@@ -19,6 +19,12 @@ import {
 import { UniversalCueBridge, CueSessionReport } from "@/lib/UniversalCueBridge";
 import { CueSheetGenerator, ProofOfPlayCertificate } from "@/lib/cue-sheet-generator";
 import { createArtistRoyaltyTrackerCheckout, createVenueSubscriptionCheckout } from "@/app/actions/stripeBillingActions";
+import {
+  TARIFA_BASE_SOLISTA_EUR,
+  DEPOSITO_STRIPE_EUR,
+  CENTRALITA_EAR_OS,
+  SPLIT_SOBERANO
+} from '@/lib/constants/ear-os-ssot';
 
 export default function ReclamarRegaliasPage() {
   // Cue Bridge Audit State
@@ -148,7 +154,30 @@ export default function ReclamarRegaliasPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#050505] text-zinc-100 font-sans selection:bg-[#ecb613] selection:text-black">
+    <div className="min-h-screen w-full overflow-x-hidden bg-[#050505] text-zinc-100 font-sans selection:bg-[#ecb613] selection:text-black">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Service',
+            name: 'Recuperación de Regalías & Tracking Acústico S-Class',
+            description: 'Infraestructura FinTech y recuperación legal de derechos de autor con firma SHA-256.',
+            provider: {
+              '@type': 'Organization',
+              name: 'Productora EAR',
+              telephone: CENTRALITA_EAR_OS
+            },
+            offers: {
+              '@type': 'Offer',
+              price: TARIFA_BASE_SOLISTA_EUR.toFixed(2),
+              priceCurrency: 'EUR',
+              availability: 'https://schema.org/InStock',
+              url: 'https://ear-os.com/artistas/reclamar-regalias'
+            }
+          })
+        }}
+      />
       
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
           1. HERO MONUMENTAL: "EL VENGADOR DE REGALÍAS"

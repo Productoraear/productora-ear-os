@@ -24,6 +24,12 @@ import {
 import { UniversalCueBridge, CueSessionReport } from "@/lib/UniversalCueBridge";
 import { CueSheetGenerator, ProofOfPlayCertificate } from "@/lib/cue-sheet-generator";
 import { createArtistRoyaltyTrackerCheckout } from "@/app/actions/stripeBillingActions";
+import {
+  TARIFA_BASE_SOLISTA_EUR,
+  DEPOSITO_STRIPE_EUR,
+  CENTRALITA_EAR_OS,
+  SPLIT_SOBERANO
+} from '@/lib/constants/ear-os-ssot';
 
 export default function ArtistDashboardPage() {
   const [activeTier, setActiveTier] = useState<"freemium" | "pro">("freemium");
@@ -114,7 +120,30 @@ export default function ArtistDashboardPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#050505] text-zinc-100 font-sans selection:bg-[#ecb613] selection:text-black">
+    <div className="min-h-screen w-full overflow-x-hidden bg-[#050505] text-zinc-100 font-sans selection:bg-[#ecb613] selection:text-black">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Service',
+            name: 'Portal de Artistas & Creadores S-Class',
+            description: 'Gestión de regalías, contratos directos 80/10/10 y tracking de sets musicales.',
+            provider: {
+              '@type': 'Organization',
+              name: 'Productora EAR',
+              telephone: CENTRALITA_EAR_OS
+            },
+            offers: {
+              '@type': 'Offer',
+              price: TARIFA_BASE_SOLISTA_EUR.toFixed(2),
+              priceCurrency: 'EUR',
+              availability: 'https://schema.org/InStock',
+              url: 'https://ear-os.com/artistas/dashboard'
+            }
+          })
+        }}
+      />
       
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
           1. HEADER DEL PORTAL FREEMIUM & PRO S-CLASS
@@ -129,7 +158,7 @@ export default function ArtistDashboardPage() {
               Escalera de Valor & Cabina <span className="text-[#ecb613]">S-Class</span>
             </h1>
             <p className="text-sm sm:text-base text-zinc-400 mt-2 max-w-2xl">
-              De la captación gratuita en cabina a la liquidación directa de cachés (80/10/10) y defensa de regalías ante SGAE con firma SHA-256.
+              De la captación gratuita en cabina a la liquidación directa de cachés ({SPLIT_SOBERANO.artista * 100}/{SPLIT_SOBERANO.earOs * 100}/{SPLIT_SOBERANO.vimume * 100}) y defensa de regalías ante SGAE con firma SHA-256. Tarifa Solista {TARIFA_BASE_SOLISTA_EUR} € y depósito Stripe {DEPOSITO_STRIPE_EUR} €.
             </p>
           </div>
 

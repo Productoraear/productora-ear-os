@@ -8,17 +8,50 @@ import {
   Sparkles, Users, Gift
 } from 'lucide-react';
 import { B2GGovFaqAccordion } from '@/components/seo/B2GGovFaqAccordion';
+import {
+  TARIFA_BASE_SOLISTA_EUR,
+  DEPOSITO_STRIPE_EUR,
+  CENTRALITA_EAR_OS,
+  SPLIT_SOBERANO,
+  AJUSTE_PREVENTIVO_B2G_EUR,
+  LIMITE_B2G_LCSP_EUR
+} from '@/lib/constants/ear-os-ssot';
 
 export default function AyuntamientosPage() {
   const [population, setPopulation] = useState<number>(3500);
   const [selectedFormat, setSelectedFormat] = useState<'menor' | 'licitacion'>('menor');
 
   const estimatedBudget = selectedFormat === 'menor' 
-    ? Math.min(14900, Math.max(2800, Math.floor(population * 2.1))) 
+    ? Math.min(AJUSTE_PREVENTIVO_B2G_EUR, Math.max(2800, Math.floor(population * 2.1))) 
     : Math.max(18000, Math.floor(population * 3.8));
 
+  const whatsappHref = `https://wa.me/${CENTRALITA_EAR_OS.replace(/\D/g, '')}?text=Hola,%20solicito%20presupuesto%20para%20Ayuntamiento`;
+
   return (
-    <div className="min-h-screen bg-[#050505] text-white pt-24 pb-20 px-4">
+    <div className="min-h-screen w-full overflow-x-hidden bg-[#050505] text-white pt-24 pb-20 px-4">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Service',
+            name: 'Soluciones Integrales para Ayuntamientos & Festejos B2G',
+            description: 'Producción de fiestas patronales, luces de navidad y espectáculos senior homologados.',
+            provider: {
+              '@type': 'Organization',
+              name: 'Productora EAR',
+              telephone: CENTRALITA_EAR_OS
+            },
+            offers: {
+              '@type': 'Offer',
+              price: AJUSTE_PREVENTIVO_B2G_EUR.toFixed(2),
+              priceCurrency: 'EUR',
+              availability: 'https://schema.org/InStock',
+              url: 'https://ear-os.com/ocasiones/ayuntamientos'
+            }
+          })
+        }}
+      />
       <div className="max-w-7xl mx-auto space-y-16">
         
         <div className="border-b border-white/10 pb-12">
@@ -223,7 +256,7 @@ export default function AyuntamientosPage() {
                   }`}
                 >
                   <span className="block font-bold text-sm mb-1">Contrato Menor (Art. 118)</span>
-                  <span className="text-[10px] font-mono text-white/50">Hasta 15.000€ + IVA • Adjudicación Directa</span>
+                  <span className="text-[10px] font-mono text-white/50">Hasta {AJUSTE_PREVENTIVO_B2G_EUR.toLocaleString('es-ES')}€ + IVA • Adjudicación Directa</span>
                 </button>
                 <button
                   onClick={() => setSelectedFormat('licitacion')}
@@ -234,7 +267,7 @@ export default function AyuntamientosPage() {
                   }`}
                 >
                   <span className="block font-bold text-sm mb-1">Licitación Abierta</span>
-                  <span className="text-[10px] font-mono text-white/50">Proyectos Macro (&gt;15.000€) • Pliego Técnico</span>
+                  <span className="text-[10px] font-mono text-white/50">Proyectos Macro (&gt;{LIMITE_B2G_LCSP_EUR.toLocaleString('es-ES')}€) • Pliego Técnico</span>
                 </button>
               </div>
             </div>
@@ -250,12 +283,12 @@ export default function AyuntamientosPage() {
 
             <div className="space-y-3">
               <a
-                href="https://wa.me/34693693048?text=Hola,%20solicito%20presupuesto%20para%20Ayuntamiento"
+                href={whatsappHref}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full py-3.5 bg-[#ecb613] hover:bg-yellow-400 text-black font-black uppercase text-xs rounded-xl transition-colors flex items-center justify-center gap-2 font-bold"
               >
-                <PhoneCall size={16} /> Contactar con Secretaría Técnica
+                <PhoneCall size={16} /> Contactar con Secretaría Técnica ({CENTRALITA_EAR_OS})
               </a>
               <Link 
                 href="/checkout/presupuesto"

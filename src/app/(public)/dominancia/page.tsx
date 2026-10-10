@@ -9,15 +9,23 @@ import {
   Scale, FileText, Compass, Sparkles, Sliders, ChevronRight, Lock, HelpCircle
 } from 'lucide-react';
 import { MeshGradientBackground } from '@/components/sclass/MeshGradientBackground';
+import {
+  TARIFA_BASE_SOLISTA_EUR,
+  DEPOSITO_STRIPE_EUR,
+  CENTRALITA_EAR_OS,
+  SPLIT_SOBERANO,
+  AJUSTE_PREVENTIVO_B2G_EUR
+} from '@/lib/constants/ear-os-ssot';
 
 // ── CONSTANTES CANÓNICAS INMUTABLES (SSOT S-CLASS) ───────────────────────────
-const EDWIN_BASE_FEE = 350.0;
+const EDWIN_BASE_FEE = TARIFA_BASE_SOLISTA_EUR;
 const RATE_PER_KM = 1.50;
 const FREE_KM_THRESHOLD = 50;
 const HOTEL_SURCHARGE = 120.0;
-const DEPOSIT_AMOUNT = 100.0;
-const B2G_CEILING = 14250.0;
+const DEPOSIT_AMOUNT = DEPOSITO_STRIPE_EUR;
+const B2G_CEILING = AJUSTE_PREVENTIVO_B2G_EUR;
 const SPL_MAX_DB = 75;
+const WHATSAPP_HREF = `https://wa.me/${CENTRALITA_EAR_OS.replace(/\D/g, '')}`;
 
 export default function DominanciaPage() {
   const [activeTab, setActiveTab] = useState<'forensic' | 'journey' | 'tariffs' | 'fincas' | 'vendors' | 'scripts' | 'roadmap' | 'simulator'>('forensic');
@@ -124,6 +132,29 @@ https://productoraear.com/checkout?amount=100`;
   return (
     <MeshGradientBackground intensity="stage">
       <main className="min-h-screen pt-28 sm:pt-32 pb-36 px-4 md:px-8 text-white font-sans selection:bg-[#ecb613] selection:text-black w-full overflow-x-hidden">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Service',
+              name: 'Estrategia y Dominancia de Mercado S-Class',
+              description: 'Manifiesto de soberanía y auditoría forense para eventos sin comisiones abusivas.',
+              provider: {
+                '@type': 'Organization',
+                name: 'Productora EAR',
+                telephone: CENTRALITA_EAR_OS
+              },
+              offers: {
+                '@type': 'Offer',
+                price: TARIFA_BASE_SOLISTA_EUR.toFixed(2),
+                priceCurrency: 'EUR',
+                availability: 'https://schema.org/InStock',
+                url: 'https://ear-os.com/reservar/solista'
+              }
+            })
+          }}
+        />
         <div className="max-w-7xl mx-auto space-y-10">
 
           {/* ── CABECERA PRINCIPAL S-CLASS ── */}

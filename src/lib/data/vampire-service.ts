@@ -21,6 +21,9 @@ export interface ProviderRecord {
 }
 
 let cachedLocalProviders: any[] | null = null;
+let isDbUnreachable = false;
+let lastDbFailureTimestamp = 0;
+const DB_COOLDOWN_MS = 60000; // 60s cooldown tras fallo DB para evitar bloqueos de timeout durante build
 
 function getCachedFallbackProviders(): any[] {
   if (cachedLocalProviders) return cachedLocalProviders;
@@ -52,8 +55,12 @@ export const getProvidersByLocation = cache(
     const normProv = (provinceQuery || '').toLowerCase().trim();
     const normCat = (categoryQuery || '').toLowerCase().trim();
 
+    const now = Date.now();
+    const canQueryDb = (process.env.POSTGRES_PRISMA_URL || process.env.DATABASE_URL) &&
+      (!isDbUnreachable || (now - lastDbFailureTimestamp > DB_COOLDOWN_MS));
+
     // 1. Intentar consulta optimizada a PostgreSQL / Prisma
-    if (process.env.POSTGRES_PRISMA_URL || process.env.DATABASE_URL) {
+    if (canQueryDb) {
       try {
         const whereClause: any = {};
 
@@ -80,6 +87,8 @@ export const getProvidersByLocation = cache(
           take: limit,
         });
 
+        isDbUnreachable = false; // Reset en caso de éxito
+
         if (dbRecords && dbRecords.length > 0) {
           return dbRecords.map((r) => ({
             id: r.id,
@@ -99,7 +108,11 @@ export const getProvidersByLocation = cache(
           }));
         }
       } catch (dbError) {
-        console.warn('⚠️ [VAMPIRE SERVICE] Fallback a JSON local por error DB:', dbError);
+        if (!isDbUnreachable) {
+          console.warn('⚠️ [VAMPIRE SERVICE] Fallback a JSON local por error DB (activado Circuit Breaker 60s):', (dbError as any)?.message || dbError);
+        }
+        isDbUnreachable = true;
+        lastDbFailureTimestamp = Date.now();
       }
     }
 
@@ -170,11 +183,16 @@ export const getProviderByClaimToken = cache(
   async (claimToken: string): Promise<ProviderRecord | null> => {
     if (!claimToken) return null;
 
-    if (process.env.POSTGRES_PRISMA_URL || process.env.DATABASE_URL) {
+    const now = Date.now();
+    const canQueryDb = (process.env.POSTGRES_PRISMA_URL || process.env.DATABASE_URL) &&
+      (!isDbUnreachable || (now - lastDbFailureTimestamp > DB_COOLDOWN_MS));
+
+    if (canQueryDb) {
       try {
         const r = await prisma.vendorShadowProfile.findUnique({
           where: { claimToken },
         });
+        isDbUnreachable = false;
         if (r) {
           return {
             id: r.id,
@@ -193,7 +211,10 @@ export const getProviderByClaimToken = cache(
             status: r.status,
           };
         }
-      } catch {}
+      } catch (dbError) {
+        isDbUnreachable = true;
+        lastDbFailureTimestamp = Date.now();
+      }
     }
 
     return null;

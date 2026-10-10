@@ -1,98 +1,140 @@
 import type { Metadata } from 'next';
-import type { CSSProperties } from 'react';
+import Link from 'next/link';
+import {
+  TARIFA_BASE_SOLISTA_EUR,
+  DEPOSITO_STRIPE_EUR,
+  CENTRALITA_EAR_OS,
+} from '@/lib/constants/ear-os-ssot';
 
 export const metadata: Metadata = {
-  title: 'Infraestructura',
-  description: 'Infraestructura técnica de Productora EAR: frontend, APIs, datos y despliegue.',
+  title: 'Infraestructura | Productora EAR',
+  description:
+    'Infraestructura técnica de Productora EAR: frontend, APIs, datos y despliegue. Reserva directa desde 350 €.',
 };
 
-const pageStyle: CSSProperties = {
-  minHeight: '100vh',
-  backgroundColor: '#030305',
-  color: '#f5f5f7',
-  padding: '48px 24px',
-  fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
+const WHATSAPP_HREF = `https://wa.me/${CENTRALITA_EAR_OS.replace(/\D/g, '')}`;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: 'Infraestructura Técnica Productora EAR',
+  description:
+    'Arquitectura técnica de Productora EAR: frontend Next.js 15, APIs tipadas, modelos de datos y despliegue continuo.',
+  brand: {
+    '@type': 'Brand',
+    name: 'Productora EAR',
+  },
+  offers: {
+    '@type': 'Offer',
+    price: TARIFA_BASE_SOLISTA_EUR.toFixed(2),
+    priceCurrency: 'EUR',
+    availability: 'https://schema.org/InStock',
+    url: 'https://productora-ear.com/reservar/solista',
+    priceValidUntil: '2026-12-31',
+    eligibleQuantity: {
+      '@type': 'QuantitativeValue',
+      value: 1,
+      unitCode: 'C62',
+    },
+  },
 };
 
-const containerStyle: CSSProperties = {
-  maxWidth: '960px',
-  margin: '0 auto',
-};
-
-const titleStyle: CSSProperties = {
-  fontSize: '40px',
-  lineHeight: 1.1,
-  margin: '0 0 16px',
-};
-
-const subtitleStyle: CSSProperties = {
-  fontSize: '18px',
-  color: '#a1a1aa',
-  margin: '0 0 32px',
-};
-
-const gridStyle: CSSProperties = {
-  display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-  gap: '16px',
-};
-
-const cardStyle: CSSProperties = {
-  border: '1px solid #27272a',
-  borderRadius: '16px',
-  padding: '20px',
-  backgroundColor: '#0a0a0c',
-};
-
-const cardTitleStyle: CSSProperties = {
-  fontSize: '18px',
-  margin: '0 0 8px',
-};
-
-const cardTextStyle: CSSProperties = {
-  fontSize: '15px',
-  color: '#a1a1aa',
-  margin: 0,
-  lineHeight: 1.5,
-};
+const pillars = [
+  {
+    title: 'Frontend',
+    text: 'Next.js 15 con App Router, TypeScript estricto y una estética OLED consistente.',
+  },
+  {
+    title: 'APIs',
+    text: 'Rutas de API tipadas para perfiles, oráculos y flujos de negocio críticos.',
+  },
+  {
+    title: 'Datos',
+    text: 'Modelos de datos estructurados y validación en frontera para mantener integridad.',
+  },
+  {
+    title: 'Despliegue',
+    text: 'Build estático, verificación de tipos y despliegue continuo con mínima fricción.',
+  },
+];
 
 export default function InfraestructuraPage() {
   return (
-    <main style={pageStyle}>
-      <div style={containerStyle}>
-        <h1 style={titleStyle}>Infraestructura</h1>
-        <p style={subtitleStyle}>
-          Arquitectura técnica de Productora EAR enfocada en rendimiento, seguridad y mantenibilidad.
-        </p>
+    <main className="w-full overflow-x-hidden min-h-screen bg-[#030305] text-[#f5f5f7] px-6 py-12">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
 
-        <section style={gridStyle}>
-          <article style={cardStyle}>
-            <h2 style={cardTitleStyle}>Frontend</h2>
-            <p style={cardTextStyle}>
-              Next.js 15 con App Router, TypeScript estricto y una estética OLED consistente.
-            </p>
-          </article>
+      <div className="mx-auto w-full max-w-5xl">
+        <header className="mb-10">
+          <p className="text-xs uppercase tracking-[0.3em] text-[#a1a1aa] mb-3">
+            Productora EAR · Zona Cero
+          </p>
+          <h1 className="text-4xl md:text-5xl font-semibold leading-tight mb-4">
+            Infraestructura
+          </h1>
+          <p className="text-lg text-[#a1a1aa] max-w-2xl">
+            Arquitectura técnica de Productora EAR enfocada en rendimiento, seguridad y
+            mantenibilidad. Reserva directa desde{' '}
+            <span className="text-white font-semibold">
+              {TARIFA_BASE_SOLISTA_EUR} €
+            </span>{' '}
+            (depósito Stripe {DEPOSITO_STRIPE_EUR} €).
+          </p>
+        </header>
 
-          <article style={cardStyle}>
-            <h2 style={cardTitleStyle}>APIs</h2>
-            <p style={cardTextStyle}>
-              Rutas de API tipadas para perfiles, oráculos y flujos de negocio críticos.
-            </p>
-          </article>
+        <section className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
+          {pillars.map((pillar) => (
+            <article
+              key={pillar.title}
+              className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-6 transition-all duration-300 hover:border-white/25 hover:bg-[#0d0d12]/90 hover:-translate-y-0.5"
+            >
+              <h2 className="text-lg font-semibold mb-2">{pillar.title}</h2>
+              <p className="text-[15px] text-[#a1a1aa] leading-relaxed m-0">
+                {pillar.text}
+              </p>
+            </article>
+          ))}
+        </section>
 
-          <article style={cardStyle}>
-            <h2 style={cardTitleStyle}>Datos</h2>
-            <p style={cardTextStyle}>
-              Modelos de datos estructurados y validación en frontera para mantener integridad.
-            </p>
-          </article>
+        <section className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-8 transition-all duration-300 hover:border-white/25">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <div>
+              <p className="text-xs uppercase tracking-[0.25em] text-[#a1a1aa] mb-2">
+                Tarifa Solista
+              </p>
+              <p className="text-3xl font-semibold text-white">
+                {TARIFA_BASE_SOLISTA_EUR} €
+              </p>
+              <p className="text-sm text-[#a1a1aa] mt-1">
+                Depósito de reserva: {DEPOSITO_STRIPE_EUR} € · Confirmación inmediata
+              </p>
+            </div>
 
-          <article style={cardStyle}>
-            <h2 style={cardTitleStyle}>Despliegue</h2>
-            <p style={cardTextStyle}>
-              Build estático, verificación de tipos y despliegue continuo con mínima fricción.
-            </p>
-          </article>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Link
+                href="/reservar/solista"
+                className="inline-flex items-center justify-center rounded-2xl bg-white text-black font-semibold px-6 py-3 transition-all duration-300 hover:bg-[#e5e5ea] hover:scale-[1.02]"
+              >
+                Reservar Solista
+              </Link>
+              <Link
+                href="/alquiler"
+                className="inline-flex items-center justify-center rounded-2xl border border-white/15 text-white font-semibold px-6 py-3 transition-all duration-300 hover:border-white/40 hover:bg-white/5"
+              >
+                Ver Alquiler
+              </Link>
+              <a
+                href={WHATSAPP_HREF}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-2xl border border-white/15 text-white font-semibold px-6 py-3 transition-all duration-300 hover:border-white/40 hover:bg-white/5"
+              >
+                WhatsApp {CENTRALITA_EAR_OS}
+              </a>
+            </div>
+          </div>
         </section>
       </div>
     </main>

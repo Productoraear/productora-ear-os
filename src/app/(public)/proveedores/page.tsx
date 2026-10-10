@@ -37,6 +37,7 @@ import { PremiumMediaCarousel } from '@/components/providers/PremiumMediaCarouse
 import { PremiumPacksCarousel } from '@/components/providers/PremiumPacksCarousel';
 import { AirbnbNeuralBookingBar } from '@/features/search/AirbnbNeuralBookingBar';
 import { PROVIDERS_MANIFEST_TOTALS, PROVIDERS_B2C_TOTAL, B2C_DIRECTORY_GREMIO_TOTALS } from '@/lib/constants/providers-manifest';
+import { TARIFA_BASE_SOLISTA_EUR, CENTRALITA_EAR_OS, DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // SUBCATEGORÍAS S-CLASS: FINCAS & ESPACIOS SINGULARES
@@ -340,7 +341,7 @@ function ProveedoresDirectoryContent() {
               province: p.province || 'Madrid',
               municipality: p.municipality || '',
               description: p.description || '',
-              price: p.basePrice ? `${p.basePrice} €` : (p.priceRange || 'Consultar'),
+              price: p.basePrice ? `${p.basePrice} €` : `${TARIFA_BASE_SOLISTA_EUR} €`,
               rating: p.rating || 5.0,
               reviews: p.reviewsCount || 12,
               img: featured,
@@ -464,7 +465,7 @@ function ProveedoresDirectoryContent() {
               province: p.province || 'Madrid',
               municipality: p.municipality || '',
               description: p.description || '',
-              price: p.basePrice ? `${p.basePrice} €` : (p.priceRange || 'Consultar'),
+              price: p.basePrice ? `${p.basePrice} €` : `${TARIFA_BASE_SOLISTA_EUR} €`,
               rating: p.rating || 5.0,
               reviews: p.reviewsCount || 12,
               img: featured,
@@ -1047,7 +1048,7 @@ function ProveedoresDirectoryContent() {
                 <div>
                   <span className="text-[10px] text-neutral-500 uppercase font-mono tracking-widest block mb-1">Cierre Automático S-Class</span>
                   <span className="text-3xl font-black text-white font-mono tracking-tighter">
-                    {activeModalProvider.basePrice ? `${activeModalProvider.basePrice} €` : 'A consultar'}
+                    {activeModalProvider.basePrice ? `${activeModalProvider.basePrice} €` : `${TARIFA_BASE_SOLISTA_EUR} €`}
                   </span>
                 </div>
 
@@ -1093,11 +1094,11 @@ function ProveedoresDirectoryContent() {
                   })()}
 
                   <Link
-                    href={activeModalProvider.customUrl || `/checkout/presupuesto?proveedor=${encodeURIComponent(activeModalProvider.name)}&base=${activeModalProvider.basePrice || 650}`}
+                    href={activeModalProvider.customUrl || `/checkout/presupuesto?proveedor=${encodeURIComponent(activeModalProvider.name)}&base=${activeModalProvider.basePrice || TARIFA_BASE_SOLISTA_EUR}`}
                     className="px-8 py-4 rounded-2xl bg-white hover:bg-neutral-200 text-black font-black uppercase tracking-widest flex items-center justify-center gap-2 transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:scale-105"
                   >
                     <Lock size={16} />
-                    <span>Bloquear 100 €</span>
+                    <span>Bloquear {DEPOSITO_STRIPE_EUR} €</span>
                   </Link>
                 </div>
               </div>
@@ -1147,16 +1148,36 @@ function ProveedoresDirectoryContent() {
 
 export default function WrappedProveedoresPage() {
   return (
-    <Suspense fallback={
-      <div className="min-h-screen bg-[#030305] flex items-center justify-center text-white font-mono text-xs">
-        <div className="space-y-3 text-center">
-          <Loader2 className="animate-spin text-[#258DCD] mx-auto" size={32} />
-          <p className="text-neutral-400">Cargando Directorio Homologado S-Class...</p>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Directorio Homologado de Proveedores EAR OS",
+            "description": "Selección de profesionales de España con seguro de RC de 1.000.000 €, rider acústico estandarizado y reserva protegida.",
+            "mainEntity": {
+              "@type": "AggregateOffer",
+              "offerCount": B2C_DIRECTORY_GREMIO_TOTALS?.servicios || 120,
+              "lowPrice": TARIFA_BASE_SOLISTA_EUR,
+              "highPrice": TARIFA_BASE_SOLISTA_EUR * 10,
+              "priceCurrency": "EUR"
+            }
+          })
+        }}
+      />
+      <Suspense fallback={
+        <div className="min-h-screen bg-[#030305] flex items-center justify-center text-white font-mono text-xs">
+          <div className="space-y-3 text-center">
+            <Loader2 className="animate-spin text-[#258DCD] mx-auto" size={32} />
+            <p className="text-neutral-400">Cargando Directorio Homologado S-Class...</p>
+          </div>
         </div>
-      </div>
-    }>
-      <ProveedoresDirectoryContent />
-    </Suspense>
+      }>
+        <ProveedoresDirectoryContent />
+      </Suspense>
+    </>
   );
 }
 

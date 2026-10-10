@@ -19,6 +19,14 @@ import {
 import { CENTRALITA } from '@/lib/phone-constants';
 import { normalizeForUrl } from '@/lib/acg/acgSemanticGraph';
 import SemanticBlockRenderer from '@/components/programmatic/SemanticBlockRenderer';
+import {
+  TARIFA_BASE_SOLISTA_EUR,
+  DEPOSITO_STRIPE_EUR,
+  CENTRALITA_EAR_OS,
+  SPLIT_SOBERANO,
+  LOGISTICA_EUR_PER_KM,
+  LOGISTICA_KM_EXENTOS
+} from '@/lib/constants/ear-os-ssot';
 
 interface ProvinciaFincasProps {
   params: Promise<{ provincia: string }>;
@@ -214,7 +222,30 @@ export default async function ProvinciaFincasPage({ params }: ProvinciaFincasPro
   const capacidadTotal = fincas.reduce((sum, f) => sum + f.capacidadMaxPax, 0);
 
   return (
-    <main className="min-h-screen bg-[#030305] text-white pt-28 pb-24 selection:bg-[#ecb613] selection:text-black">
+    <main className="min-h-screen w-full overflow-x-hidden bg-[#030305] text-white pt-28 pb-24 selection:bg-[#ecb613] selection:text-black">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Service',
+            name: `Fincas S-Class Homologadas en ${resolved.display}`,
+            description: `Red de fincas homologadas con blindaje acústico y logística en ${resolved.display}.`,
+            provider: {
+              '@type': 'Organization',
+              name: 'Productora EAR',
+              telephone: CENTRALITA_EAR_OS
+            },
+            offers: {
+              '@type': 'Offer',
+              price: TARIFA_BASE_SOLISTA_EUR.toFixed(2),
+              priceCurrency: 'EUR',
+              availability: 'https://schema.org/InStock',
+              url: `https://ear-os.com/fincas/${resolved.slug}`
+            }
+          })
+        }}
+      />
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         {/* Hero */}
         <section className="space-y-6 text-center max-w-3xl mx-auto mb-16">
@@ -254,18 +285,18 @@ export default async function ProvinciaFincasPage({ params }: ProvinciaFincasPro
         <section className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="rounded-2xl bg-[#050507] border border-white/10 p-5">
             <p className="font-mono text-[10px] uppercase tracking-widest text-[#ecb613]">
-              Split Soberano
+              Split Soberano {SPLIT_SOBERANO.artista * 100}/{SPLIT_SOBERANO.earOs * 100}/{SPLIT_SOBERANO.vimume * 100}
             </p>
             <p className="font-body text-sm text-white/60 mt-2 leading-relaxed">
-              80% Artista / 10% EAR OS / 10% VIMUME. Inmutable en cada liquidación.
+              {SPLIT_SOBERANO.artista * 100}% Artista / {SPLIT_SOBERANO.earOs * 100}% EAR OS / {SPLIT_SOBERANO.vimume * 100}% VIMUME. Tarifa Solista {TARIFA_BASE_SOLISTA_EUR} €.
             </p>
           </div>
           <div className="rounded-2xl bg-[#050507] border border-white/10 p-5">
             <p className="font-mono text-[10px] uppercase tracking-widest text-[#ecb613]">
-              Price-Lock 100 €
+              Price-Lock {DEPOSITO_STRIPE_EUR} €
             </p>
             <p className="font-body text-sm text-white/60 mt-2 leading-relaxed">
-              Firma SHA-256 emitida en servidor. Depósito reembolsable si no encaja la fecha.
+              Firma SHA-256 emitida en servidor. Depósito 100% deducible y reembolsable si no encaja la fecha.
             </p>
           </div>
           <div className="rounded-2xl bg-[#050507] border border-white/10 p-5">

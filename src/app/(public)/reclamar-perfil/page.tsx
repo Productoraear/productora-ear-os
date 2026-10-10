@@ -18,6 +18,14 @@ import {
   Crown
 } from 'lucide-react';
 import Link from 'next/link';
+import {
+  TARIFA_BASE_SOLISTA_EUR,
+  DEPOSITO_STRIPE_EUR,
+  CENTRALITA_EAR_OS,
+  SPLIT_SOBERANO
+} from '@/lib/constants/ear-os-ssot';
+
+const WHATSAPP_HREF = `https://wa.me/${CENTRALITA_EAR_OS.replace(/\D/g, '')}`;
 
 function ReclamarPerfilContent() {
   const searchParams = useSearchParams();
@@ -116,7 +124,30 @@ function ReclamarPerfilContent() {
   }
 
   return (
-    <div className="min-h-screen bg-[#050508] text-white pt-28 pb-20 px-4 sm:px-6 font-sans">
+    <div className="min-h-screen w-full overflow-x-hidden bg-[#050508] text-white pt-28 pb-20 px-4 sm:px-6 font-sans">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Service',
+            name: 'Homologación y Reclamación de Perfil S-Class',
+            description: 'Verificación oficial de ficha y activación en la Red Soberana de Productora EAR sin comisiones abusivas.',
+            provider: {
+              '@type': 'Organization',
+              name: 'Productora EAR',
+              telephone: CENTRALITA_EAR_OS
+            },
+            offers: {
+              '@type': 'Offer',
+              price: '0.00',
+              priceCurrency: 'EUR',
+              availability: 'https://schema.org/InStock',
+              url: 'https://ear-os.com/reclamar-perfil'
+            }
+          })
+        }}
+      />
       <div className="max-w-4xl mx-auto space-y-10">
         
         {/* ENCABEZADO S-CLASS */}
@@ -170,15 +201,15 @@ function ReclamarPerfilContent() {
                 <div className="flex items-start gap-2.5 bg-black/40 p-4 rounded-2xl border border-white/5">
                   <CheckCircle2 size={18} className="text-emerald-400 shrink-0 mt-0.5" />
                   <div>
-                    <strong className="text-white block font-mono">Split Soberano 80/10/10</strong>
-                    <span className="text-[11px] text-slate-400">80% del caché íntegro para ti. 10% gestión EAR, 10% impacto social VIMUME.</span>
+                    <strong className="text-white block font-mono">Split Soberano {SPLIT_SOBERANO.artista * 100}/{SPLIT_SOBERANO.earOs * 100}/{SPLIT_SOBERANO.vimume * 100}</strong>
+                    <span className="text-[11px] text-slate-400">{SPLIT_SOBERANO.artista * 100}% del caché íntegro para ti. {SPLIT_SOBERANO.earOs * 100}% gestión EAR, {SPLIT_SOBERANO.vimume * 100}% impacto social VIMUME.</span>
                   </div>
                 </div>
                 <div className="flex items-start gap-2.5 bg-black/40 p-4 rounded-2xl border border-white/5">
                   <CheckCircle2 size={18} className="text-emerald-400 shrink-0 mt-0.5" />
                   <div>
-                    <strong className="text-white block font-mono">Depósito 100 € Stripe Price-Lock</strong>
-                    <span className="text-[11px] text-slate-400">Cada fecha queda congelada con señal bancaria inmediata. Cero regateos.</span>
+                    <strong className="text-white block font-mono">Depósito {DEPOSITO_STRIPE_EUR.toFixed(2)} € Stripe Price-Lock</strong>
+                    <span className="text-[11px] text-slate-400">Cada fecha queda congelada con señal bancaria inmediata deducible. Cero regateos. Tarifa Solista {TARIFA_BASE_SOLISTA_EUR} €.</span>
                   </div>
                 </div>
                 <div className="flex items-start gap-2.5 bg-black/40 p-4 rounded-2xl border border-white/5">
@@ -218,7 +249,7 @@ function ReclamarPerfilContent() {
                     Ver Ficha en Directorio Público →
                   </Link>
                   <a
-                    href="https://wa.me/34693693048"
+                    href={WHATSAPP_HREF}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-mono text-xs uppercase tracking-wider transition-colors"
@@ -246,7 +277,7 @@ function ReclamarPerfilContent() {
                 </button>
 
                 <p className="text-center text-[10px] font-mono text-slate-400">
-                  Activación instantánea sin permanencia • Soporte técnico directo 24/7 vía Centralita (+34 693 693 048)
+                  Activación instantánea sin permanencia • Soporte técnico directo 24/7 vía Centralita ({CENTRALITA_EAR_OS})
                 </p>
               </div>
             )}

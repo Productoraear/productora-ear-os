@@ -1,0 +1,353 @@
+{
+  "engine": "omega-genesis-od-001-pilot",
+  "version": "1.0.0",
+  "landingCount": 10,
+  "depositEur": 100,
+  "splitSoberano": {
+    "artista": 0.8,
+    "earOs": 0.1,
+    "vimume": 0.1
+  },
+  "payload": [
+    {
+      "slug": "villa-escorial-park",
+      "url": "/fincas/villa-escorial-park",
+      "title": "Villa Escorial Park • Mansión & Finca de Lujo · Eventos S-Class | EAR OS",
+      "metaDescription": "Exclusiva finca de 20.000 m² con 3.000 m² de jardines a los pies de San Lorenzo de El Escorial. Alquiler íntegro disponible todo el año: fines de semana completos (4.500 € de viernes 14:00h a domingo 14:00h) y estancias entre semana con alojamiento para 30 personas en 9 suites, piscina vallada, sala de cine con sofás de masaje y cocina profesional con dos islas.",
+      "fincaId": "villa-escorial-park",
+      "name": "Villa Escorial Park • Mansión & Finca de Lujo",
+      "location": "San Lorenzo de El Escorial (Madrid)",
+      "provincia": "Madrid",
+      "depositEur": 100,
+      "depositDeducible": true,
+      "stripeSessionId": "25d6fc434021e7e06b0ae9a15f39231d7884b24c74193345db31c12bd38620cf",
+      "priceLockSha256": "518980bb0d1b59fc431d46507411a6a95c91c9732f80a725dee5716047cfef83",
+      "provenanceHash": "760ab87f236ecd22ebde3de84a9d56ff963b3a0c2c90cf7cfdd395b6f89137b7",
+      "uniqueCopy": "Cruce el portón de esta mansión y abandone cualquier prisa urbana: veinte mil metros cuadrados arbolados, piscina vallada, proyector cinematográfico con butacas de masaje y nueve dormitorios para dormir a treinta invitados tras la celebración.",
+      "htmlFilePath": "public/landings/genesis/villa-escorial-park.html",
+      "htmlSha256": "64f46d68ee3dc8300b627cf76a0a8190f6945fd89cbf205b4103de68f2928f26",
+      "schemaOrg": {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": "Villa Escorial Park • Mansión & Finca de Lujo",
+        "description": "Exclusiva finca de 20.000 m² con 3.000 m² de jardines a los pies de San Lorenzo de El Escorial. Alquiler íntegro disponible todo el año: fines de semana completos (4.500 € de viernes 14:00h a domingo 14:00h) y estancias entre semana con alojamiento para 30 personas en 9 suites, piscina vallada, sala de cine con sofás de masaje y cocina profesional con dos islas.",
+        "offers": {
+          "@type": "Offer",
+          "price": 100,
+          "priceCurrency": "EUR",
+          "availability": "https://schema.org/InStock"
+        },
+        "areaServed": {
+          "@type": "Place",
+          "name": "San Lorenzo de El Escorial (Madrid)"
+        }
+      }
+    },
+    {
+      "slug": "finca-la-chopera",
+      "url": "/fincas/finca-la-chopera",
+      "title": "Finca La Chopera · Eventos S-Class | EAR OS",
+      "metaDescription": "Recinto señorial de 40 hectáreas a 30 minutos de Madrid. Zonas exteriores ajardinadas con acometida trifásica soterrada independiente de cocina.",
+      "fincaId": "finca-la-chopera",
+      "name": "Finca La Chopera",
+      "location": "Illescas (Toledo / Madrid Sur)",
+      "provincia": "Toledo",
+      "depositEur": 100,
+      "depositDeducible": true,
+      "stripeSessionId": "7f1723ddb3d37263d55eee3bc0bc0d2af909a590e98c33b5236bafaf1af2b00a",
+      "priceLockSha256": "518980bb0d1b59fc431d46507411a6a95c91c9732f80a725dee5716047cfef83",
+      "provenanceHash": "e0b370ac72189e584aa6854241416345f45ba129a26ca0aa0f8f2384f11b6746",
+      "uniqueCopy": "Cuarenta hectáreas de arboleda histórica envuelven un invernadero traslúcido y una colección de palmeras centenarias, a media hora escasa de la capital por autopista libre de peaje.",
+      "htmlFilePath": "public/landings/genesis/finca-la-chopera.html",
+      "htmlSha256": "2ad10268831df4b547e084498f19a5d6c5d49e2766e05fe5e530dc85895646f6",
+      "schemaOrg": {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": "Finca La Chopera",
+        "description": "Recinto señorial de 40 hectáreas a 30 minutos de Madrid. Zonas exteriores ajardinadas con acometida trifásica soterrada independiente de cocina.",
+        "offers": {
+          "@type": "Offer",
+          "price": 100,
+          "priceCurrency": "EUR",
+          "availability": "https://schema.org/InStock"
+        },
+        "areaServed": {
+          "@type": "Place",
+          "name": "Illescas (Toledo / Madrid Sur)"
+        }
+      }
+    },
+    {
+      "slug": "soto-de-mozanaque",
+      "url": "/fincas/soto-de-mozanaque",
+      "title": "Soto de Mozanaque · Eventos S-Class | EAR OS",
+      "metaDescription": "Propiedad señorial de la nobleza con árboles centenarios. Cuadro eléctrico de distribución renovado con protección diferencial rearmable superinmunizada.",
+      "fincaId": "soto-de-mozanaque",
+      "name": "Soto de Mozanaque",
+      "location": "Algete (Madrid)",
+      "provincia": "Madrid",
+      "depositEur": 100,
+      "depositDeducible": true,
+      "stripeSessionId": "bccef4438aa92c289d01506a2f05a29bbf14373be2bb36177c42fe8548dd560c",
+      "priceLockSha256": "518980bb0d1b59fc431d46507411a6a95c91c9732f80a725dee5716047cfef83",
+      "provenanceHash": "6ff911a71da481d27ec889cd6d6cb7acc4b31ebcb49519c8ded3ee538a68e92b",
+      "uniqueCopy": "Antiguo palacete nobiliario restaurado donde las caballerizas se convierten en salón de baile y los troncos de plátano y cedro marcan el paseo nupcial hacia el pabellón de cristal.",
+      "htmlFilePath": "public/landings/genesis/soto-de-mozanaque.html",
+      "htmlSha256": "b5b87b14c124159d2f376d4977e9fe917d0ff2e163d0da2725dfa644593222f1",
+      "schemaOrg": {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": "Soto de Mozanaque",
+        "description": "Propiedad señorial de la nobleza con árboles centenarios. Cuadro eléctrico de distribución renovado con protección diferencial rearmable superinmunizada.",
+        "offers": {
+          "@type": "Offer",
+          "price": 100,
+          "priceCurrency": "EUR",
+          "availability": "https://schema.org/InStock"
+        },
+        "areaServed": {
+          "@type": "Place",
+          "name": "Algete (Madrid)"
+        }
+      }
+    },
+    {
+      "slug": "finca-el-regajal",
+      "url": "/fincas/finca-el-regajal",
+      "title": "Finca El Regajal · Eventos S-Class | EAR OS",
+      "metaDescription": "Finca rodeada de viñedos y mariposario protegido. Espacio singular con acústica natural cálida y sin limitador restrictivo gracias al aislamiento vegetal.",
+      "fincaId": "finca-el-regajal",
+      "name": "Finca El Regajal",
+      "location": "Aranjuez (Madrid)",
+      "provincia": "Madrid",
+      "depositEur": 100,
+      "depositDeducible": true,
+      "stripeSessionId": "eede8092c228af02730a106a91bfddba97a50a3e4156362eddd8274e6dd310a8",
+      "priceLockSha256": "518980bb0d1b59fc431d46507411a6a95c91c9732f80a725dee5716047cfef83",
+      "provenanceHash": "16a571ef2f209bee3aaa2ebf535d3eb15801ee05aca48183720984eb4fb103b8",
+      "uniqueCopy": "Entre hileras de viñedo y una reserva natural de lepidópteros, las barricas de roble absorben el sonido y devuelven una reverberación dorada que halaga a las cuerdas de cámara.",
+      "htmlFilePath": "public/landings/genesis/finca-el-regajal.html",
+      "htmlSha256": "09f30bec8acb4303d07c7481dfb3b2d6593898f7cd323b7b38dc229358c34485",
+      "schemaOrg": {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": "Finca El Regajal",
+        "description": "Finca rodeada de viñedos y mariposario protegido. Espacio singular con acústica natural cálida y sin limitador restrictivo gracias al aislamiento vegetal.",
+        "offers": {
+          "@type": "Offer",
+          "price": 100,
+          "priceCurrency": "EUR",
+          "availability": "https://schema.org/InStock"
+        },
+        "areaServed": {
+          "@type": "Place",
+          "name": "Aranjuez (Madrid)"
+        }
+      }
+    },
+    {
+      "slug": "finca-aldea-santillana",
+      "url": "/fincas/finca-aldea-santillana",
+      "title": "Finca Aldea Santillana · Eventos S-Class | EAR OS",
+      "metaDescription": "Complejo exclusivo de alta privacidad con helipuerto propio y sin vecinos perimetrales. Permite hasta 95 dBA sin limitador en directo continuo.",
+      "fincaId": "finca-aldea-santillana",
+      "name": "Finca Aldea Santillana",
+      "location": "Manjirón / Sierra Norte (Madrid)",
+      "provincia": "Madrid",
+      "depositEur": 100,
+      "depositDeducible": true,
+      "stripeSessionId": "70ce4537f7a87294ea7e625c4498017f35bafb2a5e85e7d202eff12e1883bcca",
+      "priceLockSha256": "518980bb0d1b59fc431d46507411a6a95c91c9732f80a725dee5716047cfef83",
+      "provenanceHash": "80bb58fe8f3d8ea4512089b27317fe1698b2ad99ee20f69d10bd0c83c61dd5ba",
+      "uniqueCopy": "Recinto elevado con despegue para aeronaves privadas, muralla medieval reconstruida y cúpula escénica sobre embalse; aquí no existe vecino perimetral que condicione el volumen de la fiesta.",
+      "htmlFilePath": "public/landings/genesis/finca-aldea-santillana.html",
+      "htmlSha256": "410e9c7faeb9922f90a4328d1c4d3453411cbe55f7351530434f9983a5f99abb",
+      "schemaOrg": {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": "Finca Aldea Santillana",
+        "description": "Complejo exclusivo de alta privacidad con helipuerto propio y sin vecinos perimetrales. Permite hasta 95 dBA sin limitador en directo continuo.",
+        "offers": {
+          "@type": "Offer",
+          "price": 100,
+          "priceCurrency": "EUR",
+          "availability": "https://schema.org/InStock"
+        },
+        "areaServed": {
+          "@type": "Place",
+          "name": "Manjirón / Sierra Norte (Madrid)"
+        }
+      }
+    },
+    {
+      "slug": "la-casona-de-torrelodones",
+      "url": "/fincas/la-casona-de-torrelodones",
+      "title": "La Casona de Torrelodones · Eventos S-Class | EAR OS",
+      "metaDescription": "Arquitectura indiana de principios del siglo XX con jardines señoriales. Acometida secundaria para orquesta y zona de cóctel.",
+      "fincaId": "la-casona-de-torrelodones",
+      "name": "La Casona de Torrelodones",
+      "location": "Torrelodones (Madrid)",
+      "provincia": "Madrid",
+      "depositEur": 100,
+      "depositDeducible": true,
+      "stripeSessionId": "cb522e7f21dbc01dc8e7be53784200d3134c0bcfe43b578ec64c564a300087ab",
+      "priceLockSha256": "518980bb0d1b59fc431d46507411a6a95c91c9732f80a725dee5716047cfef83",
+      "provenanceHash": "8284a51302f87b435f43422e87a89785653a7c0158a901634ec60e3d20548cc2",
+      "uniqueCopy": "Casona de ascendencia indiana con zócalos de madera, celosías y un cenador vidriado; su escala contenida favorece cenas cantadas, conjuntos de cámara y despedidas de soltera de gala.",
+      "htmlFilePath": "public/landings/genesis/la-casona-de-torrelodones.html",
+      "htmlSha256": "1e93d999b3172ab4f6834541b5c2f095c56de2444ef43f1bca78adae2da55b00",
+      "schemaOrg": {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": "La Casona de Torrelodones",
+        "description": "Arquitectura indiana de principios del siglo XX con jardines señoriales. Acometida secundaria para orquesta y zona de cóctel.",
+        "offers": {
+          "@type": "Offer",
+          "price": 100,
+          "priceCurrency": "EUR",
+          "availability": "https://schema.org/InStock"
+        },
+        "areaServed": {
+          "@type": "Place",
+          "name": "Torrelodones (Madrid)"
+        }
+      }
+    },
+    {
+      "slug": "finca-las-tenadas",
+      "url": "/fincas/finca-las-tenadas",
+      "title": "Finca Las Tenadas · Eventos S-Class | EAR OS",
+      "metaDescription": "Finca rehabilitada con madera centenaria traída de graneros ingleses. Excelente coeficiente de absorción acústica natural en techos de viguería de roble.",
+      "fincaId": "finca-las-tenadas",
+      "name": "Finca Las Tenadas",
+      "location": "Algete (Madrid)",
+      "provincia": "Madrid",
+      "depositEur": 100,
+      "depositDeducible": true,
+      "stripeSessionId": "8205fb003840e5bfc8a4c1d702844314e692580ff0c08fe74d48969283553cf5",
+      "priceLockSha256": "518980bb0d1b59fc431d46507411a6a95c91c9732f80a725dee5716047cfef83",
+      "provenanceHash": "5914bc64a1bcc59dd3bac6266a9c817d6ea14ae22f92bbdb5dfbba01bf9c540f",
+      "uniqueCopy": "Vigas de roble traídas de graneros británicos y senderos de lavanda perfuman un pabellón de techos altos pensado para coros numerosos y pantallas de vídeo de gran formato.",
+      "htmlFilePath": "public/landings/genesis/finca-las-tenadas.html",
+      "htmlSha256": "aaca5e1ff45be7e3a38a9ac8883bbb3061e06a48ae27c9f4773e45c05a6ed568",
+      "schemaOrg": {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": "Finca Las Tenadas",
+        "description": "Finca rehabilitada con madera centenaria traída de graneros ingleses. Excelente coeficiente de absorción acústica natural en techos de viguería de roble.",
+        "offers": {
+          "@type": "Offer",
+          "price": 100,
+          "priceCurrency": "EUR",
+          "availability": "https://schema.org/InStock"
+        },
+        "areaServed": {
+          "@type": "Place",
+          "name": "Algete (Madrid)"
+        }
+      }
+    },
+    {
+      "slug": "cigarral-del-angel",
+      "url": "/fincas/cigarral-del-angel",
+      "title": "Cigarral del Ángel · Eventos S-Class | EAR OS",
+      "metaDescription": "El cigarral más antiguo de Toledo con ermita del siglo XI y jardines árabes aterrazados con vistas directas a la Catedral. Despliegue sin cables visibles.",
+      "fincaId": "cigarral-del-angel",
+      "name": "Cigarral del Ángel",
+      "location": "Toledo Capital",
+      "provincia": "Toledo",
+      "depositEur": 100,
+      "depositDeducible": true,
+      "stripeSessionId": "1ada9e99f653b21d90f0c35ceadb584de7cb302edc0862e89cea9511db0e51ca",
+      "priceLockSha256": "518980bb0d1b59fc431d46507411a6a95c91c9732f80a725dee5716047cfef83",
+      "provenanceHash": "814eb9bb3802c4022ed4884f3fca04cdd67043f45e51f18bfd8795f048f2b8ea",
+      "uniqueCopy": "Claustro de ermita del siglo once, terrazas árabes escalonadas y un balcón frontal sobre el cauce del Tajo con la torre catedralicia de Toledo encendida como telón de fondo.",
+      "htmlFilePath": "public/landings/genesis/cigarral-del-angel.html",
+      "htmlSha256": "b62bcc8de1a7a0d79b1cc3f88b38c4ed9f874b7e205590b214e7d5ff5c7bf0e1",
+      "schemaOrg": {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": "Cigarral del Ángel",
+        "description": "El cigarral más antiguo de Toledo con ermita del siglo XI y jardines árabes aterrazados con vistas directas a la Catedral. Despliegue sin cables visibles.",
+        "offers": {
+          "@type": "Offer",
+          "price": 100,
+          "priceCurrency": "EUR",
+          "availability": "https://schema.org/InStock"
+        },
+        "areaServed": {
+          "@type": "Place",
+          "name": "Toledo Capital"
+        }
+      }
+    },
+    {
+      "slug": "finca-los-enebrales",
+      "url": "/fincas/finca-los-enebrales",
+      "title": "Finca Los Enebrales · Eventos S-Class | EAR OS",
+      "metaDescription": "Espacio de montaña integrado en el parque natural de la Sierra Norte. Aislamiento total frente a quejas vecinales y amplia holgura de volumen.",
+      "fincaId": "finca-los-enebrales",
+      "name": "Finca Los Enebrales",
+      "location": "Almiruete (Guadalajara / Madrid Este)",
+      "provincia": "Guadalajara",
+      "depositEur": 100,
+      "depositDeducible": true,
+      "stripeSessionId": "11381e485dfc49b53858f2f33abda43118a79761201975ea963422d69c94cf97",
+      "priceLockSha256": "518980bb0d1b59fc431d46507411a6a95c91c9732f80a725dee5716047cfef83",
+      "provenanceHash": "adb1a996a9a9a725c20cd4631954b730cbc46c539d87a07d4252b157f4cb8077",
+      "uniqueCopy": "Pradera alpina insertada en parque natural serrano, con cabaña de pino nórdico y pérgola de cuerdas; el aire frío y limpio eleva la claridad de cada nota sin compresor.",
+      "htmlFilePath": "public/landings/genesis/finca-los-enebrales.html",
+      "htmlSha256": "5e68a231db0c45b6a1ae15832fdc7e77a8256a4218e6b901dfe925dad1534af4",
+      "schemaOrg": {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": "Finca Los Enebrales",
+        "description": "Espacio de montaña integrado en el parque natural de la Sierra Norte. Aislamiento total frente a quejas vecinales y amplia holgura de volumen.",
+        "offers": {
+          "@type": "Offer",
+          "price": 100,
+          "priceCurrency": "EUR",
+          "availability": "https://schema.org/InStock"
+        },
+        "areaServed": {
+          "@type": "Place",
+          "name": "Almiruete (Guadalajara / Madrid Este)"
+        }
+      }
+    },
+    {
+      "slug": "la-quinta-de-jarama",
+      "url": "/fincas/la-quinta-de-jarama",
+      "title": "La Quinta de Jarama · Eventos S-Class | EAR OS",
+      "metaDescription": "Uno de los recintos de bodas y corporativo más galardonados de la Comunidad de Madrid. Infraestructura audiovisual integrada con acometidas redundantes.",
+      "fincaId": "la-quinta-de-jarama",
+      "name": "La Quinta de Jarama",
+      "location": "San Sebastián de los Reyes (Madrid)",
+      "provincia": "Madrid",
+      "depositEur": 100,
+      "depositDeducible": true,
+      "stripeSessionId": "d15370f1da9d7f4763e8b80f668d8a6c0d6b665dc8cb38c4b01505052f8c0ef0",
+      "priceLockSha256": "518980bb0d1b59fc431d46507411a6a95c91c9732f80a725dee5716047cfef83",
+      "provenanceHash": "902a08106033f3f39371e76a20e8f94a16a69f31b8d21afae971c1ac11053732",
+      "uniqueCopy": "Premiado complejo de banquetes a orillas del río con salón de fuentes, jardinería de autor y acometidas redundantes que permiten doblar el equipo de sonido sin riesgo de corte eléctrico.",
+      "htmlFilePath": "public/landings/genesis/la-quinta-de-jarama.html",
+      "htmlSha256": "b839e12d850188062e775c155f36a806de8290b7a9fc69e3860bff5b750c868c",
+      "schemaOrg": {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": "La Quinta de Jarama",
+        "description": "Uno de los recintos de bodas y corporativo más galardonados de la Comunidad de Madrid. Infraestructura audiovisual integrada con acometidas redundantes.",
+        "offers": {
+          "@type": "Offer",
+          "price": 100,
+          "priceCurrency": "EUR",
+          "availability": "https://schema.org/InStock"
+        },
+        "areaServed": {
+          "@type": "Place",
+          "name": "San Sebastián de los Reyes (Madrid)"
+        }
+      }
+    }
+  ]
+}

@@ -17,15 +17,47 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { useNeuralTunnelStore } from '@/store/useNeuralTunnelStore';
+import {
+  TARIFA_BASE_SOLISTA_EUR,
+  DEPOSITO_STRIPE_EUR,
+  CENTRALITA_EAR_OS,
+  SPLIT_SOBERANO,
+  AJUSTE_PREVENTIVO_B2G_EUR,
+  LIMITE_B2G_LCSP_EUR
+} from '@/lib/constants/ear-os-ssot';
 
 type InstType = 'gobiernos' | 'ayuntamientos' | 'fundaciones';
 
 export default function AyuntamientosB2GPage() {
   const [selectedInst, setSelectedInst] = useState<InstType>('ayuntamientos');
   const { openTunnel } = useNeuralTunnelStore();
+  const whatsappHref = `https://wa.me/${CENTRALITA_EAR_OS.replace(/\D/g, '')}?text=Hola%20Productora%20EAR%2C%20solicito%20pliego%20t%C3%A9cnico%20y%20presupuesto%20menor%20para%20fiestas%20patronales%20%2F%20acto%20institucional.`;
 
   return (
-    <main className="min-h-screen bg-[#030305] text-white pt-24 pb-40 px-4 md:px-8 selection:bg-[#06b6d4] selection:text-black">
+    <main className="min-h-screen w-full overflow-x-hidden bg-[#030305] text-white pt-24 pb-40 px-4 md:px-8 selection:bg-[#06b6d4] selection:text-black">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Service',
+            name: 'Portal Institucional B2G y Licitación Menor Art. 118 LCSP',
+            description: 'Pliegos técnicos y producción artística homologada para Ayuntamientos, Gobiernos y Tercer Sector.',
+            provider: {
+              '@type': 'Organization',
+              name: 'Productora EAR',
+              telephone: CENTRALITA_EAR_OS
+            },
+            offers: {
+              '@type': 'Offer',
+              price: AJUSTE_PREVENTIVO_B2G_EUR.toFixed(2),
+              priceCurrency: 'EUR',
+              availability: 'https://schema.org/InStock',
+              url: 'https://ear-os.com/ayuntamientos'
+            }
+          })
+        }}
+      />
       <div className="max-w-7xl mx-auto space-y-12">
 
         {/* HERO SECTION INSTITUCIONAL */}
@@ -52,13 +84,13 @@ export default function AyuntamientosB2GPage() {
               <span>Generar Memoria Art. 118 LCSP</span>
             </a>
             <a
-              href="https://wa.me/34693693048?text=Hola%20Productora%20EAR%2C%20solicito%20pliego%20t%C3%A9cnico%20y%20presupuesto%20menor%20para%20fiestas%20patronales%20%2F%20acto%20institucional."
+              href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-mono uppercase tracking-wider hover:bg-emerald-500/25 transition-all"
             >
               <PhoneCall size={14} />
-              <span>Gabinete Técnico B2G: +34 693 693 048</span>
+              <span>Gabinete Técnico B2G: {CENTRALITA_EAR_OS}</span>
             </a>
             <Link
               href="/proveedores?cat=musica"

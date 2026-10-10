@@ -33,9 +33,16 @@ import { ClaimProfileTrigger } from '@/components/providers/ClaimProfileTrigger'
 import { ProviderMediaGallery } from '@/components/providers/ProviderMediaGallery';
 import { ProviderNavigableReviews } from '@/components/providers/ProviderNavigableReviews';
 import { ProviderFooterClaimBanner } from '@/components/providers/ProviderFooterClaimBanner';
+import sanitizeHtml from 'sanitize-html';
 
 import { isProviderPublic, isProviderBlacklisted, getProviderTier } from '@/lib/providers/visibility';
 import { INITIAL_INVENTORY } from '@/lib/constants/inventory-catalog';
+import {
+  TARIFA_BASE_SOLISTA_EUR,
+  DEPOSITO_STRIPE_EUR,
+  CENTRALITA_EAR_OS,
+  SPLIT_SOBERANO,
+} from '@/lib/constants/ear-os-ssot';
 
 export const dynamic = 'force-dynamic';
 
@@ -811,7 +818,14 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
                 {rawProvider.raw_html || rawProvider.scraped_content ? (
                   <div
                     className="text-sm text-zinc-300 leading-relaxed font-light space-y-3 prose prose-invert max-w-none [&_a]:text-[#ecb613] [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5"
-                    dangerouslySetInnerHTML={{ __html: cleanText(rawProvider.raw_html || rawProvider.scraped_content) }}
+                    dangerouslySetInnerHTML={{
+                      __html: sanitizeHtml(cleanText(rawProvider.raw_html || rawProvider.scraped_content), {
+                        allowedTags: ['b', 'i', 'em', 'strong', 'a', 'p', 'ul', 'ol', 'li', 'br', 'span', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
+                        allowedAttributes: {
+                          'a': ['href', 'target', 'rel']
+                        }
+                      })
+                    }}
                   />
                 ) : (
                   <p className="text-sm text-zinc-300 leading-relaxed font-light">
@@ -1056,6 +1070,9 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
                     {priceDisplay}
                   </span>
                 </div>
+                <span className="text-[10px] font-mono text-[#ecb613]/80 tracking-wide">
+                  Roster SSOT · Solista desde {TARIFA_BASE_SOLISTA_EUR} € · Split {Math.round(SPLIT_SOBERANO.artista * 100)}/{Math.round(SPLIT_SOBERANO.earOs * 100)}/{Math.round(SPLIT_SOBERANO.vimume * 100)}
+                </span>
               </div>
 
               {/* Action Buttons */}
@@ -1074,6 +1091,16 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
                 >
                   <Phone size={14} className="text-[#ecb613]" />
                   <span>Llamar a Centralita ({CENTRALITA.display})</span>
+                </a>
+
+                <a
+                  href={`${CENTRALITA.whatsapp}?text=${encodeURIComponent(`Hola, quiero disponibilidad y precios de ${displayName} (${category}) en ${location.split(',')[0]}.`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-3.5 px-5 rounded-2xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all"
+                >
+                  <MessageCircle size={14} className="text-emerald-400" />
+                  <span>WhatsApp Directo · Ruta Libre</span>
                 </a>
               </div>
 
@@ -1097,11 +1124,11 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
               <div className="p-3.5 bg-black/50 rounded-2xl border border-white/5 text-[10px] font-mono text-zinc-400 space-y-1.5">
                 <div className="flex justify-between">
                   <span>Bloqueo de Fecha:</span>
-                  <span className="text-[#ecb613] font-bold">100 € (Reembolsable 72h)</span>
+                  <span className="text-[#ecb613] font-bold">{DEPOSITO_STRIPE_EUR} € (Reembolsable 72h)</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Split Soberano:</span>
-                  <span className="text-emerald-400 font-bold">80% Proveedor / 10% EAR / 10% VIMUME</span>
+                  <span className="text-emerald-400 font-bold">{Math.round(SPLIT_SOBERANO.artista * 100)}% Proveedor / {Math.round(SPLIT_SOBERANO.earOs * 100)}% EAR / {Math.round(SPLIT_SOBERANO.vimume * 100)}% VIMUME</span>
                 </div>
               </div>
 
@@ -1146,7 +1173,7 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
             >
               <span className="text-[10px] font-mono text-[#ecb613] uppercase block font-bold">Roster Oficial</span>
               <h4 className="text-xs font-bold text-white group-hover:text-[#ecb613] transition-colors">
-                Edwin Agudelo (Solista 350 €)
+                Edwin Agudelo (Solista {TARIFA_BASE_SOLISTA_EUR} €)
               </h4>
               <p className="text-[10px] text-zinc-400">Tenor lírico & Sonido Bose F1</p>
             </Link>
@@ -1199,7 +1226,7 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
               name: displayName,
               description: description || `Proveedor homologado por Productora EAR para bodas y eventos en ${location}.`,
               image: gallery.filter((img: string) => img.startsWith('http')),
-              telephone: CENTRALITA.raw,
+              telephone: CENTRALITA_EAR_OS,
               priceRange: priceDisplay,
               address: {
                 '@type': 'PostalAddress',
@@ -1233,6 +1260,27 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
                 price: galaPriceEur,
                 priceCurrency: 'EUR',
                 availability: 'https://schema.org/InStock',
+              },
+            }),
+          }}
+        />
+
+        {/* 📦 ETIQUETA SCHEMA.ORG JSON-LD — OFFER ROSTER SOLISTA (TARIFA SSOT 350 €) */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Product',
+              name: 'Roster Solista Oficial · Edwin Agudelo',
+              description: 'Actuación solista premium con rider acústico calibrado 70-80 dBA (Bose F1) y reserva con Price-Lock.',
+              brand: { '@type': 'Brand', name: 'Productora EAR' },
+              offers: {
+                '@type': 'Offer',
+                price: TARIFA_BASE_SOLISTA_EUR,
+                priceCurrency: 'EUR',
+                availability: 'https://schema.org/InStock',
+                url: 'https://www.productoraear.com/reservar/solista',
               },
             }),
           }}

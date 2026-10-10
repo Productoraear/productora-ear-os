@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
 import ArtistasNationalCatalogClient from "@/app/artistas/ArtistasNationalCatalogClient";
 import { SCLASS_ROSTER_14_FORMATS } from "@/lib/constants/pricing-catalog";
+import {
+  TARIFA_BASE_SOLISTA_EUR,
+  DEPOSITO_STRIPE_EUR,
+  CENTRALITA_EAR_OS,
+} from "@/lib/constants/ear-os-ssot";
 
 export const metadata: Metadata = {
   title: "Directorio Nacional de Artistas & Shows en Directo (5.359 Auditados) · Productora EAR",
   description:
-    "Catálogo nacional de música en directo: Edwin Agudelo (Solista Premium 350€), Mariachis (6, 9 y 13 músicos), DJs en vivo, Saxofonistas y Grupos de Versiones. Sonido profesional Bose y reserva directa con 100 € de depósito.",
+    `Catálogo nacional de música en directo: Edwin Agudelo (Solista Premium ${TARIFA_BASE_SOLISTA_EUR}€), Mariachis (6, 9 y 13 músicos), DJs en vivo, Saxofonistas y Grupos de Versiones. Sonido profesional Bose y reserva directa con ${DEPOSITO_STRIPE_EUR} € de depósito.`,
   keywords: [
     "contratar artistas bodas",
     "Edwin Agudelo",
@@ -26,7 +31,7 @@ export const metadata: Metadata = {
     siteName: "Productora EAR",
     title: "Directorio Nacional de Artistas & Shows en Directo · Productora EAR",
     description:
-      "5.359 artistas y formaciones musicales auditadas. Show Solista Premium 350€, Mariachi en vivo, DJs y Grupos. Sonido profesional Bose F1 812.",
+      `5.359 artistas y formaciones musicales auditadas. Show Solista Premium ${TARIFA_BASE_SOLISTA_EUR}€, Mariachi en vivo, DJs y Grupos. Sonido profesional Bose F1 812.`,
     images: [
       {
         url: "https://productoraear.com/images/brand/ear_logo_official_diamond.png",
@@ -40,7 +45,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Directorio Nacional de Artistas & Shows · Productora EAR",
     description:
-      "Show Solista Premium (350€), Mariachi en vivo, DJs y Grupos de Versiones. Reserva directa con 100 € de depósito.",
+      `Show Solista Premium (${TARIFA_BASE_SOLISTA_EUR}€), Mariachi en vivo, DJs y Grupos de Versiones. Reserva directa con ${DEPOSITO_STRIPE_EUR} € de depósito.`,
     images: ["https://productoraear.com/images/brand/ear_logo_official_diamond.png"],
   },
 };
@@ -55,7 +60,7 @@ const artistSchema = {
       jobTitle: "Artista, cantante y compositor de amplia trayectoria y oficio real sobre el escenario",
       description:
         "Tenor lírico y popular, productor audiovisual y fundador de Productora EAR y del Proyecto neuroacústico VIMUME. Más de 25 años de oficio real en escena y coordinación de 37 macroconciertos internacionales.",
-      telephone: "+34 693 693 048",
+      telephone: CENTRALITA_EAR_OS,
       email: "direccion@productoraear.com",
       url: "https://productoraear.com/artistas",
       image: "https://productoraear.com/images/brand/ear_logo_official_diamond.png",
@@ -63,7 +68,7 @@ const artistSchema = {
         "@type": "Organization",
         name: "Productora EAR",
         url: "https://productoraear.com",
-        telephone: "+34 693 693 048",
+        telephone: CENTRALITA_EAR_OS,
         address: {
           "@type": "PostalAddress",
           addressLocality: "Méntrida",
@@ -102,6 +107,32 @@ const artistSchema = {
         })),
       },
     },
+    {
+      "@type": "Product",
+      "@id": "https://productoraear.com/artistas#solista-premium",
+      name: "Show Solista Premium — Edwin Agudelo",
+      description:
+        "Espectáculo solista en directo con repertorio de rancheras de gala, boleros S-Class y baladas. Sonido profesional Bose F1 812 y microfonía Shure Axient RF Beta 87A.",
+      image: "https://productoraear.com/images/brand/ear_logo_official_diamond.png",
+      brand: {
+        "@type": "Brand",
+        name: "Productora EAR",
+      },
+      offers: {
+        "@type": "Offer",
+        url: "https://productoraear.com/reservar/solista",
+        priceCurrency: "EUR",
+        price: `${TARIFA_BASE_SOLISTA_EUR}.00`,
+        priceValidUntil: "2026-12-31",
+        availability: "https://schema.org/InStock",
+        itemCondition: "https://schema.org/NewCondition",
+        seller: {
+          "@type": "Organization",
+          name: "Productora EAR",
+          telephone: CENTRALITA_EAR_OS,
+        },
+      },
+    },
   ],
 };
 
@@ -117,4 +148,3 @@ export default function ArtistasCinematicPage() {
     </main>
   );
 }
-

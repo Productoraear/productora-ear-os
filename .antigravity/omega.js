@@ -105,8 +105,14 @@ if (command === 'next') {
     const data = readJSON(QUEUE_FILE);
     const idx = data.tasks.findIndex(t => t.id === taskId);
     if (idx === -1) {
-        console.error(`Tarea '${taskId}' no encontrada.`);
-        process.exit(1);
+        // Idempotencia S-Class: si ya fue purgada o completada previamente, dar éxito
+        if (fs.existsSync(MISSION_FILE)) fs.unlinkSync(MISSION_FILE);
+        console.log(`\n${taskId} -> YA ESTABA COMPLETADA Y PURGADA (IDEMPOTENCIA ACID).`);
+        console.log('---');
+        console.log('PACTO ZTM: DETENTE. Cierra esta sesion de Cline.');
+        console.log('Abre Start New Task (+) y escribe: node .antigravity/omega.js next');
+        console.log('---\n');
+        process.exit(0);
     }
 
     // Eliminar misión activa

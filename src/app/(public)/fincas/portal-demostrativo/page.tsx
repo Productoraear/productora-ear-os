@@ -16,6 +16,16 @@ import {
   ArrowRight,
   BadgeCheck,
 } from 'lucide-react';
+import {
+  TARIFA_BASE_SOLISTA_EUR,
+  DEPOSITO_STRIPE_EUR,
+  CENTRALITA_EAR_OS,
+  SPLIT_SOBERANO,
+  LOGISTICA_EUR_PER_KM,
+  LOGISTICA_KM_EXENTOS
+} from '@/lib/constants/ear-os-ssot';
+
+const WHATSAPP_HREF = `https://wa.me/${CENTRALITA_EAR_OS.replace(/\D/g, '')}`;
 
 export default function FincaExecutiveCockpitPage() {
   const dashboard = buildExecutiveDashboard();
@@ -36,6 +46,29 @@ export default function FincaExecutiveCockpitPage() {
 
   return (
     <main className="w-full overflow-x-hidden min-h-screen bg-[#030305] text-white pt-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Service',
+            name: 'Cockpit Ejecutivo Fincas S-Class',
+            description: 'Portal demostrativo de rentabilidad y blindaje acústico para fincas de bodas sin comisiones abusivas.',
+            provider: {
+              '@type': 'Organization',
+              name: 'Productora EAR',
+              telephone: CENTRALITA_EAR_OS
+            },
+            offers: {
+              '@type': 'Offer',
+              price: TARIFA_BASE_SOLISTA_EUR.toFixed(2),
+              priceCurrency: 'EUR',
+              availability: 'https://schema.org/InStock',
+              url: 'https://ear-os.com/fincas'
+            }
+          })
+        }}
+      />
       {/* ── HERO EJECUTIVO CONECTADO CON FINCASPARABODA.COM ── */}
       <section className="relative border-b border-white/10 py-16 px-4 sm:px-6 md:px-8">
         <div className="max-w-7xl mx-auto space-y-8">
@@ -229,8 +262,8 @@ export default function FincaExecutiveCockpitPage() {
           <p className="font-body text-sm text-white/40 leading-relaxed max-w-3xl">
             Proyección basada en {SCLASS_12_FINCAS_HOMOLOGADAS.length} fincas
             homologadas, 28 bodas anuales por espacio y tarifa base del solista
-            de 350 € con logística desde Méntrida a 1,50 €/km a partir del km
-            50.
+            de {TARIFA_BASE_SOLISTA_EUR} € con logística a {LOGISTICA_EUR_PER_KM.toFixed(2)} €/km a partir del km
+            {LOGISTICA_KM_EXENTOS}. Split Soberano {SPLIT_SOBERANO.artista * 100}/{SPLIT_SOBERANO.earOs * 100}/{SPLIT_SOBERANO.vimume * 100}.
           </p>
         </div>
       </section>
@@ -244,17 +277,27 @@ export default function FincaExecutiveCockpitPage() {
               Deje de pagar por leads fríos
             </h2>
             <p className="font-body text-lg text-white/60 max-w-2xl mx-auto leading-relaxed">
-              EAR OS le entrega el portal Bodas.net que su finca necesita, sin
-              cuotas de alta, con blindaje acústico y con cierres blindados por
-              el depósito Stripe de 100 €.
+              EAR OS le entrega el portal que su finca necesita, sin
+              cuotas fijas, con blindaje acústico y con cierres blindados por
+              el depósito Stripe de {DEPOSITO_STRIPE_EUR} €.
             </p>
-            <Link
-              href="/fincas"
-              className="inline-flex items-center gap-2 px-10 py-5 bg-[#ecb613] text-black font-black uppercase tracking-widest text-sm rounded-xl hover:shadow-[0_0_35px_rgba(236,182,19,0.5)] transition-all"
-            >
-              Acceder al portal B2B de fincas
-              <ArrowRight size={18} />
-            </Link>
+            <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
+              <Link
+                href="/fincas"
+                className="inline-flex items-center gap-2 px-10 py-5 bg-[#ecb613] text-black font-black uppercase tracking-widest text-sm rounded-xl hover:shadow-[0_0_35px_rgba(236,182,19,0.5)] transition-all"
+              >
+                Acceder al portal B2B de fincas
+                <ArrowRight size={18} />
+              </Link>
+              <a
+                href={WHATSAPP_HREF}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-8 py-5 bg-white/10 hover:bg-white/20 text-white font-mono uppercase tracking-wider text-xs rounded-xl transition-all"
+              >
+                WhatsApp Directo ({CENTRALITA_EAR_OS})
+              </a>
+            </div>
           </div>
         </div>
       </section>

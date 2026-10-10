@@ -7,6 +7,12 @@ import {
   CheckCircle2, ArrowRight, PhoneCall, Sparkles, Layers, Sliders
 } from 'lucide-react';
 import { AudiovisualFaqAccordion } from '@/components/seo/AudiovisualFaqAccordion';
+import {
+  TARIFA_BASE_SOLISTA_EUR,
+  DEPOSITO_STRIPE_EUR,
+  CENTRALITA_EAR_OS,
+  SPLIT_SOBERANO
+} from '@/lib/constants/ear-os-ssot';
 
 export default function AlquilerAudiovisualesPage() {
   const [screenM2, setScreenM2] = useState<number>(6);
@@ -17,11 +23,35 @@ export default function AlquilerAudiovisualesPage() {
   const ledCostPerM2 = isOutdoor ? 140 : 110;
   const ledPrice = screenM2 * ledCostPerM2;
   const soundPowerW = attendees * (isOutdoor ? 20 : 12);
-  const soundPrice = Math.max(350, Math.floor(attendees * 2.8));
+  const soundPrice = Math.max(TARIFA_BASE_SOLISTA_EUR, Math.floor(attendees * 2.8));
   const totalPrice = ledPrice + soundPrice;
+  const whatsappHref = `https://wa.me/${CENTRALITA_EAR_OS.replace(/\D/g, '')}?text=Hola,%20busco%20presupuesto%20para%20alquiler%20de%20pantalla%20LED%20y%20sonido`;
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white pt-24 pb-20 px-4">
+    <div className="min-h-screen w-full overflow-x-hidden bg-[#050505] text-white pt-24 pb-20 px-4">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Service',
+            name: 'Alquiler de Equipos de Sonido, Pantallas LED Gigantes & Iluminación DMX',
+            description: 'Infraestructura escénica audiovisual de alta definición para eventos y galas.',
+            provider: {
+              '@type': 'Organization',
+              name: 'Productora EAR',
+              telephone: CENTRALITA_EAR_OS
+            },
+            offers: {
+              '@type': 'Offer',
+              price: TARIFA_BASE_SOLISTA_EUR.toFixed(2),
+              priceCurrency: 'EUR',
+              availability: 'https://schema.org/InStock',
+              url: 'https://ear-os.com/alquiler-equipos-sonido-audiovisuales'
+            }
+          })
+        }}
+      />
       <div className="max-w-7xl mx-auto space-y-16">
         
         {/* HEADER AUDIOVISUAL S-CLASS */}
@@ -122,13 +152,13 @@ export default function AlquilerAudiovisualesPage() {
                 {totalPrice.toLocaleString('es-ES')} € <span className="text-xs text-white/40 font-normal">+ IVA</span>
               </div>
               <p className="text-xs text-white/50 leading-relaxed pt-2">
-                Incluye pantalla LED P2.9 de {screenM2}m², sistema de sonido de {soundPowerW}W RMS, estructura Truss, cableado y técnico operador.
+                Incluye pantalla LED P2.9 de {screenM2}m², sistema de sonido de {soundPowerW}W RMS, estructura Truss, cableado y técnico operador. Bloqueo de fecha con depósito de {DEPOSITO_STRIPE_EUR} € Stripe Price-Lock.
               </p>
             </div>
 
             <div className="space-y-3">
               <a
-                href="https://wa.me/34693693048?text=Hola,%20busco%20presupuesto%20para%20alquiler%20de%20pantalla%20LED%20y%20sonido"
+                href={whatsappHref}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full py-3.5 bg-[#ecb613] hover:bg-yellow-400 text-black font-black uppercase text-xs rounded-xl transition-colors flex items-center justify-center gap-2"

@@ -159,6 +159,29 @@ El MVP se declara dominado SOLO si Antigravity puede firmar sin mentir:
 > Los webhooks n8n no bloquean ni dejan leads huérfanos. `npx tsc --noEmit` devuelve Exit Code 0 con cero `any` implícito.
 > No queda NI UNA fachada en la ruta que genera dinero."
 
+━━ 13. CLÁUSULA DEL CONSENSO ANTAGÓNICO (ARQUITECTO ↔ OBRERO) ━━━━━━━━━━━━━━━━━━━
+1. El Arquitecto (Antigravity) tiene PROHIBIDO entregar órdenes simples. Cada tarea es un Reto Casi-Imposible con scorecard máximo.
+2. El Obrero tiene el deber de contra-retar si detecta una orden simplona, devolviendo un `reto_espejo` (plan secreto paralelo).
+3. Ninguno de los dos manda. Prevalece el máximo consenso entre ambas propuestas. La regla de fusión adopta siempre el criterio MÁS exigente.
+4. El único juez es el código resultante. Si el código no supera el scorecard, ambos han fallado.
+
+━━ 14. EL SCORECARD «Ω-DIAMANTE» (MANDATORIO PARA RUTAS DE VENTA/P0) ━━━━━━━━━━━━━━
+Sustituye y amplía el scorecard base (8/8) para todo componente CORE/Dinero (P0). 20/20 obligatorios:
+[Núcleo S-Class]: 1. tsc Exit 0 | 2. eslint Exit 0 | 3. 0 any | 4. 0 verified:true falso | 5. 0 handlers huérfanos | 6. 0 precios hardcodeados | 7. 0 TODOs | 8. 0 secrets expuestos.
+[Omega Diamante]:
+9. ISO/IEC 25010 (Calidad documentada).
+10. ISO/IEC 5055 (CISQ): 0 violaciones críticas estructurales.
+11. OWASP ASVS L3: Sanitización anti-XSS comprobada server-side.
+12. Lighthouse 100x4 (Performance, A11y, Best Practices, SEO).
+13. Core Web Vitals "Good" a p75.
+14. WCAG 2.2 AAA (mínimo exigible AA donde el contraste visual impida el AAA estricto).
+15. Rich Results (schema.org) válidos, 0 errores.
+16. Jaccard 5-gram ≤ 0,10 Y coseno TF-IDF ≤ 0,10 entre TODAS las URLs generadas.
+17. Cero alucinación: Cada hecho respaldado por un provenance hash de origen.
+18. Presupuesto de rendimiento: build < 60s, edge < 1MB, repo < 50MB.
+19. Idempotencia ACID (Stripe).
+20. n8n no bloqueante + DLQ (0 leads huérfanos).
+
 <!-- BEGIN:nextjs-agent-rules -->
 
 # This is NOT the Next.js you know

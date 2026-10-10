@@ -7,6 +7,12 @@ import {
 } from 'lucide-react';
 import type { Metadata } from 'next';
 import { CENTRALITA } from '@/lib/phone-constants';
+import {
+  TARIFA_BASE_SOLISTA_EUR,
+  DEPOSITO_STRIPE_EUR,
+  CENTRALITA_EAR_OS,
+  SPLIT_SOBERANO
+} from '@/lib/constants/ear-os-ssot';
 
 export const metadata: Metadata = {
   title: 'Acompañamiento Estratégico & Canal Empresarios | Productora EAR',
@@ -18,6 +24,14 @@ export const metadata: Metadata = {
 
 export default function EmpresariosPage() {
   const b2bFormats = [
+    {
+      id: 'solista-flagship',
+      title: 'Show Solista Premium (Edwin Agudelo)',
+      subtitle: 'Canto & Guitarra Acústica de Gala',
+      price: `${TARIFA_BASE_SOLISTA_EUR}€ + IVA`,
+      desc: 'Acústica de gala, microfonía Shure Beta 87A y sonido Bose F1 homologado.',
+      includes: [`Depósito ${DEPOSITO_STRIPE_EUR}€ Stripe Price-Lock`, `Split Soberano ${SPLIT_SOBERANO.artista * 100}/${SPLIT_SOBERANO.earOs * 100}/${SPLIT_SOBERANO.vimume * 100}`, 'Póliza RC y facturación formal']
+    },
     {
       id: 'gala-corporativa',
       title: 'Gala Corporativa & Entrega de Premios',
@@ -45,7 +59,30 @@ export default function EmpresariosPage() {
   ];
 
   return (
-    <main className="min-h-screen bg-[#050505] text-white pt-32 pb-24 px-4 sm:px-6 md:px-8 selection:bg-[#ecb613] selection:text-black font-sans">
+    <main className="min-h-screen w-full overflow-x-hidden bg-[#050505] text-white pt-32 pb-24 px-4 sm:px-6 md:px-8 selection:bg-[#ecb613] selection:text-black font-sans">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Service',
+            name: 'Acompañamiento Estratégico & Canal Empresarios',
+            description: 'Acompañamiento estratégico y espectáculos B2B para marcas de alto valor.',
+            provider: {
+              '@type': 'Organization',
+              name: 'Productora EAR',
+              telephone: CENTRALITA_EAR_OS
+            },
+            offers: {
+              '@type': 'Offer',
+              price: TARIFA_BASE_SOLISTA_EUR.toFixed(2),
+              priceCurrency: 'EUR',
+              availability: 'https://schema.org/InStock',
+              url: 'https://ear-os.com/empresarios'
+            }
+          })
+        }}
+      />
       <div className="max-w-7xl mx-auto space-y-20">
 
         {/* 🚀 HERO SECTION */}
