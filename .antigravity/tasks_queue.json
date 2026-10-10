@@ -1,12 +1,561 @@
 {
   "_meta": {
-    "version": "9.0-OMEGA-50-CONDENSED-MVP",
-    "doctrine": "50 REVISIONES INTEGRALES S-CLASS: Cada tarea sella por completo 1 superficie comercial real. Precio SSOT + CTA real + JSON-LD + Estética OLED. Tiempo estimado total: < 8 horas.",
-    "generado": "2026-10-08T21:59:27.180Z",
-    "total_tasks": 50,
-    "original_tasks_absorbed": 193,
-    "unique_surfaces_covered": 50
+    "version": "9.0-OMEGA-WAVE-10",
+    "doctrine": "WAVE 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos",
+    "wave": 10,
+    "total_tasks": 50
   },
-  "_instructions_for_worker": "1) node .antigravity/omega.js next  2) Lee SOLO .antigravity/MISSION_ACTIVE.json  3) Ejecuta el sellado integral del archivo  4) npx tsc --noEmit  5) node .antigravity/omega.js complete <ID>  6) Vuelve al paso 1 hasta agotar la cola.",
-  "tasks": []
+  "_instructions_for_worker": "Modo Autónomo Daemon DeepSeek S-Class.",
+  "tasks": [
+    {
+      "id": "W10-001",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(admin)/admin/afiliados/page.tsx.",
+      "files": [
+        "src/app/(admin)/admin/afiliados/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-002",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(admin)/admin/arena/page.tsx.",
+      "files": [
+        "src/app/(admin)/admin/arena/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-003",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(admin)/admin/calibrador-proveedores/page.tsx.",
+      "files": [
+        "src/app/(admin)/admin/calibrador-proveedores/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-004",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(admin)/admin/call-center/page.tsx.",
+      "files": [
+        "src/app/(admin)/admin/call-center/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-005",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(admin)/admin/command-center/page.tsx.",
+      "files": [
+        "src/app/(admin)/admin/command-center/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-006",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(admin)/admin/compiler/page.tsx.",
+      "files": [
+        "src/app/(admin)/admin/compiler/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-007",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — ControlDashboard.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(admin)/admin/control/ControlDashboard.tsx.",
+      "files": [
+        "src/app/(admin)/admin/control/ControlDashboard.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-008",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(admin)/admin/control/page.tsx.",
+      "files": [
+        "src/app/(admin)/admin/control/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-009",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(admin)/admin/directorio/page.tsx.",
+      "files": [
+        "src/app/(admin)/admin/directorio/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-010",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(admin)/admin/flota/page.tsx.",
+      "files": [
+        "src/app/(admin)/admin/flota/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-011",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(admin)/admin/journey-heatmap/page.tsx.",
+      "files": [
+        "src/app/(admin)/admin/journey-heatmap/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-012",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — layout.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(admin)/admin/layout.tsx.",
+      "files": [
+        "src/app/(admin)/admin/layout.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-013",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(admin)/admin/licitaciones/page.tsx.",
+      "files": [
+        "src/app/(admin)/admin/licitaciones/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-014",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(admin)/admin/mailerfind/page.tsx.",
+      "files": [
+        "src/app/(admin)/admin/mailerfind/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-015",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(admin)/admin/manual-operaciones/page.tsx.",
+      "files": [
+        "src/app/(admin)/admin/manual-operaciones/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-016",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(admin)/admin/page.tsx.",
+      "files": [
+        "src/app/(admin)/admin/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-017",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(admin)/admin/propuestas/nueva/page.tsx.",
+      "files": [
+        "src/app/(admin)/admin/propuestas/nueva/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-018",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(admin)/admin/propuestas/page.tsx.",
+      "files": [
+        "src/app/(admin)/admin/propuestas/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-019",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(admin)/admin/proveedores/page.tsx.",
+      "files": [
+        "src/app/(admin)/admin/proveedores/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-020",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(admin)/admin/scheduler/page.tsx.",
+      "files": [
+        "src/app/(admin)/admin/scheduler/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-021",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(admin)/admin/sentinel/page.tsx.",
+      "files": [
+        "src/app/(admin)/admin/sentinel/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-022",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(admin)/admin/simulador/page.tsx.",
+      "files": [
+        "src/app/(admin)/admin/simulador/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-023",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — BudgetMatrix.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(admin)/admin/sourcing/components/BudgetMatrix.tsx.",
+      "files": [
+        "src/app/(admin)/admin/sourcing/components/BudgetMatrix.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-024",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(admin)/admin/sourcing/page.tsx.",
+      "files": [
+        "src/app/(admin)/admin/sourcing/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-025",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(admin)/admin/telemetria/page.tsx.",
+      "files": [
+        "src/app/(admin)/admin/telemetria/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-026",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(admin)/admin/tesoreria/page.tsx.",
+      "files": [
+        "src/app/(admin)/admin/tesoreria/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-027",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(admin)/admin/training/page.tsx.",
+      "files": [
+        "src/app/(admin)/admin/training/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-028",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(admin)/admin/video-factory/page.tsx.",
+      "files": [
+        "src/app/(admin)/admin/video-factory/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-029",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(admin)/admin/voice-studio/page.tsx.",
+      "files": [
+        "src/app/(admin)/admin/voice-studio/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-030",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(admin)/admin/whatsapp/page.tsx.",
+      "files": [
+        "src/app/(admin)/admin/whatsapp/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-031",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(admin)/agent-skills/page.tsx.",
+      "files": [
+        "src/app/(admin)/agent-skills/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-032",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(admin)/command-center/page.tsx.",
+      "files": [
+        "src/app/(admin)/command-center/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-033",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — layout.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(admin)/journey-heatmap/layout.tsx.",
+      "files": [
+        "src/app/(admin)/journey-heatmap/layout.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-034",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(admin)/journey-heatmap/page.tsx.",
+      "files": [
+        "src/app/(admin)/journey-heatmap/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-035",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(admin)/radar/page.tsx.",
+      "files": [
+        "src/app/(admin)/radar/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-036",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(admin)/sourcing/page.tsx.",
+      "files": [
+        "src/app/(admin)/sourcing/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-037",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(admin)/voice-studio/page.tsx.",
+      "files": [
+        "src/app/(admin)/voice-studio/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-038",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(artist)/artist/wallet/page.tsx.",
+      "files": [
+        "src/app/(artist)/artist/wallet/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-039",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(artist)/artistas/analytics/page.tsx.",
+      "files": [
+        "src/app/(artist)/artistas/analytics/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-040",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(artist)/artistas/bio/page.tsx.",
+      "files": [
+        "src/app/(artist)/artistas/bio/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-041",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(artist)/artistas/bookings/page.tsx.",
+      "files": [
+        "src/app/(artist)/artistas/bookings/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-042",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(artist)/artistas/contracts/page.tsx.",
+      "files": [
+        "src/app/(artist)/artistas/contracts/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-043",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(artist)/artistas/media/page.tsx.",
+      "files": [
+        "src/app/(artist)/artistas/media/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-044",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(artist)/artistas/pricing/page.tsx.",
+      "files": [
+        "src/app/(artist)/artistas/pricing/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-045",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(artist)/artistas/profile/page.tsx.",
+      "files": [
+        "src/app/(artist)/artistas/profile/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-046",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(artist)/artistas/repertoire/page.tsx.",
+      "files": [
+        "src/app/(artist)/artistas/repertoire/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-047",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(artist)/artistas/settings/page.tsx.",
+      "files": [
+        "src/app/(artist)/artistas/settings/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-048",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(dashboard)/dashboard/paciente-cero/page.tsx.",
+      "files": [
+        "src/app/(dashboard)/dashboard/paciente-cero/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-049",
+      "wave": 10,
+      "status": "COMPLETED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(dashboard)/dashboard/proveedor/page.tsx.",
+      "files": [
+        "src/app/(dashboard)/dashboard/proveedor/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W10-050",
+      "wave": 10,
+      "status": "QUEUED",
+      "title": "Wave 10: ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos — page.tsx",
+      "action": "Ejecutar refactorización y sellado S-Class para ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos en src/app/(dashboard)/giras/page.tsx.",
+      "files": [
+        "src/app/(dashboard)/giras/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    }
+  ]
 }
