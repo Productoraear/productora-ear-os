@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { calculateNewElo, INITIAL_ARENA_LEADERBOARD } from '@/lib/arena/arena-conversion-engine';
+import { calculateNewElo, INITIAL_ARENA_LEADERBOARD } from '../../../../lib/arena/arena-conversion-engine';
 
 export async function POST(req: NextRequest) {
   try {

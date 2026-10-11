@@ -16,7 +16,7 @@ import {
   TrendingUp,
   AlertTriangle
 } from 'lucide-react';
-import { INITIAL_ARENA_LEADERBOARD, ArenaVariant } from '@/lib/arena/arena-conversion-engine';
+import { INITIAL_ARENA_LEADERBOARD, type ArenaVariant } from '../../../../lib/arena/arena-conversion-engine';
 import { BANANA_MASTER_GALLERY } from '@/lib/media/banana-prompts-gallery';
 
 /* ============================================================

@@ -4,20 +4,20 @@ WORKDIR /app
 
 # Desactivar telemetría y descargas pesadas innecesarias en CI (Puppeteer/Playwright Chromium)
 ENV NEXT_TELEMETRY_DISABLED=1 \
-    NODE_ENV=production \
     PUPPETEER_SKIP_DOWNLOAD=true \
     PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 \
     NODE_OPTIONS="--max-old-space-size=3072"
 
-# 1. Builder con dependencias instaladas in-place (elimina capa de copia cruzada de node_modules)
+# 1. Builder con dependencias completas para compilar Next.js y Tailwind
 FROM base AS builder
+ENV NODE_ENV=development
 COPY package.json package-lock.json* ./
 RUN --mount=type=cache,target=/root/.npm \
-    npm install --legacy-peer-deps --no-audit
+    npm install --include=dev --legacy-peer-deps --no-audit
 
 COPY . .
 
-RUN npx prisma generate || true
+RUN ./node_modules/.bin/prisma generate || npx prisma generate || true
 RUN --mount=type=cache,target=/app/.next/cache \
     npm run build
 
