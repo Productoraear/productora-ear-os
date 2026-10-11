@@ -35,13 +35,18 @@ interface Props {
   params: Promise<{ provincia: string; servicio: string }>;
 }
 
+export const dynamicParams = true;
+
 export function generateStaticParams() {
-  const provinces = Object.keys(PROVINCIAS_52_GRAPH);
+  // Pre-renderizamos en build únicamente los corredores estratégicos S-Class de mayor tráfico.
+  // El resto de provincias/servicios se generan bajo demanda (ISR) sin saturar los recursos de CPU/RAM del VPS en CI/CD.
+  const topProvinces = ['madrid', 'toledo', 'guadalajara', 'segovia', 'avila'];
+  const topServices = ['mariachis', 'dj', 'musica-ceremonia', 'sonorizacion'];
   const params: Array<{ provincia: string; servicio: string }> = [];
 
-  for (const prov of provinces) {
-    for (const serv of CANONICAL_SERVICES) {
-      params.push({ provincia: prov, servicio: serv.slug });
+  for (const prov of topProvinces) {
+    for (const serv of topServices) {
+      params.push({ provincia: prov, servicio: serv });
     }
   }
 

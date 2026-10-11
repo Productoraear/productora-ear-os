@@ -36,7 +36,10 @@ if (prismaStatus !== 0) {
 }
 
 // ── 2. Next build (bloqueante) ───────────────────────────────────────────────
-const nextStatus = run('Next build', 'npx next build');
+// En entornos de CI / VPS con recursos limitados (1 vCPU / 4GB RAM), Webpack garantiza compilación determinista y sin memory stalls de Turbopack.
+const useWebpack = process.env.NEXT_TURBOPACK !== '1';
+const buildCmd = useWebpack ? 'npx next build --webpack --no-lint' : 'npx next build --no-lint';
+const nextStatus = run('Next build', buildCmd);
 if (nextStatus !== 0) {
   console.error(`\n✗ [build-netlify] next build falló con Exit Code ${nextStatus}.`);
   process.exit(nextStatus);

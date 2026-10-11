@@ -17,8 +17,13 @@ interface Props {
   params: Promise<{ provincia: string }>;
 }
 
+export const dynamicParams = true;
+
 export function generateStaticParams() {
-  return Object.keys(PROVINCIAS_52_GRAPH).map((provincia) => ({
+  // Pre-renderizamos en build únicamente las provincias cabecera del Hub Central.
+  // El resto de las 52 provincias se sirven dinámicamente bajo demanda (ISR / dynamicParams = true).
+  const topProvinces = ['madrid', 'toledo', 'guadalajara', 'segovia', 'ciudad-real'];
+  return topProvinces.map((provincia) => ({
     provincia,
   }));
 }
