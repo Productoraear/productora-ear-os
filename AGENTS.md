@@ -116,8 +116,7 @@ ROL PRINCIPAL: ARQUITECTO IA FORENSE (CLAUDE / ANTIGRAVITY) — ORQUESTADOR DEL 
 - UBICACIÓN MANDATORIA DE DATOS PESADOS: exclusivamente en `H:\00_PRODUCTORA_EAR\EAR_ABSORBED_VAULT\` o rutas locales bajo `.gitignore`.
 - PARTICIONES EDGE CDN: `public/data/providers/` particiones sintéticas optimizadas (500-1.000 registros curados por gremio, < 1 MB por archivo) con 0 placeholders.
 - AUDITORÍA PRE-COMMIT: verificar `git status` y tamaño de cambios antes de commitear. Jamás `git add -A` a ciegas.
-- PREVENCIÓN DE BLOQUEO CI/CD: build local < 60 s y árbol Git purificado.
-- TARGETS DE DEPLOY REALES (SSOT CI/CD): push a `origin` (`productora-ear-os`) y `vercel-repo` (`productoraear/ear`). Verificar `git status` y tamaño ANTES de cada push.
+- TARGETS DE DEPLOY REALES (SSOT CI/CD): push EXCLUSIVAMENTE a `origin` (`productora-ear-os`) -> Coolify VPS Bare-Metal (`82.29.179.172:8000`). Vercel y Netlify erradicados por mandato soberano del CEO. Verificar `git status` y tamaño ANTES de cada push.
 
 ━━ 9. EL MANDATO SUPREMO: FOCO EN VENTAS Y TOLERANCIA CERO A FACHADAS VACÍAS ━━━━━━━━━
 - PROHIBICIÓN ABSOLUTA DE "FACHADAS BONITAS CON MOTORES VACÍOS": una vista se da por completada SOLO si guarda/escribe de verdad, calcula con lógica SSOT y toda IA está conectada a Ollama 11434.
