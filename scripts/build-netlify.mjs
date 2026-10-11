@@ -27,7 +27,8 @@ function run(label, command) {
 }
 
 // ── 1. Prisma generate (NO bloqueante) ───────────────────────────────────────
-const prismaStatus = run('Prisma generate', 'npx prisma generate');
+const prismaCmd = process.platform === 'win32' ? 'npx prisma generate' : './node_modules/.bin/prisma generate || npx prisma generate || true';
+const prismaStatus = run('Prisma generate', prismaCmd);
 if (prismaStatus !== 0) {
   console.warn(
     '\n⚠ [build-netlify] prisma generate falló (probable ausencia de POSTGRES_PRISMA_URL en CI).',
