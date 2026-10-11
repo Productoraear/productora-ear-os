@@ -52,7 +52,12 @@ jobs:
           cache-to: type=gha,mode=max
 
       - name: Trigger Coolify Webhook Deployment
-        if: ${{ secrets.COOLIFY_WEBHOOK_URL != '' }}
+        env:
+          COOLIFY_WEBHOOK: ${{ secrets.COOLIFY_WEBHOOK_URL }}
         run: |
-          echo "Triggering Coolify webhook..."
-          curl -s -X GET "${{ secrets.COOLIFY_WEBHOOK_URL }}" || true
+          if [ -n "$COOLIFY_WEBHOOK" ]; then
+            echo "Triggering Coolify webhook..."
+            curl -s -X GET "$COOLIFY_WEBHOOK" || true
+          else
+            echo "COOLIFY_WEBHOOK_URL not configured, skipping."
+          fi
