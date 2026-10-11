@@ -1,11 +1,8 @@
 import type { Metadata } from 'next';
 import React, { Suspense } from 'react';
-import dynamic from 'next/dynamic';
 import {
-  GraduationCap,
   Trophy,
   BookOpen,
-  Sparkles,
   ShieldCheck,
   Download,
   ArrowRight,
@@ -14,6 +11,7 @@ import Link from 'next/link';
 
 import { GrowthMasteryVault } from '@/features/academy/ui/GrowthMasteryVault';
 import { ArtistFunnelPanel } from '@/features/artist-funnel/ui/ArtistFunnelPanel';
+import { AcademyPanelClient, AstraNeuralTwinPanelClient } from './LmsPanels';
 
 const SITE_URL = 'https://productoraear.com';
 const CANONICAL_URL = `${SITE_URL}/academia`;
@@ -76,36 +74,6 @@ export const metadata: Metadata = {
     },
   },
 };
-
-const AcademyPanel = dynamic(
-  () => import('@/modules/SClassScreens/panels/AcademyPanel').then((mod) => mod.AcademyPanel || mod.default),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="h-96 bg-[#0a0a0c] border border-[#ecb613]/20 rounded-3xl p-8 flex flex-col items-center justify-center animate-pulse">
-        <GraduationCap className="w-12 h-12 text-[#ecb613] mb-4 opacity-50" />
-        <span className="text-slate-400 font-mono text-xs uppercase tracking-widest">
-          Cargando Campus LMS S-Class...
-        </span>
-      </div>
-    ),
-  }
-);
-
-const AstraNeuralTwinPanel = dynamic(
-  () => import('@/modules/SClassScreens/panels/AstraNeuralTwinPanel'),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="h-80 bg-[#0a0a0c] border border-[#ecb613]/20 rounded-3xl p-8 flex flex-col items-center justify-center animate-pulse">
-        <Sparkles className="w-10 h-10 text-[#ecb613] mb-4 opacity-50" />
-        <span className="text-slate-400 font-mono text-xs uppercase tracking-widest">
-          Sincronizando Astra OS: Neural Strategic Engine...
-        </span>
-      </div>
-    ),
-  }
-);
 
 interface AcademyTool {
   name: string;
@@ -265,7 +233,7 @@ export default function PublicAcademyPage() {
               </div>
             }
           >
-            <AcademyPanel />
+            <AcademyPanelClient />
           </Suspense>
         </div>
 
@@ -322,7 +290,7 @@ export default function PublicAcademyPage() {
               </div>
             }
           >
-            <AstraNeuralTwinPanel />
+            <AstraNeuralTwinPanelClient />
           </Suspense>
         </div>
       </main>

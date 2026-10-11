@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import crypto from "crypto";
 import {
     AffiliateTier,
     CommissionStatus,
@@ -135,7 +136,7 @@ export function affiliateRateToPct(rate: number): number {
 }
 
 /**
- * Genera un código soberano de prescriptor único.
+ * Genera un código soberano de prescriptor único (HMAC-SHA256 SSOT).
  */
 export function generateAffiliateCode(seed: string): string {
     const clean = seed
@@ -144,7 +145,13 @@ export function generateAffiliateCode(seed: string): string {
         .replace(/[\u0300-\u036f]/g, "")
         .replace(/[^a-z0-9]/g, "")
         .slice(0, 8);
-    const suffix = Math.floor(1000 + Math.random() * 9000);
+        
+    const hmac = crypto.createHmac("sha256", process.env.JWT_SECRET || "ear-os-fallback-secret-2026");
+    hmac.update(`${seed}-${Date.now()}`);
+    const hash = hmac.digest("hex");
+    
+    // Checksum de 4 caracteres alfanuméricos deterministas
+    const suffix = hash.slice(0, 4).toUpperCase();
     return `EAR-${clean.toUpperCase()}-${suffix}`;
 }
 

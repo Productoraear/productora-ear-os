@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback, Suspense } from 'react';
 import Link from 'next/link';
+import { ProvidersAdminTable } from './ProvidersAdminTable';
 import {
   Users,
   Search,
@@ -171,6 +172,7 @@ function ProveedoresSyncContent(): React.ReactElement {
   const [loading, setLoading] = useState<boolean>(true);
   const [fetchError, setFetchError] = useState<string | null>(null);
   const [selectedProvider, setSelectedProvider] = useState<ProviderItem | null>(null);
+  const [viewMode, setViewMode] = useState<'grid' | 'table'>('table');
 
   // Carga de datos real desde el endpoint de búsqueda y Data Lake
   const fetchProviders = useCallback(async (): Promise<void> => {
@@ -241,6 +243,12 @@ function ProveedoresSyncContent(): React.ReactElement {
         </div>
 
         <div className="flex flex-wrap items-center gap-2.5">
+          <button
+            onClick={() => setViewMode(prev => prev === 'grid' ? 'table' : 'grid')}
+            className="px-3.5 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-xs font-mono text-[#ecb613] font-bold hover:text-white hover:border-[#ecb613]/50 transition-colors"
+          >
+            Modo {viewMode === 'grid' ? 'Gestión' : 'Directorio'}
+          </button>
           <Link
             href="/admin/call-center"
             className="px-3.5 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300 hover:text-white hover:border-[#ecb613]/50 flex items-center gap-2 transition-colors"
@@ -381,7 +389,7 @@ function ProveedoresSyncContent(): React.ReactElement {
         </div>
       )}
 
-      {/* Grid de Proveedores */}
+      {/* Grid o Tabla de Proveedores */}
       {loading ? (
         <div className="py-24 text-center space-y-3">
           <RefreshCw className="w-8 h-8 text-[#ecb613] animate-spin mx-auto" />
@@ -391,6 +399,11 @@ function ProveedoresSyncContent(): React.ReactElement {
         <div className="py-16 text-center text-zinc-500 text-xs font-mono">
           No se encontraron nodos para los filtros aplicados.
         </div>
+      ) : viewMode === 'table' ? (
+        <ProvidersAdminTable 
+          providers={providers as any} 
+          onRefresh={() => void fetchProviders()} 
+        />
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {providers.map((p, idx) => {

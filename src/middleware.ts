@@ -3,29 +3,61 @@ import type { NextRequest } from 'next/server';
 
 /**
  * EAR OS Edge Middleware (S-Class)
- * Intercepta rutas de Fincas Afiliadas (/finca/[slug] o /f/[affiliateCode])
- * Inyecta la cookie inmutable 'ear_affiliate_code' para el Split 80/10/10 
- * y redirige a la landing page canónica.
+ * - P0: Blindaje del shell de administración (/admin/:path* y /command-center)
+ *   verificando la session cookie (Firebase __session o ear_admin_token + ear_role).
+ * - Atribución de afiliados (Split 80/10/10): /f/[code] y ?ref=[code].
  */
+const ADMIN_PATHS: readonly string[] = ['/admin', '/command-center'];
+const FIREBASE_SESSION_COOKIE = '__session';
+const EAR_ADMIN_TOKEN_COOKIE = 'ear_admin_token';
+const EAR_ROLE_COOKIE = 'ear_role';
+const AFFILIATE_COOKIE = 'ear_affiliate_code';
+
+const AFFILIATE_COOKIE_OPTIONS = {
+  httpOnly: false,
+  secure: process.env.NODE_ENV === 'production',
+  sameSite: 'lax' as const,
+  path: '/',
+  maxAge: 60 * 60 * 24 * 30, // 30 días de atribución
+};
+
+function isProtectedAdminPath(pathname: string): boolean {
+  return ADMIN_PATHS.some(
+    (path) => pathname === path || pathname.startsWith(`${path}/`)
+  );
+}
+
+function hasValidAdminSession(request: NextRequest): boolean {
+  const firebaseSession = request.cookies.get(FIREBASE_SESSION_COOKIE)?.value;
+  if (firebaseSession) {
+    return true;
+  }
+
+  const token = request.cookies.get(EAR_ADMIN_TOKEN_COOKIE)?.value;
+  const role = request.cookies.get(EAR_ROLE_COOKIE)?.value;
+  return Boolean(token) && (role === 'admin' || role === 'editor');
+}
+
 export function middleware(request: NextRequest) {
   const url = request.nextUrl;
+
+  // P0: Panel de administración y command-center blindados contra accesos sin sesión.
+  if (isProtectedAdminPath(url.pathname)) {
+    if (!hasValidAdminSession(request)) {
+      const loginUrl = new URL('/login', request.url);
+      loginUrl.searchParams.set('from', `${url.pathname}${url.search}`);
+      return NextResponse.redirect(loginUrl);
+    }
+  }
 
   // Interceptar URLs de referidos / afiliados (ej. productoraear.com/f/MIRAFLORES)
   if (url.pathname.startsWith('/f/')) {
     const affiliateCode = url.pathname.replace('/f/', '').toUpperCase();
-    
-    // Redirigimos a la home o a la landing de bodas con el parámetro de afiliado
+
     const redirectUrl = new URL(`/bodas?aff=${affiliateCode}`, request.url);
     const response = NextResponse.redirect(redirectUrl);
 
-    // Inyectar cookie inmutable para que Stripe Metadata la capture en el Checkout
-    response.cookies.set('ear_affiliate_code', affiliateCode, {
-      httpOnly: false, // Permitimos que el cliente (Checkout) lo lea para el Stripe Metadata
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      path: '/',
-      maxAge: 60 * 60 * 24 * 30, // 30 días de persistencia de atribución
-    });
+    response.cookies.set(AFFILIATE_COOKIE, affiliateCode, AFFILIATE_COOKIE_OPTIONS);
 
     return response;
   }
@@ -34,15 +66,9 @@ export function middleware(request: NextRequest) {
   if (url.searchParams.has('ref')) {
     const affiliateCode = url.searchParams.get('ref')!.toUpperCase();
     const response = NextResponse.next();
-    
-    response.cookies.set('ear_affiliate_code', affiliateCode, {
-      httpOnly: false,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      path: '/',
-      maxAge: 60 * 60 * 24 * 30,
-    });
-    
+
+    response.cookies.set(AFFILIATE_COOKIE, affiliateCode, AFFILIATE_COOKIE_OPTIONS);
+
     return response;
   }
 

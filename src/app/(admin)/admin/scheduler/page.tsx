@@ -104,16 +104,37 @@ export default function AdminSchedulerPage(): React.JSX.Element {
   const [newTaskTrigger, setNewTaskTrigger] = useState<string>('cron');
   const [statusFeedback, setStatusFeedback] = useState<string | null>(null);
 
-  const handleQueueTask = (e: React.FormEvent<HTMLFormElement>): void => {
+  const handleQueueTask = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     if (!newTaskTitle) return;
     setIsDeployingTask(true);
-    setTimeout(() => {
-      setIsDeployingTask(false);
-      setStatusFeedback(`Tarea programada con éxito en .antigravity/tasks_queue.json: "${newTaskTitle}"`);
+    setStatusFeedback(null);
+    try {
+      const res = await fetch('/api/admin/tasks/inject', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          task: {
+            title: newTaskTitle,
+            status: "QUEUED",
+            action: newTaskTitle
+          }
+        })
+      });
+
+      if (!res.ok) {
+        throw new Error(`Error ${res.status}: ${await res.text()}`);
+      }
+
+      setStatusFeedback(`Tarea inyectada con éxito en .antigravity/tasks_queue.json: "${newTaskTitle}"`);
       setNewTaskTitle('');
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Error desconocido';
+      setStatusFeedback(`❌ Error al encolar tarea: ${msg}`);
+    } finally {
+      setIsDeployingTask(false);
       setTimeout(() => setStatusFeedback(null), 4000);
-    }, 600);
+    }
   };
 
   return (
@@ -169,8 +190,8 @@ export default function AdminSchedulerPage(): React.JSX.Element {
         <button
           onClick={() => setActiveTab('all')}
           className={`px-3.5 py-1.5 rounded-lg text-xs font-mono transition-colors whitespace-nowrap ${activeTab === 'all'
-              ? 'bg-[#ecb613] text-black font-bold shadow-md'
-              : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
+            ? 'bg-[#ecb613] text-black font-bold shadow-md'
+            : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
             }`}
         >
           Visión Completa 360°
@@ -178,8 +199,8 @@ export default function AdminSchedulerPage(): React.JSX.Element {
         <button
           onClick={() => setActiveTab('pipeline')}
           className={`px-3.5 py-1.5 rounded-lg text-xs font-mono transition-colors whitespace-nowrap ${activeTab === 'pipeline'
-              ? 'bg-[#ecb613] text-black font-bold shadow-md'
-              : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
+            ? 'bg-[#ecb613] text-black font-bold shadow-md'
+            : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
             }`}
         >
           Pipeline Multi-Agente (SVG Live)
@@ -187,8 +208,8 @@ export default function AdminSchedulerPage(): React.JSX.Element {
         <button
           onClick={() => setActiveTab('gantt')}
           className={`px-3.5 py-1.5 rounded-lg text-xs font-mono transition-colors whitespace-nowrap ${activeTab === 'gantt'
-              ? 'bg-[#ecb613] text-black font-bold shadow-md'
-              : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
+            ? 'bg-[#ecb613] text-black font-bold shadow-md'
+            : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
             }`}
         >
           Cronograma Gantt 7 Días
@@ -196,8 +217,8 @@ export default function AdminSchedulerPage(): React.JSX.Element {
         <button
           onClick={() => setActiveTab('guardrails')}
           className={`px-3.5 py-1.5 rounded-lg text-xs font-mono transition-colors whitespace-nowrap ${activeTab === 'guardrails'
-              ? 'bg-[#ecb613] text-black font-bold shadow-md'
-              : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
+            ? 'bg-[#ecb613] text-black font-bold shadow-md'
+            : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
             }`}
         >
           Guardarraíles & Blindaje
@@ -205,8 +226,8 @@ export default function AdminSchedulerPage(): React.JSX.Element {
         <button
           onClick={() => setActiveTab('inbox')}
           className={`px-3.5 py-1.5 rounded-lg text-xs font-mono transition-colors whitespace-nowrap ${activeTab === 'inbox'
-              ? 'bg-[#ecb613] text-black font-bold shadow-md'
-              : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
+            ? 'bg-[#ecb613] text-black font-bold shadow-md'
+            : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
             }`}
         >
           Bandeja de Aprobaciones
@@ -214,8 +235,8 @@ export default function AdminSchedulerPage(): React.JSX.Element {
         <button
           onClick={() => setActiveTab('insights')}
           className={`px-3.5 py-1.5 rounded-lg text-xs font-mono transition-colors whitespace-nowrap ${activeTab === 'insights'
-              ? 'bg-[#ecb613] text-black font-bold shadow-md'
-              : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
+            ? 'bg-[#ecb613] text-black font-bold shadow-md'
+            : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
             }`}
         >
           Métricas & Telemetría

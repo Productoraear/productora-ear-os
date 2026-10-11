@@ -1,119 +1,125 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sendB2GTelegramAlert, B2GTenderAlertPayload } from '@/lib/b2g/telegram-notifier';
+import { fetchTedNotices, TedNotice } from '@/lib/services/ted-connector';
+import { SAFE_LCSP_CEILING_EUR } from '@/lib/constants/ear-os-ssot';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
 /**
- * 🏛️ CRON RADAR B2G & PLACSP HUNTER (Cada 6 horas: 0 *\/6 * * *)
- * 
- * Escanea oportunidades de contratación pública (PLACSP / Boletines)
- * para festejos populares, sonorización y programas sociosanitarios VIMUME.
- * Filtra por Contratos Menores (<15.000 €) y dispara notificaciones push
- * a Telegram cuando Match Score >= 90%.
+ * 🏛️ CRON RADAR B2G — CONECTOR REAL TED API v3 (CERO FACHADAS)
+ *
+ * Sustituye el radar hardcodeado por una consulta en vivo al Tenders Electronic
+ * Daily (UE). Filtra por CPVs de alto valor para EAR OS, calcula un Match Score
+ * honesto contra el SSOT y despacha Telegram SOLO cuando hay datos verificables.
+ *
+ * Doctrina del Dato Verificado:
+ *  - Sin TED_API_KEY => FAIL-CLOSED (0 avisos, ninguna fabricación).
+ *  - Sin importe declarado => NO se marca como Art. 118 LCSP.
  */
 
-// Radar de oportunidades activas con scoring heurístico
-const OPPORTUNITY_RADAR_POOL: B2GTenderAlertPayload[] = [
-  {
-    id: 'B2G-2026-AYT-001',
-    expedienteRef: 'CM-2026/SEP-0187',
-    title: 'Servicio de sonorización y actuación musical para Fiestas Patronales 2026',
-    organoContratante: 'Ayuntamiento de Torrijos',
-    municipio: 'Torrijos',
-    provincia: 'Toledo',
-    dir3Code: 'L01452270',
-    cpvCode: '92300000-4',
-    cpvDescription: 'Servicios de Entretenimiento y Espectáculos',
-    importeBase: 12400.00,
-    importeConIVA: 15004.00,
-    fechaLimite: '2026-09-04',
-    tipoContrato: 'MENOR',
-    isLCSPCompliant: true,
-    vimumeCompatible: false,
-    matchScore: 96,
-    matchReasons: ['Festejos patronales', 'Sonorización profesional', 'Contrato Menor LCSP', 'Provincia Hub (Toledo)']
-  },
-  {
-    id: 'B2G-2026-AYT-002',
-    expedienteRef: 'CM-2026/SEP-0193',
-    title: 'Programa de musicoterapia y envejecimiento activo para centros de día municipales',
-    organoContratante: 'Concejalía de Servicios Sociales — Ayuntamiento de Illescas',
-    municipio: 'Illescas',
-    provincia: 'Toledo',
-    dir3Code: 'L01450870',
-    cpvCode: '85320000-8',
-    cpvDescription: 'Servicios Sociales Comunitarios',
-    importeBase: 4200.00,
-    importeConIVA: 5082.00,
-    fechaLimite: '2026-09-06',
-    tipoContrato: 'MENOR',
-    isLCSPCompliant: true,
-    vimumeCompatible: true,
-    matchScore: 99,
-    matchReasons: ['VIMUME Compatible (<75 dB SPL)', 'Envejecimiento Activo', 'Preset PILOTO_TRIMESTRAL', 'Zona Hub Central']
-  },
-  {
-    id: 'B2G-2026-AYT-003',
-    expedienteRef: 'CM-2026/SEP-0201',
-    title: 'Contratación de espectáculo de gala para Homenaje al Mayor — Día Internacional de las Personas Mayores',
-    organoContratante: 'Ayuntamiento de Navalcarnero',
-    municipio: 'Navalcarnero',
-    provincia: 'Madrid',
-    dir3Code: 'L01280930',
-    cpvCode: '92300000-4',
-    cpvDescription: 'Servicios de Entretenimiento y Espectáculos',
-    importeBase: 2800.00,
-    importeConIVA: 3388.00,
-    fechaLimite: '2026-09-05',
-    tipoContrato: 'MENOR',
-    isLCSPCompliant: true,
-    vimumeCompatible: true,
-    matchScore: 97,
-    matchReasons: ['Gala Institucional', 'Preset GALA_MAYOR', 'VIMUME Compatible', '<15 km de Méntrida']
-  },
-  {
-    id: 'B2G-2026-AYT-004',
-    expedienteRef: 'CM-2026/SEP-0209',
-    title: 'Suministro de pantallas LED y equipo audiovisual para verbena patronal Septiembre 2026',
-    organoContratante: 'Ayuntamiento de Fuensalida',
-    municipio: 'Fuensalida',
-    provincia: 'Toledo',
-    dir3Code: 'L01450680',
-    cpvCode: '92300000-4',
-    cpvDescription: 'Servicios de Entretenimiento y Espectáculos',
-    importeBase: 8900.00,
-    importeConIVA: 10769.00,
-    fechaLimite: '2026-09-02',
-    tipoContrato: 'MENOR',
-    isLCSPCompliant: true,
-    vimumeCompatible: false,
-    matchScore: 91,
-    matchReasons: ['Pantallas LED', 'Equipo audiovisual', 'Verbena patronal', 'Contrato Menor LCSP']
-  },
-  {
-    id: 'B2G-2026-AYT-005',
-    expedienteRef: 'CM-2026/SEP-0215',
-    title: 'Plan anual de cohesión social y talleres sociosanitarios para la red de centros municipales',
-    organoContratante: 'Diputación Provincial de Toledo — Área de Bienestar Social',
-    municipio: 'Toledo (Capital)',
-    provincia: 'Toledo',
-    dir3Code: 'L02000052',
-    cpvCode: '85320000-8',
-    cpvDescription: 'Servicios Sociales Comunitarios',
-    importeBase: 14250.00,
-    importeConIVA: 17242.50,
-    fechaLimite: '2026-09-08',
-    tipoContrato: 'MENOR',
-    isLCSPCompliant: true,
-    vimumeCompatible: true,
-    matchScore: 100,
-    matchReasons: ['Techo Art. 118 LCSP (14.250 €)', 'Preset PLAN_ANUAL_TECHO', 'VIMUME Integral', '12 centros en red']
+type CronScanBody = {
+  success: boolean;
+  timestamp: string;
+  scanner: 'TED_API_V3';
+  source: 'TED_V3' | 'FAIL_CLOSED';
+  scannedCount: number;
+  eligibleCount: number;
+  highMatchCount: number;
+  telegramNotificationsSent: number;
+  error: string | null;
+};
+
+/** CPVs de servicios sociales (compatibles con protocolo VIMUME <75 dB). */
+const VIMUME_CPV_PREFIXES: readonly string[] = Object.freeze([
+  '8532',
+  '85312',
+  '853121',
+]);
+
+/** Palabras clave de envejecimiento activo / social para refinar VIMUME. */
+const VIMUME_KEYWORDS: readonly string[] = Object.freeze([
+  'mayor',
+  'mayores',
+  'senior',
+  'envejecimiento',
+  'social',
+  'sociosanitario',
+  'centro de dia',
+  'centro de día',
+  'musicoterapia',
+  'residencia',
+]);
+
+function normalizeCpv(cpv: string): string {
+  return cpv.trim().toUpperCase();
+}
+
+function isVimumeCompatible(notice: TedNotice): boolean {
+  const text = `${notice.subject} ${notice.buyer}`.toLowerCase();
+  if (notice.classificationCpvs.some((cpv) =>
+    VIMUME_CPV_PREFIXES.some((prefix) => normalizeCpv(cpv).startsWith(prefix))
+  )) {
+    return true;
   }
-];
+  return VIMUME_KEYWORDS.some((kw) => text.includes(kw));
+}
+
+function computeMatchScore(notice: TedNotice): number {
+  let score = 60;
+
+  const hasTargetCpv = notice.classificationCpvs.some((cpv) =>
+    normalizeCpv(cpv).startsWith('9230') ||
+    normalizeCpv(cpv).startsWith('8532') ||
+    normalizeCpv(cpv).startsWith('3152') ||
+    normalizeCpv(cpv).startsWith('5131') ||
+    normalizeCpv(cpv).startsWith('7995')
+  );
+  if (hasTargetCpv) score += 25;
+
+  if (isVimumeCompatible(notice)) score += 10;
+
+  if (notice.baseValueEur !== null && notice.baseValueEur > 0 && notice.baseValueEur <= SAFE_LCSP_CEILING_EUR) {
+    score += 5;
+  }
+
+  return Math.min(100, Math.max(0, score));
+}
+
+function mapTedNoticeToAlert(notice: TedNotice): B2GTenderAlertPayload {
+  const cpvCode = notice.classificationCpvs[0] ?? '92300000-4';
+  const cpvDescription = cpvCode.startsWith('8532') ? 'Servicios Sociales Comunitarios' : 'Servicios de Entretenimiento y Espectáculos';
+  const baseValue = notice.baseValueEur ?? 0;
+  const isLCSPCompliant = notice.baseValueEur !== null && notice.baseValueEur > 0 && notice.baseValueEur <= SAFE_LCSP_CEILING_EUR;
+  const matchScore = computeMatchScore(notice);
+
+  return {
+    id: `TED-${notice.publicationNumber || 'UNKNOWN'}`,
+    expedienteRef: notice.publicationNumber || 'TED-PENDING',
+    title: notice.subject,
+    organoContratante: notice.buyer,
+    municipio: notice.buyer,
+    provincia: 'TED Unión Europea',
+    cpvCode,
+    cpvDescription,
+    importeBase: baseValue,
+    importeConIVA: baseValue > 0 ? Number((baseValue * 1.21).toFixed(2)) : undefined,
+    fechaPublicacion: notice.publicationDate ?? undefined,
+    fechaLimite: notice.deadline ?? 'Consultar en TED',
+    tipoContrato: isLCSPCompliant ? 'MENOR' : 'ABIERTO',
+    isLCSPCompliant,
+    vimumeCompatible: isVimumeCompatible(notice),
+    matchScore,
+    matchReasons: [
+      isLCSPCompliant ? 'Contrato Menor LCSP (< 14.250 €)' : 'Contrato supera techo Art. 118',
+      isVimumeCompatible(notice) ? 'VIMUME Compatible (<75 dB SPL)' : 'Estándar Festejos',
+      'Fuente verificable TED UE',
+    ],
+    status: 'TED_ES',
+  };
+}
 
 export async function GET(req: NextRequest) {
-  // 1. Verificación de seguridad Vercel Cron Secret
   const authHeader = req.headers.get('authorization');
   const cronSecret = process.env.CRON_SECRET;
 
@@ -122,45 +128,61 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    console.log('🏛️ [CRON B2G HUNTER] Iniciando escaneo de contratación pública...');
+    console.log('🏛️ [CRON B2G HUNTER] Consultando TED API v3 (fuente real)...');
 
-    // 2. Filtrado de licitaciones bajo Art. 118 LCSP (<15.000 €) y CPVs homologados
-    const eligibleTenders = OPPORTUNITY_RADAR_POOL.filter(tender => {
-      const isMinorContract = tender.importeBase < 15000;
-      const isTargetCpv = tender.cpvCode.startsWith('9230') ||
-        tender.cpvCode.startsWith('8532') ||
-        tender.cpvCode.startsWith('3152') ||
-        tender.cpvCode.startsWith('5131');
-      return isMinorContract && isTargetCpv;
-    });
+    const scan = await fetchTedNotices(50);
 
-    // 3. Disparo de alertas Telegram para oportunidades con Match Score >= 90%
-    const highMatchTenders = eligibleTenders.filter(t => t.matchScore >= 90);
-    let telegramDispatchedCount = 0;
-
-    for (const tender of highMatchTenders) {
-      const sent = await sendB2GTelegramAlert(tender);
-      if (sent) {
-        telegramDispatchedCount++;
-      }
+    if (!scan.ok) {
+      const body: CronScanBody = {
+        success: false,
+        timestamp: new Date().toISOString(),
+        scanner: 'TED_API_V3',
+        source: scan.source,
+        scannedCount: 0,
+        eligibleCount: 0,
+        highMatchCount: 0,
+        telegramNotificationsSent: 0,
+        error: scan.error,
+      };
+      return NextResponse.json(body, { status: scan.source === 'FAIL_CLOSED' ? 503 : 502 });
     }
 
-    return NextResponse.json({
+    const alerts = scan.notices.map(mapTedNoticeToAlert);
+    const highMatch = alerts.filter((a) => a.matchScore >= 90);
+
+    let telegramDispatchedCount = 0;
+    for (const alert of highMatch) {
+      const sent = await sendB2GTelegramAlert(alert);
+      if (sent) telegramDispatchedCount += 1;
+    }
+
+    const body: CronScanBody = {
       success: true,
       timestamp: new Date().toISOString(),
-      scanner: 'PLACSP_B2G_HUNTER_V2',
-      scannedCount: OPPORTUNITY_RADAR_POOL.length,
-      eligibleCount: eligibleTenders.length,
-      highMatchCount: highMatchTenders.length,
+      scanner: 'TED_API_V3',
+      source: scan.source,
+      scannedCount: scan.total,
+      eligibleCount: alerts.length,
+      highMatchCount: highMatch.length,
       telegramNotificationsSent: telegramDispatchedCount,
-      governance: 'ANTIGRAVITY_OMEGA_V4.1'
-    }, { status: 200 });
+      error: null,
+    };
 
+    return NextResponse.json(body, { status: 200 });
   } catch (error: unknown) {
-    console.error('❌ [CRON B2G HUNTER ERROR]:', error);
-    return NextResponse.json({
+    const message = error instanceof Error ? error.message : String(error);
+    console.error('❌ [CRON B2G HUNTER ERROR]:', message);
+    const body: CronScanBody = {
       success: false,
-      error: 'INTERNAL_SCANNER_ERROR'
-    }, { status: 500 });
+      timestamp: new Date().toISOString(),
+      scanner: 'TED_API_V3',
+      source: 'TED_V3',
+      scannedCount: 0,
+      eligibleCount: 0,
+      highMatchCount: 0,
+      telegramNotificationsSent: 0,
+      error: message,
+    };
+    return NextResponse.json(body, { status: 500 });
   }
 }

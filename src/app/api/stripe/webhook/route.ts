@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
+import { createHash } from 'crypto';
 import { prisma } from '@/lib/prisma';
+import { fireAndForgetN8n } from '@/lib/services/n8n-dispatcher';
 import { lockDateAtomically } from '@/lib/availability/atomicDateLockEngine';
 import { LEDGER_SSOT } from '@/lib/vendor/ledgerEngine';
 import { generateModelo182Draft } from '@/lib/vimume-mecenazgo-engine';
@@ -81,6 +83,17 @@ export async function POST(req: NextRequest) {
       const metadata = session.metadata ?? {};
 
       console.log(`✅ [STRIPE WEBHOOK] checkout.session.completed | id=${session.id} | amount=${amountTotal}€`);
+
+      // 🛰️ N8N DLQ (0 LEAD HUÉRFANOS): despacho NO bloqueante al orquestador.
+      // Reintentos + Dead Letter Queue ya garantizados por n8n-dispatcher (P1).
+      fireAndForgetN8n('stripe-price-lock', {
+        stripeSessionId: session.id,
+        clientEmail,
+        amountTotal,
+        amountCents,
+        quoteHash: metadata.quoteHash ?? null,
+        metadata,
+      });
 
       const tasks: Array<Promise<unknown>> = [];
 
@@ -208,13 +221,22 @@ export async function POST(req: NextRequest) {
                   const payoutCents = Math.round(
                     (service.providerSplit ?? (service.unitPrice ?? 0) * LEDGER_SSOT.SPLIT_ARTIST_PCT) * 100
                   );
-                  return stripeClient.transfers.create({
-                    amount: payoutCents,
-                    currency: 'eur',
-                    destination: provider.stripeAccountId,
-                    transfer_group: prodEventId,
-                    metadata: { serviceId: service.id ?? 'service' },
-                  });
+                  // 🔒 IDEMPOTENCIA ACID (P0): retries de Stripe del MISMO evento
+                  // producen EXACTAMENTE 1 transferencia por línea de servicio.
+                  return stripeClient.transfers.create(
+                    {
+                      amount: payoutCents,
+                      currency: 'eur',
+                      destination: provider.stripeAccountId,
+                      transfer_group: prodEventId,
+                      metadata: { serviceId: service.id ?? 'service' },
+                    },
+                    {
+                      idempotencyKey: createHash('sha256')
+                        .update(`${prodEventId}:${service.providerId ?? 'service'}:${service.id ?? 'service'}`)
+                        .digest('hex'),
+                    }
+                  );
                 }
                 return undefined;
               });

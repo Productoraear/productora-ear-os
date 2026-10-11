@@ -137,11 +137,12 @@ export default function AfiliadosAdminCatminPage() {
     setApproveMsg(null);
     try {
       const { approveAllPendingCommissionsAction } = await import("@/app/actions/affiliateV2Actions");
-      const result = await approveAllPendingCommissionsAction("admin@productoraear.com");
+      const result = await approveAllPendingCommissionsAction();
       setApproveMsg(`✅ ${result.updatedCount} comisiones aprobadas.`);
       await fetchAffiliates();
-    } catch (e: any) {
-      setApproveMsg(`❌ Error: ${e?.message ?? "Desconocido"}`);
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : "Desconocido";
+      setApproveMsg(`❌ Error: ${msg}`);
     } finally {
       setApprovingAll(false);
     }
@@ -161,8 +162,9 @@ export default function AfiliadosAdminCatminPage() {
       setNewAffiliate({ name: '', email: '', companyName: '' });
       setCreateOpen(false);
       await fetchAffiliates();
-    } catch (e: any) {
-      setCreateMsg({ ok: false, text: `❌ ${e?.message ?? "Error en el alta"}` });
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : "Error en el alta";
+      setCreateMsg({ ok: false, text: `❌ ${msg}` });
     } finally {
       setCreating(false);
     }
@@ -181,7 +183,6 @@ export default function AfiliadosAdminCatminPage() {
     try {
       const { adminUpdateAffiliateAction } = await import("@/app/actions/affiliateV2Actions");
       const result = await adminUpdateAffiliateAction({
-        adminEmail: "admin@productoraear.com",
         profileId: a.id,
         commissionRate: parseFloat(editRate),
         tier: editTier,
@@ -189,8 +190,9 @@ export default function AfiliadosAdminCatminPage() {
       setEditMsg({ ok: true, text: `✅ ${result.message}` });
       setEditingId(null);
       await fetchAffiliates();
-    } catch (e: any) {
-      setEditMsg({ ok: false, text: `❌ ${e?.message ?? "Error al actualizar"}` });
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : "Error al actualizar";
+      setEditMsg({ ok: false, text: `❌ ${msg}` });
     } finally {
       setSavingEdit(false);
     }
@@ -202,13 +204,13 @@ export default function AfiliadosAdminCatminPage() {
       const { adminDeactivateAffiliateAction, adminReactivateAffiliateAction } =
         await import("@/app/actions/affiliateV2Actions");
       if (a.isActive) {
-        await adminDeactivateAffiliateAction({ adminEmail: "admin@productoraear.com", profileId: a.id });
+        await adminDeactivateAffiliateAction({ profileId: a.id });
       } else {
-        await adminReactivateAffiliateAction({ adminEmail: "admin@productoraear.com", profileId: a.id });
+        await adminReactivateAffiliateAction({ profileId: a.id });
       }
       await fetchAffiliates();
-    } catch (e: any) {
-      console.warn("Toggle active failed:", e?.message);
+    } catch (e: unknown) {
+      console.warn("Toggle active failed:", e instanceof Error ? e.message : "Desconocido");
     } finally {
       setTogglingId(null);
     }

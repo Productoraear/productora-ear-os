@@ -14,12 +14,18 @@ import {
 } from "@/lib/affiliate/affiliateCommissionEngine";
 import { AffiliateTier } from "@prisma/client";
 
-async function assertAdminOrThrow(adminEmail: string): Promise<void> {
-    const admin = await prisma.user.findUnique({
-        where: { email: adminEmail.trim().toLowerCase() },
+import { headers } from "next/headers";
+import { requireAdmin } from "@/lib/security/adminGuard";
+
+async function assertAdminOrThrow(): Promise<void> {
+    const headersList = await headers();
+    const mockRequest = new Request("https://productoraear.com", {
+        headers: headersList,
     });
-    if (!admin || (admin.role !== Role.ADMIN && admin.role !== Role.COMMANDER)) {
-        throw new Error("UNAUTHORIZED_ACCESS");
+
+    const auth = await requireAdmin(mockRequest);
+    if (!auth.ok) {
+        throw new Error("UNAUTHORIZED_ACCESS: Valid admin token required.");
     }
 }
 
@@ -293,11 +299,8 @@ export async function requestAffiliatePayoutV2Action(email: string, amount: numb
     return requestPayout({ email, amount });
 }
 
-export async function approveAllPendingCommissionsAction(adminEmail: string) {
-    const admin = await prisma.user.findUnique({ where: { email: adminEmail } });
-    if (!admin || (admin.role !== Role.ADMIN && admin.role !== Role.COMMANDER)) {
-        throw new Error("UNAUTHORIZED_ACCESS");
-    }
+export async function approveAllPendingCommissionsAction() {
+    await assertAdminOrThrow();
 
     const result = await prisma.commissionLedger.updateMany({
         where: { status: CommissionStatus.PENDING },
@@ -311,8 +314,8 @@ export async function approveAllPendingCommissionsAction(adminEmail: string) {
 // PANEL ADMIN · ALTA / BAJA / % COMISIÓN / AJUSTE DE TIER (Indie Affiliates Pro)
 // ════════════════════════════════════════════════════════════════════════════
 
-export async function adminListAffiliatesAction(adminEmail: string) {
-    await assertAdminOrThrow(adminEmail);
+export async function adminListAffiliatesAction() {
+    await assertAdminOrThrow();
 
     const affiliates = await prisma.affiliateProfile.findMany({
         include: {
@@ -356,7 +359,6 @@ export async function adminListAffiliatesAction(adminEmail: string) {
 }
 
 export async function adminUpdateAffiliateAction(input: {
-    adminEmail: string;
     profileId: string;
     commissionRate?: number;
     tier?: string;
@@ -366,7 +368,7 @@ export async function adminUpdateAffiliateAction(input: {
     payoutMethod?: string;
     payoutDetails?: string;
 }) {
-    await assertAdminOrThrow(input.adminEmail);
+    await assertAdminOrThrow();
 
     const data: Record<string, unknown> = {};
 
@@ -408,10 +410,9 @@ export async function adminUpdateAffiliateAction(input: {
 }
 
 export async function adminDeactivateAffiliateAction(input: {
-    adminEmail: string;
     profileId: string;
 }) {
-    await assertAdminOrThrow(input.adminEmail);
+    await assertAdminOrThrow();
     await prisma.affiliateProfile.update({
         where: { id: input.profileId },
         data: { isActive: false },
@@ -420,10 +421,9 @@ export async function adminDeactivateAffiliateAction(input: {
 }
 
 export async function adminReactivateAffiliateAction(input: {
-    adminEmail: string;
     profileId: string;
 }) {
-    await assertAdminOrThrow(input.adminEmail);
+    await assertAdminOrThrow();
     await prisma.affiliateProfile.update({
         where: { id: input.profileId },
         data: { isActive: true },

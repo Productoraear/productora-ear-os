@@ -20,54 +20,28 @@ export type AdminAuthResult =
  * ============================================================================
  */
 export async function requireAdmin(request: Request): Promise<AdminAuthResult> {
-    const isDev = process.env.NODE_ENV !== 'production';
-    const host = request.headers.get('host') || '';
-    const isLocalhost = host.includes('localhost') || host.includes('127.0.0.1');
-
     const authHeader = request.headers.get('authorization');
 
-    // 🛡️ Acceso local bare-metal del CEO (entorno dev o host localhost sin token en navegador)
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        if (isDev || isLocalhost || !process.env.FIREBASE_ADMIN_PROJECT_ID) {
-            return {
-                ok: true,
-                uid: 'ceo-bare-metal',
-                email: 'edwin@productoraear.com',
-            };
-        }
         return {
             ok: false,
-            response: NextResponse.json({ error: 'Unauthorized' }, { status: 401 }),
+            response: NextResponse.json({ error: 'Unauthorized: Missing or invalid token' }, { status: 401 }),
         };
     }
 
     const token = authHeader.slice(7).trim();
     if (!token) {
-        if (isDev || isLocalhost || !process.env.FIREBASE_ADMIN_PROJECT_ID) {
-            return {
-                ok: true,
-                uid: 'ceo-bare-metal',
-                email: 'edwin@productoraear.com',
-            };
-        }
         return {
             ok: false,
-            response: NextResponse.json({ error: 'Unauthorized' }, { status: 401 }),
+            response: NextResponse.json({ error: 'Unauthorized: Empty token' }, { status: 401 }),
         };
     }
 
-    // Si Firebase Admin no está configurado en este entorno:
+    // Si Firebase Admin no está configurado en producción, es un fallo crítico.
     if (!process.env.FIREBASE_ADMIN_PROJECT_ID) {
-        if (isDev || isLocalhost) {
-            return {
-                ok: true,
-                uid: 'ceo-bare-metal',
-                email: 'edwin@productoraear.com',
-            };
-        }
         return {
             ok: false,
-            response: NextResponse.json({ error: 'Admin service not configured' }, { status: 503 }),
+            response: NextResponse.json({ error: 'System Error: Admin service not configured' }, { status: 503 }),
         };
     }
 
@@ -76,42 +50,33 @@ export async function requireAdmin(request: Request): Promise<AdminAuthResult> {
         decoded = await adminAuth.verifyIdToken(token);
     } catch (err) {
         console.warn('[ADMIN_GUARD] Token inválido:', err instanceof Error ? err.message : String(err));
-        if (isDev || isLocalhost) {
-            return {
-                ok: true,
-                uid: 'ceo-bare-metal',
-                email: 'edwin@productoraear.com',
-            };
-        }
         return {
             ok: false,
-            response: NextResponse.json({ error: 'Unauthorized' }, { status: 401 }),
+            response: NextResponse.json({ error: 'Unauthorized: Invalid token' }, { status: 401 }),
         };
     }
 
     if (!decoded.uid) {
         return {
             ok: false,
-            response: NextResponse.json({ error: 'Unauthorized' }, { status: 401 }),
+            response: NextResponse.json({ error: 'Unauthorized: No UID in token' }, { status: 401 }),
         };
     }
 
     try {
         const authorized = await UserService.hasRole(decoded.uid, Role.ADMIN);
-        if (!authorized && !isDev && !isLocalhost) {
+        if (!authorized) {
             return {
                 ok: false,
-                response: NextResponse.json({ error: 'Forbidden' }, { status: 403 }),
+                response: NextResponse.json({ error: 'Forbidden: Requires ADMIN role' }, { status: 403 }),
             };
         }
-    } catch {
-        // En desarrollo local tolerar fallo de conexión a BD remota
-        if (!isDev && !isLocalhost) {
-            return {
-                ok: false,
-                response: NextResponse.json({ error: 'Forbidden' }, { status: 403 }),
-            };
-        }
+    } catch (err) {
+        console.error('[ADMIN_GUARD] Error checking role:', err);
+        return {
+            ok: false,
+            response: NextResponse.json({ error: 'System Error: Role check failed' }, { status: 500 }),
+        };
     }
 
     return { ok: true, uid: decoded.uid, email: decoded.email ?? '' };

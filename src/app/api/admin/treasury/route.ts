@@ -4,6 +4,7 @@ export const runtime = 'nodejs';
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { requireAdmin } from '@/lib/security/adminGuard';
+import { EAR_OS_SSOT } from '@/lib/constants/ear-os-ssot';
 
 /**
  * W02-API-019 — Treasury API Hardening
@@ -65,9 +66,9 @@ type TreasuryErrorResponse = {
 // Constants
 // ─────────────────────────────────────────────────────────────
 
-const SPLIT_ARTIST = 0.8;
-const SPLIT_EAR_OS = 0.1;
-const SPLIT_VIMUME = 0.1;
+const SPLIT_ARTIST = EAR_OS_SSOT.SPLIT_SOBERANO.artista;
+const SPLIT_EAR_OS = EAR_OS_SSOT.SPLIT_SOBERANO.earOs;
+const SPLIT_VIMUME = EAR_OS_SSOT.SPLIT_SOBERANO.vimume;
 const SPLIT_RULE = '80% Artista / 10% EAR OS / 10% VIMUME';
 const DEFAULT_LIMIT = 20;
 const MAX_LIMIT = 100;
@@ -213,7 +214,7 @@ export async function GET(request: Request): Promise<NextResponse> {
               deposit: `${amount.toFixed(2)} €`,
               hash: safeString(
                 readRecordField(t, 'priceLockHash'),
-                `SHA256: ${Math.random().toString(36).slice(2, 10)}`
+                'NO_HASH'
               ),
               status: safeString(t.status, 'CONFIRMADO'),
               date: formatDate(t.createdAt),
