@@ -63,7 +63,8 @@
     --font-syne: var(--font-syne), 'Syne', sans-serif;
   }
 
-  .light {
+  .light,
+  .light-mode {
     --background: #FBFBFC;
     --foreground: #09090B;
     --card: #FFFFFF;

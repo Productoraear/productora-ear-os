@@ -19,6 +19,9 @@ import MariachiCentralita from '@/components/mariachi/MariachiCentralita';
 import MariachiLandingDirectory from '@/components/mariachi/MariachiLandingDirectory';
 import { EdwinMariachiCulture } from '@/features/artists/ui/EdwinMariachiCulture';
 import { MARIACHI_KEYWORDS_METADATA } from '@/lib/constants/mariachi-keyword-matrix';
+import QuantumColibri from '@/components/brand/QuantumColibri';
+import IntegrityAuditBadge from '@/components/telemetry/IntegrityAuditBadge';
+import ThemeToggle from '@/components/layout/ThemeToggle';
 
 const CANONICAL_URL = 'https://productoraear.com/mariachis';
 
@@ -135,6 +138,7 @@ export default function MariachisPage() {
           </div>
 
           <div className="flex items-center gap-3">
+            <ThemeToggle />
             <Link
               href="/mariachis/unirse"
               className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 text-white/80 hover:text-white transition-all"
@@ -414,6 +418,14 @@ export default function MariachisPage() {
           </div>
         </div>
       </section>
+
+      {/* BLOQUE 15: FICHA TÉCNICA DE INTEGRIDAD Y RENDIMIENTO (ANTIGRAVITY OMEGA) */}
+      <section className="border-t border-white/5 py-8 bg-[#040406]">
+        <IntegrityAuditBadge />
+      </section>
+
+      {/* GUARDIÁN VECTORIAL S-CLASS: EL COLIBRÍ CUÁNTICO */}
+      <QuantumColibri primaryAccent="#ecb613" />
     </main>
   );
 }
