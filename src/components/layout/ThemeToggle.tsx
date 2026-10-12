@@ -4,23 +4,30 @@ import React, { useEffect, useState } from 'react';
 import { Sun, Moon } from 'lucide-react';
 
 export default function ThemeToggle() {
-  const [isLightMode, setIsLightMode] = useState(false);
+  const [isLightMode, setIsLightMode] = useState(true);
 
   useEffect(() => {
-    // Leer preferencia guardada
+    // Leer preferencia guardada (default: light)
     const savedTheme = localStorage.getItem('ear-theme');
-    if (savedTheme === 'light') {
+    if (savedTheme === 'dark') {
+      setIsLightMode(false);
+      document.documentElement.classList.remove('light-mode');
+      document.documentElement.classList.add('dark');
+    } else {
       setIsLightMode(true);
       document.documentElement.classList.add('light-mode');
+      document.documentElement.classList.remove('dark');
     }
   }, []);
 
   const toggleTheme = () => {
     if (isLightMode) {
       document.documentElement.classList.remove('light-mode');
+      document.documentElement.classList.add('dark');
       localStorage.setItem('ear-theme', 'dark');
       setIsLightMode(false);
     } else {
+      document.documentElement.classList.remove('dark');
       document.documentElement.classList.add('light-mode');
       localStorage.setItem('ear-theme', 'light');
       setIsLightMode(true);

@@ -8,27 +8,16 @@
   "_instructions_for_worker": "Modo Autónomo Daemon DeepSeek S-Class. Usar modelos locales Ollama para generación de contenido. Zero tokens externos.",
   "tasks": [
     {
-      "id": "W22_T03_AUDIT_LINKS",
-      "title": "PASO 3: Auditoría Coherencia Enlaces Internos",
-      "status": "QUEUED",
-      "files": [
-        "scripts/audit_internal_links_coherence.cjs"
-      ],
-      "action": "CREAR script que audite todos los enlaces internos en páginas de proveedores, landings y rutas dinámicas. Validar: 1) URL existe (no 404), 2) Contenido destino cumple promesa del anchor text, 3) Intención de búsqueda se resuelve. Ejemplos críticos: 'Ver mariachis Madrid' → lista mariachis reales Madrid; 'Finca La Romanée' → ficha completa; 'Solicitar presupuesto' → formulario + webhook n8n. Salida: reports/AUDITORIA_ENLACES_INTERNOS_MVP_2026.json",
-      "scaffold": "const fs = require('fs'); const path = require('path'); const glob = require('glob'); const fetch = require('node-fetch'); // Escanear src/app/**/*.tsx buscando <Link href=... // Extraer anchor text y URL destino // Para cada enlace: verificar HTTP 200, leer contenido destino // Usar deepseek-r1:14b (localhost:11434) para validar coherencia anchor↔contenido // Detectar CTAs y verificar webhook n8n en código // Generar reporte: {total_enlaces, rotos, promesas_incumplidas, ctas_sin_webhook}",
-      "done_when": "0 enlaces rotos, 0 promesas incumplidas, 100% CTAs conectados a webhooks n8n"
-    },
-    {
       "id": "W22_T04_OPTIMIZE_CONTENT",
-      "title": "PASO 4: Optimización Contenido Premium con Llama 70B",
+      "title": "PASO 4: Optimización Contenido Premium con Modelos Soberanos Ollama",
       "status": "QUEUED",
       "files": [
         "scripts/optimize_content_with_ollama.cjs",
         "src/app/(public)/bodas/page.tsx",
         "src/app/(public)/mariachis/page.tsx"
       ],
-      "action": "CREAR script que optimice top 50 páginas usando llama3.3:70b (localhost:11434). Prompt: 'Copywriter élite eventos lujo. Mejora {pagina}: 1) Atención 3s, 2) Storytelling emocional (boda ensueño), 3) Prueba social (testimonios), 4) Keywords long-tail {keywords}, 5) CTAs cada 200 palabras, 6) Resuelve objeciones (precio, disponibilidad). HTML semántico. Tono premium, aspiracional, conversión. 800-1200 palabras.' Targets: top 50 proveedores, /bodas, /mariachis, /vimume",
-      "scaffold": "const fs = require('fs'); const path = require('path'); const fetch = require('node-fetch'); const { execSync } = require('child_process'); // Identificar top 50 páginas (por tráfico o prioridad manual) // Para cada página: leer contenido actual, extraer keywords // POST a llama3.3:70b con prompt premium // Reemplazar contenido en page.tsx // Ejecutar Lighthouse CLI para validar SEO 100 // Validar Core Web Vitals con PageSpeed Insights API // Generar reporte: {paginas_optimizadas, lighthouse_scores, cwv_status}",
+      "action": "CREAR script que optimice top 50 páginas usando ear-27b-apis-sclass o ear-14b-textos-sclass (localhost:11434). Prompt: 'Copywriter élite eventos lujo. Mejora {pagina}: 1) Atención 3s, 2) Storytelling emocional (boda ensueño), 3) Prueba social (testimonios), 4) Keywords long-tail {keywords}, 5) CTAs cada 200 palabras, 6) Resuelve objeciones (precio, disponibilidad). HTML semántico. Tono premium, aspiracional, conversión. 800-1200 palabras.' Targets: top 50 proveedores, /bodas, /mariachis, /vimume",
+      "scaffold": "const fs = require('fs'); const path = require('path'); const fetch = require('node-fetch'); const { execSync } = require('child_process'); // Identificar top 50 páginas // Para cada página: leer contenido actual, extraer keywords // POST a ear-14b-textos-sclass con prompt premium // Validar SEO y Core Web Vitals // Generar reporte: {paginas_optimizadas, lighthouse_scores, cwv_status}",
       "done_when": "Top 50 páginas optimizadas, Lighthouse SEO 100, Core Web Vitals 'Good', 0 contenido genérico"
     },
     {
