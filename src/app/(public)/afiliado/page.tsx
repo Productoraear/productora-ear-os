@@ -53,7 +53,7 @@ export default function AfiliadoRedirectPage(): never {
   permanentRedirect(CANONICAL_PATH);
 }
 
-export function AfiliadoJsonLd(): ReactElement {
+function AfiliadoJsonLd(): ReactElement {
   return (
     <script
       type="application/ld+json"

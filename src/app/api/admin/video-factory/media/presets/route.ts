@@ -61,7 +61,7 @@ export type PresetsResponse = PresetsSuccessResponse | PresetsErrorResponse;
 // Librería SSOT de assets
 // ---------------------------------------------------------------------------
 
-export const STOCK_MEDIA_LIBRARY: readonly StockMediaAsset[] = [
+const STOCK_MEDIA_LIBRARY: readonly StockMediaAsset[] = [
   // B-ROLL FOOTAGE & CINEMATIC BACKGROUNDS
   {
     id: "broll-piano-gala",

@@ -60,12 +60,12 @@ import {
  * Rutas canónicas consolidadas (W14-005).
  * Los alias plurales quedan deprecados en el edge middleware con 308.
  */
-export const ORACULO_API_ROUTES = {
+const ORACULO_API_ROUTES = {
   quote: '/api/oraculo/quote',
   checkout: '/api/oraculo/checkout',
 } as const;
 
-export const ORACULO_API_DEPRECATED_ROUTES = {
+const ORACULO_API_DEPRECATED_ROUTES = {
   quotes: '/api/oraculo/quotes',
   payments: '/api/oraculo/payments',
 } as const;

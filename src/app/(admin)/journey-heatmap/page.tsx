@@ -196,5 +196,5 @@ const JourneyHeatmapPage = (): React.JSX.Element => {
 };
 
 export default JourneyHeatmapPage;
-export { JourneyErrorBoundary, JourneyLoadingFallback, JourneyHeatmapContent };
+// export { JourneyErrorBoundary, JourneyLoadingFallback, JourneyHeatmapContent };
 export type { JourneyItem, ErrorBoundaryProps, ErrorBoundaryState };

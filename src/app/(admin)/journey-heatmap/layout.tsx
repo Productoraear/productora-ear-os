@@ -119,5 +119,6 @@ const JourneyHeatmapLayout = ({ children }: JourneyHeatmapLayoutProps): React.JS
 };
 
 export default JourneyHeatmapLayout;
-export { JourneyHeatmapErrorBoundary, JourneyHeatmapSkeleton };
+// internal exports removed for Next.js App Router compliance
+// export { JourneyHeatmapErrorBoundary, JourneyHeatmapSkeleton };
 export type { JourneyHeatmapLayoutProps, ErrorBoundaryProps, ErrorBoundaryState };

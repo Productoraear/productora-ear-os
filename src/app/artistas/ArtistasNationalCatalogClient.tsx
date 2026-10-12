@@ -41,6 +41,9 @@ import { NeuralArtistTinderMatch, type CanonicalArtist } from '@/components/arti
 import type { CoupleCalibration } from '@/lib/matching/calibratorTypes';
 import { ARTIST_CALIBRATION_DIMENSIONS } from '@/lib/matching/artistCalibratorTypes';
 import ArtistBookingSpecSheet from '@/components/artists/ArtistBookingSpecSheet';
+import QuantumColibri from '@/components/brand/QuantumColibri';
+import IntegrityAuditBadge from '@/components/telemetry/IntegrityAuditBadge';
+import ThemeToggle from '@/components/layout/ThemeToggle';
 
 interface RealArtist {
   id: string;
@@ -391,17 +394,17 @@ export default function ArtistasNationalCatalogClient() {
 
             {/* TELEMETRÍA EN VIVO COMPACTA */}
             <div className="flex items-center gap-2 bg-[#0a0a10] border border-slate-800 px-3 py-1.5 rounded-xl shadow-lg shrink-0 font-mono text-[11px]">
+              <ThemeToggle />
               <span className="text-slate-400">52 Provs</span>
               <span className="text-slate-600">·</span>
               <span className="text-emerald-400 font-bold">Split 80/10/10</span>
               <span className="text-slate-600">·</span>
               <button
                 onClick={() => setIsSwipeMode(!isSwipeMode)}
-                className={`px-2 py-1 rounded-lg font-bold text-[10px] uppercase transition flex items-center gap-1 ${
-                  isSwipeMode
-                    ? 'bg-[#ecb613] text-black'
-                    : 'bg-slate-900 hover:bg-slate-800 text-slate-300'
-                }`}
+                className={`px-2 py-1 rounded-lg font-bold text-[10px] uppercase transition flex items-center gap-1 ${isSwipeMode
+                  ? 'bg-[#ecb613] text-black'
+                  : 'bg-slate-900 hover:bg-slate-800 text-slate-300'
+                  }`}
               >
                 <Layers className="w-3 h-3" />
                 <span>{isSwipeMode ? 'Cuadrícula' : 'Swipe'}</span>
@@ -521,11 +524,10 @@ export default function ArtistasNationalCatalogClient() {
                         setSelectedSubcat(cat.id);
                         setCurrentPage(1);
                       }}
-                      className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-mono font-bold whitespace-nowrap transition-all shrink-0 ${
-                        isActive
-                          ? 'bg-[#ecb613] text-black shadow-md'
-                          : 'bg-slate-950/80 hover:bg-slate-900 text-slate-300 border border-slate-800'
-                      }`}
+                      className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-mono font-bold whitespace-nowrap transition-all shrink-0 ${isActive
+                        ? 'bg-[#ecb613] text-black shadow-md'
+                        : 'bg-slate-950/80 hover:bg-slate-900 text-slate-300 border border-slate-800'
+                        }`}
                     >
                       <Icon className="w-3 h-3" />
                       <span>{cat.shortLabel}</span>
@@ -550,11 +552,10 @@ export default function ArtistasNationalCatalogClient() {
                             setCurrentPage(1);
                             setIsAccordionOpen(false);
                           }}
-                          className={`p-2 rounded-xl border text-left transition text-xs flex flex-col justify-between ${
-                            isActive
-                              ? 'bg-[#ecb613]/20 border-[#ecb613]'
-                              : 'bg-slate-950 border-slate-800 hover:border-slate-700'
-                          }`}
+                          className={`p-2 rounded-xl border text-left transition text-xs flex flex-col justify-between ${isActive
+                            ? 'bg-[#ecb613]/20 border-[#ecb613]'
+                            : 'bg-slate-950 border-slate-800 hover:border-slate-700'
+                            }`}
                         >
                           <div className="flex items-center gap-1.5 mb-1">
                             <Icon className="w-3.5 h-3.5 text-[#ecb613] shrink-0" />
@@ -895,6 +896,12 @@ export default function ArtistasNationalCatalogClient() {
           onClose={() => setSelectedArtistModal(null)}
         />
       )}
+
+      {/* FICHA TÉCNICA DE INTEGRIDAD Y RENDIMIENTO (ANTIGRAVITY OMEGA) */}
+      <IntegrityAuditBadge />
+
+      {/* GUARDIÁN VECTORIAL S-CLASS: EL COLIBRÍ CUÁNTICO */}
+      <QuantumColibri primaryAccent="#ecb613" />
     </div>
   );
 }

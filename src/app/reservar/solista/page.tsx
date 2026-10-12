@@ -40,7 +40,7 @@ export interface SClassArtistFormat {
   rider: string;
 }
 
-export const ARTIST_FORMATS: SClassArtistFormat[] = [
+const ARTIST_FORMATS: SClassArtistFormat[] = [
   {
     id: 'edwin-solista',
     name: 'Edwin Agudelo (Tenor Lírico)',

@@ -87,15 +87,15 @@ export interface ArtistRouteCtaVariant {
   readonly hover: ArtistRouteHoverState;
 }
 
-export const ARTIST_ROUTE_FALLBACK_SLUG = 'default-artist' as const;
+const ARTIST_ROUTE_FALLBACK_SLUG = 'default-artist' as const;
 
-export const ARTIST_ROUTE_SMOKE_EXPECTATIONS: ArtistRouteSmokeExpectations = {
+const ARTIST_ROUTE_SMOKE_EXPECTATIONS: ArtistRouteSmokeExpectations = {
   ok: 200,
   created: 201,
   badRequest: 400,
 } as const;
 
-export const ARTIST_ROUTE_POLISH_TOKENS: ArtistRoutePolishTokens = {
+const ARTIST_ROUTE_POLISH_TOKENS: ArtistRoutePolishTokens = {
   background: '#030305',
   foreground: '#F5F5F7',
   accent: '#7C5CFF',
@@ -106,13 +106,13 @@ export const ARTIST_ROUTE_POLISH_TOKENS: ArtistRoutePolishTokens = {
   microAnimationDurationMs: 180,
 } as const;
 
-export const ARTIST_ROUTE_CTA_LABELS: ArtistRouteCtaLabels = {
+const ARTIST_ROUTE_CTA_LABELS: ArtistRouteCtaLabels = {
   primary: 'Ver perfil',
   secondary: 'Explorar catálogo',
   tertiary: 'Contactar',
 } as const;
 
-export const ARTIST_ROUTE_MICRO_ANIMATIONS: readonly ArtistRouteMicroAnimation[] = [
+const ARTIST_ROUTE_MICRO_ANIMATIONS: readonly ArtistRouteMicroAnimation[] = [
   {
     name: 'ear-cta-press',
     durationMs: ARTIST_ROUTE_POLISH_TOKENS.microAnimationDurationMs,
@@ -133,7 +133,7 @@ export const ARTIST_ROUTE_MICRO_ANIMATIONS: readonly ArtistRouteMicroAnimation[]
   },
 ] as const;
 
-export const ARTIST_ROUTE_CTA_VARIANTS: readonly ArtistRouteCtaVariant[] = [
+const ARTIST_ROUTE_CTA_VARIANTS: readonly ArtistRouteCtaVariant[] = [
   {
     id: 'primary',
     label: ARTIST_ROUTE_CTA_LABELS.primary,
@@ -175,12 +175,12 @@ export const ARTIST_ROUTE_CTA_VARIANTS: readonly ArtistRouteCtaVariant[] = [
   },
 ] as const;
 
-export const ARTIST_ROUTE_FOCUS_RING_STYLE = {
+const ARTIST_ROUTE_FOCUS_RING_STYLE = {
   outline: 'none',
   boxShadow: `0 0 0 ${ARTIST_ROUTE_POLISH_TOKENS.focusRingWidthPx}px rgba(124,92,255,0.65)`,
 } as const;
 
-export const ARTIST_ROUTE_CTA_BASE_STYLE = {
+const ARTIST_ROUTE_CTA_BASE_STYLE = {
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -194,14 +194,14 @@ export const ARTIST_ROUTE_CTA_BASE_STYLE = {
   willChange: 'transform',
 } as const;
 
-export function getArtistRouteCtaVariant(
+function getArtistRouteCtaVariant(
   id: ArtistRouteCtaVariant['id'],
 ): ArtistRouteCtaVariant {
   const found = ARTIST_ROUTE_CTA_VARIANTS.find((variant) => variant.id === id);
   return found ?? ARTIST_ROUTE_CTA_VARIANTS[0];
 }
 
-export function getArtistRouteHoverTransform(
+function getArtistRouteHoverTransform(
   variant: ArtistRouteCtaVariant,
 ): string {
   return `translateY(-${variant.hover.liftPx}px) scale(${variant.hover.scale})`;
