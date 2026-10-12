@@ -159,69 +159,94 @@ export default function MariachisPage() {
         </div>
       </div>
 
-      {/* BLOQUE 2: HERO SECTION TRANSACCIONAL DE GALA */}
-      <section className="relative px-6 pt-16 pb-16 md:pt-24 md:pb-24 border-b border-white/5">
-        <div className="absolute top-0 right-0 h-[600px] w-[600px] translate-x-1/3 -translate-y-1/3 rounded-full bg-[#ecb613]/10 blur-[180px] pointer-events-none" />
-        <div className="max-w-7xl mx-auto space-y-6 relative z-10">
+      {/* BLOQUE 2: HERO SECTION TRANSACCIONAL DE GALA (AWWWARDS COUTURE EDITION) */}
+      <section className="relative px-6 pt-20 pb-20 md:pt-32 md:pb-32 border-b border-white/10 awwwards-mesh-gradient overflow-hidden">
+        {/* Halos Orgánicos Respiratorios */}
+        <div className="absolute top-0 right-0 h-[700px] w-[700px] translate-x-1/4 -translate-y-1/4 rounded-full bg-[#ecb613]/15 blur-[200px] pointer-events-none animate-breathing-halo" />
+        <div className="absolute bottom-0 left-0 h-[500px] w-[500px] -translate-x-1/4 translate-y-1/4 rounded-full bg-[#00E5FF]/10 blur-[180px] pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto space-y-8 relative z-10">
           <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-[10px] font-mono uppercase tracking-[0.3em]">
-              <Sparkles size={13} />
-              RED NACIONAL S-CLASS // PRECIO CERRADO &amp; RESERVA INMEDIATA
+            <div className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-white/[0.04] border border-white/15 backdrop-blur-xl text-[#ecb613] text-[11px] font-mono uppercase tracking-[0.3em] shadow-lg shadow-black/50">
+              <Sparkles size={14} className="text-[#ecb613] animate-pulse" />
+              <span>RED NACIONAL S-CLASS // PRECIO CERRADO &amp; RESERVA INMEDIATA</span>
             </div>
 
-            <div className="flex items-center gap-2 text-xs font-mono text-white/50">
-              <span className="inline-flex items-center gap-1 text-emerald-400">
-                <CheckCircle2 size={13} /> Reserva con 100 € en Stripe
+            <div className="flex items-center gap-3 text-xs font-mono">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
+                <CheckCircle2 size={13} /> Fianza 100 € Stripe Price-Lock
               </span>
-              <span className="text-white/20">·</span>
-              <span>100% Deducible</span>
+              <span className="text-white/40 font-mono hidden sm:inline">100% Deducible</span>
             </div>
           </div>
 
-          <h1 className="font-syne text-4xl sm:text-6xl md:text-7xl font-black uppercase tracking-tight leading-[0.95]">
-            Contrata Tu Mariachi en España <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] via-amber-300 to-amber-600">
+          <h1 className="font-syne text-4xl sm:text-6xl md:text-8xl font-black uppercase tracking-tight leading-[0.92]">
+            Contrata Tu Mariachi <br />
+            <span className="text-metallic-gold">
               Con Precio Cerrado
-            </span> y Despacho Uber
+            </span> <br />
+            <span className="text-white/90 text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-normal">
+              y Despacho Logístico Inteligente
+            </span>
           </h1>
 
-          <p className="max-w-3xl text-sm sm:text-base md:text-lg text-white/70 font-sans leading-relaxed">
-            Sin llamadas a ciegas ni regateos de días. Selecciona tu formato desde solista de gala hasta ensamble monumental,
-            calcula la distancia exacta en kilómetros desde la sede más cercana y asegura tu fecha al instante con un
-            <strong> depósito de 100 € en Stripe</strong> (100% deducible del total del evento).
+          <p className="max-w-3xl text-sm sm:text-base md:text-xl text-white/80 font-sans leading-relaxed font-light">
+            Sin llamadas a ciegas ni regateos interminables. Selecciona tu formación desde solista de gala hasta ensamble monumental,
+            calcula la distancia exacta en kilómetros desde la sede más cercana y asegura tu fecha en segundos con un
+            <strong className="text-white font-semibold"> depósito de 100 € en Stripe</strong> (100% deducible de la liquidación final).
           </p>
 
-          <div className="flex flex-wrap items-center gap-6 pt-2 text-xs font-mono text-white/60">
-            <span className="flex items-center gap-2 text-white">
-              <ShieldCheck size={16} className="text-[#ecb613]" /> Traje de charro de gala impecable
-            </span>
-            <span className="flex items-center gap-2 text-white">
-              <Zap size={16} className="text-[#00E5FF]" /> Centralita WhatsApp para toda España
-            </span>
-            <span className="flex items-center gap-2 text-white">
-              <Music size={16} className="text-emerald-400" /> Formación adaptada al límite de ruido de la finca
-            </span>
-            <span className="flex items-center gap-2 text-white">
-              <Heart size={16} className="text-[#FF2B44]" /> 10% Donación social VIMUME
-            </span>
+          {/* Badges de Lujo Biselados (Couture Glass) */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-2 text-xs font-mono">
+            <div className="couture-glass-card p-4 rounded-2xl flex items-center gap-3">
+              <ShieldCheck size={20} className="text-[#ecb613] shrink-0" />
+              <div>
+                <span className="text-white font-bold block">Traje Gran Gala</span>
+                <span className="text-white/40 text-[10px]">Botonadura plata</span>
+              </div>
+            </div>
+
+            <div className="couture-glass-card p-4 rounded-2xl flex items-center gap-3">
+              <Zap size={20} className="text-[#00E5FF] shrink-0" />
+              <div>
+                <span className="text-white font-bold block">Despacho 24/7</span>
+                <span className="text-white/40 text-[10px]">WhatsApp directo</span>
+              </div>
+            </div>
+
+            <div className="couture-glass-card p-4 rounded-2xl flex items-center gap-3">
+              <Music size={20} className="text-emerald-400 shrink-0" />
+              <div>
+                <span className="text-white font-bold block">Rider Acústico</span>
+                <span className="text-white/40 text-[10px]">Calibrado por finca</span>
+              </div>
+            </div>
+
+            <div className="couture-glass-card p-4 rounded-2xl flex items-center gap-3">
+              <Heart size={20} className="text-[#FF2B44] shrink-0" />
+              <div>
+                <span className="text-white font-bold block">Impacto Social</span>
+                <span className="text-white/40 text-[10px]">10% Sesiones VIMUME</span>
+              </div>
+            </div>
           </div>
 
           <div className="flex flex-wrap items-center gap-4 pt-4">
             <a
               href="#cotizador-uber"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-[#ecb613] hover:bg-amber-400 text-black font-mono text-xs uppercase font-bold tracking-wider transition-all shadow-lg shadow-[#ecb613]/25"
+              className="inline-flex items-center gap-3 px-10 py-5 rounded-2xl bg-gradient-to-r from-[#ecb613] via-amber-300 to-[#ecb613] hover:brightness-110 text-black font-syne text-xs uppercase font-black tracking-widest transition-all duration-300 shadow-2xl shadow-[#ecb613]/30 hover:scale-[1.02] active:scale-[0.98]"
             >
-              Calcular Presupuesto Inmediato
-              <ArrowRight size={15} />
+              <span>Calcular Presupuesto Inmediato</span>
+              <ArrowRight size={16} />
             </a>
             <a
               href="https://wa.me/34693693048?text=Hola,%20deseo%20asesoría%20personalizada%20para%20contratar%20un%20mariachi"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/15 text-white font-mono text-xs uppercase tracking-wider transition-all"
+              className="inline-flex items-center gap-3 px-8 py-5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/20 hover:border-white/40 text-white font-syne text-xs uppercase font-bold tracking-wider transition-all duration-300 backdrop-blur-md"
             >
-              <MessageCircle size={15} className="text-emerald-400" />
-              Asesoría Inmediata por WhatsApp
+              <MessageCircle size={16} className="text-emerald-400" />
+              <span>Asesoría Inmediata por WhatsApp</span>
             </a>
           </div>
         </div>
