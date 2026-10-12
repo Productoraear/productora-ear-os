@@ -44,7 +44,7 @@ export default function DynamicContextBar() {
     return (
       <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] w-[90%] max-w-md">
         <div className="bg-[#050505]/95 backdrop-blur-2xl border border-[#ecb613]/30 rounded-full px-6 py-3 flex items-center justify-between shadow-[0_10px_40px_rgba(0,0,0,0.7)]">
-          <Link href="/vimume/conocimiento" className="flex flex-col items-center justify-center p-2 text-white/70 hover:text-[#ecb613] transition-colors">
+          <Link href="/vimume/b2g" className="flex flex-col items-center justify-center p-2 text-white/70 hover:text-[#ecb613] transition-colors">
             <FileText className="w-5 h-5" />
             <span className="text-[8px] mt-1 font-bold tracking-wider">PLIEGOS LCSP</span>
           </Link>

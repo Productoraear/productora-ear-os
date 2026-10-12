@@ -74,6 +74,11 @@ const nextConfig: NextConfig = {
     return [
       // Alias de producción
       {
+        source: "/checkout",
+        destination: "/checkout/presupuesto",
+        permanent: false,
+      },
+      {
         source: "/dashboard",
         destination: "/admin",
         permanent: false,

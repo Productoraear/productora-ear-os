@@ -8,19 +8,6 @@
   "_instructions_for_worker": "Modo Autónomo Daemon DeepSeek S-Class. Usar modelos locales Ollama para generación de contenido. Zero tokens externos.",
   "tasks": [
     {
-      "id": "W22_T04_OPTIMIZE_CONTENT",
-      "title": "PASO 4: Optimización Contenido Premium con Modelos Soberanos Ollama",
-      "status": "QUEUED",
-      "files": [
-        "scripts/optimize_content_with_ollama.cjs",
-        "src/app/(public)/bodas/page.tsx",
-        "src/app/(public)/mariachis/page.tsx"
-      ],
-      "action": "CREAR script que optimice top 50 páginas usando ear-27b-apis-sclass o ear-14b-textos-sclass (localhost:11434). Prompt: 'Copywriter élite eventos lujo. Mejora {pagina}: 1) Atención 3s, 2) Storytelling emocional (boda ensueño), 3) Prueba social (testimonios), 4) Keywords long-tail {keywords}, 5) CTAs cada 200 palabras, 6) Resuelve objeciones (precio, disponibilidad). HTML semántico. Tono premium, aspiracional, conversión. 800-1200 palabras.' Targets: top 50 proveedores, /bodas, /mariachis, /vimume",
-      "scaffold": "const fs = require('fs'); const path = require('path'); const fetch = require('node-fetch'); const { execSync } = require('child_process'); // Identificar top 50 páginas // Para cada página: leer contenido actual, extraer keywords // POST a ear-14b-textos-sclass con prompt premium // Validar SEO y Core Web Vitals // Generar reporte: {paginas_optimizadas, lighthouse_scores, cwv_status}",
-      "done_when": "Top 50 páginas optimizadas, Lighthouse SEO 100, Core Web Vitals 'Good', 0 contenido genérico"
-    },
-    {
       "id": "W22_T05_VALIDATE_MVP",
       "title": "PASO 5: Validación MVP Readiness - Scorecard Ω-Diamante 20/20",
       "status": "QUEUED",

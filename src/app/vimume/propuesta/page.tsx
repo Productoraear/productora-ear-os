@@ -45,13 +45,6 @@ export default function VimumePropuestaPage() {
         {/* CTA Dual */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
           <Link
-            href="/docs/dossier-vimume.pdf"
-            download
-            className="inline-flex justify-center items-center px-8 py-4 rounded bg-white text-black font-semibold hover:bg-[#AAD6CD] transition-colors shadow-lg"
-          >
-            Descargar Dossier Técnico-Clínico (PDF)
-          </Link>
-          <Link
             href={whatsappUrl}
             target="_blank"
             className="inline-flex justify-center items-center px-8 py-4 rounded border border-[#258DCD] text-[#258DCD] hover:bg-[#258DCD]/10 transition-colors font-semibold"

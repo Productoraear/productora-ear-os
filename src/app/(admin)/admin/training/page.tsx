@@ -89,8 +89,7 @@ export default function TrainingCenterAdminPage() {
 
         <div className="flex flex-wrap items-center gap-2.5">
           <a
-            href="/EAR_OMNI_TRAINING_CENTER.html"
-            target="_blank"
+            href="/admin/training"
             rel="noopener noreferrer"
             className="px-4 py-2 rounded-xl bg-[#ecb613]/10 border border-[#ecb613]/40 text-xs font-mono text-[#ecb613] hover:bg-[#ecb613]/20 flex items-center gap-2 transition-all font-bold shadow-[0_0_15px_rgba(236,182,19,0.15)]"
           >
@@ -257,8 +256,8 @@ export default function TrainingCenterAdminPage() {
                   key={obj.id}
                   onClick={() => setSelectedObjection(obj)}
                   className={`w-full p-4 rounded-xl text-left border transition-all ${isSelected
-                      ? 'bg-[#ecb613]/10 border-[#ecb613] text-white'
-                      : 'bg-[#050508] border-[#1a1a24] text-zinc-400 hover:text-white hover:bg-white/[0.02]'
+                    ? 'bg-[#ecb613]/10 border-[#ecb613] text-white'
+                    : 'bg-[#050508] border-[#1a1a24] text-zinc-400 hover:text-white hover:bg-white/[0.02]'
                     }`}
                 >
                   <div className="flex items-center justify-between text-[10px] font-mono mb-1">

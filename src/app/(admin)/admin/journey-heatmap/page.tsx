@@ -158,13 +158,11 @@ function JourneyHeatmapContent(): ReactNode {
 
         <div className="flex flex-wrap items-center gap-2.5">
           <a
-            href="/EAR_JOURNEY_HEATMAP.html"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/admin/journey-heatmap"
             className="px-4 py-2 rounded-xl bg-[#ecb613]/10 border border-[#ecb613]/40 text-xs font-mono text-[#ecb613] hover:bg-[#ecb613]/20 flex items-center gap-2 transition-all font-bold shadow-[0_0_15px_rgba(236,182,19,0.15)]"
           >
             <ArrowUpRight className="w-3.5 h-3.5" />
-            Reporte Estático (58 Tests)
+            Reporte Dinámico (58 Tests)
           </a>
         </div>
       </div>
@@ -251,8 +249,8 @@ function JourneyHeatmapContent(): ReactNode {
               key={t}
               onClick={() => setFilterTemp(t)}
               className={`px-3 py-1.5 rounded-lg border transition-colors ${filterTemp === t
-                  ? 'bg-[#ecb613] text-black border-[#ecb613] font-bold'
-                  : 'bg-[#050508] text-zinc-400 border-[#1a1a24] hover:text-white'
+                ? 'bg-[#ecb613] text-black border-[#ecb613] font-bold'
+                : 'bg-[#050508] text-zinc-400 border-[#1a1a24] hover:text-white'
                 }`}
             >
               {t}
@@ -284,8 +282,8 @@ function JourneyHeatmapContent(): ReactNode {
                   <td className="py-3 px-4 text-white font-sans font-medium text-xs">{j.query}</td>
                   <td className="py-3 px-4 text-center">
                     <span className={`inline-block px-2 py-0.5 rounded text-[10px] font-bold border ${j.temperature === 'FIRE'
-                        ? 'bg-red-950/40 text-red-400 border-red-800'
-                        : 'bg-amber-950/40 text-amber-400 border-amber-800'
+                      ? 'bg-red-950/40 text-red-400 border-red-800'
+                      : 'bg-amber-950/40 text-amber-400 border-amber-800'
                       }`}>
                       {j.temperature}
                     </span>
