@@ -3,14 +3,16 @@
 import React, { useState, useMemo } from 'react';
 import {
   MapPin, ShieldCheck, CreditCard,
-  Sparkles, Navigation, CheckCircle2, MessageCircle
+  Sparkles, Navigation, CheckCircle2, MessageCircle,
+  Loader2, Search, Building2, Compass
 } from 'lucide-react';
 import {
   MARIACHI_FORMATS,
   MARIACHI_DISPATCH_HUBS,
   calculateMariachiQuote,
-  MariachiFormat
+  MariachiFormatId
 } from '@/lib/mariachi/mariachiDispatchCore';
+import { checkoutMariachiDeposit } from '@/app/actions/mariachiCheckoutActions';
 import MariachiRepertoireSelector from './MariachiRepertoireSelector';
 
 // Destinos de referencia frecuentes para cotización rápida
@@ -27,26 +29,86 @@ const SAMPLE_DESTINATIONS = [
 ];
 
 export default function MariachiDispatchConsole() {
-  const [selectedFormatId, setSelectedFormatId] = useState<MariachiFormat['id']>('cuarteto');
-  const [selectedDestinationIndex, setSelectedDestinationIndex] = useState<number>(0);
+  const [selectedFormatId, setSelectedFormatId] = useState<MariachiFormatId>('cuarteto');
+  const [selectedDestinationIndex, setSelectedDestinationIndex] = useState<number | null>(0);
   const [customDestinationName, setCustomDestinationName] = useState<string>('');
+  const [customCoords, setCustomCoords] = useState<{ lat: number; lng: number } | null>(null);
+  const [suggestions, setSuggestions] = useState<Array<{
+    id: string | number;
+    label: string;
+    sublabel?: string;
+    fullAddress: string;
+    lat: number;
+    lng: number;
+    type: 'finca' | 'calle' | 'municipio' | 'venue';
+    province?: string;
+  }>>([]);
+  const [isLoadingSuggestions, setIsLoadingSuggestions] = useState<boolean>(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
+
   const [endHour, setEndHour] = useState<number>(2); // 2:00 AM (sin hotel) vs 3:00 AM (con hotel)
   const [selectedHubId, setSelectedHubId] = useState<string>('madrid-eliptica');
   const [autoNearestHub, setAutoNearestHub] = useState<boolean>(true);
   const [selectedSongs, setSelectedSongs] = useState<string[]>(['1', '2', '3', '4', '5']);
   const [isProcessingStripe, setIsProcessingStripe] = useState<boolean>(false);
 
-  const destination = SAMPLE_DESTINATIONS[selectedDestinationIndex];
+  // Destino activo (Muestra o Personalizado vía Autocompletado / Texto)
+  const activeDestination = useMemo(() => {
+    if (customCoords && customDestinationName.trim()) {
+      return {
+        name: customDestinationName.trim(),
+        lat: customCoords.lat,
+        lng: customCoords.lng,
+      };
+    }
+    if (selectedDestinationIndex !== null && SAMPLE_DESTINATIONS[selectedDestinationIndex]) {
+      return SAMPLE_DESTINATIONS[selectedDestinationIndex];
+    }
+    return SAMPLE_DESTINATIONS[0];
+  }, [customCoords, customDestinationName, selectedDestinationIndex]);
+
+  // Debounced fetch de sugerencias geográficas
+  React.useEffect(() => {
+    const trimmed = customDestinationName.trim();
+    if (trimmed.length < 2) {
+      setSuggestions([]);
+      setIsDropdownOpen(false);
+      return;
+    }
+
+    setIsLoadingSuggestions(true);
+    const timer = setTimeout(async () => {
+      try {
+        const res = await fetch(`/api/geo/autocomplete?q=${encodeURIComponent(trimmed)}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data.suggestions) && data.suggestions.length > 0) {
+            setSuggestions(data.suggestions);
+            setIsDropdownOpen(true);
+          } else {
+            setSuggestions([]);
+            setIsDropdownOpen(false);
+          }
+        }
+      } catch (err) {
+        console.error('AUTOCOMPLETE_CLIENT_ERROR:', err);
+      } finally {
+        setIsLoadingSuggestions(false);
+      }
+    }, 280);
+
+    return () => clearTimeout(timer);
+  }, [customDestinationName]);
 
   const quote = useMemo(() => {
     return calculateMariachiQuote(
       selectedFormatId,
-      { lat: destination.lat, lng: destination.lng },
-      customDestinationName.trim() || destination.name,
+      { lat: activeDestination.lat, lng: activeDestination.lng },
+      activeDestination.name,
       endHour,
       autoNearestHub ? undefined : selectedHubId
     );
-  }, [selectedFormatId, destination, customDestinationName, endHour, autoNearestHub, selectedHubId]);
+  }, [selectedFormatId, activeDestination, endHour, autoNearestHub, selectedHubId]);
 
   const handleToggleSong = (songId: string) => {
     setSelectedSongs((prev) =>
@@ -57,37 +119,27 @@ export default function MariachiDispatchConsole() {
   const handleStripeDeposit = async () => {
     try {
       setIsProcessingStripe(true);
-      const res = await fetch('/api/payments/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          amount: 100.00,
-          concept: `Price-Lock Mariachi Imperial Edwin Agudelo — ${quote.format.name} (${quote.destinationName})`,
-          metadata: {
-            type: 'RESERVA_ARTISTA',
-            artistName: 'Edwin Agudelo (Mariachi Imperial)',
-            formatId: selectedFormatId,
-            formatName: quote.format.name,
-            members: quote.format.members,
-            destination: quote.destinationName,
-            totalGrossPrice: quote.totalGrossPrice,
-            repertoireSongs: selectedSongs.length,
-            splitArtist: quote.totalGrossPrice * 0.8,
-            splitEar: quote.totalGrossPrice * 0.1,
-            splitVimume: quote.totalGrossPrice * 0.1,
-            sha256Token: '72H-MARIACHI-LOCK'
-          }
-        })
+      const result = await checkoutMariachiDeposit({
+        formatId: selectedFormatId,
+        destinationLat: activeDestination.lat,
+        destinationLng: activeDestination.lng,
+        destinationName: activeDestination.name,
+        endHour,
+        overrideHubId: autoNearestHub ? undefined : selectedHubId,
+        repertoireSongs: selectedSongs.length,
+        clientHash: quote.priceLockHash,
+        issuedAt: Date.now()
       });
-      const data = await res.json();
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        alert(data.error || 'No se pudo iniciar la pasarela Stripe.');
+
+      if (!result.ok) {
+        alert(result.error || 'No se pudo iniciar la pasarela Stripe.');
+        return;
       }
+
+      window.location.href = result.url;
     } catch (err: unknown) {
-      console.error('STRIPE_DEPOSIT_ERROR:', err);
-      alert('Error al conectar con Stripe.');
+      console.error('MARIACHI_STRIPE_DEPOSIT_ERROR:', err);
+      alert('Error al conectar con Stripe. Por favor, inténtalo de nuevo.');
     } finally {
       setIsProcessingStripe(false);
     }
@@ -203,18 +255,88 @@ export default function MariachiDispatchConsole() {
             </div>
           </div>
 
-          {/* Input de dirección exacta personalizada */}
-          <div className="space-y-2">
-            <label className="text-xs font-mono uppercase tracking-wider text-white/60 block">
-              O escribe tu finca / dirección exacta
-            </label>
-            <input
-              type="text"
-              placeholder="Ej: Finca La Romanée, Griñón (Madrid)"
-              value={customDestinationName}
-              onChange={(e) => setCustomDestinationName(e.target.value)}
-              className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-xs text-white placeholder-white/40 focus:border-[#00E5FF] focus:outline-none"
-            />
+          {/* Input de dirección exacta personalizada con Autocompletado Inteligente */}
+          <div className="space-y-2 relative">
+            <div className="flex items-center justify-between">
+              <label className="text-xs font-mono uppercase tracking-wider text-white/60 block">
+                O escribe tu finca / dirección exacta
+              </label>
+              {customCoords && (
+                <span className="text-[10px] font-mono text-[#00E5FF] flex items-center gap-1">
+                  <CheckCircle2 size={11} /> Coordenadas fijadas ({customCoords.lat.toFixed(4)}, {customCoords.lng.toFixed(4)})
+                </span>
+              )}
+            </div>
+
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Ej: calle nuñez, o Finca La Romanée..."
+                value={customDestinationName}
+                onFocus={() => {
+                  if (suggestions.length > 0) setIsDropdownOpen(true);
+                }}
+                onChange={(e) => {
+                  setCustomDestinationName(e.target.value);
+                  setSelectedDestinationIndex(null);
+                }}
+                className="w-full rounded-xl border border-white/10 bg-white/5 pl-10 pr-10 py-2.5 text-xs text-white placeholder-white/40 focus:border-[#00E5FF] focus:outline-none transition-all"
+              />
+              <div className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40 pointer-events-none">
+                <Search size={14} />
+              </div>
+              {isLoadingSuggestions && (
+                <div className="absolute right-3 top-1/2 -translate-y-1/2 text-[#00E5FF] animate-spin">
+                  <Loader2 size={14} />
+                </div>
+              )}
+            </div>
+
+            {/* Dropdown de Sugerencias en Vivo (OLED S-Class) */}
+            {isDropdownOpen && suggestions.length > 0 && (
+              <div className="absolute z-50 left-0 right-0 mt-1 rounded-2xl bg-[#09090e]/95 backdrop-blur-xl border border-[#00E5FF]/30 shadow-2xl overflow-hidden divide-y divide-white/5 animate-in fade-in slide-in-from-top-1 duration-150">
+                <div className="px-3 py-1.5 bg-white/5 text-[10px] font-mono uppercase tracking-widest text-white/40 flex items-center justify-between">
+                  <span>Sugerencias de localización en tiempo real</span>
+                  <span className="text-[#00E5FF]">España</span>
+                </div>
+                {suggestions.map((item) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => {
+                      setCustomDestinationName(item.label);
+                      setCustomCoords({ lat: item.lat, lng: item.lng });
+                      setIsDropdownOpen(false);
+                      setSelectedDestinationIndex(null);
+                    }}
+                    className="w-full px-4 py-3 text-left hover:bg-[#00E5FF]/10 transition-colors flex items-start gap-3 group cursor-pointer"
+                  >
+                    <div className="mt-0.5 p-1.5 rounded-lg bg-white/5 border border-white/10 text-[#00E5FF] group-hover:border-[#00E5FF]/40">
+                      {item.type === 'finca' ? (
+                        <Building2 size={13} className="text-[#ecb613]" />
+                      ) : item.type === 'calle' ? (
+                        <MapPin size={13} className="text-[#00E5FF]" />
+                      ) : (
+                        <Compass size={13} className="text-white/60" />
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-xs font-semibold text-white group-hover:text-[#00E5FF] transition-colors truncate">
+                        {item.label}
+                      </div>
+                      {item.sublabel && (
+                        <div className="text-[11px] text-white/50 truncate font-sans">
+                          {item.sublabel}
+                        </div>
+                      )}
+                    </div>
+                    <span className="text-[9px] font-mono uppercase tracking-wider px-2 py-0.5 rounded bg-white/5 border border-white/10 text-white/60 self-center">
+                      {item.type === 'finca' ? 'Finca' : item.type === 'calle' ? 'Calle' : 'Municipio'}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Opciones de Base Logística */}

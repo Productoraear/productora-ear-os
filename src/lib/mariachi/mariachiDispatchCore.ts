@@ -1,26 +1,51 @@
-import { calculateHaversineDistance, calculateLogisticsFee, LogisticsCostBreakdown } from '@/features/search/utils/mentridaDistanceEngine';
+import { createHash } from 'crypto';
+import {
+  TARIFA_BASE_SOLISTA_EUR,
+  DEPOSITO_STRIPE_EUR,
+  VAT_RATE,
+  SPLIT_SOBERANO as SSOT_SPLIT_RATIOS,
+} from '@/lib/constants/ear-os-ssot';
+import {
+  calculateHaversineDistance,
+  calculateLogisticsFee,
+  LogisticsCostBreakdown,
+} from '@/features/search/utils/mentridaDistanceEngine';
+
+/**
+ * ════════════════════════════════════════════════════════════════════════════
+ * EAR OS — CATÁLOGO CANÓNICO MARIACHI (MOTOR DE DINERO SSOT-DRIVEN)
+ * ════════════════════════════════════════════════════════════════════════════
+ * Fuente ÚNICA de verdad para los formatos mariachi y su cotización.
+ * Los precios nacen del SSOT (Tarifa Solista 350 €, Depósito 100 €, IVA 21 %,
+ * Split Soberano 80/10/10). Prohibido duplicar valores en componentes.
+ *
+ * Split Soberano aplica sobre la base imponible (pre-IVA) de la actuación.
+ * ════════════════════════════════════════════════════════════════════════════
+ */
+
+export type MariachiFormatId = 'solista' | 'cuarteto' | 'gala' | 'monumental';
 
 export interface MariachiFormat {
-  id: 'trio' | 'cuarteto' | 'gala' | 'monumental';
+  id: MariachiFormatId;
   name: string;
   members: number;
-  basePrice: number; // En euros
+  basePrice: number; // En euros (sin IVA)
   description: string;
   recommendedFor: string;
-  depositAmount: number; // Siempre 100€ SSOT
+  depositAmount: number; // Siempre 100 € (SSOT)
   repertoireCount: number;
 }
 
-export const MARIACHI_FORMATS: MariachiFormat[] = [
+export const MARIACHI_FORMATS: readonly MariachiFormat[] = [
   {
-    id: 'trio',
-    name: 'Trío Serenata Íntimo',
-    members: 3,
-    basePrice: 450,
-    description: 'Voz principal, vihuela y guitarrón. Serenatas a domicilio, pedidas de mano y aniversarios íntimos.',
-    recommendedFor: 'Serenatas y eventos hasta 40 pax',
-    depositAmount: 100,
-    repertoireCount: 12
+    id: 'solista',
+    name: 'Solista Serenata Express',
+    members: 1,
+    basePrice: TARIFA_BASE_SOLISTA_EUR,
+    description: 'Voz tenor solista de gala (Edwin Agudelo o voz asignada) con vihuela/guitarra o pistas de estudio en alta fidelidad.',
+    recommendedFor: 'Serenatas, aniversarios y domicilios (hasta 35 pax)',
+    depositAmount: DEPOSITO_STRIPE_EUR,
+    repertoireCount: 10,
   },
   {
     id: 'cuarteto',
@@ -29,18 +54,18 @@ export const MARIACHI_FORMATS: MariachiFormat[] = [
     basePrice: 600,
     description: 'Trompeta solista, vihuela, guitarrón y violín. El equilibrio perfecto para cócteles y fiestas familiares.',
     recommendedFor: 'Cócteles de boda y cumpleaños (hasta 90 pax)',
-    depositAmount: 100,
-    repertoireCount: 18
+    depositAmount: DEPOSITO_STRIPE_EUR,
+    repertoireCount: 18,
   },
   {
     id: 'gala',
-    name: 'Ensemble de Gala',
+    name: 'Gala Imperial Edwin Agudelo',
     members: 6,
     basePrice: 900,
-    description: '2 trompetas, 2 violines, vihuela y guitarrón. Traje de charro de gala, show interactivo y máxima potencia.',
+    description: '2 trompetas, 2 violines, vihuela y guitarrón. Traje de charro de gala, show interactivo y dirección de Edwin Agudelo.',
     recommendedFor: 'Bodas en finca, banquetes y convenciones (hasta 200 pax)',
-    depositAmount: 100,
-    repertoireCount: 26
+    depositAmount: DEPOSITO_STRIPE_EUR,
+    repertoireCount: 26,
   },
   {
     id: 'monumental',
@@ -49,10 +74,10 @@ export const MARIACHI_FORMATS: MariachiFormat[] = [
     basePrice: 1300,
     description: 'Agrupación sinfónica completa: 3 violines, 2 trompetas, vihuela, guitarrón y guitarra española. Acústica 12 W/pax.',
     recommendedFor: 'Fiestas patronales B2G, grandes auditorios y eventos VIP',
-    depositAmount: 100,
-    repertoireCount: 35
-  }
-];
+    depositAmount: DEPOSITO_STRIPE_EUR,
+    repertoireCount: 35,
+  },
+] as const;
 
 export interface SongRepertoireItem {
   id: string;
@@ -63,7 +88,7 @@ export interface SongRepertoireItem {
   isFavorite?: boolean;
 }
 
-export const MARIACHI_REPERTOIRE_MASTER: SongRepertoireItem[] = [
+export const MARIACHI_REPERTOIRE_MASTER: readonly SongRepertoireItem[] = [
   { id: '1', title: 'Si Nos Dejan', originalArtist: 'José Alfredo Jiménez', category: 'bolero', isFavorite: true },
   { id: '2', title: 'El Rey', originalArtist: 'José Alfredo Jiménez / Vicente Fernández', category: 'ranchera', isFavorite: true },
   { id: '3', title: 'Las Mañanitas', originalArtist: 'Tradicional Mexicana', category: 'clasico', isFavorite: true },
@@ -87,8 +112,8 @@ export const MARIACHI_REPERTOIRE_MASTER: SongRepertoireItem[] = [
   { id: '21', title: 'Mala Suerte', originalArtist: 'Tradicional Ranchera', category: 'ranchera' },
   { id: '22', title: 'No Me Amenaces', originalArtist: 'José Alfredo Jiménez', category: 'ranchera' },
   { id: '23', title: 'Paloma Negra', originalArtist: 'Tomás Méndez', category: 'ranchera' },
-  { id: '24', title: 'Guadalajara', originalArtist: 'Pepe Guízar', category: 'popular' }
-];
+  { id: '24', title: 'Guadalajara', originalArtist: 'Pepe Guízar', category: 'popular' },
+] as const;
 
 export interface MariachiHubBase {
   id: string;
@@ -100,7 +125,7 @@ export interface MariachiHubBase {
   isCentralHub: boolean;
 }
 
-export const MARIACHI_DISPATCH_HUBS: MariachiHubBase[] = [
+export const MARIACHI_DISPATCH_HUBS: readonly MariachiHubBase[] = [
   { id: 'madrid-eliptica', name: 'Hub Central Plaza Elíptica', city: 'Madrid', province: 'Madrid', lat: 40.3847, lng: -3.7183, isCentralHub: true },
   { id: 'toledo-mentrida', name: 'Hub S-Class Méntrida', city: 'Méntrida', province: 'Toledo', lat: 40.2383, lng: -4.1956, isCentralHub: false },
   { id: 'barcelona-hub', name: 'Sede Federada Barcelona', city: 'Barcelona', province: 'Barcelona', lat: 41.3851, lng: 2.1734, isCentralHub: false },
@@ -108,8 +133,14 @@ export const MARIACHI_DISPATCH_HUBS: MariachiHubBase[] = [
   { id: 'sevilla-hub', name: 'Sede Federada Andalucía Sur', city: 'Sevilla', province: 'Sevilla', lat: 37.3891, lng: -5.9845, isCentralHub: false },
   { id: 'bilbao-hub', name: 'Sede Federada Norte', city: 'Bilbao', province: 'Bizkaia', lat: 43.263, lng: -2.935, isCentralHub: false },
   { id: 'milan-hub', name: 'Sede Internacional Europa 01', city: 'Milán', province: 'Lombardía (Italia)', lat: 45.4642, lng: 9.19, isCentralHub: false },
-  { id: 'cdmx-hub', name: 'Sede Matriz América Latina', city: 'Ciudad de México', province: 'CDMX (México)', lat: 19.4326, lng: -99.1332, isCentralHub: false }
-];
+  { id: 'cdmx-hub', name: 'Sede Matriz América Latina', city: 'Ciudad de México', province: 'CDMX (México)', lat: 19.4326, lng: -99.1332, isCentralHub: false },
+] as const;
+
+export interface MariachiSplitBreakdown {
+  artist80: number;
+  earOs10: number;
+  vimume10: number;
+}
 
 export interface MariachiQuoteCalculation {
   format: MariachiFormat;
@@ -123,18 +154,24 @@ export interface MariachiQuoteCalculation {
   totalGrossPrice: number;
   depositRequired: number;
   balanceOnVenue: number;
+  split: MariachiSplitBreakdown;
+  priceLockHash: string;
 }
 
+/**
+ * Calcula la cotización mariachi de forma determinista (SSOT).
+ * El Split Soberano 80/10/10 se aplica sobre la base imponible (pre-IVA).
+ */
 export function calculateMariachiQuote(
-  formatId: MariachiFormat['id'],
+  formatId: MariachiFormatId,
   destinationCoords: { lat: number; lng: number },
   destinationName: string,
   endHour: number = 2,
-  overrideHubId?: string
+  overrideHubId?: string,
 ): MariachiQuoteCalculation {
-  const format = MARIACHI_FORMATS.find((f) => f.id === formatId) || MARIACHI_FORMATS[1];
-  
-  // Buscar el hub más cercano si no se especifica uno
+  const format = MARIACHI_FORMATS.find((f) => f.id === formatId) ?? MARIACHI_FORMATS[0];
+
+  // Buscar el hub más cercano si no se especifica uno.
   let selectedHub = MARIACHI_DISPATCH_HUBS[0];
   if (overrideHubId) {
     const found = MARIACHI_DISPATCH_HUBS.find((h) => h.id === overrideHubId);
@@ -154,16 +191,25 @@ export function calculateMariachiQuote(
     destinationCoords.lat,
     destinationCoords.lng,
     selectedHub.lat,
-    selectedHub.lng
+    selectedHub.lng,
   );
 
   const logistics = calculateLogisticsFee(distanceKm, endHour);
   const basePrice = format.basePrice;
   const subtotal = basePrice + logistics.totalLogisticsFee;
-  const vatAmount = Math.round(subtotal * 0.21);
+  const vatAmount = Math.round(subtotal * VAT_RATE);
   const totalGrossPrice = subtotal + vatAmount;
-  const depositRequired = format.depositAmount; // 100€
+  const depositRequired = format.depositAmount; // 100 € (SSOT)
   const balanceOnVenue = Math.max(0, totalGrossPrice - depositRequired);
+
+  // Split Soberano 80/10/10 sobre base imponible (pre-IVA).
+  const artist80 = Math.round(subtotal * SSOT_SPLIT_RATIOS.artista);
+  const earOs10 = Math.round(subtotal * SSOT_SPLIT_RATIOS.earOs);
+  const vimume10 = subtotal - artist80 - earOs10;
+
+  // Price-Lock SHA-256 real (determinista, verificable server-side).
+  const payloadToHash = `${format.id}|${Math.round(distanceKm)}|${subtotal}|${DEPOSITO_STRIPE_EUR}|${endHour}`;
+  const priceLockHash = createHash('sha256').update(payloadToHash).digest('hex');
 
   return {
     format,
@@ -176,6 +222,8 @@ export function calculateMariachiQuote(
     vatAmount,
     totalGrossPrice,
     depositRequired,
-    balanceOnVenue
+    balanceOnVenue,
+    split: { artist80, earOs10, vimume10 },
+    priceLockHash,
   };
 }

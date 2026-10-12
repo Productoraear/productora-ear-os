@@ -6,6 +6,8 @@ export const ROUTES = {
   home: "/",
   artistas: "/artistas",
   artists: "/artistas",
+  mariachis: "/mariachis",
+  artistasMariachis: "/artistas/mariachis",
   presupuesto: "/presupuesto",
   cotizador: "/cotizador",
   theSignal: "/the-signal",

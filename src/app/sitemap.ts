@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { PROVINCIAS_52_GRAPH } from '@/lib/constants/seo-data-hydrated';
+import { MARIACHI_LANDINGS } from '@/lib/mariachi/mariachiLandingCatalog';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://productoraear.com';
 
@@ -26,7 +27,8 @@ const STATIC_ROUTES: StaticRoute[] = [
     { path: '/presupuesto', priority: 0.85, changeFrequency: 'weekly' },
     { path: '/checkout/presupuesto', priority: 0.85, changeFrequency: 'weekly' },
     { path: '/vimume', priority: 0.85, changeFrequency: 'weekly' },
-    { path: '/mariachis', priority: 0.9, changeFrequency: 'daily' },
+    { path: '/mariachis', priority: 0.95, changeFrequency: 'daily' },
+    { path: '/mariachis/unirse', priority: 0.8, changeFrequency: 'weekly' },
     { path: '/dj-para-bodas', priority: 0.9, changeFrequency: 'daily' },
     { path: '/catering-brasas', priority: 0.85, changeFrequency: 'weekly' },
     { path: '/arroces', priority: 0.85, changeFrequency: 'weekly' },
@@ -69,6 +71,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
             lastModified,
             changeFrequency: 'weekly',
             priority: 0.8,
+        });
+    }
+
+    // Sub-landings mariachi de intención (transaccionales), derivadas del
+    // catálogo SSOT `MARIACHI_LANDINGS`. Cada una es una página real de venta.
+    for (const landing of MARIACHI_LANDINGS) {
+        entries.push({
+            url: `${BASE_URL}/mariachis/${landing.slug}`,
+            lastModified,
+            changeFrequency: landing.slug === 'fiestas-patronales' ? 'weekly' : 'daily',
+            priority: 0.85,
         });
     }
 

@@ -627,32 +627,57 @@ export default function ArtistasNationalCatalogClient() {
 
               {/* LAS 4 FÓRMULAS HOMOLOGADAS EN CHIPS COMPACTOS */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 font-mono">
-                <div className="p-2.5 rounded-xl bg-black/60 border border-[#ecb613]/50">
-                  <span className="text-[10px] text-slate-400 uppercase block">1. Solista Premium</span>
+                <a
+                  href="/reservar/solista"
+                  className="p-2.5 rounded-xl bg-black/60 border border-[#ecb613]/50 hover:border-[#ecb613] transition block group"
+                  title="Reservar Show Solista Edwin Agudelo (350 €)"
+                >
+                  <span className="text-[10px] text-slate-400 group-hover:text-amber-300 uppercase block">1. Solista Premium</span>
                   <span className="text-xs font-black text-[#ecb613]">350 €</span>
-                </div>
-                <div className="p-2.5 rounded-xl bg-black/60 border border-slate-800">
-                  <span className="text-[10px] text-slate-400 uppercase block">2. Mariachi 6p</span>
+                </a>
+                <a
+                  href="/mariachis#packs"
+                  className="p-2.5 rounded-xl bg-black/60 border border-slate-800 hover:border-[#ecb613]/60 transition block group"
+                  title="Ver Pack Mariachi 6p en /mariachis (600 €)"
+                >
+                  <span className="text-[10px] text-slate-400 group-hover:text-amber-300 uppercase block">2. Mariachi 6p</span>
                   <span className="text-xs font-black text-[#ecb613]">600 €</span>
-                </div>
-                <div className="p-2.5 rounded-xl bg-black/60 border border-slate-800">
-                  <span className="text-[10px] text-slate-400 uppercase block">3. Mariachi 9p</span>
+                </a>
+                <a
+                  href="/mariachis#packs"
+                  className="p-2.5 rounded-xl bg-black/60 border border-slate-800 hover:border-[#ecb613]/60 transition block group"
+                  title="Ver Pack Mariachi 9p en /mariachis (900 €)"
+                >
+                  <span className="text-[10px] text-slate-400 group-hover:text-amber-300 uppercase block">3. Mariachi 9p</span>
                   <span className="text-xs font-black text-[#ecb613]">900 €</span>
-                </div>
-                <div className="p-2.5 rounded-xl bg-black/60 border border-slate-800">
-                  <span className="text-[10px] text-slate-400 uppercase block">4. Ensamble 13p</span>
+                </a>
+                <a
+                  href="/mariachis#packs"
+                  className="p-2.5 rounded-xl bg-black/60 border border-slate-800 hover:border-[#ecb613]/60 transition block group"
+                  title="Ver Pack Gran Ensamble 13p en /mariachis (1.300 €)"
+                >
+                  <span className="text-[10px] text-slate-400 group-hover:text-amber-300 uppercase block">4. Ensamble 13p</span>
                   <span className="text-xs font-black text-[#ecb613]">1.300 €</span>
-                </div>
+                </a>
               </div>
 
               {/* BOTONES DE CIERRE DIRECTO */}
-              <div className="flex flex-col sm:flex-row gap-2 pt-1 font-mono text-xs">
+              <div className="flex flex-col sm:flex-row flex-wrap gap-2 pt-1 font-mono text-xs">
                 <a
                   href="/reservar/solista"
-                  className="flex-1 bg-[#ecb613] hover:bg-white text-black font-black uppercase py-3 px-4 rounded-xl text-center transition flex items-center justify-center gap-1.5 shadow-md"
+                  className="flex-1 min-w-[200px] bg-[#ecb613] hover:bg-white text-black font-black uppercase py-3 px-4 rounded-xl text-center transition flex items-center justify-center gap-1.5 shadow-md"
                 >
                   <Lock className="w-3.5 h-3.5 fill-black" />
                   <span>Bloquear Fecha (100 € Stripe)</span>
+                </a>
+
+                <a
+                  href="/mariachis"
+                  className="bg-amber-400/10 hover:bg-[#ecb613] text-[#ecb613] hover:text-black border border-[#ecb613]/50 font-bold uppercase py-3 px-4 rounded-xl text-center transition flex items-center justify-center gap-1.5 shadow-sm"
+                  title="Acceder a la plataforma especializada de mariachis con cálculo por km"
+                >
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>🎺 Cotizador Mariachis (/mariachis)</span>
                 </a>
 
                 <a
@@ -734,6 +759,41 @@ export default function ArtistasNationalCatalogClient() {
         </section>
       ) : (
         <section id="catalogo-artistas-grid" className="max-w-7xl mx-auto py-4 sm:py-6 px-3 sm:px-6 lg:px-8">
+          {/* BANNER DINÁMICO S-CLASS AL FILTRAR O BUSCAR MARIACHIS */}
+          {(selectedSubcat === 'mariachi' || /mariachi|ranchera/i.test(searchQuery)) && (
+            <div className="mb-6 p-4 sm:p-6 rounded-2xl bg-gradient-to-r from-[#0c0a06] via-[#08080f] to-[#12080a] border-2 border-[#ecb613]/70 shadow-[0_0_30px_rgba(236,182,19,0.15)]">
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div className="space-y-1.5">
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#ecb613] text-black text-[10px] font-mono font-black uppercase tracking-wider">
+                    <Sparkles className="w-3 h-3 fill-black" />
+                    <span>Vertical Oficial S-Class · Red Nacional de Mariachis EAR OS</span>
+                  </div>
+                  <h3 className="text-lg sm:text-2xl font-black text-white font-syne uppercase">
+                    Cotizador & Despacho Inmediato de <span className="text-[#ecb613]">Mariachis en Directo</span>
+                  </h3>
+                  <p className="text-xs text-slate-300 font-light max-w-2xl leading-relaxed">
+                    Calcula el kilometraje real (1,50 €/km), elige entre los 4 formatos homologados (Solista 350€, Cuarteto 600€, Gran Ensamble 900€, Gala Imperial 1.300€), configura repertorio charro a la carta y bloquea tu fecha con 100 € deducibles en Stripe.
+                  </p>
+                </div>
+                <div className="flex flex-wrap items-center gap-2 shrink-0 font-mono text-xs">
+                  <a
+                    href="/mariachis"
+                    className="bg-[#ecb613] hover:bg-white text-black font-black uppercase py-3 px-4 rounded-xl transition flex items-center gap-1.5 shadow-md"
+                  >
+                    <Lock className="w-3.5 h-3.5 fill-black" />
+                    <span>Abrir /mariachis</span>
+                  </a>
+                  <a
+                    href="/artistas/mariachis"
+                    className="bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 font-bold uppercase py-3 px-3 rounded-xl transition"
+                  >
+                    Dossier Formatos
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* CONTROLES SUPERIORES DE PAGINACIÓN Y MÉTRICAS */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-slate-800/60 pb-3 mb-4 font-mono text-xs">
             <div className="text-slate-400">
@@ -868,6 +928,11 @@ function RealArtistCard({ artist, onSelect }: { artist: RealArtist; onSelect: ()
   const displayImg = (!imgError && !isForbiddenImg) ? rawImg : fallbackImg;
   const baseTariff = artist.basePrice || 350;
 
+  const isMariachi = Boolean(
+    artist.gremioTag === 'mariachi' ||
+    /mariachi|ranchera|charro|mexicano/i.test(`${artist.name} ${artist.description || ''}`)
+  );
+
   return (
     <div className="bg-[#07070b] border border-slate-800/80 rounded-2xl overflow-hidden hover:border-[#ecb613]/60 transition-all duration-300 hover:-translate-y-0.5 group flex flex-col h-full shadow-lg">
       {/* FOTO HD DEL ARTISTA */}
@@ -886,6 +951,14 @@ function RealArtistCard({ artist, onSelect }: { artist: RealArtist; onSelect: ()
           <MapPin className="w-3 h-3 text-[#ecb613]" />
           <span>{artist.province}</span>
         </div>
+
+        {/* BADGE MARIACHI S-CLASS */}
+        {isMariachi && (
+          <div className="absolute bottom-2.5 right-2.5 bg-[#ecb613] text-black text-[9px] px-2 py-0.5 rounded-full font-black uppercase tracking-wider font-mono shadow-md flex items-center gap-1">
+            <Sparkles className="w-3 h-3 fill-black" />
+            <span>Mariachi S-Class</span>
+          </div>
+        )}
 
         {artist.rating && (
           <div className="absolute top-2.5 right-2.5 bg-slate-950/80 backdrop-blur-md text-[#ecb613] border border-[#ecb613]/30 text-[10px] px-2 py-0.5 rounded-full font-bold flex items-center gap-1">
@@ -954,6 +1027,17 @@ function RealArtistCard({ artist, onSelect }: { artist: RealArtist; onSelect: ()
             <MessageSquare className="w-3.5 h-3.5" />
             <span>Consultar</span>
           </a>
+
+          {isMariachi && (
+            <a
+              href={`/mariachis?artista=${encodeURIComponent(artist.name)}&provincia=${encodeURIComponent(artist.province)}`}
+              className="col-span-2 bg-[#ecb613]/10 hover:bg-[#ecb613] text-[#ecb613] hover:text-black border border-[#ecb613]/40 text-center py-2 px-2 rounded-xl text-[10px] font-black uppercase transition flex items-center justify-center gap-1.5 shadow-sm"
+              title="Abrir cotizador especializado de mariachis con cálculo por km"
+            >
+              <Sparkles className="w-3 h-3" />
+              <span>🎺 Cotizar en /mariachis (Km + 4 Packs)</span>
+            </a>
+          )}
         </div>
       </div>
     </div>
@@ -963,6 +1047,10 @@ function RealArtistCard({ artist, onSelect }: { artist: RealArtist; onSelect: ()
 function ArtistDetailModal({ artist, onClose }: { artist: RealArtist; onClose: () => void }) {
   const basePrice = artist.basePrice || 350;
   const artistSlug = artist.slug || artist.id;
+  const isMariachi = Boolean(
+    artist.gremioTag === 'mariachi' ||
+    /mariachi|ranchera|charro|mexicano/i.test(`${artist.name} ${artist.description || ''}`)
+  );
 
   return (
     <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-2 sm:p-6 overflow-y-auto font-sans">
@@ -1000,6 +1088,22 @@ function ArtistDetailModal({ artist, onClose }: { artist: RealArtist; onClose: (
             aspectRatio="video"
           />
         </div>
+
+        {/* BANNER ENLACE S-CLASS A /MARIACHIS SI EL ARTISTA ES MARIACHI */}
+        {isMariachi && (
+          <div className="mb-4 sm:mb-6 p-3 sm:p-4 rounded-xl bg-gradient-to-r from-[#0c0a06] via-[#07070b] to-[#12080a] border border-[#ecb613]/60 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+            <div className="text-xs font-mono">
+              <span className="text-[#ecb613] font-bold block">🎺 Agrupación Homologada · Red Nacional de Mariachis EAR OS</span>
+              <span className="text-slate-400 text-[11px]">Calcula el desplazamiento exacto por km (1,50 €/km), 4 packs oficiales y reserva con 100 € deducibles.</span>
+            </div>
+            <a
+              href={`/mariachis?artista=${encodeURIComponent(artist.name)}&provincia=${encodeURIComponent(artist.province)}`}
+              className="bg-[#ecb613] hover:bg-white text-black text-xs font-mono font-black uppercase py-2 px-3.5 rounded-lg transition whitespace-nowrap shadow-sm shrink-0"
+            >
+              Cotizar en /mariachis
+            </a>
+          </div>
+        )}
 
         {/* FICHA TÉCNICA EXHAUSTIVA DE CONTRATACIÓN (CON CALENDARIO Y RUTA POR HORAS) */}
         <ArtistBookingSpecSheet

@@ -37,3 +37,5 @@ export const MARIACHI_SEMANTIC_MATRIX: MariachiSemanticNode[] = [
   { level: 29, entity: "Contratación Directa sin Intermediarios", category: "service", searchIntent: "contratar mariachi directo sin agencias comisiones" },
   { level: 30, entity: "Cobertura Provincial y Desplazamiento pSEO", category: "service", searchIntent: "mariachi a domicilio en toledo madrid y provincias" }
 ];
+
+export * from './mariachi-seo-matrix-400';

@@ -194,6 +194,9 @@ async function loadStaticDataset(targetFile: string, requestUrl: string): Promis
     path.join(process.cwd(), 'public', 'data', 'providers', targetFile),
     path.join(process.cwd(), '.next', 'standalone', 'public', 'data', 'providers', targetFile),
     path.join(__dirname, '..', '..', '..', '..', '..', 'public', 'data', 'providers', targetFile),
+    path.join(process.cwd(), 'public', 'data', 'artists', targetFile),
+    path.join(process.cwd(), '.next', 'standalone', 'public', 'data', 'artists', targetFile),
+    path.join(__dirname, '..', '..', '..', '..', '..', 'public', 'data', 'artists', targetFile),
   ];
 
   // Si la petición es para música, comprobar también la ruta canónica de artistas
@@ -220,7 +223,7 @@ async function loadStaticDataset(targetFile: string, requestUrl: string): Promis
   //    Esto mantiene el bundle serverless < 250 MB sin perder el dataset.
   try {
     const origin = new URL(requestUrl).origin;
-    if (targetFile === 'musica.json') {
+    if (targetFile === 'musica.json' || targetFile === 'artists_canonical.json') {
       const artRes = await fetch(`${origin}/data/artists/artists_canonical.json`, { cache: 'no-store' });
       if (artRes.ok) return await artRes.text();
     }
@@ -259,6 +262,26 @@ async function queryStaticProviders(options: {
     const raw = await loadStaticDataset(`${normCat}.json`, requestUrl);
     if (raw) {
       try { list = JSON.parse(raw); } catch (e) { }
+    }
+    // S-Class: Al consultar música o catálogo de artistas, combinar con artists_canonical.json
+    // para garantizar que la vertical de Mariachis y agrupaciones de raíz estén 100% integradas
+    if (normCat === 'musica') {
+      const canonicalRaw = await loadStaticDataset('artists_canonical.json', requestUrl);
+      if (canonicalRaw) {
+        try {
+          const canonicalList = JSON.parse(canonicalRaw);
+          if (Array.isArray(canonicalList)) {
+            const seenIds = new Set(list.map((x) => x.id || x.slug));
+            for (const item of canonicalList) {
+              const key = item.id || item.slug;
+              if (key && !seenIds.has(key)) {
+                seenIds.add(key);
+                list.push(item);
+              }
+            }
+          }
+        } catch { /* continuar */ }
+      }
     }
   } else {
     // When no category is selected, load multiple massive datasets to show the true scale (S-Class)
@@ -351,7 +374,12 @@ async function queryStaticProviders(options: {
       const descLower = (p.description || '').toLowerCase();
 
       if (subcatLower === 'mariachi') {
-        return /mariachi|ranchera|charro|mexicano|rociero/i.test(nameLower) || /mariachi|ranchera|charro|rociero/i.test(descLower);
+        const hasMariachiGenre = Array.isArray(p.genres) && p.genres.some((g: string) => /mariachi/i.test(g));
+        return (
+          hasMariachiGenre ||
+          /mariachi|ranchera|charro|mexicano|rociero/i.test(nameLower) ||
+          /mariachi|ranchera|charro|rociero/i.test(descLower)
+        );
       }
       if (subcatLower === 'dj') {
         return /\b(dj|djs|discomovil|discomóvil|disc-jockey)\b/i.test(nameLower) || /\b(dj|discomovil)\b/i.test(catLower) || /\b(dj|discomovil)\b/i.test(descLower);

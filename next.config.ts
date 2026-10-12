@@ -134,6 +134,9 @@ const nextConfig: NextConfig = {
       // Consolidación anti-doorway: rutas legacy /weddings -> hub real de bodas
       { source: "/weddings", destination: "/bodas", permanent: true },
       { source: "/weddings/:path*", destination: "/bodas", permanent: true },
+      // Canonicalización mariachi con tilde: slugs ASCII legacy -> slug español canónico.
+      { source: "/mariachis/cumpleanos", destination: "/mariachis/cumpleaños", permanent: true },
+      { source: "/mariachis/quinceanera", destination: "/mariachis/quinceañera", permanent: true },
     ];
   },
 };
