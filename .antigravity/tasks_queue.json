@@ -8,28 +8,6 @@
   "_instructions_for_worker": "Ejecuta SOLO via: call RUN_OMEGA.bat next  ->  lee .antigravity/MISSION_ACTIVE.json  ->  edita SOLO 'files'  ->  call RUN_OMEGA.bat complete <ID>. El complete ya ejecuta tsc + eslint + test. 1 tarea por sesion. Si una orden te parece simplona, devuelve reto_espejo en tu reporte (AGENTS.md 13).",
   "tasks": [
     {
-      "id": "W28_T03_DISPATCH_LEAD_PROVIDER_WHATSAPP_N8N",
-      "title": "P0: Notificador Instantáneo de Leads a Proveedores por WhatsApp + n8n",
-      "status": "QUEUED",
-      "files": [
-        "src/app/api/booking/notify-provider/route.ts",
-        "scripts/verify_provider_lead_dispatcher.cjs"
-      ],
-      "action": "Implementar el endpoint API que toma una solicitud de reserva creada por RequestToBookModal (requestId, providerId, clientPhone, clientName, eventDate, budget, location) y genera el payload enriquecido de notificación inmediata. Despacha evento asíncrono a n8n ('call-center-intake') y genera el enlace directo de WhatsApp preformateado con mensaje profesional para avisar al proveedor del bolo en < 60 segundos.",
-      "scaffold": {
-        "rules": [
-          "Endpoint POST en src/app/api/booking/notify-provider/route.ts con validación estricta de requestId, providerId y eventDate.",
-          "Generar enlace de WhatsApp (wa.me) con texto codificado: '¡Hola [Proveedor]! Tienes una solicitud de reserva prioritaria en EAR OS para el [Fecha] en [Lugar]. Presupuesto: [Presupuesto]€. Responde para aceptar el bolo y recibir el depósito.'",
-          "Despachar mediante fireAndForgetN8n('call-center-intake', ...) con DLQ garantizado (cero leads huérfanos).",
-          "Devolver JSON { success: true, whatsappUrl: string, dispatchedAt: string }.",
-          "Cero 'any', tipado TypeScript estricto."
-        ],
-        "test_cjs": "scripts/verify_provider_lead_dispatcher.cjs: envía payload simulado al endpoint o valida exports, presencia de fireAndForgetN8n, wa.me y ausencia de ': any'. Exit 1 en fallo."
-      },
-      "test": "node scripts/verify_provider_lead_dispatcher.cjs",
-      "done_when": "tsc 0 + eslint 0 + test 0. Notificación y enlace de WhatsApp funcionando para proveedores."
-    },
-    {
       "id": "W28_T04_VENDOR_BOOKING_ACCEPTANCE_FLOW",
       "title": "P0: Flujo de Aceptación del Proveedor con Token HMAC y Desbloqueo del Depósito Stripe 100 €",
       "status": "QUEUED",
