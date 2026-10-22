@@ -109,8 +109,8 @@ export default function ReclamarRegaliasPage() {
       if (res.checkoutUrl) {
         window.location.href = res.checkoutUrl;
       }
-    } catch (err: any) {
-      alert(err.message || "Error al iniciar el checkout de Stripe.");
+    } catch (err: unknown) {
+      alert(err instanceof Error && err.message ? err.message : "Error al iniciar el checkout de Stripe.");
       setBillingLoading(null);
     }
   };
@@ -138,8 +138,8 @@ export default function ReclamarRegaliasPage() {
       if (res.checkoutUrl) {
         window.location.href = res.checkoutUrl;
       }
-    } catch (err: any) {
-      alert(err.message || "Error al conectar con Stripe.");
+    } catch (err: unknown) {
+      alert(err instanceof Error && err.message ? err.message : "Error al conectar con Stripe.");
       setBillingLoading(null);
     }
   };
@@ -194,12 +194,19 @@ export default function ReclamarRegaliasPage() {
           </div>
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white font-syne leading-[1.1]">
-            Tu música suena en salas y eventos. <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] via-amber-300 to-yellow-500">Recupera el 100% de tus regalías en 30 segundos.</span>
+            Tu música suena en salas y eventos. <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] via-amber-300 to-yellow-500">Certificación Forense de Ejecución Pública (Art. 108 TRLPI).</span>
           </h1>
 
           <p className="text-base sm:text-xl text-zinc-400 font-normal max-w-3xl mx-auto leading-relaxed">
-            Instala el conector silencioso <strong className="text-zinc-200">Cue Bridge de 1-Clic</strong> o sube el historial de tu controladora (<strong className="text-zinc-200">VirtualDJ, Pioneer, Serato, Traktor, Denon</strong>). Certificación forense SHA-256 amparada por el Art. 108 de la LPI.
+            Instala el conector silencioso <strong className="text-zinc-200">Cue Bridge de 1-Clic</strong> o sube el historial de tu controladora (<strong className="text-zinc-200">VirtualDJ, Pioneer, Serato, Traktor, Denon</strong>). Genera un justificante de repertorio para entidades de gestión colectiva (SGAE / AIE) con sellado SHA-256 conforme al Art. 108 del TRLPI (RDL 1/1996).
           </p>
+
+          <div role="note" aria-label="Descargo de responsabilidad oficial" className="max-w-3xl mx-auto rounded-3xl bg-[#09090d]/80 border border-[#ecb613]/40 backdrop-blur-md p-5 text-left transition-all duration-300 ease-out hover:border-[#ecb613]/70">
+            <p className="text-xs sm:text-sm text-zinc-200 leading-relaxed">
+              <strong className="text-[#ecb613] font-mono uppercase tracking-wider">Descargo de Responsabilidad Oficial: </strong>
+              EAR OS es una plataforma tecnológica independiente de auditoría acústica y certificación de ejecuciones. No constituye entidad de gestión colectiva de derechos ni sustituye la liquidación legal obligatoria.
+            </p>
+          </div>
 
           {/* CTAs Principales de Captación */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
@@ -269,7 +276,7 @@ export default function ReclamarRegaliasPage() {
                 Auditar mi Último Bolo Gratis (Sin Tarjeta)
               </h2>
               <p className="text-xs sm:text-sm text-zinc-400 mt-1">
-                Arrastra cualquier archivo de historial (<code className="text-zinc-200">.m3u, .csv, .xml, .nml, .txt</code>) para calcular al instante tu bolsa de dinero no reclamado.
+                Arrastra cualquier archivo de historial (<code className="text-zinc-200">.m3u, .csv, .xml, .nml, .txt</code>) para obtener una estimación orientativa de repertorio auditable.
               </p>
             </div>
 
@@ -332,7 +339,7 @@ export default function ReclamarRegaliasPage() {
                     className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-mono text-xs uppercase font-bold rounded-xl shadow-lg shadow-emerald-600/20 flex items-center gap-2 cursor-pointer shrink-0"
                   >
                     <DocumentArrowDownIcon className="w-4 h-4" />
-                    Descargar Acta Visada SGAE
+                    Descargar Justificante de Repertorio (SGAE / AIE)
                   </button>
                 </div>
               )}
@@ -361,7 +368,7 @@ export default function ReclamarRegaliasPage() {
             Monetización & Blindaje <span className="text-[#ecb613]">S-Class</span>
           </h2>
           <p className="text-zinc-400 text-sm sm:text-base">
-            Elige el plan adaptado a tu actividad: recupera tus derechos como artista o blinda tu establecimiento frente a inspecciones de la SGAE.
+            Elige el plan adaptado a tu actividad: documenta tus ejecuciones como artista o conserva evidencia técnica auditable de la música emitida en tu establecimiento.
           </p>
 
           {/* Selector Ciclo Facturación */}
@@ -526,7 +533,7 @@ export default function ReclamarRegaliasPage() {
               </div>
               <h3 className="text-2xl font-bold text-white font-syne">Blindaje Total Fincas S-Class</h3>
               <p className="text-xs text-zinc-400">
-                Póliza digital anti-multas SGAE para bodas y eventos privados. Certificado Inmune con trazabilidad 0 Fallos.
+                Certificación Forense de Ejecución Pública (Art. 108 TRLPI) para bodas y eventos privados, con trazabilidad SHA-256 del repertorio.
               </p>
               <div className="pt-4 border-t border-white/10">
                 <span className="text-4xl font-black text-white font-mono">
@@ -543,7 +550,7 @@ export default function ReclamarRegaliasPage() {
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckBadgeIcon className="w-4 h-4 text-cyan-400 shrink-0" />
-                  <span>Actas visadas descargables para inspección</span>
+                  <span>Justificantes de repertorio descargables</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckBadgeIcon className="w-4 h-4 text-cyan-400 shrink-0" />
@@ -613,10 +620,10 @@ export default function ReclamarRegaliasPage() {
         <div className="bg-zinc-900/40 border border-white/10 rounded-3xl p-8 backdrop-blur-md">
           <h3 className="text-xl font-bold text-white font-syne mb-4 flex items-center gap-2">
             <LockClosedIcon className="w-5 h-5 text-[#ecb613]" />
-            ¿Por Qué el Expediente SHA-256 es Jurídicamente Irrefutable?
+            ¿Qué Valor Probatorio Aporta el Expediente SHA-256? (Art. 108 TRLPI)
           </h3>
           <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
-            De acuerdo con el <strong className="text-white">Artículo 24 de la Ley 34/2002 (LSSI)</strong> y el <strong className="text-white">Real Decreto Legislativo 1/1996 de Propiedad Intelectual</strong>, un registro digital fechado con sellado criptográfico SHA-256 y vinculado a coordenadas GPS constituye prueba plena de comunicación pública. La SGAE y la AIE no pueden rechazar una declaración de repertorio respaldada por datos de hardware no manipulables.
+            De acuerdo con el <strong className="text-white">Artículo 24 de la Ley 34/2002 (LSSI)</strong> y el <strong className="text-white">Real Decreto Legislativo 1/1996 de Propiedad Intelectual</strong>, un registro digital fechado con sellado criptográfico SHA-256 y vinculado a coordenadas GPS constituye un elemento probatorio técnico de la ejecución pública, cuya valoración corresponde a cada entidad de gestión colectiva (SGAE / AIE) y a los tribunales. Es una estimación orientativa de repertorio auditable y no sustituye la liquidación legal obligatoria.
           </p>
         </div>
       </section>

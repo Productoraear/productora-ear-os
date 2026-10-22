@@ -1,35 +1,80 @@
 {
   "_meta": {
     "version": "9.0-OMEGA-WAVE-28",
-    "doctrine": "WAVE 28: SALES CONVERSION + PROVIDER BOOKING INTEGRATION + LEGAL ROYALTY SHIELD + EAR DECK ARCHITECTURE SPEC",
+    "doctrine": "WAVE 28: SALES ENGINE & INSTANT CLOSING + PROVIDER WHATSAPP DISPATCH + 100€ STRIPE UNLOCK + EAR DECK SPEC",
     "wave": 28,
-    "total_tasks": 3
+    "total_tasks": 5
   },
   "_instructions_for_worker": "Ejecuta SOLO via: call RUN_OMEGA.bat next  ->  lee .antigravity/MISSION_ACTIVE.json  ->  edita SOLO 'files'  ->  call RUN_OMEGA.bat complete <ID>. El complete ya ejecuta tsc + eslint + test. 1 tarea por sesion. Si una orden te parece simplona, devuelve reto_espejo en tu reporte (AGENTS.md 13).",
   "tasks": [
     {
-      "id": "W28_T02_LEGAL_SHIELD_ROYALTIES_COPY",
-      "title": "P0: Blindaje Jurídico y Corrección de Copy en Reclamar Regalías (/artistas/reclamar-regalias)",
+      "id": "W28_T03_DISPATCH_LEAD_PROVIDER_WHATSAPP_N8N",
+      "title": "P0: Notificador Instantáneo de Leads a Proveedores por WhatsApp + n8n",
       "status": "QUEUED",
       "files": [
-        "src/app/(public)/artistas/reclamar-regalias/page.tsx",
-        "scripts/verify_legal_royalties_shield.cjs"
+        "src/app/api/booking/notify-provider/route.ts",
+        "scripts/verify_provider_lead_dispatcher.cjs"
       ],
-      "action": "Saneamiento y blindaje jurídico de la landing /artistas/reclamar-regalias. Eliminar afirmaciones engañosas o de riesgo ('anular multas SGAE', 'póliza anti-multas', 'dinero que te deben') y sustituirlas por terminología legal y técnica rigurosa amparada por el Art. 108 TRLPI ('Auditoría forense de repertorio ejecutado', 'Certificación criptográfica SHA-256 de sesión', 'Estimación orientativa de derechos'). Cumplir AGENTS.md §10.",
+      "action": "Implementar el endpoint API que toma una solicitud de reserva creada por RequestToBookModal (requestId, providerId, clientPhone, clientName, eventDate, budget, location) y genera el payload enriquecido de notificación inmediata. Despacha evento asíncrono a n8n ('call-center-intake') y genera el enlace directo de WhatsApp preformateado con mensaje profesional para avisar al proveedor del bolo en < 60 segundos.",
       "scaffold": {
         "rules": [
-          "Reemplazar 'Póliza digital anti-multas SGAE' y 'anular inspecciones' por 'Certificación Forense de Ejecución Pública (Art. 108 TRLPI)' y 'Justificante de repertorio para entidades de gestión'.",
-          "Reemplazar 'bolsa de dinero no reclamado' y 'te deben' por 'Estimación orientativa de repertorio auditable'.",
-          "Asegurar descargo explícito: 'EAR OS es una plataforma tecnológica independiente de auditoría acústica y certificación de ejecuciones. No constituye entidad de gestión colectiva de derechos ni sustituye la liquidación legal obligatoria.'",
-          "Cero ': any', cero 'Math.random'. Mantener funcionalidad del upload y certificado SHA-256."
+          "Endpoint POST en src/app/api/booking/notify-provider/route.ts con validación estricta de requestId, providerId y eventDate.",
+          "Generar enlace de WhatsApp (wa.me) con texto codificado: '¡Hola [Proveedor]! Tienes una solicitud de reserva prioritaria en EAR OS para el [Fecha] en [Lugar]. Presupuesto: [Presupuesto]€. Responde para aceptar el bolo y recibir el depósito.'",
+          "Despachar mediante fireAndForgetN8n('call-center-intake', ...) con DLQ garantizado (cero leads huérfanos).",
+          "Devolver JSON { success: true, whatsappUrl: string, dispatchedAt: string }.",
+          "Cero 'any', tipado TypeScript estricto."
         ],
-        "test_cjs": "scripts/verify_legal_royalties_shield.cjs: asserta que no existen las cadenas 'anti-multas' ni 'anular inspecciones' en reclamar-regalias/page.tsx, y que contiene 'Art. 108' y descargo de responsabilidad."
+        "test_cjs": "scripts/verify_provider_lead_dispatcher.cjs: envía payload simulado al endpoint o valida exports, presencia de fireAndForgetN8n, wa.me y ausencia de ': any'. Exit 1 en fallo."
       },
-      "test": "node scripts/verify_legal_royalties_shield.cjs",
-      "done_when": "tsc 0 + eslint 0 + test 0. Landing saneada y blindada jurídicamente sin riesgos de publicidad engañosa."
+      "test": "node scripts/verify_provider_lead_dispatcher.cjs",
+      "done_when": "tsc 0 + eslint 0 + test 0. Notificación y enlace de WhatsApp funcionando para proveedores."
     },
     {
-      "id": "W28_T03_SPEC_EAR_DECK_PRO_PLAYER",
+      "id": "W28_T04_VENDOR_BOOKING_ACCEPTANCE_FLOW",
+      "title": "P0: Flujo de Aceptación del Proveedor con Token HMAC y Desbloqueo del Depósito Stripe 100 €",
+      "status": "QUEUED",
+      "files": [
+        "src/app/api/booking/accept/route.ts",
+        "src/app/(public)/reservar/aceptar/page.tsx",
+        "scripts/verify_booking_acceptance_flow.cjs"
+      ],
+      "action": "Crear el flujo por el cual un proveedor acepta formalmente la fecha solicitada. La URL firmada (con token HMAC SHA-256) lleva a /reservar/aceptar?token=... donde el proveedor ve el resumen del evento, sus honorarios (80% Split Soberano) y pulsa 'Aceptar Bolo'. El endpoint actualiza el estado a ACCEPTED_BY_PROVIDER y genera el enlace de pago de Stripe Checkout (depósito de 100 € deducible) para que el cliente formalice la fianza.",
+      "scaffold": {
+        "rules": [
+          "src/app/api/booking/accept/route.ts: valida token HMAC, actualiza estado de reserva a 'ACCEPTED_BY_PROVIDER' y genera sesión de Stripe Checkout 100€ (DEPOSITO_STRIPE_EUR).",
+          "src/app/(public)/reservar/aceptar/page.tsx: UI OLED con resumen del evento, contador de ventana de exclusividad de 2 horas y botón de confirmación formal del artista/proveedor.",
+          "Protección anti-tampering: token firmado con clave secreta de servidor.",
+          "Cero ': any', TypeScript sin errores."
+        ],
+        "test_cjs": "scripts/verify_booking_acceptance_flow.cjs: asserta presencia de DEPOSITO_STRIPE_EUR, ACCEPTED_BY_PROVIDER, HMAC SHA-256 y ausencia de ': any'. Exit 1 en fallo."
+      },
+      "test": "node scripts/verify_booking_acceptance_flow.cjs",
+      "done_when": "tsc 0 + eslint 0 + test 0. Flujo completo de aceptación del artista y desbloqueo de pasarela de pago operativo."
+    },
+    {
+      "id": "W28_T05_DASHBOARD_LIVE_BOOKINGS_RADAR",
+      "title": "P1: Radar Telemetría de Reservas en Vivo (LiveBookingsRadar)",
+      "status": "QUEUED",
+      "files": [
+        "src/components/dashboard/LiveBookingsRadar.tsx",
+        "src/app/(dashboard)/panel/reservas/page.tsx",
+        "scripts/verify_live_bookings_radar.cjs"
+      ],
+      "action": "Construir la pantalla de telemetría y seguimiento en tiempo real de todas las solicitudes de reserva entrantes para el concierge y el artista: estados visuales (PENDIENTE_PROVEEDOR, ACEPTADO, FIANZA_STRIPE_LOCKED, EXPIRADO), cuenta atrás SLA de 2 horas, filtros por fecha y acceso directo a chat de WhatsApp.",
+      "scaffold": {
+        "rules": [
+          "LiveBookingsRadar.tsx: 'use client', tabla OLED con badges de estado dinámicos (Ámbar = Esperando Proveedor, Verde = Confirmada / Fianza Pagada, Rubí = Expirada).",
+          "Página en src/app/(dashboard)/panel/reservas/page.tsx protegida y responsive.",
+          "Cero 'any', cero datos simulados; integración con telemetría real.",
+          "Descarga de CSV de reservas para contabilidad."
+        ],
+        "test_cjs": "scripts/verify_live_bookings_radar.cjs: asserta exportación de LiveBookingsRadar, estados de reserva, cuenta atrás SLA y ausencia de ': any'. Exit 1 en fallo."
+      },
+      "test": "node scripts/verify_live_bookings_radar.cjs",
+      "done_when": "tsc 0 + eslint 0 + test 0. Panel de control y radar de reservas en vivo operativo."
+    },
+    {
+      "id": "W28_T06_SPEC_EAR_DECK_PRO_PLAYER",
       "title": "P1: Especificación Maestra de Arquitectura del Reproductor Propio (EAR Deck Pro Audio)",
       "status": "QUEUED",
       "files": [
@@ -52,6 +97,11 @@
   ],
   "completed": [
     {
+      "id": "W28_T01_INTEGRATE_REQUEST_TO_BOOK_SUPPLIERS",
+      "status": "COMPLETED",
+      "exit_code": 0
+    },
+    {
       "id": "W27_T03_BOVEDA_CANCIONES_PROHIBIDAS",
       "status": "COMPLETED",
       "exit_code": 0
@@ -68,9 +118,9 @@
     }
   ],
   "metadata": {
-    "last_updated": "2026-10-22T20:00:00.000Z",
-    "total_pending": 3,
-    "current_sprint": "WAVE_28_SALES_AND_BOOKING_CONVERSION",
-    "ceo_mandate": "Prioridad absoluta a ventas y conversión de reservas. Reproductor EAR Deck en especificación técnica hasta facturación del MVP."
+    "last_updated": "2026-10-22T20:20:00.000Z",
+    "total_pending": 5,
+    "current_sprint": "WAVE_28_SALES_ENGINE_AND_CONVERSION",
+    "ceo_mandate": "Prioridad absoluta a ventas y conversión de reservas. Notificación instantánea a proveedores, aceptación de bolos y desbloqueo de depósito Stripe de 100€."
   }
 }
