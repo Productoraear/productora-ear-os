@@ -34,6 +34,7 @@ import { ProviderMediaGallery } from '@/components/providers/ProviderMediaGaller
 import { ProviderNavigableReviews } from '@/components/providers/ProviderNavigableReviews';
 import { ProviderFooterClaimBanner } from '@/components/providers/ProviderFooterClaimBanner';
 import sanitizeHtml from 'sanitize-html';
+import { RequestToBookButton } from '@/components/booking/RequestToBookButton';
 
 import { isProviderPublic, isProviderBlacklisted, getProviderTier } from '@/lib/providers/visibility';
 import { INITIAL_INVENTORY } from '@/lib/constants/inventory-catalog';
@@ -655,7 +656,8 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
 
   const category = cleanText(rawProvider.atomic_specs?.category || rawProvider.category || 'Música & Sonido');
   const location = cleanText(rawProvider.atomic_specs?.location || rawProvider.address || `${rawProvider.province || 'Madrid'}, España`);
-  const providerIdShort = (rawProvider.id || slug).substring(0, 8).toUpperCase();
+  const providerId = rawProvider.id || slug;
+  const providerIdShort = providerId.substring(0, 8).toUpperCase();
 
   const tier = getProviderTier({ id: rawProvider.id || slug, slug, name: rawProvider.name });
   const isBlacklisted = tier === 'BLACKLISTED';
@@ -1015,12 +1017,14 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
                           <span className="text-[9px] font-mono text-zinc-500 block">Tarifa Oficial EAR</span>
                           <span className="text-lg font-black text-white font-mono">{item.ear_catalog_price_eur || item.original_price_eur} €</span>
                         </div>
-                        <Link
-                          href={`/checkout/presupuesto?proveedor=${encodeURIComponent(displayName)}&pack=${encodeURIComponent(item.title)}&precio=${item.ear_catalog_price_eur || item.original_price_eur}`}
-                          className="px-4 py-2 bg-[#ecb613] hover:bg-[#ecb613]/90 text-black font-mono text-xs font-bold uppercase rounded-xl transition-all"
-                        >
-                          Reservar
-                        </Link>
+                        <RequestToBookButton
+                          providerId={providerId}
+                          providerName={displayName}
+                          category={category}
+                          defaultBudget={item.ear_catalog_price_eur || item.original_price_eur}
+                          location={location.split(',')[0]}
+                          label="Reservar"
+                        />
                       </div>
                     </div>
                   ))}
@@ -1097,13 +1101,15 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
 
               {/* Action Buttons */}
               <div className="space-y-3">
-                <Link
-                  href={`/checkout/presupuesto?proveedor=${encodeURIComponent(displayName)}&precio=${rawProvider.basePrice || 650}`}
-                  className="w-full py-4 px-5 rounded-2xl bg-gradient-to-r from-[#ecb613] via-amber-500 to-amber-600 hover:from-amber-400 hover:to-[#ecb613] text-black font-black text-xs font-mono uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-amber-950/40 hover:scale-[1.02] active:scale-95 transition-all text-center"
-                >
-                  <span>Solicitar Presupuesto Oficial</span>
-                  <ArrowRight size={16} />
-                </Link>
+                <RequestToBookButton
+                  providerId={providerId}
+                  providerName={displayName}
+                  category={category}
+                  defaultBudget={rawProvider.basePrice || 650}
+                  location={location.split(',')[0]}
+                  label="Solicitar Reserva"
+                  className="w-full"
+                />
 
                 <a
                   href={CENTRALITA.tel}

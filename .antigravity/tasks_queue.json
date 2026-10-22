@@ -1,38 +1,76 @@
 {
   "_meta": {
-    "version": "9.0-OMEGA-WAVE-27",
-    "doctrine": "WAVE 27: CRO COMMERCIAL CONVERSION + ACOUSTIC CONSCIENCE PWA + PROHIBITED SONGS VAULT",
-    "wave": 27,
+    "version": "9.0-OMEGA-WAVE-28",
+    "doctrine": "WAVE 28: SALES CONVERSION + PROVIDER BOOKING INTEGRATION + LEGAL ROYALTY SHIELD + EAR DECK ARCHITECTURE SPEC",
+    "wave": 28,
     "total_tasks": 3
   },
   "_instructions_for_worker": "Ejecuta SOLO via: call RUN_OMEGA.bat next  ->  lee .antigravity/MISSION_ACTIVE.json  ->  edita SOLO 'files'  ->  call RUN_OMEGA.bat complete <ID>. El complete ya ejecuta tsc + eslint + test. 1 tarea por sesion. Si una orden te parece simplona, devuelve reto_espejo en tu reporte (AGENTS.md 13).",
-  "tasks": [],
+  "tasks": [
+    {
+      "id": "W28_T02_LEGAL_SHIELD_ROYALTIES_COPY",
+      "title": "P0: Blindaje Jurídico y Corrección de Copy en Reclamar Regalías (/artistas/reclamar-regalias)",
+      "status": "QUEUED",
+      "files": [
+        "src/app/(public)/artistas/reclamar-regalias/page.tsx",
+        "scripts/verify_legal_royalties_shield.cjs"
+      ],
+      "action": "Saneamiento y blindaje jurídico de la landing /artistas/reclamar-regalias. Eliminar afirmaciones engañosas o de riesgo ('anular multas SGAE', 'póliza anti-multas', 'dinero que te deben') y sustituirlas por terminología legal y técnica rigurosa amparada por el Art. 108 TRLPI ('Auditoría forense de repertorio ejecutado', 'Certificación criptográfica SHA-256 de sesión', 'Estimación orientativa de derechos'). Cumplir AGENTS.md §10.",
+      "scaffold": {
+        "rules": [
+          "Reemplazar 'Póliza digital anti-multas SGAE' y 'anular inspecciones' por 'Certificación Forense de Ejecución Pública (Art. 108 TRLPI)' y 'Justificante de repertorio para entidades de gestión'.",
+          "Reemplazar 'bolsa de dinero no reclamado' y 'te deben' por 'Estimación orientativa de repertorio auditable'.",
+          "Asegurar descargo explícito: 'EAR OS es una plataforma tecnológica independiente de auditoría acústica y certificación de ejecuciones. No constituye entidad de gestión colectiva de derechos ni sustituye la liquidación legal obligatoria.'",
+          "Cero ': any', cero 'Math.random'. Mantener funcionalidad del upload y certificado SHA-256."
+        ],
+        "test_cjs": "scripts/verify_legal_royalties_shield.cjs: asserta que no existen las cadenas 'anti-multas' ni 'anular inspecciones' en reclamar-regalias/page.tsx, y que contiene 'Art. 108' y descargo de responsabilidad."
+      },
+      "test": "node scripts/verify_legal_royalties_shield.cjs",
+      "done_when": "tsc 0 + eslint 0 + test 0. Landing saneada y blindada jurídicamente sin riesgos de publicidad engañosa."
+    },
+    {
+      "id": "W28_T03_SPEC_EAR_DECK_PRO_PLAYER",
+      "title": "P1: Especificación Maestra de Arquitectura del Reproductor Propio (EAR Deck Pro Audio)",
+      "status": "QUEUED",
+      "files": [
+        "docs/specs/EAR_DECK_ARCHITECTURE_SPEC.md",
+        "scripts/verify_ear_deck_spec.cjs"
+      ],
+      "action": "Redactar la Especificación de Arquitectura Técnica Completa del futuro reproductor propio 'EAR Deck' para su construcción tras la fase de facturación del MVP. Debe contemplar: 1) Motor de audio (Web Audio API + AudioWorklet + Web MIDI), 2) Blockchain/Ledger de reproducciones encadenadas SHA-256 (>30s para devengo de derechos), 3) Exportación oficial de planillas estándar a entidades de gestión, 4) Transición a app nativa Tauri (Rust) con separación de stems ONNX.",
+      "scaffold": {
+        "rules": [
+          "Crear docs/specs/EAR_DECK_ARCHITECTURE_SPEC.md con estructura ISO/IEC 25010 y C4 Model.",
+          "Definir contratos de interfaces TypeScript (AudioEngine, PlaybackLedgerEntry, MidiMapping, TrackMetadata).",
+          "Especificar el flujo criptográfico de firma de track > 30s con timestamp y GPS/Venue hash.",
+          "Establecer la hoja de ruta de implementación F1 (Web/PWA) a F3 (Tauri nativo + AI Stems)."
+        ],
+        "test_cjs": "scripts/verify_ear_deck_spec.cjs: asserta existencia de docs/specs/EAR_DECK_ARCHITECTURE_SPEC.md, presencia de AudioWorklet, SHA-256, Web MIDI y C4 Model. Exit 1 en fallo."
+      },
+      "test": "node scripts/verify_ear_deck_spec.cjs",
+      "done_when": "Especificación arquitectónica sellada y lista para ejecutar tras facturación."
+    }
+  ],
   "completed": [
     {
-      "id": "W26_T04_REQUEST_TO_BOOK_API",
+      "id": "W27_T03_BOVEDA_CANCIONES_PROHIBIDAS",
       "status": "COMPLETED",
       "exit_code": 0
     },
     {
-      "id": "W26_T03_TRACKER_DEFACADE",
+      "id": "W27_T02_SONOMETRO_CONCIENCIA_PWA",
       "status": "COMPLETED",
       "exit_code": 0
     },
     {
-      "id": "W26_T02_TELEMETRY_REAL_PINGS_API",
-      "status": "COMPLETED",
-      "exit_code": 0
-    },
-    {
-      "id": "W26_T01_VENDORS_VERIFIED_ONLY",
+      "id": "W27_T01_REQUEST_TO_BOOK_MODAL_UI",
       "status": "COMPLETED",
       "exit_code": 0
     }
   ],
   "metadata": {
-    "last_updated": "2026-10-22T15:20:00.000Z",
+    "last_updated": "2026-10-22T20:00:00.000Z",
     "total_pending": 3,
-    "current_sprint": "WAVE_27_CRO_AND_INTERACTIVE_TOOLS",
-    "ceo_mandate": "Máxima dominancia comercial, herramientas virales interactivas y cero fachadas."
+    "current_sprint": "WAVE_28_SALES_AND_BOOKING_CONVERSION",
+    "ceo_mandate": "Prioridad absoluta a ventas y conversión de reservas. Reproductor EAR Deck en especificación técnica hasta facturación del MVP."
   }
 }
