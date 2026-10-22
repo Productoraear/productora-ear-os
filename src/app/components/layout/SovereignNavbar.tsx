@@ -111,12 +111,12 @@ const MENU_FOLDERS: MenuFolder[] = [
   {
     id: 'proveedores',
     label: 'Catering & Servicios',
-    href: '/proveedores-servicios',
+    href: '/proveedores',
     subitems: [
       {
         title: 'Directorio Canónico de Proveedores Verificados',
         desc: 'Catering de Autor, Fotografía, Vídeo, Decoración y Planners',
-        href: '/proveedores-servicios',
+        href: '/proveedores',
         badge: 'Catálogo Verificado',
         icon: Sliders
       }

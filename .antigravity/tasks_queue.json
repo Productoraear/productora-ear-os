@@ -6,73 +6,7 @@
     "total_tasks": 5
   },
   "_instructions_for_worker": "Ejecuta SOLO via: call RUN_OMEGA.bat next  ->  lee .antigravity/MISSION_ACTIVE.json  ->  edita SOLO 'files'  ->  call RUN_OMEGA.bat complete <ID>. El complete ya ejecuta tsc + eslint + test. 1 tarea por sesion. Si una orden te parece simplona, devuelve reto_espejo en tu reporte (AGENTS.md 13).",
-  "tasks": [
-    {
-      "id": "W28_T04_VENDOR_BOOKING_ACCEPTANCE_FLOW",
-      "title": "P0: Flujo de Aceptación del Proveedor con Token HMAC y Desbloqueo del Depósito Stripe 100 €",
-      "status": "QUEUED",
-      "files": [
-        "src/app/api/booking/accept/route.ts",
-        "src/app/(public)/reservar/aceptar/page.tsx",
-        "scripts/verify_booking_acceptance_flow.cjs"
-      ],
-      "action": "Crear el flujo por el cual un proveedor acepta formalmente la fecha solicitada. La URL firmada (con token HMAC SHA-256) lleva a /reservar/aceptar?token=... donde el proveedor ve el resumen del evento, sus honorarios (80% Split Soberano) y pulsa 'Aceptar Bolo'. El endpoint actualiza el estado a ACCEPTED_BY_PROVIDER y genera el enlace de pago de Stripe Checkout (depósito de 100 € deducible) para que el cliente formalice la fianza.",
-      "scaffold": {
-        "rules": [
-          "src/app/api/booking/accept/route.ts: valida token HMAC, actualiza estado de reserva a 'ACCEPTED_BY_PROVIDER' y genera sesión de Stripe Checkout 100€ (DEPOSITO_STRIPE_EUR).",
-          "src/app/(public)/reservar/aceptar/page.tsx: UI OLED con resumen del evento, contador de ventana de exclusividad de 2 horas y botón de confirmación formal del artista/proveedor.",
-          "Protección anti-tampering: token firmado con clave secreta de servidor.",
-          "Cero ': any', TypeScript sin errores."
-        ],
-        "test_cjs": "scripts/verify_booking_acceptance_flow.cjs: asserta presencia de DEPOSITO_STRIPE_EUR, ACCEPTED_BY_PROVIDER, HMAC SHA-256 y ausencia de ': any'. Exit 1 en fallo."
-      },
-      "test": "node scripts/verify_booking_acceptance_flow.cjs",
-      "done_when": "tsc 0 + eslint 0 + test 0. Flujo completo de aceptación del artista y desbloqueo de pasarela de pago operativo."
-    },
-    {
-      "id": "W28_T05_DASHBOARD_LIVE_BOOKINGS_RADAR",
-      "title": "P1: Radar Telemetría de Reservas en Vivo (LiveBookingsRadar)",
-      "status": "QUEUED",
-      "files": [
-        "src/components/dashboard/LiveBookingsRadar.tsx",
-        "src/app/(dashboard)/panel/reservas/page.tsx",
-        "scripts/verify_live_bookings_radar.cjs"
-      ],
-      "action": "Construir la pantalla de telemetría y seguimiento en tiempo real de todas las solicitudes de reserva entrantes para el concierge y el artista: estados visuales (PENDIENTE_PROVEEDOR, ACEPTADO, FIANZA_STRIPE_LOCKED, EXPIRADO), cuenta atrás SLA de 2 horas, filtros por fecha y acceso directo a chat de WhatsApp.",
-      "scaffold": {
-        "rules": [
-          "LiveBookingsRadar.tsx: 'use client', tabla OLED con badges de estado dinámicos (Ámbar = Esperando Proveedor, Verde = Confirmada / Fianza Pagada, Rubí = Expirada).",
-          "Página en src/app/(dashboard)/panel/reservas/page.tsx protegida y responsive.",
-          "Cero 'any', cero datos simulados; integración con telemetría real.",
-          "Descarga de CSV de reservas para contabilidad."
-        ],
-        "test_cjs": "scripts/verify_live_bookings_radar.cjs: asserta exportación de LiveBookingsRadar, estados de reserva, cuenta atrás SLA y ausencia de ': any'. Exit 1 en fallo."
-      },
-      "test": "node scripts/verify_live_bookings_radar.cjs",
-      "done_when": "tsc 0 + eslint 0 + test 0. Panel de control y radar de reservas en vivo operativo."
-    },
-    {
-      "id": "W28_T06_SPEC_EAR_DECK_PRO_PLAYER",
-      "title": "P1: Especificación Maestra de Arquitectura del Reproductor Propio (EAR Deck Pro Audio)",
-      "status": "QUEUED",
-      "files": [
-        "docs/specs/EAR_DECK_ARCHITECTURE_SPEC.md",
-        "scripts/verify_ear_deck_spec.cjs"
-      ],
-      "action": "Redactar la Especificación de Arquitectura Técnica Completa del futuro reproductor propio 'EAR Deck' para su construcción tras la fase de facturación del MVP. Debe contemplar: 1) Motor de audio (Web Audio API + AudioWorklet + Web MIDI), 2) Blockchain/Ledger de reproducciones encadenadas SHA-256 (>30s para devengo de derechos), 3) Exportación oficial de planillas estándar a entidades de gestión, 4) Transición a app nativa Tauri (Rust) con separación de stems ONNX.",
-      "scaffold": {
-        "rules": [
-          "Crear docs/specs/EAR_DECK_ARCHITECTURE_SPEC.md con estructura ISO/IEC 25010 y C4 Model.",
-          "Definir contratos de interfaces TypeScript (AudioEngine, PlaybackLedgerEntry, MidiMapping, TrackMetadata).",
-          "Especificar el flujo criptográfico de firma de track > 30s con timestamp y GPS/Venue hash.",
-          "Establecer la hoja de ruta de implementación F1 (Web/PWA) a F3 (Tauri nativo + AI Stems)."
-        ],
-        "test_cjs": "scripts/verify_ear_deck_spec.cjs: asserta existencia de docs/specs/EAR_DECK_ARCHITECTURE_SPEC.md, presencia de AudioWorklet, SHA-256, Web MIDI y C4 Model. Exit 1 en fallo."
-      },
-      "test": "node scripts/verify_ear_deck_spec.cjs",
-      "done_when": "Especificación arquitectónica sellada y lista para ejecutar tras facturación."
-    }
-  ],
+  "tasks": [],
   "completed": [
     {
       "id": "W28_T01_INTEGRATE_REQUEST_TO_BOOK_SUPPLIERS",

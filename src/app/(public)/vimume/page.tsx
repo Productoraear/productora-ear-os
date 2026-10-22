@@ -18,6 +18,7 @@ import {
   MessageCircle
 } from 'lucide-react';
 import { CENTRALITA_EAR_OS } from '@/lib/constants/ear-os-ssot';
+import { VimumeBovedaEvidencia } from '@/components/vimume/VimumeBovedaEvidencia';
 
 type StakeholderRole = 'terapeuta' | 'director' | 'familia' | 'empresa' | 'investigador';
 
@@ -68,6 +69,11 @@ export default function VimumePortalPage() {
             ></iframe>
           </div>
         </div>
+
+        {/* 🔬 BÓVEDA DE EVIDENCIA CLÍNICA, MOTOR 40 HZ Y LABORATORIO ACÚSTICO */}
+        <section className="mb-20">
+          <VimumeBovedaEvidencia />
+        </section>
 
         {/* SELECTOR MULTICANAL DE ROLES (ADAPTACIÓN DINÁMICA) */}
         <div className="mb-12">
