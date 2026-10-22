@@ -1,38 +1,38 @@
 {
   "_meta": {
-    "version": "9.0-OMEGA-WAVE-28",
-    "doctrine": "WAVE 28: SALES ENGINE & INSTANT CLOSING + PROVIDER WHATSAPP DISPATCH + 100€ STRIPE UNLOCK + EAR DECK SPEC",
-    "wave": 28,
-    "total_tasks": 5
+    "version": "9.0-OMEGA-WAVE-30",
+    "doctrine": "WAVE 30: GRAND FINALE — N8N WEBHOOK PULSE + SEO SITEMAP LOCK + PRODUCTION BUILD SEAL + BARE-METAL SYNC",
+    "wave": 30,
+    "total_tasks": 4
   },
-  "_instructions_for_worker": "Ejecuta SOLO via: call RUN_OMEGA.bat next  ->  lee .antigravity/MISSION_ACTIVE.json  ->  edita SOLO 'files'  ->  call RUN_OMEGA.bat complete <ID>. El complete ya ejecuta tsc + eslint + test. 1 tarea por sesion. Si una orden te parece simplona, devuelve reto_espejo en tu reporte (AGENTS.md 13).",
+  "_instructions_for_worker": "Ejecuta SOLO via: call RUN_OMEGA.bat next  ->  lee .antigravity/MISSION_ACTIVE.json  ->  edita SOLO 'files'  ->  call RUN_OMEGA.bat complete <ID>. El complete ya ejecuta tsc + eslint + test. 1 tarea por sesion.",
   "tasks": [],
   "completed": [
     {
-      "id": "W28_T01_INTEGRATE_REQUEST_TO_BOOK_SUPPLIERS",
+      "id": "W29_T04_SEGUIMIENTO_TRACKER_ENHANCEMENT",
       "status": "COMPLETED",
       "exit_code": 0
     },
     {
-      "id": "W27_T03_BOVEDA_CANCIONES_PROHIBIDAS",
+      "id": "W29_T03_AUTOMATED_SPLIT_PAYOUT_DISPATCHER",
       "status": "COMPLETED",
       "exit_code": 0
     },
     {
-      "id": "W27_T02_SONOMETRO_CONCIENCIA_PWA",
+      "id": "W29_T02_SIGNATURE_ESCROW_PAGE",
       "status": "COMPLETED",
       "exit_code": 0
     },
     {
-      "id": "W27_T01_REQUEST_TO_BOOK_MODAL_UI",
+      "id": "W29_T01_SMART_CONTRACT_GENERATOR",
       "status": "COMPLETED",
       "exit_code": 0
     }
   ],
   "metadata": {
-    "last_updated": "2026-10-22T20:20:00.000Z",
-    "total_pending": 5,
-    "current_sprint": "WAVE_28_SALES_ENGINE_AND_CONVERSION",
-    "ceo_mandate": "Prioridad absoluta a ventas y conversión de reservas. Notificación instantánea a proveedores, aceptación de bolos y desbloqueo de depósito Stripe de 100€."
+    "last_updated": "2026-10-22T21:40:00.000Z",
+    "total_pending": 4,
+    "current_sprint": "WAVE_30_GRAND_FINALE_PRODUCTION_SEAL",
+    "ceo_mandate": "Cierre total del MVP al más alto nivel: n8n health, SEO sitemap lock, next build y sincronización bare-metal."
   }
 }

@@ -12,10 +12,14 @@ interface StaticRoute {
     changeFrequency: ChangeFrequency;
 }
 
-// Rutas estáticas vendibles: captación, checkout y páginas estructurales reales.
+// Rutas estáticas vendibles: captación, checkout, firma de contratos y páginas estructurales reales.
 // Sin doorway, sin bloques duplicados, sin páginas huérfanas.
 const STATIC_ROUTES: StaticRoute[] = [
     { path: '', priority: 1.0, changeFrequency: 'daily' },
+    { path: '/reservar/solista', priority: 1.0, changeFrequency: 'daily' },
+    { path: '/reservar/contrato', priority: 0.95, changeFrequency: 'daily' },
+    { path: '/reservar/aceptar', priority: 0.9, changeFrequency: 'weekly' },
+    { path: '/panel/reservas', priority: 0.85, changeFrequency: 'daily' },
     { path: '/bodas', priority: 1.0, changeFrequency: 'daily' },
     { path: '/fincas', priority: 0.95, changeFrequency: 'daily' },
     { path: '/proveedores', priority: 0.95, changeFrequency: 'daily' },
@@ -26,7 +30,7 @@ const STATIC_ROUTES: StaticRoute[] = [
     { path: '/cotizador', priority: 0.9, changeFrequency: 'weekly' },
     { path: '/presupuesto', priority: 0.85, changeFrequency: 'weekly' },
     { path: '/checkout/presupuesto', priority: 0.85, changeFrequency: 'weekly' },
-    { path: '/vimume', priority: 0.85, changeFrequency: 'weekly' },
+    { path: '/vimume', priority: 0.95, changeFrequency: 'daily' },
     { path: '/mariachis', priority: 0.95, changeFrequency: 'daily' },
     { path: '/mariachis/unirse', priority: 0.8, changeFrequency: 'weekly' },
     { path: '/dj-para-bodas', priority: 0.9, changeFrequency: 'daily' },
