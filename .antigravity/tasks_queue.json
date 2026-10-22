@@ -6,31 +6,7 @@
     "total_tasks": 4
   },
   "_instructions_for_worker": "Ejecuta SOLO via: call RUN_OMEGA.bat next  ->  lee .antigravity/MISSION_ACTIVE.json  ->  edita SOLO 'files'  ->  call RUN_OMEGA.bat complete <ID>. El complete ya ejecuta tsc + eslint + test. 1 tarea por sesion. Si una orden te parece simplona, devuelve reto_espejo en tu reporte (AGENTS.md 13).",
-  "tasks": [
-    {
-      "id": "W26_T04_REQUEST_TO_BOOK_API",
-      "title": "P0: Request-to-Book — solicitud al proveedor por n8n/WhatsApp antes de cobrar (decision CEO Bloque 6/A6, A8)",
-      "status": "QUEUED",
-      "files": [
-        "src/app/api/booking/request/route.ts",
-        "scripts/verify_request_to_book.cjs"
-      ],
-      "action": "Endpoint POST que registra una solicitud cliente->proveedor y la despacha a n8n. NO cobra: el cobro solo ocurre tras aceptacion del proveedor (flujo Stripe existente). Instant Book de Edwin Agudelo NO se toca (sigue en /reservar/solista).",
-      "scaffold": {
-        "route_ts": [
-          "type BookingRequest = { providerId: string; providerName: string; category: string; eventDate: string; eventLocation: string; guests: number; budgetEur: number; clientName: string; clientPhone: string; notes?: string }.",
-          "Validacion server-side: strings recortados y sin '<' ni '>' (anti-XSS OWASP); eventDate ISO futura; guests 1..5000; budgetEur > 0; clientPhone casa /^\\+?\\d{9,15}$/ tras quitar espacios. 422 con lista de campos invalidos.",
-          "requestId = 'REQ-' + createHash('sha256').update(providerId+eventDate+clientPhone).digest('hex').slice(0,12).toUpperCase()  (idempotente: misma solicitud = mismo id).",
-          "fireAndForgetN8n('call-center-intake', { kind: 'request_to_book', requestId, ...payload, acceptWindowHours: 2 }).",
-          "Respuesta 202 { requestId, status: 'PENDING_PROVIDER', acceptWindowHours: 2, message: 'Solicitud enviada. El proveedor tiene 2 h para confirmar; solo entonces se habilita el deposito.' }.",
-          "Comision: NO calcular precios aqui (SSOT intocable). Solo transporta budgetEur declarado."
-        ],
-        "test_cjs": "scripts/verify_request_to_book.cjs: replica la funcion de requestId en JS y asserta idempotencia (2 llamadas iguales = mismo id; distinto telefono = distinto id); asserta por texto que route.ts contiene '202', '422', 'call-center-intake', 'createHash' y NO 'stripe' (case-insensitive) ni ': any'. Exit 1 en fallo."
-      },
-      "test": "node scripts/verify_request_to_book.cjs",
-      "done_when": "tsc 0 + eslint 0 + test 0. Ningun cobro antes de la aceptacion del proveedor."
-    }
-  ],
+  "tasks": [],
   "completed": [
     {
       "id": "W25_T02_AUDIT_360_SUITE_INTEGRITY",
