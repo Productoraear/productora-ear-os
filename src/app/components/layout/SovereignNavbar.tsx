@@ -84,6 +84,13 @@ const MENU_FOLDERS: MenuFolder[] = [
         href: '/simulacion-mariachis',
         badge: 'Packs',
         icon: Users
+      },
+      {
+        title: 'Experiencia 360° (Multirrol)',
+        desc: 'Portal interactivo: Atmosphere Matcher, Split 80/10/10 y Licitaciones LCSP',
+        href: '/experiencia',
+        badge: 'Nuevo 360°',
+        icon: Sparkles
       }
     ]
   },

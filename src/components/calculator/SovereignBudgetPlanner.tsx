@@ -46,7 +46,10 @@ import {
   Eye,
   ChevronRight,
   Mic,
-  Award
+  Award,
+  Sun,
+  Moon,
+  ChevronDown
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -370,8 +373,33 @@ export default function SovereignBudgetPlanner() {
   const [depositLoading, setDepositLoading] = useState(false);
   const [depositError, setDepositError] = useState<string | null>(null);
 
-  // 🎵 Estado de Pack Oficial EAR seleccionado
   const [selectedOfficialPack, setSelectedOfficialPack] = useState<string | null>(null);
+
+  // 🎨 Tema de Vanguardia S-Class (Onyx Dark vs Marfil Nupcial)
+  const [themeMode, setThemeMode] = useState<'dark' | 'champagne'>('dark');
+
+  // 💎 Pasaporte de Explorador EAR & Gamificación Multi-Gremio
+  const [explorerCredits, setExplorerCredits] = useState<number>(15);
+  const [exploredTrades, setExploredTrades] = useState<string[]>(['catering']);
+  const [showCustomPartidaAccordion, setShowCustomPartidaAccordion] = useState<boolean>(false);
+
+  // 🏆 Bonificación de Exploración por Interlinking Infinito
+  const awardExplorerCredits = useCallback((tradeKey: string, bonus: number = 5) => {
+    setExploredTrades((prev) => {
+      if (!prev.includes(tradeKey)) {
+        setExplorerCredits((curr) => Math.min(100, curr + bonus));
+        return [...prev, tradeKey];
+      }
+      return prev;
+    });
+  }, []);
+
+  const handleExploreTrade = (tradeKey: string) => {
+    awardExplorerCredits(tradeKey, 5);
+    setActiveRadarTrade(tradeKey);
+    const el = document.getElementById('radar-neural-proveedores');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
 
   // Inicialización o lectura de Hash de URL (Enlace Mágico Compartible)
   useEffect(() => {
@@ -467,6 +495,7 @@ export default function SovereignBudgetPlanner() {
 
   // 1-Click: Asignar Pack Oficial Productora EAR
   const handleSelectOfficialPack = (pack: OfficialPack) => {
+    awardExplorerCredits('pack_' + pack.id, 10);
     setSelectedOfficialPack(pack.id);
     setCategories((prev) =>
       prev.map((c) => {
@@ -714,7 +743,11 @@ export default function SovereignBudgetPlanner() {
     <div className="w-full space-y-12 font-sans text-slate-100 selection:bg-[#ecb613] selection:text-black">
 
       {/* ── ESCENARIOS PREDEFINIDOS RÁPIDOS (1-CLICK LUXURY SEED) ── */}
-      <div className="flex flex-wrap items-center justify-between gap-3 p-4 rounded-3xl bg-[#09090e]/90 border border-white/10 backdrop-blur-2xl shadow-2xl">
+      <div className={`flex flex-wrap items-center justify-between gap-3 p-4 rounded-3xl border backdrop-blur-2xl shadow-2xl transition-all ${
+        themeMode === 'champagne'
+          ? 'bg-[#FAF8F5]/95 border-amber-900/10 text-zinc-900'
+          : 'bg-[#09090e]/90 border-white/10 text-slate-100'
+      }`}>
         <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#ecb613] uppercase tracking-wider">
           <Sparkles size={14} className="text-[#ecb613]" />
           <span>Escenarios Maestros 1-Clic:</span>
@@ -762,6 +795,36 @@ export default function SovereignBudgetPlanner() {
             <RefreshCw size={12} aria-hidden="true" />
             <span>Limpiar a 0 €</span>
           </button>
+
+          {/* TOGGLE MODO DARK / MARFIL CHAMPAGNE NUPCIAL */}
+          <div className="flex items-center gap-1 p-1 rounded-2xl bg-white/5 border border-white/10 text-xs font-mono ml-auto">
+            <button
+              type="button"
+              onClick={() => setThemeMode('dark')}
+              aria-label="Activar Modo Oscuro Onyx"
+              className={`px-3 py-1.5 rounded-xl transition flex items-center gap-1.5 ${
+                themeMode === 'dark'
+                  ? 'bg-[#ecb613] text-black font-bold shadow-sm'
+                  : 'text-zinc-400 hover:text-white'
+              }`}
+            >
+              <Moon size={12} />
+              <span>Onyx Dark</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setThemeMode('champagne')}
+              aria-label="Activar Modo Marfil Champagne Nupcial"
+              className={`px-3 py-1.5 rounded-xl transition flex items-center gap-1.5 ${
+                themeMode === 'champagne'
+                  ? 'bg-[#ecb613] text-black font-bold shadow-sm'
+                  : 'text-zinc-400 hover:text-white'
+              }`}
+            >
+              <Sun size={12} />
+              <span>Marfil Champagne</span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -1075,6 +1138,58 @@ export default function SovereignBudgetPlanner() {
         </div>
       </div>
 
+      {/* ── 💎 PASAPORTE DE EXPLORADOR EAR · GAMIFICACIÓN E INTERLINKING ACTIVO ── */}
+      <div className={`rounded-3xl border p-5 sm:p-6 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4 transition-all ${
+        themeMode === 'champagne'
+          ? 'bg-gradient-to-r from-[#ecb613]/15 via-[#f5f1e8] to-[#ebe3d3] border-[#d8cdb8]'
+          : 'bg-gradient-to-r from-[#ecb613]/10 via-[#0d0d18] to-[#00E5FF]/5 border-[#ecb613]/30'
+      }`}>
+        <div className="flex items-center gap-4">
+          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#ecb613] to-amber-600 text-black flex flex-col items-center justify-center font-black shadow-[0_0_20px_rgba(236,182,19,0.35)] shrink-0">
+            <span className="text-[10px] font-mono font-black leading-none">CRÉDITO</span>
+            <span className="text-lg font-mono font-black leading-tight">+{explorerCredits}€</span>
+          </div>
+          <div>
+            <div className="flex items-center gap-2 flex-wrap">
+              <h3 className={`text-sm sm:text-base font-black font-syne uppercase tracking-wide ${themeMode === 'champagne' ? 'text-zinc-900' : 'text-white'}`}>
+                Pasaporte de Explorador EAR · Bonificación de Fianza
+              </h3>
+              <span className="text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-[#ecb613]/20 text-[#ecb613] border border-[#ecb613]/30">
+                {exploredTrades.length} / {RADAR_TRADES.length} Gremios Descubiertos
+              </span>
+            </div>
+            <p className={`text-xs font-normal mt-0.5 max-w-2xl leading-relaxed ${themeMode === 'champagne' ? 'text-zinc-600' : 'text-zinc-400'}`}>
+              Gana <strong>+5 € de crédito acumulable</strong> por cada gremio, pack o proveedor que explores en nuestro ecosistema. El saldo se descuenta íntegramente de tu fianza protegida Stripe de 100 €.
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3 shrink-0 self-end md:self-center">
+          <div className="text-right font-mono">
+            <span className={`text-[10px] block uppercase ${themeMode === 'champagne' ? 'text-zinc-500' : 'text-zinc-400'}`}>Nivel de Curador</span>
+            <span className="text-xs font-black text-[#ecb613]">
+              {explorerCredits >= 50 ? '🌟 Curador VIP S-Class' : '🧭 Explorador Nupcial'}
+            </span>
+          </div>
+          <div className="h-8 w-[1px] bg-white/10 hidden sm:block" />
+          <button
+            type="button"
+            onClick={() => {
+              const el = document.getElementById('radar-neural-proveedores');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className={`px-4 py-2.5 rounded-xl border text-xs font-mono font-bold transition flex items-center gap-1.5 ${
+              themeMode === 'champagne'
+                ? 'bg-black/5 hover:bg-black/10 border-black/10 text-zinc-900'
+                : 'bg-white/5 hover:bg-white/10 border-white/15 text-white'
+            }`}
+          >
+            <span>Explorar Radar</span>
+            <ChevronRight size={13} className="text-[#ecb613]" />
+          </button>
+        </div>
+      </div>
+
       {/* ── MATRIZ DE LAS 14 CATEGORÍAS CARDINALES (BENTO CARDS S-CLASS) ── */}
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -1082,23 +1197,23 @@ export default function SovereignBudgetPlanner() {
             <span className="text-[10px] font-mono text-[#ecb613] uppercase tracking-widest font-black block">
               Desglose Exhaustivo Multi-Gremio
             </span>
-            <h2 className="text-2xl sm:text-3xl font-black font-syne uppercase text-white">
+            <h2 className={`text-2xl sm:text-3xl font-black font-syne uppercase ${themeMode === 'champagne' ? 'text-zinc-900' : 'text-white'}`}>
               Las 14 Partidas Cardinales de tu Evento
             </h2>
-            <p className="text-xs text-zinc-400 font-normal mt-0.5">
+            <p className={`text-xs font-normal mt-0.5 ${themeMode === 'champagne' ? 'text-zinc-600' : 'text-zinc-400'}`}>
               Bloquea con el candado 🔒 las partidas fijas para que no se alteren al auto-distribuir.
             </p>
           </div>
 
-          <button
-            type="button"
-            onClick={() => setShowAddModal(true)}
-            aria-label="Añadir nueva partida de gasto personalizada"
-            className="px-4 py-2.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/15 text-xs font-mono font-bold text-white flex items-center gap-2 transition"
-          >
-            <Plus size={15} className="text-[#ecb613]" aria-hidden="true" />
-            <span>+ Nueva Partida</span>
-          </button>
+          <div className="flex items-center gap-2 font-mono text-xs text-zinc-400">
+            <span className={`px-3.5 py-1.5 rounded-full border text-[11px] ${
+              themeMode === 'champagne'
+                ? 'bg-black/5 border-black/10 text-zinc-700'
+                : 'bg-white/5 border-white/10 text-zinc-400'
+            }`}>
+              Partidas configuradas: <strong className={themeMode === 'champagne' ? 'text-black' : 'text-white'}>{categories.filter(c => c.allocated > 0).length}</strong> / {categories.length}
+            </span>
+          </div>
         </div>
 
         {/* Grilla de Tarjetas Bento */}
@@ -1209,15 +1324,15 @@ export default function SovereignBudgetPlanner() {
                   <div className="flex items-center justify-between pt-2 border-t border-white/5 text-[11px] font-mono">
                     <button
                       type="button"
-                      onClick={() => {
-                        setActiveRadarTrade(cat.apiCategory!);
-                        const el = document.getElementById('radar-neural-proveedores');
-                        if (el) el.scrollIntoView({ behavior: 'smooth' });
-                      }}
-                      aria-label={`Ver ${cat.name} en el radar de proveedores en vivo`}
-                      className="text-[#ecb613] hover:underline flex items-center gap-1 font-bold"
+                      onClick={() => handleExploreTrade(cat.apiCategory!)}
+                      aria-label={`Explorar ${cat.name} en el radar de proveedores`}
+                      className="text-[#ecb613] hover:underline flex items-center gap-1.5 font-bold"
                     >
-                      <Eye size={12} aria-hidden="true" /> Ver en Radar en Vivo
+                      <Eye size={12} aria-hidden="true" />
+                      <span>Explorar</span>
+                      <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-[#ecb613]/20 text-[#ecb613] font-bold">
+                        +5€ fianza
+                      </span>
                     </button>
 
                     {cat.routeHref && (
@@ -1233,6 +1348,73 @@ export default function SovereignBudgetPlanner() {
               </div>
             );
           })}
+        </div>
+
+        {/* ── SECCIÓN DESPLEGABLE MINIMALISTA AL FINAL: AÑADIR NUEVA PARTIDA ── */}
+        <div className="pt-2">
+          {!showCustomPartidaAccordion ? (
+            <button
+              type="button"
+              onClick={() => setShowCustomPartidaAccordion(true)}
+              className="w-full py-4 px-6 rounded-2xl border border-dashed border-white/15 hover:border-[#ecb613]/50 bg-white/[0.02] hover:bg-white/[0.05] transition-all flex items-center justify-center gap-2 text-xs font-mono font-bold text-zinc-400 hover:text-white group"
+            >
+              <Plus size={15} className="text-[#ecb613] group-hover:rotate-90 transition-transform duration-300" />
+              <span>¿Necesitas una partida especial? + Añadir Partida Personalizada al Final</span>
+            </button>
+          ) : (
+            <div className={`p-6 rounded-3xl border space-y-4 transition-all ${
+              themeMode === 'champagne'
+                ? 'bg-[#FAF8F5] border-black/15 text-zinc-900'
+                : 'bg-[#090912] border-white/20 text-white'
+            }`}>
+              <div className="flex justify-between items-center">
+                <div>
+                  <h4 className={`font-bold text-sm font-syne uppercase ${themeMode === 'champagne' ? 'text-zinc-900' : 'text-white'}`}>
+                    Añadir Partida Personalizada
+                  </h4>
+                  <p className={`text-xs font-mono ${themeMode === 'champagne' ? 'text-zinc-600' : 'text-zinc-400'}`}>
+                    Incorpora conceptos a medida (Candy Bar, Carpas, Pirotecnia, Animación infantil, etc.)
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowCustomPartidaAccordion(false)}
+                  className="text-xs text-zinc-500 hover:text-zinc-300 font-mono px-2.5 py-1 rounded bg-white/5"
+                >
+                  Cerrar ✕
+                </button>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <input
+                  type="text"
+                  value={newCatName}
+                  onChange={(e) => setNewCatName(e.target.value)}
+                  placeholder="Ej: Candy Bar & Repostería de Autor..."
+                  className={`flex-1 border rounded-xl px-4 py-3 text-xs font-mono focus:border-[#ecb613] outline-none ${
+                    themeMode === 'champagne'
+                      ? 'bg-white border-zinc-300 text-zinc-900'
+                      : 'bg-black/50 border-white/15 text-white'
+                  }`}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      handleAddCategory();
+                      setShowCustomPartidaAccordion(false);
+                    }
+                  }}
+                />
+                <button
+                  type="button"
+                  onClick={() => {
+                    handleAddCategory();
+                    setShowCustomPartidaAccordion(false);
+                  }}
+                  className="px-6 py-3 bg-[#ecb613] text-black font-black uppercase text-xs font-mono rounded-xl hover:bg-[#d8a40f] transition shadow-lg"
+                >
+                  Incorporar Partida
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -1269,7 +1451,10 @@ export default function SovereignBudgetPlanner() {
                 <button
                   key={trade.key}
                   type="button"
-                  onClick={() => setActiveRadarTrade(trade.key)}
+                  onClick={() => {
+                    awardExplorerCredits(trade.key, 5);
+                    setActiveRadarTrade(trade.key);
+                  }}
                   aria-pressed={isActive}
                   aria-label={`Mostrar proveedores del gremio ${trade.label}`}
                   className={`px-4 py-2.5 rounded-2xl border transition-all shrink-0 flex items-center gap-2 ${isActive

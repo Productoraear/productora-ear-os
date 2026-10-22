@@ -1,60 +1,121 @@
 {
   "_meta": {
-    "version": "9.0-OMEGA-WAVE-22",
-    "doctrine": "WAVE 22: SINCRONIZACIÓN TOTAL MVP - PROVEEDORES + ENLACES + OLLAMA",
-    "wave": 22,
-    "total_tasks": 5
+    "version": "9.0-OMEGA-WAVE-26",
+    "doctrine": "WAVE 26: ERRADICACION DE FACHADAS EN RUTA DE VENTA (P0) + REQUEST-TO-BOOK WHATSAPP",
+    "wave": 26,
+    "total_tasks": 4
   },
-  "_instructions_for_worker": "Modo Autónomo Daemon DeepSeek S-Class. Usar modelos locales Ollama para generación de contenido. Zero tokens externos.",
+  "_instructions_for_worker": "Ejecuta SOLO via: call RUN_OMEGA.bat next  ->  lee .antigravity/MISSION_ACTIVE.json  ->  edita SOLO 'files'  ->  call RUN_OMEGA.bat complete <ID>. El complete ya ejecuta tsc + eslint + test. 1 tarea por sesion. Si una orden te parece simplona, devuelve reto_espejo en tu reporte (AGENTS.md 13).",
   "tasks": [
     {
-      "id": "W22_T05_VALIDATE_MVP",
-      "title": "PASO 5: Validación MVP Readiness - Scorecard Ω-Diamante 20/20",
+      "id": "W26_T02_TELEMETRY_REAL_PINGS_API",
+      "title": "P0: API real de pings GPS para seguimiento Dia D (sustituye datos simulados)",
       "status": "QUEUED",
       "files": [
-        "scripts/validate_mvp_readiness.cjs"
+        "src/app/api/telemetry/[id]/route.ts",
+        "scripts/verify_telemetry_api.cjs"
       ],
-      "action": "CREAR script que ejecute batería completa de validaciones MVP. Validaciones críticas: 1) tsc Exit 0, 2) eslint Exit 0, 3) 0 verified:true sin teléfono, 4) 0 fichas vacías, 5) 0 enlaces rotos, 6) 0 CTAs sin webhook, 7) 100% rutas dinámicas OK, 8) Lighthouse >90 top 20, 9) Schema.org válido 100%, 10-20) Scorecard Ω-Diamante completo. Salida: reports/VALIDACION_MVP_READINESS_2026.json con scorecard 20/20",
-      "scaffold": "const { execSync } = require('child_process'); const fs = require('fs'); // Ejecutar npx tsc --noEmit, capturar exit code // Ejecutar npx eslint src/, capturar exit code // Leer inventario W22_T01, contar verified:true sin teléfono // Leer fichas HTML, detectar vacías/placeholder // Leer auditoría W22_T03, contar enlaces rotos y CTAs sin webhook // Probar rutas dinámicas con fetch localhost:3000 // Ejecutar Lighthouse CLI en top 20 páginas // Validar schema.org con validator // Calcular scorecard Ω-Diamante (20 criterios) // Escribir reporte JSON con resultado PASS/FAIL y scorecard",
-      "done_when": "Todas validaciones críticas pasan, scorecard Ω-Diamante 20/20, CEO puede declarar 'MVP DOMINADO'"
+      "action": "Crear endpoint GET/POST. Hoy LiveFleetTracker.tsx simula posicion con setInterval y SPL con Math.random (lineas 42-53): es FACHADA. Esta tarea crea el backend; T03 conecta la UI.",
+      "scaffold": {
+        "route_ts": [
+          "Next 15: export async function POST(req: Request, { params }: { params: Promise<{ id: string }> }) y GET igual. SIEMPRE const resolvedParams = await params;",
+          "Validar id con /^[A-Z0-9-]{4,40}$/ -> 400 si no casa.",
+          "type TelemetryPing = { lat: number; lng: number; accuracy: number; status: 'EN_RUTA' | 'EN_RECINTO' | 'MONTAJE' | 'LISTO' | 'EN_VIVO' | 'FINALIZADO'; at: string }.",
+          "POST body validado a mano: lat en [-90,90], lng en [-180,180], accuracy >= 0, status en la union. Rechazar con 422 si invalido. Requiere header 'x-ear-provider-token' igual a process.env.TELEMETRY_PROVIDER_TOKEN; si la env no existe -> 503 {error:'telemetry_disabled'} (nunca aceptar sin token).",
+          "Almacen v1: const store = globalThis as unknown as { __earTelemetry?: Map<string, TelemetryPing[]> }; guardar max 200 pings por id. Comentar en cabecera: 'v1 en memoria del proceso; persistencia PostgreSQL en Wave 27'.",
+          "GET devuelve { id, last: TelemetryPing | null, count: number, live: boolean } donde live = last existe y tiene < 120 s.",
+          "En el primer ping con status 'EN_RUTA' y en 'FINALIZADO': fireAndForgetN8n('call-center-intake', { kind: 'telemetry', id, status }) importado de '@/lib/services/n8n-dispatcher'."
+        ],
+        "test_cjs": "scripts/verify_telemetry_api.cjs: lee el route.ts como texto y asserta que contiene 'await params', 'TELEMETRY_PROVIDER_TOKEN', '503', '422', 'fireAndForgetN8n' y NO contiene 'Math.random' ni ': any'. Exit 1 en fallo."
+      },
+      "test": "node scripts/verify_telemetry_api.cjs",
+      "done_when": "tsc 0 + eslint 0 + test 0. Sin token = 503, jamas acepta pings anonimos."
+    },
+    {
+      "id": "W26_T03_TRACKER_DEFACADE",
+      "title": "P0: LiveFleetTracker consume la API real y muestra 'Sin senal' honesto en vez de datos inventados",
+      "status": "QUEUED",
+      "files": [
+        "src/components/telemetry/LiveFleetTracker.tsx",
+        "scripts/verify_tracker_no_facade.cjs"
+      ],
+      "action": "Eliminar los dos setInterval simulados (lineas ~42-53, incluido Math.random del SPL). Sustituir por polling cada 15 s a GET /api/telemetry/{id}.",
+      "scaffold": {
+        "rules": [
+          "Leer SOLO LiveFleetTracker.tsx. Conservar estilos, props y estructura visual existentes.",
+          "type TelemetryResponse = { id: string; last: { lat: number; lng: number; accuracy: number; status: string; at: string } | null; count: number; live: boolean }.",
+          "useEffect con fetch + AbortController + setInterval 15000; limpiar en unmount. Estados: 'cargando' | 'sin_senal' | 'en_vivo' | 'error'.",
+          "Si live=false: mostrar tarjeta 'Sin senal en vivo todavia. El seguimiento se activa automaticamente a la hora pactada.' + boton WhatsApp https://wa.me/34693693048 (aria-label claro).",
+          "Eliminar el medidor SPL simulado. Si se quiere mostrar dBA, solo el rango SSOT por contexto como texto estatico etiquetado 'Rango normativo', nunca como medicion.",
+          "Hora de ultima senal formateada con Intl.DateTimeFormat('es-ES', { timeStyle: 'short' })."
+        ],
+        "test_cjs": "scripts/verify_tracker_no_facade.cjs: asserta que el .tsx NO contiene 'Math.random' y SI contiene '/api/telemetry/' y 'AbortController'. Exit 1 en fallo."
+      },
+      "test": "node scripts/verify_tracker_no_facade.cjs",
+      "done_when": "tsc 0 + eslint 0 + test 0. Cero numeros inventados en pantalla."
+    },
+    {
+      "id": "W26_T04_REQUEST_TO_BOOK_API",
+      "title": "P0: Request-to-Book — solicitud al proveedor por n8n/WhatsApp antes de cobrar (decision CEO Bloque 6/A6, A8)",
+      "status": "QUEUED",
+      "files": [
+        "src/app/api/booking/request/route.ts",
+        "scripts/verify_request_to_book.cjs"
+      ],
+      "action": "Endpoint POST que registra una solicitud cliente->proveedor y la despacha a n8n. NO cobra: el cobro solo ocurre tras aceptacion del proveedor (flujo Stripe existente). Instant Book de Edwin Agudelo NO se toca (sigue en /reservar/solista).",
+      "scaffold": {
+        "route_ts": [
+          "type BookingRequest = { providerId: string; providerName: string; category: string; eventDate: string; eventLocation: string; guests: number; budgetEur: number; clientName: string; clientPhone: string; notes?: string }.",
+          "Validacion server-side: strings recortados y sin '<' ni '>' (anti-XSS OWASP); eventDate ISO futura; guests 1..5000; budgetEur > 0; clientPhone casa /^\\+?\\d{9,15}$/ tras quitar espacios. 422 con lista de campos invalidos.",
+          "requestId = 'REQ-' + createHash('sha256').update(providerId+eventDate+clientPhone).digest('hex').slice(0,12).toUpperCase()  (idempotente: misma solicitud = mismo id).",
+          "fireAndForgetN8n('call-center-intake', { kind: 'request_to_book', requestId, ...payload, acceptWindowHours: 2 }).",
+          "Respuesta 202 { requestId, status: 'PENDING_PROVIDER', acceptWindowHours: 2, message: 'Solicitud enviada. El proveedor tiene 2 h para confirmar; solo entonces se habilita el deposito.' }.",
+          "Comision: NO calcular precios aqui (SSOT intocable). Solo transporta budgetEur declarado."
+        ],
+        "test_cjs": "scripts/verify_request_to_book.cjs: replica la funcion de requestId en JS y asserta idempotencia (2 llamadas iguales = mismo id; distinto telefono = distinto id); asserta por texto que route.ts contiene '202', '422', 'call-center-intake', 'createHash' y NO 'stripe' (case-insensitive) ni ': any'. Exit 1 en fallo."
+      },
+      "test": "node scripts/verify_request_to_book.cjs",
+      "done_when": "tsc 0 + eslint 0 + test 0. Ningun cobro antes de la aceptacion del proveedor."
     }
   ],
   "completed": [
     {
-      "id": "W22_T01_AUDIT_INVENTORY",
-      "title": "PASO 1: Auditoría Forense Completa - Inventario Proveedores",
+      "id": "W25_T02_AUDIT_360_SUITE_INTEGRITY",
       "status": "COMPLETED",
-      "files": [
-        "scripts/audit_providers_full_inventory.cjs"
-      ],
-      "action": "CREAR script que genere inventario completo JSON de todos los proveedores/artistas. Fuentes: public/data/providers/*.json, src/data/providers/, H:/EAR_ABSORBED_VAULT/. Salida: reports/INVENTARIO_PROVEEDORES_MVP_2026.json con estructura: {id, nombre, categoría, slug, tiene_ficha_html, url_ficha, enlaces_internos[], verified, teléfono_real}",
-      "scaffold": "const fs = require('fs'); const path = require('path'); const glob = require('glob'); // Leer particiones edge en public/data/providers/*.json // Leer catálogos en src/data/providers/ // Consolidar en un solo inventario con deduplicación // Validar: 0 verified:true sin teléfono real // Generar resumen estadístico JSON < 300 tokens // Escribir reports/INVENTARIO_PROVEEDORES_MVP_2026.json",
-      "done_when": "Inventario JSON generado con 100% proveedores, 0 duplicados, 0 placeholders sin teléfono real, resumen < 300 tokens",
-      "completed_at": "2026-10-12T11:51:06.662Z",
-      "exit_code": 0,
-      "bypass_reason": "Errores TS2344 en .next/types autogenerados por Next.js 16.3.5, no en código del script"
+      "exit_code": 0
     },
     {
-      "id": "W22_T02_GENERATE_CARDS",
-      "title": "PASO 2: Generación Fichas HTML Íntegras con Ollama",
+      "id": "W25_T01_NAVBAR_AND_ROBOTS_INTEGRATION",
       "status": "COMPLETED",
-      "files": [
-        "scripts/generate_provider_cards_ollama.cjs",
-        "public/fichas-proveedores/"
-      ],
-      "action": "CREAR script que genere fichas HTML para cada proveedor usando Ollama qwen3.8:27b-fast (localhost:11434). Prompt: 'Eres redactor SEO experto. Genera ficha HTML completa para {nombre} ({categoria}, {ubicacion}): 1) Descripción 300-500 palabras, 2) Servicios específicos, 3) Zona cobertura, 4) Precios orientativos, 5) Propuesta valor única, 6) CTA claro. HTML semántico + schema.org LocalBusiness/MusicGroup. Tono profesional, conversión. NO clichés.' Salida: public/fichas-proveedores/{categoria}/{slug}.html",
-      "scaffold": "const fs = require('fs'); const path = require('path'); const fetch = require('node-fetch'); // Leer inventario de W22_T01 // Para cada proveedor sin ficha o ficha incompleta: // - Construir prompt con datos reales del proveedor // - POST a http://localhost:11434/api/generate con modelo qwen3.8:27b-fast // - Validar respuesta > 2KB // - Calcular Jaccard 5-gram con fichas existentes (< 0.10) // - Validar schema.org con validator // - Escribir public/fichas-proveedores/{categoria}/{slug}.html // Generar resumen: fichas_generadas, promedio_tamaño, jaccard_max",
-      "done_when": "Fichas HTML generadas para 100% proveedores verificados, cada ficha > 2KB, Jaccard < 0.10, schema.org válido",
-      "completed_at": "2026-10-12T13:38:17.863Z",
+      "exit_code": 0
+    },
+    {
+      "id": "W24_T03_B2G_DOSSIER_VIEW",
+      "status": "COMPLETED",
+      "exit_code": 0
+    },
+    {
+      "id": "W24_T02_WIRE_EXPERIENCIA_PAGE",
+      "status": "COMPLETED",
+      "exit_code": 0
+    },
+    {
+      "id": "W24_T01_OMNICHANNEL_ROLE_HUB",
+      "status": "COMPLETED",
+      "exit_code": 0
+    },
+    {
+      "id": "W25_HOTFIX_BUDGET_PAGE",
+      "title": "budget/page.tsx: 0 any, 0 prompt(), fondo #030305 (Antigravity directo)",
+      "status": "COMPLETED",
       "exit_code": 0,
-      "bypass_reason": "Errores TS2344 en .next/types autogenerados por Next.js 16.3.5, no en código del script. Scripts de generación creados y funcionando: generate_provider_cards_ollama.cjs (Ollama local), generate_provider_cards_abacus_turbo.cjs (Abacus.ai), generate_provider_cards_mcp_turbo.cjs (MCP asistido), monitor_generation_progress.cjs (monitorización)"
+      "validated": "VALIDATE.bat -> NODE v26.12.1, TSC_EXIT=0, ESLINT_EXIT=0 (2026-10-22 11:13)"
     }
   ],
   "metadata": {
-    "last_updated": "2026-10-12T13:38:17.864Z",
-    "total_pending": 3,
-    "total_completed": 2,
-    "current_sprint": "MVP_FINAL_SYNC_SPRINT",
-    "ceo_mandate": "Sincronizar todos los proveedores/artistas con fichas HTML íntegras hasta el último bit. Verificar coherencia de enlaces internos. Usar modelos locales Ollama para máxima calidad con cero tokens externos. MVP debe estar listo para generar ventas HOY."
+    "last_updated": "2026-10-22T09:15:00.000Z",
+    "total_pending": 4,
+    "current_sprint": "WAVE_26_DEFACADE_MONEY_PATH",
+    "ceo_mandate": "Cero fachadas en la ruta que genera dinero antes del 28-OCT."
   }
 }

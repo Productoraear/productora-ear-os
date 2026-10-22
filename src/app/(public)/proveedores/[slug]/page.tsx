@@ -588,7 +588,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const cleanName = cleanText(provider.name);
   const basePrice = provider.basePrice || provider.pricing?.rentalBasePrice || 650;
 
-  const isGenericName = !cleanName || cleanName.toLowerCase().startsWith('prov-');
+  const tier = getProviderTier({ id: provider.id || slug, slug, name: provider.name });
+  const isBlacklisted = tier === 'BLACKLISTED';
+
+  const isGenericName = !cleanName || cleanName.toLowerCase().startsWith('prov-') || isBlacklisted;
   const displayTitle = isGenericName
     ? `Proveedor Homologado S-Class #${providerIdShort} (${category} en ${location}) | Productora EAR`
     : `${cleanName} — ${category} en ${location} | Precios 2026 & Reserva Directa (Productora EAR)`;
@@ -598,14 +601,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     : slug.toLowerCase().trim();
 
   const firstGallery = Array.isArray(provider.gallery) ? provider.gallery[0] : undefined;
-  const coverImg = provider.img || firstGallery
-    || 'https://productoraear.com/images/brand/ear_logo_official_diamond.png';
+  const coverImg = isBlacklisted
+    ? 'https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop'
+    : (provider.img || firstGallery || 'https://productoraear.com/images/brand/ear_logo_official_diamond.png');
 
-  const metaDescription = `Contrata ${cleanName || 'proveedor homologado'} (${category}) en ${location}. Tarifas oficiales desde ${basePrice}€, rider certificado (12 W/pax), seguro de RC y reserva online con Price-Lock 100€.`;
+  const metaDescription = isBlacklisted
+    ? `Contrata servicio profesional homologado S-Class (${category}) en ${location}. Tarifas oficiales desde ${basePrice}€, rider certificado, seguro de RC y reserva con fianza protegida Stripe.`
+    : `Contrata ${cleanName || 'proveedor homologado'} (${category}) en ${location}. Tarifas oficiales desde ${basePrice}€, rider certificado (12 W/pax), seguro de RC y reserva online con Price-Lock 100€.`;
 
   return {
     title: displayTitle,
     description: metaDescription,
+    robots: isBlacklisted ? { index: false, follow: false } : { index: true, follow: true },
     alternates: {
       canonical: `https://www.productoraear.com/proveedores/${canonicalSlug}`,
     },
@@ -651,24 +658,37 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
   const providerIdShort = (rawProvider.id || slug).substring(0, 8).toUpperCase();
 
   const tier = getProviderTier({ id: rawProvider.id || slug, slug, name: rawProvider.name });
+  const isBlacklisted = tier === 'BLACKLISTED';
   const isUnclaimed = tier === 'DIRECTORY_UNCLAIMED';
 
-  // 🏛️ IDENTIDAD S-CLASS: Mostrar nombre real del profesional/agrupación para directorio legal
-  const cleanName = cleanText(rawProvider.name);
-  const displayName = cleanName && !cleanName.toLowerCase().startsWith('prov-')
-    ? cleanName
-    : isUnlocked
-      ? `División Técnica Homologada #${providerIdShort} · ${category}`
-      : `Proveedor Homologado S-Class #${providerIdShort} — ${category} (${location.split(',')[0]})`;
+  // 🏛️ IDENTIDAD S-CLASS: Mostrar nombre real si es legítimo; si está en optout/protegido, anonimizar completamente
+  const cleanName = isBlacklisted ? '' : cleanText(rawProvider.name);
+  const displayName = isBlacklisted
+    ? `División Técnica Homologada #${providerIdShort} · ${category}`
+    : cleanName && !cleanName.toLowerCase().startsWith('prov-')
+      ? cleanName
+      : isUnlocked
+        ? `División Técnica Homologada #${providerIdShort} · ${category}`
+        : `Proveedor Homologado S-Class #${providerIdShort} — ${category} (${location.split(',')[0]})`;
 
   const rating = rawProvider.atomic_specs?.metrics?.rating || rawProvider.rating || 5.0;
   const reviewsCount = rawProvider.atomic_specs?.metrics?.reviewCount || rawProvider.reviews || 27;
   const priceDisplay = rawProvider.atomic_specs?.price || `Precio desde ${rawProvider.basePrice || 900}€`;
-  const description = cleanText(rawProvider.atomic_specs?.description || rawProvider.description_full || rawProvider.description);
+  const description = isBlacklisted
+    ? `Servicio profesional homologado de ${category} para bodas y eventos en ${location}. Gestión centralizada vía Productora EAR con Split Soberano 80/10/10, fianza protegida Stripe de 100€ y garantía de ejecución S-Class.`
+    : cleanText(rawProvider.atomic_specs?.description || rawProvider.description_full || rawProvider.description);
 
-  // Galería de imágenes
-  const coverImg = rawProvider.atomic_specs?.media?.coverImage || rawProvider.img;
-  const rawGallery = Array.isArray(rawProvider.gallery) ? rawProvider.gallery : [coverImg];
+  // Galería de imágenes (si está protegido/opt-out, usar archivo editorial neutro sin marcas de terceros)
+  const coverImg = isBlacklisted
+    ? 'https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop'
+    : (rawProvider.atomic_specs?.media?.coverImage || rawProvider.img);
+  const rawGallery = isBlacklisted
+    ? [
+        'https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=800&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=800&auto=format&fit=crop'
+      ]
+    : (Array.isArray(rawProvider.gallery) ? rawProvider.gallery : [coverImg]);
   const gallery = rawGallery.map((g: string) => getProxiedImage(g));
   if (gallery.length < 3) {
     gallery.push('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=800&auto=format&fit=crop');
@@ -704,7 +724,7 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
             {category.split(' ')[0]}
           </Link>
           <span>/</span>
-          <span className="text-white font-bold truncate max-w-[200px] sm:max-w-xs">{rawProvider.name}</span>
+          <span className="text-white font-bold truncate max-w-[200px] sm:max-w-xs">{displayName}</span>
         </nav>
 
 

@@ -8,6 +8,7 @@ yarn-error.log*
 pnpm-debug.log*
 *.backup.json
 *.backup*.json
+src/data/backups/
 .antigravity/safeboot_state_before.txt
 
 # Local environment variables
@@ -132,3 +133,9 @@ benchmark_localizados.csv
 *.out.log
 Modelfile_*
 ABRIR_C
+.abacusai/
+temp_batch_*.json
+.antigravity/*.txt
+.antigravity/*.log
+.antigravity/ted_probe_body.json
+reports/*.txt

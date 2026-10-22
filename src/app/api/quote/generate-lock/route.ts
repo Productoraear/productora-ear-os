@@ -1,6 +1,16 @@
+/**
+ * EAR OS — GENERATE PRICE-LOCK (SHA-256) · W23_T02 (omega n8n)
+ * ==================================================================
+ * Genera el cierre hermético Price-Lock SHA-256 (depósito Stripe 100 €,
+ * deducible 100%) y dispara en FIRE-AND-FORGET el webhook n8n
+ * `b2b-quote` con el payload enriquecido (lead + referencia + sello),
+ * garantizando que NINGÚN lead quede huérfano (Scorecard Ω 20/20).
+ */
+
 import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { ACG_ARTIST_OFFERS } from '@/lib/acg/acgDecisionEngine';
+import { fireAndForgetN8n } from '@/lib/services/n8n-dispatcher';
 
 /**
  * EAR OS — PRICE-LOCK SHA-256 (INMUTABLE)
@@ -78,6 +88,19 @@ export async function POST(req: Request) {
       .toUpperCase();
 
     const priceLockHash = `SHA256-Ω-${hmac.substring(0, 16)}`;
+
+    // Despacho fire-and-forget a n8n para no dejar leads huérfanos (Scorecard Ω 20/20)
+    fireAndForgetN8n('b2b-quote', {
+      formatId: currentFormat.id,
+      formatName: currentFormat.name,
+      distanceKm,
+      endHour,
+      eventDate,
+      totalPrice: totalBaseBeforeVat,
+      depositAmount: 100.0,
+      priceLockHash,
+      timestamp: new Date().toISOString(),
+    });
 
     return NextResponse.json({
       priceLockHash,

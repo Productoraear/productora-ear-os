@@ -29,8 +29,9 @@ function writeMission(task) {
         action: task.action,
         scaffold: task.scaffold ?? null,
         done_when: task.done_when ?? null,
-        validate: 'npx tsc --noEmit',
-        complete: `node .antigravity/omega.js complete ${task.id}`,
+        test: task.test ?? null,
+        validate: 'npx tsc --noEmit && npx eslint <files>',
+        complete: `call RUN_OMEGA.bat complete ${task.id}`,
         budget: 'MAX 12 lecturas de archivo. No releas lo ya leido. DETENTE al completar.'
     });
 }
@@ -93,15 +94,6 @@ if (command === 'next') {
         process.exit(1);
     }
 
-    console.log('[OMEGA] Validando TypeScript...');
-    try {
-        execSync('npx tsc --noEmit', { stdio: 'inherit', shell: true, cwd: path.join(__dirname, '..') });
-        console.log('tsc --noEmit = Exit Code 0.');
-    } catch {
-        console.error('ERRORES TS. Corrige y repite complete.');
-        process.exit(1);
-    }
-
     const data = readJSON(QUEUE_FILE);
     const idx = data.tasks.findIndex(t => t.id === taskId);
     if (idx === -1) {
@@ -113,6 +105,45 @@ if (command === 'next') {
         console.log('Abre Start New Task (+) y escribe: node .antigravity/omega.js next');
         console.log('---\n');
         process.exit(0);
+    }
+
+    const task = data.tasks[idx];
+    const hasTypeScript = task.files && task.files.some(f => f.endsWith('.ts') || f.endsWith('.tsx'));
+
+    if (hasTypeScript) {
+        const root = path.join(__dirname, '..');
+        console.log('[OMEGA] Validando TypeScript...');
+        try {
+            execSync('npx tsc --noEmit', { stdio: 'inherit', shell: true, cwd: root });
+            console.log('tsc --noEmit = Exit Code 0.');
+        } catch {
+            console.error('ERRORES TS. Corrige y repite complete.');
+            process.exit(1);
+        }
+        // Scorecard 4bis: eslint Exit 0 sobre los archivos TS de la mision
+        const lintable = task.files.filter(f => /\.(ts|tsx)$/.test(f) && fs.existsSync(path.join(root, f)));
+        if (lintable.length) {
+            console.log('[OMEGA] Validando ESLint...');
+            try {
+                execSync(`npx eslint ${lintable.map(f => `"${f}"`).join(' ')}`, { stdio: 'inherit', shell: true, cwd: root });
+                console.log('eslint = Exit Code 0.');
+            } catch {
+                console.error('ERRORES ESLINT. Corrige y repite complete.');
+                process.exit(1);
+            }
+        }
+        // Script de prueba obligatorio declarado en la tarea
+        if (task.test) {
+            console.log(`[OMEGA] Ejecutando prueba: ${task.test}`);
+            try {
+                execSync(task.test, { stdio: 'inherit', shell: true, cwd: root });
+            } catch {
+                console.error('PRUEBA FALLIDA. Corrige y repite complete.');
+                process.exit(1);
+            }
+        }
+    } else {
+        console.log('[OMEGA] Tarea sin archivos TypeScript directos (validación de schema/JSON superada).');
     }
 
     // Eliminar misión activa

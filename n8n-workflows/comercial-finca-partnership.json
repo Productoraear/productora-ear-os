@@ -1,0 +1,169 @@
+{
+  "name": "COMERCIAL · Finca & Venue Strategic Partnership Qualifier (S-Class)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "finca-partnership",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "wb-finca",
+      "name": "Webhook Finca Partnership",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [0, 0],
+      "webhookId": "ear-wb-finca-partnership-v1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// EAR OS · Finca Partnership Qualifier v9.0 · Split Soberano inmutable 80/10/10 (SSOT)\nconst SSOT = { baseSolista: 350.00, split: { artista: 0.80, earOs: 0.10, vimume: 0.10 }, deposito: 100.00 };\nconst body = $input.first().json.body ?? $input.first().json;\nconst required = ['fincaName', 'fincaLocation', 'contactName', 'contactPhone', 'capacity'];\nconst errores = required.filter(c => body[c] === undefined || body[c] === null || body[c] === '');\nif (errores.length > 0) { return { valid: false, error: 'Faltan campos obligatorios: ' + errores.join(', ') }; }\nconst capacity = Number(body.capacity);\nconst weddingPackages = body.weddingPackages === true || body.weddingPackages === 'true';\nconst catering = body.catering === true || body.catering === 'true';\nconst greenArea = body.greenArea === true || body.greenArea === 'true';\nlet score = 0;\nscore += capacity >= 100 ? 30 : capacity >= 50 ? 20 : 10;\nscore += weddingPackages ? 25 : 0;\nscore += catering ? 20 : 0;\nscore += greenArea ? 15 : 0;\nconst loc = String(body.fincaLocation).toLowerCase();\nscore += (loc.includes('méntrida') || loc.includes('mentrida')) ? 10 : 5;\nconst tier = score >= 80 ? 'PLATINO' : score >= 60 ? 'ORO' : score >= 40 ? 'PLATA' : 'BRONCE';\nconst estimatedEvent = Number(body.estimatedEventPrice ?? SSOT.baseSolista);\nreturn { valid: true, ...body, capacity, weddingPackages, catering, greenArea, score, tier, qualified: score >= 60, split: { artista: +(estimatedEvent * SSOT.split.artista).toFixed(2), earOs: +(estimatedEvent * SSOT.split.earOs).toFixed(2), vimume: +(estimatedEvent * SSOT.split.vimume).toFixed(2) }, fincaCommission: +(estimatedEvent * 0.10).toFixed(2), depositAmount: SSOT.deposito, requestId: body.requestId ?? ('FINCA-' + Date.now()) };"
+      },
+      "id": "code-finca",
+      "name": "Cualificar Finca (Split 80/10/10)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [220, 0]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "loose", "version": 2 },
+          "conditions": [
+            {
+              "id": "cond-finca-valid",
+              "leftValue": "={{ $json.valid }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "true" }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "if-finca",
+      "name": "¿Payload válido?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [440, 0]
+    },
+    {
+      "parameters": {
+        "content": "🤝 *NUEVA ALIANZA FINCA — EAR OS* 🤝\n━━━━━━━━━━━━━━━━\n🏰 Finca: {{ $json.fincaName }}\n📍 Ubicación: {{ $json.fincaLocation }}\n👤 Contacto: {{ $json.contactName }} · {{ $json.contactPhone }}\n👥 Capacidad: {{ Number($json.capacity).toFixed(0) }} pax\n🏆 Tier: {{ $json.tier }} (score {{ Number($json.score).toFixed(0) }}/100)\n✅ Cualificada: {{ $json.qualified ? 'SÍ' : 'NO' }}\n💰 Comisión estimada: {{ Number($json.fincaCommission).toFixed(2) }} €\n📊 Split 80/10/10: Artista {{ Number($json.split.artista).toFixed(2) }} € · EAR OS {{ Number($json.split.earOs).toFixed(2) }} € · VIMUME {{ Number($json.split.vimume).toFixed(2) }} €\n🆔 {{ $json.requestId }}",
+        "chatId": "={{ $env.TELEGRAM_CHAT_ID }}",
+        "additionalFields": {}
+      },
+      "id": "telegram-finca",
+      "name": "Notificar Alianza (Telegram CEO)",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [660, 200],
+      "credentials": {
+        "telegramApi": {
+          "id": "telegram-cred",
+          "name": "Telegram Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "⚠️ EAR OS · Payload finca inválido: {{ $json.error }}",
+        "chatId": "={{ $env.TELEGRAM_CHAT_ID }}",
+        "additionalFields": {}
+      },
+      "id": "telegram-finca-invalid",
+      "name": "Alertar Payload Inválido",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [660, -100],
+      "credentials": {
+        "telegramApi": {
+          "id": "telegram-cred",
+          "name": "Telegram Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ success: true, requestId: $json.requestId, qualified: $json.qualified, tier: $json.tier, score: $json.score, split: $json.split, fincaCommission: $json.fincaCommission }) }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "respond-finca",
+      "name": "Confirmar Cualificación (200 OK)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [880, 200]
+    }
+  ],
+  "connections": {
+    "Webhook Finca Partnership": {
+      "main": [
+        [
+          {
+            "node": "Cualificar Finca (Split 80/10/10)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cualificar Finca (Split 80/10/10)": {
+      "main": [
+        [
+          {
+            "node": "¿Payload válido?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Payload válido?": {
+      "main": [
+        [
+          {
+            "node": "Notificar Alianza (Telegram CEO)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Alertar Payload Inválido",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notificar Alianza (Telegram CEO)": {
+      "main": [
+        [
+          {
+            "node": "Confirmar Cualificación (200 OK)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Alertar Payload Inválido": {
+      "main": [
+        [
+          {
+            "node": "Confirmar Cualificación (200 OK)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": true,
+  "pinData": {}
+}

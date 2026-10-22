@@ -3,13 +3,19 @@
   "note": "Lista soberana de exclusión y opt-out en 1 clic de acuerdo al RGPD Art. 17 (Derecho de Supresión) y LSSI Art. 16. Los perfiles aquí listados jamás se muestran públicamente ni se indexan.",
   "blacklisted_ids": [
     "prov-6",
-    "peke-teso"
+    "peke-teso",
+    "prov-4827",
+    "vendor-tabare-fotografia-films"
   ],
   "blacklisted_slugs": [
     "prov-6",
     "peke-teso",
     "100-apodos",
-    "prov-164"
+    "prov-164",
+    "prov-4827",
+    "tabare-fotografia-films",
+    "keila-tabare",
+    "tabare"
   ],
   "optout_records": [
     {
@@ -21,7 +27,12 @@
       "slug": "prov-164",
       "reason": "1-Click Opt-Out ejecutado desde enlace ético de notificación",
       "timestamp": "2026-09-09T08:35:16.421Z"
+    },
+    {
+      "slug": "tabare-fotografia-films",
+      "reason": "Protección y anonimización S-Class solicitada por titular. Ocultamiento total de datos PII sin rotura 404.",
+      "timestamp": "2026-10-22T10:30:00Z"
     }
   ],
-  "updated_at": "2026-09-09T06:00:00Z"
+  "updated_at": "2026-10-22T10:30:00Z"
 }

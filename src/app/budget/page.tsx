@@ -44,6 +44,9 @@ export default function BudgetPage() {
     }
   };
 
+  const [editingCategory, setEditingCategory] = useState<BudgetCategory | null>(null);
+  const [editEstimateValue, setEditEstimateValue] = useState('');
+
   const handleUpdateTotalBudget = async () => {
     if (!budget) return;
     try {
@@ -66,7 +69,43 @@ export default function BudgetPage() {
     }
   };
 
-  const handleAddExpense = async (expenseData: any) => {
+  const handleSaveCategoryEstimate = async () => {
+    if (!budget || !editingCategory) return;
+    const parsed = Number(editEstimateValue);
+    if (isNaN(parsed)) return;
+
+    try {
+      const res = await fetch('/api/budget/expenses', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          budgetId: budget.id,
+          categoryId: editingCategory.id,
+          description: 'Ajuste de Estimación',
+          amount: 0,
+          date: new Date().toISOString().split('T')[0],
+          notes: `Estimación fijada en ${parsed} €`,
+        }),
+      });
+
+      if (res.ok) {
+        setEditingCategory(null);
+        await fetchData();
+      }
+    } catch (error) {
+      console.error('Error saving estimate:', error);
+    }
+  };
+
+  const handleAddExpense = async (expenseData: {
+    budgetId: string;
+    categoryId: string;
+    description: string;
+    amount: number;
+    date: string;
+    notes?: string;
+    vendorId?: string;
+  }) => {
     try {
       const res = await fetch('/api/budget/expenses', {
         method: 'POST',
@@ -93,7 +132,7 @@ export default function BudgetPage() {
 
   if (loading || !budget) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#050505]">
+      <div className="min-h-screen flex items-center justify-center bg-[#030305]">
         <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#ecb613]" />
       </div>
     );
@@ -103,9 +142,26 @@ export default function BudgetPage() {
   const isOverBudget = totalSpent > budget.totalBudget && budget.totalBudget > 0;
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white pt-24 pb-28 px-4 sm:px-6 lg:px-8 font-sans selection:bg-[#ecb613] selection:text-black">
+    <div className="min-h-screen bg-[#030305] text-white pt-24 pb-28 px-4 sm:px-6 lg:px-8 font-sans selection:bg-[#ecb613] selection:text-black">
       <div className="max-w-7xl mx-auto space-y-8">
         
+        {/* Banner de Salto a la Calculadora S-Class */}
+        <div className="p-4 rounded-2xl bg-[#09090d] border border-[#ecb613]/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <span className="p-2 rounded-xl bg-[#ecb613]/10 text-[#ecb613] font-mono text-sm">🔒/🔓</span>
+            <div>
+              <p className="text-xs font-bold text-white font-syne uppercase">Cotizador Multi-Partida con Candados 🔒/🔓</p>
+              <p className="text-[11px] font-mono text-white/50">¿Deseas distribuir presupuesto dinámicamente con candados y packs oficiales EAR?</p>
+            </div>
+          </div>
+          <a
+            href="/calculadora"
+            className="px-4 py-2 bg-[#ecb613] hover:bg-amber-400 text-black text-xs font-mono font-black uppercase rounded-xl transition-all shadow-md shadow-[#ecb613]/20 shrink-0"
+          >
+            Abrir Cotizador S-Class →
+          </a>
+        </div>
+
         {/* Cabecera Principal */}
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 p-6 rounded-3xl bg-[#09090d] border border-white/10 shadow-2xl">
           <div>
@@ -216,30 +272,65 @@ export default function BudgetPage() {
                   setIsExpenseModalOpen(true);
                 }}
                 onEditCategory={(cat) => {
-                  const val = prompt(`Fijar presupuesto estimado para "${cat.name}":`, String(cat.estimatedCost));
-                  if (val !== null) {
-                    const parsed = Number(val);
-                    if (!isNaN(parsed)) {
-                      fetch('/api/budget/expenses', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                          budgetId: budget.id,
-                          categoryId: cat.id,
-                          description: 'Ajuste de Estimación',
-                          amount: 0,
-                          date: new Date().toISOString().split('T')[0],
-                          notes: `Estimación fijada en ${parsed} €`
-                        })
-                      }).then(() => fetchData());
-                    }
-                  }
+                  setEditingCategory(cat);
+                  setEditEstimateValue(String(cat.estimatedCost || ''));
                 }}
                 onDeleteCategory={handleDeleteCategory}
               />
             ))}
           </div>
         </div>
+
+        {/* Modal Elegante S-Class de Edición de Estimación (Erradicación de prompt()) */}
+        {editingCategory && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
+            <div className="w-full max-w-md p-6 rounded-3xl bg-[#09090d] border border-[#ecb613]/30 shadow-2xl space-y-4">
+              <div className="flex items-center justify-between">
+                <h3 className="text-base font-bold font-syne text-white uppercase">
+                  Fijar Presupuesto Estimado
+                </h3>
+                <button
+                  onClick={() => setEditingCategory(null)}
+                  className="p-1 rounded-lg text-white/50 hover:text-white hover:bg-white/10"
+                >
+                  <X size={16} />
+                </button>
+              </div>
+              <p className="text-xs font-mono text-white/60">
+                Partida: <span className="text-[#ecb613] font-bold">{editingCategory.name}</span>
+              </p>
+              <div>
+                <label className="block text-[11px] font-mono uppercase text-white/50 mb-1">
+                  Importe Estimado (€)
+                </label>
+                <input
+                  type="number"
+                  value={editEstimateValue}
+                  onChange={(e) => setEditEstimateValue(e.target.value)}
+                  placeholder="Ej. 1500"
+                  className="w-full px-4 py-2.5 bg-black/60 border border-white/10 rounded-xl text-sm font-jetbrains text-white focus:outline-none focus:border-[#ecb613]"
+                  autoFocus
+                />
+              </div>
+              <div className="flex justify-end gap-2 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setEditingCategory(null)}
+                  className="px-4 py-2 text-xs font-mono text-white/70 hover:text-white rounded-xl bg-white/5 hover:bg-white/10 transition-colors"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="button"
+                  onClick={handleSaveCategoryEstimate}
+                  className="px-4 py-2 text-xs font-mono font-bold text-black bg-[#ecb613] hover:bg-amber-400 rounded-xl transition-all shadow-md shadow-[#ecb613]/20"
+                >
+                  Guardar Estimación
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Modal de Registro */}
         <AddExpenseModal

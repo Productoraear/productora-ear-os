@@ -4,8 +4,8 @@
  * Sistema de notificación forense para ventas y eventos críticos.
  */
 
-const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
-const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN;
+const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || process.env.NEXT_PUBLIC_TELEGRAM_ADMIN_ID;
 
 export async function sendTelegramNotification(message: string, chatId?: string) {
   const targetId = chatId || TELEGRAM_CHAT_ID;

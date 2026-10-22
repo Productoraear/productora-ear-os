@@ -8,9 +8,9 @@ export class TelegramService {
     private adminChatId: string;
 
     constructor() {
-        // Usamos las variables del .env.local recuperado
-        this.botToken = process.env.TELEGRAM_BOT_TOKEN || '';
-        this.adminChatId = process.env.TELEGRAM_CHAT_ID || '';
+        // Usamos las variables del .env.local recuperado con fallback
+        this.botToken = process.env.TELEGRAM_BOT_TOKEN || process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN || '';
+        this.adminChatId = process.env.TELEGRAM_CHAT_ID || process.env.NEXT_PUBLIC_TELEGRAM_ADMIN_ID || '';
     }
 
     /**

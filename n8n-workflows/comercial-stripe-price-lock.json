@@ -1,0 +1,169 @@
+{
+  "name": "COMERCIAL · Stripe Price-Lock Deposit & Smart Contract (S-Class)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "stripe-price-lock",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "wb-stripe-lock",
+      "name": "Webhook Stripe Price-Lock",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [0, 0],
+      "webhookId": "ear-wb-stripe-price-lock-v1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// EAR OS · Stripe Price-Lock v9.0 · Depósito 100 € Price-Lock SHA-256 (SSOT)\n// crypto es módulo incorporado de Node disponible oficialmente en el Code node n8n.\nconst crypto = require('crypto');\nconst SSOT = { deposito: 100.00, split: { artista: 0.80, earOs: 0.10, vimume: 0.10 } };\nconst body = $input.first().json.body ?? $input.first().json;\nconst required = ['stripeSessionId', 'eventDate', 'clientPhone', 'clientEmail', 'totalPrice', 'lockSignature'];\nconst errores = required.filter(c => body[c] === undefined || body[c] === null || body[c] === '');\nif (errores.length > 0) { return { valid: false, error: 'Faltan campos obligatorios: ' + errores.join(', ') }; }\nconst depositAmount = Number(body.depositAmount ?? SSOT.deposito);\nif (depositAmount !== SSOT.deposito) { return { valid: false, error: 'Depósito debe ser exactamente 100,00 € (SSOT). Recibido: ' + depositAmount }; }\nconst firmasEsperadas = [crypto.createHash('sha256').update(JSON.stringify({ stripeSessionId: body.stripeSessionId, eventDate: body.eventDate, clientPhone: body.clientPhone, totalPrice: Number(body.totalPrice) })).digest('hex')];\nconst sinFirma = { ...body }; delete sinFirma.lockSignature;\nfirmasEsperadas.push(crypto.createHash('sha256').update(JSON.stringify(sinFirma)).digest('hex'));\nfirmasEsperadas.push(crypto.createHash('sha256').update(JSON.stringify(sinFirma) + 'EAR_OS_V1').digest('hex'));\nconst firmaValida = firmasEsperadas.includes(String(body.lockSignature).toLowerCase());\nif (!firmaValida) { return { valid: false, error: 'lockSignature SHA-256 inválida. Esperadas: ' + firmasEsperadas.join(' | ') }; }\nconst total = Number(body.totalPrice);\nreturn { valid: true, ...body, depositAmount, depositDeductible: SSOT.deposito, remainingToPay: +(total - SSOT.deposito).toFixed(2), lockConfirmed: true, split: { artista: +(total * SSOT.split.artista).toFixed(2), earOs: +(total * SSOT.split.earOs).toFixed(2), vimume: +(total * SSOT.split.vimume).toFixed(2) }, requestId: body.requestId ?? ('LOCK-' + Date.now()) };"
+      },
+      "id": "code-stripe-lock",
+      "name": "Validar Depósito 100 € + Firma SHA-256",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [220, 0]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "loose", "version": 2 },
+          "conditions": [
+            {
+              "id": "cond-lock-valid",
+              "leftValue": "={{ $json.valid }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "true" }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "if-stripe-lock",
+      "name": "¿Depósito verificado?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [440, 0]
+    },
+    {
+      "parameters": {
+        "content": "🔒 *DEPÓSITO PRICE-LOCK CONFIRMADO — EAR OS* 🔒\n━━━━━━━━━━━━━━━━\n💰 Depósito: {{ Number($json.depositAmount).toFixed(2) }} € (100% deducible)\n📅 Fecha bloqueada: {{ $json.eventDate }}\n🧾 Stripe Session: `{{ $json.stripeSessionId }}`\n🔐 Firma SHA-256: verificado ✅\n👤 Cliente: {{ $json.clientPhone }}\n📧 Email: {{ $json.clientEmail }}\n💰 Total evento: {{ Number($json.totalPrice).toFixed(2) }} €\n💶 Pendiente: {{ Number($json.remainingToPay).toFixed(2) }} €\n📊 Split 80/10/10: Artista {{ Number($json.split.artista).toFixed(2) }} € · EAR OS {{ Number($json.split.earOs).toFixed(2) }} € · VIMUME {{ Number($json.split.vimume).toFixed(2) }} €\n🆔 {{ $json.requestId }}",
+        "chatId": "={{ $env.TELEGRAM_CHAT_ID }}",
+        "additionalFields": {}
+      },
+      "id": "telegram-stripe-lock",
+      "name": "Confirmar Lock (Telegram CEO)",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [660, 200],
+      "credentials": {
+        "telegramApi": {
+          "id": "telegram-cred",
+          "name": "Telegram Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "⚠️ EAR OS · Depósito inválido: {{ $json.error }}",
+        "chatId": "={{ $env.TELEGRAM_CHAT_ID }}",
+        "additionalFields": {}
+      },
+      "id": "telegram-stripe-invalid",
+      "name": "Alertar Depósito Inválido",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [660, -100],
+      "credentials": {
+        "telegramApi": {
+          "id": "telegram-cred",
+          "name": "Telegram Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ success: true, lockConfirmed: $json.lockConfirmed, requestId: $json.requestId, depositAmount: $json.depositAmount, eventDate: $json.eventDate, remainingToPay: $json.remainingToPay, split: $json.split }) }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "respond-stripe-lock",
+      "name": "Confirmar Lock (200 OK)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [880, 200]
+    }
+  ],
+  "connections": {
+    "Webhook Stripe Price-Lock": {
+      "main": [
+        [
+          {
+            "node": "Validar Depósito 100 € + Firma SHA-256",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validar Depósito 100 € + Firma SHA-256": {
+      "main": [
+        [
+          {
+            "node": "¿Depósito verificado?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Depósito verificado?": {
+      "main": [
+        [
+          {
+            "node": "Confirmar Lock (Telegram CEO)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Alertar Depósito Inválido",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Confirmar Lock (Telegram CEO)": {
+      "main": [
+        [
+          {
+            "node": "Confirmar Lock (200 OK)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Alertar Depósito Inválido": {
+      "main": [
+        [
+          {
+            "node": "Confirmar Lock (200 OK)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": true,
+  "pinData": {}
+}

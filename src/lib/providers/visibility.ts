@@ -62,7 +62,12 @@ export function isProviderBlacklisted(provider: {
     id === 'prov-6' ||
     slug === 'prov-6' ||
     name.includes('100 apodos') ||
-    slug.includes('100-apodos')
+    slug.includes('100-apodos') ||
+    name.includes('tabare') ||
+    name.includes('keila') ||
+    slug.includes('tabare') ||
+    id.includes('tabare') ||
+    id === 'prov-4827'
   ) {
     return true;
   }

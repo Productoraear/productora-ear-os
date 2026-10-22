@@ -1,0 +1,169 @@
+{
+  "name": "COMERCIAL · B2B/B2G Quote & Smart Lead Dispatcher (S-Class)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "b2b-quote",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "wb-b2b-quote",
+      "name": "Webhook B2B/B2G Quote",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [0, 0],
+      "webhookId": "ear-wb-b2b-quote-v1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// EAR OS SSOT v9.0 - Fuente: src/lib/constants/ear-os-ssot.ts (Sentinel SHA-256)\nconst SSOT = { baseSolista: 350.00, split: { artista: 0.80, earOs: 0.10, vimume: 0.10 }, deposito: 100.00, kmGratis: 50, tarifaKm: 1.50, hotel: 120.00, hotelKmUmbral: 200, techoB2G: 14250.00 };\nconst RIDER = { festejo: [90, 102], boda: [85, 90], solista: [70, 80], vimume: [65, 75] };\nconst body = $input.first().json.body ?? $input.first().json;\nconst required = ['clientName', 'clientPhone', 'eventType', 'eventDate', 'location', 'distanceKm'];\nconst errores = required.filter(c => body[c] === undefined || body[c] === null || body[c] === '');\nif (errores.length > 0) { return { valid: false, error: 'Faltan campos obligatorios: ' + errores.join(', ') }; }\nconst distanceKm = Number(body.distanceKm);\nconst eventType = String(body.eventType).toLowerCase();\nconst horaFin = String(body.endTime ?? '00:00').replace(':', '');\nconst kmFacturables = Math.max(0, distanceKm - SSOT.kmGratis);\nconst logistica = kmFacturables * SSOT.tarifaKm;\nconst hotel = (Number(horaFin) >= 300 || distanceKm > SSOT.hotelKmUmbral) ? SSOT.hotel : 0;\nconst logisticaTotal = logistica + hotel;\nconst total = SSOT.baseSolista + logisticaTotal;\nconst split = { artista: +(total * SSOT.split.artista).toFixed(2), earOs: +(total * SSOT.split.earOs).toFixed(2), vimume: +(total * SSOT.split.vimume).toFixed(2) };\nreturn { valid: true, ...body, distanceKm, eventType, logistica: +logistica.toFixed(2), hotel, logisticaTotal: +logisticaTotal.toFixed(2), totalPrice: +total.toFixed(2), depositAmount: SSOT.deposito, depositDeductible: SSOT.deposito, b2gEligible: total < SSOT.techoB2G, riderDBA: RIDER[eventType] ?? RIDER.solista, split, requestId: body.requestId ?? ('B2B-' + Date.now()) };"
+      },
+      "id": "code-b2b-quote",
+      "name": "Validar Cotización (SSOT + Split 80/10/10)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [220, 0]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "loose", "version": 2 },
+          "conditions": [
+            {
+              "id": "cond-b2b-valid",
+              "leftValue": "={{ $json.valid }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "true" }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "if-b2b-quote",
+      "name": "¿Payload válido?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [440, 0]
+    },
+    {
+      "parameters": {
+        "content": "🚨 *NUEVA COTIZACIÓN B2B/B2G — EAR OS* 🚨\n━━━━━━━━━━━━━━━━\n👤 Cliente: {{ $json.clientName }}\n📞 Teléfono: {{ $json.clientPhone }}\n📅 Fecha evento: {{ $json.eventDate }}\n📍 Ubicación: {{ $json.location }}\n🚗 Km: {{ Number($json.distanceKm).toFixed(0) }} km\n💰 Total: {{ Number($json.totalPrice).toFixed(2) }} €\n🔒 Depósito: {{ Number($json.depositAmount).toFixed(2) }} € (100% deducible)\n📊 Split 80/10/10: Artista {{ Number($json.split.artista).toFixed(2) }} € · EAR OS {{ Number($json.split.earOs).toFixed(2) }} € · VIMUME {{ Number($json.split.vimume).toFixed(2) }} €\n🎧 Rider: {{ $json.riderDBA[0] }}-{{ $json.riderDBA[1] }} dBA\n🏛️ B2G elegible: {{ $json.b2gEligible ? 'SÍ (< 14.250 €)' : 'NO' }}\n🆔 {{ $json.requestId }}",
+        "chatId": "={{ $env.TELEGRAM_CHAT_ID }}",
+        "additionalFields": {}
+      },
+      "id": "telegram-b2b-quote",
+      "name": "Notificar Cotización (Telegram CEO)",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [660, 200],
+      "credentials": {
+        "telegramApi": {
+          "id": "telegram-cred",
+          "name": "Telegram Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "⚠️ EAR OS · Payload B2B inválido: {{ $json.error }}",
+        "chatId": "={{ $env.TELEGRAM_CHAT_ID }}",
+        "additionalFields": {}
+      },
+      "id": "telegram-b2b-invalid",
+      "name": "Alertar Payload Inválido",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [660, -100],
+      "credentials": {
+        "telegramApi": {
+          "id": "telegram-cred",
+          "name": "Telegram Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ success: true, requestId: $json.requestId, totalPrice: $json.totalPrice, depositAmount: $json.depositAmount, split: $json.split, lockSignature: null }) }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "respond-b2b-quote",
+      "name": "Confirmar Recepción (200 OK)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [880, 200]
+    }
+  ],
+  "connections": {
+    "Webhook B2B/B2G Quote": {
+      "main": [
+        [
+          {
+            "node": "Validar Cotización (SSOT + Split 80/10/10)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validar Cotización (SSOT + Split 80/10/10)": {
+      "main": [
+        [
+          {
+            "node": "¿Payload válido?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Payload válido?": {
+      "main": [
+        [
+          {
+            "node": "Notificar Cotización (Telegram CEO)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Alertar Payload Inválido",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notificar Cotización (Telegram CEO)": {
+      "main": [
+        [
+          {
+            "node": "Confirmar Recepción (200 OK)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Alertar Payload Inválido": {
+      "main": [
+        [
+          {
+            "node": "Confirmar Recepción (200 OK)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": true,
+  "pinData": {}
+}
