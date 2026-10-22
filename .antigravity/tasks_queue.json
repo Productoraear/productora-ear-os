@@ -6,31 +6,7 @@
     "total_tasks": 3
   },
   "_instructions_for_worker": "Ejecuta SOLO via: call RUN_OMEGA.bat next  ->  lee .antigravity/MISSION_ACTIVE.json  ->  edita SOLO 'files'  ->  call RUN_OMEGA.bat complete <ID>. El complete ya ejecuta tsc + eslint + test. 1 tarea por sesion. Si una orden te parece simplona, devuelve reto_espejo en tu reporte (AGENTS.md 13).",
-  "tasks": [
-    {
-      "id": "W27_T03_BOVEDA_CANCIONES_PROHIBIDAS",
-      "title": "P1: Bóveda de Canciones Prohibidas y QR Interactivo de Peticiones DJ para Fincas",
-      "status": "QUEUED",
-      "files": [
-        "src/components/music/ProhibitedSongsVault.tsx",
-        "src/app/(public)/musica/canciones-prohibidas/page.tsx",
-        "scripts/verify_boveda_canciones.cjs"
-      ],
-      "action": "Crear la Bóveda de Canciones Prohibidas: herramienta donde las parejas configuran los temas que jamás deben sonar en su fiesta, junto a un generador de QR imprimible para las mesas donde los invitados solicitan canciones al DJ que se filtran contra la lista prohibida en tiempo real.",
-      "scaffold": {
-        "rules": [
-          "ProhibitedSongsVault.tsx: 'use client', lista canónica de 15 temas comúnmente vetados con opción de añadir/quitar personalizados.",
-          "Generador de QR SVG interactivo que apunta al formulario de peticiones de la boda.",
-          "Formulario de peticiones para invitados con auto-check en tiempo real: si el tema está en la lista negra, muestra mensaje elegante con recomendación alternativa.",
-          "Página pública en src/app/(public)/musica/canciones-prohibidas/page.tsx con Metadata SEO y rich snippet schema.org.",
-          "Cero 'any', tipado estricto, estética OLED de alta gala."
-        ],
-        "test_cjs": "scripts/verify_boveda_canciones.cjs: asserta que el componente contiene lista de canciones, filtro de coincidencia, generador QR o SVG y NO contiene ': any'. Exit 1 en fallo."
-      },
-      "test": "node scripts/verify_boveda_canciones.cjs",
-      "done_when": "tsc 0 + eslint 0 + test 0. Bóveda interactiva lista para novios y DJs."
-    }
-  ],
+  "tasks": [],
   "completed": [
     {
       "id": "W26_T04_REQUEST_TO_BOOK_API",
