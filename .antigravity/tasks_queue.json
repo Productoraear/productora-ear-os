@@ -8,30 +8,6 @@
   "_instructions_for_worker": "Ejecuta SOLO via: call RUN_OMEGA.bat next  ->  lee .antigravity/MISSION_ACTIVE.json  ->  edita SOLO 'files'  ->  call RUN_OMEGA.bat complete <ID>. El complete ya ejecuta tsc + eslint + test. 1 tarea por sesion. Si una orden te parece simplona, devuelve reto_espejo en tu reporte (AGENTS.md 13).",
   "tasks": [
     {
-      "id": "W26_T02_TELEMETRY_REAL_PINGS_API",
-      "title": "P0: API real de pings GPS para seguimiento Dia D (sustituye datos simulados)",
-      "status": "QUEUED",
-      "files": [
-        "src/app/api/telemetry/[id]/route.ts",
-        "scripts/verify_telemetry_api.cjs"
-      ],
-      "action": "Crear endpoint GET/POST. Hoy LiveFleetTracker.tsx simula posicion con setInterval y SPL con Math.random (lineas 42-53): es FACHADA. Esta tarea crea el backend; T03 conecta la UI.",
-      "scaffold": {
-        "route_ts": [
-          "Next 15: export async function POST(req: Request, { params }: { params: Promise<{ id: string }> }) y GET igual. SIEMPRE const resolvedParams = await params;",
-          "Validar id con /^[A-Z0-9-]{4,40}$/ -> 400 si no casa.",
-          "type TelemetryPing = { lat: number; lng: number; accuracy: number; status: 'EN_RUTA' | 'EN_RECINTO' | 'MONTAJE' | 'LISTO' | 'EN_VIVO' | 'FINALIZADO'; at: string }.",
-          "POST body validado a mano: lat en [-90,90], lng en [-180,180], accuracy >= 0, status en la union. Rechazar con 422 si invalido. Requiere header 'x-ear-provider-token' igual a process.env.TELEMETRY_PROVIDER_TOKEN; si la env no existe -> 503 {error:'telemetry_disabled'} (nunca aceptar sin token).",
-          "Almacen v1: const store = globalThis as unknown as { __earTelemetry?: Map<string, TelemetryPing[]> }; guardar max 200 pings por id. Comentar en cabecera: 'v1 en memoria del proceso; persistencia PostgreSQL en Wave 27'.",
-          "GET devuelve { id, last: TelemetryPing | null, count: number, live: boolean } donde live = last existe y tiene < 120 s.",
-          "En el primer ping con status 'EN_RUTA' y en 'FINALIZADO': fireAndForgetN8n('call-center-intake', { kind: 'telemetry', id, status }) importado de '@/lib/services/n8n-dispatcher'."
-        ],
-        "test_cjs": "scripts/verify_telemetry_api.cjs: lee el route.ts como texto y asserta que contiene 'await params', 'TELEMETRY_PROVIDER_TOKEN', '503', '422', 'fireAndForgetN8n' y NO contiene 'Math.random' ni ': any'. Exit 1 en fallo."
-      },
-      "test": "node scripts/verify_telemetry_api.cjs",
-      "done_when": "tsc 0 + eslint 0 + test 0. Sin token = 503, jamas acepta pings anonimos."
-    },
-    {
       "id": "W26_T03_TRACKER_DEFACADE",
       "title": "P0: LiveFleetTracker consume la API real y muestra 'Sin senal' honesto en vez de datos inventados",
       "status": "QUEUED",
