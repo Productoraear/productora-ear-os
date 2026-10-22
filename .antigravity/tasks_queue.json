@@ -1,50 +1,86 @@
 {
   "_meta": {
-    "version": "9.0-OMEGA-WAVE-26",
-    "doctrine": "WAVE 26: ERRADICACION DE FACHADAS EN RUTA DE VENTA (P0) + REQUEST-TO-BOOK WHATSAPP",
-    "wave": 26,
-    "total_tasks": 4
+    "version": "9.0-OMEGA-WAVE-27",
+    "doctrine": "WAVE 27: CRO COMMERCIAL CONVERSION + ACOUSTIC CONSCIENCE PWA + PROHIBITED SONGS VAULT",
+    "wave": 27,
+    "total_tasks": 3
   },
   "_instructions_for_worker": "Ejecuta SOLO via: call RUN_OMEGA.bat next  ->  lee .antigravity/MISSION_ACTIVE.json  ->  edita SOLO 'files'  ->  call RUN_OMEGA.bat complete <ID>. El complete ya ejecuta tsc + eslint + test. 1 tarea por sesion. Si una orden te parece simplona, devuelve reto_espejo en tu reporte (AGENTS.md 13).",
-  "tasks": [],
+  "tasks": [
+    {
+      "id": "W27_T02_SONOMETRO_CONCIENCIA_PWA",
+      "title": "P1: Sonómetro de Conciencia PWA (Medidor Pedagógico Web Audio API Ley 37/2003)",
+      "status": "QUEUED",
+      "files": [
+        "src/components/tools/AcousticConscienceMeter.tsx",
+        "src/app/(public)/sonometro/page.tsx",
+        "scripts/verify_sonometro_pwa.cjs"
+      ],
+      "action": "Implementar el Sonómetro de Conciencia en el navegador usando Web Audio API (navigator.mediaDevices.getUserMedia + AnalyserNode) para medir el nivel sonoro ambiental en dBA y contrastarlo con los límites de la Ley 37/2003 según contexto (Cóctel 70-80 dBA, Fincas 85-90 dBA, Festejos 90-102 dBA, VIMUME Senior 65-75 dBA). Mandato CEO: Herramienta de concienciación y autorregulación responsable, NO garantía legal ni limitador policial.",
+      "scaffold": {
+        "rules": [
+          "AcousticConscienceMeter.tsx: 'use client', gestión de permisos de micrófono, audioContext, analyserNode, cálculo RMS a dB.",
+          "Selector de contexto acústico: 'Cóctel Lírico', 'Boda Finca', 'Plaza Pública', 'Senior VIMUME'.",
+          "Visualizador circular o aguja con zonas de color (Verde = Óptimo, Ámbar = Alerta, Rubí = Saturación).",
+          "Descargo de responsabilidad visible: 'Herramienta pedagógica de autorregulación acústica conforme a la Ley 37/2003. No constituye medición oficial homologada.'",
+          "Botón de impresión o exportación de informe de soundcheck (window.print()).",
+          "Página pública en src/app/(public)/sonometro/page.tsx con Metadata SEO canónica."
+        ],
+        "test_cjs": "scripts/verify_sonometro_pwa.cjs: asserta que el componente contiene 'AudioContext' o 'webkitAudioContext', 'Ley 37/2003', 'autorregulación' y NO contiene ': any'. Exit 1 en fallo."
+      },
+      "test": "node scripts/verify_sonometro_pwa.cjs",
+      "done_when": "tsc 0 + eslint 0 + test 0. Medidor acústico interactivo operativo en /sonometro."
+    },
+    {
+      "id": "W27_T03_BOVEDA_CANCIONES_PROHIBIDAS",
+      "title": "P1: Bóveda de Canciones Prohibidas y QR Interactivo de Peticiones DJ para Fincas",
+      "status": "QUEUED",
+      "files": [
+        "src/components/music/ProhibitedSongsVault.tsx",
+        "src/app/(public)/musica/canciones-prohibidas/page.tsx",
+        "scripts/verify_boveda_canciones.cjs"
+      ],
+      "action": "Crear la Bóveda de Canciones Prohibidas: herramienta donde las parejas configuran los temas que jamás deben sonar en su fiesta, junto a un generador de QR imprimible para las mesas donde los invitados solicitan canciones al DJ que se filtran contra la lista prohibida en tiempo real.",
+      "scaffold": {
+        "rules": [
+          "ProhibitedSongsVault.tsx: 'use client', lista canónica de 15 temas comúnmente vetados con opción de añadir/quitar personalizados.",
+          "Generador de QR SVG interactivo que apunta al formulario de peticiones de la boda.",
+          "Formulario de peticiones para invitados con auto-check en tiempo real: si el tema está en la lista negra, muestra mensaje elegante con recomendación alternativa.",
+          "Página pública en src/app/(public)/musica/canciones-prohibidas/page.tsx con Metadata SEO y rich snippet schema.org.",
+          "Cero 'any', tipado estricto, estética OLED de alta gala."
+        ],
+        "test_cjs": "scripts/verify_boveda_canciones.cjs: asserta que el componente contiene lista de canciones, filtro de coincidencia, generador QR o SVG y NO contiene ': any'. Exit 1 en fallo."
+      },
+      "test": "node scripts/verify_boveda_canciones.cjs",
+      "done_when": "tsc 0 + eslint 0 + test 0. Bóveda interactiva lista para novios y DJs."
+    }
+  ],
   "completed": [
     {
-      "id": "W25_T02_AUDIT_360_SUITE_INTEGRITY",
+      "id": "W26_T04_REQUEST_TO_BOOK_API",
       "status": "COMPLETED",
       "exit_code": 0
     },
     {
-      "id": "W25_T01_NAVBAR_AND_ROBOTS_INTEGRATION",
+      "id": "W26_T03_TRACKER_DEFACADE",
       "status": "COMPLETED",
       "exit_code": 0
     },
     {
-      "id": "W24_T03_B2G_DOSSIER_VIEW",
+      "id": "W26_T02_TELEMETRY_REAL_PINGS_API",
       "status": "COMPLETED",
       "exit_code": 0
     },
     {
-      "id": "W24_T02_WIRE_EXPERIENCIA_PAGE",
+      "id": "W26_T01_VENDORS_VERIFIED_ONLY",
       "status": "COMPLETED",
       "exit_code": 0
-    },
-    {
-      "id": "W24_T01_OMNICHANNEL_ROLE_HUB",
-      "status": "COMPLETED",
-      "exit_code": 0
-    },
-    {
-      "id": "W25_HOTFIX_BUDGET_PAGE",
-      "title": "budget/page.tsx: 0 any, 0 prompt(), fondo #030305 (Antigravity directo)",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "validated": "VALIDATE.bat -> NODE v26.12.1, TSC_EXIT=0, ESLINT_EXIT=0 (2026-10-22 11:13)"
     }
   ],
   "metadata": {
-    "last_updated": "2026-10-22T09:15:00.000Z",
-    "total_pending": 4,
-    "current_sprint": "WAVE_26_DEFACADE_MONEY_PATH",
-    "ceo_mandate": "Cero fachadas en la ruta que genera dinero antes del 28-OCT."
+    "last_updated": "2026-10-22T15:20:00.000Z",
+    "total_pending": 3,
+    "current_sprint": "WAVE_27_CRO_AND_INTERACTIVE_TOOLS",
+    "ceo_mandate": "Máxima dominancia comercial, herramientas virales interactivas y cero fachadas."
   }
 }
