@@ -8,29 +8,6 @@
   "_instructions_for_worker": "Ejecuta SOLO via: call RUN_OMEGA.bat next  ->  lee .antigravity/MISSION_ACTIVE.json  ->  edita SOLO 'files'  ->  call RUN_OMEGA.bat complete <ID>. El complete ya ejecuta tsc + eslint + test. 1 tarea por sesion. Si una orden te parece simplona, devuelve reto_espejo en tu reporte (AGENTS.md 13).",
   "tasks": [
     {
-      "id": "W26_T03_TRACKER_DEFACADE",
-      "title": "P0: LiveFleetTracker consume la API real y muestra 'Sin senal' honesto en vez de datos inventados",
-      "status": "QUEUED",
-      "files": [
-        "src/components/telemetry/LiveFleetTracker.tsx",
-        "scripts/verify_tracker_no_facade.cjs"
-      ],
-      "action": "Eliminar los dos setInterval simulados (lineas ~42-53, incluido Math.random del SPL). Sustituir por polling cada 15 s a GET /api/telemetry/{id}.",
-      "scaffold": {
-        "rules": [
-          "Leer SOLO LiveFleetTracker.tsx. Conservar estilos, props y estructura visual existentes.",
-          "type TelemetryResponse = { id: string; last: { lat: number; lng: number; accuracy: number; status: string; at: string } | null; count: number; live: boolean }.",
-          "useEffect con fetch + AbortController + setInterval 15000; limpiar en unmount. Estados: 'cargando' | 'sin_senal' | 'en_vivo' | 'error'.",
-          "Si live=false: mostrar tarjeta 'Sin senal en vivo todavia. El seguimiento se activa automaticamente a la hora pactada.' + boton WhatsApp https://wa.me/34693693048 (aria-label claro).",
-          "Eliminar el medidor SPL simulado. Si se quiere mostrar dBA, solo el rango SSOT por contexto como texto estatico etiquetado 'Rango normativo', nunca como medicion.",
-          "Hora de ultima senal formateada con Intl.DateTimeFormat('es-ES', { timeStyle: 'short' })."
-        ],
-        "test_cjs": "scripts/verify_tracker_no_facade.cjs: asserta que el .tsx NO contiene 'Math.random' y SI contiene '/api/telemetry/' y 'AbortController'. Exit 1 en fallo."
-      },
-      "test": "node scripts/verify_tracker_no_facade.cjs",
-      "done_when": "tsc 0 + eslint 0 + test 0. Cero numeros inventados en pantalla."
-    },
-    {
       "id": "W26_T04_REQUEST_TO_BOOK_API",
       "title": "P0: Request-to-Book — solicitud al proveedor por n8n/WhatsApp antes de cobrar (decision CEO Bloque 6/A6, A8)",
       "status": "QUEUED",

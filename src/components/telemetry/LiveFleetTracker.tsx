@@ -1,7 +1,18 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Truck, CheckCircle2, Clock, Volume2, Phone } from "lucide-react";
+import {
+  Truck,
+  CheckCircle2,
+  Clock,
+  Volume2,
+  Phone,
+  Radio,
+  LoaderCircle,
+  MapPin,
+  Activity,
+  TriangleAlert,
+} from "lucide-react";
 
 interface MissionStage {
   readonly key: string;
@@ -14,46 +25,129 @@ interface LiveFleetTrackerProps {
   readonly etaMinutes?: number;
 }
 
+type TelemetryResponse = {
+  id: string;
+  last: {
+    lat: number;
+    lng: number;
+    accuracy: number;
+    status: string;
+    at: string;
+  } | null;
+  count: number;
+  live: boolean;
+};
+
+type TrackerState = "cargando" | "sin_senal" | "en_vivo" | "error";
+
 const STAGES: readonly MissionStage[] = [
   { key: "contract", label: "Contrato y Depósito Firmado" },
   { key: "route", label: "En Ruta (GPS Hub Méntrida)" },
   { key: "setup", label: "Llegada y Montaje" },
-  { key: "soundcheck", label: "Soundcheck Acústico (<85 dB)" },
+  { key: "soundcheck", label: "Soundcheck Acústico" },
   { key: "show", label: "Show en Curso" },
 ];
 
 const EMERGENCY_WHATSAPP = "https://wa.me/34693693048";
-const ACOUSTIC_LIMIT_DB = 85;
+const POLL_INTERVAL_MS = 15_000;
+
+// Rango normativo SSOT por contexto (Solista / Edwin Agudelo, Ley 37/2003).
+// Se muestra como texto estático de referencia, nunca como medición en vivo.
+const NORMATIVE_RANGE_LABEL = "70–80 dBA · Solista (acústica de gala)";
+
+// Mapea el estado real de telemetría al índice de etapa visual (0-based).
+const STATUS_TO_STAGE: Readonly<Record<string, number>> = {
+  EN_RUTA: 1,
+  EN_RECINTO: 2,
+  MONTAJE: 2,
+  LISTO: 3,
+  EN_VIVO: 4,
+  FINALIZADO: 4,
+};
+
+function stageFromStatus(status: string): number {
+  return STATUS_TO_STAGE[status] ?? 0;
+}
+
+function formatSignalTime(iso: string | null): string {
+  if (iso === null) {
+    return "Sin señal aún";
+  }
+  const ts = new Date(iso).getTime();
+  if (!Number.isFinite(ts)) {
+    return "Sin señal aún";
+  }
+  return new Intl.DateTimeFormat("es-ES", { timeStyle: "short" }).format(ts);
+}
 
 export function LiveFleetTracker({
   missionId,
-  initialStage = 1,
-  etaMinutes = 45,
+  initialStage = 0,
 }: LiveFleetTrackerProps): React.JSX.Element {
   const lastIndex = STAGES.length - 1;
-  const [stage, setStage] = useState<number>(
-    Math.min(Math.max(Math.trunc(initialStage), 0), lastIndex)
-  );
-  const [eta, setEta] = useState<number>(Math.max(0, Math.trunc(etaMinutes)));
-  const [spl, setSpl] = useState<number>(78);
+  const baselineStage = Math.min(Math.max(Math.trunc(initialStage), 0), lastIndex);
+
+  const [state, setState] = useState<TrackerState>("cargando");
+  const [lastSignalAt, setLastSignalAt] = useState<string | null>(null);
+  const [liveStatus, setLiveStatus] = useState<string | null>(null);
+  const [lastPosition, setLastPosition] = useState<{
+    lat: number;
+    lng: number;
+    accuracy: number;
+  } | null>(null);
+  const [pingCount, setPingCount] = useState<number>(0);
 
   useEffect(() => {
-    if (stage !== 1 || eta <= 0) return;
-    const timer = window.setInterval(() => {
-      setEta((prev) => Math.max(0, prev - 1));
-    }, 60000);
-    return () => window.clearInterval(timer);
-  }, [stage, eta]);
+    const controller = new AbortController();
+    let timer: number | undefined;
 
-  useEffect(() => {
-    if (stage < 3) return;
-    const timer = window.setInterval(() => {
-      setSpl(Math.round((76 + Math.random() * 8) * 10) / 10);
-    }, 2000);
-    return () => window.clearInterval(timer);
-  }, [stage]);
+    const load = async (): Promise<void> => {
+      try {
+        const res = await fetch(`/api/telemetry/${encodeURIComponent(missionId)}`, {
+          signal: controller.signal,
+          cache: "no-store",
+        });
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}`);
+        }
+        const data = (await res.json()) as TelemetryResponse;
+        if (controller.signal.aborted) {
+          return;
+        }
+        setLastSignalAt(data.last?.at ?? null);
+        setPingCount(data.count);
+        setLiveStatus(data.last?.status ?? null);
+        setLastPosition(
+          data.last
+            ? { lat: data.last.lat, lng: data.last.lng, accuracy: data.last.accuracy }
+            : null
+        );
+        setState(data.live ? "en_vivo" : "sin_senal");
+      } catch {
+        if (controller.signal.aborted) {
+          return;
+        }
+        setState("error");
+      }
+    };
 
-  const compliant = spl < ACOUSTIC_LIMIT_DB;
+    void load();
+    timer = window.setInterval(() => {
+      void load();
+    }, POLL_INTERVAL_MS);
+
+    return () => {
+      controller.abort();
+      if (timer !== undefined) {
+        window.clearInterval(timer);
+      }
+    };
+  }, [missionId]);
+
+  const stage =
+    state === "en_vivo" && liveStatus !== null
+      ? stageFromStatus(liveStatus)
+      : baselineStage;
   const pct = Math.round((stage / lastIndex) * 100);
 
   return (
@@ -68,6 +162,34 @@ export function LiveFleetTracker({
           <p className="font-mono text-xs text-white/70">Misión {missionId}</p>
         </div>
       </header>
+
+      {state === "cargando" && (
+        <div className="mb-8 flex items-center gap-3 rounded-3xl border border-white/10 bg-white/[0.02] px-5 py-4">
+          <LoaderCircle className="h-5 w-5 animate-spin text-[#00E5FF]" aria-hidden="true" />
+          <p className="text-sm text-white/70">Conectando con el radar de telemetría…</p>
+        </div>
+      )}
+
+      {state === "error" && (
+        <div className="mb-8 rounded-3xl border border-[#FF2B44]/40 bg-[#FF2B44]/10 px-5 py-4">
+          <p className="flex items-center gap-2 text-sm text-white">
+            <TriangleAlert className="h-5 w-5 text-[#FF2B44]" aria-hidden="true" />
+            No se pudo leer la telemetría en este momento. Reintentando automáticamente…
+          </p>
+        </div>
+      )}
+
+      {state === "sin_senal" && (
+        <div
+          role="status"
+          className="mb-8 rounded-3xl border border-white/10 bg-white/[0.02] px-5 py-4"
+        >
+          <p className="flex items-center gap-2 text-sm text-white">
+            <Radio className="h-5 w-5 text-[#00E5FF]" aria-hidden="true" />
+            Sin señal en vivo todavía. El seguimiento se activa automáticamente a la hora pactada.
+          </p>
+        </div>
+      )}
 
       <div
         role="progressbar"
@@ -86,7 +208,7 @@ export function LiveFleetTracker({
       <ol className="mb-8 space-y-3">
         {STAGES.map((s, i) => {
           const reached = i <= stage;
-          const active = i === stage;
+          const active = state === "en_vivo" && i === stage;
           return (
             <li
               key={s.key}
@@ -113,29 +235,27 @@ export function LiveFleetTracker({
       <div className="mb-8 grid gap-4 sm:grid-cols-2">
         <div className="rounded-3xl border border-white/10 p-5">
           <p className="mb-1 flex items-center gap-2 text-sm text-white/70">
-            <Clock className="h-4 w-4" aria-hidden="true" /> ETA de llegada
+            <Clock className="h-4 w-4" aria-hidden="true" /> Última señal
           </p>
           <p className="font-mono text-3xl font-bold text-[#00E5FF]">
-            {stage <= 1 ? `${eta} min` : "Llegado"}
+            {formatSignalTime(lastSignalAt)}
           </p>
+          {state === "en_vivo" && lastPosition !== null && (
+            <p className="mt-2 font-mono text-xs text-white/60">
+              <MapPin className="mr-1 inline h-3 w-3" aria-hidden="true" />
+              {lastPosition.lat.toFixed(4)}, {lastPosition.lng.toFixed(4)} ·{" "}
+              <Activity className="mr-1 inline h-3 w-3" aria-hidden="true" />±
+              {Math.round(lastPosition.accuracy)} m · {pingCount} pings
+            </p>
+          )}
         </div>
         <div className="rounded-3xl border border-white/10 p-5">
           <p className="mb-1 flex items-center gap-2 text-sm text-white/70">
-            <Volume2 className="h-4 w-4" aria-hidden="true" /> Certificado acústico
+            <Volume2 className="h-4 w-4" aria-hidden="true" /> Rango normativo
           </p>
-          {stage >= 3 ? (
-            <p
-              className={`font-mono text-3xl font-bold ${
-                compliant ? "text-[#00E5FF]" : "text-[#FF2B44]"
-              }`}
-            >
-              {spl.toFixed(1)} dBA
-            </p>
-          ) : (
-            <p className="font-mono text-lg text-white/60">Pendiente de soundcheck</p>
-          )}
+          <p className="font-mono text-lg text-white/60">{NORMATIVE_RANGE_LABEL}</p>
           <p className="mt-1 text-xs text-white/60">
-            Límite {ACOUSTIC_LIMIT_DB} dBA · Ley 37/2003
+            Ley 37/2003 del Ruido · referencia estática, no medición
           </p>
         </div>
       </div>
@@ -145,19 +265,11 @@ export function LiveFleetTracker({
           href={EMERGENCY_WHATSAPP}
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Contactar por WhatsApp ante cualquier incidencia del seguimiento"
           className="inline-flex items-center gap-2 rounded-3xl bg-[#FF2B44] px-6 py-3 text-sm font-semibold text-white transition-all duration-300 ease-out hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
         >
           <Phone className="h-4 w-4" aria-hidden="true" /> Emergencia WhatsApp
         </a>
-        {stage < lastIndex && (
-          <button
-            type="button"
-            onClick={() => setStage((prev) => Math.min(prev + 1, lastIndex))}
-            className="rounded-3xl border border-white/10 px-5 py-3 text-sm text-white/80 transition-all duration-300 ease-out hover:bg-white/10"
-          >
-            Avanzar fase (demo)
-          </button>
-        )}
       </div>
     </section>
   );
