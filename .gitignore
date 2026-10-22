@@ -105,6 +105,10 @@ public/images/navidad_2026/
 src/data/vimume-brain/
 !src/data/vimume-brain/VIMUME_100_LEVELS_ONTOLOGY.json
 docs/
+!docs/MANUAL_OPERATIVO_SCLASS_2026.md
+!docs/SITEMAP_NAVEGABLE_CANONICO_2026.md
+!docs/00_CENTRO_DE_MANDO_SCLASS.md
+!docs/MASTER_AUDIT_OMEGA_DIAMANTE_2026.md
 scripts/reports/visual_audit/
 scripts/nightcrawler_results/
 scripts/vampire_public_catalog_zk.json

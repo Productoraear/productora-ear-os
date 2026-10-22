@@ -54,8 +54,9 @@ export async function signContractAction(payload: SignerPayload): Promise<SignCo
       signedPdfUrl,
       signatureToken,
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMsg = error instanceof Error ? error.message : 'Error al procesar la firma digital';
     console.error('❌ [SIGN_CONTRACT_ACTION_ERROR]:', error);
-    return { success: false, error: error.message || 'Error al procesar la firma digital' };
+    return { success: false, error: errorMsg };
   }
 }

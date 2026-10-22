@@ -5,6 +5,8 @@ import {
     SmartContractDocument,
 } from '@/lib/contracts/smartContractEngine';
 import { TARIFA_BASE_SOLISTA_EUR, DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
+import { prisma } from '@/lib/prisma';
+import { fireAndForgetN8n } from '@/lib/services/n8n-dispatcher';
 
 interface GenerateContractRequestBody {
     requestId: string;
@@ -108,9 +110,54 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
         const contract: SmartContractDocument = generateSmartContract(params);
 
+        // 1. Persistencia real en PostgreSQL mediante Prisma (cero fachadas)
+        let persistedId = contract.contractId;
+        try {
+            if (prisma?.smartContract) {
+                const dbRecord = await prisma.smartContract.create({
+                    data: {
+                        id: contract.contractId,
+                        title: `Contrato Artístico ${contract.eventDetails.city} - ${contract.parties.provider.name}`,
+                        deposit: contract.financials.depositDeducted,
+                        contractTerms: contract.clauses.join('\n\n'),
+                        status: contract.status,
+                        stripeSessionId: contract.requestId,
+                    },
+                });
+                persistedId = dbRecord.id;
+            }
+        } catch (dbError) {
+            console.warn('[CONTRACT_GENERATE] Persistencia BD fallback (continuando con contrato emitido):', dbError);
+        }
+
+        // 2. Despacho no bloqueante al cluster n8n (cero leads huérfanos)
+        fireAndForgetN8n('stripe-price-lock', {
+            event: 'CONTRACT_GENERATED',
+            contractId: persistedId,
+            requestId: contract.requestId,
+            clientEmail: contract.parties.client.email,
+            clientPhone: contract.parties.client.phone,
+            providerName: contract.parties.provider.name,
+            totalEur: contract.financials.totalAmount,
+            depositDeductedEur: contract.financials.depositDeducted,
+            remainingToPayEur: contract.financials.remainingToPay,
+            sha256Hash: contract.sha256Hash,
+            createdAt: contract.createdAt,
+        });
+
+        fireAndForgetN8n('b2b-quote', {
+            event: 'CONTRACT_QUOTE_DISPATCHED',
+            contractId: persistedId,
+            requestId: contract.requestId,
+            eventDate: contract.eventDetails.date,
+            location: contract.eventDetails.location,
+            baseAmount: contract.financials.baseAmount,
+        });
+
         return NextResponse.json({
             success: true,
             contract,
+            persistedId,
             sha256Hash: contract.sha256Hash,
             depositDeductedEur: contract.financials.depositDeducted,
             remainingToPayEur: contract.financials.remainingToPay,

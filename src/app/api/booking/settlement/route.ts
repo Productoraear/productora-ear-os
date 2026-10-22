@@ -1,10 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
+import Stripe from 'stripe';
 import {
     executeSettlement,
     ExecuteSettlementParams,
     SettlementExecutionResult,
 } from '@/lib/finance/splitSettlementEngine';
 import { TARIFA_BASE_SOLISTA_EUR, DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
+import { prisma } from '@/lib/prisma';
+import { fireAndForgetN8n } from '@/lib/services/n8n-dispatcher';
 
 interface SettlementRequestBody {
     eventId: string;
@@ -75,9 +78,87 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
         const settlement: SettlementExecutionResult = executeSettlement(params);
 
+        // 1. Persistencia real en PostgreSQL (cero fachadas, todo botón escribe)
+        let ledgerRecordId: string = settlement.settlementId;
+        try {
+            if (prisma?.commissionLedger) {
+                const ledger = await prisma.commissionLedger.create({
+                    data: {
+                        reference: settlement.settlementId,
+                        amount: settlement.breakdown.finalArtistNetPayoutEur,
+                        currency: 'EUR',
+                        status: 'PAID',
+                        sourceEvent: settlement.eventId,
+                        description: `Liquidación Split 80/10/10 Artista: ${settlement.breakdown.finalArtistNetPayoutEur} €, EAR OS: ${settlement.breakdown.earOsFeeEur} €, VIMUME: ${settlement.breakdown.vimumeDonationEur} € (M182: ${settlement.modelo182Certificate.certificateId})`,
+                    },
+                });
+                ledgerRecordId = ledger.id;
+            }
+        } catch (dbErr) {
+            console.warn('[SETTLEMENT] Persistencia BD fallback (continuando con liquidación emitida):', dbErr);
+        }
+
+        // 2. Transferencia real en Stripe si se proporciona stripeAccountId y la clave está configurada
+        let realStripeTransferId: string | null = null;
+        if (
+            process.env.STRIPE_SECRET_KEY &&
+            process.env.STRIPE_SECRET_KEY !== 'sk_test_dummy_key_for_build' &&
+            body.provider.stripeAccountId &&
+            body.provider.stripeAccountId.startsWith('acct_')
+        ) {
+            try {
+                const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+                    apiVersion: '2025-02-24.acacia' as Stripe.LatestApiVersion,
+                });
+                const transfer = await stripe.transfers.create({
+                    amount: Math.round(settlement.breakdown.finalArtistNetPayoutEur * 100),
+                    currency: 'eur',
+                    destination: body.provider.stripeAccountId,
+                    description: `Liquidación evento ${settlement.eventId} - Split 80% Artista`,
+                    metadata: {
+                        settlementId: settlement.settlementId,
+                        eventId: settlement.eventId,
+                        modelo182Id: settlement.modelo182Certificate.certificateId,
+                    },
+                });
+                realStripeTransferId = transfer.id;
+                settlement.transfers.artistTransferId = transfer.id;
+            } catch (stripeErr) {
+                console.warn('[SETTLEMENT] Aviso de transferencia Stripe Connect:', stripeErr instanceof Error ? stripeErr.message : stripeErr);
+            }
+        }
+
+        // 3. Despacho no bloqueante a n8n (cero leads o eventos huérfanos)
+        fireAndForgetN8n('executive-kpi-radar', {
+            event: 'SETTLEMENT_EXECUTED',
+            settlementId: settlement.settlementId,
+            eventId: settlement.eventId,
+            totalGrossEur: settlement.breakdown.totalGrossEur,
+            artistPayoutEur: settlement.breakdown.finalArtistNetPayoutEur,
+            earOsFeeEur: settlement.breakdown.earOsFeeEur,
+            vimumeDonationEur: settlement.breakdown.vimumeDonationEur,
+            stripeTransferId: realStripeTransferId,
+            ledgerRecordId,
+            timestamp: settlement.executedAt,
+        });
+
+        fireAndForgetN8n('vimume-clinical-report', {
+            event: 'VIMUME_DONATION_REGISTERED',
+            certificateId: settlement.modelo182Certificate.certificateId,
+            donorName: settlement.modelo182Certificate.donorName,
+            donorTaxId: settlement.modelo182Certificate.donorTaxId,
+            amountEur: settlement.modelo182Certificate.amountEur,
+            taxDeductionEur: settlement.modelo182Certificate.potentialTaxDeductionEur,
+            legalReference: settlement.modelo182Certificate.legalReference,
+            sha256Hash: settlement.modelo182Certificate.sha256Hash,
+            issuedAt: settlement.modelo182Certificate.issuedAt,
+        });
+
         return NextResponse.json({
             success: true,
             settlement,
+            ledgerRecordId,
+            realStripeTransferId,
             artistPayoutEur: settlement.breakdown.finalArtistNetPayoutEur,
             vimumeDonationEur: settlement.breakdown.vimumeDonationEur,
             modelo182Hash: settlement.modelo182Certificate.sha256Hash,

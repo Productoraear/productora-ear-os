@@ -34,7 +34,7 @@ const STATIC_ROUTES: StaticRoute[] = [
     { path: '/mariachis', priority: 0.95, changeFrequency: 'daily' },
     { path: '/mariachis/unirse', priority: 0.8, changeFrequency: 'weekly' },
     { path: '/dj-para-bodas', priority: 0.9, changeFrequency: 'daily' },
-    { path: '/catering-brasas', priority: 0.85, changeFrequency: 'weekly' },
+    { path: '/catering-de-brasas', priority: 0.85, changeFrequency: 'weekly' },
     { path: '/arroces', priority: 0.85, changeFrequency: 'weekly' },
     { path: '/alquiler-equipos-sonido-audiovisuales', priority: 0.85, changeFrequency: 'weekly' },
     { path: '/alquiler-pantallas-led-madrid', priority: 0.8, changeFrequency: 'weekly' },

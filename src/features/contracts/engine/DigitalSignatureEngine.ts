@@ -52,10 +52,12 @@ export interface DigitalContractSignature {
 }
 
 export class DigitalSignatureEngine {
-  private static SECRET_SALT = process.env.SIGNATURE_SECRET_SALT || 'EAR_OS_OMEGA_SOVEREIGN_SIGN_2026';
+  private static getSecretKey(): string {
+    return process.env.SIGNATURE_SECRET_SALT || process.env.STRIPE_SECRET_KEY || 'EAR_OS_OMEGA_SOVEREIGN_SIGN_CANONICAL_2026';
+  }
 
   /**
-   * Genera una firma electrónica avanzada con sellado criptográfico inmutable
+   * Genera una firma electrónica avanzada con sellado criptográfico HMAC SHA-256 inmutable
    */
   public static generateSignature(payload: SignerPayload): DigitalContractSignature {
     const now = Date.now();
@@ -69,12 +71,15 @@ export class DigitalSignatureEngine {
       payload.eventDate,
       now.toString(),
       payload.ipAddress || '127.0.0.1',
-      this.SECRET_SALT
     ].join('::');
 
-    const verificationHash = crypto.createHash('sha256').update(rawDataToSign).digest('hex').toUpperCase();
+    const verificationHash = crypto
+      .createHmac('sha256', this.getSecretKey())
+      .update(rawDataToSign)
+      .digest('hex')
+      .toUpperCase();
     const signatureId = `SIG-EAR-${verificationHash.slice(0, 16)}`;
-    const certificateSeal = `eIDAS-ES-${crypto.createHash('sha256').update(verificationHash + now).digest('hex').slice(0, 24).toUpperCase()}`;
+    const certificateSeal = `eIDAS-ES-${crypto.createHmac('sha256', this.getSecretKey()).update(verificationHash + now).digest('hex').slice(0, 24).toUpperCase()}`;
 
     const legalFramework = payload.isB2G
       ? 'Contratación Pública Directa bajo Art. 118 LCSP y eIDAS (Reglamento UE 910/2014)'
