@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3007",
-    "build": "node scripts/build-netlify.mjs",
+    "build": "prisma generate && next build",
     "build:next": "prisma generate && next build",
     "start": "next start",
     "lint": "eslint src/",
@@ -21,7 +21,7 @@
     "telemetry:geo": "py scripts/telemetry_gsc_geo_hunter.py",
     "staging:vampirize": "npx tsx src/scripts/vampire-staging-processor.ts",
     "seed:b2g": "npx tsx src/scripts/seed-national-b2g.ts",
-    "simulate:whatsapp": "node scripts/simulate_whatsapp_agent.cjs"
+    "simulate:whatsapp": "node scripts/simulate_whatsapp_agent.mjs"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",

@@ -11,9 +11,6 @@ const nextConfig: NextConfig = {
         ? { exclude: ["error", "warn"] }
         : false,
   },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
   serverExternalPackages: ["sharp", "@prisma/client", "bcryptjs"],
   experimental: {
     cpus: 1,

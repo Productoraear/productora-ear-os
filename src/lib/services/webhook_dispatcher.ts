@@ -1,8 +1,19 @@
 /**
- * 🛰️ WEBHOOK DISPATCHER (S-Class Logistics)
- * Purpose: Bridge between EAR OS Gold and external automation platforms (Make/Trello).
- * Handles structured lead data for high-ticket projects.
+ * 🛰️ WEBHOOK DISPATCHER (S-CLASS SOVEREIGN GATEWAY)
+ * ----------------------------------------------------------------------------
+ * Re-export canónico y tipado estricto hacia n8n-dispatcher.
+ * Erradicación total de Make/Trello y fachadas simuladas.
+ * ----------------------------------------------------------------------------
  */
+
+import {
+    dispatchToN8n,
+    fireAndForgetN8n,
+    type N8nWebhookSlug,
+    type N8nDispatchResult
+} from './n8n-dispatcher';
+
+export type { N8nWebhookSlug, N8nDispatchResult };
 
 export interface LeadPayload {
     monto: number;
@@ -11,48 +22,48 @@ export interface LeadPayload {
     activosAsignados: string[];
     timestamp: string;
     prioridad: 'ALTA' | 'CRITICA' | 'NORMAL';
-    metadata?: any;
+    metadata?: Record<string, unknown>;
+}
+
+export async function dispatchLead(
+    slug: N8nWebhookSlug,
+    payload: Record<string, unknown>
+): Promise<N8nDispatchResult> {
+    return dispatchToN8n(slug, payload);
 }
 
 class WebhookDispatcher {
-    // URL del Webhook de Make (server-only, BLINDAJE P1-4)
-    private readonly MAKE_WEBHOOK_URL = process.env.MAKE_WEBHOOK_TRELLO || '';
-
     /**
-     * Dispatches a lead object to the Make/Trello pipeline.
+     * Despacha un prospecto al orquestador n8n (b2b-quote / call-center-intake).
      */
     async dispatchLead(data: LeadPayload): Promise<{ success: boolean; message: string }> {
-        if (!this.MAKE_WEBHOOK_URL) {
-            return { success: false, message: 'MAKE_WEBHOOK_TRELLO no configurado en el entorno de servidor.' };
-        }
+        const payload: Record<string, unknown> = {
+            monto: data.monto,
+            fuente: data.fuente,
+            url: data.url,
+            activosAsignados: data.activosAsignados,
+            timestamp: data.timestamp,
+            prioridad: data.prioridad,
+            metadata: data.metadata ?? {},
+            os_origin: 'EAR_OS_V2_GOLD',
+            dispatch_time: new Date().toISOString()
+        };
 
-        try {
-            const response = await fetch(this.MAKE_WEBHOOK_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    ...data,
-                    os_origin: 'EAR_OS_V2_GOLD',
-                    dispatch_time: new Date().toISOString()
-                }),
-            });
+        const result = await dispatchToN8n('b2b-quote', payload);
 
-            if (response.ok) {
-                return { success: true, message: 'Propuesta enviada exitosamente al pipeline de Trello.' };
-            } else {
-                throw new Error(`Error en el servidor: ${response.statusText}`);
-            }
-        } catch (error) {
-            console.error('❌ DISPATCHER_ERROR:', error);
-            // Fallback for development/simulation
+        if (result.delivered) {
             return {
                 success: true,
-                message: 'SIMULACIÓN: Webhook recibido en logs. El puente lógico está configurado.'
+                message: 'Propuesta despachada exitosamente al cluster n8n.'
             };
         }
+
+        return {
+            success: false,
+            message: `Fallo de entrega n8n (${result.lastError ?? 'desconocido'}). Evento encolado en DLQ.`
+        };
     }
 }
 
 export const webhookDispatcher = new WebhookDispatcher();
+export { fireAndForgetN8n, dispatchToN8n };

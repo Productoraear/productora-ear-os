@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createCheckoutSession } from '@/lib/payments';
+import { fireAndForgetN8n } from '@/lib/services/n8n-dispatcher';
 
 // ============================================================================
 // 💳 STRIPE SESSION HANDLER (S-CLASS)
@@ -11,19 +12,6 @@ interface CreateSessionBody {
   clientName?: string;
   clientPhone?: string;
   metadata?: Record<string, string | number | undefined>;
-}
-
-/**
- * 🛰️ Despacho NO bloqueante del lead a la Centralita n8n (call-center-intake).
- * Garantiza que ningún lead del formulario /checkout/presupuesto quede huérfano:
- * si n8n falla o no responde, la sesión de Stripe continúa sin verse afectada.
- */
-function dispatchLeadToCallCenter(url: string, payload: Record<string, string | null>): void {
-  void fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-  }).catch(() => { });
 }
 
 export async function POST(req: Request) {
@@ -48,8 +36,20 @@ export async function POST(req: Request) {
     const proveedor = metadata?.providerName ?? metadata?.format;
     const fecha = metadata?.eventDate;
 
-    // 🔔 LEAD INTAKE: solo campos reales del formulario de presupuesto.
-    dispatchLeadToCallCenter('https://n8n.productoraear.com/webhook/call-center-intake', {
+    // 🔔 N8N STRIPE PRICE-LOCK & CALL-CENTER INTAKE (Non-blocking / 0 leads huérfanos)
+    fireAndForgetN8n('stripe-price-lock', {
+      source: 'checkout-presupuesto',
+      amount: Number(amount),
+      concept: String(concept),
+      clientName: clientName ?? null,
+      clientPhone: clientPhone ?? null,
+      proveedor: proveedor != null ? String(proveedor) : String(concept),
+      eventDate: fecha != null ? String(fecha) : null,
+      metadata: stripeMetadata,
+      createdAt: new Date().toISOString(),
+    });
+
+    fireAndForgetN8n('call-center-intake', {
       source: 'checkout-presupuesto',
       proveedor: proveedor != null ? String(proveedor) : String(concept),
       nombre: clientName ?? null,
