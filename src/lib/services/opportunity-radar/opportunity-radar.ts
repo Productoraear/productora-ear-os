@@ -91,14 +91,20 @@ function parseFeedConfigs(): FeedConfig[] {
         }
     }
 
-    // 3. Feeds públicos institucionales canónicos del Estado (baseline real verificable).
-    // Conecta de inmediato con el Boletín Oficial del Estado (ayudas, subvenciones, convocatorias).
-    const BASELINE_PUBLIC_FEEDS: readonly { url: string; name: string }[] = [
-        { url: 'https://www.boe.es/rss/canal.php?c=ayudas', name: 'BOE — Subvenciones y Ayudas Públicas' },
-        { url: 'https://www.boe.es/rss/canal.php?c=becas', name: 'BOE — Becas, Ayudas y Premios Culturales' },
+    // 3. Feeds públicos institucionales y agregadores Google en vivo (baseline real 100% verificable).
+    // Conecta de inmediato con el BOE y con búsquedas activas de Google Noticias para España.
+    const BASELINE_PUBLIC_FEEDS: readonly { url: string; name: string; source: OpportunitySource }[] = [
+        { url: 'https://www.boe.es/rss/canal.php?c=ayudas', name: 'BOE — Subvenciones y Ayudas Públicas', source: 'RSS_FEED' },
+        { url: 'https://www.boe.es/rss/canal.php?c=becas', name: 'BOE — Becas, Ayudas y Premios Culturales', source: 'RSS_FEED' },
+        { url: 'https://news.google.com/rss/search?q=convocatoria+artistas+OR+concurso+bandas&hl=es&gl=ES&ceid=ES:es', name: 'Google — Convocatorias Artistas', source: 'GOOGLE_ALERTS_RSS' },
+        { url: 'https://news.google.com/rss/search?q=comision+fiestas+contratacion+musica+OR+orquesta&hl=es&gl=ES&ceid=ES:es', name: 'Google — Comisiones de Fiestas', source: 'GOOGLE_ALERTS_RSS' },
+        { url: 'https://news.google.com/rss/search?q=subvencion+musica+ayuntamiento+OR+cultura&hl=es&gl=ES&ceid=ES:es', name: 'Google — Subvenciones Municipales', source: 'GOOGLE_ALERTS_RSS' },
+        { url: 'https://news.google.com/rss/search?q=pleno+municipal+festejos+OR+mayores&hl=es&gl=ES&ceid=ES:es', name: 'Google — Plenos Municipales', source: 'GOOGLE_ALERTS_RSS' },
+        { url: 'https://news.google.com/rss/search?q=servicios+sociales+mayores+musicoterapia+OR+residencia&hl=es&gl=ES&ceid=ES:es', name: 'Google — VIMUME Tercera Edad', source: 'GOOGLE_ALERTS_RSS' },
+        { url: 'https://news.google.com/rss/search?q=licitacion+sonorizacion+fiestas+patronales&hl=es&gl=ES&ceid=ES:es', name: 'Google — Licitaciones Festejos B2G', source: 'GOOGLE_ALERTS_RSS' },
     ];
     for (const feed of BASELINE_PUBLIC_FEEDS) {
-        push(feed.url, feed.name, 'RSS_FEED');
+        push(feed.url, feed.name, feed.source);
     }
 
     return configs;
