@@ -19,6 +19,9 @@ src/data/backups/
 .env.test.local
 .env.production.local
 !.env.example
+# Solo claves PUBLICAS (NEXT_PUBLIC_*) para el build de Docker/CI.
+# Los secretos reales (DB, Stripe secret, Telegram bot, Gemini) NO van aquí.
+!.env.production
 
 # Google OAuth Credentials
 credentials.json
