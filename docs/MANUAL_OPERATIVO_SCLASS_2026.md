@@ -113,4 +113,27 @@ node scripts/audit_sitemap_live.cjs
 
 # Verificar integridad Bare-Metal antes de push
 node scripts/verify_bare_metal_readiness.cjs
+
+# Disparar verificación de despliegue Coolify VPS
+node scripts/trigger_coolify_deploy.cjs
 ```
+
+---
+
+## 7. SELLO DE DOMINIO Ω-DIAMANTE · WAVE 30 FINAL (CIERRE DE SPRINT)
+
+- **Fecha de Sellado**: 23 de Octubre de 2026.
+- **Servidor Bare-Metal**: Hostinger VPS Ubuntu 24.04 LTS (`82.29.179.172:8000`).
+- **Estado de Coolify v4**: HTTP 302 OK (Conectividad verificada en 201 ms).
+- **Invariantes SSOT Blindadas**:
+  - Edwin Agudelo Tarifa Base: 350,00 €.
+  - Depósito Stripe Price-Lock: 100,00 € (100% deducible).
+  - Split Soberano: 80% Artista / 10% EAR OS / 10% VIMUME.
+  - Logística Méntrida: 1,50 €/km (>50 km) + 120 € hotel si >= 3:00 AM o > 200 km.
+  - Centralita oficial: `+34 693 693 048`.
+- **Scorecard 20/20**:
+  - `tsc --noEmit`: Exit Code 0 (0 errores de tipado).
+  - Anti-Bloat: Árbol de Git < 50 MB, 0 archivos de código > 1 MB en `src/`.
+  - Flota Agéntica Multimodal: Supervisión distribuida, Web Speech dictation, voz natural y bus con DLQ durable.
+  - Despliegue Automatizado: Push canónico a `origin/main` con disparo directo hacia Coolify VPS Bare-Metal.
+

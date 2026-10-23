@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { Metadata } from 'next';
 import { LiveBookingsRadar } from '@/components/dashboard/LiveBookingsRadar';
 import { Activity } from 'lucide-react';
@@ -30,6 +31,13 @@ export default function PanelReservasPage() {
                     </div>
 
                     <div className="flex items-center gap-3">
+                        <Link
+                            href="/panel/agentes"
+                            className="px-4 py-2 rounded-xl bg-[#ecb613]/10 hover:bg-[#ecb613]/20 border border-[#ecb613]/30 text-xs font-mono text-[#ecb613] flex items-center gap-2 transition-all hover:scale-105"
+                        >
+                            <span className="w-2 h-2 rounded-full bg-[#ecb613] animate-pulse" />
+                            <span>Consola de Agentes AI ➔</span>
+                        </Link>
                         <a
                             href={`tel:${CENTRALITA_EAR_OS.replace(/\s+/g, '')}`}
                             className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-xs font-mono text-zinc-300 flex items-center gap-2 transition-colors"

@@ -223,7 +223,7 @@ export async function POST(req: Request): Promise<NextResponse> {
     if (geminiKey && geminiKey.length > 10) {
       try {
         const genAI = new GoogleGenerativeAI(geminiKey);
-        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+        const model = genAI.getGenerativeModel({ model: 'gemini-3.8-flash' });
 
         const systemPrompt = `Eres el asistente de producción y reservas de Productora EAR para Edwin Agudelo y la Red de Fincas Homologadas S-Class.
 DIRECTIVA CRÍTICA (HUMANO, CONTEXTUAL Y RESOLUTIVO):
