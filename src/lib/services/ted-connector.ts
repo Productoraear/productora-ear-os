@@ -47,12 +47,12 @@ type TedSearchParams = {
 
 type TedRawNotice = {
     'publication-number'?: string;
-    'notice-title'?: string;
-    'buyer-name'?: string;
+    'notice-title'?: string | Record<string, string>;
+    'buyer-name'?: string | Record<string, unknown>;
     'classification-cpv'?: string | string[] | { code?: string }[];
     deadline?: string;
     'publication-date'?: string;
-    links?: { 'notice'?: string; 'official-language'?: string }[];
+    links?: Record<string, unknown> | { 'notice'?: string; 'official-language'?: string }[];
     'value'?: number | { 'amount'?: number; 'currency'?: string };
     [key: string]: unknown;
 };
@@ -76,6 +76,45 @@ function asArray(value: unknown): unknown[] {
     if (Array.isArray(value)) return value;
     if (value == null) return [];
     return [value];
+}
+
+function extractMultilingualString(val: unknown): string {
+    if (typeof val === 'string') return val;
+    if (val && typeof val === 'object') {
+        const obj = val as Record<string, unknown>;
+        const candidate = obj.spa ?? obj.SPA ?? obj.es ?? obj.ES ?? obj.eng ?? obj.ENG ?? obj.en ?? obj.EN ?? Object.values(obj)[0];
+        if (typeof candidate === 'string') return candidate;
+        if (Array.isArray(candidate) && candidate.length > 0) {
+            const first = candidate[0];
+            if (typeof first === 'string') return first;
+            if (first && typeof first === 'object') return extractMultilingualString(first);
+        }
+    }
+    return '';
+}
+
+function extractNoticeUrl(raw: TedRawNotice): string | null {
+    if (raw.links && typeof raw.links === 'object') {
+        const links = raw.links as Record<string, unknown>;
+        if (links.html && typeof links.html === 'object') {
+            const html = links.html as Record<string, string>;
+            const url = html.SPA || html.spa || html.ENG || html.eng || Object.values(html)[0];
+            if (typeof url === 'string') return url;
+        }
+        if (links.htmlDirect && typeof links.htmlDirect === 'object') {
+            const htmlDirect = links.htmlDirect as Record<string, string>;
+            const url = htmlDirect.SPA || htmlDirect.spa || htmlDirect.ENG || htmlDirect.eng || Object.values(htmlDirect)[0];
+            if (typeof url === 'string') return url;
+        }
+        if (Array.isArray(raw.links) && raw.links.length > 0) {
+            const first = raw.links[0] as Record<string, unknown>;
+            if (typeof first.notice === 'string') return first.notice;
+        }
+    }
+    if (raw['publication-number']) {
+        return `https://ted.europa.eu/es/notice/-/detail/${raw['publication-number']}`;
+    }
+    return null;
 }
 
 function normalizeCpv(value: unknown): string[] {
@@ -108,22 +147,19 @@ function parseBaseValue(value: unknown): { baseValueEur: number | null; currency
 
 function mapRawNotice(raw: TedRawNotice): TedNotice {
     const classificationCpvs = normalizeCpv(raw['classification-cpv']);
-    const links = asArray(raw.links);
-    const firstLink = links[0];
-    const noticeUrl = typeof firstLink === 'object' && firstLink !== null
-        ? (firstLink as { notice?: unknown }).notice as string | undefined
-        : undefined;
-
+    const noticeUrl = extractNoticeUrl(raw);
     const { baseValueEur, currency } = parseBaseValue(raw.value ?? raw['value']);
+    const subject = extractMultilingualString(raw['notice-title']) || (typeof raw['notice-title'] === 'string' ? raw['notice-title'] : '');
+    const buyer = extractMultilingualString(raw['buyer-name']) || 'Órgano de contratación no especificado';
 
     return {
         publicationNumber: raw['publication-number'] ?? '',
-        subject: raw['notice-title'] ?? '',
-        buyer: raw['buyer-name'] ?? 'Órgano de contratación no especificado',
+        subject,
+        buyer,
         classificationCpvs,
         deadline: raw.deadline ?? null,
         publicationDate: raw['publication-date'] ?? null,
-        noticeUrl: typeof noticeUrl === 'string' ? noticeUrl : null,
+        noticeUrl,
         baseValueEur,
         currency,
     };
@@ -149,9 +185,9 @@ function classifyCpvMatch(cpv: string): boolean {
     return TARGET_CPV_PREFIXES.some((prefix) => normalized.startsWith(prefix));
 }
 
-function requiresKey(): { url: string; apiKey: string; headerName: string } {
+function getTedConfig(): { url: string; apiKey?: string; headerName: string } {
     const url = process.env.TED_API_URL || DEFAULT_TED_URL;
-    const apiKey = process.env.TED_API_KEY || '';
+    const apiKey = process.env.TED_API_KEY || undefined;
     const headerName = process.env.TED_API_KEY_HEADER || DEFAULT_API_KEY_HEADER;
     return { url, apiKey, headerName };
 }
@@ -162,25 +198,16 @@ function sha256(input: string): string {
 
 /**
  * Consulta el TED API v3 y devuelve exclusivamente avisos reales.
- * Fail-closed: sin TED_API_KEY NO se realiza ninguna llamada de red.
+ * En TED v3, la búsqueda pública (/v3/notices/search) es un servicio abierto de la UE.
+ * Si TED_API_KEY está configurada se pasa en headers; de lo contrario se consulta el endpoint público.
  */
 export async function fetchTedNotices(limit = 50): Promise<TedSearchScan> {
-    const { url, apiKey, headerName } = requiresKey();
+    const { url, apiKey, headerName } = getTedConfig();
 
-    if (!apiKey) {
-        console.warn('[ted-connector] FAIL-CLOSED: TED_API_KEY no configurado. 0 avisos (cero fachadas).');
-        return {
-            ok: false,
-            source: 'FAIL_CLOSED',
-            fetchedAt: new Date().toISOString(),
-            total: 0,
-            notices: [],
-            error: 'TED_API_KEY no configurado',
-        };
-    }
+    const query = 'place-of-performance = ESP AND (classification-cpv IN (92300000, 92310000, 92320000, 85320000, 85312000, 31520000, 51313000, 79952000) OR notice-title ~ (musica, festejos, cultura, sonido, iluminacion, orquesta, eventos)) SORT BY publication-date DESC';
 
     const params: TedSearchParams = {
-        query: TARGET_CPV_PREFIXES.map((cpv) => `classification-cpv="${cpv}"`).join(' OR '),
+        query,
         fields: [
             'publication-number',
             'notice-title',
@@ -189,7 +216,6 @@ export async function fetchTedNotices(limit = 50): Promise<TedSearchScan> {
             'deadline',
             'publication-date',
             'links',
-            'value',
         ],
         limit,
     };
@@ -198,12 +224,17 @@ export async function fetchTedNotices(limit = 50): Promise<TedSearchScan> {
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 20_000);
 
+        const headers: Record<string, string> = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        };
+        if (apiKey) {
+            headers[headerName] = apiKey;
+        }
+
         const response = await fetch(url, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                [headerName]: apiKey,
-            },
+            headers,
             body: JSON.stringify(params),
             signal: controller.signal,
         });
@@ -229,7 +260,6 @@ export async function fetchTedNotices(limit = 50): Promise<TedSearchScan> {
 
         const rawNotices = extractNotices(payload);
         const notices = rawNotices
-            .filter((raw) => classifyCpvMatch((raw['classification-cpv'] ?? '').toString()) || true)
             .map(mapRawNotice)
             .filter((notice) => notice.subject.length > 0);
 

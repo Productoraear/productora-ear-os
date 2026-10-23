@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { runOpportunityRadar, getRadarStore } from '@/lib/services/opportunity-radar/opportunity-radar';
+import { runOpportunityRadar, getRadarStore, sendTelegramOpportunity } from '@/lib/services/opportunity-radar/opportunity-radar';
 import type { OpportunityCategory, OpportunityRecord } from '@/lib/services/opportunity-radar/types';
 
 export const dynamic = 'force-dynamic';
@@ -9,7 +9,8 @@ export const runtime = 'nodejs';
  * 🎯 API OPPORTUNITY RADAR // GESTIÓN Y CONSULTA EN TIEMPO REAL
  *
  * GET  -> Consulta las oportunidades reales persistidas con filtros.
- * POST -> Dispara un barrido activo bajo demanda (Google Alerts + BOE + TED).
+ * POST -> Dispara un barrido activo bajo demanda (Google Alerts + BOE + TED),
+ *         o despacha una oportunidad individual a Telegram.
  */
 
 export async function GET(req: NextRequest) {
@@ -60,8 +61,33 @@ export async function GET(req: NextRequest) {
     }
 }
 
-export async function POST(_req: NextRequest) {
+export async function POST(req: NextRequest) {
     try {
+        let body: { action?: string; opportunityId?: string } = {};
+        try {
+            body = await req.json();
+        } catch {
+            // body vacío o no JSON => acción por defecto 'scan'
+        }
+
+        if (body.action === 'dispatch_telegram') {
+            if (!body.opportunityId) {
+                return NextResponse.json({ success: false, error: 'Falta opportunityId' }, { status: 400 });
+            }
+            const store = await getRadarStore();
+            const target = store.opportunities.find((o) => o.id === body.opportunityId);
+            if (!target) {
+                return NextResponse.json({ success: false, error: 'Oportunidad no encontrada' }, { status: 404 });
+            }
+            const sent = await sendTelegramOpportunity(target);
+            return NextResponse.json({
+                success: sent,
+                dispatched: sent,
+                opportunityId: body.opportunityId,
+                message: sent ? 'Alerta enviada a Telegram con éxito' : 'No se pudo enviar la alerta (verificar credenciales de Telegram)',
+            });
+        }
+
         console.log('🎯 [API OPPORTUNITY RADAR] Iniciando escaneo manual bajo demanda...');
         const result = await runOpportunityRadar();
 

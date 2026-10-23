@@ -369,17 +369,22 @@ model ProviderCalibration {
 }
 
 model MediaAsset {
-  id           String   @id @default(cuid())
-  providerId   String
-  url          String
-  type         String // IMAGE, VIDEO, DOCUMENT
-  sizeBytes    Float // Float evita serialización BigInt en Next.js
-  displayOrder Int      @default(0)
-  createdAt    DateTime @default(now())
+  id             String         @id @default(cuid())
+  providerId     String?
+  vendorId       String?
+  url            String
+  type           String // IMAGE, VIDEO, AUDIO, DOCUMENT
+  sizeBytes      Float // Float evita serialización BigInt en Next.js
+  fileName       String?
+  fileHashSha256 String?
+  displayOrder   Int            @default(0)
+  createdAt      DateTime       @default(now())
 
-  provider providerProfile @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  provider providerProfile? @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  vendor   VendorProfile?   @relation(fields: [vendorId], references: [id], onDelete: SetNull)
 
   @@index([providerId], name: "idx_media_provider")
+  @@index([vendorId], name: "idx_media_vendor")
 }
 
 model ProviderQuota {
@@ -533,13 +538,109 @@ model VendorProfile {
   tier           VendorTier @default(FREE)
   isVimumeActive Boolean    @default(false)
   bio            String?    @db.Text
+  stageName      String?
+  baseRateEur    Float?
+  soundLimitDba  Int?
+  youtubeUrl     String?
+  spotifyUrl     String?
+  quotaUsedMb    Float      @default(0)
+  quotaMaxMb     Float      @default(15)
   strikes        Int        @default(0)
   status         String     @default("ACTIVE") // ACTIVE | BANNED
+  leads          VendorLead[]
+  clients        VendorCrmClient[]
+  bookings       VendorBooking[]
+  mediaAssets    MediaAsset[]
   createdAt      DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
 
   @@index([userId], name: "idx_vendor_profile_user")
   @@index([tier], name: "idx_vendor_profile_tier")
+}
+
+// ==========================================
+// 📇 VENDOR CRM (Capa de datos propia del proveedor)
+// ==========================================
+
+enum VendorBookingStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+  INSTA_BOOKED
+  ESCALATED
+}
+
+model VendorLead {
+  id          String              @id @default(cuid())
+  vendorId    String
+  vendor      VendorProfile       @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  clientName  String
+  clientPhone String
+  clientEmail String?
+  eventDate   String?
+  pax         Int                 @default(0)
+  budgetEur   Float               @default(0)
+  source      String
+  status      VendorBookingStatus @default(PENDING)
+  threads     VendorThread[]
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+
+  @@index([vendorId], name: "idx_vendor_lead_vendor")
+  @@index([status], name: "idx_vendor_lead_status")
+}
+
+model VendorThread {
+  id        String     @id @default(cuid())
+  leadId    String
+  lead      VendorLead @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  sender    String
+  body      String
+  createdAt DateTime   @default(now())
+
+  @@index([leadId], name: "idx_vendor_thread_lead")
+}
+
+model VendorCrmClient {
+  id        String        @id @default(cuid())
+  vendorId  String
+  vendor    VendorProfile @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  fullName  String
+  phone     String
+  email     String?
+  eventDate DateTime?
+  eventType String
+  venue     String?
+  budgetEur Float?
+  status    String        @default("LEAD")
+  notes     String?       @db.Text
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  @@index([vendorId], name: "idx_vendor_client_vendor")
+  @@index([status], name: "idx_vendor_client_status")
+}
+
+model VendorBooking {
+  id             String        @id @default(cuid())
+  vendorId       String
+  vendor         VendorProfile @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  clientId       String?
+  eventTitle     String
+  eventDate      DateTime
+  location       String
+  totalPriceEur  Float
+  depositPaidEur Float         @default(0.0)
+  splitArtistEur Float
+  splitEarEur    Float
+  splitVimumeEur Float
+  isLockedAcid   Boolean       @default(true)
+  contractHash   String?
+  status         String        @default("CONFIRMED")
+  createdAt      DateTime      @default(now())
+
+  @@index([vendorId], name: "idx_vendor_booking_vendor")
+  @@index([status], name: "idx_vendor_booking_status")
 }
 
 model EquipmentInventory {

@@ -1,311 +1,192 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
-import Link from 'next/link';
-import { 
-  UploadCloud, 
-  HardDrive, 
-  Trash2, 
-  CheckCircle2, 
-  AlertTriangle, 
-  Sparkles, 
-  Crown,
-  Eye,
-  ArrowUpRight,
-  Image as ImageIcon,
-  Loader2
-} from 'lucide-react';
-import { 
-  uploadProviderMediaAction, 
-  deleteProviderMediaAction, 
-  getProviderMediaAction 
-} from '@/modules/vendor/actions/mediaActions';
+import { useCallback, useEffect, useState } from 'react';
+import { AlertTriangle, Crown, Loader2 } from 'lucide-react';
 
-interface MediaItem {
+import MediaDragAndDrop from '@/components/vendor/MediaDragAndDrop';
+import type { VendorTier } from '@/components/vendor/VendorShowcaseCard';
+import { reorderMediaAction, uploadMediaAction } from '@/app/(vendor)/vendor/actions';
+import type { VendorMediaAssetRecord } from '@/lib/vendor/vendorCrmTypes';
+
+interface MediaApiItem {
   id: string;
+  providerId: string | null;
+  vendorId: string | null;
   url: string;
+  type: string;
   sizeBytes: number;
-  sizeKB: number;
-  createdAt: string | Date;
+  fileName: string | null;
+  fileHashSha256: string | null;
+  displayOrder: number;
+  createdAt: string;
 }
 
 interface QuotaInfo {
-  tier: string;
-  maxMB: number;
-  currentMB: number;
-  currentBytes: number;
-  percentage: number;
-  maxPhotos: number;
-  currentPhotos: number;
+  quotaUsedMb: number;
+  quotaMaxMb: number;
+  usagePct: number;
+}
+
+interface ProfileApiResponse {
+  success: boolean;
+  profile: { id?: string; tier?: string } | null;
+  quota: QuotaInfo;
+  media: MediaApiItem[];
+}
+
+const VALID_TIERS: readonly string[] = ['FREE', 'PREMIUM', 'PRO', 'ELITE'];
+
+function toTier(value: string | null | undefined): VendorTier {
+  if (value && VALID_TIERS.includes(value)) return value as VendorTier;
+  return 'FREE';
+}
+
+function toAssetRecord(item: MediaApiItem): VendorMediaAssetRecord {
+  return {
+    id: item.id,
+    providerId: item.providerId,
+    vendorId: item.vendorId,
+    url: item.url,
+    type: item.type,
+    sizeBytes: item.sizeBytes,
+    fileName: item.fileName,
+    fileHashSha256: item.fileHashSha256,
+    displayOrder: item.displayOrder,
+    createdAt: new Date(item.createdAt),
+  };
 }
 
 export default function VendorMediaPage() {
-  const [providerId, setProviderId] = useState('prov-429'); // Proveedor demo homologado (Alberto Navarro)
-  const [assets, setAssets] = useState<MediaItem[]>([]);
+  const [vendorId, setVendorId] = useState('');
+  const [assets, setAssets] = useState<VendorMediaAssetRecord[]>([]);
+  const [tier, setTier] = useState<VendorTier>('FREE');
   const [quota, setQuota] = useState<QuotaInfo>({
-    tier: 'FREE',
-    maxMB: 15,
-    currentMB: 0,
-    currentBytes: 0,
-    percentage: 0,
-    maxPhotos: 10,
-    currentPhotos: 0,
+    quotaUsedMb: 0,
+    quotaMaxMb: 50,
+    usagePct: 0,
   });
-  const [isDragging, setIsDragging] = useState(false);
-  const [uploading, setUploading] = useState(false);
-  const [statusMessage, setStatusMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
-  // Cargar galería al montar
+  const loadMedia = useCallback(async () => {
+    const res = await fetch('/api/vendor/profile', { cache: 'no-store' });
+    if (!res.ok) {
+      const body = (await res.json().catch(() => null)) as { error?: string } | null;
+      throw new Error(body?.error ?? `Error ${res.status}`);
+    }
+    const data = (await res.json()) as ProfileApiResponse;
+    setVendorId(data.profile?.id ?? '');
+    setAssets((data.media ?? []).map(toAssetRecord));
+    setQuota(data.quota);
+    setTier(toTier(data.profile?.tier));
+  }, []);
+
   useEffect(() => {
-    loadMedia();
-  }, [providerId]);
-
-  const loadMedia = async () => {
-    try {
-      const res = await getProviderMediaAction(providerId);
-      if (res.success && res.data) {
-        setAssets(res.data.assets);
-        setQuota(res.data.quota);
-      }
-    } catch (err) {
-      console.error('Error cargando medios:', err);
-    }
-  };
-
-  const handleFileUpload = async (files: FileList | null) => {
-    if (!files || files.length === 0) return;
-    setUploading(true);
-    setStatusMessage(null);
-
-    try {
-      let successCount = 0;
-      for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        const formData = new FormData();
-        formData.append('file', file);
-
-        const res = await uploadProviderMediaAction(providerId, formData);
-        if (res.success) {
-          successCount++;
-        } else {
-          setStatusMessage({
-            type: 'error',
-            text: res.error === 'STORAGE_QUOTA_EXCEEDED' 
-              ? 'Límite de cuota alcanzado (15 MB). Pasa al Plan Gold para 5 GB.'
-              : `Error al procesar "${file.name}": ${res.error}`,
-          });
-          break;
+    let cancelled = false;
+    setLoading(true);
+    loadMedia()
+      .then(() => {
+        if (!cancelled) setLoadError(null);
+      })
+      .catch((err: unknown) => {
+        if (!cancelled) {
+          setLoadError(err instanceof Error ? err.message : 'Error al cargar los archivos.');
         }
-      }
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [loadMedia]);
 
-      if (successCount > 0) {
-        setStatusMessage({
-          type: 'success',
-          text: `¡${successCount} imagen(es) comprimida(s) a WebP y guardada(s) con éxito!`,
-        });
-        await loadMedia();
-      }
-    } catch (err: any) {
-      setStatusMessage({ type: 'error', text: err.message || 'Fallo de red en la subida.' });
-    } finally {
-      setUploading(false);
-      if (fileInputRef.current) fileInputRef.current.value = '';
-    }
-  };
+  // Subida real: invoca la Server Action que calcula el hash SHA-256 server-side.
+  const handleUpload = useCallback(
+    async (file: File) => {
+      const formData = new FormData();
+      formData.append('file', file);
+      const res = await uploadMediaAction(formData);
+      if (!res.ok) throw new Error(res.error);
+      await loadMedia();
+    },
+    [loadMedia],
+  );
 
-  const handleDelete = async (assetId: string) => {
-    if (!confirm('¿Deseas eliminar permanentemente esta imagen de tu cuota y escaparate?')) return;
-    try {
-      const res = await deleteProviderMediaAction(providerId, assetId);
-      if (res.success) {
-        setStatusMessage({ type: 'success', text: 'Imagen eliminada y espacio liberado en disco.' });
-        await loadMedia();
-      } else {
-        setStatusMessage({ type: 'error', text: res.error || 'Error al eliminar.' });
-      }
-    } catch (err: any) {
-      setStatusMessage({ type: 'error', text: err.message || 'Error al eliminar imagen.' });
-    }
-  };
+  // Reordenado persistente vía Server Action (transacción ACID tenant-isolated).
+  const handleReorder = useCallback(
+    async (orderedIds: string[]) => {
+      const res = await reorderMediaAction({ orderedIds });
+      if (!res.ok) throw new Error(res.error);
+      await loadMedia();
+    },
+    [loadMedia],
+  );
+
+  const usagePct = Math.min(100, Math.max(0, quota.usagePct));
 
   return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-      
-      {/* Header con Badge y Alertas */}
-      <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-6">
+    <div className="space-y-8">
+      <header className="flex flex-col justify-between gap-4 border-b border-white/10 pb-6 sm:flex-row sm:items-center">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-amber-500/10 border border-amber-500/30 rounded-full text-[10px] font-mono text-amber-300 font-bold uppercase mb-2">
+          <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-[#ecb613]/30 bg-[#ecb613]/10 px-3 py-1 font-mono text-[10px] font-bold uppercase text-[#ecb613]">
             <Crown size={12} />
-            <span>Motor de Compresión C++ (sharp WebP S-Class)</span>
+            <span>Escaparate S-Class · Plan {tier}</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-black font-syne text-white tracking-tight">
+          <h1 className="font-syne text-3xl font-black tracking-tight text-white sm:text-4xl">
             Galería Multimedia & Cuota de Disco
           </h1>
-          <p className="text-xs sm:text-sm text-zinc-400 font-light mt-1">
-            Tus fotos se comprimen en tiempo real con una reducción del 85% de peso para garantizar carga ultra-rápida.
+          <p className="mt-1 text-xs font-light text-zinc-400 sm:text-sm">
+            Sube por arrastre, ordena la portada con drag & drop y publica tu material en tiempo real.
           </p>
         </div>
 
-        <div className="p-4 bg-[#09090d] border border-white/10 rounded-2xl flex items-center gap-4">
-          <div className="space-y-1">
-            <div className="flex justify-between text-xs font-mono">
-              <span className="text-zinc-400">Cuota Usada:</span>
-              <span className="text-[#ecb613] font-bold">{quota.currentMB} / {quota.maxMB} MB</span>
-            </div>
-            <div className="w-40 bg-white/5 rounded-full h-2 overflow-hidden border border-white/5">
-              <div 
-                className="bg-gradient-to-r from-amber-500 to-[#ecb613] h-full rounded-full transition-all duration-500" 
-                style={{ width: `${quota.percentage}%` }} 
-              />
-            </div>
-            <span className="text-[9px] font-mono text-zinc-500 block text-right">{quota.percentage}% consumido</span>
+        <div className="w-full rounded-2xl border border-white/10 bg-[#09090d] p-4 sm:w-72">
+          <div className="flex items-center justify-between font-mono text-xs">
+            <span className="text-zinc-400">Cuota usada</span>
+            <span className="font-bold text-[#ecb613]">
+              {quota.quotaUsedMb} / {quota.quotaMaxMb} MB
+            </span>
           </div>
+          <div className="mt-2 h-2 w-full overflow-hidden rounded-full border border-white/5 bg-white/5">
+            <div
+              role="progressbar"
+              aria-valuenow={usagePct}
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-label="Cuota de almacenamiento consumida"
+              className="h-full rounded-full bg-[#ecb613] transition-all duration-500"
+              style={{ width: `${usagePct}%` }}
+            />
+          </div>
+          <span className="mt-1 block text-right font-mono text-[9px] text-zinc-500">
+            {usagePct.toFixed(1)}% consumido
+          </span>
         </div>
       </header>
 
-      {/* Alertas de Estado */}
-      {statusMessage && (
-        <div className={`p-4 rounded-2xl border flex items-center justify-between gap-3 text-xs font-mono ${
-          statusMessage.type === 'success' 
-            ? 'bg-emerald-950/40 border-emerald-500/40 text-emerald-300' 
-            : 'bg-rose-950/40 border-rose-500/40 text-rose-300'
-        }`}>
-          <div className="flex items-center gap-2">
-            {statusMessage.type === 'success' ? <CheckCircle2 size={16} /> : <AlertTriangle size={16} />}
-            <span>{statusMessage.text}</span>
-          </div>
-          <button onClick={() => setStatusMessage(null)} className="text-xs underline hover:text-white">
-            Cerrar
-          </button>
+      {loadError && (
+        <div className="flex items-center gap-2 rounded-2xl border border-rose-500/40 bg-rose-950/40 p-4 font-mono text-xs text-rose-300">
+          <AlertTriangle size={16} />
+          <span>{loadError}</span>
         </div>
       )}
 
-      {/* 📥 Dropzone de Subida S-Class */}
-      <div
-        onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
-        onDragLeave={() => setIsDragging(false)}
-        onDrop={(e) => {
-          e.preventDefault();
-          setIsDragging(false);
-          handleFileUpload(e.dataTransfer.files);
-        }}
-        onClick={() => fileInputRef.current?.click()}
-        className={`p-8 sm:p-12 border-2 border-dashed rounded-3xl text-center space-y-4 transition-all duration-300 cursor-pointer group ${
-          isDragging 
-            ? 'border-[#ecb613] bg-[#ecb613]/10 scale-[1.01]' 
-            : 'border-white/20 hover:border-[#ecb613]/80 bg-[#09090d]/60'
-        }`}
-      >
-        <input 
-          type="file" 
-          ref={fileInputRef} 
-          onChange={(e) => handleFileUpload(e.target.files)} 
-          multiple 
-          accept="image/jpeg,image/png,image/webp,image/avif" 
-          className="hidden" 
+      {loading ? (
+        <div className="flex items-center justify-center gap-3 rounded-3xl border border-white/10 bg-[#09090d]/80 p-16 text-white/60">
+          <Loader2 className="animate-spin" size={20} />
+          <span className="font-mono text-xs uppercase tracking-widest">Cargando galería…</span>
+        </div>
+      ) : (
+        <MediaDragAndDrop
+          vendorId={vendorId}
+          assets={assets}
+          tier={tier}
+          onReorder={handleReorder}
+          onUpload={handleUpload}
         />
-
-        <div className="w-16 h-16 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-[#ecb613] flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
-          {uploading ? (
-            <Loader2 className="w-8 h-8 animate-spin" />
-          ) : (
-            <UploadCloud size={32} />
-          )}
-        </div>
-
-        <div className="space-y-1">
-          <h3 className="text-base sm:text-lg font-bold text-white font-syne">
-            {uploading ? 'Comprimiendo y almacenando en servidor...' : 'Arrastra tus fotos de alta resolución o haz clic'}
-          </h3>
-          <p className="text-xs text-zinc-400 font-light font-mono max-w-md mx-auto">
-            Procesado con <strong className="text-white">sharp WebP (q=82)</strong>. Acepta JPG, PNG, WebP. Máximo 10 MB por imagen cruda.
-          </p>
-        </div>
-
-        <button 
-          type="button" 
-          disabled={uploading}
-          className="px-6 py-3 bg-[#ecb613] text-black font-mono text-xs font-black uppercase rounded-2xl hover:scale-105 transition-all shadow-lg shadow-amber-950/30"
-        >
-          {uploading ? 'Procesando...' : 'Examinar Archivos Locales'}
-        </button>
-      </div>
-
-      {/* 🖼️ Grid de Imágenes Cargadas */}
-      <div className="space-y-4">
-        <div className="flex items-center justify-between border-b border-white/10 pb-3">
-          <h3 className="text-xl font-bold font-syne text-white uppercase tracking-tight">
-            Archivos en Bóveda ({assets.length} / {quota.maxPhotos} fotos)
-          </h3>
-          <span className="text-xs font-mono text-zinc-400">
-            Aislamiento Tenant: <code className="text-[#ecb613]">/public/uploads/providers/{providerId}</code>
-          </span>
-        </div>
-
-        {assets.length === 0 ? (
-          <div className="p-12 rounded-3xl bg-[#09090d] border border-white/5 text-center space-y-2">
-            <ImageIcon size={32} className="text-zinc-600 mx-auto" />
-            <p className="text-sm text-zinc-400 font-light">Aún no has subido ninguna imagen a tu cuota.</p>
-            <p className="text-xs text-zinc-500 font-mono">Usa la zona de subida superior para publicar tu primera fotografía HD.</p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {assets.map((item) => (
-              <div 
-                key={item.id} 
-                className="group relative rounded-2xl overflow-hidden border border-white/10 bg-[#09090d] space-y-2 hover:border-[#ecb613] transition-all"
-              >
-                <div className="relative h-44 w-full bg-zinc-900 overflow-hidden">
-                  <img 
-                    src={item.url} 
-                    alt="Asset proveedor" 
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-                  />
-                  <div className="absolute top-2 left-2 px-2 py-0.5 bg-black/70 backdrop-blur-md rounded-md text-[9px] font-mono text-[#ecb613] border border-white/10 font-bold">
-                    {item.sizeKB} KB
-                  </div>
-                  <button
-                    onClick={() => handleDelete(item.id)}
-                    className="absolute top-2 right-2 p-2 bg-black/70 backdrop-blur-md rounded-xl text-zinc-400 hover:text-rose-400 hover:bg-rose-950/60 border border-white/10 transition-colors"
-                    title="Eliminar archivo de disco"
-                  >
-                    <Trash2 size={14} />
-                  </button>
-                </div>
-                <div className="p-3 pt-1 flex justify-between items-center text-[10px] font-mono text-zinc-500">
-                  <span>WebP 1080p</span>
-                  <a href={item.url} target="_blank" rel="noreferrer" className="text-zinc-400 hover:text-white flex items-center gap-1">
-                    <span>Ver</span>
-                    <ArrowUpRight size={10} />
-                  </a>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Banner de Upgrade a Tier Gold */}
-      <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-amber-950/30 via-[#09090d] to-purple-950/20 border border-[#ecb613]/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div className="space-y-1">
-          <div className="flex items-center gap-2 text-[#ecb613] font-bold text-xs font-mono uppercase">
-            <Sparkles size={14} />
-            <span>Desbloquear Cuota Ilimitada S-Class</span>
-          </div>
-          <h4 className="text-lg font-bold font-syne text-white">¿Necesitas subir más de 10 fotos o vídeos en 4K?</h4>
-          <p className="text-xs text-zinc-400 font-light">
-            El Plan Gold incrementa tu almacenamiento a 5.000 MB (50 fotos) y reduce la comisión transaccional al 85/7.5/7.5.
-          </p>
-        </div>
-        <Link 
-          href="/vendor/billing" 
-          className="px-5 py-3 bg-white hover:bg-[#ecb613] text-black font-mono text-xs font-black uppercase rounded-2xl transition-all shrink-0"
-        >
-          Ver Planes y Upgrades
-        </Link>
-      </div>
-
+      )}
     </div>
   );
 }
+

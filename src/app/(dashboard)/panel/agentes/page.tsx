@@ -178,7 +178,7 @@ export default function PanelAgentesPage(): React.JSX.Element {
               </h1>
             </div>
             <p className="mt-1 font-mono text-xs text-white/50">
-              Terminal conversacional interactiva • Flota Titan (32 Agentes) • Invocable vía <kbd className="rounded bg-white/10 px-1 py-0.5 text-white/80">Ctrl+Shift+A</kbd> o <kbd className="rounded bg-white/10 px-1 py-0.5 text-white/80">?agent=true</kbd>
+              Terminal conversacional interactiva • Flota Omega (48 Agentes · 6 Divisiones) • Invocable vía <kbd className="rounded bg-white/10 px-1 py-0.5 text-white/80">Ctrl+Shift+A</kbd> o <kbd className="rounded bg-white/10 px-1 py-0.5 text-white/80">?agent=true</kbd>
             </p>
           </div>
           <div className="flex items-center gap-3">
@@ -214,10 +214,10 @@ export default function PanelAgentesPage(): React.JSX.Element {
           <div className="rounded-xl border border-white/10 bg-[#09090d] p-4">
             <span className="font-mono text-[10px] text-white/40 uppercase tracking-wider">Flota de Agentes</span>
             <div className="mt-1 font-mono text-sm font-bold text-cyan-400">
-              {fleet ? `${fleet.entryAgentCount} Agentes de Entrada` : '32 Agentes'}
+              {fleet ? `${fleet.entryAgentCount} Agentes de Entrada` : '48 Agentes'}
             </div>
             <span className="font-mono text-xs text-white/60">
-              {fleet ? `${fleet.divisionCount} Divisiones · Kill-Switch ${fleet.killSwitch ? '⛔ ON' : '✅ OFF'}` : '4 Divisiones de Choque'}
+              {fleet ? `${fleet.divisionCount} Divisiones · Kill-Switch ${fleet.killSwitch ? '⛔ ON' : '✅ OFF'}` : '6 Divisiones de Choque'}
             </span>
           </div>
           <div className="rounded-xl border border-white/10 bg-[#09090d] p-4">

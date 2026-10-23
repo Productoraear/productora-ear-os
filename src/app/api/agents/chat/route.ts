@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createEarBus } from '@/lib/agents/sectorAgents';
+import { createOmegaFleet } from '@/lib/agents/omegaFleet';
 import type { AgentId, TraceEntry } from '@/lib/agents/agentBus';
 import { isKillSwitchActive } from '@/lib/agents/killSwitch';
 import { GoogleGenerativeAI } from '@google/generative-ai';
@@ -32,7 +32,7 @@ interface ChatRequestBody {
   };
 }
 
-const bus = createEarBus();
+const bus = createOmegaFleet();
 
 /** Rate limiter en memoria por IP para el canal de atención al cliente. */
 const chatRateLimiter = new SlidingWindowRateLimiter(20, 60_000);

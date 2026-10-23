@@ -148,7 +148,7 @@ export async function GET(req: NextRequest) {
     }
 
     const alerts = scan.notices.map(mapTedNoticeToAlert);
-    const highMatch = alerts.filter((a) => a.matchScore >= 90);
+    const highMatch = alerts.filter((a) => a.matchScore >= 90).slice(0, 5);
 
     let telegramDispatchedCount = 0;
     for (const alert of highMatch) {

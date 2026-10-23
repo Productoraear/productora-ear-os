@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Lock, KeyRound, ArrowRight, AlertCircle, ShieldCheck, Edit3, UserCheck, Eye, EyeOff } from 'lucide-react';
+import { Lock, KeyRound, ArrowRight, AlertCircle, ShieldCheck, Edit3, UserCheck, Eye, EyeOff, Mail, Zap } from 'lucide-react';
 import { SignIn2 } from '@/components/ui/clean-minimal-sign-in';
 
 function OmniAuthLoginForm() {
@@ -13,10 +13,10 @@ function OmniAuthLoginForm() {
 
   const [authRole, setAuthRole] = useState<'admin' | 'editor' | 'partner'>('admin');
   const [step, setStep] = useState<1 | 2>(1);
+  const [email, setEmail] = useState('edwin.agudelo@productoraear.com');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [code2fa, setCode2fa] = useState('');
-  const [verifyMethod] = useState<'authenticator' | 'email'>('authenticator');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [infoMsg, setInfoMsg] = useState<string | null>(null);
@@ -27,7 +27,7 @@ function OmniAuthLoginForm() {
     setMounted(true);
   }, []);
 
-  // Paso 1: Enviar contraseña y solicitar desafío
+  // Paso 1: Enviar contraseña y solicitar desafío 2FA
   const handleStep1 = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -36,44 +36,56 @@ function OmniAuthLoginForm() {
 
     try {
       if (authRole === 'admin') {
-        // Bypass Soberano: clave maestra sin segundo factor.
-        const bypassRes = await fetch('/api/auth/admin-verify', {
+        const checkRes = await fetch('/api/auth/admin-verify', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ password, role: 'admin' })
+          body: JSON.stringify({ password, role: 'admin', action: 'check-password' }),
         });
 
-        const bypassData = await bypassRes.json();
+        const checkData = await checkRes.json();
 
-        if (bypassRes.ok && bypassData.success && bypassData.bypass === 'sovereign') {
-          router.push(fromPath || '/admin');
-          router.refresh();
+        if (checkRes.ok && checkData.success) {
+          const today = String(new Date().getDate()).padStart(2, '0');
+          setInfoMsg(`Abre Google Authenticator e introduce tu código de 6 cifras (o usa el PIN Soberano de hoy: ${today}24).`);
+          setStep(2);
+          return;
+        } else {
+          setError(checkData.message || 'Contraseña incorrecta.');
           return;
         }
       }
 
-      const res = await fetch('/api/auth/send-otp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: 'productoraear@gmail.com', password, role: authRole })
-      });
-
-      const data = await res.json();
-
-      if (res.ok && data.success) {
-        if (authRole === 'editor') {
-          // Editores acceden en 1 solo paso con su clave autorizada
-          handleEditorLogin();
-        } else {
-          // ADMIN: Exige segundo factor (Móvil +34693693048, Telegram o Fórmula Soberana)
-          setInfoMsg(data.message || 'Introduce el PIN de 4 cifras enviado a tu móvil (+34693693048) o tu Fórmula Soberana (Día + 24).');
-          setStep(2);
-        }
-      } else {
-        setError(data.message || 'Contraseña incorrecta.');
+      if (authRole === 'editor') {
+        await handleEditorLogin();
       }
     } catch {
       setError('Error conectando con el servidor de autenticación.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Acceso Soberano Directo (Bypass 1-Click)
+  const handleDirectBypass = async () => {
+    setError(null);
+    setLoading(true);
+    try {
+      const bypassRes = await fetch('/api/auth/admin-verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password, role: 'admin', bypassSovereign: true }),
+      });
+
+      const bypassData = await bypassRes.json();
+
+      if (bypassRes.ok && bypassData.success) {
+        // Navegación nativa para garantizar envío de cookies en localhost y producción
+        window.location.href = fromPath || '/admin';
+      } else {
+        setError(bypassData.message || 'Error en bypass soberano.');
+      }
+    } catch {
+      setError('Error al procesar bypass soberano.');
     } finally {
       setLoading(false);
     }
@@ -85,12 +97,11 @@ function OmniAuthLoginForm() {
       const res = await fetch('/api/auth/admin-verify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password, role: 'editor' })
+        body: JSON.stringify({ password, role: 'editor' }),
       });
       const data = await res.json();
       if (res.ok && data.success) {
-        router.push(fromPath || '/admin');
-        router.refresh();
+        window.location.href = fromPath || '/admin';
       } else {
         setError(data.message || 'Acceso de editor denegado.');
       }
@@ -99,7 +110,7 @@ function OmniAuthLoginForm() {
     }
   };
 
-  // Paso 2: Verificar 2FA (Google Authenticator o Email)
+  // Paso 2: Verificar Google Authenticator (TOTP) o Fórmula Soberana
   const handleStep2 = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -109,15 +120,16 @@ function OmniAuthLoginForm() {
       const res = await fetch('/api/auth/admin-verify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password, code2fa, method: verifyMethod, role: 'admin' })
+        body: JSON.stringify({ password, code2fa, role: 'admin' }),
       });
 
       const data = await res.json();
 
       if (res.ok && data.success) {
-        router.push(fromPath || '/admin');
+        // Redirección completa con recarga para asentar cookies
+        window.location.href = fromPath || '/admin';
       } else {
-        setError(data.message || 'Código 2FA inválido.');
+        setError(data.message || 'Código 2FA incorrecto o expirado.');
       }
     } catch {
       setError('Fallo de verificación en el servidor.');
@@ -138,7 +150,7 @@ function OmniAuthLoginForm() {
             <Lock className="w-7 h-7" />
           </div>
           <h1 className="text-2xl font-black tracking-tight text-white uppercase">IDENTIDAD S-CLASS</h1>
-          <p className="text-xs text-neutral-400 mt-1">Acceso Soberano Vercel Serverless • 2FA &amp; Editores</p>
+          <p className="text-xs text-neutral-400 mt-1">Acceso Soberano Productora EAR • 2FA Google Authenticator</p>
         </div>
 
         {/* SELECTOR DE PERFIL DE ENTRADA */}
@@ -146,21 +158,21 @@ function OmniAuthLoginForm() {
           <button
             type="button"
             onClick={() => { setAuthRole('admin'); setStep(1); setError(null); }}
-            className={`p-2.5 rounded-xl border text-left transition flex flex-col justify-between ${
+            className={`p-2.5 rounded-xl border text-left transition flex flex-col justify-between cursor-pointer ${
               authRole === 'admin' ? 'bg-amber-500/15 border-amber-500 text-amber-300' : 'bg-[#030305] border-neutral-800 text-neutral-500'
             }`}
           >
             <ShieldCheck className="w-4 h-4 text-amber-400 mb-1" />
             <div>
               <div className="text-[11px] font-bold">ADMIN</div>
-              <div className="text-[8px] text-neutral-500">2FA Total</div>
+              <div className="text-[8px] text-neutral-500">Google 2FA</div>
             </div>
           </button>
 
           <button
             type="button"
             onClick={() => { setAuthRole('editor'); setStep(1); setError(null); }}
-            className={`p-2.5 rounded-xl border text-left transition flex flex-col justify-between ${
+            className={`p-2.5 rounded-xl border text-left transition flex flex-col justify-between cursor-pointer ${
               authRole === 'editor' ? 'bg-amber-500/15 border-amber-500 text-amber-300' : 'bg-[#030305] border-neutral-800 text-neutral-500'
             }`}
           >
@@ -174,7 +186,7 @@ function OmniAuthLoginForm() {
           <button
             type="button"
             onClick={() => { setAuthRole('partner'); setError(null); }}
-            className={`p-2.5 rounded-xl border text-left transition flex flex-col justify-between ${
+            className={`p-2.5 rounded-xl border text-left transition flex flex-col justify-between cursor-pointer ${
               authRole === 'partner' ? 'bg-amber-500/15 border-amber-500 text-amber-300' : 'bg-[#030305] border-neutral-800 text-neutral-500'
             }`}
           >
@@ -186,12 +198,12 @@ function OmniAuthLoginForm() {
           </button>
         </div>
 
-        {/* MODO PARTNERS / CLIENTES (CLEAN MINIMAL SIGN IN) */}
+        {/* MODO PARTNERS / CLIENTES */}
         {authRole === 'partner' && (
           <div className="w-full">
             <SignIn2
               onSuccess={() => {
-                router.push('/panel');
+                window.location.href = '/panel';
               }}
             />
           </div>
@@ -207,9 +219,28 @@ function OmniAuthLoginForm() {
               </span>
             </div>
 
+            {authRole === 'admin' && (
+              <div>
+                <label className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider block mb-1.5">
+                  Email de Administrador
+                </label>
+                <div className="relative">
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="edwin.agudelo@productoraear.com"
+                    className="w-full pl-10 pr-4 py-3 bg-[#030305] border border-neutral-800 rounded-xl text-sm text-white focus:outline-none focus:border-amber-500 transition font-mono"
+                  />
+                  <Mail className="w-4 h-4 text-neutral-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                </div>
+              </div>
+            )}
+
             <div>
               <label className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider block mb-1.5">
-                {authRole === 'admin' ? 'Contraseña Master (.env.local)' : 'Contraseña de Editor Autorizado'}
+                {authRole === 'admin' ? 'Contraseña Master EAR OS' : 'Contraseña de Editor Autorizado'}
               </label>
               <div className="relative">
                 <input
@@ -223,7 +254,7 @@ function OmniAuthLoginForm() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-neutral-400 hover:text-amber-400 transition"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-neutral-400 hover:text-amber-400 transition cursor-pointer"
                   title={showPassword ? 'Ocultar contraseña' : 'Ver contraseña'}
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -241,43 +272,54 @@ function OmniAuthLoginForm() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3.5 bg-amber-500 hover:bg-amber-400 text-black font-extrabold rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition shadow-lg shadow-amber-500/10 disabled:opacity-50"
+              className="w-full py-3.5 bg-amber-500 hover:bg-amber-400 text-black font-extrabold rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition shadow-lg shadow-amber-500/10 disabled:opacity-50 cursor-pointer"
             >
               <KeyRound className="w-4 h-4" />
-              <span>{loading ? 'Verificando...' : authRole === 'admin' ? 'Continuar a 2FA' : 'Acceder como Editor'}</span>
+              <span>{loading ? 'Verificando...' : authRole === 'admin' ? 'Continuar a Google Authenticator (2FA)' : 'Acceder como Editor'}</span>
               <ArrowRight className="w-4 h-4" />
             </button>
+
+            {authRole === 'admin' && (
+              <button
+                type="button"
+                onClick={handleDirectBypass}
+                disabled={loading}
+                className="w-full py-2.5 bg-neutral-900/60 hover:bg-neutral-800/80 border border-neutral-700/60 text-amber-400/90 hover:text-amber-300 font-mono text-[11px] rounded-xl flex items-center justify-center gap-2 transition cursor-pointer"
+              >
+                <Zap className="w-3.5 h-3.5 text-amber-400" />
+                <span>Entrar directo con Bypass Soberano</span>
+              </button>
+            )}
           </form>
         )}
 
         {/* PASO 2: VERIFICACIÓN 2FA PARA ADMIN */}
         {step === 2 && authRole === 'admin' && (
           <form onSubmit={handleStep2} className="space-y-4">
-            {infoMsg && (
-              <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl text-amber-300 text-xs flex flex-col gap-1">
-                <span className="font-bold flex items-center gap-1.5">
-                  <ShieldCheck className="w-4 h-4 text-amber-400 shrink-0" />
-                  Doble Verificación Requerida:
-                </span>
-                <span className="text-neutral-300">{infoMsg}</span>
-                <div className="mt-1 pt-1 border-t border-amber-500/20 text-[10px] text-amber-400 font-mono">
-                  💡 Fórmula Soberana de hoy: <strong>{String(new Date().getDate()).padStart(2, '0')}24</strong> (Día + 24)
-                </div>
+            <div className="p-3.5 bg-amber-500/10 border border-amber-500/30 rounded-xl text-amber-300 text-xs flex flex-col gap-1.5">
+              <span className="font-bold flex items-center gap-1.5 text-amber-400">
+                <ShieldCheck className="w-4 h-4 shrink-0" />
+                Doble Factor Requerido:
+              </span>
+              <span className="text-neutral-300 leading-relaxed text-[11px]">{infoMsg}</span>
+              <div className="mt-1 pt-1.5 border-t border-amber-500/20 text-[10px] text-amber-400/90 font-mono">
+                💡 PIN de respaldo para hoy: <strong>{String(new Date().getDate()).padStart(2, '0')}24</strong>
               </div>
-            )}
+            </div>
 
             <div>
               <label className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider block mb-1.5">
-                PIN de 4 Cifras (Móvil +34693693048 o Fórmula) / Código TOTP
+                Código de 6 Cifras (Google Authenticator)
               </label>
               <input
                 type="text"
                 maxLength={6}
+                autoFocus
                 required
                 value={code2fa}
                 onChange={(e) => setCode2fa(e.target.value)}
-                placeholder="ej. 1524"
-                className="w-full px-4 py-3 bg-[#030305] border border-neutral-800 rounded-xl text-lg font-mono tracking-widest text-center text-amber-400 focus:outline-none focus:border-amber-500 transition"
+                placeholder="000000"
+                className="w-full px-4 py-3.5 bg-[#030305] border border-amber-500/40 rounded-xl text-xl font-mono tracking-widest text-center text-amber-400 focus:outline-none focus:border-amber-400 transition"
               />
             </div>
 
@@ -291,10 +333,20 @@ function OmniAuthLoginForm() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3.5 bg-amber-500 hover:bg-amber-400 text-black font-extrabold rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition shadow-lg shadow-amber-500/10 disabled:opacity-50"
+              className="w-full py-3.5 bg-amber-500 hover:bg-amber-400 text-black font-extrabold rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition shadow-lg shadow-amber-500/10 disabled:opacity-50 cursor-pointer"
             >
               <KeyRound className="w-4 h-4" />
               <span>{loading ? 'Validando 2FA...' : 'DESBLOQUEAR PANELES SOBERANOS'}</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={handleDirectBypass}
+              disabled={loading}
+              className="w-full py-2.5 bg-neutral-900/60 hover:bg-neutral-800/80 border border-neutral-700/60 text-amber-400/90 hover:text-amber-300 font-mono text-[11px] rounded-xl flex items-center justify-center gap-2 transition cursor-pointer"
+            >
+              <Zap className="w-3.5 h-3.5 text-amber-400" />
+              <span>¿Sin móvil? Entrar con Bypass Soberano</span>
             </button>
 
             <button

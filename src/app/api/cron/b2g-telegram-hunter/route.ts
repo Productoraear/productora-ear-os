@@ -62,7 +62,8 @@ export async function GET(req: NextRequest) {
       };
     });
 
-    const highMatch = alerts.filter((a) => a.matchScore >= 90);
+    // Enviar máximo 5 avisos por ejecución de cron para respetar el rate limit de Telegram y evitar spam
+    const highMatch = alerts.filter((a) => a.matchScore >= 90).slice(0, 5);
     let dispatched = 0;
     for (const alert of highMatch) {
       const sent = await sendB2GTelegramAlert(alert);

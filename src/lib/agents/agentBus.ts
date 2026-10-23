@@ -2,8 +2,11 @@ import { randomUUID } from 'node:crypto';
 import { isKillSwitchActive } from './killSwitch';
 
 /**
- * Flota completa de 32 Agentes Autónomos S-CLASS (Wave 31 — Titan Fleet).
- * Organizados en 4 Divisiones de Choque interconectadas por AgentBus.
+ * Flota completa de Agentes Autónomos S-CLASS (Wave 31 Titan Fleet + Wave 32).
+ * Organizados en 6 Divisiones de Choque interconectadas por AgentBus:
+ *  1) Comercial · 2) Técnica · 3) Jurídica/B2G/Financiera · 4) VIMUME/B2B
+ *  5) Sector (dispatch entry) · 6) Artist Career Management (Multinacional 360°).
+ * Cero huérfanos: todo `AgentId` debe tener handler registrado en `createOmegaFleet()`.
  */
 export type AgentId =
   // ── División 1 · Comercial, Voz & Cierre Cuántico (8) ──
@@ -48,7 +51,18 @@ export type AgentId =
   | 'b2g-compliance'
   | 'vimume-impact'
   | 'escalation'
-  | 'supervisor';
+  | 'supervisor'
+  // ── División 6 · Artist Career Management (Wave 32 — Multinacional 360°) ──
+  | 'artist-career-manager'
+  | 'artist-scout'
+  | 'artist-development'
+  | 'release-strategist'
+  | 'tour-architect'
+  | 'brand-partnership-director'
+  | 'catalog-publishing-director'
+  | 'sync-licensing-agent'
+  | 'fanbase-growth-agent'
+  | 'business-affairs-agent';
 
 export type PayloadValue = string | number | boolean;
 export type AgentPayload = Readonly<Record<string, PayloadValue>>;
@@ -161,6 +175,16 @@ export class AgentBus {
 
   register(agent: AgentId, handler: AgentHandler): void {
     this.handlers.set(agent, handler);
+  }
+
+  /** ¿Tiene este agente un handler registrado? (auditoría de huérfanos). */
+  hasHandler(agent: AgentId): boolean {
+    return this.handlers.has(agent);
+  }
+
+  /** Lista de agentes con handler registrado (telemetría del bus). */
+  registeredAgents(): AgentId[] {
+    return [...this.handlers.keys()];
   }
 
   /** Envía un mensaje y ejecuta en cascada las ayudas que cada agente solicite. */

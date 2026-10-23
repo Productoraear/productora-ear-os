@@ -1,13 +1,62 @@
 {
   "_meta": {
-    "version": "9.0-OMEGA-WAVE-31-RETO-SCLASS",
-    "doctrine": "WAVE 31: S-CLASS VOICE COMMAND CENTER & TITAN FLEET PERSISTENCE — PERSISTENCIA PRISMA + CRUD API + OLED UI + FORENSIC SUITE",
-    "wave": 31,
-    "total_tasks": 4
+    "version": "9.1-OMEGA-WAVE-32-VENDOR-ENTERPRISE",
+    "doctrine": "WAVE 32: AREA PRIVADA ENTERPRISE DE PROVEEDORES — CRM PROPIO + ESCAPARATE + DRAG & DROP MULTIMEDIA (SSOT: VENDOR_ARCHITECTURE_MANIFESTO.md)",
+    "wave": 32,
+    "total_tasks": 7
   },
   "_instructions_for_worker": "Ejecuta SOLO via: call RUN_OMEGA.bat next  ->  lee .antigravity/MISSION_ACTIVE.json  ->  edita SOLO 'files'  ->  call RUN_OMEGA.bat complete <ID>. El complete ya ejecuta tsc + eslint + test. 1 tarea por sesion.",
   "tasks": [],
   "completed": [
+    {
+      "id": "W32_T07_VENDOR_ENTERPRISE_VALIDATION_SUITE",
+      "title": "VENDOR ENTERPRISE VALIDATION SUITE — Script forense scripts/verify_vendor_enterprise.cjs con sello Omega Diamante",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-23T19:52:27.814Z"
+    },
+    {
+      "id": "W32_T06_VENDOR_CRM_PANEL_UI",
+      "title": "VENDOR CRM PANEL UI — Pipeline de leads + inbox de chat + contadores y alertas de reserva (manifest seccion 6)",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-23T19:42:24.621Z"
+    },
+    {
+      "id": "W32_T05_VENDOR_DRAG_DROP_MEDIA",
+      "title": "VENDOR DRAG & DROP MULTIMEDIA — Gestor de media con reordenado por drag, subida por drop y límites por tier",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-23T18:54:48.993Z"
+    },
+    {
+      "id": "W32_T04_VENDOR_ESCAPARATE_PUBLICO",
+      "title": "VENDOR ESCAPARATE PUBLICO — Ficha pública estructurada inmutable + galería + CTA booking (SSOT manifest seccion 3)",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-23T18:27:20.653Z"
+    },
+    {
+      "id": "W32_T03_VENDOR_CRM_SERVER_ACTIONS",
+      "title": "VENDOR CRM SERVER ACTIONS — Acciones server tipadas (booking request 24h, chat, upload media) con Zod + defensa en profundidad",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-23T17:36:32.237Z"
+    },
+    {
+      "id": "W32_T02_VENDOR_REST_API_ENDPOINTS",
+      "title": "VENDOR REST API ENDPOINTS — Endpoints REST server-only para perfil, subida media SHA-256, clientes CRM y bolos (Split 80/10/10)",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-23T17:15:38.635Z"
+    },
+    {
+      "id": "W32_T01_VENDOR_CRM_DATA_LAYER",
+      "title": "VENDOR CRM DATA LAYER — Modelos Prisma VendorLead/VendorThread/VendorCrmClient/VendorBooking + tipos estrictos + VendorCrmRepository server-only",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-23T16:54:46.999Z"
+    },
     {
       "id": "W31_T04_VOICE_ENTERPRISE_VALIDATION_SUITE",
       "title": "VOICE ENTERPRISE VALIDATION SUITE — Script forense scripts/verify_voice_command_center.cjs con validación de los 32 agentes, TTS failover y sello Omega Diamante",
@@ -84,10 +133,10 @@
     }
   ],
   "metadata": {
-    "last_updated": "2026-10-23T13:57:18.170Z",
+    "last_updated": "2026-10-23T19:52:27.816Z",
     "total_pending": 0,
-    "current_sprint": "WAVE_31_SCLASS_VOICE_COMMAND_CENTER",
-    "ceo_mandate": "Persistencia relacional de voces de la flota, API CRUD, Command Center OLED y validación forense Omega Diamante.",
+    "current_sprint": "WAVE_32_VENDOR_ENTERPRISE_PRIVATE_AREA",
+    "ceo_mandate": "Área Privada Enterprise de Proveedores: CRM propio (leads/chat/booking request 24h), escaparate público estructurado y gestor multimedia drag & drop. Piloto Edwin Agudelo, expansión SaaS multi-tenant (Free + Pro/Elite). SSOT: VENDOR_ARCHITECTURE_MANIFESTO.md.",
     "forensic_verification": {
       "verified_at": "2026-10-23T15:26:00.000Z",
       "node": "v26.12.1 (portable: C:/Users/Productora Ear/Downloads/node-lts/node-v26.12.1-win-x64)",

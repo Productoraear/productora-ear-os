@@ -242,7 +242,7 @@ function formatTelegramMessage(record: OpportunityRecord): string {
         .join('\n');
 }
 
-async function sendTelegramOpportunity(record: OpportunityRecord): Promise<boolean> {
+export async function sendTelegramOpportunity(record: OpportunityRecord): Promise<boolean> {
     const token = TELEGRAM_TOKEN();
     const chatId = TELEGRAM_CHAT_ID();
     if (!token || !chatId) {

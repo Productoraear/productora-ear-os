@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { timingSafeEqual } from 'node:crypto';
-import { createEarBus, FLEET_ROSTER } from '@/lib/agents/sectorAgents';
-import type { AgentSpec } from '@/lib/agents/sectorAgents';
+import { createOmegaFleet, OMEGA_FLEET_ROSTER } from '@/lib/agents/omegaFleet';
+import type { FleetSpec } from '@/lib/agents/omegaFleet';
 import type { AgentId, AgentPayload, PayloadValue, TraceEntry } from '@/lib/agents/agentBus';
 import { activateKillSwitch, isKillSwitchActive, releaseKillSwitch } from '@/lib/agents/killSwitch';
 import { replayDeadLetterQueue, readDeadLetterQueue } from '@/lib/agents/n8nDispatcher';
@@ -9,8 +9,8 @@ import { replayDeadLetterQueue, readDeadLetterQueue } from '@/lib/agents/n8nDisp
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-const ENTRY_AGENTS: readonly AgentId[] = FLEET_ROSTER.map((spec: AgentSpec): AgentId => spec.id);
-const bus = createEarBus();
+const ENTRY_AGENTS: readonly AgentId[] = OMEGA_FLEET_ROSTER.map((spec: FleetSpec): AgentId => spec.id);
+const bus = createOmegaFleet();
 
 function authorized(req: Request): boolean {
   const expected: string | undefined = process.env.AGENT_ADMIN_TOKEN;

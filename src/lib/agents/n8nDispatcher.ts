@@ -9,7 +9,39 @@ export type N8nWebhook =
   | 'vimume-clinical-report'
   | 'call-center-intake'
   | 'autonomous-escalation'
-  | 'executive-kpi-radar';
+  | 'executive-kpi-radar'
+  // ── División 1 · Comercial ──
+  | 'retention-reactivation'
+  | 'cross-sell'
+  // ── División 2 · Técnica ──
+  | 'acoustic-rider-audit'
+  | 'equipment-allocation'
+  | 'convoy-telemetry'
+  | 'soundcheck-audit'
+  | 'procurement-inventory'
+  | 'subcontract'
+  | 'venue-profile'
+  // ── División 3 · Jurídica/B2G/Financiera ──
+  | 'b2g-tender'
+  | 'split-settlement'
+  | 'invoice-treasury'
+  | 'vendor-compliance'
+  | 'dispute-escrow'
+  // ── División 4 · VIMUME/B2B ──
+  | 'dental-clinic'
+  | 'veterinary-care'
+  | 'hospitality-table'
+  | 'real-estate-event'
+  | 'corporate-experience'
+  // ── División 6 · Artist Career Management ──
+  | 'artist-career-intake'
+  | 'artist-development-plan'
+  | 'artist-release-plan'
+  | 'artist-tour-plan'
+  | 'artist-brand-deal'
+  | 'artist-catalog-royalties'
+  | 'artist-sync-license'
+  | 'artist-fanbase-growth';
 
 const ALLOWED: readonly N8nWebhook[] = [
   'b2b-quote',
@@ -19,6 +51,33 @@ const ALLOWED: readonly N8nWebhook[] = [
   'call-center-intake',
   'autonomous-escalation',
   'executive-kpi-radar',
+  'retention-reactivation',
+  'cross-sell',
+  'acoustic-rider-audit',
+  'equipment-allocation',
+  'convoy-telemetry',
+  'soundcheck-audit',
+  'procurement-inventory',
+  'subcontract',
+  'venue-profile',
+  'b2g-tender',
+  'split-settlement',
+  'invoice-treasury',
+  'vendor-compliance',
+  'dispute-escrow',
+  'dental-clinic',
+  'veterinary-care',
+  'hospitality-table',
+  'real-estate-event',
+  'corporate-experience',
+  'artist-career-intake',
+  'artist-development-plan',
+  'artist-release-plan',
+  'artist-tour-plan',
+  'artist-brand-deal',
+  'artist-catalog-royalties',
+  'artist-sync-license',
+  'artist-fanbase-growth',
 ];
 
 /** Allowlist pública (solo lectura) para telemetría y auditoría del bus. */
