@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect } from 'react';
-import Link from 'next/link';
 
 export default function PublicErrorFallback({
   error,
@@ -34,12 +33,12 @@ export default function PublicErrorFallback({
           >
             Reintentar Operación
           </button>
-          <Link
+          <a
             href="/"
             className="w-full py-3 px-4 bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 font-medium rounded-xl transition-colors dark:bg-zinc-900 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
           >
             Volver al Inicio
-          </Link>
+          </a>
         </div>
       </div>
     </div>

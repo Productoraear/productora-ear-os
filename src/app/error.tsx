@@ -2,7 +2,6 @@
 
 import { useEffect } from 'react';
 import { Home, RefreshCw, ShieldAlert } from 'lucide-react';
-import Link from 'next/link';
 
 type GlobalErrorProps = {
   error: Error & { digest?: string };
@@ -51,13 +50,13 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
             <span>Reintentar Nodo</span>
           </button>
 
-          <Link
+          <a
             href="/"
             className="flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-xs font-bold uppercase tracking-wider text-white transition-all hover:bg-white/10 sm:w-auto"
           >
             <Home size={14} aria-hidden="true" />
             <span>Inicio</span>
-          </Link>
+          </a>
         </div>
       </div>
     </div>
