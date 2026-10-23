@@ -2,6 +2,12 @@
 
 import * as React from 'react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
+import {
+  REGISTERED_VOICES,
+  getVoiceForAgent,
+  getVoiceById,
+} from '@/lib/voice/voiceRegistry';
+import { toConversationalSpeech } from '@/lib/voice/speechNormalizer';
 
 interface ChatMessage {
   id: string;
@@ -131,39 +137,21 @@ function FormattedMessageContent({ text, isUser }: { text: string; isUser: boole
   );
 }
 
-function toConversationalSpeech(raw: string): string {
-  return raw
-    // Eliminar enlaces markdown completos: [texto](url) -> se suprime para no leer URLs
-    .replace(/\[(?:🔒|💬)?\s*([^\]]+)\]\([^)]+\)/g, '')
-    // Eliminar URLs completas
-    .replace(/https?:\/\/\S+/g, '')
-    // Eliminar encabezados y telemetría de depuración
-    .replace(/OMNI-SUPERVISOR[^\n]*/gi, '')
-    // Normalizar cifras monetarias con decimales ceros: 179.00 € o 179,00 € -> 179 euros
-    .replace(/(\d+)[.,]000?\s*(?:€|euros?)\b/gi, '$1 euros')
-    // Normalizar cifras con céntimos reales: 179.50 € o 179,50 € -> 179 euros con 50 céntimos
-    .replace(/(\d+)[.,](\d{1,2})\s*(?:€|euros?)\b/gi, '$1 euros con $2 céntimos')
-    // Limpiar cifras sueltas con decimales ceros como 350.00 -> 350
-    .replace(/(\d+)[.,]000?\b/g, '$1')
-    // Reemplazar símbolo euro por la palabra euros
-    .replace(/€/g, ' euros ')
-    // Reemplazar viñetas y caracteres markdown
-    .replace(/[•\*\#\_`~\[\]\(\)\<\>]/g, ' ')
-    // Reemplazar emojis comunes
-    .replace(/[\u{1F300}-\u{1FAFF}]|[\u{2600}-\u{27BF}]/gu, ' ')
-    // Normalizar pausas y respiraciones
-    .replace(/\n+/g, '. ')
-    .replace(/\s+/g, ' ')
-    .replace(/\.{2,}/g, '.')
-    .trim();
-}
-
 export function OmniAgentConsoleModal(): React.JSX.Element | null {
   const [isListening, setIsListening] = React.useState<boolean>(false);
   const [speakReplies, setSpeakReplies] = React.useState<boolean>(true);
   const [micError, setMicError] = React.useState<string>('');
   const [availableVoices, setAvailableVoices] = React.useState<SpeechSynthesisVoice[]>([]);
   const [selectedVoice, setSelectedVoice] = React.useState<SpeechSynthesisVoice | null>(null);
+  const [selectedVoiceMode, setSelectedVoiceMode] = React.useState<string>('auto');
+  const [isAudioLoading, setIsAudioLoading] = React.useState<boolean>(false);
+  const [isAudioPlaying, setIsAudioPlaying] = React.useState<boolean>(false);
+  const [currentlySpeakingMsgId, setCurrentlySpeakingMsgId] = React.useState<string | null>(null);
+  const [lastPlaybackSource, setLastPlaybackSource] = React.useState<string | null>(null);
+
+  const audioRef = React.useRef<HTMLAudioElement | null>(null);
+  const audioUrlRef = React.useRef<string | null>(null);
+  const synthAbortControllerRef = React.useRef<AbortController | null>(null);
   const recRef = React.useRef<SpeechRec | null>(null);
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const [inputMessage, setInputMessage] = React.useState<string>('');
@@ -332,7 +320,36 @@ export function OmniAgentConsoleModal(): React.JSX.Element | null {
     }
   }, [messages, isOpen]);
 
+  const stopAudio = React.useCallback((): void => {
+    if (synthAbortControllerRef.current) {
+      synthAbortControllerRef.current.abort();
+      synthAbortControllerRef.current = null;
+    }
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+    if (audioUrlRef.current) {
+      URL.revokeObjectURL(audioUrlRef.current);
+      audioUrlRef.current = null;
+    }
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
+    setIsAudioLoading(false);
+    setIsAudioPlaying(false);
+    setCurrentlySpeakingMsgId(null);
+  }, []);
+
+  React.useEffect(() => {
+    return () => {
+      stopAudio();
+    };
+  }, [stopAudio]);
+
   const handleClose = (): void => {
+    stopAudio();
     setIsOpen(false);
     // Limpiar el parámetro de la URL si estaba presente sin recargar
     if (searchParams?.get('agent') || searchParams?.get('nexus')) {
@@ -383,21 +400,140 @@ export function OmniAgentConsoleModal(): React.JSX.Element | null {
     rec.start();
   };
 
-  const speak = (rawText: string): void => {
-    if (!speakReplies || typeof window === 'undefined' || !('speechSynthesis' in window)) return;
-    window.speechSynthesis.cancel();
-    const speechText = toConversationalSpeech(rawText);
-    if (!speechText) return;
+  const fallbackToBrowser = React.useCallback(
+    (text: string, msgId?: string): void => {
+      if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
+        setIsAudioLoading(false);
+        setIsAudioPlaying(false);
+        setCurrentlySpeakingMsgId(null);
+        return;
+      }
+      window.speechSynthesis.cancel();
+      const speechText = toConversationalSpeech(text);
+      if (!speechText) {
+        setIsAudioLoading(false);
+        setIsAudioPlaying(false);
+        setCurrentlySpeakingMsgId(null);
+        return;
+      }
 
-    const u = new SpeechSynthesisUtterance(speechText);
-    u.lang = selectedVoice?.lang || 'es-ES';
-    if (selectedVoice) {
-      u.voice = selectedVoice;
-    }
-    u.rate = 1.0;
-    u.pitch = 1.0;
-    window.speechSynthesis.speak(u);
-  };
+      const u = new SpeechSynthesisUtterance(speechText);
+      u.lang = selectedVoice?.lang || 'es-ES';
+      if (selectedVoice) {
+        u.voice = selectedVoice;
+      }
+      u.rate = 1.0;
+      u.pitch = 1.0;
+      u.onstart = () => {
+        setIsAudioLoading(false);
+        setIsAudioPlaying(true);
+        if (msgId) setCurrentlySpeakingMsgId(msgId);
+      };
+      u.onend = () => {
+        setIsAudioPlaying(false);
+        setCurrentlySpeakingMsgId(null);
+      };
+      u.onerror = () => {
+        setIsAudioLoading(false);
+        setIsAudioPlaying(false);
+        setCurrentlySpeakingMsgId(null);
+      };
+      window.speechSynthesis.speak(u);
+    },
+    [selectedVoice]
+  );
+
+  const speak = React.useCallback(
+    async (rawText: string, agentUsed?: string, msgId?: string): Promise<void> => {
+      if (!speakReplies) return;
+
+      stopAudio();
+
+      if (selectedVoiceMode === 'browser') {
+        setLastPlaybackSource('browser');
+        fallbackToBrowser(rawText, msgId);
+        return;
+      }
+
+      const resolvedVoiceId =
+        selectedVoiceMode === 'auto'
+          ? getVoiceForAgent(agentUsed || 'omni-supervisor-daemon')
+          : selectedVoiceMode;
+
+      setIsAudioLoading(true);
+      if (msgId) setCurrentlySpeakingMsgId(msgId);
+
+      const abortController = new AbortController();
+      synthAbortControllerRef.current = abortController;
+
+      try {
+        const res = await fetch('/api/voice/synthesize', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            text: rawText,
+            voiceId: resolvedVoiceId,
+          }),
+          signal: abortController.signal,
+        });
+
+        if (!res.ok) {
+          setLastPlaybackSource('browser-fallback');
+          fallbackToBrowser(rawText, msgId);
+          return;
+        }
+
+        const contentType = res.headers.get('content-type') || '';
+        if (contentType.includes('audio') || contentType.includes('mpeg')) {
+          const blob = await res.blob();
+          const url = URL.createObjectURL(blob);
+          audioUrlRef.current = url;
+          const audio = new Audio(url);
+          audioRef.current = audio;
+
+          audio.onended = () => {
+            setIsAudioPlaying(false);
+            setCurrentlySpeakingMsgId(null);
+            if (audioUrlRef.current) {
+              URL.revokeObjectURL(audioUrlRef.current);
+              audioUrlRef.current = null;
+            }
+          };
+
+          audio.onerror = () => {
+            setIsAudioPlaying(false);
+            setCurrentlySpeakingMsgId(null);
+            if (audioUrlRef.current) {
+              URL.revokeObjectURL(audioUrlRef.current);
+              audioUrlRef.current = null;
+            }
+            setLastPlaybackSource('browser-fallback');
+            fallbackToBrowser(rawText, msgId);
+          };
+
+          setLastPlaybackSource('cloud');
+          setIsAudioLoading(false);
+          setIsAudioPlaying(true);
+          await audio.play();
+        } else {
+          const data = (await res.json()) as {
+            mode?: string;
+            normalizedText?: string;
+            fallbackReason?: string;
+          };
+          setLastPlaybackSource(data.mode === 'browser' ? 'browser' : 'browser-fallback');
+          setIsAudioLoading(false);
+          fallbackToBrowser(data.normalizedText || rawText, msgId);
+        }
+      } catch (err: unknown) {
+        if ((err as Error)?.name === 'AbortError') return;
+        setIsAudioLoading(false);
+        setLastPlaybackSource('browser-fallback');
+        fallbackToBrowser(rawText, msgId);
+      }
+    },
+    [fallbackToBrowser, selectedVoiceMode, speakReplies, stopAudio]
+  );
 
 function detectActiveDOMContext(): { name?: string; type?: string } | undefined {
   if (typeof document === 'undefined') return undefined;
@@ -474,7 +610,7 @@ function detectActiveDOMContext(): { name?: string; type?: string } | undefined 
       };
 
       setMessages((prev) => [...prev, agentMsg]);
-      speak(agentMsg.text);
+      void speak(agentMsg.text, agentMsg.agentUsed, agentMsg.id);
     } catch {
       setMessages((prev) => [
         ...prev,
@@ -574,9 +710,46 @@ function detectActiveDOMContext(): { name?: string; type?: string } | undefined 
                 <span className="rounded border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 font-mono text-[10px] text-emerald-400">
                   ONLINE
                 </span>
-                {availableVoices.length > 0 && (
-                  <div className="flex items-center gap-1.5 rounded-lg border border-[#ecb613]/30 bg-[#ecb613]/10 px-2 py-0.5">
-                    <span className="text-[10px] text-[#ecb613]">🎙️ Voz:</span>
+                <div className="flex items-center gap-1.5 rounded-lg border border-[#ecb613]/30 bg-[#ecb613]/10 px-2 py-0.5">
+                  <span className="text-[10px] text-[#ecb613]">
+                    {isAudioPlaying ? '🔊' : isAudioLoading ? '⚡' : '🎙️'} Voz:
+                  </span>
+                  <select
+                    value={selectedVoiceMode}
+                    onChange={(e) => {
+                      stopAudio();
+                      setSelectedVoiceMode(e.target.value);
+                    }}
+                    className="bg-transparent font-mono text-[10px] text-white focus:outline-none cursor-pointer"
+                    title="Selecciona la voz para las respuestas de la flota"
+                  >
+                    <option value="auto" className="bg-[#0e0e16] text-[#ecb613]">
+                      ✨ Auto (según Agente)
+                    </option>
+                    {REGISTERED_VOICES.map((v) => (
+                      <option key={v.id} value={v.id} className="bg-[#0e0e16] text-white">
+                        {v.profile.name}
+                      </option>
+                    ))}
+                    <option value="browser" className="bg-[#0e0e16] text-white/70">
+                      🌐 Síntesis Nativa Navegador
+                    </option>
+                  </select>
+                  {isAudioLoading && (
+                    <span className="font-mono text-[9px] text-[#ecb613] animate-pulse">
+                      sintetizando...
+                    </span>
+                  )}
+                  {isAudioPlaying && (
+                    <span className="relative flex h-2 w-2">
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+                      <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400"></span>
+                    </span>
+                  )}
+                </div>
+                {selectedVoiceMode === 'browser' && availableVoices.length > 0 && (
+                  <div className="flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-2 py-0.5">
+                    <span className="text-[10px] text-white/60">Tono:</span>
                     <select
                       value={selectedVoice?.name || ''}
                       onChange={(e) => {
@@ -584,12 +757,11 @@ function detectActiveDOMContext(): { name?: string; type?: string } | undefined 
                         if (v) setSelectedVoice(v);
                       }}
                       className="bg-transparent font-mono text-[10px] text-white focus:outline-none cursor-pointer"
-                      title="Selecciona la voz para las respuestas"
+                      title="Voz nativa del navegador"
                     >
                       {availableVoices.map((v) => (
                         <option key={v.name} value={v.name} className="bg-[#0e0e16] text-white">
                           {v.name.replace(/Microsoft |Online \(Natural\) - |Spanish \(Spain\)|Google /g, '').trim()}
-                          {/natural|neural/i.test(v.name) ? ' ⭐ Natural' : ''}
                         </option>
                       ))}
                     </select>
@@ -652,11 +824,36 @@ function detectActiveDOMContext(): { name?: string; type?: string } | undefined 
                 )}
 
                 <div
-                  className={`mt-1.5 text-[10px] font-mono ${
-                    m.sender === 'user' ? 'text-black/60 text-right' : 'text-white/40'
+                  className={`mt-1.5 flex items-center justify-between text-[10px] font-mono ${
+                    m.sender === 'user' ? 'text-black/60' : 'text-white/40'
                   }`}
                 >
-                  {m.time} {m.agentUsed && `• ${m.agentUsed}`}
+                  <span>
+                    {m.time} {m.agentUsed && `• ${m.agentUsed}`}
+                  </span>
+                  {m.sender === 'agent' && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (isAudioPlaying && currentlySpeakingMsgId === m.id) {
+                          stopAudio();
+                        } else {
+                          void speak(m.text, m.agentUsed, m.id);
+                        }
+                      }}
+                      className={`ml-2 inline-flex items-center gap-1 rounded border px-1.5 py-0.5 text-[10px] transition-all ${
+                        currentlySpeakingMsgId === m.id && (isAudioPlaying || isAudioLoading)
+                          ? 'border-[#ecb613] bg-[#ecb613]/20 text-[#ecb613] animate-pulse'
+                          : 'border-white/10 bg-white/5 text-white/60 hover:border-[#ecb613]/50 hover:bg-[#ecb613]/10 hover:text-[#ecb613]'
+                      }`}
+                      title={currentlySpeakingMsgId === m.id && isAudioPlaying ? 'Detener locución' : 'Escuchar locución del agente'}
+                    >
+                      <span>{currentlySpeakingMsgId === m.id && isAudioPlaying ? '⏹' : '🔊'}</span>
+                      <span className="font-mono text-[9px] uppercase">
+                        {getVoiceById(getVoiceForAgent(m.agentUsed || ''))?.profile.name.split(' ')[0] || 'Voz'}
+                      </span>
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -735,12 +932,23 @@ function detectActiveDOMContext(): { name?: string; type?: string } | undefined 
             </button>
             <button
               type="button"
-              onClick={() => { setSpeakReplies((p) => !p); window.speechSynthesis?.cancel(); }}
+              onClick={() => {
+                if (speakReplies) {
+                  stopAudio();
+                  setSpeakReplies(false);
+                } else {
+                  setSpeakReplies(true);
+                }
+              }}
               aria-label="Activar o desactivar voz de respuesta"
-              title={speakReplies ? 'Voz de respuesta: ON' : 'Voz de respuesta: OFF'}
-              className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/15 bg-black/60 text-lg text-white/70 hover:border-[#ecb613]"
+              title={speakReplies ? 'Voz de respuesta: ON (pulsa para silenciar)' : 'Voz de respuesta: OFF (pulsa para activar)'}
+              className={`flex h-11 w-11 items-center justify-center rounded-xl border text-lg transition-all ${
+                speakReplies
+                  ? 'border-[#ecb613]/40 bg-[#ecb613]/10 text-[#ecb613]'
+                  : 'border-white/15 bg-black/60 text-white/40'
+              }`}
             >
-              {speakReplies ? '🔊' : '🔇'}
+              {speakReplies ? (isAudioPlaying ? '🔊' : '🔉') : '🔇'}
             </button>
             <button
               type="submit"
