@@ -123,21 +123,53 @@ const VOICE_BINDINGS: readonly VoiceBinding[] = [
   },
 ];
 
-/** Voz por defecto por agente de la flota (división comercial ↔ contexto). */
-const DEFAULT_AGENT_VOICE_ASSIGNMENTS: Partial<Record<AgentId, string>> = {
-  'omni-supervisor-daemon': 'edwin_agudelo_gala',
+/**
+ * Voz por defecto por agente de la flota Titan Fleet (32 agentes, 4 divisiones)
+ * + agentes sectoriales de dispatch (Wave 30). Fallback final: gala de Edwin.
+ */
+export const DEFAULT_AGENT_VOICE_ASSIGNMENTS: Partial<Record<AgentId, string>> = {
+  // ── División 1 · Comercial, Voz & Cierre Cuántico (8) ──
   'voice-concierge': 'ceremonial_hostess',
-  'sales-closer': 'edwin_agudelo_gala',
   'lead-intake-dispatcher': 'ceremonial_hostess',
-  'vip-concierge-escalation': 'ceremonial_hostess',
+  'sales-closer': 'edwin_agudelo_gala',
+  'logistics-pricer': 'edwin_agudelo_gala',
   'retention-reactivator': 'edwin_agudelo_gala',
   'finca-negotiator': 'edwin_agudelo_gala',
   'cross-sell-orchestrator': 'edwin_agudelo_gala',
+  'vip-concierge-escalation': 'ceremonial_hostess',
+  // ── División 2 · Técnica, Rider, Logística & Flota (8) ──
+  'acoustic-rider-guard': 'edwin_agudelo_gala',
+  'equipment-allocator': 'edwin_agudelo_gala',
+  'convoy-telemetry-sentinel': 'edwin_agudelo_gala',
+  'soundcheck-auditor': 'edwin_agudelo_gala',
+  'procurement-inventory': 'edwin_agudelo_gala',
+  'subcontract-dispatcher': 'edwin_agudelo_gala',
+  'route-optimizer': 'edwin_agudelo_gala',
+  'venue-profiler': 'edwin_agudelo_gala',
+  // ── División 3 · Jurídica, B2G & Financiera (8) ──
+  'smart-contract-engine': 'edwin_agudelo_gala',
+  'b2g-tender-hunter': 'edwin_agudelo_gala',
+  'b2g-pliego-compiler': 'edwin_agudelo_gala',
+  'split-settlement-dispatcher': 'edwin_agudelo_gala',
+  'modelo-182-tax-shield': 'edwin_agudelo_gala',
+  'invoice-treasury-agent': 'edwin_agudelo_gala',
+  'vendor-compliance-auditor': 'edwin_agudelo_gala',
+  'dispute-escrow-arbitrator': 'edwin_agudelo_gala',
+  // ── División 4 · VIMUME Clínica & Expansión B2B (8) ──
   'vimume-protocol-sentinel': 'edwin_agudelo_vimume',
   'clinical-report-generator': 'edwin_agudelo_vimume',
   'dental-clinic-coordinator': 'ceremonial_hostess',
+  'veterinary-care-agent': 'ceremonial_hostess',
   'hospitality-table-agent': 'ceremonial_hostess',
+  'real-estate-event-liaison': 'ceremonial_hostess',
   'corporate-experience-agent': 'ceremonial_hostess',
+  'omni-supervisor-daemon': 'edwin_agudelo_gala',
+  // ── División 5 · Sector Agents (Wave 30 — dispatch entry) ──
+  'lead-intake': 'ceremonial_hostess',
+  'acoustic-rider': 'edwin_agudelo_gala',
+  'b2g-compliance': 'edwin_agudelo_gala',
+  'vimume-impact': 'edwin_agudelo_vimume',
+  'escalation': 'ceremonial_hostess',
   'supervisor': 'edwin_agudelo_gala',
 };
 

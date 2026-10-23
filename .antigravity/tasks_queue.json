@@ -1,13 +1,41 @@
 {
   "_meta": {
-    "version": "9.0-OMEGA-WAVE-30-RETO-SCLASS",
-    "doctrine": "WAVE 30: GRAND FINALE — N8N WEBHOOK PULSE + SEO SITEMAP LOCK + PRODUCTION BUILD SEAL + BARE-METAL SYNC",
-    "wave": 30,
+    "version": "9.0-OMEGA-WAVE-31-RETO-SCLASS",
+    "doctrine": "WAVE 31: S-CLASS VOICE COMMAND CENTER & TITAN FLEET PERSISTENCE — PERSISTENCIA PRISMA + CRUD API + OLED UI + FORENSIC SUITE",
+    "wave": 31,
     "total_tasks": 4
   },
   "_instructions_for_worker": "Ejecuta SOLO via: call RUN_OMEGA.bat next  ->  lee .antigravity/MISSION_ACTIVE.json  ->  edita SOLO 'files'  ->  call RUN_OMEGA.bat complete <ID>. El complete ya ejecuta tsc + eslint + test. 1 tarea por sesion.",
   "tasks": [],
   "completed": [
+    {
+      "id": "W31_T04_VOICE_ENTERPRISE_VALIDATION_SUITE",
+      "title": "VOICE ENTERPRISE VALIDATION SUITE — Script forense scripts/verify_voice_command_center.cjs con validación de los 32 agentes, TTS failover y sello Omega Diamante",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-23T13:57:18.168Z"
+    },
+    {
+      "id": "W31_T03_VOICE_COMMAND_CENTER_UI",
+      "title": "VOICE COMMAND CENTER UI — Consola de Mando Visual OLED S-Class en /command-center/voices para supervisar y reasignar las voces de los 32 agentes",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-23T13:55:34.971Z"
+    },
+    {
+      "id": "W31_T02_VOICE_ADMIN_CRUD_API",
+      "title": "VOICE ADMIN CRUD API — Endpoints REST /api/voices/assignments (GET/PUT) y ampliación de /api/voices (POST) con validación estricta y auditoría",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-23T13:53:00.394Z"
+    },
+    {
+      "id": "W31_T01_VOICE_PERSISTENCE_PRISMA",
+      "title": "VOICE PERSISTENCE PRISMA — Modelos VoiceProfile y AgentVoiceAssignment en schema.prisma, npx prisma generate y servicio híbrido resiliente voicePersistence.ts",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-23T13:35:52.353Z"
+    },
     {
       "id": "W30_T04_BARE_METAL_SYNC",
       "title": "BARE-METAL SYNC — Sello de conectividad VPS Hostinger Coolify (82.29.179.172:8000), verificación Git y despliegue final",
@@ -56,23 +84,19 @@
     }
   ],
   "metadata": {
-    "last_updated": "2026-10-23T09:45:22.071Z",
+    "last_updated": "2026-10-23T13:57:18.170Z",
     "total_pending": 0,
-    "current_sprint": "WAVE_30_GRAND_FINALE_PRODUCTION_SEAL",
-    "ceo_mandate": "Cierre total del MVP al más alto nivel: n8n health, SEO sitemap lock, next build y sincronización bare-metal.",
+    "current_sprint": "WAVE_31_SCLASS_VOICE_COMMAND_CENTER",
+    "ceo_mandate": "Persistencia relacional de voces de la flota, API CRUD, Command Center OLED y validación forense Omega Diamante.",
     "forensic_verification": {
-      "verified_at": "2026-10-23T06:14:00.000Z",
+      "verified_at": "2026-10-23T15:26:00.000Z",
       "node": "v26.12.1 (portable: C:/Users/Productora Ear/Downloads/node-lts/node-v26.12.1-win-x64)",
       "git": "2.47.1.windows.1 (portable: C:/Users/Productora Ear/Downloads/git-portable/cmd)",
       "tsc_noEmit_exit": 0,
       "tsc_noEmit_output_bytes": 0,
       "eslint_exit": 0,
       "eslint_errors": 0,
-      "eslint_warnings": 3466,
-      "eslint_note": "3466 warnings (mayoria @typescript-eslint/no-unused-vars y no-explicit-any). El criterio '0 any implicito' del scorecard Omega-Diamante exige resolución estricta en los entregables de agentes.",
-      "git_head_commit": "36e490b9 (main == origin/main, remoto GitHub)",
-      "git_untracked_files": 51,
-      "coolify_remote_present": false
+      "git_head_commit": "06bfd2dd (feat(voice): cablear OmniAgentConsoleModal al motor de voz multi-proveedor)"
     }
   }
 }

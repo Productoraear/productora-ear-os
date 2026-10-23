@@ -83,6 +83,19 @@ const TOOLS: ToolCard[] = [
     telemetry: '646 Idiomas // Zero-Shot Clone'
   },
   {
+    id: 'voice-command-center',
+    title: 'Voice Command Center // Flota Titan',
+    category: 'INTELLIGENCE',
+    icon: Mic2,
+    tag: '32 AGENTES S-CLASS',
+    description: 'Consola de mando vocal: reasignación dinámica de voces en caliente para los 32 agentes Titan Fleet, failover multi-proveedor y test de locución interactivo.',
+    actionType: 'LINK',
+    targetUrl: '/command-center/voices',
+    localPath: 'src/app/(admin)/command-center/voices/page.tsx',
+    status: 'ONLINE',
+    telemetry: '32 Agentes // 4 Divisiones de Choque'
+  },
+  {
     id: 'sourcing-hub',
     title: 'Sourcing Hub // VIMUME B2G',
     category: 'TELEMARKETING',

@@ -945,3 +945,45 @@ model TherapistProfile {
   @@index([specialty], name: "idx_therapist_specialty")
   @@index([status], name: "idx_therapist_status")
 }
+
+// ==========================================
+// 🎛️ VOICE PERSISTENCE PRISMA (Wave 31)
+// Modelos VoiceProfile y AgentVoiceAssignment
+// ==========================================
+
+model VoiceProfile {
+  id              String   @id
+  name            String
+  artist          String
+  language        String   @default("es-ES")
+  gender          String
+  tone            String
+  tags            String[]
+  sampleAudio     String?
+  description     String   @db.Text
+  isMasterProfile Boolean  @default(false)
+  elevenVoiceId   String?
+  openAiVoice     String?
+  googleVoice     String?
+  speed           Float    @default(1.0)
+  pitch           Float    @default(1.0)
+  stability       Float    @default(0.65)
+  similarityBoost Float    @default(0.85)
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  assignments     AgentVoiceAssignment[]
+  @@index([language], name: "idx_voice_language")
+  @@index([isActive], name: "idx_voice_active")
+}
+
+model AgentVoiceAssignment {
+  agentId        String       @id
+  voiceProfileId String
+  voiceProfile   VoiceProfile @relation(fields: [voiceProfileId], references: [id], onDelete: Cascade)
+  customSettings Json?
+  assignedBy     String?
+  updatedAt      DateTime     @updatedAt
+  @@index([voiceProfileId], name: "idx_agent_voice_profile")
+}
+
