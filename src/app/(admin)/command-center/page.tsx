@@ -96,6 +96,19 @@ const TOOLS: ToolCard[] = [
     telemetry: '32 Agentes // 4 Divisiones de Choque'
   },
   {
+    id: 'opportunity-radar',
+    title: 'Opportunity Radar // Caza Real B2G & Festejos',
+    category: 'INTELLIGENCE',
+    icon: Compass,
+    tag: 'RADAR CERO FACHADAS',
+    description: 'Caza real de convocatorias de artistas, concursos de proyectos, comisiones de fiestas, subvenciones públicas y servicios sociales VIMUME.',
+    actionType: 'LINK',
+    targetUrl: '/admin/licitaciones',
+    localPath: 'src/lib/services/opportunity-radar/opportunity-radar.ts',
+    status: 'ONLINE',
+    telemetry: 'BOE + Google Alerts + TED API v3'
+  },
+  {
     id: 'sourcing-hub',
     title: 'Sourcing Hub // VIMUME B2G',
     category: 'TELEMARKETING',

@@ -93,6 +93,7 @@ src/data/vendors-enriched-night.json
 src/data/celebrents_providers.json
 src/data/vampirized_providers.json
 src/data/ear-rag-database.json
+src/data/opportunities_radar.json
 src/data/wedding_intel_vault/
 src/data/staging/
 src/lib/NUCLEO_DATA/*.json

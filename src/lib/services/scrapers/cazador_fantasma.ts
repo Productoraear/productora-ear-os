@@ -83,17 +83,8 @@ export async function runCazadorFantasma(targetUrl: string, depth: 'Alpha' | 'Be
             );
         }
 
-        // Si la web externa usa protección Cloudflare estricta y devuelve 0 leads,
-        // garantizamos activos reales con ficha verificada
-        if (combinedLeads.length === 0) {
-            combinedLeads.push(
-                `[PROVEEDOR] Finca Las Tenadas (Madrid) - Ficha Verificada · Tel: +34 605 584 338`,
-                `[PROVEEDOR] Palacio de Aldovea (Torrejón) - Ficha Verificada · Tel: +34 693 693 048`,
-                `[PROVEEDOR] El Antiguo Convento (Boadilla) - Ficha Verificada · Tel: +34 612 345 678`,
-                `[PROVEEDOR] Soto de Cerrolén (Torrelodones) - Ficha Verificada · Tel: +34 622 987 654`,
-                `[PROVEEDOR] Cigarral del Ángel (Toledo) - Ficha Verificada · Tel: +34 633 445 566`
-            );
-        }
+        // DOCTRINA CERO FACHADAS: si la fuente externa devuelve 0 leads,
+        // el motor reporta 0. NUNCA inyecta proveedores ni teléfonos inventados.
 
         // Persistencia asíncrona segura en Firestore
         if (uniqueEmails.length > 0 && db) {
@@ -121,21 +112,16 @@ export async function runCazadorFantasma(targetUrl: string, depth: 'Alpha' | 'Be
             source: targetUrl
         };
 
-    } catch (error: any) {
-        console.warn('⚠️ [CAZADOR FANTASMA] Respaldo de contingencia activado:', error.message);
-        
-        return { 
-            success: true, 
-            leadsCount: 5,
-            leads: [
-                `[INSPECCIÓN S-CLASS] Conexión establecida con ${targetUrl}`,
-                `[PROVEEDOR] Finca El Tomillar (Torrelodones) · Tel: +34 605 584 338`,
-                `[PROVEEDOR] Palacio Negralejo (Rivas) · Tel: +34 693 693 048`,
-                `[PROVEEDOR] La Quinta de Jarama (San Sebastián) · Tel: +34 612 345 678`,
-                `[PROVEEDOR] Finca Monteviejo (Chinchón) · Tel: +34 622 987 654`
-            ],
+    } catch (error: unknown) {
+        const message = error instanceof Error ? error.message : String(error);
+        console.warn('⚠️ [CAZADOR FANTASMA] Fallo de contingencia (fail-closed, 0 fachadas):', message);
+
+        return {
+            success: false,
+            leadsCount: 0,
+            leads: [],
             depth,
-            note: `Extracción completada con motor semántico de respaldo.`
+            note: `Extracción no completada: ${message}. Cero fabricación de proveedores.`
         };
     }
 }

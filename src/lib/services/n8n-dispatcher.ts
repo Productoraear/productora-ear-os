@@ -26,6 +26,7 @@ export type N8nWebhookSlug =
     | 'call-center-intake'
     | 'autonomous-escalation'
     | 'executive-kpi-radar'
+    | 'opportunity-radar'
     | 'support-health'
     | 'dlq-retry';
 

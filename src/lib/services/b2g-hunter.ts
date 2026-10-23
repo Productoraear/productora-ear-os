@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 dotenv.config();
+import { fetchTedNotices } from './ted-connector';
 
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
@@ -93,57 +94,44 @@ function formatAlertMessageHtml(item: Licitacion): string {
 }
 
 /**
- * Radar de Oportunidades Multiescala
+ * Radar de Oportunidades Multiescala — CONECTOR REAL TED API v3.
+ * Sustituye el radar hardcodeado por avisos reales del Tenders Electronic Daily.
+ * Fail-closed: sin TED_API_KEY no fabrica ninguna licitación.
  */
 export async function runHunterB2GScan() {
-  console.log('🔍 [HUNTER B2G] Iniciando barrido forense multiescala (Madrid, Toledo, Nacional)...\n');
+  console.log('🔍 [HUNTER B2G] Iniciando barrido real multiescala (TED API v3)...\n');
 
-  const oportunidades: Licitacion[] = [
-    {
-      id: 'LIC-NAV-2026-004',
-      ayuntamiento: 'Ayuntamiento de Navalcarnero (Madrid)',
-      objeto: 'Sonorización, iluminación técnica e infraestructura acústica para Fiestas Patronales y Ciclo Cultural de Otoño',
-      presupuestoMaximo: 14850,
-      cpv: '51313000-9 (Instalación de equipos de sonido)',
-      tipoContrato: 'Menor (Art. 118)',
-      linkPliego: 'https://contrataciondelestado.es/wps/poc?uri=deeplink:perfilContratante&idBp=Navalcarnero',
-      fuente: 'PLACSP'
-    },
-    {
-      id: 'LIC-MEN-2026-012',
-      ayuntamiento: 'Ayuntamiento de Méntrida (Toledo)',
-      objeto: 'Programa Municipal de Estimulación Sonora y Envejecimiento Activo para Mayores (Plan VIMUME 2026)',
-      presupuestoMaximo: 13900,
-      cpv: '85312000-9 (Servicios sociales para mayores)',
-      tipoContrato: 'Menor (Art. 118)',
-      linkPliego: 'https://mentrida.sedelectronica.es/contractor-profile',
-      fuente: 'SEDE_ELECTRONICA'
-    },
-    {
-      id: 'LIC-TOL-2026-089',
-      ayuntamiento: 'Diputación Provincial de Toledo',
-      objeto: 'Circuito Provincial de Espectáculos Musicales, Solistas y Mariachi en Municipios de Menos de 5.000 Habitantes',
-      presupuestoMaximo: 48500,
-      cpv: '92300000-4 (Servicios de Espectáculos)',
-      tipoContrato: 'Abierto Simplificado',
-      linkPliego: 'https://contrataciondelestado.es/wps/poc?uri=deeplink:perfilContratante&idBp=DipuToledo',
-      fuente: 'PLACSP'
-    },
-    {
-      id: 'LIC-POZ-2026-104',
-      ayuntamiento: 'Ayuntamiento de Pozuelo de Alarcón (Madrid)',
-      objeto: 'Producción Técnica, Escenario y Programación de Gala Musical para Semana Cultural y Fiestas',
-      presupuestoMaximo: 120000,
-      cpv: '79952000-2 (Servicios de Eventos)',
-      tipoContrato: 'Licitación Mayor Gran Formato',
-      linkPliego: 'https://contrataciondelestado.es/wps/poc?uri=deeplink:perfilContratante&idBp=Pozuelo',
-      fuente: 'PLACSP'
-    }
-  ];
+  const scan = await fetchTedNotices(50);
 
-  for (const item of oportunidades) {
-    await sendTelegramB2GAlert(item);
+  if (!scan.ok) {
+    console.warn(`⚠️ [HUNTER B2G] FAIL-CLOSED: ${scan.error ?? 'sin resultados'}. 0 licitaciones fabricadas.`);
+    return;
   }
 
-  console.log('🎯 [HUNTER B2G] Barrido multiescala completado con éxito.');
+  let dispatched = 0;
+  for (const notice of scan.notices) {
+    const cpvCode = notice.classificationCpvs[0] ?? '92300000-4';
+    const baseValue = notice.baseValueEur ?? 0;
+    const isMenor = baseValue > 0 && baseValue <= 15000;
+
+    const item: Licitacion = {
+      id: `TED-${notice.publicationNumber || 'UNKNOWN'}`,
+      ayuntamiento: notice.buyer,
+      objeto: notice.subject,
+      presupuestoMaximo: baseValue,
+      cpv: cpvCode,
+      tipoContrato: isMenor
+        ? 'Menor (Art. 118)'
+        : baseValue > 15000
+          ? 'Licitación Mayor Gran Formato'
+          : 'Abierto Simplificado',
+      linkPliego: notice.noticeUrl ?? 'https://ted.europa.eu',
+      fuente: 'PLACSP'
+    };
+
+    const sent = await sendTelegramB2GAlert(item);
+    if (sent) dispatched += 1;
+  }
+
+  console.log(`🎯 [HUNTER B2G] Barrido real completado: ${scan.notices.length} avisos, ${dispatched} alertas enviadas.`);
 }
