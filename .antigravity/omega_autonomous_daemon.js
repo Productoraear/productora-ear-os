@@ -9,7 +9,7 @@ const MANIFEST_FILE = path.join(__dirname, 'waves_manifest.json');
 const JOURNAL_FILE = path.join(__dirname, 'OMEGA_STATE_JOURNAL.md');
 const VAULT_DIR = path.join(__dirname, '..', '..', 'EAR_VAULT_GOLDEN_NUGGETS');
 
-const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY || 'sk-9ffafb7a7ca142db89155c9fac984b18';
+const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY || '';
 const MODEL_NAME = 'deepseek-coder';
 
 const ZONA_CERO = [

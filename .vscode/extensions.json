@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "saoudrizwan.claude-dev",
+    "rooveterinaryinc.roo-cline",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "prisma.prisma"
+  ]
+}

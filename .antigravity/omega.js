@@ -149,8 +149,28 @@ if (command === 'next') {
     // Eliminar misión activa
     if (fs.existsSync(MISSION_FILE)) fs.unlinkSync(MISSION_FILE);
 
-    // Purgar la tarea completada directamente (no guardar COMPLETED en cola)
+    // Registrar la tarea en completed con timestamp forense y evidencia
+    if (!data.completed) data.completed = [];
+    const completedEntry = {
+        id: task.id,
+        title: task.title,
+        status: 'COMPLETED',
+        exit_code: 0,
+        completed_at: new Date().toISOString()
+    };
+    const existingIdx = data.completed.findIndex(c => c.id === task.id);
+    if (existingIdx !== -1) {
+        data.completed[existingIdx] = completedEntry;
+    } else {
+        data.completed.unshift(completedEntry);
+    }
+
+    // Purgar de tasks pendientes y actualizar contadores
     data.tasks.splice(idx, 1);
+    if (data.metadata) {
+        data.metadata.total_pending = data.tasks.length;
+        data.metadata.last_updated = new Date().toISOString();
+    }
     writeJSON(QUEUE_FILE, data);
     updateJournal(data);
 
