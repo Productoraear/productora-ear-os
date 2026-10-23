@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 const MUTATIONS_FILE_PATH = path.join(process.cwd(), 'src', 'data', 'editor_mutations.json');
 
 // Asegurar que el directorio y el archivo existen

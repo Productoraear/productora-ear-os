@@ -1,6 +1,8 @@
 import { randomUUID } from 'crypto';
 import { NextRequest, NextResponse } from 'next/server';
 
+export const dynamic = 'force-dynamic';
+
 export const runtime = 'nodejs';
 
 type RegisterPayload = {

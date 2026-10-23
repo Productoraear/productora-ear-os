@@ -3,6 +3,8 @@ import type { VenueAcousticInput, GeoAcousticOutput } from '@/lib/geo/geo-acoust
 import { calculateGeoAcousticRadar } from '@/lib/geo/geo-acoustic-radar';
 import { computeLogisticsFee } from '@/lib/affiliate/affiliateCommissionEngine';
 
+export const dynamic = 'force-dynamic';
+
 export const runtime = 'nodejs';
 
 const VALID_VENUE_TYPES: ReadonlyArray<VenueAcousticInput['venueType']> = [

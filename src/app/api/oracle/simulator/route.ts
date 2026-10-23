@@ -1,5 +1,8 @@
 import { NextResponse } from 'next/server';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 /**
  * 🛰️ ORACLE SIMULATOR BRIDGE (CORS BYPASS)
  * Proxies requests to the WordPress endpoint to handle pricing logic server-side.

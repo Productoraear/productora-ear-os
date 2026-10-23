@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import { generateModelo182Draft, MecenazgoCalculationInput } from '@/lib/vimume-mecenazgo-engine';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 /**
  * 🏛️ ENDPOINT: GENERADOR OFICIAL MODELO 182 AEAT // VIMUME LEY 49/2002
  */

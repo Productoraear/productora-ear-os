@@ -9,6 +9,9 @@ import { TARIFA_BASE_SOLISTA_EUR, DEPOSITO_STRIPE_EUR } from '@/lib/constants/ea
 import { prisma } from '@/lib/prisma';
 import { fireAndForgetN8n } from '@/lib/services/n8n-dispatcher';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 interface SettlementRequestBody {
     eventId: string;
     baseAmount?: number;

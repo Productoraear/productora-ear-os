@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { createProviderCardSetupSession } from '@/app/actions/vipCheckoutActions';
 
+export const dynamic = 'force-dynamic';
+
 export const runtime = 'nodejs';
 
 /**

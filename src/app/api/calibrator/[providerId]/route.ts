@@ -11,6 +11,9 @@ import {
     type PresetSlug
 } from '@/lib/matching/calibratorPresets';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 interface ProviderCalibrationRow {
     providerId: string;
     presetSlug: string;

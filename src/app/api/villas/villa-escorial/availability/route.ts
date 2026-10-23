@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getVillaEscorialTelemetry, calculateCustomStayPrice } from '@/lib/villas/villa-escorial-sync';
 import Stripe from 'stripe';
 
+export const runtime = 'nodejs';
+
 export const dynamic = 'force-dynamic';
 
 export async function GET(req: NextRequest) {

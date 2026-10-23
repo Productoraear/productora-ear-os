@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma'; // Assuming this is the path to your Prisma client 
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 const urlRegex = /(https?:\/\/[^\s]+)|(www\.[^\s]+)|([a-zA-Z0-9-]+\.[a-zA-Z]{2,})/gi;
 const phoneRegex = /(?:\d[\s-]*){9,}/g;
 

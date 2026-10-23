@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 const OVERRIDE_FILE_PATH = path.join(process.cwd(), 'src/data/providers/jardines_la_cartuja_override.json');
 
 // GET: Cargar configuración activa

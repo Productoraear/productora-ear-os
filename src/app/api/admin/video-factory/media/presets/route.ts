@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 /**
  * W02-API-025 · SECURITY API HARDENING
  * src/app/api/admin/video-factory/media/presets/route.ts

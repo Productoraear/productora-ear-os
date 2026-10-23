@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { MailerfindConnector, MailerfindSearchParams } from '@/lib/mcp/mailerfind-connector';
 import { generateOrganicOutreach } from '@/lib/outreach/organic-outreach-engine';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 export async function POST(req: NextRequest) {
   try {
     const body: MailerfindSearchParams = await req.json();

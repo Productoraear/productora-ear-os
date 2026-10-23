@@ -12,6 +12,9 @@ import crypto from 'crypto';
 import { ACG_ARTIST_OFFERS } from '@/lib/acg/acgDecisionEngine';
 import { fireAndForgetN8n } from '@/lib/services/n8n-dispatcher';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 /**
  * EAR OS — PRICE-LOCK SHA-256 (INMUTABLE)
  * ==================================================================

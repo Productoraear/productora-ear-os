@@ -3,6 +3,9 @@ import { exec } from 'child_process';
 import path from 'path';
 import fs from 'fs';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 /**
  * 💣 HUNTER EXECUTION ENGINE
  * Secure bridge to execute Python scrapers from the UI.

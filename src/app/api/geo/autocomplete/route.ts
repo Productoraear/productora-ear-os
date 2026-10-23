@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { SCLASS_12_FINCAS_HOMOLOGADAS } from '@/lib/constants/fincas-catalog';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 export interface GeoSuggestion {
   id: string | number;
   label: string;

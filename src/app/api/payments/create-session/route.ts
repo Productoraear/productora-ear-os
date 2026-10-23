@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server';
 import { createCheckoutSession } from '@/lib/payments';
 import { fireAndForgetN8n } from '@/lib/services/n8n-dispatcher';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 // ============================================================================
 // 💳 STRIPE SESSION HANDLER (S-CLASS)
 // ============================================================================

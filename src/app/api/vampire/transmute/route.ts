@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { vampireService } from '@/lib/services/VampireService';
 
+export const runtime = 'nodejs';
+
 export const dynamic = 'force-dynamic';
 
 /**

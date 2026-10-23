@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { NexusPayments } from '@/lib/services/nexus_payments';
 
+export const dynamic = 'force-dynamic';
+
 export const runtime = 'nodejs';
 
 // ============================================================================

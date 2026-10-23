@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import crypto from "node:crypto";
 
+export const dynamic = 'force-dynamic';
+
 export const runtime = "nodejs";
 
 type SongTier = "standard_49" | "cinematic_99";

@@ -4,6 +4,9 @@ import { z } from 'zod';
 import { prisma } from '@/lib/prisma';
 import type { Prisma, VendorShadowProfile } from '@prisma/client';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 /**
  * W21-003 — INGESTOR IDEMPOTENTE BODAS.NET → PostgreSQL 16
  * ---------------------------------------------------------------------------

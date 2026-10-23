@@ -9,9 +9,10 @@ interface ChatMessage {
   text: string;
   agentUsed?: string;
   traces?: Array<{
-    to: string;
-    intent: string;
-    reply: { ok: boolean; summary: string };
+    message?: { to?: string; intent?: string };
+    reply?: { ok?: boolean; summary?: string };
+    rejected?: string;
+    error?: string;
   }>;
   time: string;
 }
@@ -54,6 +55,18 @@ function renderBoldText(str: string, keyPrefix: string): React.ReactNode {
   );
 }
 
+/** Devuelve la URL solo si pertenece a un esquema seguro (anti-XSS / anti-javascript:). */
+function safeHref(url: string): string | undefined {
+  const trimmed = url.trim();
+  if (!trimmed) return undefined;
+  if (/^(javascript:|data:|vbscript:|file:|blob:|about:|view-source:|chrome:|edge:)/i.test(trimmed)) {
+    return undefined;
+  }
+  if (/^(https?:\/\/|tel:|mailto:|sms:)/i.test(trimmed)) return trimmed;
+  if (/^(\/(?!\/)|#)/.test(trimmed)) return trimmed;
+  return undefined;
+}
+
 function FormattedMessageContent({ text, isUser }: { text: string; isUser: boolean }): React.JSX.Element {
   if (isUser) {
     return <div className="whitespace-pre-wrap">{text}</div>;
@@ -80,19 +93,31 @@ function FormattedMessageContent({ text, isUser }: { text: string; isUser: boole
           }
           const label = match[1];
           const url = match[2];
-          const isExternal = url.startsWith('http') || url.startsWith('//');
+          const href = safeHref(url);
 
-          parts.push(
-            <a
-              key={`${lineIdx}-link-${partIdx++}`}
-              href={url}
-              target={isExternal ? '_blank' : undefined}
-              rel={isExternal ? 'noopener noreferrer' : undefined}
-              className="my-1.5 inline-flex items-center gap-1.5 rounded-xl border border-[#ecb613]/50 bg-[#ecb613]/15 px-4 py-2 font-mono text-xs font-bold text-[#ecb613] shadow-[0_0_15px_rgba(236,182,19,0.2)] transition-all hover:scale-105 hover:bg-[#ecb613] hover:text-black"
-            >
-              <span>{label}</span>
-            </a>
-          );
+          if (href) {
+            const isExternal = /^https?:\/\//i.test(href);
+            parts.push(
+              <a
+                key={`${lineIdx}-link-${partIdx++}`}
+                href={href}
+                target={isExternal ? '_blank' : undefined}
+                rel={isExternal ? 'noopener noreferrer' : undefined}
+                className="my-1.5 inline-flex items-center gap-1.5 rounded-xl border border-[#ecb613]/50 bg-[#ecb613]/15 px-4 py-2 font-mono text-xs font-bold text-[#ecb613] shadow-[0_0_15px_rgba(236,182,19,0.2)] transition-all hover:scale-105 hover:bg-[#ecb613] hover:text-black"
+              >
+                <span>{label}</span>
+              </a>
+            );
+          } else {
+            parts.push(
+              <span
+                key={`${lineIdx}-nolink-${partIdx++}`}
+                className="my-1.5 inline-flex items-center gap-1.5 rounded-xl border border-white/10 bg-white/5 px-4 py-2 font-mono text-xs font-bold text-white/80"
+              >
+                {label}
+              </span>
+            );
+          }
           lastIndex = regex.lastIndex;
         }
 
@@ -112,15 +137,21 @@ function toConversationalSpeech(raw: string): string {
     .replace(/\[(?:🔒|💬)?\s*([^\]]+)\]\([^)]+\)/g, '')
     // Eliminar URLs completas
     .replace(/https?:\/\/\S+/g, '')
-    // Eliminar encabezados robóticos
+    // Eliminar encabezados y telemetría de depuración
     .replace(/OMNI-SUPERVISOR[^\n]*/gi, '')
+    // Normalizar cifras monetarias con decimales ceros: 179.00 € o 179,00 € -> 179 euros
+    .replace(/(\d+)[.,]000?\s*(?:€|euros?)\b/gi, '$1 euros')
+    // Normalizar cifras con céntimos reales: 179.50 € o 179,50 € -> 179 euros con 50 céntimos
+    .replace(/(\d+)[.,](\d{1,2})\s*(?:€|euros?)\b/gi, '$1 euros con $2 céntimos')
+    // Limpiar cifras sueltas con decimales ceros como 350.00 -> 350
+    .replace(/(\d+)[.,]000?\b/g, '$1')
+    // Reemplazar símbolo euro por la palabra euros
+    .replace(/€/g, ' euros ')
     // Reemplazar viñetas y caracteres markdown
     .replace(/[•\*\#\_`~\[\]\(\)\<\>]/g, ' ')
     // Reemplazar emojis comunes
     .replace(/[\u{1F300}-\u{1FAFF}]|[\u{2600}-\u{27BF}]/gu, ' ')
-    // Reemplazar símbolo euro por la palabra euros
-    .replace(/€/g, ' euros ')
-    // Normalizar pausas
+    // Normalizar pausas y respiraciones
     .replace(/\n+/g, '. ')
     .replace(/\s+/g, ' ')
     .replace(/\.{2,}/g, '.')
@@ -419,12 +450,24 @@ function detectActiveDOMContext(): { name?: string; type?: string } | undefined 
         }),
       });
 
-      const data = await res.json();
+      const data = (await res.json()) as {
+        reply?: string;
+        error?: string;
+        agentUsed?: string;
+        traces?: ChatMessage['traces'];
+      };
+
+      const replyText: string =
+        typeof data.reply === 'string' && data.reply.trim()
+          ? data.reply
+          : typeof data.error === 'string' && data.error.trim()
+            ? data.error
+            : 'Sin respuesta del agente.';
 
       const agentMsg: ChatMessage = {
         id: `agent-${Date.now()}`,
         sender: 'agent',
-        text: data.reply || 'Sin respuesta del agente.',
+        text: replyText,
         agentUsed: data.agentUsed || 'omni-supervisor-daemon',
         traces: data.traces,
         time: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }),
@@ -597,9 +640,11 @@ function detectActiveDOMContext(): { name?: string; type?: string } | undefined 
                           className="flex items-start gap-2 rounded border border-white/5 bg-black/40 p-2 font-mono text-xs text-white/70"
                         >
                           <span className="rounded bg-[#ecb613]/20 px-1.5 py-0.5 text-[10px] text-[#ecb613]">
-                            {t.to}
+                            {t.message?.to ?? 'bus'}
                           </span>
-                          <span className="text-white/80">{t.reply.summary}</span>
+                          <span className="text-white/80">
+                            {t.reply?.summary ?? t.rejected ?? t.error ?? ''}
+                          </span>
                         </div>
                       ))}
                     </div>
@@ -675,6 +720,7 @@ function detectActiveDOMContext(): { name?: string; type?: string } | undefined 
               placeholder="Habla con el Omni-Supervisor o pide asistencia a la flota (ej. 'cotiza un bolo en Méntrida')..."
               className="flex-1 rounded-xl border border-white/15 bg-black/60 px-4 py-3 font-mono text-sm text-white placeholder-white/40 focus:border-[#ecb613] focus:outline-none focus:ring-1 focus:ring-[#ecb613]"
               disabled={isSending}
+              maxLength={2000}
             />
             <button
               type="button"

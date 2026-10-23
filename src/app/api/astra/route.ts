@@ -3,6 +3,9 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { ASTRA_SYSTEM_PROMPT } from './systemPrompt';
 import { parseLeadIntent, processLeadToCheckout } from '@/lib/orchestrators/deal-closer';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 // ============================================================================
 // 🌌 ASTRA NEURAL BRAIN API (GEMINI 1.5 PRO + RAG INTEGRATION)
 // ============================================================================

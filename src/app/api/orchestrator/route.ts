@@ -5,6 +5,9 @@ import { MultiServiceOrchestrator } from '@/lib/engines/multiServiceOrchestrator
 // o en su defecto podemos simular el comportamiento devolviendo rápidamente y ejecutando la promesa.
 import { waitUntil } from '@vercel/functions';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();

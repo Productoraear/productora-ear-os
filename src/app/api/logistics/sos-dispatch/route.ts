@@ -6,6 +6,8 @@ import {
 } from "@/lib/logistics/rescueFleetEngine";
 import { consumeRateLimit } from "@/lib/security/rateLimitGuard";
 
+export const dynamic = 'force-dynamic';
+
 export const runtime = "nodejs";
 
 type SosDispatchBody = {

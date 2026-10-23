@@ -3,6 +3,9 @@ import { stripe } from '@/lib/payments';
 import { prisma } from '@/lib/prisma';
 import { logger } from '@/lib/logger';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 /**
  * 🏦 STRIPE CONNECT ONBOARDING API ROUTE (P1-12)
  * 

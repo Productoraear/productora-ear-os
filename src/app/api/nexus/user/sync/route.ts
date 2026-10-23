@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server';
 import { UserService } from '@/lib/services/UserService';
 import { adminAuth } from '@/lib/firebaseAdmin';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 export async function POST(request: Request) {
   try {
     const authHeader = request.headers.get('Authorization');

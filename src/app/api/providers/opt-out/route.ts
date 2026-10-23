@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 const BLACKLIST_PATH = path.join(process.cwd(), 'src', 'data', 'blacklisted_providers.json');
 const PROVIDERS_DB_PATH = path.join(process.cwd(), 'src', 'data', 'vampirized-providers-deep-sclass.json');
 

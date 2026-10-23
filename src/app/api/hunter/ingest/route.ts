@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/services/auth_nexus';
 
+export const dynamic = 'force-dynamic';
+
 export const runtime = 'nodejs';
 
 // ============================================================================

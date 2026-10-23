@@ -10,6 +10,9 @@ import crypto from 'crypto';
 import { guardarPropuesta } from '@/lib/proposals/proposal-store';
 import type { SovereignProposal } from '@/lib/proposals/proposal-types';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 export async function POST(req: Request) {
   try {
     const body = await req.json();

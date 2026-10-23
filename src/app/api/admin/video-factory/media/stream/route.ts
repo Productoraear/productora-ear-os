@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 // Endpoint S-Class Blindado: Stream de Medios (Videos MP4/WEBM, Audio MP3/WAV)
 // Soporta HTTP 206 Partial Content, scrubbing Remotion, whitelisting de rutas y cabeceras de seguridad
 const ALLOWED_ROOTS = [

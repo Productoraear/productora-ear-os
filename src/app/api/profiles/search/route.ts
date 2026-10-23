@@ -7,6 +7,8 @@ import path from 'path';
 
 import { SCLASS_12_FINCAS_HOMOLOGADAS } from '@/lib/constants/fincas-catalog';
 
+export const runtime = 'nodejs';
+
 let prisma: PrismaClient | null = null;
 function getPrismaClient() {
   if (!prisma) {

@@ -7,6 +7,9 @@ import {
   B2GPackageItem
 } from '@/lib/b2g-tender-engine';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();

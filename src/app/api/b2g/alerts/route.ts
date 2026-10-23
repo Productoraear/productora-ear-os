@@ -3,6 +3,9 @@ import { B2G_PRESETS } from '@/lib/vimume/b2g-tender-engine';
 import { fetchTedNotices, TedNotice } from '@/lib/services/ted-connector';
 import { SAFE_LCSP_CEILING_EUR } from '@/lib/constants/ear-os-ssot';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 /**
  * 🏛️ B2G TENDER ALERT FEED — FUENTE REAL TED API v3 (CERO FACHADAS)
  *

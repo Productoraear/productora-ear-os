@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import { telegramService } from '@/lib/services/comm/TelegramService';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 /**
  * 🔱 TEST DE IGNICIÓN TELEGRAM
  * Dispara una alerta de prueba para verificar la soberanía del puente de comunicación.

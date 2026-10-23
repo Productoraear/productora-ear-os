@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 
+export const runtime = 'nodejs';
+
 export const dynamic = 'force-dynamic';
 
 const TENDERS_PATH = path.join(process.cwd(), 'src', 'data', 'b2g', 'placsp_harvested_tenders.json');

@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import { fireAndForgetN8n } from '@/lib/services/n8n-dispatcher';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 /**
  * Telemetría real de pings GPS para seguimiento "Día D".
  *

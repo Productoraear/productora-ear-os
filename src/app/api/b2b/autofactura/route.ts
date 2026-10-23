@@ -6,6 +6,9 @@ import {
   calculateB2BCommission
 } from '@/lib/b2b-billing-engine';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();

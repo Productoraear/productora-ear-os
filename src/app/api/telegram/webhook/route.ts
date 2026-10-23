@@ -4,6 +4,8 @@ import { telegramService } from '@/lib/services/comm/TelegramService';
 import { calculateTacticalQuote } from '@/lib/services/pricing/quote-calculator';
 import { prisma } from '@/lib/prisma';
 
+export const runtime = 'nodejs';
+
 export const dynamic = 'force-dynamic';
 
 export async function POST(req: NextRequest) {

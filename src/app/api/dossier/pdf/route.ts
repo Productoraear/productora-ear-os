@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { PriceLockEngine } from '@/features/finance/services/PriceLockEngine';
 import { CENTRALITA } from '@/lib/phone-constants';
 
+export const dynamic = 'force-dynamic';
+
 export const runtime = 'nodejs';
 
 export async function GET(req: NextRequest) {

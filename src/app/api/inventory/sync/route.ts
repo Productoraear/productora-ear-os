@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 /**
  * 🏛️ ASSET GRAPH & INVENTORY SYNC API
  * Suma los 8.352 perfiles cosechados a los activos del Ecosistema EAR OS.

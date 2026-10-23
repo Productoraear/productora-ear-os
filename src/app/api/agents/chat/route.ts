@@ -6,6 +6,15 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { findNextAvailableDate, parseExplicitDate, type NextAvailableDateResult } from '@/lib/availability/findNextDate';
 import { computeSoloQuote, computeSplit, type QuoteBreakdown, type SplitBreakdown } from '@/lib/agents/pricing';
 import { KNOWN_FINCAS, resolveCityDistance, DEFAULT_DISTANCE_KM, FINCA_DISTANCE_KM, TOLEDO_DISTANCE_KM } from '@/lib/agents/geo';
+import { runDeepSeekChat, isDeepSeekConfigured } from '@/lib/compiler/deepseek-inference';
+import {
+  sanitizeUserInput,
+  detectInjection,
+  sanitizeAiOutput,
+  buildHardenedSystemPrompt,
+  wrapUntrustedMessage,
+  SlidingWindowRateLimiter,
+} from '@/lib/agents/chatGuard';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -24,6 +33,9 @@ interface ChatRequestBody {
 }
 
 const bus = createEarBus();
+
+/** Rate limiter en memoria por IP para el canal de atención al cliente. */
+const chatRateLimiter = new SlidingWindowRateLimiter(20, 60_000);
 
 /**
  * 🛰️ OMNI-SUPERVISOR CHAT ENGINE (S-CLASS) // GROUNDED & CONTEXT-AWARE
@@ -45,11 +57,39 @@ export async function POST(req: Request): Promise<NextResponse> {
       }, { status: 503 });
     }
 
-    const body = (await req.json()) as ChatRequestBody;
-    const { message, agent, pathname, activeEntity } = body;
+    const rawBody: unknown = await req.json();
+    const body: ChatRequestBody = (rawBody && typeof rawBody === 'object' ? rawBody : {}) as ChatRequestBody;
+    const { agent, pathname, activeEntity } = body;
 
-    if (!message || typeof message !== 'string') {
-      return NextResponse.json({ error: 'Mensaje requerido' }, { status: 400 });
+    // Validación y saneado de la entrada (dato no confiable).
+    const inputCheck = sanitizeUserInput(body.message);
+    if (!inputCheck.ok) {
+      return NextResponse.json({ error: inputCheck.reason }, { status: 400 });
+    }
+    const message: string = inputCheck.text;
+
+    // Rate limit por IP (anti-abuso / DoS).
+    const forwarded = req.headers.get('x-forwarded-for');
+    const clientIp: string = (forwarded ? forwarded.split(',')[0].trim() : '') ||
+      req.headers.get('x-real-ip') ||
+      'anonymous';
+    if (!chatRateLimiter.allow(clientIp)) {
+      return NextResponse.json(
+        { error: 'Demasiadas solicitudes. Espera un momento e inténtalo de nuevo.' },
+        { status: 429 },
+      );
+    }
+
+    // Anti-inyección de prompt / exfiltración / abuso de infraestructura.
+    if (detectInjection(message).blocked) {
+      return NextResponse.json({
+        reply:
+          'Gracias por escribirnos. Estoy aquí para ayudarte con los servicios de Productora EAR: fechas, presupuestos, fincas homologadas y reservas. ¿En qué puedo ayudarte con tu evento?',
+        agentUsed: 'omni-supervisor-daemon',
+        traces: [],
+        killSwitch: false,
+        timestamp: new Date().toISOString(),
+      });
     }
 
     const traces: TraceEntry[] = [];
@@ -216,34 +256,55 @@ export async function POST(req: Request): Promise<NextResponse> {
     const waText = `Hola Edwin, deseo bloquear la fecha para el ${nextDate ? nextDate.formattedSpanish : 'evento'} en ${detectedCity} (presupuesto estimado: ${bookingTotalParam} € con depósito deducible de 100 €).`;
     const waUrl = `https://wa.me/34693693048?text=${encodeURIComponent(waText)}`;
 
-    // 9. Síntesis conversacional mediante Gemini 1.5 Flash
+    // 9. Síntesis conversacional S-Class (DeepSeek -> Gemini -> Determinista)
     let aiReply = '';
     const geminiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
 
-    if (geminiKey && geminiKey.length > 10) {
+    const formattedTotalEur = calculatedQuote
+      ? (calculatedQuote.total % 1 === 0 ? calculatedQuote.total : calculatedQuote.total.toFixed(2))
+      : 350;
+
+    const systemPrompt: string = buildHardenedSystemPrompt({
+      pathname: pathname ?? '',
+      activeFincaName,
+      detectedCity,
+      distanceKm,
+      endHour,
+      formattedTotalEur,
+      explicitDateLabel: explicitDate ? explicitDate.formattedSpanish : '',
+      nextDateLabel: nextDate && !explicitDate ? nextDate.formattedSpanish : '',
+      stripeBookingUrl,
+      waUrl,
+    });
+
+    const untrustedMessage: string = wrapUntrustedMessage(message);
+
+    // Nivel 1: DeepSeek Cloud (Máxima inteligencia analítica y comprensión semántica del español)
+    if (isDeepSeekConfigured()) {
+      try {
+        const dsRes = await runDeepSeekChat({
+          model: 'deepseek-chat',
+          system: systemPrompt,
+          prompt: untrustedMessage,
+          temperature: 0.3,
+        });
+        if (dsRes.available && dsRes.content.trim()) {
+          aiReply = dsRes.content.trim();
+        }
+      } catch (dsErr: unknown) {
+        console.warn('⚠️ [OMNI_CHAT_DEEPSEEK_FALLBACK]:', dsErr);
+      }
+    }
+
+    // Nivel 2: Google Gemini Flash si DeepSeek no responde o no tiene clave
+    if (!aiReply && geminiKey && geminiKey.length > 10) {
       try {
         const genAI = new GoogleGenerativeAI(geminiKey);
         const model = genAI.getGenerativeModel({ model: 'gemini-flash-latest' });
 
-        const systemPrompt = `Eres el asistente de producción y reservas de Productora EAR para Edwin Agudelo y la Red de Fincas Homologadas S-Class.
-DIRECTIVA CRÍTICA (HUMANO, CONTEXTUAL Y RESOLUTIVO):
-1. Responde ESTRICTAMENTE a lo que el usuario ha preguntado, conectando el contexto si mezcla temas (ej. si está viendo una finca y pregunta por el artista Edwin Agudelo o una fecha).
-2. CONTEXTO DE NAVEGACIÓN ACTIVO:
-   - Página actual: ${pathname || '/'}
-   - Finca/Recinto en pantalla: ${activeFincaName || 'Ninguna seleccionada'}
-3. DISPONIBILIDAD Y FECHAS:
-   ${explicitDate ? `- El usuario ha pedido una fecha concreta: ${explicitDate.formattedSpanish}. Confirma con naturalidad si está disponible para esa fecha (actualmente disponible).` : ''}
-   ${nextDate && !explicitDate ? `- Próxima fecha libre relativa encontrada: ${nextDate.formattedSpanish} a las ${endHour}:00.` : ''}
-4. NO uses encabezados teatrales ni parrafadas robóticas. Habla con elegancia, brevedad (máximo 2 párrafos) y tono de dirección de producción.
-5. Si pregunta por la finca (ej. Villa Escorial Park) o por la fecha 31 de diciembre (Nochevieja):
-   - Confirma que la finca dispone de alojamiento para 30 personas y que Nochevieja se coordina por el canal prioritario B2B.
-   - Si pregunta por Edwin, confirma que para esa fecha figura disponible en agenda.
-   - Presenta los botones de acción limpios:
-     - [💬 Consultar Disponibilidad de ${activeFincaName || 'Finca'} en WhatsApp ➔](https://wa.me/34693693048?text=${encodeURIComponent(`Hola Edwin, quiero consultar disponibilidad y condiciones de ${activeFincaName || 'la finca'} para el ${nextDate?.formattedSpanish || 'evento'}.`)})`;
-
         const result = await model.generateContent([
           systemPrompt,
-          `Usuario: ${message}`
+          `Usuario: ${untrustedMessage}`
         ]);
         aiReply = result.response.text();
       } catch (geminiErr: unknown) {
@@ -251,7 +312,7 @@ DIRECTIVA CRÍTICA (HUMANO, CONTEXTUAL Y RESOLUTIVO):
       }
     }
 
-    // 10. Fallback Determinista S-Class Multidominio
+    // 10. Fallback Determinista S-Class Multidominio (Limpio y sin loro)
     if (!aiReply) {
       if (isFincaContext && explicitDate) {
         aiReply = `Para **${activeFincaName}** el **${explicitDate.formattedSpanish}**:\n\n` +
@@ -265,20 +326,25 @@ DIRECTIVA CRÍTICA (HUMANO, CONTEXTUAL Y RESOLUTIVO):
           `¿Para qué localidad y horario sería el evento? Indícamelo y te calculo el presupuesto con el desplazamiento exacto.\n\n` +
           `[💬 Consultar por WhatsApp Oficial (+34 693 693 048) ➔](${waUrl})`;
       } else if (calculatedQuote) {
-        aiReply = `La serenata como solista de **Edwin Agudelo** en **${detectedCity}** tiene un coste total de **${calculatedQuote.total.toFixed(2)} €**:\n\n` +
-          `• Tarifa base solista: **${calculatedQuote.base.toFixed(2)} €**\n` +
-          `• Desplazamiento (${distanceKm} km desde Hub Méntrida): **${calculatedQuote.logistica.toFixed(2)} €**\n` +
-          (calculatedQuote.hotel > 0 ? `• Suplemento hotel/nocturnidad: **${calculatedQuote.hotel.toFixed(2)} €** (por finalizar a las ${endHour}:00 y superar 200 km).\n\n` : '\n') +
-          (calculatedSplit
+        const cleanTotal = calculatedQuote.total % 1 === 0 ? calculatedQuote.total : calculatedQuote.total.toFixed(2);
+        const cleanBase = calculatedQuote.base % 1 === 0 ? calculatedQuote.base : calculatedQuote.base.toFixed(2);
+        const cleanLogistica = calculatedQuote.logistica % 1 === 0 ? calculatedQuote.logistica : calculatedQuote.logistica.toFixed(2);
+        const cleanHotel = calculatedQuote.hotel % 1 === 0 ? calculatedQuote.hotel : calculatedQuote.hotel.toFixed(2);
+
+        aiReply = `La serenata como solista de **Edwin Agudelo** en **${detectedCity}** tiene un coste total de **${cleanTotal} €**:\n\n` +
+          `• Tarifa base solista: **${cleanBase} €**\n` +
+          `• Desplazamiento (${distanceKm} km desde Hub Méntrida): **${cleanLogistica} €**\n` +
+          (calculatedQuote.hotel > 0 ? `• Suplemento hotel/nocturnidad: **${cleanHotel} €** (por finalizar a las ${endHour}:00 y superar 200 km).\n\n` : '\n') +
+          (calculatedSplit && (lower.includes('split') || lower.includes('reparto') || lower.includes('donacion') || lower.includes('donación'))
             ? `• Split Soberano 80/10/10: Artista **${calculatedSplit.artista.toFixed(2)} €** · EAR OS **${calculatedSplit.earOs.toFixed(2)} €** · VIMUME (obra social) **${calculatedSplit.vimume.toFixed(2)} €**\n\n`
             : '') +
           (nextDate ? `El domingo libre más próximo en el calendario es el **${nextDate.formattedSpanish}** a las **${endHour}:00**.\n\n` : '') +
           `Puedes bloquear la fecha ahora mismo con el depósito de 100 € (100% deducible del total):\n\n` +
-          `[🔒 Bloquear Fecha (${calculatedQuote.total.toFixed(2)} €) con Depósito de 100 € ➔](${stripeBookingUrl})\n\n` +
+          `[🔒 Bloquear Fecha (${cleanTotal} €) con Depósito de 100 € ➔](${stripeBookingUrl})\n\n` +
           `[💬 Confirmar por WhatsApp (+34 693 693 048) ➔](${waUrl})`;
       } else if (isFincaContext) {
         aiReply = `Estás consultando información sobre **${activeFincaName}**.\n\n` +
-          `Este recinto forma parte de nuestra Red Homologada S-Class con garantía acústica Ley 37/2003 y acometida trifásica CETAC 32A. ¿Para qué fecha o número de invitados deseas consultar las condiciones?\n\n` +
+          `Este recinto forma parte de nuestra Red Homologada S-Class con garantía acústica y acometida trifásica. ¿Para qué fecha o número de invitados deseas consultar las condiciones?\n\n` +
           `[💬 Contactar con Concierge B2B en WhatsApp ➔](https://wa.me/34693693048?text=${encodeURIComponent(`Hola Edwin, quiero información sobre ${activeFincaName}.`)})`;
       } else if (nextDate) {
         aiReply = `La próxima fecha libre disponible en el calendario para esa franja es el **${nextDate.formattedSpanish}** a las **${endHour}:00**.\n\n` +
@@ -294,8 +360,10 @@ DIRECTIVA CRÍTICA (HUMANO, CONTEXTUAL Y RESOLUTIVO):
       }
     }
 
+    const safeReply: string = sanitizeAiOutput(aiReply);
+
     return NextResponse.json({
-      reply: aiReply,
+      reply: safeReply,
       agentUsed: agent || (traces.length > 0 ? traces[0].message.to : 'omni-supervisor-daemon'),
       traces,
       killSwitch: false,
@@ -303,8 +371,11 @@ DIRECTIVA CRÍTICA (HUMANO, CONTEXTUAL Y RESOLUTIVO):
     });
 
   } catch (error: unknown) {
-    const message = error instanceof Error ? error.message : 'Error interno en el chat del Omni-Supervisor';
-    console.error('❌ [OMNI_CHAT_ERROR]:', error);
-    return NextResponse.json({ error: message }, { status: 500 });
+    // Nunca exponer detalles internos al cliente (sin fuga de stack/mensajes).
+    console.error('❌ [OMNI_CHAT_ERROR]:', error instanceof Error ? error.message : error);
+    return NextResponse.json(
+      { error: 'Error interno del servicio de atención. Inténtalo de nuevo en unos instantes.' },
+      { status: 500 },
+    );
   }
 }

@@ -14,8 +14,19 @@ import {
   Loader2,
   Minimize2,
   Maximize2,
+  Volume2,
+  VolumeX,
+  Mic,
+  MicOff,
 } from 'lucide-react';
 import { ProviderRecord } from '@/lib/data/vampire-service';
+import {
+  speakNatural,
+  stopSpeaking,
+  isSpeechSupported,
+  listenOnce,
+  isListeningSupported,
+} from '@/lib/voice/naturalVoice';
 
 interface ChatMessage {
   id: string;
@@ -51,7 +62,17 @@ export function AIConciergeDock() {
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [isListening, setIsListening] = useState(false);
+  const [activeSpeakingId, setActiveSpeakingId] = useState<string | null>(null);
+  const stopMicRef = useRef<(() => void) | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    return () => {
+      stopSpeaking();
+      if (stopMicRef.current) stopMicRef.current();
+    };
+  }, []);
 
   useEffect(() => {
     const handleOpen = () => setIsOpen(true);
@@ -157,6 +178,42 @@ export function AIConciergeDock() {
       setMessages((prev) => [...prev, errorMsg]);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleToggleSpeech = async (msgId: string, text: string) => {
+    if (activeSpeakingId === msgId) {
+      stopSpeaking();
+      setActiveSpeakingId(null);
+    } else {
+      stopSpeaking();
+      setActiveSpeakingId(msgId);
+      try {
+        await speakNatural(text);
+      } finally {
+        setActiveSpeakingId((current) => (current === msgId ? null : current));
+      }
+    }
+  };
+
+  const handleToggleMic = () => {
+    if (!isListeningSupported()) {
+      alert('Tu navegador no soporta entrada de voz o requiere permisos de micrófono.');
+      return;
+    }
+    if (isListening) {
+      if (stopMicRef.current) stopMicRef.current();
+      setIsListening(false);
+    } else {
+      setIsListening(true);
+      stopMicRef.current = listenOnce(
+        (transcript) => {
+          setIsListening(false);
+          setInputMessage(transcript);
+          handleSendMessage(transcript);
+        },
+        () => setIsListening(false)
+      );
     }
   };
 
@@ -414,14 +471,41 @@ export function AIConciergeDock() {
                     </div>
                   )}
 
-                  <span
-                    className={`text-[9px] font-mono block ${
-                      msg.sender === 'user' ? 'text-black/60 text-right' : 'text-zinc-500'
-                    }`}
-                    aria-hidden="true"
-                  >
-                    {msg.timestamp}
-                  </span>
+                  <div className="flex items-center justify-between pt-1">
+                    {msg.sender === 'concierge' && (
+                      <button
+                        type="button"
+                        onClick={() => handleToggleSpeech(msg.id, msg.text)}
+                        className={`inline-flex items-center gap-1.5 text-[10px] font-mono px-2.5 py-0.5 rounded-full transition-all focus:outline-none focus-visible:ring-1 focus-visible:ring-[#ecb613] ${
+                          activeSpeakingId === msg.id
+                            ? 'bg-[#ecb613] text-black font-bold animate-pulse'
+                            : 'bg-white/5 text-zinc-400 hover:text-[#ecb613] hover:bg-white/10'
+                        }`}
+                        title={activeSpeakingId === msg.id ? 'Detener voz' : 'Escuchar respuesta en voz alta'}
+                        aria-label={activeSpeakingId === msg.id ? 'Detener voz' : 'Escuchar respuesta en voz alta'}
+                      >
+                        {activeSpeakingId === msg.id ? (
+                          <>
+                            <VolumeX className="w-3 h-3 text-black" aria-hidden="true" focusable="false" />
+                            <span>Detener</span>
+                          </>
+                        ) : (
+                          <>
+                            <Volume2 className="w-3 h-3 text-[#ecb613]" aria-hidden="true" focusable="false" />
+                            <span>Escuchar voz</span>
+                          </>
+                        )}
+                      </button>
+                    )}
+                    <span
+                      className={`text-[9px] font-mono block ${
+                        msg.sender === 'user' ? 'text-black/60 text-right w-full' : 'text-zinc-500'
+                      }`}
+                      aria-hidden="true"
+                    >
+                      {msg.timestamp}
+                    </span>
+                  </div>
                 </div>
 
                 {msg.suggestedChips && msg.suggestedChips.length > 0 && (
@@ -478,13 +562,35 @@ export function AIConciergeDock() {
                 type="text"
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
-                placeholder="Escribe: 'Finca para 180 pax en Toledo'..."
+                placeholder={isListening ? 'Escuchando tu voz...' : "Escribe o pulsa el micro: 'Finca en Toledo'..."}
                 aria-label="Escribe tu solicitud de evento"
                 aria-required="true"
                 aria-disabled={isLoading}
-                className="flex-1 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-zinc-500 text-xs focus:outline-none focus:border-[#ecb613] focus-visible:ring-2 focus-visible:ring-[#ecb613]/50 transition-colors"
+                className={`flex-1 px-4 py-3 rounded-xl bg-white/5 border text-xs focus:outline-none transition-colors ${
+                  isListening
+                    ? 'border-rose-500 text-rose-300 placeholder:text-rose-400'
+                    : 'border-white/10 text-white placeholder:text-zinc-500 focus:border-[#ecb613] focus-visible:ring-2 focus-visible:ring-[#ecb613]/50'
+                }`}
                 disabled={isLoading}
               />
+              <button
+                type="button"
+                onClick={handleToggleMic}
+                disabled={isLoading}
+                className={`p-3 rounded-xl transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613] ${
+                  isListening
+                    ? 'bg-rose-500 text-white animate-pulse'
+                    : 'bg-white/5 hover:bg-white/10 text-zinc-300 hover:text-white border border-white/10'
+                }`}
+                title={isListening ? 'Detener escucha' : 'Hablar por micrófono'}
+                aria-label={isListening ? 'Detener escucha de micrófono' : 'Hablar por micrófono'}
+              >
+                {isListening ? (
+                  <MicOff className="w-4 h-4 text-white" aria-hidden="true" focusable="false" />
+                ) : (
+                  <Mic className="w-4 h-4" aria-hidden="true" focusable="false" />
+                )}
+              </button>
               <button
                 type="submit"
                 disabled={!inputMessage.trim() || isLoading}

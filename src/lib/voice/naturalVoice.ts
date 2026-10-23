@@ -5,6 +5,10 @@
  * Limitación: la calidad depende de las voces instaladas en el dispositivo del usuario.
  */
 
+import { toConversationalSpeech } from './speechNormalizer';
+
+export { toConversationalSpeech };
+
 const PREFERRED_VOICE_HINTS: readonly string[] = ['natural', 'neural', 'online', 'google', 'microsoft', 'monica', 'paulina'];
 
 function pickVoice(voices: readonly SpeechSynthesisVoice[]): SpeechSynthesisVoice | null {
@@ -47,7 +51,8 @@ export async function speakNatural(text: string): Promise<void> {
   const synth: SpeechSynthesis = window.speechSynthesis;
   synth.cancel();
   const voice: SpeechSynthesisVoice | null = pickVoice(synth.getVoices());
-  const sentences: string[] = splitSentences(text.slice(0, 2000));
+  const cleanSpeechText = toConversationalSpeech(text);
+  const sentences: string[] = splitSentences(cleanSpeechText.slice(0, 2000));
 
   for (const sentence of sentences) {
     await new Promise<void>((resolve): void => {

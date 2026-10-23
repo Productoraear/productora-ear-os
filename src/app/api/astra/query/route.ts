@@ -1,5 +1,8 @@
 import { NextResponse } from 'next/server';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 /**
  * 🌌 ASTRA QUERY ADAPTER - V127.1
  * Redirige las peticiones de búsqueda semántica al núcleo de Astra.

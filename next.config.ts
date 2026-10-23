@@ -10,10 +10,7 @@ const nextConfig: NextConfig = {
     // Omitirla en Docker ahorra más de 5 minutos de CPU en el VPS.
     ignoreBuildErrors: true,
   },
-  eslint: {
-    // Validado localmente con exit code 0.
-    ignoreDuringBuilds: true,
-  },
+
   compiler: {
     removeConsole:
       process.env.NODE_ENV === "production"

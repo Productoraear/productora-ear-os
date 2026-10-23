@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { SITEMAP_PARTITIONS } from '@/lib/seo/sitemapGenerator';
 
+export const runtime = 'nodejs';
+
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://productoraear.com';
 
 export const dynamic = 'force-dynamic';

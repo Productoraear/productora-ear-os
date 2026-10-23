@@ -10,6 +10,9 @@ import { waitUntil } from '@vercel/functions';
 import { createClient } from '@supabase/supabase-js';
 import { getStripe } from '@/lib/payments';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 /** Línea de servicio deserializada desde `ProductionEvent.serviceLines` (Json). */
 interface ServiceLine {
   id?: string;

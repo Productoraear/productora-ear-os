@@ -2,6 +2,8 @@ import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
 import genomeData from '@/app/data/genome_sessions.json';
 
+export const runtime = 'nodejs';
+
 // Force dynamic: prevents Next.js from evaluating this route at build time.
 // Supabase requires a valid URL which may not be present in all build environments.
 export const dynamic = 'force-dynamic';

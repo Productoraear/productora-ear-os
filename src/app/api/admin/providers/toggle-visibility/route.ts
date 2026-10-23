@@ -3,6 +3,8 @@ import { z } from 'zod';
 import { getActiveWhitelist, toggleProviderVisibility } from '@/lib/providers/visibility';
 import { requireAdmin } from '@/lib/security/adminGuard';
 
+export const runtime = 'nodejs';
+
 export const dynamic = 'force-dynamic';
 
 const SECURITY_HEADERS: Record<string, string> = {

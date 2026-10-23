@@ -5,6 +5,9 @@ import { eternalMemory } from '@/lib/intelligence/EternalMemory';
 import fs from 'fs';
 import path from 'path';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 // ============================================================================
 // 🌌 SANITIZADOR DE PAYLOAD RAG S-CLASS (TOKEN & NETWORK EFFICIENCY)
 // ============================================================================

@@ -3,6 +3,9 @@ import { DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
 import { prisma } from '@/lib/prisma';
 import { fireAndForgetN8n } from '@/lib/services/n8n-dispatcher';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 /**
  * ════════════════════════════════════════════════════════════════════════════
  * EAR OS — ENDPOINT TELEMÉTRICO DE MISIÓN (/api/telemetry/mission/[id])

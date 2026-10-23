@@ -4,6 +4,9 @@ import { z } from 'zod';
 import routeGovernance from '@/data/governance/route_visibility.json';
 import { requireAdmin } from '@/lib/security/adminGuard';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 /**
  * 🛡️ API HANDLER: GET / POST /api/admin/route-governance
  * Permite al Administrador consultar y alternar en caliente qué URLs

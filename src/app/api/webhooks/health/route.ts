@@ -7,6 +7,9 @@ import {
     N8nInstanceHealth,
 } from '@/lib/services/n8n-dispatcher';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 /**
  * ════════════════════════════════════════════════════════════════════════════
  * EAR OS — HEALTH-CHECK TELEMÉTRICO DEL CLUSTER N8N (/api/webhooks/health)

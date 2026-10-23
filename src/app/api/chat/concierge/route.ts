@@ -1,5 +1,8 @@
 import { NextResponse } from 'next/server';
 import { getProvidersByLocation } from '@/lib/data/vampire-service';
+import { runDeepSeekChat, isDeepSeekConfigured } from '@/lib/compiler/deepseek-inference';
+import { GoogleGenerativeAI } from '@google/generative-ai';
+import { normalizeCurrencyAndNumbers } from '@/lib/voice/speechNormalizer';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -140,11 +143,64 @@ export async function POST(request: Request) {
     const provName = detectedProv.charAt(0).toUpperCase() + detectedProv.slice(1);
     const catName = detectedCat || 'Espacios y Proveedores';
 
-    let reply = `He seleccionado los mejores perfiles de **${catName}** en **${provName}** dentro del Roster Homologado. Todos cuentan con protocolo transaccional *Hold & Ping* (pre-autorización de 100 € sin coste de cancelación en 24h).`;
+    // 4. Síntesis Conversacional S-Class (Tier 1: DeepSeek Cloud -> Tier 2: Gemini Flash -> Tier 3: Determinista)
+    let reply = '';
+    const providersList = providers.map((p) => `${p.name} (${p.category || 'Proveedor'})`).join(', ');
 
-    if (providers.length === 0) {
-      reply = `He registrado tu solicitud para **${provName}**. Nuestro equipo en el Hub Central de Méntrida te contactará de inmediato con opciones a medida.`;
+    const systemPrompt = `Eres el Concierge Inteligente de Productora EAR para Edwin Agudelo y la Red de Fincas y Proveedores de Gala.
+DIRECTIVA INMUTABLE (HUMANO, EMPÁTICO Y RESOLUTIVO — CERO LORO):
+1. REGLA DE ORO ANTI-LORO:
+   - Responde ESTRICTAMENTE a la duda del usuario con empatía y cercanía.
+   - PROHIBIDO mencionar leyes acústicas (Ley 37/2003), decibelios, homologaciones o el reparto del split (80/10/10) a menos que el usuario pregunte expresamente por acústica o finanzas.
+   - PROHIBIDO soltar discursos largos. Máximo 2 párrafos concisos y elegantes.
+2. PRECIOS Y NÚMEROS LIMPIOS:
+   - Si preguntan precio: tarifa base de Edwin Agudelo como solista es de 350 euros (incluye sonido Bose F1 de alta fidelidad).
+   - Para bloquear la fecha en exclusiva en agenda se realiza un depósito de 100 euros íntegramente deducible del total del evento.
+   - Escribe siempre cantidades redondas y naturales ("350 euros", "100 euros"). Cero decimales mecánicos como ".00".
+3. CONTEXTO DISPONIBLE:
+   - Ubicación detectada: ${provName}
+   - Categoría consultada: ${catName}
+   - Proveedores encontrados en la base de datos: ${providersList || 'Búsqueda personalizada en curso'}
+   - Teléfono / WhatsApp oficial: +34 693 693 048`;
+
+    if (isDeepSeekConfigured()) {
+      try {
+        const dsRes = await runDeepSeekChat({
+          model: 'deepseek-chat',
+          system: systemPrompt,
+          prompt: `Mensaje del cliente: "${message}"`,
+          temperature: 0.3,
+        });
+        if (dsRes.available && dsRes.content.trim()) {
+          reply = dsRes.content.trim();
+        }
+      } catch (err: unknown) {
+        console.warn('⚠️ [CONCIERGE_DEEPSEEK_FALLBACK]:', err);
+      }
     }
+
+    const geminiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
+    if (!reply && geminiKey && geminiKey.length > 10) {
+      try {
+        const genAI = new GoogleGenerativeAI(geminiKey);
+        const model = genAI.getGenerativeModel({ model: 'gemini-flash-latest' });
+        const result = await model.generateContent([systemPrompt, `Cliente: ${message}`]);
+        reply = result.response.text();
+      } catch (err: unknown) {
+        console.warn('⚠️ [CONCIERGE_GEMINI_FALLBACK]:', err);
+      }
+    }
+
+    if (!reply) {
+      if (providers.length > 0) {
+        reply = `He seleccionado perfiles destacados de **${catName}** en **${provName}** para tu evento. Puedes revisar las opciones a continuación o escribirnos directamente a WhatsApp para armar un paquete personalizado con Edwin Agudelo.`;
+      } else {
+        reply = `He registrado tu solicitud para **${provName}**. Nuestro equipo en el Hub Central de Méntrida te contactará de inmediato con opciones a medida y fechas disponibles.`;
+      }
+    }
+
+    // Normalizar fonéticamente cualquier cifra para que no existan aberraciones
+    reply = normalizeCurrencyAndNumbers(reply);
 
     return NextResponse.json({
       success: true,

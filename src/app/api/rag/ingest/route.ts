@@ -3,6 +3,9 @@ import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 const RAG_DB_PATH = path.join(process.cwd(), 'src', 'data', 'ear-rag-database.json');
 
 type RagNode = {

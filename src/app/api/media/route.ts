@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { promises as dns } from 'dns';
 
+export const dynamic = 'force-dynamic';
+
 export const runtime = 'nodejs';
 
 /**

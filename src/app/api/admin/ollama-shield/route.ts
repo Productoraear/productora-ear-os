@@ -5,6 +5,9 @@ import { promisify } from 'node:util';
 import { z } from 'zod';
 import { requireAdmin } from '@/lib/security/adminGuard';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 const execAsync = promisify(exec);
 
 /**

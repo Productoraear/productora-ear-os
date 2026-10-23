@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { verifyGoogleAuthenticator } from '@/lib/totp-engine';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 function cleanEnv(val: string | undefined, fallback: string): string {
   if (!val) return fallback.trim().replace(/^["']|["']$/g, '');
   return val.trim().replace(/^["']|["']$/g, '');

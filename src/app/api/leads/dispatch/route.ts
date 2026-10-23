@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { calculateLeadScore } from '@/lib/scoring/leadScoreEngine';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 type LeadDispatchPayload = {
   leadId?: string;
   email?: string;

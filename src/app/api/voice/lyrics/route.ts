@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+export const runtime = 'nodejs';
+
 export const dynamic = 'force-dynamic';
 
 const OLLAMA_ENDPOINT = process.env.OLLAMA_HOST || 'http://127.0.0.1:11434';

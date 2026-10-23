@@ -3,6 +3,9 @@ import { prisma } from '@/lib/prisma';
 import fs from 'fs';
 import path from 'path';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 function normalizePhone(raw: string | undefined): string | null {
   if (!raw) return null;
   let cleaned = raw.replace(/[\s\-()]/g, '');
