@@ -20,6 +20,7 @@ RUN --mount=type=cache,target=/root/.npm \
 
 COPY . .
 
+ENV NODE_ENV=production
 RUN ./node_modules/.bin/prisma generate || npx prisma generate || true
 RUN --mount=type=cache,target=/app/.next/cache \
     npm run build
