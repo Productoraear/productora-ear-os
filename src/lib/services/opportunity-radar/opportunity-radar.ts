@@ -102,6 +102,11 @@ function parseFeedConfigs(): FeedConfig[] {
         { url: 'https://news.google.com/rss/search?q=pleno+municipal+festejos+OR+mayores&hl=es&gl=ES&ceid=ES:es', name: 'Google — Plenos Municipales', source: 'GOOGLE_ALERTS_RSS' },
         { url: 'https://news.google.com/rss/search?q=servicios+sociales+mayores+musicoterapia+OR+residencia&hl=es&gl=ES&ceid=ES:es', name: 'Google — VIMUME Tercera Edad', source: 'GOOGLE_ALERTS_RSS' },
         { url: 'https://news.google.com/rss/search?q=licitacion+sonorizacion+fiestas+patronales&hl=es&gl=ES&ceid=ES:es', name: 'Google — Licitaciones Festejos B2G', source: 'GOOGLE_ALERTS_RSS' },
+        // Nichos estratégicos de alta conversión:
+        { url: 'https://news.google.com/rss/search?q="feria+del+caballo"+OR+"feria+agricola"+OR+"exhibicion+ecuestre"&hl=es&gl=ES&ceid=ES:es', name: 'Google — Ferias del Caballo y Agrícolas', source: 'GOOGLE_ALERTS_RSS' },
+        { url: 'https://news.google.com/rss/search?q="feria+de+bodas"+OR+"1001+bodas"+OR+"salon+nupcial"&hl=es&gl=ES&ceid=ES:es', name: 'Google — Ferias de Bodas & Showrooms', source: 'GOOGLE_ALERTS_RSS' },
+        { url: 'https://news.google.com/rss/search?q="certamen+cultural"+OR+"festival+folklore"+OR+"premio+nacional+musica"&hl=es&gl=ES&ceid=ES:es', name: 'Google — Festivales de Folklore & Premios', source: 'GOOGLE_ALERTS_RSS' },
+        { url: 'https://news.google.com/rss/search?q=mariachi+ayuntamiento+OR+fiestas+patronales+OR+concierto&hl=es&gl=ES&ceid=ES:es', name: 'Google — Mariachi & Espectáculos Tradicionales', source: 'GOOGLE_ALERTS_RSS' },
     ];
     for (const feed of BASELINE_PUBLIC_FEEDS) {
         push(feed.url, feed.name, feed.source);
@@ -126,6 +131,9 @@ function mapRssItemToRecord(item: RssItem, feed: FeedConfig): OpportunityRecord 
         matchScore: classification.matchScore,
         matchReasons: classification.matchReasons,
         vimumeCompatible: classification.vimumeCompatible,
+        proximityZone: classification.proximityZone,
+        locationName: classification.locationName,
+        isOnlineTramitacion: classification.isOnlineTramitacion,
         firstSeenAt: new Date().toISOString(),
     };
 }
@@ -203,12 +211,25 @@ function formatTelegramMessage(record: OpportunityRecord): string {
         ? `${record.matchScore}% (VIMUME <75 dB)`
         : `${record.matchScore}%`;
 
+    const proximityTag =
+        record.proximityZone === 'LOCAL_50KM'
+            ? `• 📍 <b>Proximidad:</b> Hub Méntrida Inmediato (&lt;50 km: ${record.locationName ?? 'Local'})`
+            : record.proximityZone === 'REGIONAL_150KM'
+              ? `• 📍 <b>Proximidad:</b> Regional Madrid/Toledo (50-150 km: ${record.locationName ?? 'Regional'})`
+              : `• 📍 <b>Ámbito:</b> Nacional (Desplazamiento amortizado)`;
+
+    const onlineTag = record.isOnlineTramitacion
+        ? `• ⚡ <b>Tramitación:</b> 100% Telemática Online (Sede / RED SARA / PLACSP)`
+        : '';
+
     return [
         `🎯 <b>OPORTUNIDAD DETECTADA (RADAR REAL)</b>`,
         `━━━━━━━━━━━━━━━━━━━━━━━━━`,
         `• <b>${escapeHtml(record.title)}</b>`,
         `• <b>Categoría:</b> ${escapeHtml(categories)}`,
         `• <b>Match:</b> ${badges}`,
+        proximityTag,
+        onlineTag,
         record.publishedAt
             ? `• <b>Publicado:</b> ${escapeHtml(new Date(record.publishedAt).toLocaleDateString('es-ES'))}`
             : '',

@@ -1,11 +1,11 @@
-import type { OpportunityCategory } from './types';
+import type { OpportunityCategory, ProximityZone } from './types';
 
 /**
  * ════════════════════════════════════════════════════════════════════════════
- * CLASIFICADOR SEMÁNTICO DE OPORTUNIDADES (SSOT-AWARE)
+ * CLASIFICADOR SEMÁNTICO DE OPORTUNIDADES (SSOT-AWARE & GEO-AWARE)
  * ════════════════════════════════════════════════════════════════════════════
  * Clasifica un texto real (título + descripción) en las categorías de negocio
- * EAR OS y calcula un Match Score honesto contra las reglas inmutables.
+ * EAR OS, detecta cercanía logística al Hub de Méntrida y tramitación online.
  * ════════════════════════════════════════════════════════════════════════════
  */
 
@@ -15,10 +15,6 @@ interface CategoryRule {
     priority: number;
 }
 
-/**
- * Reglas de clasificación. priority más alto = categoría más valiosa para EAR OS.
- * Los términos están en minúsculas y sin tildes para matching normalizado.
- */
 const CATEGORY_RULES: readonly CategoryRule[] = Object.freeze([
     {
         category: 'VIMUME_SERVICIOS_SOCIALES',
@@ -27,6 +23,7 @@ const CATEGORY_RULES: readonly CategoryRule[] = Object.freeze([
             'mayores', 'tercera edad', 'envejecimiento', 'servicios sociales',
             'residencia', 'centro de dia', 'centro de día', 'musicoterapia',
             'senior', 'sociosanitario', 'soledad no deseada', 'discapacidad',
+            'estimulacion cognitiva', 'estimulación cognitiva', 'alzheimer',
         ],
     },
     {
@@ -48,13 +45,42 @@ const CATEGORY_RULES: readonly CategoryRule[] = Object.freeze([
         ],
     },
     {
+        category: 'FERIAS_Y_ECUESTRE',
+        priority: 88,
+        keywords: [
+            'feria del caballo', 'ecuestre', 'feria agricola', 'feria agrícola',
+            'ganadera', 'feria de ganado', 'sicab', 'picadero', 'charro', 'mariachi',
+            'hipica', 'hípica', 'exhibicion ecuestre', 'concurso hipico', 'feria del campo',
+            'agroturismo', 'doma', 'romeria', 'romería', 'fiesta campera', 'albero',
+        ],
+    },
+    {
         category: 'COMISION_FIESTAS',
-        priority: 85,
+        priority: 86,
         keywords: [
             'comision de fiestas', 'comisión de fiestas', 'comision de festejos',
             'comisión de festejos', 'festejos', 'fiestas patronales',
             'programacion festiva', 'programación festiva', 'fiestas populares',
             'pregon', 'pregón', 'feria', 'verbena',
+        ],
+    },
+    {
+        category: 'FESTIVALES_Y_PREMIOS',
+        priority: 84,
+        keywords: [
+            'premio nacional', 'certamen cultural', 'festival de folklore',
+            'festival de musica tradicional', 'encuentro iberoamericano',
+            'premio de composicion', 'concurso de canto', 'gala musical',
+            'circuito cultural', 'red de teatros', 'certamen musical',
+        ],
+    },
+    {
+        category: 'BODAS_Y_EVENTOS',
+        priority: 82,
+        keywords: [
+            'feria de bodas', 'salon nupcial', 'salón nupcial', '1001 bodas',
+            'ifema', 'expoboda', 'feria de novios', 'showroom bodas',
+            'finca de bodas', 'boda', 'novios', 'enlace', 'celebracion nupcial',
         ],
     },
     {
@@ -87,6 +113,26 @@ const CATEGORY_RULES: readonly CategoryRule[] = Object.freeze([
     },
 ] as const);
 
+// Proximidad geográfica desde Hub Méntrida
+const LOCAL_MUNICIPALITIES: readonly string[] = [
+    'mentrida', 'méntrida', 'navalcarnero', 'torrijos', 'illescas', 'fuensalida',
+    'valmojado', 'camarena', 'mostoles', 'móstoles', 'alcorcon', 'alcorcón',
+    'fuenlabrada', 'getafe', 'arroyomolinos', 'toledo', 'villamanta',
+    'aldea del fresno', 'santa cruz del retamar', 'escalona', 'el álamo',
+];
+
+const REGIONAL_PROVINCES: readonly string[] = [
+    'madrid', 'toledo', 'talavera', 'talavera de la reina', 'aranjuez',
+    'guadalajara', 'avila', 'ávila', 'segovia', 'cuenca', 'ciudad real',
+];
+
+const ONLINE_TRAMITACION_KEYWORDS: readonly string[] = [
+    'sede electronica', 'sede electrónica', 'tramitacion online', 'tramitación online',
+    'red sara', 'face', 'placsp', 'registro electronico', 'registro electrónico',
+    'solicitud telematica', 'solicitud telemática', 'formulario online',
+    'instancia general', 'tramitacion telematica', 'tramitación telemática',
+];
+
 function normalize(text: string): string {
     return text
         .toLowerCase()
@@ -99,11 +145,13 @@ export interface ClassificationResult {
     matchScore: number;
     matchReasons: string[];
     vimumeCompatible: boolean;
+    proximityZone: ProximityZone;
+    locationName?: string;
+    isOnlineTramitacion: boolean;
 }
 
 /**
- * Clasifica y puntúa un texto real. Nunca devuelve un score inflado:
- * parte de base 50 y suma puntos SOLO por coincidencias léxicas reales.
+ * Clasifica y puntúa un texto real calculando encaje SSOT, cercanía geográfica y vía online.
  */
 export function classifyOpportunity(title: string, description: string): ClassificationResult {
     const haystack = normalize(`${title} ${description}`);
@@ -132,7 +180,34 @@ export function classifyOpportunity(title: string, description: string): Classif
 
     const vimumeCompatible = categories.includes('VIMUME_SERVICIOS_SOCIALES');
 
-    // Puntuación honesta: base + densidad léxica + prioridad de categoría.
+    // Detección de proximidad geográfica
+    let proximityZone: ProximityZone = 'NACIONAL';
+    let locationName: string | undefined;
+
+    for (const loc of LOCAL_MUNICIPALITIES) {
+        if (haystack.includes(normalize(loc))) {
+            proximityZone = 'LOCAL_50KM';
+            locationName = loc.toUpperCase();
+            break;
+        }
+    }
+
+    if (!locationName) {
+        for (const prov of REGIONAL_PROVINCES) {
+            if (haystack.includes(normalize(prov))) {
+                proximityZone = 'REGIONAL_150KM';
+                locationName = prov.toUpperCase();
+                break;
+            }
+        }
+    }
+
+    // Detección de tramitación telemática online
+    const isOnlineTramitacion = ONLINE_TRAMITACION_KEYWORDS.some((kw) =>
+        haystack.includes(normalize(kw)),
+    );
+
+    // Puntuación honesta: base + densidad léxica + prioridad + proximidad + online
     let matchScore = 50;
     const reasons: string[] = [];
 
@@ -157,6 +232,24 @@ export function classifyOpportunity(title: string, description: string): Classif
         reasons.push('Encaja con motor de licitación B2G (Art. 118 LCSP)');
     }
 
+    if (categories.includes('FERIAS_Y_ECUESTRE')) {
+        matchScore += 5;
+        reasons.push('Encaje directo Mariachi / Espectáculo Ecuestre & Campero');
+    }
+
+    if (proximityZone === 'LOCAL_50KM') {
+        matchScore += 8;
+        reasons.push(`Hub Méntrida Inmediato (<50 km: ${locationName}) · 0 € Hotel`);
+    } else if (proximityZone === 'REGIONAL_150KM') {
+        matchScore += 4;
+        reasons.push(`Radio Regional Madrid/Toledo (50-150 km: ${locationName})`);
+    }
+
+    if (isOnlineTramitacion) {
+        matchScore += 4;
+        reasons.push('Tramitación telemática online verificada (Sede / RED SARA / PLACSP)');
+    }
+
     matchScore = Math.min(100, Math.max(0, matchScore));
 
     return {
@@ -164,5 +257,8 @@ export function classifyOpportunity(title: string, description: string): Classif
         matchScore,
         matchReasons: reasons,
         vimumeCompatible,
+        proximityZone,
+        locationName,
+        isOnlineTramitacion,
     };
 }

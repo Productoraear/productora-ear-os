@@ -18,6 +18,11 @@ param(
     [int]$IntervalMinutes = 60
 )
 
+# Garantizar que el script opere siempre en la raiz del proyecto sin importar desde donde se invoque
+if ($PSScriptRoot) {
+    Set-Location $PSScriptRoot
+}
+
 $Host.UI.RawUI.WindowTitle = "EAR OS // Opportunity Radar S-Class"
 
 function Write-RadarHeader {
@@ -43,7 +48,10 @@ if ($OpenGoogleAlerts) {
         '"comision de fiestas" contratacion orquesta OR mariachi',
         'subvenciones musica ayuntamiento "festejos"',
         '"pleno municipal" "comision de fiestas" OR "festejos"',
-        '"servicios sociales" "mayores" musicoterapia OR "centro de dia"'
+        '"servicios sociales" "mayores" musicoterapia OR "centro de dia"',
+        '"feria del caballo" OR "feria agricola" OR "exhibicion ecuestre"',
+        '"feria de bodas" OR "1001 bodas" OR "salon nupcial"',
+        '"certamen cultural" OR "festival de folklore" OR "premio nacional de musica"'
     )
 
     foreach ($q in $queries) {
@@ -98,7 +106,13 @@ function Invoke-RadarScan {
             foreach ($item in $res.topOpportunities) {
                 $vimumeBadge = ""
                 if ($item.vimume) { $vimumeBadge = "[VIMUME 40Hz]" }
-                Write-Host "  [$($item.score)%] $($item.categories) $vimumeBadge" -ForegroundColor Cyan
+                $proxBadge = ""
+                if ($item.proximity -eq 'LOCAL_50KM') { $proxBadge = "[<50km: $($item.location)]" }
+                elseif ($item.proximity -eq 'REGIONAL_150KM') { $proxBadge = "[50-150km: $($item.location)]" }
+                $onlineBadge = ""
+                if ($item.isOnline) { $onlineBadge = "[ONLINE]" }
+
+                Write-Host "  [$($item.score)%] $($item.categories) $vimumeBadge $proxBadge $onlineBadge" -ForegroundColor Cyan
                 Write-Host "    $($item.title)" -ForegroundColor White
                 Write-Host "    Link: $($item.url)" -ForegroundColor DarkGray
                 Write-Host ""
@@ -123,7 +137,7 @@ if ($Summary) {
     Write-Host "Ultimo barrido: $($store.lastScanAt)" -ForegroundColor Gray
     Write-Host ""
 
-    $top = $store.opportunities | Sort-Object matchScore -Descending | Select-Object -First 20
+    $top = $store.opportunities | Sort-Object matchScore -Descending | Select-Object -First 25
 
     foreach ($item in $top) {
         $scoreColor = "Gray"
@@ -131,8 +145,14 @@ if ($Summary) {
         elseif ($item.matchScore -ge 75) { $scoreColor = "Yellow" }
         $vimume = ""
         if ($item.vimumeCompatible) { $vimume = "[VIMUME]" }
+        $prox = ""
+        if ($item.proximityZone -eq 'LOCAL_50KM') { $prox = "[HUB <50km: $($item.locationName)]" }
+        elseif ($item.proximityZone -eq 'REGIONAL_150KM') { $prox = "[REGIONAL: $($item.locationName)]" }
+        $online = ""
+        if ($item.isOnlineTramitacion) { $online = "[ONLINE]" }
+
         $cats = $item.categories -join ' - '
-        Write-Host "[$($item.matchScore)%] $cats $vimume" -ForegroundColor $scoreColor
+        Write-Host "[$($item.matchScore)%] $cats $vimume $prox $online" -ForegroundColor $scoreColor
         Write-Host "  $($item.title)" -ForegroundColor White
         Write-Host "  $($item.url)" -ForegroundColor DarkCyan
         Write-Host ""

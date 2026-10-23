@@ -23,7 +23,13 @@ export type OpportunityCategory =
     | 'PLENO_MUNICIPAL'
     | 'VIMUME_SERVICIOS_SOCIALES'
     | 'LICITACION_B2G'
+    | 'FERIAS_Y_ECUESTRE'
+    | 'BODAS_Y_EVENTOS'
+    | 'FESTIVALES_Y_PREMIOS'
     | 'OTRO';
+
+/** Zonas de proximidad logística desde Méntrida (Hub Central EAR OS). */
+export type ProximityZone = 'LOCAL_50KM' | 'REGIONAL_150KM' | 'NACIONAL';
 
 /** Registro normalizado de una oportunidad real detectada. */
 export interface OpportunityRecord {
@@ -43,6 +49,12 @@ export interface OpportunityRecord {
     matchReasons: string[];
     /** true si encaja con el protocolo VIMUME (servicios sociales mayores, <75 dB). */
     vimumeCompatible: boolean;
+    /** Zona de proximidad logística calculada desde Méntrida. */
+    proximityZone?: ProximityZone;
+    /** Nombre de municipio/provincia detectado. */
+    locationName?: string;
+    /** true si la convocatoria permite o exige tramitación telemática online. */
+    isOnlineTramitacion?: boolean;
     firstSeenAt: string;
 }
 

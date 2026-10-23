@@ -14,6 +14,9 @@ async function main() {
             categories: o.categories.join(', '),
             score: o.matchScore,
             vimume: o.vimumeCompatible,
+            proximity: o.proximityZone,
+            location: o.locationName,
+            isOnline: o.isOnlineTramitacion,
             url: o.url,
         }));
 
