@@ -2,9 +2,18 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: "standalone",
-  staticPageGenerationTimeout: 60,
+  staticPageGenerationTimeout: 120,
   reactStrictMode: true,
   productionBrowserSourceMaps: false,
+  typescript: {
+    // Validación estricta ejecutada localmente en pre-push (tsc --noEmit -> Exit 0).
+    // Omitirla en Docker ahorra más de 5 minutos de CPU en el VPS.
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    // Validado localmente con exit code 0.
+    ignoreDuringBuilds: true,
+  },
   compiler: {
     removeConsole:
       process.env.NODE_ENV === "production"

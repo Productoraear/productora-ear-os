@@ -1,4 +1,4 @@
-FROM node:20-alpine AS base
+FROM node:22-alpine AS base
 RUN apk add --no-cache libc6-compat python3 make g++
 WORKDIR /app
 
@@ -6,14 +6,14 @@ WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1 \
     PUPPETEER_SKIP_DOWNLOAD=true \
     PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 \
-    NEXT_CPU_COUNT=1 \
-    NODE_OPTIONS="--max-old-space-size=2048"
+    NEXT_CPU_COUNT=2 \
+    NODE_OPTIONS="--max-old-space-size=4096"
 
 # 1. Builder con dependencias completas para compilar Next.js y Tailwind
 FROM base AS builder
 ENV NODE_ENV=development \
-    NEXT_CPU_COUNT=1 \
-    NODE_OPTIONS="--max-old-space-size=2048"
+    NEXT_CPU_COUNT=2 \
+    NODE_OPTIONS="--max-old-space-size=4096"
 COPY package.json package-lock.json* ./
 RUN --mount=type=cache,target=/root/.npm \
     npm install --include=dev --legacy-peer-deps --no-audit
@@ -25,7 +25,7 @@ RUN --mount=type=cache,target=/app/.next/cache \
     npm run build
 
 # 2. Production runner ultraligero
-FROM node:20-alpine AS runner
+FROM node:22-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production \
@@ -48,4 +48,3 @@ USER nextjs
 EXPOSE 3000
 
 CMD ["node", "server.js"]
-
