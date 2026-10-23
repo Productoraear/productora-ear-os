@@ -13,8 +13,6 @@ const nextConfig: NextConfig = {
   },
   serverExternalPackages: ["sharp", "@prisma/client", "bcryptjs"],
   experimental: {
-    cpus: 1,
-    workerThreads: false,
     webpackMemoryOptimizations: true,
     optimizePackageImports: [
       "lucide-react",

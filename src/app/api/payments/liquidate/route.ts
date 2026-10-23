@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { NexusPayments } from '@/lib/services/nexus_payments';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 // ============================================================================
 // 💰 API LIQUIDACIONES S-CLASS
@@ -31,8 +31,9 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: result.message }, { status: 400 });
     }
 
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Error desconocido en liquidación';
     console.error('❌ [LIQUIDATION API ERROR]', error);
-    return NextResponse.json({ error: 'Fallo crítico en el nexo de liquidación', details: error.message }, { status: 500 });
+    return NextResponse.json({ error: 'Fallo crítico en el nexo de liquidación', details: message }, { status: 500 });
   }
 }

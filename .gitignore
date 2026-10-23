@@ -143,3 +143,13 @@ temp_batch_*.json
 .antigravity/*.log
 .antigravity/ted_probe_body.json
 reports/*.txt
+
+# Volcados efímeros de validación y debug (ZTM — nunca trackear)
+t28.txt
+tsc_w28.txt
+v28.txt
+val28.txt
+validate_final.txt
+_exist.txt
+_grep.txt
+_scan.txt

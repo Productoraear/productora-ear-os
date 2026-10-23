@@ -1,5 +1,5 @@
 import { AgentBus } from './agentBus';
-import type { AgentHandler, AgentMessage, AgentReply, FollowUp } from './agentBus';
+import type { AgentHandler, AgentId, AgentMessage, AgentReply, FollowUp } from './agentBus';
 import {
   computeSoloQuote,
   computeSplit,
@@ -26,6 +26,25 @@ import type { N8nBody } from './n8nDispatcher';
  * 8. escalation: Despacho a guardia humana ante incidencias complejas.
  * 9. supervisor: Orquestador que supervisa y encadena el flujo.
  */
+
+// ─── FLEET ROSTER (entry agents para el API de dispatch) ─────────────────────
+export interface AgentSpec {
+  readonly id: AgentId;
+  readonly sector: string;
+  readonly description: string;
+}
+
+export const FLEET_ROSTER: readonly AgentSpec[] = [
+  { id: 'voice-concierge', sector: 'Comercial', description: 'Atención vocal y triaje de consultas entrantes.' },
+  { id: 'lead-intake', sector: 'Comercial', description: 'Ingesta, saneamiento y sincronización con n8n/CRM.' },
+  { id: 'logistics-pricer', sector: 'Logística', description: 'Cálculo SSOT de tarifas, kilometraje y hotel.' },
+  { id: 'b2g-compliance', sector: 'Jurídica', description: 'Auditoría de contratos menores (Art. 118 LCSP < 14.250 €).' },
+  { id: 'acoustic-rider', sector: 'Técnica', description: 'Presión sonora dBA y potencia según Ley 37/2003.' },
+  { id: 'vimume-impact', sector: 'Sanitaria', description: 'Estimación clínica y deducción fiscal Ley 49/2002.' },
+  { id: 'sales-closer', sector: 'Comercial', description: 'Cierre de reservas con depósito Stripe 100 €.' },
+  { id: 'escalation', sector: 'Supervisión', description: 'Despacho a guardia humana ante incidencias complejas.' },
+  { id: 'supervisor', sector: 'Supervisión', description: 'Orquestador que supervisa y encadena el flujo.' },
+];
 
 // ─── 1. VOICE CONCIERGE ───────────────────────────────────────────────────────
 const voiceConciergeHandler: AgentHandler = async (msg: AgentMessage): Promise<AgentReply> => {
