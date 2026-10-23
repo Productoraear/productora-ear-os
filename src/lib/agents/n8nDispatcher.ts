@@ -1,4 +1,4 @@
-import { appendFileSync, mkdirSync } from 'node:fs';
+import { appendFileSync, mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 
 /** Webhooks permitidos (allowlist). Cualquier otro destino se rechaza. */
@@ -20,6 +20,9 @@ const ALLOWED: readonly N8nWebhook[] = [
   'autonomous-escalation',
   'executive-kpi-radar',
 ];
+
+/** Allowlist pública (solo lectura) para telemetría y auditoría del bus. */
+export const ALLOWED_WEBHOOKS: readonly N8nWebhook[] = ALLOWED;
 
 const DLQ_FILE: string = join(process.cwd(), '.antigravity', 'dlq.jsonl');
 const MAX_ATTEMPTS = 3;
@@ -81,4 +84,73 @@ export async function dispatchToN8n(webhook: N8nWebhook, body: N8nBody): Promise
   }
   deadLetter(webhook, body, 'MAX_ATTEMPTS_EXCEEDED');
   return { delivered: false, attempts: MAX_ATTEMPTS, deadLettered: true };
+}
+
+export interface DlqEntry {
+  readonly at: string;
+  readonly webhook: N8nWebhook;
+  readonly body: N8nBody;
+  readonly reason: string;
+}
+
+/** Lee la cola de mensajes muertos persistida en disco (0 leads huérfanos). */
+export function readDeadLetterQueue(): DlqEntry[] {
+  try {
+    if (!existsSync(DLQ_FILE)) return [];
+    const raw = readFileSync(DLQ_FILE, 'utf8');
+    return raw
+      .split('\n')
+      .filter((line) => line.trim().length > 0)
+      .map((line): DlqEntry => JSON.parse(line) as DlqEntry);
+  } catch {
+    return [];
+  }
+}
+
+export interface ReplayResult {
+  readonly replayed: number;
+  readonly succeeded: number;
+  readonly failed: number;
+}
+
+/**
+ * Reintenta el envío de TODOS los mensajes de la DLQ y purga los que se
+ * entregan con éxito. Los que fallan se conservan para el siguiente replay.
+ */
+export async function replayDeadLetterQueue(): Promise<ReplayResult> {
+  const entries = readDeadLetterQueue();
+  if (entries.length === 0) return { replayed: 0, succeeded: 0, failed: 0 };
+
+  let succeeded = 0;
+  let failed = 0;
+  const survivors: DlqEntry[] = [];
+
+  for (const entry of entries) {
+    if (!ALLOWED.includes(entry.webhook)) {
+      survivors.push(entry);
+      failed += 1;
+      continue;
+    }
+    const url = `${baseUrl()}/webhook/${entry.webhook}`;
+    const ok = await postOnce(url, entry.body);
+    if (ok) {
+      succeeded += 1;
+    } else {
+      survivors.push(entry);
+      failed += 1;
+    }
+  }
+
+  // Reescribir la DLQ conservando solo los mensajes que siguen sin entregarse.
+  try {
+    if (survivors.length === 0) {
+      writeFileSync(DLQ_FILE, '', 'utf8');
+    } else {
+      writeFileSync(DLQ_FILE, survivors.map((e) => JSON.stringify(e)).join('\n') + '\n', 'utf8');
+    }
+  } catch {
+    // Si no podemos persistir la purga, el estado queda intacto en memoria.
+  }
+
+  return { replayed: entries.length, succeeded, failed };
 }

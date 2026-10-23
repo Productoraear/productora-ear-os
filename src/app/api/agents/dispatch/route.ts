@@ -4,6 +4,7 @@ import { createEarBus, FLEET_ROSTER } from '@/lib/agents/sectorAgents';
 import type { AgentSpec } from '@/lib/agents/sectorAgents';
 import type { AgentId, AgentPayload, PayloadValue, TraceEntry } from '@/lib/agents/agentBus';
 import { activateKillSwitch, isKillSwitchActive, releaseKillSwitch } from '@/lib/agents/killSwitch';
+import { replayDeadLetterQueue, readDeadLetterQueue } from '@/lib/agents/n8nDispatcher';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -50,6 +51,14 @@ export async function POST(req: Request): Promise<NextResponse> {
     if (action === 'release') {
       releaseKillSwitch();
       return NextResponse.json({ killSwitch: false });
+    }
+    if (action === 'dlq') {
+      const entries = readDeadLetterQueue();
+      return NextResponse.json({ depth: entries.length, entries });
+    }
+    if (action === 'replay-dlq') {
+      const result = await replayDeadLetterQueue();
+      return NextResponse.json({ replay: result });
     }
 
     if (typeof agent !== 'string' || !ENTRY_AGENTS.includes(agent as AgentId)) {
