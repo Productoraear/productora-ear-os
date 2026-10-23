@@ -65,10 +65,10 @@
     "postgres": "^3.4.9",
     "puppeteer-extra": "^3.3.6",
     "qrcode": "^1.5.4",
-    "react": "^19.2.6",
+    "react": "19.1.0",
     "react-chartjs-2": "^5.3.1",
     "react-day-picker": "^10.0.1",
-    "react-dom": "^19.2.6",
+    "react-dom": "19.1.0",
     "react-hook-form": "^7.75.0",
     "react-markdown": "^10.1.0",
     "recharts": "^3.10.1",
@@ -111,8 +111,8 @@
     "typescript": "^6.0.3"
   },
   "overrides": {
-    "react": "^19.2.6",
-    "react-dom": "^19.2.6",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3"
   },
