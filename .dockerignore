@@ -12,3 +12,26 @@ pnpm-debug.log*
 scratch
 reports
 *.monolith.json
+
+# P0 ANTI-BLOAT S-CLASS: bóveda monolítica y datos pesados locales
+# (nunca van a la imagen Docker; los datos de venta viven en
+#  public/data/providers/*.json particionados < 1 MB).
+src/data/catalog/ADN_EAR_INDEX.json
+src/data/all_providers_database.json
+src/data/all_providers_database.json.bak
+src/data/bodas-vendors-harvested.json
+src/data/vampirized-providers-*.json
+src/data/vampirized_providers*.json
+src/data/staging/
+src/data/wedding_intel_vault/
+src/lib/NUCLEO_DATA/
+vault/
+vault_absorbed/
+scripts/
+docs/
+deploy/
+n8n-workflows/
+.firebase/
+.obsidian/
+.models/
+/*.pdf

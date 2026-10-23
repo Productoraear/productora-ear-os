@@ -2,6 +2,32 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: "standalone",
+  // P0 ANTI-BLOAT (deploy Coolify): excluir del trazado standalone la
+  // bóveda monolítica de datos locales (src/data, NUCLEO_DATA, vault,
+  // scripts, docs, reports...) que inflaba la imagen a ~6.3 GB y
+  // provocaba OOM/timeout en el VPS de 4 GB. Los datos de venta viven en
+  // public/data/providers/*.json (particiones < 1 MB, copiadas aparte).
+  outputFileTracingExcludes: {
+    "/*": [
+      "./src/data/**/*",
+      "./src/lib/NUCLEO_DATA/**/*",
+      "./vault/**/*",
+      "./vault_absorbed/**/*",
+      "./scripts/**/*",
+      "./docs/**/*",
+      "./reports/**/*",
+      "./scratch/**/*",
+      "./deploy/**/*",
+      "./n8n-workflows/**/*",
+      "./.firebase/**/*",
+      "./.obsidian/**/*",
+      "./.models/**/*",
+      "./public/**/*",
+      "./*.log",
+      "./*.pdf",
+      "./*.html",
+    ],
+  },
   staticPageGenerationTimeout: 120,
   reactStrictMode: true,
   productionBrowserSourceMaps: false,

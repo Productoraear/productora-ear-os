@@ -6,14 +6,14 @@ WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1 \
     PUPPETEER_SKIP_DOWNLOAD=true \
     PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 \
-    NEXT_CPU_COUNT=2 \
-    NODE_OPTIONS="--max-old-space-size=4096"
+    NEXT_CPU_COUNT=1 \
+    NODE_OPTIONS="--max-old-space-size=2048"
 
 # 1. Builder con dependencias completas para compilar Next.js y Tailwind
 FROM base AS builder
 ENV NODE_ENV=development \
-    NEXT_CPU_COUNT=2 \
-    NODE_OPTIONS="--max-old-space-size=4096"
+    NEXT_CPU_COUNT=1 \
+    NODE_OPTIONS="--max-old-space-size=2048"
 COPY package.json package-lock.json* ./
 RUN --mount=type=cache,target=/root/.npm \
     npm install --include=dev --legacy-peer-deps --no-audit

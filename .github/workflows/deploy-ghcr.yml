@@ -42,7 +42,6 @@ jobs:
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
-        continue-on-error: true
         with:
           context: .
           file: ./Dockerfile
@@ -53,6 +52,7 @@ jobs:
           cache-to: type=gha,mode=max
 
       - name: Trigger Coolify Webhook Deployment
+        if: success()
         env:
           COOLIFY_WEBHOOK: ${{ secrets.COOLIFY_WEBHOOK_URL }}
         run: |
