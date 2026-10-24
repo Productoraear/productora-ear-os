@@ -129,12 +129,6 @@ module.exports = {
         mono: ["var(--font-jetbrains-mono)", "JetBrains Mono", "ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "monospace"],
         jm: ["var(--font-jetbrains-mono)", "JetBrains Mono", "ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "monospace"],
       },
-      borderRadius: {
-        "DEFAULT": "0px",
-        "lg": "0px",
-        "xl": "0px",
-        "full": "9999px"
-      }
     },
   },
   plugins: [],
