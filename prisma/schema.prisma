@@ -1088,3 +1088,49 @@ model AgentVoiceAssignment {
   @@index([voiceProfileId], name: "idx_agent_voice_profile")
 }
 
+
+// ==========================================
+// FUNNEL ANALYTICS & CONVERSION EVENT ENGINE (S-CLASS · DOCTRINA DEL DATO VERIFICADO)
+// ==========================================
+
+enum FunnelEventType {
+  FUNNEL_STARTED
+  STEP_REACHED
+  QUOTE_VIEWED
+  LEAD_SUBMITTED
+  DEPOSIT_INITIATED
+  DEPOSIT_CONFIRMED
+  DEPOSIT_ERROR
+  FUNNEL_ABANDONED
+}
+
+/// Telemetría de embudo: cada paso y conversión del flujo de dinero.
+/// Idempotente por `eventId` (retries de beacon/Stripe NO duplican filas).
+model FunnelEvent {
+  id            String          @id @default(cuid())
+  eventId       String          @unique
+  sessionId     String
+  funnelKey     String          @default("bodas-parejas")
+  archetype     String?
+  step          Int?
+  stepTag       String?
+  eventType     FunnelEventType
+  sourceUrl     String?
+  utmSource     String?
+  utmMedium     String?
+  utmCampaign   String?
+  referrer      String?
+  priceSnapshot Float?
+  orderId       String?
+  error         String?
+  leadName      String?
+  leadPhone     String?
+  leadEmail     String?
+  metadata      Json?
+  createdAt     DateTime        @default(now())
+
+  @@index([sessionId, createdAt(sort: Desc)], name: "idx_funnel_session")
+  @@index([funnelKey, eventType], name: "idx_funnel_key_event")
+  @@index([step], name: "idx_funnel_step")
+}
+
