@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import FincasB2BPortal from '@/components/fincas/FincasB2BPortal';
+import { FincasParabodaBridgeCta } from '@/components/fincas/FincasParabodaBridgeModal';
 import {
     TARIFA_BASE_SOLISTA_EUR,
     DEPOSITO_STRIPE_EUR,
@@ -96,6 +97,10 @@ export default function FincasB2BPage() {
                         >
                             WhatsApp · {CENTRALITA_EAR_OS}
                         </a>
+                    </div>
+
+                    <div className="mt-4">
+                        <FincasParabodaBridgeCta />
                     </div>
                 </div>
             </section>

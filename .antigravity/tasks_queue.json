@@ -6,23 +6,15 @@
     "total_tasks": 3
   },
   "_instructions_for_worker": "Ejecuta SOLO via: call RUN_OMEGA.bat next  ->  lee .antigravity/MISSION_ACTIVE.json  ->  edita SOLO 'files'  ->  call RUN_OMEGA.bat complete <ID>. El complete ya ejecuta tsc + eslint + test. 1 tarea por sesion.",
-  "tasks": [
+  "tasks": [],
+  "completed": [
     {
       "id": "W35_T03_FINCAS_PARABODA_HIGH_CONVERTING_BRIDGE",
-      "wave": 35,
-      "status": "QUEUED",
       "title": "FINCAS PARABODA HIGH CONVERTING BRIDGE — Conector interactivo para fincasparaboda.com con cotizador paramétrico de acústica Bose F1 (12 W/pax), limitadores Ley 37/2003 y bloqueo 100€ Stripe",
-      "files": [
-        "src/components/fincas/FincasParabodaBridgeModal.tsx",
-        "src/app/(public)/fincas/page.tsx"
-      ],
-      "action": "Construir `src/components/fincas/FincasParabodaBridgeModal.tsx` e integrarlo en `src/app/(public)/fincas/page.tsx`. Permite a cualquier pareja o wedding planner que busque finca: 1) Seleccionar el aforo de invitados (50 a 600 pax); 2) Calcular al vuelo la potencia requerida en vatios RMS (12 W/pax) y el sistema recomendado (Bose F1 / L1 Pro / Line Array); 3) Mostrar la certificación acústica Ley 37/2003 (85-90 dBA exterior / 80-85 dBA interior) con garantía de no-clausura; 4) Botón de reserva con fianza protegida Stripe 100€ deducible y despacho automático a n8n 'finca-partnership'.",
-      "scaffold": "1. Crear src/components/fincas/FincasParabodaBridgeModal.tsx:\n- Modal accesible con Dialog primitive o aria-modal.\n- Slider de aforo de 50 a 600 pax con cálculo en vivo: watts = pax * WATTS_PER_PAX (12).\n- Selector de entorno: Jardín Exterior (85-90 dBA) vs Salón Interior (80-85 dBA).\n- Desglose transparente: Fianza Stripe 100€ (100% deducible) + Solista Edwin Agudelo desde 350€.\n- Botón de envío que invoca /api/dispatch/swarm-lead o abre WhatsApp con el lead precargado.\n2. Integrar el CTA 'Conectar con FincasParaBoda.com // Auditoría Acústica S-Class' en src/app/(public)/fincas/page.tsx.\n3. Validar: npx tsc --noEmit && npx eslint src/components/fincas/FincasParabodaBridgeModal.tsx src/app/(public)/fincas/page.tsx",
-      "done_when": "Modal interactivo de fincas operativo, cálculo de vatios 12 W/pax en vivo, integración en /fincas y tsc Exit Code 0.",
-      "validate": "npx tsc --noEmit"
-    }
-  ],
-  "completed": [
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-24T21:23:31.903Z"
+    },
     {
       "id": "W35_T02_SWARM_AI_LEAD_DISPATCHER_N8N_WHATSAPP",
       "title": "SWARM AI LEAD DISPATCHER & WHATSAPP ENGINE — Motor de cribado multi-agente, formateo de mensaje WhatsApp de alta conversión y despacho no bloqueante a n8n",
@@ -109,8 +101,8 @@
     }
   ],
   "metadata": {
-    "last_updated": "2026-10-24T21:12:33.117Z",
-    "total_pending": 1,
+    "last_updated": "2026-10-24T21:23:31.905Z",
+    "total_pending": 0,
     "current_sprint": "WAVE_35_QUANTUM_MULTIROL_SEAL",
     "ceo_mandate": "Ejecución del Master Cockpit Multirol S-Class: Selector morfogenético Novios/Ayuntamientos/Artistas/Proveedores con audio háptico, Swarm IA Lead Dispatcher n8n con formateo WhatsApp de alta conversión, y conector FincasParaBoda con simulación acústica Bose F1 (12 W/pax). 1 tarea por sesión."
   }
