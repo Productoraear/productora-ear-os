@@ -3,11 +3,14 @@ import Stripe from 'stripe';
 import crypto from 'crypto';
 import { checkDateAvailability } from '@/lib/availability/atomicDateLockEngine';
 import { fireAndForgetN8n } from '@/lib/services/n8n-dispatcher';
+import { DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-const DEPOSIT_CENTS = 10000;
+// Depósito vinculante en céntimos, derivado del SSOT inmutable (100,00 € → 10000 cts).
+// Prohibido hardcodear: DEPOSITO_STRIPE_EUR es la única fuente de verdad.
+const DEPOSIT_CENTS = Math.round(DEPOSITO_STRIPE_EUR * 100);
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://productoraear.com';
 
 export async function POST(req: NextRequest) {
@@ -67,7 +70,7 @@ export async function POST(req: NextRequest) {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
-      success_url: `${BASE_URL}/reservar/solista?deposit=confirmado&order_id=${orderId}&lock=${priceLockHash.slice(0, 16)}`,
+      success_url: `${BASE_URL}/reservar/solista?deposit=confirmado&order_id=${orderId}&lock=${priceLockHash.slice(0, 16)}&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${BASE_URL}/reservar/solista?deposit=cancelado`,
       line_items: [
         {

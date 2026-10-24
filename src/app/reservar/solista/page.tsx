@@ -253,6 +253,82 @@ export default function SolistaReservationPage() {
   const [depositLoading, setDepositLoading] = useState(false);
   const [depositError, setDepositError] = useState<string | null>(null);
 
+  // Post-payment confirmation state (P0 #3: encadenado funnel → confirmación idempotente).
+  const [depositConfirmStatus, setDepositConfirmStatus] = useState<
+    'idle' | 'confirming' | 'confirmed' | 'canceled' | 'failed'
+  >('idle');
+  const [depositConfirmMeta, setDepositConfirmMeta] = useState<{
+    orderId: string;
+    lock: string;
+    productionId?: string;
+    eventDate?: string;
+  } | null>(null);
+
+  // P0 #3: al volver de Stripe (?deposit=confirmado&order_id=&lock=&session_id=),
+  // resolvemos el ProductionEvent de forma idempotente. El webhook lo materializa
+  // (lockDateAtomically con stripeSessionId); aquí lo verificamos y, ante la carrera
+  // webhook↔cliente, lo registramos con el MISMO motor ACID idempotente vía /confirm.
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+    const deposit = params.get('deposit');
+    const orderId = params.get('order_id') ?? '';
+    const lock = params.get('lock') ?? '';
+    const sessionId = params.get('session_id') ?? '';
+
+    if (deposit === 'cancelado') {
+      setDepositConfirmStatus('canceled');
+      return;
+    }
+    if (deposit !== 'confirmado' || !orderId || !lock) return;
+
+    setDepositConfirmStatus('confirming');
+    setDepositConfirmMeta({ orderId, lock });
+
+    const MAX_ATTEMPTS = 12;
+    let attempts = 0;
+    let timer: ReturnType<typeof setTimeout> | null = null;
+
+    const poll = async () => {
+      try {
+        const qs = new URLSearchParams({ order_id: orderId, lock });
+        if (sessionId) qs.set('session_id', sessionId);
+        const res = await fetch(`/api/reservar/solista/confirm?${qs.toString()}`);
+        const data = (await res.json()) as {
+          confirmed?: boolean;
+          productionId?: string;
+          eventDate?: string;
+        };
+
+        if (data.confirmed) {
+          setDepositConfirmMeta({
+            orderId,
+            lock,
+            productionId: data.productionId,
+            eventDate: data.eventDate,
+          });
+          setDepositConfirmStatus('confirmed');
+          return;
+        }
+      } catch {
+        // Degradación silenciosa: reintentamos hasta agotar los intentos.
+      }
+
+      if (attempts >= MAX_ATTEMPTS) {
+        setDepositConfirmStatus('failed');
+        return;
+      }
+      attempts += 1;
+      timer = setTimeout(poll, 2000);
+    };
+
+    poll();
+
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
+  }, []);
+
   // Base constants sincronizados con el artista seleccionado
   const BASE_RATE = selectedArtist.baseRate;
   const DEPOSIT = DEPOSITO_STRIPE_EUR;
@@ -510,6 +586,77 @@ export default function SolistaReservationPage() {
       </header>
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 mt-10">
+
+        {/* POST-PAYMENT CONFIRMATION (P0 #3: funnel → confirmación idempotente) */}
+        {depositConfirmStatus !== 'idle' && (
+          <div
+            className={`mb-8 p-5 rounded-3xl border backdrop-blur-md flex flex-col sm:flex-row items-start gap-4 shadow-xl ${
+              depositConfirmStatus === 'confirmed'
+                ? 'bg-[#ecb613]/10 border-[#ecb613]/40'
+                : depositConfirmStatus === 'canceled' || depositConfirmStatus === 'failed'
+                  ? 'bg-[#FF455B]/10 border-[#FF455B]/30'
+                  : 'bg-[#258DCD]/10 border-[#258DCD]/30'
+            }`}
+          >
+            <div
+              className={`shrink-0 w-11 h-11 rounded-2xl flex items-center justify-center border ${
+                depositConfirmStatus === 'confirmed'
+                  ? 'bg-[#ecb613]/15 border-[#ecb613]/40 text-[#ecb613]'
+                  : depositConfirmStatus === 'canceled' || depositConfirmStatus === 'failed'
+                    ? 'bg-[#FF455B]/15 border-[#FF455B]/40 text-[#FF455B]'
+                    : 'bg-[#258DCD]/15 border-[#258DCD]/40 text-[#258DCD]'
+              }`}
+            >
+              {depositConfirmStatus === 'confirmed' ? (
+                <CheckCircle2 size={22} />
+              ) : depositConfirmStatus === 'canceled' || depositConfirmStatus === 'failed' ? (
+                <AlertCircle size={22} />
+              ) : (
+                <Lock size={22} className="animate-pulse" />
+              )}
+            </div>
+            <div className="flex-1 text-left min-w-0">
+              <strong
+                className={`block font-bold mb-1 uppercase tracking-widest text-sm ${
+                  depositConfirmStatus === 'confirmed'
+                    ? 'text-[#ecb613]'
+                    : depositConfirmStatus === 'canceled' || depositConfirmStatus === 'failed'
+                      ? 'text-[#FF455B]'
+                      : 'text-[#258DCD]'
+                }`}
+              >
+                {depositConfirmStatus === 'confirmed'
+                  ? 'Depósito verificado · Reserva bloqueada'
+                  : depositConfirmStatus === 'canceled'
+                    ? 'Pago cancelado'
+                    : depositConfirmStatus === 'failed'
+                      ? 'Confirmación pendiente de Stripe'
+                      : 'Verificando depósito…'}
+              </strong>
+              <p className="text-xs text-zinc-300 font-mono leading-relaxed">
+                {depositConfirmStatus === 'confirmed'
+                  ? `Tu depósito vinculante de 100 € ha sido verificado. La fecha ${depositConfirmMeta?.eventDate ?? ''} quedó bloqueada de forma inmutable (lock atómico SHA-256).`
+                  : depositConfirmStatus === 'canceled'
+                    ? 'No se ha completado ningún cargo. Puedes reintentar el bloqueo cuando lo desees.'
+                    : depositConfirmStatus === 'failed'
+                      ? 'El pago se está procesando. Si no se confirma en unos instantes, contacta por WhatsApp con tu order_id.'
+                      : 'Confirmando el pago contra el motor ACID y el registro idempotente de producción…'}
+                {depositConfirmStatus === 'confirmed' && depositConfirmMeta?.productionId && (
+                  <>
+                    {' '}
+                    Producción <span className="text-[#ecb613]">{depositConfirmMeta.productionId}</span> registrada de forma idempotente.
+                  </>
+                )}
+              </p>
+              {depositConfirmMeta?.orderId && (
+                <p className="mt-2 text-[10px] text-zinc-500 font-mono break-all">
+                  Order: {depositConfirmMeta.orderId}
+                  {depositConfirmMeta.lock ? ` · Lock: ${depositConfirmMeta.lock}` : ''}
+                </p>
+              )}
+            </div>
+          </div>
+        )}
 
         {/* HERO TITLE */}
         <div className="text-center mb-12">

@@ -402,7 +402,7 @@ function Test1EurContent() {
                 </>
               ) : (
                 <>
-                  <CreditCard className="w-4 h-4" /> Firmar y Pagar 1,00 € (Tarjeta / Bizum)
+                  <CreditCard className="w-4 h-4" /> Firmar y Pagar 1,00 € (Tarjeta)
                 </>
               )}
             </button>
