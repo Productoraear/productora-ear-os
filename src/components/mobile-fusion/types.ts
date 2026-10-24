@@ -1,3 +1,13 @@
+import {
+  DEPOSITO_STRIPE_EUR,
+  LOGISTICA_EUR_PER_KM,
+  LOGISTICA_KM_EXENTOS,
+  LOGISTICA_KM_HOTEL,
+  SUPLEMENTO_HOTEL_EUR,
+  SPLIT_SOBERANO,
+  WATTS_PER_PAX,
+} from '@/lib/constants/ear-os-ssot';
+
 export interface ArtistFormat {
   id: string;
   name: string;
@@ -204,6 +214,29 @@ export const MOODBOARD_AESTHETICS = [
   }
 ];
 
+/**
+ * ═══════════════════════════════════════════════════════════════════════
+ * COTIZADOR CANÓNICO — 100% SSOT (CERO PRECIOS HARDCODEADOS)
+ * ═══════════════════════════════════════════════════════════════════════
+ * Consume EXCLUSIVAMENTE las constantes inmutables de ear-os-ssot.ts:
+ *  - Logística S-Class: LOGISTICA_EUR_PER_KM (1,50 €/km) a partir de
+ *    LOGISTICA_KM_EXENTOS (km 50, Hub Méntrida).
+ *  - Suplemento hotelero: SUPLEMENTO_HOTEL_EUR (+120 €) si distancia
+ *    > LOGISTICA_KM_HOTEL (200 km).
+ *  - Depósito Price-Lock: DEPOSITO_STRIPE_EUR (100 €), 100% deducible.
+ *  - Split Soberano: SPLIT_SOBERANO (80% Artista / 10% EAR OS / 10% VIMUME).
+ *  - Presión acústica: WATTS_PER_PAX (12 W/pax).
+ * ═══════════════════════════════════════════════════════════════════════
+ * El contrato de firma se mantiene intacto para los 11 call sites actuales:
+ *   { basePrice, extraMusicians, distanceKm, pax, hasBoseSound, hasPhotocall }
+ *   -> { total, deposit, restAtEvent, requiredWatts, kmFee, hotelFee, split }
+ *
+ * Nota forense (P2): `extraMusicians`, `hasBoseSound` y `hasPhotocall` se
+ * conservan en la firma por compatibilidad de call sites, pero sus tarifas
+ * ya NO se inventan aquí. Su definición canónica debe vivir en PostgreSQL 16
+ * (catálogo de formatos), jamás como constantes arbitrarias en el motor.
+ * ═══════════════════════════════════════════════════════════════════════
+ */
 export function calculateQuote(params: {
   basePrice: number;
   extraMusicians: number;
@@ -212,18 +245,22 @@ export function calculateQuote(params: {
   hasBoseSound: boolean;
   hasPhotocall: boolean;
 }) {
-  const musicianMultiplier = params.extraMusicians * 180;
-  const kmFee = params.distanceKm > 30 ? (params.distanceKm - 30) * 0.95 : 0;
-  const soundFee = params.hasBoseSound ? Math.max(120, params.pax * 0.9) : 0;
-  const photocallFee = params.hasPhotocall ? 80 : 0;
+  // Logística S-Class (SSOT): 1,50 €/km SOLO a partir del km exento 50.
+  const chargeableKm = Math.max(0, params.distanceKm - LOGISTICA_KM_EXENTOS);
+  const kmFee = chargeableKm * LOGISTICA_EUR_PER_KM;
 
-  const total = Math.round(params.basePrice + musicianMultiplier + kmFee + soundFee + photocallFee);
-  const deposit = 100; // Depósito estándar de reserva Stripe
+  // Suplemento hotelero (SSOT): +120 € si distancia > 200 km (Hub Méntrida).
+  const hotelFee = params.distanceKm > LOGISTICA_KM_HOTEL ? SUPLEMENTO_HOTEL_EUR : 0;
+
+  const total = Math.round(params.basePrice + kmFee + hotelFee);
+
+  const deposit = DEPOSITO_STRIPE_EUR;
   const restAtEvent = total - deposit;
-  const requiredWatts = params.pax * 12; // 12 W/pax
+  const requiredWatts = params.pax * WATTS_PER_PAX;
 
-  const splitArtist = Math.round(total * 0.8);
-  const splitEar = Math.round(total * 0.1);
+  // Split Soberano inmutable 80/10/10 (nunca redondeado a ojo).
+  const splitArtist = Math.round(total * SPLIT_SOBERANO.artista);
+  const splitEar = Math.round(total * SPLIT_SOBERANO.earOs);
   const splitVimume = total - splitArtist - splitEar;
 
   return {
@@ -232,6 +269,7 @@ export function calculateQuote(params: {
     restAtEvent,
     requiredWatts,
     kmFee: Math.round(kmFee),
+    hotelFee,
     split: {
       artist: splitArtist,
       ear: splitEar,

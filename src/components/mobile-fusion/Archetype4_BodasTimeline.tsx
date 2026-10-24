@@ -1,18 +1,21 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Heart, Sparkles, Crown, Music, Clock,
-  Check, Plus, Trash2, Calendar, Users,
-  Share2, ArrowRight, ShieldCheck, Volume2
+  Sparkles, Clock,
+  Users,
+  ArrowRight, Volume2
 } from 'lucide-react';
 import { ARTIST_FORMATS, WEDDING_MILESTONES_DEFAULT, SOVEREIGN_ARTIST } from './types';
 
-export default function Archetype4_BodasTimeline() {
+export default function Archetype4_BodasTimeline({ initialPaxCount, initialIncludePhotocall, onNext }: {
+  initialPaxCount?: number;
+  initialIncludePhotocall?: boolean;
+  onNext?: (p: { milestoneFormatIds: string[]; includePhotocall: boolean; paxCount: number }) => void;
+}) {
   const [milestones, setMilestones] = useState(WEDDING_MILESTONES_DEFAULT);
-  const [paxCount, setPaxCount] = useState(140);
-  const [includePhotocall, setIncludePhotocall] = useState(true);
+  const paxCount = initialPaxCount ?? 140;
+  const [includePhotocall, setIncludePhotocall] = useState(initialIncludePhotocall ?? true);
 
   const toggleMilestone = (id: string, formatId: string) => {
     setMilestones(prev => prev.map(m => {
@@ -39,6 +42,16 @@ export default function Archetype4_BodasTimeline() {
   const grandTotal = Math.max(350, totalBase - bundleDiscount + photocallCost);
 
   const handleWhatsAppExport = () => {
+    if (onNext) {
+      onNext({
+        milestoneFormatIds: selectedMilestones
+          .map(m => m.selectedFormatId)
+          .filter((id): id is string => id !== null),
+        includePhotocall,
+        paxCount,
+      });
+      return;
+    }
     const agendaText = selectedMilestones.map(m => {
       const fmt = ARTIST_FORMATS.find(f => f.id === m.selectedFormatId);
       return `• ${m.name} (${m.timeSlot}): ${fmt?.name} [${fmt?.basePrice}€]`;
@@ -93,7 +106,6 @@ export default function Archetype4_BodasTimeline() {
       <div className="space-y-3">
         {milestones.map((milestone, idx) => {
           const isAssigned = milestone.selectedFormatId !== null;
-          const assignedFormat = ARTIST_FORMATS.find(f => f.id === milestone.selectedFormatId);
 
           return (
             <div

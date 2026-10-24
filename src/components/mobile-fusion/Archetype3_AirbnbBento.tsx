@@ -1,18 +1,24 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import {
-  Star, ShieldCheck, Heart, Share2, Calendar,
-  Users, CheckCircle2, ChevronRight, Award, Music,
-  ArrowRight, Sparkles, MapPin
+  Star, ShieldCheck, Calendar,
+  Users, ChevronRight, Award,
+  ArrowRight, MapPin
 } from 'lucide-react';
 import { ARTIST_FORMATS, SOVEREIGN_ARTIST, calculateQuote } from './types';
 
-export default function Archetype3_AirbnbBento() {
-  const [selectedFormat, setSelectedFormat] = useState(ARTIST_FORMATS[0]);
-  const [guestCount, setGuestCount] = useState(120);
-  const [eventDate, setEventDate] = useState('2026-09-19');
+export default function Archetype3_AirbnbBento({ initialFormatId, initialGuestCount, initialEventDate, onNext }: {
+  initialFormatId?: string;
+  initialGuestCount?: number;
+  initialEventDate?: string;
+  onNext?: (p: { formatId: string; guestCount: number; eventDate: string }) => void;
+}) {
+  const [selectedFormat, setSelectedFormat] = useState(
+    initialFormatId ? (ARTIST_FORMATS.find(f => f.id === initialFormatId) || ARTIST_FORMATS[0]) : ARTIST_FORMATS[0]
+  );
+  const [guestCount, setGuestCount] = useState(initialGuestCount ?? 120);
+  const [eventDate, setEventDate] = useState(initialEventDate ?? '2026-09-19');
   const [showSplitDetails, setShowSplitDetails] = useState(false);
 
   const quote = calculateQuote({
@@ -25,6 +31,10 @@ export default function Archetype3_AirbnbBento() {
   });
 
   const handleBooking = () => {
+    if (onNext) {
+      onNext({ formatId: selectedFormat.id, guestCount, eventDate });
+      return;
+    }
     const text = encodeURIComponent(
       `Hola Edwin, deseo reservar la Experiencia Airbnb S-Class:\n- Formato: ${selectedFormat.name} (${selectedFormat.basePrice}€)\n- Fecha: ${eventDate}\n- Asistentes: ${guestCount} pax\n- Total con Sonorización Bose F1: ${quote.total}€\n- Depósito de Reserva: 100€`
     );

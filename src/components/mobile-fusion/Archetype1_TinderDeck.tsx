@@ -4,26 +4,20 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
 import {
   Heart, X, Sparkles, Volume2, ShieldCheck,
-  ChevronRight, ArrowRight, Share2, Info, Check,
-  Music, MapPin, Zap, Star
+  ArrowRight, Info,
+  Zap, Star
 } from 'lucide-react';
-import { ARTIST_FORMATS, SOVEREIGN_ARTIST, calculateQuote } from './types';
+import { ARTIST_FORMATS, SOVEREIGN_ARTIST } from './types';
 
-export default function Archetype1_TinderDeck({ onBook }: { onBook?: (formatId: string) => void }) {
+export default function Archetype1_TinderDeck({ onBook, onNext }: {
+  onBook?: (formatId: string) => void;
+  onNext?: () => void;
+}) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
-  const [likedList, setLikedList] = useState<string[]>([]);
   const [showDetailModal, setShowDetailModal] = useState(false);
 
   const currentFormat = ARTIST_FORMATS[currentIndex % ARTIST_FORMATS.length];
-  const quote = calculateQuote({
-    basePrice: currentFormat.basePrice,
-    extraMusicians: 0,
-    distanceKm: 25,
-    pax: 120,
-    hasBoseSound: true,
-    hasPhotocall: true
-  });
 
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-200, 200], [-15, 15]);
@@ -32,7 +26,7 @@ export default function Archetype1_TinderDeck({ onBook }: { onBook?: (formatId: 
 
   const handleSwipe = (direction: 'left' | 'right') => {
     if (direction === 'right') {
-      setLikedList(prev => [...prev, currentFormat.id]);
+      onBook?.(currentFormat.id);
     }
     setCurrentIndex(prev => prev + 1);
   };
@@ -42,6 +36,15 @@ export default function Archetype1_TinderDeck({ onBook }: { onBook?: (formatId: 
       `Hola Edwin, vengo de probar el Tinder-Deck S-Class de EAR OS. Me interesa el formato ${currentFormat.name} (${currentFormat.basePrice}€). ¿Tenéis disponibilidad para mi fecha?`
     );
     window.open(`https://wa.me/${SOVEREIGN_ARTIST.phoneClean}?text=${text}`, '_blank');
+  };
+
+  const handleLockOrNext = () => {
+    if (onNext) {
+      onBook?.(currentFormat.id);
+      onNext();
+      return;
+    }
+    handleWhatsApp();
   };
 
   return (
@@ -235,7 +238,7 @@ export default function Archetype1_TinderDeck({ onBook }: { onBook?: (formatId: 
 
         {/* Direct Stripe / WhatsApp Lock */}
         <button
-          onClick={handleWhatsApp}
+          onClick={handleLockOrNext}
           aria-label="Bloquear fecha con Edwin"
           className="flex flex-col items-center justify-center p-3 min-h-[48px] rounded-2xl bg-[#ecb613] text-black active:scale-95 transition-all shadow-lg shadow-[#ecb613]/30 font-black"
         >
@@ -308,7 +311,7 @@ export default function Archetype1_TinderDeck({ onBook }: { onBook?: (formatId: 
             </div>
 
             <button
-              onClick={handleWhatsApp}
+              onClick={handleLockOrNext}
               className="w-full py-3.5 rounded-2xl bg-[#ecb613] text-black font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg"
             >
               <span>Confirmar Bloqueo con Edwin</span>

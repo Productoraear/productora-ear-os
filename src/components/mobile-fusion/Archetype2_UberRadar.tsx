@@ -3,18 +3,22 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import {
-  Navigation, Radio, Zap, Clock, ShieldCheck,
-  MapPin, CheckCircle2, ChevronRight, Sliders, Truck,
+  Clock,
+  MapPin, Truck,
   Volume2, Users, ArrowRight
 } from 'lucide-react';
 import { ARTIST_FORMATS, SOVEREIGN_ARTIST, calculateQuote } from './types';
 
-export default function Archetype2_UberRadar({ onDispatch }: { onDispatch?: (data: any) => void }) {
-  const [selectedFormatId, setSelectedFormatId] = useState('cuarteto-imperial');
-  const [distanceKm, setDistanceKm] = useState(45);
-  const [paxCount, setPaxCount] = useState(130);
-  const [isSlideUnlocked, setIsSlideUnlocked] = useState(false);
-  const [cityTarget, setCityTarget] = useState('Madrid / Alrededores');
+export default function Archetype2_UberRadar({ onDispatch, initialFormatId, initialPaxCount, initialDistanceKm }: {
+  onDispatch?: (data: { formatId: string; distanceKm: number; paxCount: number }) => void;
+  initialFormatId?: string;
+  initialPaxCount?: number;
+  initialDistanceKm?: number;
+}) {
+  const [selectedFormatId, setSelectedFormatId] = useState(initialFormatId || 'cuarteto-imperial');
+  const [distanceKm, setDistanceKm] = useState(initialDistanceKm ?? 45);
+  const [paxCount, setPaxCount] = useState(initialPaxCount ?? 130);
+  const cityTarget = 'Madrid / Alrededores';
 
   const activeFormat = ARTIST_FORMATS.find(f => f.id === selectedFormatId) || ARTIST_FORMATS[0];
   const quote = calculateQuote({
@@ -30,7 +34,10 @@ export default function Archetype2_UberRadar({ onDispatch }: { onDispatch?: (dat
   const wattsNeeded = paxCount * 12;
 
   const handleSlideComplete = () => {
-    setIsSlideUnlocked(true);
+    if (onDispatch) {
+      onDispatch({ formatId: selectedFormatId, distanceKm, paxCount });
+      return;
+    }
     const text = encodeURIComponent(
       `🚨 DESPACHO UBER S-CLASS EAR OS\n- Formato: ${activeFormat.name}\n- Destino: ${cityTarget} (${distanceKm} km)\n- Asistentes: ${paxCount} pax (${wattsNeeded}W Acústicos)\n- Total Estimado: ${quote.total}€\n- Depósito Stripe: 100€\nSolicito confirmación de unidad móvil.`
     );
