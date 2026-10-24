@@ -37,17 +37,21 @@ export function DynamicMobileExperienceOrchestrator() {
       ? profile.selectedAdaptiveMode
       : config.activeMode;
 
-  const { features } = config;
-
+  // 🧭 DOCTRINA DE AGENTES SINCRONIZADOS (SELLO DE DOMINIO):
+  // El Concierge IA y el Oráculo Astra (HUD) se montan SIEMPRE en móvil.
+  // El enrutador adaptativo es una capa de optimización, NO un interruptor que
+  // deje la pantalla táctil sin agentes. Bug sellado: el evento `open-ai-concierge`
+  // no tenía listener porque AIConciergeDock se importaba pero jamás se renderizaba.
   return (
     <>
-      {/* 1. MODO SOVEREIGN HUD V5 (SOLO NAVEGACIÓN MÓVIL REFINADA - CERO CHATBOTS FLOTANTES) */}
-      {effectiveMode === 'SOVEREIGN_HUD_V5' && (
-        <SovereignMobileHUD />
-      )}
+      {/* Concierge IA Territorial — responde al evento `open-ai-concierge` del HUD */}
+      <AIConciergeDock />
 
-      {/* 2. MODO MINIMAL STEALTH / OMNI-BAR SUPREMACY: CERO WIDGETS FLOTANTES OBSOLETOS */}
-      {effectiveMode !== 'SOVEREIGN_HUD_V5' && null}
+      {/* Navegación móvil + Oráculo Astra Copilot (roles, acústica 12 W/pax, IA y retención) */}
+      <SovereignMobileHUD />
+
+      {/* Refuerzo WhatsApp en estrategia clásica (desktop; el móvil ya tiene la barra sticky global) */}
+      {effectiveMode === 'CLASSIC_WHATSAPP' && <FloatingWhatsAppCta />}
     </>
   );
 }

@@ -3,7 +3,6 @@
 import React from 'react';
 import Link from 'next/link';
 import {
-  Heart,
   ShieldCheck,
   Crown,
   Music,
@@ -28,6 +27,7 @@ import { FramerMotionScrollCanvas } from '@/components/ui/FramerMotionScrollCanv
 import { motion } from 'framer-motion';
 import VanguardFluidBackground from '@/components/sclass/VanguardFluidBackground';
 import HolographicTiltCard from '@/components/sclass/HolographicTiltCard';
+import { WeddingTaxonomyExplorer } from '@/features/wedding/ui/WeddingTaxonomyExplorer';
 
 // Marco cinematográfico del hero: imagen auténtica y emocional (Edwin Agudelo cantando a los novios en directo).
 const HERO_WEDDING_IMAGE =
@@ -173,7 +173,7 @@ export default function BodasPage() {
               initial={{ opacity: 0, y: 25 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="text-5xl sm:text-6xl xl:text-7xl font-black uppercase tracking-tight text-white font-syne leading-[0.92]"
+              className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black uppercase tracking-tight text-white font-syne leading-[1.08] text-balance"
             >
               Bodas de{' '}
               <span className="relative inline-block">
@@ -188,7 +188,7 @@ export default function BodasPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-white/75 text-base sm:text-lg max-w-xl leading-relaxed"
+              className="text-white/75 text-base sm:text-lg max-w-xl leading-relaxed text-pretty"
             >
               Orquestamos los <strong className="text-white">6 pilares</strong> de una celebración legendaria —música en directo, catering de autor, escenografía monumental y blindaje técnico— con la precisión de una producción de gala y la emoción de un instante irrepetible.
             </motion.p>
@@ -315,6 +315,11 @@ export default function BodasPage() {
           <SmartMarketplaceNav />
         </section>
 
+        {/* 2.6. TAXONOMÍA CANÓNICA DE GREMIOS + FILTROS FACETADOS (bodas.net S-Class) */}
+        <section className="pt-10">
+          <WeddingTaxonomyExplorer />
+        </section>
+
         {/* 2.5. HERRAMIENTAS DE BODA PRO (GESTIÓN DE MESAS S-CLASS) */}
         <section className="pt-2">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 p-6 rounded-3xl bg-[#0c0a0e] border border-white/10">
@@ -368,7 +373,7 @@ export default function BodasPage() {
               <span className="text-xs font-mono font-black uppercase tracking-[0.3em] text-[#ecb613]">
                 Directorio Exclusivo
               </span>
-              <h2 className="text-3xl sm:text-5xl font-black uppercase text-white font-syne">
+              <h2 className="text-2xl sm:text-4xl font-black uppercase text-white font-syne leading-[1.1] text-balance">
                 Espacios y Banquetes por Zona
               </h2>
               <p className="text-zinc-400 text-sm mt-1">
@@ -501,7 +506,7 @@ export default function BodasPage() {
                 <Crown size={14} /> Banda Sonora de Vuestra Boda
               </div>
 
-              <h2 className="text-3xl sm:text-5xl font-black uppercase tracking-tight text-white font-syne leading-tight">
+              <h2 className="text-2xl sm:text-4xl font-black uppercase tracking-tight text-white font-syne leading-tight text-balance">
                 Edwin Agudelo & Ensamble de Gala
               </h2>
 
@@ -555,7 +560,7 @@ export default function BodasPage() {
                 <Star size={12} className="fill-[#ecb613]" />
                 <span>100% Recomendado por Parejas</span>
               </div>
-              <h2 className="text-3xl sm:text-5xl font-black uppercase text-white font-syne">
+              <h2 className="text-2xl sm:text-4xl font-black uppercase text-white font-syne leading-[1.1] text-balance">
                 Opiniones Reales & <span className="text-[#ecb613]">Garantía S-Class</span>
               </h2>
             </div>

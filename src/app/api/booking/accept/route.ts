@@ -12,7 +12,7 @@ import { fireAndForgetN8n } from '@/lib/services/n8n-dispatcher';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-export const BOOKING_STATUS_ACCEPTED = 'ACCEPTED_BY_PROVIDER' as const;
+const BOOKING_STATUS_ACCEPTED = 'ACCEPTED_BY_PROVIDER' as const;
 
 /** Almacén en memoria de estado para reservas aceptadas (idempotencia y telemetría). */
 const acceptedBookingsRegistry = new Map<string, {

@@ -1,27 +1,19 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import {
   Sparkles,
-  MapPin,
-  ShieldCheck,
-  ArrowRight,
-  Award,
-  Star,
   Phone,
   CheckCircle2,
   Flame,
-  Music,
   Sliders,
-  Clock,
   HelpCircle,
   AlertTriangle,
-  ChevronRight
+  ArrowUpRight
 } from 'lucide-react';
 import { PROVINCIAS_52_GRAPH } from '@/lib/constants/seo-data-hydrated';
 import { MUNICIPALITIES_DATASET } from '@/lib/constants/spanish-municipalities';
-import { CENTRALITA } from '@/lib/phone-constants';
 import { getProvidersByLocation } from '@/lib/data/vampire-service';
 import { resolveSearchIntent } from '@/lib/seo/searchIntentEngine';
 import {
@@ -30,9 +22,37 @@ import {
   getCanonicalServiceLabel,
   CANONICAL_SERVICES
 } from '@/lib/navigation/canonical-taxonomy';
+import { getPriceTierForPrice } from '@/lib/constants/wedding-taxonomy';
+import { WeddingProviderGrid } from '@/features/wedding/ui/WeddingProviderGrid';
+import {
+  parsePriceEur,
+  getMomentsForCategory,
+} from '@/features/wedding/lib/wedding-provider-facets';
+import type { WeddingProviderCardData } from '@/features/wedding/lib/wedding-provider-facets';
 
 interface Props {
   params: Promise<{ provincia: string; servicio: string }>;
+}
+
+/** 💀 Esqueleto OLED del grid (fallback Suspense) — preserva LCP sin layout shift. */
+function GridSkeleton() {
+  return (
+    <div className="space-y-6" aria-hidden>
+      <div className="h-24 rounded-3xl bg-white/[0.02] border border-white/10 animate-pulse" />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <div key={i} className="rounded-3xl bg-[#09090d] border border-white/10 overflow-hidden">
+            <div className="aspect-[16/10] bg-white/[0.03] animate-pulse" />
+            <div className="p-6 space-y-3">
+              <div className="h-4 w-2/3 bg-white/[0.06] rounded animate-pulse" />
+              <div className="h-3 w-full bg-white/[0.04] rounded animate-pulse" />
+              <div className="h-3 w-1/2 bg-white/[0.04] rounded animate-pulse" />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 export const dynamicParams = true;
@@ -103,7 +123,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function BodasServicioProvinciaPage({ params }: Props) {
   const { provincia, servicio } = await params;
   const provKey = provincia.toLowerCase();
-  const servKey = servicio.toLowerCase();
 
   // SSOT canónico: redirigir slugs legacy o geo incoherente con 301 permanente.
   const canonical = resolveCanonicalBodasService(provincia, servicio);
@@ -133,6 +152,26 @@ export default async function BodasServicioProvinciaPage({ params }: Props) {
   const providers = await getProvidersByLocation(canonical.province, canonical.service, 12);
   const topTowns = (MUNICIPALITIES_DATASET[canonical.province] || []).slice(0, 8);
   const basePrice = servData.basePrice || intent.basePrice || 350;
+
+  // Enriquecimiento del roster para el grid facetado (Precio y Momento reales).
+  const cards: WeddingProviderCardData[] = providers.map((p) => {
+    const priceEur = parsePriceEur(p.priceRange);
+    return {
+      id: p.id,
+      slug: p.shaHash ?? p.id,
+      name: p.name,
+      category: p.category,
+      municipality: p.municipality ?? null,
+      province: p.province,
+      priceRange: p.priceRange ?? null,
+      priceEur,
+      priceTier: priceEur !== null ? getPriceTierForPrice(priceEur) : null,
+      rating: p.rating ?? 4.9,
+      description: p.description ?? null,
+      imageUrl: (p.imageUrls && p.imageUrls[0]) ? p.imageUrls[0] : '',
+      momentIds: getMomentsForCategory(p.category)
+    };
+  });
 
   // Schema.org JSON-LD
   const serviceJsonLd = {
@@ -174,6 +213,17 @@ export default async function BodasServicioProvinciaPage({ params }: Props) {
     }))
   };
 
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://productoraear.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Bodas', item: 'https://productoraear.com/bodas' },
+      { '@type': 'ListItem', position: 3, name: provData.name, item: `https://productoraear.com/bodas/${canonical.province}` },
+      { '@type': 'ListItem', position: 4, name: servData.title, item: `https://productoraear.com${canonical.path}` }
+    ]
+  };
+
   return (
     <main className="min-h-screen bg-[#050505] text-white selection:bg-[#ecb613] selection:text-black font-sans pt-28 pb-36 px-4 sm:px-6 lg:px-8">
       {/* Microdatos estructurados */}
@@ -185,18 +235,22 @@ export default async function BodasServicioProvinciaPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
 
       <div className="max-w-7xl mx-auto space-y-16">
 
-        {/* Breadcrumb S-Class */}
-        <nav className="flex items-center gap-2 text-xs font-mono text-zinc-500">
+        {/* Breadcrumb S-Class (jerárquico + accesible) */}
+        <nav aria-label="Miga de pan" className="flex items-center flex-wrap gap-2 text-xs font-mono text-zinc-500">
           <Link href="/" className="hover:text-[#ecb613] transition-colors">Inicio</Link>
-          <span>/</span>
+          <span aria-hidden>/</span>
           <Link href="/bodas" className="hover:text-[#ecb613] transition-colors">Bodas</Link>
-          <span>/</span>
+          <span aria-hidden>/</span>
           <Link href={`/bodas/${canonical.province}`} className="hover:text-[#ecb613] transition-colors">{provData.name}</Link>
-          <span>/</span>
-          <span className="text-[#ecb613] font-bold">{servData.title}</span>
+          <span aria-hidden>/</span>
+          <span className="text-[#ecb613] font-bold" aria-current="page">{servData.title}</span>
         </nav>
 
         {/* 🏆 HERO HORMOZI $100M GRAND SLAM OFFER */}
@@ -387,85 +441,41 @@ export default async function BodasServicioProvinciaPage({ params }: Props) {
                 // Verificados por Productora EAR
               </span>
               <h2 className="text-2xl sm:text-3xl font-black font-syne text-white uppercase mt-1">
-                Profesionales y Espacios en {provData.name} ({providers.length})
+                Profesionales y Espacios en {provData.name}
               </h2>
             </div>
             <span className="text-xs font-mono text-zinc-500 hidden sm:inline">Cero cuotas mensuales para proveedores</span>
           </div>
 
-          {providers.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {providers.map((p, idx) => {
-                const coverImg = (p.imageUrls && p.imageUrls[0]) ? p.imageUrls[0] : 'https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop';
-                const catLabel = (p.category || 'Servicio Homologado').toUpperCase();
+          <Suspense fallback={<GridSkeleton />}>
+            <WeddingProviderGrid
+              cards={cards}
+              provinceName={provData.name}
+              provinceSlug={canonical.province}
+              serviceTitle={servData.title}
+              basePrice={basePrice}
+            />
+          </Suspense>
+        </section>
 
-                return (
-                  <div
-                    key={idx}
-                    className="rounded-3xl bg-[#09090d] border border-white/10 hover:border-[#ecb613]/50 transition-all flex flex-col justify-between group overflow-hidden shadow-lg shadow-black/40 hover:-translate-y-1 duration-300"
-                  >
-                    <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#050505]">
-                      <img
-                        src={coverImg}
-                        alt={p.name}
-                        loading="lazy"
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#09090d] via-transparent to-black/40 pointer-events-none" />
-                      <div className="absolute top-3 left-3">
-                        <span className="px-2.5 py-1 bg-black/80 backdrop-blur-md border border-[#ecb613]/40 text-[#ecb613] rounded-full text-[10px] font-mono uppercase font-bold tracking-wider">
-                          {catLabel}
-                        </span>
-                      </div>
-                      <div className="absolute top-3 right-3 flex items-center gap-1 px-2 py-1 bg-black/80 backdrop-blur-md rounded-full text-white text-[10px] font-mono font-bold">
-                        <Star size={10} className="fill-[#ecb613] text-[#ecb613]" />
-                        <span>{p.rating || 4.9}</span>
-                      </div>
-                    </div>
-
-                    <div className="p-6 space-y-4 flex-grow flex flex-col justify-between">
-                      <div className="space-y-2">
-                        <h3 className="text-lg font-bold font-syne text-white group-hover:text-[#ecb613] transition-colors">
-                          {p.name}
-                        </h3>
-                        <p className="text-zinc-400 text-xs line-clamp-2 leading-relaxed font-light">
-                          {p.description || `Servicio profesional homologado en la provincia de ${provData.name} con calibración acústica S-Class.`}
-                        </p>
-                      </div>
-
-                      <div className="pt-4 border-t border-white/10 flex items-center justify-between">
-                        <div className="flex items-center gap-1 text-xs font-mono text-zinc-400">
-                          <MapPin size={12} className="text-[#ecb613]" />
-                          <span>{p.province || provData.name}</span>
-                        </div>
-                        <Link
-                          href={`/proveedores/${p.id}`}
-                          className="px-3 py-1.5 bg-white/5 hover:bg-[#ecb613] text-white hover:text-black font-mono text-[11px] font-bold uppercase rounded-lg transition-all flex items-center gap-1"
-                        >
-                          <span>Ver Ficha</span>
-                          <ArrowRight size={12} />
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          ) : (
-            <div className="p-12 rounded-3xl bg-white/[0.02] border border-white/10 text-center space-y-4">
-              <Sparkles size={32} className="mx-auto text-[#ecb613]" />
-              <h3 className="text-lg font-bold font-syne uppercase">Cobertura Oficial Activa en {provData.name}</h3>
-              <p className="text-zinc-400 text-xs sm:text-sm max-w-md mx-auto">
-                Despachamos unidades móviles y agrupaciones artísticas directas desde nuestro Hub Central con el SLA de 12 W/pax y Price-Lock 100€.
-              </p>
+        {/* 🔗 OTROS SERVICIOS PARA TU BODA (INTERLINKING pSEO) */}
+        <section className="space-y-4 pt-8 border-t border-white/10">
+          <span className="text-xs font-mono text-[#ecb613] uppercase tracking-widest block font-bold">
+            // Otros Servicios para tu Boda
+          </span>
+          <div className="flex flex-wrap gap-2">
+            {CANONICAL_SERVICES.filter((s) => s.slug !== canonical.service).map((s) => (
               <Link
-                href={`/cotizador?provincia=${encodeURIComponent(provData.name)}&ocasion=${encodeURIComponent(servData.title)}`}
-                className="inline-block px-6 py-3 bg-[#ecb613] text-black font-mono text-xs font-bold uppercase rounded-xl"
+                key={s.slug}
+                href={`/bodas/${canonical.province}/${s.slug}`}
+                className="group inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/[0.03] hover:bg-[#ecb613]/10 border border-white/10 hover:border-[#ecb613]/30 text-xs font-mono text-zinc-400 hover:text-[#ecb613] transition-all"
               >
-                Solicitar Reserva Directa
+                {s.label}
+                <span className="text-[10px] text-white/30 group-hover:text-[#ecb613]/70">Desde {s.basePrice} €</span>
+                <ArrowUpRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />
               </Link>
-            </div>
-          )}
+            ))}
+          </div>
         </section>
 
         {/* ❓ PREGUNTAS FRECUENTES PARA MOTORES DE IA & CLIENTES */}

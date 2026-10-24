@@ -825,4 +825,39 @@ div[class*="netlify-identity"],
 
 .animate-breathing-halo {
   animation: breathing-halo 6s ease-in-out infinite;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   🛡️ ANTI-DESBORDAMIENTO S-CLASS (SLOP 22-27 · TOLERANCIA CERO)
+   Tipografía monumental Syne jamás recorta ni desborda en móvil.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Elimina el scroll horizontal fantasma y el desbordamiento de 100vw */
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* Palabras largas (sonorización, backline, disponibilidad) jamás rompen el grid */
+h1, h2, h3, h4, h5, h6, p {
+  overflow-wrap: break-word;
+}
+
+/* Titulares: equilibra la última línea huérfana (text-wrap: balance) */
+h1, h2, h3 {
+  text-wrap: balance;
+}
+
+/* Cuerpo: justificación óptima sin ríos tipográficos (text-wrap: pretty) */
+p {
+  text-wrap: pretty;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
 }

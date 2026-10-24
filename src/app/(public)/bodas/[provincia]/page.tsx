@@ -3,9 +3,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
 import {
-  Heart, Sparkles, MapPin, ShieldCheck, Music,
-  Flame, Tv, Clock, Phone, ArrowRight, CheckCircle2,
-  Calendar, Star, Sliders, MessageCircle, Building2
+  MapPin, ShieldCheck, Clock, Phone, ArrowRight, MessageCircle, Building2
 } from 'lucide-react';
 import { PROVINCIAS_52_GRAPH, generateGeoSchema } from '@/lib/constants/seo-data-hydrated';
 import { CENTRALITA } from '@/lib/phone-constants';
@@ -91,6 +89,16 @@ export default async function ProvincialWeddingPage({ params }: Props) {
 
   const schemaJson = generateGeoSchema(provKey, 'mariachi');
 
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://productoraear.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Bodas', item: 'https://productoraear.com/bodas' },
+      { '@type': 'ListItem', position: 3, name: data.name, item: `https://productoraear.com/bodas/${data.slug}` }
+    ]
+  };
+
   const weddingServices: FeatureCardItem[] = [
     {
       id: 'mariachi-solista',
@@ -139,6 +147,20 @@ export default async function ProvincialWeddingPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaJson) }}
       />
+      {/* Breadcrumb Schema.org */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+
+      {/* Miga de pan jerárquica (interlinking) */}
+      <nav aria-label="Miga de pan" className="max-w-7xl mx-auto px-6 pt-24 flex items-center flex-wrap gap-2 text-xs font-mono text-ash">
+        <Link href="/" className="hover:text-[#ecb613] transition-colors">Inicio</Link>
+        <span aria-hidden>/</span>
+        <Link href="/bodas" className="hover:text-[#ecb613] transition-colors">Bodas</Link>
+        <span aria-hidden>/</span>
+        <span className="text-[#ecb613] font-bold" aria-current="page">{data.name}</span>
+      </nav>
 
       {/* 1. HERO EDITORIAL PROVINCIAL */}
       <section className="relative pt-36 pb-20 px-6 max-w-7xl mx-auto text-center space-y-8">
