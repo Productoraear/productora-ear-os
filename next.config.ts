@@ -99,6 +99,15 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // Canonicalización de host: unifica productoraear.com -> www.productoraear.com.
+      // Google indexa el host www (GSC 2026-10-24). Sin este 301 ambos hosts compiten
+      // y dividen la autoridad, hundiendo el posicionamiento. No afecta al IP de Coolify.
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "productoraear.com" }],
+        destination: "https://www.productoraear.com/:path*",
+        permanent: true,
+      },
       // Alias de producción
       {
         source: "/checkout",

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Phone, ArrowRight, ShieldCheck, Music2, Sparkles } from 'lucide-react';
-import NeuralConciergeFunnel2050 from '@/components/neural/NeuralConciergeFunnel2050';
+import { HeroWeddingCinematic } from '@/components/home/HeroWeddingCinematic';
 import { CENTRALITA_EAR_OS, TARIFA_BASE_SOLISTA_EUR, DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
 
 export default function Home() {
@@ -48,9 +48,9 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Hero Interactivo Neural 2050 (Viaje en 3 Clics) */}
+      {/* Hero de Alta Conversión: voz de Edwin + precio 350 € + bloqueo de fecha sin riesgo */}
       <div className="relative pt-16 sm:pt-20">
-        <NeuralConciergeFunnel2050 />
+        <HeroWeddingCinematic />
       </div>
 
       {/* BLOQUE DE CONFIANZA EDITORIAL S-CLASS: 3 PILARES QUE CIERRAN VENTAS */}

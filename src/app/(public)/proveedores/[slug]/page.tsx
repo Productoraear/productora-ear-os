@@ -592,6 +592,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const tier = getProviderTier({ id: provider.id || slug, slug, name: provider.name });
   const isBlacklisted = tier === 'BLACKLISTED';
 
+  // P0 — DOCTRINA DEL DATO VERIFICADO (GSC 2026-10-24 · Anti-Doorway):
+  // `verified:true` solo con teléfono real verificable. Tier SOVEREIGN (Edwin) o
+  // CLAIMED (whitelist reclamada) = verificado. Todo lo demás (DIRECTORY_UNCLAIMED,
+  // fichas prov-* sin reclamar y BLACKLISTED) se emite con noindex para erradicar
+  // el castigo algorítmico por "Thin Content / Doorways" y disparar el CTR real.
+  const isVerifiedTier = tier === 'SOVEREIGN' || tier === 'CLAIMED';
+  const shouldNoIndex = isBlacklisted || !isVerifiedTier;
+
   const isGenericName = !cleanName || cleanName.toLowerCase().startsWith('prov-') || isBlacklisted;
   const displayTitle = isGenericName
     ? `Proveedor Homologado S-Class #${providerIdShort} (${category} en ${location}) | Productora EAR`
@@ -613,7 +621,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: displayTitle,
     description: metaDescription,
-    robots: isBlacklisted ? { index: false, follow: false } : { index: true, follow: true },
+    robots: shouldNoIndex ? { index: false, follow: false } : { index: true, follow: true },
     alternates: {
       canonical: `https://www.productoraear.com/proveedores/${canonicalSlug}`,
     },
