@@ -4,7 +4,7 @@ import React, { useState, useMemo } from 'react';
 import {
   MapPin, ShieldCheck, CreditCard,
   Sparkles, Navigation, CheckCircle2, MessageCircle,
-  Loader2, Search, Building2, Compass
+  Loader2, Search, Building2, Compass, AlertCircle
 } from 'lucide-react';
 import {
   MARIACHI_FORMATS,
@@ -51,6 +51,7 @@ export default function MariachiDispatchConsole() {
   const [autoNearestHub, setAutoNearestHub] = useState<boolean>(true);
   const [selectedSongs, setSelectedSongs] = useState<string[]>(['1', '2', '3', '4', '5']);
   const [isProcessingStripe, setIsProcessingStripe] = useState<boolean>(false);
+  const [stripeError, setStripeError] = useState<string | null>(null);
 
   // Destino activo (Muestra o Personalizado vía Autocompletado / Texto)
   const activeDestination = useMemo(() => {
@@ -119,6 +120,7 @@ export default function MariachiDispatchConsole() {
   const handleStripeDeposit = async () => {
     try {
       setIsProcessingStripe(true);
+      setStripeError(null);
       const result = await checkoutMariachiDeposit({
         formatId: selectedFormatId,
         destinationLat: activeDestination.lat,
@@ -132,14 +134,14 @@ export default function MariachiDispatchConsole() {
       });
 
       if (!result.ok) {
-        alert(result.error || 'No se pudo iniciar la pasarela Stripe.');
+        setStripeError(result.error || 'No se pudo iniciar la pasarela Stripe.');
         return;
       }
 
       window.location.href = result.url;
     } catch (err: unknown) {
       console.error('MARIACHI_STRIPE_DEPOSIT_ERROR:', err);
-      alert('Error al conectar con Stripe. Por favor, inténtalo de nuevo.');
+      setStripeError('Error al conectar con Stripe. Por favor, inténtalo de nuevo.');
     } finally {
       setIsProcessingStripe(false);
     }
@@ -160,6 +162,12 @@ export default function MariachiDispatchConsole() {
 
   return (
     <div className="space-y-10 overflow-x-hidden">
+      {stripeError && (
+        <div role="alert" className="flex items-center gap-3 p-4 rounded-2xl bg-red-950/60 border border-red-500/50 text-red-200 text-sm font-medium">
+          <AlertCircle className="w-5 h-5 shrink-0 text-red-400" />
+          <span>{stripeError}</span>
+        </div>
+      )}
       {/* SECCIÓN 1: SELECCIÓN DE FORMATO */}
       <div>
         <div className="flex items-center justify-between mb-4">

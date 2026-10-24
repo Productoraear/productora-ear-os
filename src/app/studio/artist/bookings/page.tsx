@@ -1,40 +1,20 @@
 'use client';
 export const dynamic = 'force-dynamic';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-  Calendar,
   MapPin,
   Clock,
   CheckCircle2,
   AlertCircle,
   ArrowUpRight,
   Filter,
-  DollarSign,
   Users,
 } from 'lucide-react';
+import { getArtistBookings, STUDIO_ARTIST_USER_ID, type ArtistBookingRecord } from '@/app/actions/artistStudioActions';
 
 type BookingStatus = 'CONFIRMADO' | 'PENDIENTE' | 'COMPLETADO' | 'CANCELADO';
 type FilterType = 'todos' | 'CONFIRMADO' | 'PENDIENTE' | 'COMPLETADO';
-
-interface Booking {
-  id: string;
-  eventDate: string;
-  eventType: string;
-  clientName: string;
-  location: string;
-  fee: number;
-  status: BookingStatus;
-  pax: number;
-}
-
-const MOCK_BOOKINGS: Booking[] = [
-  { id: 'BK-2026-0091', eventDate: '2026-09-20', eventType: 'Boda de Gala', clientName: 'María & Carlos', location: 'Finca El Olivar, Toledo', fee: 280, status: 'CONFIRMADO', pax: 180 },
-  { id: 'BK-2026-0092', eventDate: '2026-09-27', eventType: 'Gala Benéfica', clientName: 'Fundación Esperanza', location: 'Hotel Palace, Madrid', fee: 350, status: 'CONFIRMADO', pax: 250 },
-  { id: 'BK-2026-0093', eventDate: '2026-10-05', eventType: 'Evento Corporativo', clientName: 'Deloitte España', location: 'IFEMA, Madrid', fee: 450, status: 'PENDIENTE', pax: 400 },
-  { id: 'BK-2026-0088', eventDate: '2026-08-15', eventType: 'Boda Íntima', clientName: 'Ana & Pablo', location: 'Cigarral de las Mercedes, Toledo', fee: 350, status: 'COMPLETADO', pax: 60 },
-  { id: 'BK-2026-0085', eventDate: '2026-08-01', eventType: 'Sesión VIMUME', clientName: 'Residencia La Paz', location: 'Getafe, Madrid', fee: 280, status: 'COMPLETADO', pax: 30 },
-];
 
 const statusConfig: Record<BookingStatus, { color: string; bg: string; border: string; label: string }> = {
   CONFIRMADO: { color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/30', label: 'Confirmado' },
@@ -45,10 +25,27 @@ const statusConfig: Record<BookingStatus, { color: string; bg: string; border: s
 
 export default function ArtistBookingsPage() {
   const [filter, setFilter] = useState<FilterType>('todos');
+  const [bookings, setBookings] = useState<ArtistBookingRecord[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const filtered = filter === 'todos' ? MOCK_BOOKINGS : MOCK_BOOKINGS.filter(b => b.status === filter);
-  const totalRevenue = MOCK_BOOKINGS.filter(b => b.status === 'COMPLETADO').reduce((sum, b) => sum + b.fee, 0);
-  const upcomingCount = MOCK_BOOKINGS.filter(b => b.status === 'CONFIRMADO' || b.status === 'PENDIENTE').length;
+  useEffect(() => {
+    let active = true;
+    (async () => {
+      try {
+        const records = await getArtistBookings(STUDIO_ARTIST_USER_ID);
+        if (active) setBookings(records);
+      } finally {
+        if (active) setIsLoading(false);
+      }
+    })();
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const filtered = filter === 'todos' ? bookings : bookings.filter((b) => b.status === filter);
+  const totalRevenue = bookings.filter((b) => b.status === 'COMPLETADO').reduce((sum, b) => sum + b.fee, 0);
+  const upcomingCount = bookings.filter((b) => b.status === 'CONFIRMADO' || b.status === 'PENDIENTE').length;
 
   return (
     <div className="space-y-12">
@@ -89,6 +86,12 @@ export default function ArtistBookingsPage() {
 
       {/* BOOKINGS LIST */}
       <div className="space-y-4">
+        {isLoading && (
+          <div className="text-white/40 text-sm font-medium italic py-10 text-center">Cargando bookings reales desde el búnker…</div>
+        )}
+        {!isLoading && filtered.length === 0 && (
+          <div className="text-white/40 text-sm font-medium italic py-10 text-center">Sin bookings registrados todavía. Tu primer bolo aparecerá aquí.</div>
+        )}
         {filtered.map(booking => {
           const cfg = statusConfig[booking.status];
           return (

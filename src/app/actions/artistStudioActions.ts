@@ -161,3 +161,155 @@ export async function saveArtistConfig(
     return { ok: false, message: `DB_ERROR: ${message}` };
   }
 }
+
+// ---------------------------------------------------------------------------
+// 3. LECTURA REAL SERVER-SIDE (Cerrojo 2 — CERO FACHADAS)
+//    getArtistFinanceSummary() y getArtistBookings() leen de Prisma
+//    (auraWallet / ProductionEvent) con fallback limpio a 0,00 € / lista vacía.
+// ---------------------------------------------------------------------------
+
+/**
+ * Cerrojo 4 — Vinculación de identidad del artista (DOCUMENTADA).
+ * El estudio del artista aún no cablea la sesión autenticada (Firebase/NextAuth).
+ * Hasta entonces, las vistas inyectan este userId temporal y las consultas
+ * devuelven 0,00 € / listas vacías si no existe registro, garantizando
+ * CERO saldos ficticios inventados.
+ */
+export const STUDIO_ARTIST_USER_ID = "artista-actual";
+
+/** Split Soberano canónico: 80% neto al artista ejecutante (SSOT 80/10/10). */
+const SOVEREIGN_ARTIST_SPLIT = 0.8;
+
+export type ArtistPayoutStatus = "LIQUIDADO" | "EN_ESCROW" | "PROCESANDO";
+export type ArtistBookingStatus = "CONFIRMADO" | "PENDIENTE" | "COMPLETADO" | "CANCELADO";
+
+export interface ArtistPayoutRecord {
+  id: string;
+  date: string;
+  eventName: string;
+  venueCity: string;
+  format: string;
+  totalGrossEuro: number;
+  sovereignSplitPercent: number;
+  netPayoutEuro: number;
+  status: ArtistPayoutStatus;
+  payoutMethod: string;
+}
+
+export interface ArtistBookingRecord {
+  id: string;
+  eventDate: string;
+  eventType: string;
+  clientName: string;
+  location: string;
+  fee: number;
+  gross: number;
+  status: ArtistBookingStatus;
+  pax: number;
+}
+
+export interface ArtistFinanceSummary {
+  availableBalanceEuro: number;
+  escrowLockedBalanceEuro: number;
+  lifetimeEarnedEuro: number;
+  payouts: ArtistPayoutRecord[];
+}
+
+function mapEventToPayoutStatus(status: string): ArtistPayoutStatus {
+  const s = status.toUpperCase();
+  if (["COMPLETED", "PAID", "LIQUIDADO", "CONFIRMED", "CONFIRMADO"].includes(s)) return "LIQUIDADO";
+  if (["CANCELLED", "CANCELADO", "REJECTED"].includes(s)) return "PROCESANDO";
+  return "EN_ESCROW";
+}
+
+function mapEventToBookingStatus(status: string): ArtistBookingStatus {
+  const s = status.toUpperCase();
+  if (["COMPLETED", "PAID", "LIQUIDADO"].includes(s)) return "COMPLETADO";
+  if (["CONFIRMED", "CONFIRMADO", "ACTIVE"].includes(s)) return "CONFIRMADO";
+  if (["CANCELLED", "CANCELADO"].includes(s)) return "CANCELADO";
+  return "PENDIENTE";
+}
+
+/**
+ * Resumen financiero real del artista: saldo de auraWallet + eventos de
+ * producción leídos de PostgreSQL. Artista nuevo (sin wallet ni eventos)
+ * => 0,00 € y lista vacía. Nunca números inventados.
+ */
+export async function getArtistFinanceSummary(userId: string): Promise<ArtistFinanceSummary> {
+  try {
+    const [wallet, events] = await Promise.all([
+      prisma.auraWallet.findUnique({ where: { userId } }),
+      prisma.productionEvent.findMany({ orderBy: { eventDate: "desc" }, take: 50 }),
+    ]);
+
+    const availableBalanceEuro = wallet?.balance ?? 0;
+
+    let escrowLockedBalanceEuro = 0;
+    let lifetimeEarnedEuro = 0;
+
+    const payouts: ArtistPayoutRecord[] = events.map((event) => {
+      const gross = event.totalBudget ?? 0;
+      const status = mapEventToPayoutStatus(event.status);
+      const netPayoutEuro = gross * SOVEREIGN_ARTIST_SPLIT;
+
+      if (status === "EN_ESCROW") escrowLockedBalanceEuro += gross;
+      if (status === "LIQUIDADO") lifetimeEarnedEuro += netPayoutEuro;
+
+      return {
+        id: event.id,
+        date: event.eventDate.toISOString().slice(0, 10).split("-").reverse().join("/"),
+        eventName: event.title,
+        venueCity: event.location ?? "—",
+        format: event.eventType,
+        totalGrossEuro: gross,
+        sovereignSplitPercent: Math.round(SOVEREIGN_ARTIST_SPLIT * 100),
+        netPayoutEuro,
+        status,
+        payoutMethod:
+          status === "EN_ESCROW"
+            ? "Stripe Escrow (Liberación automática post-evento)"
+            : "Stripe Connect (Cuenta bancaria del artista)",
+      };
+    });
+
+    return { availableBalanceEuro, escrowLockedBalanceEuro, lifetimeEarnedEuro, payouts };
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Error desconocido al leer el resumen financiero.";
+    logger.error({ event: "ARTIST_FINANCE_SUMMARY_ERROR", userId, error: message });
+    return { availableBalanceEuro: 0, escrowLockedBalanceEuro: 0, lifetimeEarnedEuro: 0, payouts: [] };
+  }
+}
+
+/**
+ * Bookings reales leídos de ProductionEvent (PostgreSQL).
+ * NOTA (Cerrojo 4): ProductionEvent aún no tiene FK a User/artistProfile; la
+ * vinculación por artista se documenta y se resolverá al cablear la sesión.
+ * Fallback limpio: sin eventos => lista vacía. Nunca un MOCK_BOOKINGS.
+ */
+export async function getArtistBookings(userId: string): Promise<ArtistBookingRecord[]> {
+  try {
+    const events = await prisma.productionEvent.findMany({
+      orderBy: { eventDate: "desc" },
+      take: 50,
+    });
+
+    return events.map((event) => {
+      const gross = event.totalBudget ?? 0;
+      return {
+        id: event.id,
+        eventDate: event.eventDate.toISOString(),
+        eventType: event.eventType,
+        clientName: event.clientName ?? "Cliente no identificado",
+        location: event.location ?? "Ubicación por confirmar",
+        fee: gross * SOVEREIGN_ARTIST_SPLIT,
+        gross,
+        status: mapEventToBookingStatus(event.status),
+        pax: event.guestCount ?? 0,
+      };
+    });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Error desconocido al leer los bookings.";
+    logger.error({ event: "ARTIST_BOOKINGS_ERROR", userId, error: message });
+    return [];
+  }
+}

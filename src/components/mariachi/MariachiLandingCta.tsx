@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { CreditCard, MessageCircle, FileText } from 'lucide-react';
+import { CreditCard, MessageCircle, FileText, AlertCircle } from 'lucide-react';
 import { checkoutMariachiDeposit } from '@/app/actions/mariachiCheckoutActions';
 import {
     MARIACHI_FORMATS,
@@ -24,6 +24,7 @@ interface MariachiLandingCtaProps {
  */
 export default function MariachiLandingCta({ formatId, finalCta, isB2g = false }: MariachiLandingCtaProps) {
     const [loading, setLoading] = useState(false);
+    const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
     const format = MARIACHI_FORMATS.find((f) => f.id === formatId) ?? MARIACHI_FORMATS[0];
     const reserveHub = MARIACHI_DISPATCH_HUBS[0];
@@ -39,6 +40,7 @@ export default function MariachiLandingCta({ formatId, finalCta, isB2g = false }
         if (isB2g) return;
         try {
             setLoading(true);
+            setErrorMsg(null);
             const quote = calculateMariachiQuote(
                 formatId,
                 { lat: reserveHub.lat, lng: reserveHub.lng },
@@ -58,20 +60,27 @@ export default function MariachiLandingCta({ formatId, finalCta, isB2g = false }
                 issuedAt: Date.now(),
             });
             if (!result.ok) {
-                alert(result.error || 'No se pudo iniciar la pasarela de pago Stripe.');
+                setErrorMsg(result.error || 'No se pudo iniciar la pasarela de pago Stripe.');
                 return;
             }
             window.location.href = result.url;
         } catch (err: unknown) {
             console.error('MARIACHI_LANDING_STRIPE_ERROR:', err);
-            alert('Error de conexión con la pasarela de pago.');
+            setErrorMsg('Error de conexión con la pasarela de pago.');
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <div className="flex flex-wrap items-center gap-4">
+        <div className="space-y-3">
+            {errorMsg && (
+                <div role="alert" className="flex items-center gap-3 p-4 rounded-2xl bg-red-950/60 border border-red-500/50 text-red-200 text-sm font-medium">
+                    <AlertCircle className="w-5 h-5 shrink-0 text-red-400" />
+                    <span>{errorMsg}</span>
+                </div>
+            )}
+            <div className="flex flex-wrap items-center gap-4">
             {isB2g ? (
                 <>
                     <a
@@ -112,6 +121,7 @@ export default function MariachiLandingCta({ formatId, finalCta, isB2g = false }
                     </a>
                 </>
             )}
+            </div>
         </div>
     );
 }

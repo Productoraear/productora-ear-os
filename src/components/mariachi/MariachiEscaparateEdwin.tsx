@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import {
   Sparkles, Award, CheckCircle2,
-  Calendar, MessageCircle, CreditCard, Video, Disc, HeartHandshake, ShieldCheck
+  Calendar, MessageCircle, CreditCard, Video, Disc, HeartHandshake, ShieldCheck, AlertCircle
 } from 'lucide-react';
 import { checkoutMariachiAuthorProduct } from '@/app/actions/mariachiCheckoutActions';
 
@@ -34,6 +34,7 @@ const AUTHOR_PRODUCTS: Array<{
 
 export default function MariachiEscaparateEdwin() {
   const [processingId, setProcessingId] = useState<AuthorProductId | null>(null);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const handleAuthorProduct = async (productId: AuthorProductId) => {
     const product = AUTHOR_PRODUCTS.find((p) => p.id === productId);
@@ -41,6 +42,7 @@ export default function MariachiEscaparateEdwin() {
 
     try {
       setProcessingId(productId);
+      setErrorMsg(null);
       const result = await checkoutMariachiAuthorProduct({
         productId,
         amount: product.amount,
@@ -49,11 +51,11 @@ export default function MariachiEscaparateEdwin() {
       if (result.ok) {
         window.location.href = result.url;
       } else {
-        alert(result.error || 'No se pudo iniciar la pasarela Stripe.');
+        setErrorMsg(result.error || 'No se pudo iniciar la pasarela Stripe.');
       }
     } catch (err: unknown) {
       console.error('MARIACHI_AUTHOR_PRODUCT_ERROR:', err);
-      alert('Error al conectar con Stripe. Por favor, inténtalo de nuevo.');
+      setErrorMsg('Error al conectar con Stripe. Por favor, inténtalo de nuevo.');
     } finally {
       setProcessingId(null);
     }
@@ -77,6 +79,12 @@ export default function MariachiEscaparateEdwin() {
       <div className="absolute bottom-0 left-0 w-80 h-80 bg-red-600/5 rounded-full blur-[130px] pointer-events-none" />
 
       <div className="relative z-10 space-y-8">
+        {errorMsg && (
+          <div role="alert" className="flex items-center gap-3 p-4 rounded-2xl bg-red-950/60 border border-red-500/50 text-red-200 text-sm font-medium">
+            <AlertCircle className="w-5 h-5 shrink-0 text-red-400" />
+            <span>{errorMsg}</span>
+          </div>
+        )}
         {/* Encabezado y Badges */}
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#ecb613]/15 border border-[#ecb613]/40 text-[#ecb613] text-xs font-mono uppercase tracking-[0.25em]">

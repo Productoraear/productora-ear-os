@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useTransition } from 'react';
+import React, { useState, useTransition, useEffect } from 'react';
 import { 
   Wallet, 
   CreditCard, 
@@ -12,22 +12,15 @@ import {
 } from 'lucide-react';
 import { createArtistSubscriptionCheckout, type ArtistPlanId } from '@/app/actions/artistSubscriptionActions';
 import { createConnectOnboardingLink } from '@/app/actions/stripeConnectActions';
+import {
+  getArtistFinanceSummary,
+  STUDIO_ARTIST_USER_ID,
+  type ArtistFinanceSummary,
+  type ArtistPayoutRecord,
+} from '@/app/actions/artistStudioActions';
 
 type FinancePeriod = 'ESTE_MES' | 'TRIMESTRE' | 'ANUAL';
 const FINANCE_PERIODS: readonly FinancePeriod[] = ['ESTE_MES', 'TRIMESTRE', 'ANUAL'] as const;
-
-interface GigPayoutRecord {
-  id: string;
-  date: string;
-  eventName: string;
-  venueCity: string;
-  format: string;
-  totalGrossEuro: number;
-  sovereignSplitPercent: number; // 80%
-  netPayoutEuro: number;
-  status: 'LIQUIDADO' | 'EN_ESCROW' | 'PROCESANDO';
-  payoutMethod: string;
-}
 
 export default function ArtistFinancePage() {
   const [selectedPeriod, setSelectedPeriod] = useState<'ESTE_MES' | 'TRIMESTRE' | 'ANUAL'>('ESTE_MES');
@@ -35,62 +28,36 @@ export default function ArtistFinancePage() {
   const [isSubscribing, setIsSubscribing] = useTransition();
   const [payoutErrorMsg, setPayoutErrorMsg] = useState<string | null>(null);
 
-  // Datos financieros del Artista / Cuadrilla (SSOT temporal — se sustituirá
-  // por lectura server-side desde auraWallet / Stripe Connect en la siguiente fase).
-  const availableBalance = 1420.80; // Saldo neto listo para transferir
-  const escrowLockedBalance = 600.00; // Depósitos de 100€ de reservas bloqueadas
-  const lifetimeEarned = 18450.00;
+  // Cerrojo 2/3 — Lectura real server-side. Saldos y liquidaciones leídos de
+  // Prisma (auraWallet + ProductionEvent) con fallback limpio a 0,00 € / lista
+  // vacía. Cero saldos ficticios inventados.
+  const [finance, setFinance] = useState<ArtistFinanceSummary>({
+    availableBalanceEuro: 0,
+    escrowLockedBalanceEuro: 0,
+    lifetimeEarnedEuro: 0,
+    payouts: [],
+  });
+  const [isLoadingFinance, setIsLoadingFinance] = useState<boolean>(true);
 
-  const [payouts] = useState<GigPayoutRecord[]>([
-    {
-      id: 'PAY-2026-088',
-      date: '28/08/2026',
-      eventName: 'Boda Gala Real (Gala Solista)',
-      venueCity: 'Finca El Regajal (Aranjuez)',
-      format: 'Edwin Agudelo Solista',
-      totalGrossEuro: 372.50,
-      sovereignSplitPercent: 80,
-      netPayoutEuro: 298.00,
-      status: 'LIQUIDADO',
-      payoutMethod: 'Stripe Connect (Cuenta ES84...)'
-    },
-    {
-      id: 'PAY-2026-087',
-      date: '25/08/2026',
-      eventName: 'Concierto Fiestas Patronales',
-      venueCity: 'Plaza Mayor (Méntrida, Toledo)',
-      format: 'Trío Mariachi Tradicional',
-      totalGrossEuro: 600.00,
-      sovereignSplitPercent: 80,
-      netPayoutEuro: 480.00,
-      status: 'LIQUIDADO',
-      payoutMethod: 'Stripe Connect (Cuenta ES84...)'
-    },
-    {
-      id: 'PAY-2026-089',
-      date: '05/09/2026',
-      eventName: 'Gala Privada Bodas de Plata',
-      venueCity: 'Hotel Santo Mauro (Madrid)',
-      format: 'Quinteto Imperial',
-      totalGrossEuro: 900.00,
-      sovereignSplitPercent: 80,
-      netPayoutEuro: 720.00,
-      status: 'EN_ESCROW',
-      payoutMethod: 'Stripe Escrow (Liberación automática post-evento)'
-    },
-    {
-      id: 'PAY-2026-090',
-      date: '12/09/2026',
-      eventName: 'Sesión Musicoterapia VIMUME',
-      venueCity: 'Residencia Los Nogales (Madrid)',
-      format: 'Dúo VIMUME Terapéutico',
-      totalGrossEuro: 480.00,
-      sovereignSplitPercent: 80,
-      netPayoutEuro: 384.00,
-      status: 'EN_ESCROW',
-      payoutMethod: 'Stripe Escrow (Liberación post-acta SPL)'
-    }
-  ]);
+  useEffect(() => {
+    let active = true;
+    (async () => {
+      try {
+        const summary = await getArtistFinanceSummary(STUDIO_ARTIST_USER_ID);
+        if (active) setFinance(summary);
+      } finally {
+        if (active) setIsLoadingFinance(false);
+      }
+    })();
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const availableBalance = finance.availableBalanceEuro;
+  const escrowLockedBalance = finance.escrowLockedBalanceEuro;
+  const lifetimeEarned = finance.lifetimeEarnedEuro;
+  const payouts = finance.payouts;
 
   /**
    * Retiro de saldo vía Stripe Connect Express.
@@ -101,8 +68,10 @@ export default function ArtistFinancePage() {
     setIsPayoutPending(async () => {
       try {
         const result = await createConnectOnboardingLink({
-          providerId: '00000000-0000-0000-0000-000000000000', // Se inyecta el providerId real tras autenticación
-          userId: 'artista-actual', // Sustituir por userId autenticado (session)
+          // Cerrojo 4 (DOCUMENTADO): el providerId real debe resolverse desde
+          // providerProfile del artista autenticado. Pendiente de cablear sesión.
+          providerId: '00000000-0000-0000-0000-000000000000',
+          userId: STUDIO_ARTIST_USER_ID,
         });
         if (result.url) {
           window.location.href = result.url;
@@ -124,8 +93,10 @@ export default function ArtistFinancePage() {
       try {
         const result = await createArtistSubscriptionCheckout({
           plan,
-          artistEmail: 'productoraear@gmail.com', // Sustituir por email autenticado del artista
-          artistName: 'Edwin Agudelo', // Sustituir por stageName autenticado
+          // Cerrojo 4 (DOCUMENTADO): email/stageName deben inyectarse desde la
+          // sesión autenticada del artista. Pendiente de cablear.
+          artistEmail: 'productoraear@gmail.com',
+          artistName: 'Edwin Agudelo',
         });
         if (result.ok) {
           window.location.href = result.checkoutUrl;
@@ -332,6 +303,15 @@ export default function ArtistFinancePage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-white/5 text-gray-300">
+              {isLoadingFinance ? (
+                <tr>
+                  <td colSpan={6} className="py-8 text-center text-gray-500">Cargando liquidaciones reales…</td>
+                </tr>
+              ) : payouts.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="py-8 text-center text-gray-500">Sin liquidaciones todavía. Tu primer bolo aparecerá aquí.</td>
+                </tr>
+              ) : null}
               {payouts.map((p) => (
                 <tr key={p.id} className="hover:bg-white/5 transition-colors">
                   <td className="py-3.5">
@@ -406,7 +386,7 @@ export default function ArtistFinancePage() {
  * Genera y descarga un certificado fiscal real (CSV) de la liquidación.
  * Cero fachadas: escribe un Blob con el desglose del split 80/10/10 y lo descarga.
  */
-function downloadFiscalInvoice(p: GigPayoutRecord) {
+function downloadFiscalInvoice(p: ArtistPayoutRecord) {
   const gross = p.totalGrossEuro.toFixed(2);
   const net = p.netPayoutEuro.toFixed(2);
   const platform = (p.totalGrossEuro * 0.1).toFixed(2);

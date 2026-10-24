@@ -4,7 +4,7 @@ import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import {
   Check, Sparkles, CreditCard,
-  MessageCircle, Users, Gift
+  MessageCircle, Users, Gift, AlertCircle
 } from 'lucide-react';
 import {
   MARIACHI_FORMATS,
@@ -64,6 +64,7 @@ const RESERVATION_HUB = MARIACHI_DISPATCH_HUBS[0];
 
 export default function MariachiPricingPacks() {
   const [loadingId, setLoadingId] = useState<MariachiFormatId | null>(null);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   // Cotización de cada pack a distancia 0 (tarifa base cerrada, sin logística).
   const quotesByFormat = useMemo(() => {
@@ -89,6 +90,7 @@ export default function MariachiPricingPacks() {
 
     try {
       setLoadingId(pack.id);
+      setErrorMsg(null);
       const result = await checkoutMariachiDeposit({
         formatId: pack.id,
         destinationLat: RESERVATION_HUB.lat,
@@ -102,14 +104,14 @@ export default function MariachiPricingPacks() {
       });
 
       if (!result.ok) {
-        alert(result.error || 'No se pudo iniciar la pasarela de pago Stripe.');
+        setErrorMsg(result.error || 'No se pudo iniciar la pasarela de pago Stripe.');
         return;
       }
 
       window.location.href = result.url;
     } catch (err: unknown) {
       console.error('MARIACHI_PACK_STRIPE_ERROR:', err);
-      alert('Error de conexión con la pasarela de pago.');
+      setErrorMsg('Error de conexión con la pasarela de pago.');
     } finally {
       setLoadingId(null);
     }
@@ -129,6 +131,12 @@ export default function MariachiPricingPacks() {
 
   return (
     <div id="precios" className="space-y-12">
+      {errorMsg && (
+        <div role="alert" className="flex items-center gap-3 p-4 rounded-2xl bg-red-950/60 border border-red-500/50 text-red-200 text-sm font-medium">
+          <AlertCircle className="w-5 h-5 shrink-0 text-red-400" />
+          <span>{errorMsg}</span>
+        </div>
+      )}
       {/* Título de Sección */}
       <div className="text-center max-w-3xl mx-auto space-y-3">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-xs font-mono uppercase tracking-[0.25em]">
