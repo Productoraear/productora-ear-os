@@ -8,20 +8,6 @@
   "_instructions_for_worker": "Ejecuta SOLO via: call RUN_OMEGA.bat next  ->  lee .antigravity/MISSION_ACTIVE.json  ->  edita SOLO 'files'  ->  call RUN_OMEGA.bat complete <ID>. El complete ya ejecuta tsc + eslint + test. 1 tarea por sesion.",
   "tasks": [
     {
-      "id": "W35_T02_SWARM_AI_LEAD_DISPATCHER_N8N_WHATSAPP",
-      "wave": 35,
-      "status": "QUEUED",
-      "title": "SWARM AI LEAD DISPATCHER & WHATSAPP ENGINE — Motor de cribado multi-agente, formateo de mensaje WhatsApp de alta conversión y despacho no bloqueante a n8n",
-      "files": [
-        "src/lib/dispatch/swarmLeadDispatcher.ts",
-        "src/app/api/dispatch/swarm-lead/route.ts"
-      ],
-      "action": "Implementar el dispatcher de leads enriquecidos en `src/lib/dispatch/swarmLeadDispatcher.ts` y su endpoint API `src/app/api/dispatch/swarm-lead/route.ts`. Debe validar inputs por rol (Novios, Ayuntamientos, Artistas, Proveedores), calcular viabilidad acústica (12 W/pax según aforo), verificar deducción de depósito de 100€ Stripe, formatear el texto WhatsApp listo para conversión con formato oficial y disparar webhook no bloqueante a n8n ('call-center-intake' o 'b2b-quote') con dead-letter queue. Cero `any` implícito.",
-      "scaffold": "1. Crear src/lib/dispatch/swarmLeadDispatcher.ts:\n- Exportar interface SwarmLeadInput con campos tipados (role, clientName, clientPhone, eventDate, location, guestsPax, budgetEur, technicalNotes).\n- Exportar interface SwarmQualificationResult con leadId (hash SHA-256 truncado), score (0..100), acousticStatus, wattsRecommended, splitPreview (80/10/10), whatsAppDirectUrl, n8nPayload.\n- Implementar qualifyAndFormatSwarmLead(input: SwarmLeadInput): SwarmQualificationResult consumiendo SSOT (DEPOSITO_STRIPE_EUR, WATTS_PER_PAX, SPLIT_SOBERANO, CENTRALITA_EAR_OS).\n- Disparar fireAndForgetN8n de @/lib/services/n8n-dispatcher.\n2. Crear src/app/api/dispatch/swarm-lead/route.ts con validación anti-XSS OWASP (sanitización de strings), POST handler que devuelve 202 Accepted con el payload estructurado.\n3. Validar: npx tsc --noEmit && npx eslint src/lib/dispatch/swarmLeadDispatcher.ts src/app/api/dispatch/swarm-lead/route.ts",
-      "done_when": "Dispatcher tipado y ruta API operativos, validación estricta de inputs, generación de URL de WhatsApp formateada y tsc Exit Code 0.",
-      "validate": "npx tsc --noEmit"
-    },
-    {
       "id": "W35_T03_FINCAS_PARABODA_HIGH_CONVERTING_BRIDGE",
       "wave": 35,
       "status": "QUEUED",
@@ -37,6 +23,13 @@
     }
   ],
   "completed": [
+    {
+      "id": "W35_T02_SWARM_AI_LEAD_DISPATCHER_N8N_WHATSAPP",
+      "title": "SWARM AI LEAD DISPATCHER & WHATSAPP ENGINE — Motor de cribado multi-agente, formateo de mensaje WhatsApp de alta conversión y despacho no bloqueante a n8n",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-24T21:12:33.115Z"
+    },
     {
       "id": "W35_T01_MULTIROL_QUANTUM_COCKPIT_SELECTOR",
       "title": "QUANTUM ROLE MORPHING COCKPIT — Selector Multirol inmersivo (Novios/Ayuntamientos/Artistas/Proveedores) con transiciones hápticas, paletas OLED adaptativas y cero layout shift",
@@ -116,8 +109,8 @@
     }
   ],
   "metadata": {
-    "last_updated": "2026-10-24T21:07:34.394Z",
-    "total_pending": 2,
+    "last_updated": "2026-10-24T21:12:33.117Z",
+    "total_pending": 1,
     "current_sprint": "WAVE_35_QUANTUM_MULTIROL_SEAL",
     "ceo_mandate": "Ejecución del Master Cockpit Multirol S-Class: Selector morfogenético Novios/Ayuntamientos/Artistas/Proveedores con audio háptico, Swarm IA Lead Dispatcher n8n con formateo WhatsApp de alta conversión, y conector FincasParaBoda con simulación acústica Bose F1 (12 W/pax). 1 tarea por sesión."
   }
