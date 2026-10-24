@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Phone, ArrowRight, ShieldCheck, Music2, Sparkles } from 'lucide-react';
 import { HeroWeddingCinematic } from '@/components/home/HeroWeddingCinematic';
+import QuantumRoleCockpit from '@/components/home/QuantumRoleCockpit';
 import { CENTRALITA_EAR_OS, TARIFA_BASE_SOLISTA_EUR, DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
 
 export default function Home() {
@@ -48,8 +49,13 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Hero de Alta Conversión: voz de Edwin + precio 350 € + bloqueo de fecha sin riesgo */}
+      {/* Selector Multirol Quantum: cabecera inmersiva de arquetipos EAR OS */}
       <div className="relative pt-16 sm:pt-20">
+        <QuantumRoleCockpit />
+      </div>
+
+      {/* Hero de Alta Conversión: voz de Edwin + precio 350 € + bloqueo de fecha sin riesgo */}
+      <div className="relative">
         <HeroWeddingCinematic />
       </div>
 

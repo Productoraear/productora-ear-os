@@ -10,7 +10,7 @@
   --ear-bg: #050505;
   --ear-surface: #0a0a0a;
   --ear-surface-2: #141414;
-  --ear-muted: #666666;
+  --ear-muted: #a1a1aa;
   --ear-text: #f5f1e8;
   --ear-accent: #ecb613; 
   --ear-accent-2: #49d6b5; 
@@ -65,7 +65,7 @@ h1, h2, h3, h4, .display {
 p, .text {
   font-family: var(--ear-font-text);
   font-weight: 400;
-  color: rgba(245, 241, 232, 0.5); /* More silent */
+  color: rgba(245, 241, 232, 0.88); /* High-contrast legible body */
 }
 
 /* 🧪 S-Class Components */

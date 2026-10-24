@@ -1,13 +1,49 @@
 {
   "_meta": {
-    "version": "9.1-OMEGA-WAVE-34-AWWWARDS-SEAL",
-    "doctrine": "WAVE 34: REFINAMIENTO INVERSO AWWWARDS — aislamiento hermetico por vertical + radar networking horas muertas + morphing mobile HUD + aura glow OLED",
-    "wave": 34,
-    "total_tasks": 1
+    "version": "9.2-OMEGA-WAVE-35-QUANTUM-MULTIROL-SEAL",
+    "doctrine": "WAVE 35: QUANTUM MULTIROL MASTER COCKPIT & SWARM DISPATCHER — Selector Morfogenético Cuántico (Novios/Ayuntamientos/Artistas/Proveedores), Swarm IA WhatsApp Dispatcher n8n y Conector FincasParaBoda S-Class",
+    "wave": 35,
+    "total_tasks": 3
   },
   "_instructions_for_worker": "Ejecuta SOLO via: call RUN_OMEGA.bat next  ->  lee .antigravity/MISSION_ACTIVE.json  ->  edita SOLO 'files'  ->  call RUN_OMEGA.bat complete <ID>. El complete ya ejecuta tsc + eslint + test. 1 tarea por sesion.",
-  "tasks": [],
+  "tasks": [
+    {
+      "id": "W35_T02_SWARM_AI_LEAD_DISPATCHER_N8N_WHATSAPP",
+      "wave": 35,
+      "status": "QUEUED",
+      "title": "SWARM AI LEAD DISPATCHER & WHATSAPP ENGINE — Motor de cribado multi-agente, formateo de mensaje WhatsApp de alta conversión y despacho no bloqueante a n8n",
+      "files": [
+        "src/lib/dispatch/swarmLeadDispatcher.ts",
+        "src/app/api/dispatch/swarm-lead/route.ts"
+      ],
+      "action": "Implementar el dispatcher de leads enriquecidos en `src/lib/dispatch/swarmLeadDispatcher.ts` y su endpoint API `src/app/api/dispatch/swarm-lead/route.ts`. Debe validar inputs por rol (Novios, Ayuntamientos, Artistas, Proveedores), calcular viabilidad acústica (12 W/pax según aforo), verificar deducción de depósito de 100€ Stripe, formatear el texto WhatsApp listo para conversión con formato oficial y disparar webhook no bloqueante a n8n ('call-center-intake' o 'b2b-quote') con dead-letter queue. Cero `any` implícito.",
+      "scaffold": "1. Crear src/lib/dispatch/swarmLeadDispatcher.ts:\n- Exportar interface SwarmLeadInput con campos tipados (role, clientName, clientPhone, eventDate, location, guestsPax, budgetEur, technicalNotes).\n- Exportar interface SwarmQualificationResult con leadId (hash SHA-256 truncado), score (0..100), acousticStatus, wattsRecommended, splitPreview (80/10/10), whatsAppDirectUrl, n8nPayload.\n- Implementar qualifyAndFormatSwarmLead(input: SwarmLeadInput): SwarmQualificationResult consumiendo SSOT (DEPOSITO_STRIPE_EUR, WATTS_PER_PAX, SPLIT_SOBERANO, CENTRALITA_EAR_OS).\n- Disparar fireAndForgetN8n de @/lib/services/n8n-dispatcher.\n2. Crear src/app/api/dispatch/swarm-lead/route.ts con validación anti-XSS OWASP (sanitización de strings), POST handler que devuelve 202 Accepted con el payload estructurado.\n3. Validar: npx tsc --noEmit && npx eslint src/lib/dispatch/swarmLeadDispatcher.ts src/app/api/dispatch/swarm-lead/route.ts",
+      "done_when": "Dispatcher tipado y ruta API operativos, validación estricta de inputs, generación de URL de WhatsApp formateada y tsc Exit Code 0.",
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W35_T03_FINCAS_PARABODA_HIGH_CONVERTING_BRIDGE",
+      "wave": 35,
+      "status": "QUEUED",
+      "title": "FINCAS PARABODA HIGH CONVERTING BRIDGE — Conector interactivo para fincasparaboda.com con cotizador paramétrico de acústica Bose F1 (12 W/pax), limitadores Ley 37/2003 y bloqueo 100€ Stripe",
+      "files": [
+        "src/components/fincas/FincasParabodaBridgeModal.tsx",
+        "src/app/(public)/fincas/page.tsx"
+      ],
+      "action": "Construir `src/components/fincas/FincasParabodaBridgeModal.tsx` e integrarlo en `src/app/(public)/fincas/page.tsx`. Permite a cualquier pareja o wedding planner que busque finca: 1) Seleccionar el aforo de invitados (50 a 600 pax); 2) Calcular al vuelo la potencia requerida en vatios RMS (12 W/pax) y el sistema recomendado (Bose F1 / L1 Pro / Line Array); 3) Mostrar la certificación acústica Ley 37/2003 (85-90 dBA exterior / 80-85 dBA interior) con garantía de no-clausura; 4) Botón de reserva con fianza protegida Stripe 100€ deducible y despacho automático a n8n 'finca-partnership'.",
+      "scaffold": "1. Crear src/components/fincas/FincasParabodaBridgeModal.tsx:\n- Modal accesible con Dialog primitive o aria-modal.\n- Slider de aforo de 50 a 600 pax con cálculo en vivo: watts = pax * WATTS_PER_PAX (12).\n- Selector de entorno: Jardín Exterior (85-90 dBA) vs Salón Interior (80-85 dBA).\n- Desglose transparente: Fianza Stripe 100€ (100% deducible) + Solista Edwin Agudelo desde 350€.\n- Botón de envío que invoca /api/dispatch/swarm-lead o abre WhatsApp con el lead precargado.\n2. Integrar el CTA 'Conectar con FincasParaBoda.com // Auditoría Acústica S-Class' en src/app/(public)/fincas/page.tsx.\n3. Validar: npx tsc --noEmit && npx eslint src/components/fincas/FincasParabodaBridgeModal.tsx src/app/(public)/fincas/page.tsx",
+      "done_when": "Modal interactivo de fincas operativo, cálculo de vatios 12 W/pax en vivo, integración en /fincas y tsc Exit Code 0.",
+      "validate": "npx tsc --noEmit"
+    }
+  ],
   "completed": [
+    {
+      "id": "W35_T01_MULTIROL_QUANTUM_COCKPIT_SELECTOR",
+      "title": "QUANTUM ROLE MORPHING COCKPIT — Selector Multirol inmersivo (Novios/Ayuntamientos/Artistas/Proveedores) con transiciones hápticas, paletas OLED adaptativas y cero layout shift",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-24T21:07:34.393Z"
+    },
     {
       "id": "W34_T01_CONTEXTUAL_VERTICAL_ISOLATION_AND_NETWORKING_RADAR",
       "title": "VERTICAL ISOLATION & SENSORY NETWORKING RADAR — Erradicacion total de ruido visual (fincas/artistas/novios/B2G 100% aislados), morphing cockpit con acentos S-Class, micro-feedback audio Web Audio API y Radar de Eventos para horas muertas de proveedores",
@@ -77,96 +113,12 @@
       "status": "COMPLETED",
       "exit_code": 0,
       "completed_at": "2026-10-23T16:54:46.999Z"
-    },
-    {
-      "id": "W31_T04_VOICE_ENTERPRISE_VALIDATION_SUITE",
-      "title": "VOICE ENTERPRISE VALIDATION SUITE — Script forense scripts/verify_voice_command_center.cjs con validación de los 32 agentes, TTS failover y sello Omega Diamante",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-23T13:57:18.168Z"
-    },
-    {
-      "id": "W31_T03_VOICE_COMMAND_CENTER_UI",
-      "title": "VOICE COMMAND CENTER UI — Consola de Mando Visual OLED S-Class en /command-center/voices para supervisar y reasignar las voces de los 32 agentes",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-23T13:55:34.971Z"
-    },
-    {
-      "id": "W31_T02_VOICE_ADMIN_CRUD_API",
-      "title": "VOICE ADMIN CRUD API — Endpoints REST /api/voices/assignments (GET/PUT) y ampliación de /api/voices (POST) con validación estricta y auditoría",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-23T13:53:00.394Z"
-    },
-    {
-      "id": "W31_T01_VOICE_PERSISTENCE_PRISMA",
-      "title": "VOICE PERSISTENCE PRISMA — Modelos VoiceProfile y AgentVoiceAssignment en schema.prisma, npx prisma generate y servicio híbrido resiliente voicePersistence.ts",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-23T13:35:52.353Z"
-    },
-    {
-      "id": "W30_T04_BARE_METAL_SYNC",
-      "title": "BARE-METAL SYNC — Sello de conectividad VPS Hostinger Coolify (82.29.179.172:8000), verificación Git y despliegue final",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-23T09:45:22.069Z"
-    },
-    {
-      "id": "W30_T03_PRODUCTION_BUILD_SEAL",
-      "title": "PRODUCTION BUILD SEAL — Commit atómico de agentes, DLQ durable en disco y compilación real standalone",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-23T07:06:32.503Z"
-    },
-    {
-      "id": "W30_T02_SEO_SITEMAP_LOCK",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "evidence": "src/app/sitemap.ts + src/app/api/sitemap/ + src/app/api/sitemap-index/ + src/app/robots.ts + public/data/urls_sitemap.json (artefactos reales presentes y trackeados)."
-    },
-    {
-      "id": "W30_T01_N8N_WEBHOOK_PULSE",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "evidence": "src/lib/agents/n8nDispatcher.ts + src/app/api/agents/ implementados. tsc --noEmit = 0, eslint = 0. NOTA: archivos SIN trackear (no incluidos en commit 36e490b9)."
-    },
-    {
-      "id": "W29_T04_SEGUIMIENTO_TRACKER_ENHANCEMENT",
-      "status": "COMPLETED",
-      "exit_code": 0
-    },
-    {
-      "id": "W29_T03_AUTOMATED_SPLIT_PAYOUT_DISPATCHER",
-      "status": "COMPLETED",
-      "exit_code": 0
-    },
-    {
-      "id": "W29_T02_SIGNATURE_ESCROW_PAGE",
-      "status": "COMPLETED",
-      "exit_code": 0
-    },
-    {
-      "id": "W29_T01_SMART_CONTRACT_GENERATOR",
-      "status": "COMPLETED",
-      "exit_code": 0
     }
   ],
   "metadata": {
-    "last_updated": "2026-10-24T17:13:13.906Z",
-    "total_pending": 0,
-    "current_sprint": "WAVE_33_MVP_S_CLASS_SEAL",
-    "ceo_mandate": "Sellado del MVP S-Class: confirmacion post-pago idempotente ACID (Stripe session_id → dedupe ProductionEvent → lockDateAtomically) y funnel secuencial mobile-fusion multi-arquetipo (Tinder/Uber/Airbnb/Timeline). 3 commits atomicos + push + arbol limpio.",
-    "forensic_verification": {
-      "verified_at": "2026-10-23T15:26:00.000Z",
-      "node": "v26.12.1 (portable: C:/Users/Productora Ear/Downloads/node-lts/node-v26.12.1-win-x64)",
-      "git": "2.47.1.windows.1 (portable: C:/Users/Productora Ear/Downloads/git-portable/cmd)",
-      "tsc_noEmit_exit": 0,
-      "tsc_noEmit_output_bytes": 0,
-      "eslint_exit": 0,
-      "eslint_errors": 0,
-      "git_head_commit": "06bfd2dd (feat(voice): cablear OmniAgentConsoleModal al motor de voz multi-proveedor)"
-    }
+    "last_updated": "2026-10-24T21:07:34.394Z",
+    "total_pending": 2,
+    "current_sprint": "WAVE_35_QUANTUM_MULTIROL_SEAL",
+    "ceo_mandate": "Ejecución del Master Cockpit Multirol S-Class: Selector morfogenético Novios/Ayuntamientos/Artistas/Proveedores con audio háptico, Swarm IA Lead Dispatcher n8n con formateo WhatsApp de alta conversión, y conector FincasParaBoda con simulación acústica Bose F1 (12 W/pax). 1 tarea por sesión."
   }
 }

@@ -9,10 +9,12 @@ import {
   Building2,
   Landmark,
   ArrowRight,
-  Heart
+  Heart,
+  Search
 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useSharedContext } from '@/app/context/SharedContext';
 
 export interface ProfileJourney {
   id: string;
@@ -102,7 +104,7 @@ const PROFILES: ProfileJourney[] = [
     ctaText: 'ViajeMusicalPorLaMemoria.com',
     href: '/vimume',
     icon: Heart,
-    accentColor: '#8b5cf6',
+    accentColor: '#00E5FF',
     bgImage: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1200&auto=format&fit=crop',
     stats: [
       { label: 'Deducción Fiscal', value: 'Hasta 80% Ley 49' },
@@ -111,9 +113,20 @@ const PROFILES: ProfileJourney[] = [
   }
 ];
 
+const QUICK_CATEGORIES: { label: string; href: string }[] = [
+  { label: 'Fincas', href: '/fincas' },
+  { label: 'Mariachis', href: '/simulacion-mariachis' },
+  { label: 'DJs', href: '/artistas/djs' },
+  { label: 'Catering', href: '/proveedores' },
+  { label: 'Solista 350 €', href: '/reservar/solista' },
+  { label: 'Ayuntamientos', href: '/ayuntamientos' },
+  { label: 'VIMUME', href: '/vimume' }
+];
+
 export default function CinematicHeroSClass() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const router = useRouter();
+  const { setIsSearchOpen } = useSharedContext();
 
   const handleCardNavigation = (href: string) => {
     router.push(href);
@@ -132,11 +145,44 @@ export default function CinematicHeroSClass() {
         </div>
 
         <h1 className="mt-4 text-2xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-white font-syne max-w-4xl leading-tight">
-          MÚSICA EN DIRECTO DE ALTA GALA // <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] via-[#00E5FF] to-white italic">EVENTOS INOLVIDABLES</span>
+          MÚSICA EN DIRECTO DE ALTA GALA // <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f5c538] via-[#ecb613] to-[#b38805] italic">EVENTOS INOLVIDABLES</span>
         </h1>
-        <p className="text-xs sm:text-base text-zinc-300 font-sans font-normal max-w-2xl mt-3 leading-relaxed">
+        <p className="text-sm sm:text-base text-zinc-200 font-sans font-normal max-w-2xl mt-3 leading-relaxed">
           Mariachis de gala, solistas líricos y producción técnica de alta fidelidad para bodas, celebraciones exclusivas y recepciones oficiales. Presupuesto garantizado con reserva inmediata.
         </p>
+
+        {/* 🔍 BARRA DE BÚSQUEDA CENTRAL (PATRÓN BODAS.NET / ZOLA) */}
+        <div className="mt-6 w-full max-w-2xl px-2">
+          <button
+            onClick={() => setIsSearchOpen(true)}
+            aria-label="Abrir buscador global de proveedores y servicios"
+            className="w-full flex items-center gap-3 px-4 py-3.5 rounded-full bg-white/10 hover:bg-white/15 border border-white/15 hover:border-[#ecb613]/50 backdrop-blur-xl transition-all duration-300 group text-left shadow-lg shadow-black/40"
+          >
+            <Search className="w-5 h-5 text-[#ecb613] shrink-0" />
+            <span className="flex-1 text-sm text-zinc-200 group-hover:text-white truncate">
+              Busca fincas, mariachis, DJs, catering, sonido…
+            </span>
+            <span className="hidden sm:inline-flex items-center text-[10px] font-mono text-zinc-300 border border-white/15 rounded-md px-2 py-1">
+              Ctrl&nbsp;K
+            </span>
+            <span className="shrink-0 bg-[#ecb613] text-black font-bold text-xs px-4 py-2 rounded-full group-hover:brightness-110 transition-all">
+              Buscar
+            </span>
+          </button>
+
+          {/* Píldoras de categoría (acceso directo multirrol) */}
+          <div className="mt-3 flex flex-wrap justify-center gap-2">
+            {QUICK_CATEGORIES.map((c) => (
+              <Link
+                key={c.href}
+                href={c.href}
+                className="px-3.5 py-1.5 rounded-full bg-white/5 hover:bg-[#ecb613] hover:text-black border border-white/10 hover:border-[#ecb613] text-xs font-semibold text-zinc-200 transition-all duration-300"
+              >
+                {c.label}
+              </Link>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* 🎴 LOS 5 EJES PRINCIPALES SOBERANOS */}
@@ -154,7 +200,7 @@ export default function CinematicHeroSClass() {
                 onClick={() => handleCardNavigation(p.href)}
                 className={`relative rounded-3xl overflow-hidden border transition-all duration-500 flex flex-col justify-between p-5 sm:p-6 cursor-pointer group ${isHovered
                   ? 'shadow-[0_0_50px_rgba(0,0,0,0.8)] scale-[1.02]'
-                  : 'border-white/10 hover:border-white/20 bg-[#08090d]/90'
+                  : 'border-white/10 hover:border-white/30 bg-[#0a0a0f]/70'
                   }`}
                 style={{
                   borderColor: isHovered ? p.accentColor : undefined,
@@ -172,9 +218,9 @@ export default function CinematicHeroSClass() {
                   unoptimized
                   priority={index === 0}
                   sizes="(max-width: 1024px) 100vw, 20vw"
-                  className="object-cover opacity-15 group-hover:opacity-25 transition-opacity duration-700 pointer-events-none mix-blend-luminosity"
+                  className="object-cover opacity-100 transition-all duration-700 pointer-events-none group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-[#050507]/80 to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#050507]/95 via-[#050507]/55 to-[#050507]/30 pointer-events-none" />
 
                 {/* Sección Superior: Icono (o Colibrí) & Badge */}
                 <div className="relative z-10 space-y-3">
@@ -191,7 +237,7 @@ export default function CinematicHeroSClass() {
                     </div>
 
                     <span
-                      className="text-[8px] font-mono font-bold tracking-wider px-2 py-1 rounded-full border uppercase truncate max-w-[120px]"
+                      className="text-[10px] font-mono font-bold tracking-wider px-2 py-1 rounded-full border uppercase truncate max-w-[140px]"
                       style={{
                         backgroundColor: `${p.accentColor}10`,
                         borderColor: `${p.accentColor}30`,
@@ -206,7 +252,7 @@ export default function CinematicHeroSClass() {
                     <h3 className="text-lg sm:text-xl font-black uppercase tracking-tight text-white font-syne">
                       {p.name}
                     </h3>
-                    <p className="text-[9px] font-mono uppercase tracking-wider text-zinc-400 mt-0.5 font-semibold line-clamp-1">
+                    <p className="text-[11px] font-mono uppercase tracking-wider text-zinc-300 mt-0.5 font-semibold line-clamp-1">
                       {p.subtitle}
                     </p>
                   </div>
@@ -214,15 +260,15 @@ export default function CinematicHeroSClass() {
 
                 {/* Sección Media: Descripción & Métricas */}
                 <div className="relative z-10 space-y-3 my-3">
-                  <p className="text-xs text-zinc-300 leading-relaxed font-light line-clamp-3">
+                  <p className="text-[13px] text-zinc-100 leading-relaxed font-normal line-clamp-3">
                     {p.description}
                   </p>
 
                   <div className="grid grid-cols-2 gap-1.5 pt-2 border-t border-white/5">
                     {p.stats.map((s, idx) => (
                       <div key={idx} className="bg-black/60 p-2 rounded-xl border border-white/5">
-                        <span className="text-[7.5px] font-mono text-zinc-400 uppercase tracking-wider block truncate">{s.label}</span>
-                        <span className="text-[10.5px] font-bold font-mono text-white mt-0.5 block truncate" style={{ color: p.accentColor }}>
+                        <span className="text-[10px] font-mono text-zinc-300 uppercase tracking-wider block truncate">{s.label}</span>
+                        <span className="text-xs font-bold font-mono mt-0.5 block truncate" style={{ color: p.accentColor }}>
                           {s.value}
                         </span>
                       </div>
@@ -237,7 +283,7 @@ export default function CinematicHeroSClass() {
                     onClick={(e) => {
                       e.stopPropagation();
                     }}
-                    className="w-full py-3 px-3.5 rounded-xl font-bold text-xs font-mono uppercase tracking-wider flex items-center justify-between transition-all duration-300 shadow-md group-hover:shadow-lg active:scale-95 text-center cursor-pointer"
+                    className="w-full py-3 px-3.5 rounded-xl font-bold text-sm font-mono uppercase tracking-wider flex items-center justify-between transition-all duration-300 shadow-md group-hover:shadow-lg active:scale-95 text-center cursor-pointer"
                     style={{
                       backgroundColor: isHovered ? p.accentColor : 'rgba(255,255,255,0.06)',
                       color: isHovered ? '#000' : '#fff',
