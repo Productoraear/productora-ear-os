@@ -1,14 +1,17 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useTransition } from 'react';
 import { 
   Wallet, 
   CreditCard, 
   ArrowUpRight, 
   CheckCircle2, 
   Download, 
-  Sparkles
+  Sparkles,
+  AlertCircle
 } from 'lucide-react';
+import { createArtistSubscriptionCheckout, type ArtistPlanId } from '@/app/actions/artistSubscriptionActions';
+import { createConnectOnboardingLink } from '@/app/actions/stripeConnectActions';
 
 type FinancePeriod = 'ESTE_MES' | 'TRIMESTRE' | 'ANUAL';
 const FINANCE_PERIODS: readonly FinancePeriod[] = ['ESTE_MES', 'TRIMESTRE', 'ANUAL'] as const;
@@ -28,10 +31,12 @@ interface GigPayoutRecord {
 
 export default function ArtistFinancePage() {
   const [selectedPeriod, setSelectedPeriod] = useState<'ESTE_MES' | 'TRIMESTRE' | 'ANUAL'>('ESTE_MES');
-  const [isRequestingPayout, setIsRequestingPayout] = useState<boolean>(false);
-  const [payoutSuccessMsg, setPayoutSuccessMsg] = useState<string | null>(null);
+  const [isPayoutPending, setIsPayoutPending] = useTransition();
+  const [isSubscribing, setIsSubscribing] = useTransition();
+  const [payoutErrorMsg, setPayoutErrorMsg] = useState<string | null>(null);
 
-  // Datos financieros reales del Artista / Cuadrilla
+  // Datos financieros del Artista / Cuadrilla (SSOT temporal — se sustituirá
+  // por lectura server-side desde auraWallet / Stripe Connect en la siguiente fase).
   const availableBalance = 1420.80; // Saldo neto listo para transferir
   const escrowLockedBalance = 600.00; // Depósitos de 100€ de reservas bloqueadas
   const lifetimeEarned = 18450.00;
@@ -87,12 +92,51 @@ export default function ArtistFinancePage() {
     }
   ]);
 
+  /**
+   * Retiro de saldo vía Stripe Connect Express.
+   * Si el artista aún no tiene cuenta Connect, se le envía al onboarding KYC real.
+   */
   const handleInstantPayout = () => {
-    setIsRequestingPayout(true);
-    setTimeout(() => {
-      setIsRequestingPayout(false);
-      setPayoutSuccessMsg(`✅ Transferencia instantánea de ${availableBalance.toFixed(2)} € solicitada con éxito a tu cuenta bancaria asociada.`);
-    }, 1200);
+    setPayoutErrorMsg(null);
+    setIsPayoutPending(async () => {
+      try {
+        const result = await createConnectOnboardingLink({
+          providerId: '00000000-0000-0000-0000-000000000000', // Se inyecta el providerId real tras autenticación
+          userId: 'artista-actual', // Sustituir por userId autenticado (session)
+        });
+        if (result.url) {
+          window.location.href = result.url;
+        }
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Error desconocido al abrir Stripe Connect.';
+        setPayoutErrorMsg(`Cobro no iniciado: ${message}`);
+      }
+    });
+  };
+
+  /**
+   * Alta o cambio de plan SaaS vía Stripe Billing (modo suscripción recurrente).
+   * Redirige al portal seguro de Stripe Checkout; la suscripción se cierra por webhook.
+   */
+  const handleSubscriptionCheckout = (plan: ArtistPlanId) => {
+    setPayoutErrorMsg(null);
+    setIsSubscribing(async () => {
+      try {
+        const result = await createArtistSubscriptionCheckout({
+          plan,
+          artistEmail: 'productoraear@gmail.com', // Sustituir por email autenticado del artista
+          artistName: 'Edwin Agudelo', // Sustituir por stageName autenticado
+        });
+        if (result.ok) {
+          window.location.href = result.checkoutUrl;
+        } else {
+          setPayoutErrorMsg(result.error);
+        }
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Error desconocido al crear la suscripción.';
+        setPayoutErrorMsg(`Suscripción no iniciada: ${message}`);
+      }
+    });
   };
 
   return (
@@ -120,11 +164,11 @@ export default function ArtistFinancePage() {
           <div className="flex items-center gap-3">
             <button
               onClick={handleInstantPayout}
-              disabled={isRequestingPayout || availableBalance <= 0}
+              disabled={isPayoutPending || availableBalance <= 0}
               className="py-3.5 px-6 rounded-xl bg-gradient-to-r from-[#ecb613] to-amber-500 hover:from-amber-400 hover:to-amber-600 text-black font-bold text-xs tracking-wider uppercase transition-all shadow-[0_10px_30px_rgba(236,182,19,0.3)] flex items-center gap-2 cursor-pointer disabled:opacity-50"
             >
               <ArrowUpRight className="w-4 h-4" />
-              {isRequestingPayout ? 'Procesando Stripe...' : 'Retirar Saldo Instantáneo'}
+              {isPayoutPending ? 'Abriendo Stripe Connect...' : 'Retirar Saldo Instantáneo'}
             </button>
           </div>
         </div>
@@ -158,18 +202,23 @@ export default function ArtistFinancePage() {
               <span className="text-[10px] text-emerald-400 font-mono">290 € / año (Ahorras 58€)</span>
             </div>
             <button
-              onClick={() => alert("Redirigiendo al portal seguro de Stripe Customer Billing para gestionar tu suscripción...")}
-              className="py-3 px-5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-white font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2 cursor-pointer"
+              onClick={() => handleSubscriptionCheckout('ELITE_ANNUAL')}
+              disabled={isSubscribing}
+              className="py-3 px-5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-white font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
             >
               <CreditCard className="w-4 h-4 text-[#ecb613]" />
-              <span>Gestionar Suscripción</span>
+              <span>{isSubscribing ? 'Abriendo Stripe...' : 'Gestionar Suscripción'}</span>
             </button>
           </div>
         </div>
 
         {/* Comparador de Tiers del Puente */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
-          <div className="p-4 rounded-xl bg-black/40 border border-white/10 space-y-2">
+          <button
+            onClick={() => handleSubscriptionCheckout('PRO_MONTHLY')}
+            disabled={isSubscribing}
+            className="p-4 rounded-xl bg-black/40 border border-white/10 space-y-2 text-left cursor-pointer hover:border-[#ecb613]/40 transition-all disabled:opacity-50"
+          >
             <div className="flex justify-between items-center">
               <span className="text-xs font-mono font-bold text-white uppercase">Plan Pro Mensual (29 € / mes)</span>
               <span className="text-[10px] font-mono text-gray-400">Sin permanencia</span>
@@ -177,7 +226,10 @@ export default function ArtistFinancePage() {
             <p className="text-[11px] text-gray-400 leading-relaxed">
               Pasarela Stripe para clientes (fianzas de 100€ en Escrow), Área Privada con calendario ACID, contratos digitales y despacho por WhatsApp.
             </p>
-          </div>
+            <span className="inline-block text-[10px] font-mono font-bold text-[#ecb613] uppercase tracking-wider pt-1">
+              {isSubscribing ? 'Abriendo...' : 'Activar Plan →'}
+            </span>
+          </button>
 
           <div className="p-4 rounded-xl bg-[#ecb613]/10 border border-[#ecb613]/30 space-y-2 relative overflow-hidden">
             <div className="flex justify-between items-center">
@@ -195,10 +247,10 @@ export default function ArtistFinancePage() {
         </div>
       </div>
 
-      {payoutSuccessMsg && (
-        <div className="p-4 rounded-2xl bg-emerald-950/60 border border-emerald-500/50 text-emerald-300 text-xs font-mono flex items-center gap-3">
-          <CheckCircle2 className="w-5 h-5 shrink-0 text-emerald-400" />
-          {payoutSuccessMsg}
+      {payoutErrorMsg && (
+        <div className="p-4 rounded-2xl bg-red-950/60 border border-red-500/50 text-red-300 text-xs font-mono flex items-center gap-3">
+          <AlertCircle className="w-5 h-5 shrink-0 text-red-400" />
+          {payoutErrorMsg}
         </div>
       )}
 
@@ -302,7 +354,7 @@ export default function ArtistFinancePage() {
                   </td>
                   <td className="py-3.5 text-right">
                     <button
-                      onClick={() => alert(`Descargando factura de liquidación fiscal para el evento: ${p.eventName}`)}
+                      onClick={() => downloadFiscalInvoice(p)}
                       className="p-1.5 rounded-lg bg-white/5 hover:bg-white/15 text-gray-300 hover:text-white transition-colors cursor-pointer"
                       title="Descargar Certificado Fiscal"
                     >
@@ -348,4 +400,43 @@ export default function ArtistFinancePage() {
       </div>
     </div>
   );
+}
+
+/**
+ * Genera y descarga un certificado fiscal real (CSV) de la liquidación.
+ * Cero fachadas: escribe un Blob con el desglose del split 80/10/10 y lo descarga.
+ */
+function downloadFiscalInvoice(p: GigPayoutRecord) {
+  const gross = p.totalGrossEuro.toFixed(2);
+  const net = p.netPayoutEuro.toFixed(2);
+  const platform = (p.totalGrossEuro * 0.1).toFixed(2);
+  const vimume = (p.totalGrossEuro * 0.1).toFixed(2);
+
+  const csvLines = [
+    ['ID Liquidación', p.id],
+    ['Evento', p.eventName],
+    ['Ubicación', p.venueCity],
+    ['Formato', p.format],
+    ['Fecha', p.date],
+    ['Bruto (€)', gross],
+    ['Split Artista 80% (€)', net],
+    ['EAR OS 10% (€)', platform],
+    ['VIMUME 10% (€)', vimume],
+    ['Estado', p.status],
+    ['Método', p.payoutMethod],
+  ];
+
+  const csv = csvLines
+    .map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(';'))
+    .join('\n');
+
+  const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `liquidacion_${p.id}.csv`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
 }

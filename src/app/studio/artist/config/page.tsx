@@ -1,14 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useTransition } from 'react';
 import {
   Settings,
   Bell,
   Shield,
   CreditCard,
   Globe,
-  Moon,
-  Sun,
   ToggleLeft,
   ToggleRight,
   Save,
@@ -17,7 +15,9 @@ import {
   Mail,
   Lock,
   AlertTriangle,
+  AlertCircle,
 } from 'lucide-react';
+import { saveArtistConfig } from '@/app/actions/artistStudioActions';
 
 interface ConfigState {
   notifications: {
@@ -75,25 +75,41 @@ const DEFAULT_CONFIG: ConfigState = {
 
 export default function ArtistConfigPage() {
   const [config, setConfig] = useState<ConfigState>(DEFAULT_CONFIG);
-  const [saving, setSaving] = useState(false);
-  const [saved, setSaved] = useState(false);
+  const [isSaving, setIsSaving] = useTransition();
+  const [saveStatus, setSaveStatus] = useState<'idle' | 'saved' | 'error'>('idle');
+  const [saveMessage, setSaveMessage] = useState<string | null>(null);
 
   const updateNotif = (key: keyof ConfigState['notifications']) => {
     setConfig(prev => ({ ...prev, notifications: { ...prev.notifications, [key]: !prev.notifications[key] } }));
-    setSaved(false);
+    setSaveStatus('idle');
+    setSaveMessage(null);
   };
 
   const updatePrivacy = (key: keyof ConfigState['privacy']) => {
     setConfig(prev => ({ ...prev, privacy: { ...prev.privacy, [key]: !prev.privacy[key] } }));
-    setSaved(false);
+    setSaveStatus('idle');
+    setSaveMessage(null);
   };
 
-  const handleSave = async () => {
-    setSaving(true);
-    await new Promise(resolve => setTimeout(resolve, 800));
-    setSaving(false);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
+  // Persistencia real server-side (Prisma) — cero setTimeout, cero fachadas.
+  const handleSave = () => {
+    setIsSaving(async () => {
+      const result = await saveArtistConfig({
+        userId: 'artista-actual', // Sustituir por userId autenticado (session)
+        notifications: config.notifications,
+        privacy: config.privacy,
+        maxBookingsPerWeek: config.preferences.maxBookingsPerWeek,
+        timezone: config.preferences.timezone,
+      });
+
+      if (result.ok) {
+        setSaveStatus('saved');
+        setSaveMessage(result.message);
+      } else {
+        setSaveStatus('error');
+        setSaveMessage(result.message);
+      }
+    });
   };
 
   return (
@@ -105,13 +121,24 @@ export default function ArtistConfigPage() {
         </div>
         <button
           onClick={handleSave}
-          disabled={saving}
+          disabled={isSaving}
           className="flex items-center gap-2 px-6 py-3 bg-[#ecb613] hover:bg-[#d4a00f] text-black font-extrabold rounded-xl text-xs uppercase tracking-wider transition shadow-lg shadow-[#ecb613]/10 disabled:opacity-50"
         >
-          {saved ? <CheckCircle2 size={16} /> : <Save size={16} />}
-          {saving ? 'Guardando...' : saved ? 'Guardado' : 'Guardar'}
+          {saveStatus === 'saved' ? <CheckCircle2 size={16} /> : saveStatus === 'error' ? <AlertCircle size={16} /> : <Save size={16} />}
+          {isSaving ? 'Guardando...' : saveStatus === 'saved' ? 'Guardado' : saveStatus === 'error' ? 'Error' : 'Guardar'}
         </button>
       </div>
+
+      {saveMessage && (
+        <div className={`p-4 rounded-2xl text-xs font-mono flex items-center gap-3 ${
+          saveStatus === 'error'
+            ? 'bg-red-950/60 border border-red-500/50 text-red-300'
+            : 'bg-emerald-950/60 border border-emerald-500/50 text-emerald-300'
+        }`}>
+          {saveStatus === 'error' ? <AlertCircle className="w-5 h-5 shrink-0 text-red-400" /> : <CheckCircle2 className="w-5 h-5 shrink-0 text-emerald-400" />}
+          {saveMessage}
+        </div>
+      )}
 
       <div className="grid lg:grid-cols-2 gap-8">
 

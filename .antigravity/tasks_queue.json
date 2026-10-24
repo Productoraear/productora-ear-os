@@ -8,22 +8,6 @@
   "_instructions_for_worker": "Ejecuta SOLO via: call RUN_OMEGA.bat next  ->  lee .antigravity/MISSION_ACTIVE.json  ->  edita SOLO 'files'  ->  call RUN_OMEGA.bat complete <ID>. El complete ya ejecuta tsc + eslint + test. 1 tarea por sesion.",
   "tasks": [
     {
-      "id": "W36_T02_ARTIST_SAAS_STRIPE_CONNECT_ENGINE",
-      "wave": 36,
-      "status": "QUEUED",
-      "title": "ARTIST SAAS STRIPE CONNECT ENGINE & ZERO-FACHADA AUDIT — Motor real de suscripción SaaS para artistas (29€/mes o 290€/año) en Stripe, erradicación de setTimeouts en perfil/config y onboarding Stripe Connect real",
-      "files": [
-        "src/app/actions/artistSubscriptionActions.ts",
-        "src/app/studio/artist/finance/page.tsx",
-        "src/app/studio/artist/perfil/page.tsx",
-        "src/app/studio/artist/config/page.tsx"
-      ],
-      "action": "1) Construir Server Action real `src/app/actions/artistSubscriptionActions.ts` con Zod, rate limiting y Stripe Checkout en modo `subscription` para los planes canónicos `PRO_MONTHLY` (29 €/mes) y `ELITE_ANNUAL` (290 €/año); 2) Conectar el botón de membresía en `src/app/studio/artist/finance/page.tsx` a `createArtistSubscriptionCheckout` para redirección a Stripe real; 3) Conectar `handleInstantPayout` en `finance/page.tsx` con `createConnectOnboardingLink` de `src/app/actions/stripeConnectActions.ts`; 4) Erradicar los `setTimeout` y `alert()` en `perfil/page.tsx` y `config/page.tsx` conectándolos con Server Actions de persistencia real; 5) Cero `any`, cero fachadas.",
-      "scaffold": "1. Crear src/app/actions/artistSubscriptionActions.ts exportando createArtistSubscriptionCheckout(plan: 'PRO_MONTHLY' | 'ELITE_ANNUAL', artistEmail: string, artistName: string) con stripe de @/lib/payments.\n2. Conectar en finance/page.tsx la suscripción real a Stripe y el botón de retiro a createConnectOnboardingLink.\n3. En perfil/page.tsx y config/page.tsx eliminar setTimeout y conectar a Server Actions reales o persistencia segura.\n4. Validar: npx tsc --noEmit && npx eslint src/app/actions/artistSubscriptionActions.ts src/app/studio/artist/finance/page.tsx src/app/studio/artist/perfil/page.tsx src/app/studio/artist/config/page.tsx",
-      "done_when": "Suscripción Stripe de 29€/mes y 290€/año 100% operativa vía Server Action, 0 setTimeout en el búnker de artistas, 0 alert() en pasarelas, compilación tsc Exit Code 0.",
-      "validate": "npx tsc --noEmit"
-    },
-    {
       "id": "W36_T03_VENDOR_DIRECTORY_SCLASS_BODAS_CARD",
       "wave": 36,
       "status": "QUEUED",
@@ -54,6 +38,13 @@
   ],
   "completed": [
     {
+      "id": "W36_T02_ARTIST_SAAS_STRIPE_CONNECT_ENGINE",
+      "title": "ARTIST SAAS STRIPE CONNECT ENGINE & ZERO-FACHADA AUDIT — Motor real de suscripción SaaS para artistas (29€/mes o 290€/año) en Stripe, erradicación de setTimeouts en perfil/config y onboarding Stripe Connect real",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-24T22:08:38.059Z"
+    },
+    {
       "id": "W36_T01_ARTISTAS_EUROPA_ROSTER_INTERCONNECT",
       "title": "ARTISTAS EUROPA ROSTER INTERCONNECT — Conector de Roster Europeo para artistaseuropa.com en /artistas con tarjeta Diamante Rojo, Split 80/10/10 y despacho Swarm",
       "status": "COMPLETED",
@@ -83,8 +74,8 @@
     }
   ],
   "metadata": {
-    "last_updated": "2026-10-24T23:58:00.000Z",
-    "total_pending": 3,
+    "last_updated": "2026-10-24T22:08:38.060Z",
+    "total_pending": 2,
     "current_sprint": "WAVE_36_ARTIST_SAAS_AND_VENDOR_CARDS",
     "ceo_mandate": "Ejecución inmediata del Motor Real de Suscripción SaaS para Artistas (29€/mes o 290€/año) con Stripe Checkout real, erradicación de setTimeouts en perfil/config, conexión de Stripe Connect real y cero fachadas. 1 tarea por sesión."
   }

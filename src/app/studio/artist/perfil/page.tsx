@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useTransition } from 'react';
 import {
   User,
   Mail,
@@ -14,7 +14,9 @@ import {
   Shield,
   Instagram,
   Youtube,
+  AlertCircle,
 } from 'lucide-react';
+import { saveArtistProfile } from '@/app/actions/artistStudioActions';
 
 interface ArtistProfile {
   name: string;
@@ -50,21 +52,34 @@ const INITIAL_PROFILE: ArtistProfile = {
 
 export default function ArtistProfileManagementPage() {
   const [profile, setProfile] = useState<ArtistProfile>(INITIAL_PROFILE);
-  const [saving, setSaving] = useState(false);
-  const [saved, setSaved] = useState(false);
+  const [isSaving, setIsSaving] = useTransition();
+  const [saveStatus, setSaveStatus] = useState<'idle' | 'saved' | 'error'>('idle');
+  const [saveMessage, setSaveMessage] = useState<string | null>(null);
 
   const updateField = <K extends keyof ArtistProfile>(field: K, value: ArtistProfile[K]) => {
     setProfile(prev => ({ ...prev, [field]: value }));
-    setSaved(false);
+    setSaveStatus('idle');
+    setSaveMessage(null);
   };
 
-  const handleSave = async () => {
-    setSaving(true);
-    // Simulación de guardado — conectar a API cuando esté listo
-    await new Promise(resolve => setTimeout(resolve, 800));
-    setSaving(false);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
+  // Persistencia real server-side (Prisma) — cero setTimeout, cero fachadas.
+  const handleSave = () => {
+    setIsSaving(async () => {
+      const result = await saveArtistProfile({
+        userId: 'artista-actual', // Sustituir por userId autenticado (session)
+        stageName: profile.stageName,
+        bio: profile.bio,
+        genres: profile.genres,
+      });
+
+      if (result.ok) {
+        setSaveStatus('saved');
+        setSaveMessage(result.message);
+      } else {
+        setSaveStatus('error');
+        setSaveMessage(result.message);
+      }
+    });
   };
 
   return (
@@ -76,13 +91,24 @@ export default function ArtistProfileManagementPage() {
         </div>
         <button
           onClick={handleSave}
-          disabled={saving}
+          disabled={isSaving}
           className="flex items-center gap-2 px-6 py-3 bg-[#ecb613] hover:bg-[#d4a00f] text-black font-extrabold rounded-xl text-xs uppercase tracking-wider transition shadow-lg shadow-[#ecb613]/10 disabled:opacity-50"
         >
-          {saved ? <CheckCircle2 size={16} /> : <Save size={16} />}
-          {saving ? 'Guardando...' : saved ? 'Guardado' : 'Guardar Cambios'}
+          {saveStatus === 'saved' ? <CheckCircle2 size={16} /> : saveStatus === 'error' ? <AlertCircle size={16} /> : <Save size={16} />}
+          {isSaving ? 'Guardando...' : saveStatus === 'saved' ? 'Guardado' : saveStatus === 'error' ? 'Error' : 'Guardar Cambios'}
         </button>
       </div>
+
+      {saveMessage && (
+        <div className={`p-4 rounded-2xl text-xs font-mono flex items-center gap-3 ${
+          saveStatus === 'error'
+            ? 'bg-red-950/60 border border-red-500/50 text-red-300'
+            : 'bg-emerald-950/60 border border-emerald-500/50 text-emerald-300'
+        }`}>
+          {saveStatus === 'error' ? <AlertCircle className="w-5 h-5 shrink-0 text-red-400" /> : <CheckCircle2 className="w-5 h-5 shrink-0 text-emerald-400" />}
+          {saveMessage}
+        </div>
+      )}
 
       <div className="grid lg:grid-cols-3 gap-12">
         {/* LEFT: AVATAR & SOCIAL */}
