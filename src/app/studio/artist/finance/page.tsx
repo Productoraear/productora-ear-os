@@ -1,24 +1,17 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
 import { 
   Wallet, 
   CreditCard, 
   ArrowUpRight, 
-  ArrowDownLeft, 
-  Clock, 
   CheckCircle2, 
   Download, 
-  Sparkles, 
-  ShieldCheck, 
-  DollarSign, 
-  Layers, 
-  Calendar,
-  Building,
-  TrendingUp,
-  Percent
+  Sparkles
 } from 'lucide-react';
+
+type FinancePeriod = 'ESTE_MES' | 'TRIMESTRE' | 'ANUAL';
+const FINANCE_PERIODS: readonly FinancePeriod[] = ['ESTE_MES', 'TRIMESTRE', 'ANUAL'] as const;
 
 interface GigPayoutRecord {
   id: string;
@@ -137,6 +130,71 @@ export default function ArtistFinancePage() {
         </div>
       </div>
 
+      {/* 🚀 MÓDULO S-CLASS: MEMBRESÍA DEL PUENTE TECNOLÓGICO EAR OS (SAAS) */}
+      <div className="rounded-3xl bg-[#09090d] border border-[#ecb613]/30 p-6 sm:p-8 space-y-6 relative overflow-hidden shadow-2xl">
+        <div className="absolute top-0 right-0 w-80 h-80 bg-[#ecb613]/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 relative z-10">
+          <div>
+            <div className="flex items-center gap-2 mb-2">
+              <span className="px-3 py-1 bg-[#ecb613]/10 text-[#ecb613] border border-[#ecb613]/30 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5" /> Modelo Puente Tecnológico // SaaS Artistas
+              </span>
+              <span className="px-2.5 py-0.5 rounded-full bg-emerald-950/80 text-emerald-300 border border-emerald-500/30 text-[10px] font-mono font-bold">
+                Membresía Activa
+              </span>
+            </div>
+            <h2 className="text-xl sm:text-2xl font-bold font-serif text-white">
+              Tu Suscripción al Puente: Clientes Pagan Seguro, Tú Cobras el 80%
+            </h2>
+            <p className="text-xs text-gray-400 mt-1 max-w-2xl leading-relaxed">
+              Nosotros somos el puente tecnológico. Tus clientes pagan depósitos de 100€ asegurados en Stripe antes de cada bolo, nosotros despachamos las reservas en &lt;15s y gestionamos contratos con seguro RC 1M€.
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-center gap-3">
+            <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/10 text-center min-w-[170px]">
+              <span className="text-[10px] font-mono text-gray-400 uppercase tracking-wider block">Plan Activo</span>
+              <span className="text-base font-bold font-mono text-[#ecb613] block mt-0.5">Plan Élite Anual</span>
+              <span className="text-[10px] text-emerald-400 font-mono">290 € / año (Ahorras 58€)</span>
+            </div>
+            <button
+              onClick={() => alert("Redirigiendo al portal seguro de Stripe Customer Billing para gestionar tu suscripción...")}
+              className="py-3 px-5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-white font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2 cursor-pointer"
+            >
+              <CreditCard className="w-4 h-4 text-[#ecb613]" />
+              <span>Gestionar Suscripción</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Comparador de Tiers del Puente */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+          <div className="p-4 rounded-xl bg-black/40 border border-white/10 space-y-2">
+            <div className="flex justify-between items-center">
+              <span className="text-xs font-mono font-bold text-white uppercase">Plan Pro Mensual (29 € / mes)</span>
+              <span className="text-[10px] font-mono text-gray-400">Sin permanencia</span>
+            </div>
+            <p className="text-[11px] text-gray-400 leading-relaxed">
+              Pasarela Stripe para clientes (fianzas de 100€ en Escrow), Área Privada con calendario ACID, contratos digitales y despacho por WhatsApp.
+            </p>
+          </div>
+
+          <div className="p-4 rounded-xl bg-[#ecb613]/10 border border-[#ecb613]/30 space-y-2 relative overflow-hidden">
+            <div className="flex justify-between items-center">
+              <span className="text-xs font-mono font-bold text-[#ecb613] uppercase flex items-center gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5 text-[#ecb613]" /> Plan Élite Anual (290 € / año)
+              </span>
+              <span className="text-[9px] font-mono font-bold bg-[#ecb613] text-black px-2 py-0.5 rounded-full uppercase">
+                Tu Plan Actual
+              </span>
+            </div>
+            <p className="text-[11px] text-zinc-300 leading-relaxed">
+              Insignia Diamante Oro, prioridad en el mapa nacional y en ArtistasEuropa.com, seguro de RC de 1M€ incluido y soporte 24/7.
+            </p>
+          </div>
+        </div>
+      </div>
+
       {payoutSuccessMsg && (
         <div className="p-4 rounded-2xl bg-emerald-950/60 border border-emerald-500/50 text-emerald-300 text-xs font-mono flex items-center gap-3">
           <CheckCircle2 className="w-5 h-5 shrink-0 text-emerald-400" />
@@ -192,10 +250,10 @@ export default function ArtistFinancePage() {
           </div>
 
           <div className="flex gap-1.5">
-            {['ESTE_MES', 'TRIMESTRE', 'ANUAL'].map((period) => (
+            {FINANCE_PERIODS.map((period) => (
               <button
                 key={period}
-                onClick={() => setSelectedPeriod(period as any)}
+                onClick={() => setSelectedPeriod(period)}
                 className={`px-3 py-1 rounded-xl text-xs font-mono transition-all cursor-pointer ${
                   selectedPeriod === period
                     ? 'bg-white/20 text-white font-bold border border-white/30'

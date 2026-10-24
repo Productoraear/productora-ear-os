@@ -36,12 +36,53 @@ export default function ArtistDashboardPage() {
         </div>
       </div>
 
+      {/* 🚀 MÓDULO DEL PUENTE TECNOLÓGICO: PASARELA DE COBRO DE CLIENTES */}
+      <div className="rounded-[2.5rem] bg-gradient-to-r from-[#0d0d15] via-[#151522] to-[#0d0d15] border border-[#ecb613]/30 p-8 relative overflow-hidden shadow-2xl">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#ecb613]/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 relative z-10">
+          <div className="space-y-2">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="px-3 py-1 bg-[#ecb613]/10 text-[#ecb613] border border-[#ecb613]/30 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider">
+                Puente Tecnológico EAR OS // Pasarela de Clientes
+              </span>
+              <span className="px-2.5 py-0.5 rounded-full bg-emerald-950/80 text-emerald-300 border border-emerald-500/30 text-[10px] font-mono font-bold">
+                Membresía Élite Anual Activa (290€/año)
+              </span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-black uppercase italic tracking-tight text-white font-syne">
+              Tus Clientes Pagan Seguro en Stripe. Tú Cobras el 80%.
+            </h2>
+            <p className="text-xs text-zinc-400 max-w-2xl leading-relaxed">
+              Comparte tu enlace de reserva directa para que tus clientes depositen los 100€ deducibles en Stripe Escrow. Tu fecha queda blindada con candado atómico y cero plantones.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-3">
+            <a
+              href="https://productoraear.com/mariachis"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-6 py-3.5 rounded-xl bg-[#ecb613] hover:bg-amber-300 text-black font-black font-mono text-xs uppercase tracking-wider transition shadow-lg shadow-[#ecb613]/20 flex items-center gap-2"
+            >
+              <ArrowUpRight size={16} />
+              <span>Ver Mi Escaparate Público</span>
+            </a>
+            <a
+              href="/studio/artist/finance"
+              className="px-6 py-3.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-white font-bold font-mono text-xs uppercase tracking-wider transition flex items-center gap-2"
+            >
+              <span>Ver Liquidaciones (80%)</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
       {/* 📊 KPI GRID */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
         <KpiCard title="Impacto Semanal" value="12.4k" trend="+14%" icon={<Users size={20} />} />
         <KpiCard title="Próximos Eventos" value="3" trend="Siguiente: 24/05" icon={<Calendar size={20} />} />
-        <KpiCard title="Pendiente Pago" value="1.240€" trend="En trámite" icon={<TrendingUp size={20} />} />
-        <KpiCard title="Versión Rider" value="v2.1" trend="Actualizado" icon={<FileText size={20} />} />
+        <KpiCard title="Escrow Garantizado" value="600€" trend="6 depósitos Stripe" icon={<TrendingUp size={20} />} />
+        <KpiCard title="Split Soberano" value="80%" trend="Neto inmutable" icon={<FileText size={20} />} />
       </div>
 
       <div className="grid lg:grid-cols-3 gap-12">

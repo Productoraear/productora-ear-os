@@ -2,9 +2,9 @@ import type { Metadata } from 'next';
 import React from 'react';
 import Link from 'next/link';
 import {
-  Sparkles, Globe, ShieldCheck, Zap, Music,
-  PhoneCall, MessageCircle, Calendar, ArrowRight,
-  Heart, Users, Award, CheckCircle2, ChevronRight, Lock
+  Sparkles, ShieldCheck, Zap, Music,
+  PhoneCall, MessageCircle, ArrowRight,
+  Heart, Users, CheckCircle2, Lock
 } from 'lucide-react';
 import MariachiDispatchConsole from '@/components/mariachi/MariachiDispatchConsole';
 import MariachiEscaparateEdwin from '@/components/mariachi/MariachiEscaparateEdwin';
@@ -137,14 +137,21 @@ export default function MariachisPage() {
             </a>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <ThemeToggle />
             <Link
+              href="/studio/artist"
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#ecb613]/10 hover:bg-[#ecb613]/20 border border-[#ecb613]/30 text-[#ecb613] font-bold transition-all"
+            >
+              <Lock size={12} />
+              <span>Área Privada Artistas</span>
+            </Link>
+            <Link
               href="/mariachis/unirse"
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 text-white/80 hover:text-white transition-all"
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 text-white/80 hover:text-white transition-all hidden sm:inline-flex"
             >
               <Users size={12} className="text-[#ecb613]" />
-              ¿Eres Músico? Únete a la Red
+              <span>Únete al Puente (29€/mes)</span>
             </Link>
             <a
               href="https://wa.me/34693693048?text=Hola,%20deseo%20consultar%20disponibilidad%20inmediata%20de%20mariachis"
@@ -153,7 +160,7 @@ export default function MariachisPage() {
               className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/25 transition-all"
             >
               <MessageCircle size={12} />
-              +34 693 693 048
+              <span>+34 693 693 048</span>
             </a>
           </div>
         </div>
@@ -248,6 +255,62 @@ export default function MariachisPage() {
               <MessageCircle size={16} className="text-emerald-400" />
               <span>Asesoría Inmediata por WhatsApp</span>
             </a>
+          </div>
+        </div>
+      </section>
+
+      {/* 🚀 MÓDULO ESTRATÉGICO: EL PUENTE SOBERANO (CLIENTES PAGAN SEGURO / ARTISTAS GESTIONAN SU CARRERA) */}
+      <section className="max-w-7xl mx-auto px-6 pt-12 pb-4">
+        <div className="rounded-3xl border border-[#ecb613]/30 bg-gradient-to-r from-[#0d0d15] via-[#141420] to-[#0d0d15] p-6 sm:p-10 relative overflow-hidden shadow-2xl">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#ecb613]/5 rounded-full blur-3xl pointer-events-none" />
+          
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+            <div className="lg:col-span-8 space-y-4">
+              <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-[10px] font-mono uppercase tracking-[0.25em]">
+                <Sparkles size={12} />
+                EL PUENTE TECNOLÓGICO Y FINANCIERO // EAR OS
+              </div>
+              <h2 className="text-2xl sm:text-4xl font-black font-syne uppercase text-white tracking-tight leading-tight">
+                El Puente de Confianza Entre <span className="text-[#ecb613]">Clientes Exigentes</span> y <span className="text-white">Artistas Profesionales</span>
+              </h2>
+              <p className="text-xs sm:text-sm text-zinc-300 max-w-2xl leading-relaxed">
+                A diferencia de directorios anticuados que canibalizan los precios a 150€ sin fianza, en EAR OS garantizamos que <strong>los clientes reservan con depósito de 100€ deducible en Stripe</strong> y los artistas gestionan su carrera en su <strong>Área Privada con cobro del 80% neto</strong> bajo una cuota plana transparente (29€/mes o 290€/año).
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 text-xs font-mono">
+                <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 space-y-1">
+                  <span className="text-[#ecb613] font-bold block uppercase text-[10px]">Para Clientes:</span>
+                  <p className="text-zinc-300 text-[11px]">Reserva protegida por Stripe Escrow, artistas de gala verificados, cálculo acústico Bose F1 y cero sorpresas.</p>
+                </div>
+                <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 space-y-1">
+                  <span className="text-[#00E5FF] font-bold block uppercase text-[10px]">Para Músicos &amp; Mariachis:</span>
+                  <p className="text-zinc-300 text-[11px]">Área Privada (`/studio/artist`), calendario ACID, contratos con seguro RC 1M€ y cobro del 80% neto directo a tu cuenta.</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="lg:col-span-4 flex flex-col gap-3">
+              <a
+                href="#cotizador-uber"
+                className="w-full py-4 px-6 rounded-2xl bg-[#ecb613] hover:bg-amber-300 text-black font-black font-syne text-xs uppercase tracking-wider text-center transition-all shadow-xl shadow-[#ecb613]/20 flex items-center justify-center gap-2"
+              >
+                <span>Contratar Mariachi (Desde 350€)</span>
+                <ArrowRight size={14} />
+              </a>
+              <Link
+                href="/studio/artist"
+                className="w-full py-4 px-6 rounded-2xl bg-white/10 hover:bg-white/15 border border-white/20 text-white font-bold font-syne text-xs uppercase tracking-wider text-center transition flex items-center justify-center gap-2"
+              >
+                <Lock size={14} className="text-[#ecb613]" />
+                <span>Entrar al Área Privada de Artista</span>
+              </Link>
+              <Link
+                href="/mariachis/unirse"
+                className="text-center text-[11px] font-mono text-zinc-400 hover:text-white transition pt-1"
+              >
+                ¿Eres Mariachi? Únete al Puente (29€/mes o 290€/año) &rarr;
+              </Link>
+            </div>
           </div>
         </div>
       </section>
