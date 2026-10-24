@@ -1,14 +1,29 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
 import {
-  Heart, X, Sparkles, Volume2, ShieldCheck,
+  Heart, X, Volume2, ShieldCheck,
   ArrowRight, Info,
-  Zap, Star
+  Zap, Star, Users, MapPin
 } from 'lucide-react';
 import { ARTIST_FORMATS, SOVEREIGN_ARTIST } from './types';
 import { playAnalogClick } from '@/lib/audio/AnalogClickSynth';
+import {
+  computeAstraTensorScore,
+  DEFAULT_COUPLE_PROFILE,
+  PAX_MIN,
+  PAX_MAX,
+  PAX_STEP,
+  DISTANCE_MIN,
+  DISTANCE_MAX,
+  DISTANCE_STEP,
+  STYLE_INTENTS,
+  type CoupleProfile,
+  type StyleIntent,
+} from './astraTensorMatch';
+import AstraMatchOdometer from './AstraMatchOdometer';
+import AstraTensorSpiderChart from './AstraTensorSpiderChart';
 
 export default function Archetype1_TinderDeck({ onBook, onNext }: {
   onBook?: (formatId: string) => void;
@@ -17,8 +32,20 @@ export default function Archetype1_TinderDeck({ onBook, onNext }: {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   const [showDetailModal, setShowDetailModal] = useState(false);
+  const [couple, setCouple] = useState<CoupleProfile>(DEFAULT_COUPLE_PROFILE);
 
   const currentFormat = ARTIST_FORMATS[currentIndex % ARTIST_FORMATS.length];
+  const tensor = useMemo(
+    () => computeAstraTensorScore(currentFormat, couple),
+    [currentFormat, couple]
+  );
+
+  const adjustPax = (delta: number) =>
+    setCouple((prev) => ({ ...prev, pax: Math.min(PAX_MAX, Math.max(PAX_MIN, prev.pax + delta)) }));
+  const adjustDistance = (delta: number) =>
+    setCouple((prev) => ({ ...prev, distanceKm: Math.min(DISTANCE_MAX, Math.max(DISTANCE_MIN, prev.distanceKm + delta)) }));
+  const setStyle = (styleIntent: StyleIntent) =>
+    setCouple((prev) => ({ ...prev, styleIntent }));
 
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-200, 200], [-15, 15]);
@@ -71,11 +98,65 @@ export default function Archetype1_TinderDeck({ onBook, onNext }: {
           </div>
         </div>
 
-        <div className="flex items-center gap-1 bg-white/5 border border-white/10 px-2.5 py-1 rounded-full backdrop-blur-md">
-          <Sparkles size={12} className="text-[#ecb613]" />
-          <span className="text-[10px] font-mono font-bold text-[#ecb613]">
-            {currentFormat.matchScore}% AFINIDAD
-          </span>
+        <AstraMatchOdometer value={tensor.percent} isElite={tensor.isElite} />
+      </div>
+
+      {/* 💞 COUPLE TELEMETRY — ASTRA TENSOR LIVE INPUTS */}
+      <div className="flex items-center gap-2 z-10 pb-2 overflow-x-auto no-scrollbar">
+        <div className="flex items-center gap-1 bg-white/5 border border-white/10 rounded-xl px-2 py-1 shrink-0">
+          <Users size={12} className="text-[#ecb613]" />
+          <button
+            onClick={() => adjustPax(-PAX_STEP)}
+            aria-label="Menos invitados"
+            className="w-6 h-6 rounded-lg bg-white/10 text-white/80 hover:bg-white/20 active:scale-95 transition-all font-mono text-xs"
+          >
+            −
+          </button>
+          <span className="text-[10px] font-mono font-bold tabular-nums text-white w-10 text-center">{couple.pax}</span>
+          <button
+            onClick={() => adjustPax(PAX_STEP)}
+            aria-label="Más invitados"
+            className="w-6 h-6 rounded-lg bg-white/10 text-white/80 hover:bg-white/20 active:scale-95 transition-all font-mono text-xs"
+          >
+            ＋
+          </button>
+          <span className="text-[8px] font-mono text-white/40 uppercase">pax</span>
+        </div>
+
+        <div className="flex items-center gap-1 bg-white/5 border border-white/10 rounded-xl px-2 py-1 shrink-0">
+          <MapPin size={12} className="text-[#ecb613]" />
+          <button
+            onClick={() => adjustDistance(-DISTANCE_STEP)}
+            aria-label="Menos distancia"
+            className="w-6 h-6 rounded-lg bg-white/10 text-white/80 hover:bg-white/20 active:scale-95 transition-all font-mono text-xs"
+          >
+            −
+          </button>
+          <span className="text-[10px] font-mono font-bold tabular-nums text-white w-10 text-center">{couple.distanceKm}</span>
+          <button
+            onClick={() => adjustDistance(DISTANCE_STEP)}
+            aria-label="Más distancia"
+            className="w-6 h-6 rounded-lg bg-white/10 text-white/80 hover:bg-white/20 active:scale-95 transition-all font-mono text-xs"
+          >
+            ＋
+          </button>
+          <span className="text-[8px] font-mono text-white/40 uppercase">km</span>
+        </div>
+
+        <div className="flex items-center gap-1 shrink-0">
+          {STYLE_INTENTS.map((styleIntent) => (
+            <button
+              key={styleIntent}
+              onClick={() => setStyle(styleIntent)}
+              className={`px-2 py-1.5 rounded-lg text-[8px] font-mono font-bold uppercase tracking-tight transition-all active:scale-95 ${
+                couple.styleIntent === styleIntent
+                  ? 'bg-[#ecb613] text-black'
+                  : 'bg-white/5 text-white/50 hover:text-white border border-white/10'
+              }`}
+            >
+              {styleIntent}
+            </button>
+          ))}
         </div>
       </div>
 
@@ -84,7 +165,16 @@ export default function Archetype1_TinderDeck({ onBook, onNext }: {
         <AnimatePresence mode="popLayout">
           <motion.div
             key={currentFormat.id + currentIndex}
-            style={{ x, rotate }}
+            style={{
+              x,
+              rotate,
+              ...(tensor.isElite
+                ? {
+                    borderColor: 'rgba(236,182,19,0.55)',
+                    boxShadow: '0 0 45px rgba(236,182,19,0.35)',
+                  }
+                : {}),
+            }}
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
             dragElastic={0.7}
@@ -201,6 +291,14 @@ export default function Archetype1_TinderDeck({ onBook, onNext }: {
           </motion.div>
         </AnimatePresence>
       </div>
+
+      {/* 🧬 POLÍGONO SAGRADO — ROMBO DE AFINIDAD CUÁNTICA (SPIDER CHART EN VIVO) */}
+      <AstraTensorSpiderChart
+        components={tensor.components}
+        isElite={tensor.isElite}
+        percent={tensor.percent}
+        className="z-10"
+      />
 
       {/* 🎮 FLOATING TACTILE ACTION CONTROLS */}
       <div className="grid grid-cols-4 gap-2 pt-3 z-10">

@@ -1,14 +1,60 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
-  Clock,
   MapPin, Truck,
-  Volume2, Users, ArrowRight
+  Volume2, Users, ArrowRight,
+  Radio, ShieldCheck
 } from 'lucide-react';
 import { ARTIST_FORMATS, SOVEREIGN_ARTIST, calculateQuote } from './types';
 import { playAnalogClick } from '@/lib/audio/AnalogClickSynth';
+
+/* ── GEODESIA S-CLASS: HAVERSINE + TRAZA EN CARRETERA ── */
+const HUB_MENTRIDA = { lat: 40.2383, lon: -4.2361 } as const;
+const DEST_MADRID = { lat: 40.4168, lon: -3.7038 } as const;
+
+function toRadians(deg: number): number {
+  return (deg * Math.PI) / 180;
+}
+
+/** Distancia ortodrómica (fórmula de Haversine) en km entre dos coordenadas. */
+function haversineKm(aLat: number, aLon: number, bLat: number, bLon: number): number {
+  const earthRadiusKm = 6371;
+  const dLat = toRadians(bLat - aLat);
+  const dLon = toRadians(bLon - aLon);
+  const la1 = toRadians(aLat);
+  const la2 = toRadians(bLat);
+  const h =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(la1) * Math.cos(la2) * Math.sin(dLon / 2) ** 2;
+  return 2 * earthRadiusKm * Math.asin(Math.sqrt(h));
+}
+
+/** Distancia geodésica canónica Hub Méntrida → Madrid (≈ 48 km). */
+const GEODESIC_KM = haversineKm(HUB_MENTRIDA.lat, HUB_MENTRIDA.lon, DEST_MADRID.lat, DEST_MADRID.lon);
+
+interface StarParticle {
+  readonly x: number;
+  readonly y: number;
+  readonly r: number;
+  readonly phase: number;
+  readonly speed: number;
+}
+
+interface Point2D {
+  readonly x: number;
+  readonly y: number;
+}
+
+/** Interpolación sobre una Bézier cuadrática (proyección del arco de círculo máximo). */
+function quadraticPoint(p0: Point2D, control: Point2D, p1: Point2D, t: number): Point2D {
+  const mt = 1 - t;
+  return {
+    x: mt * mt * p0.x + 2 * mt * t * control.x + t * t * p1.x,
+    y: mt * mt * p0.y + 2 * mt * t * control.y + t * t * p1.y,
+  };
+}
 
 export default function Archetype2_UberRadar({ onDispatch, initialFormatId, initialPaxCount, initialDistanceKm }: {
   onDispatch?: (data: { formatId: string; distanceKm: number; paxCount: number }) => void;
@@ -19,7 +65,11 @@ export default function Archetype2_UberRadar({ onDispatch, initialFormatId, init
   const [selectedFormatId, setSelectedFormatId] = useState(initialFormatId || 'cuarteto-imperial');
   const [distanceKm, setDistanceKm] = useState(initialDistanceKm ?? 45);
   const [paxCount, setPaxCount] = useState(initialPaxCount ?? 130);
+  const [dispatched, setDispatched] = useState(false);
   const cityTarget = 'Madrid / Alrededores';
+
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const rafRef = useRef<number>(0);
 
   const activeFormat = ARTIST_FORMATS.find(f => f.id === selectedFormatId) || ARTIST_FORMATS[0];
   const quote = calculateQuote({
@@ -31,74 +81,244 @@ export default function Archetype2_UberRadar({ onDispatch, initialFormatId, init
     hasPhotocall: true
   });
 
-  const etaMinutes = Math.round(25 + (distanceKm * 0.8));
+  // ETA militar derivado de la geodésica real (Haversine), no del slider de cotización.
+  const etaMinutes = Math.round(25 + GEODESIC_KM * 0.8);
   const wattsNeeded = paxCount * 12;
+
+  /* 🛰️ RADAR DOPPLER CINEMÁTICO A 60 FPS (canvas 2D, cero librerías externas). */
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const dpr = window.devicePixelRatio || 1;
+    let width = 0;
+    let height = 0;
+
+    const resize = (): void => {
+      const rect = canvas.getBoundingClientRect();
+      width = rect.width;
+      height = rect.height;
+      canvas.width = Math.max(1, Math.round(rect.width * dpr));
+      canvas.height = Math.max(1, Math.round(rect.height * dpr));
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    resize();
+    window.addEventListener('resize', resize);
+
+    const stars: StarParticle[] = Array.from({ length: 90 }, () => ({
+      x: Math.random(),
+      y: Math.random(),
+      r: 0.4 + Math.random() * 1.4,
+      phase: Math.random() * Math.PI * 2,
+      speed: 0.4 + Math.random() * 1.7,
+    }));
+
+    const originFrac: Point2D = { x: 0.16, y: 0.74 };
+    const destFrac: Point2D = { x: 0.84, y: 0.26 };
+
+    const start = performance.now();
+
+    const render = (now: number): void => {
+      const t = (now - start) / 1000;
+      ctx.clearRect(0, 0, width, height);
+
+      const cx = width / 2;
+      const cy = height / 2;
+      const maxR = Math.min(width, height) * 0.44;
+
+      // Fondo radial profundo (OLED).
+      const bg = ctx.createRadialGradient(cx, cy, 0, cx, cy, maxR * 1.5);
+      bg.addColorStop(0, 'rgba(22,22,30,0.92)');
+      bg.addColorStop(1, 'rgba(4,4,6,0)');
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, width, height);
+
+      // Partículas estelares tenues (twinkle).
+      for (const s of stars) {
+        const tw = 0.3 + 0.7 * (0.5 + 0.5 * Math.sin(t * s.speed + s.phase));
+        ctx.globalAlpha = tw * 0.6;
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(s.x * width, s.y * height, s.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+
+      // Anillos concéntricos del radar.
+      for (let i = 1; i <= 4; i++) {
+        ctx.beginPath();
+        ctx.arc(cx, cy, (maxR / 4) * i, 0, Math.PI * 2);
+        ctx.strokeStyle = i === 4 ? 'rgba(236,182,19,0.22)' : 'rgba(255,255,255,0.07)';
+        ctx.setLineDash(i === 4 ? [3, 5] : []);
+        ctx.lineWidth = 0.6;
+        ctx.stroke();
+      }
+      ctx.setLineDash([]);
+
+      // Aguja Doppler con estela luminosa.
+      const sweep = (t * 0.85) % 1;
+      const sweepAngle = sweep * Math.PI * 2;
+      for (let k = 10; k >= 0; k--) {
+        const a = sweepAngle - k * 0.055;
+        ctx.beginPath();
+        ctx.arc(cx, cy, maxR, a - 0.04, a + 0.012);
+        ctx.strokeStyle = `rgba(236,182,19,${(((10 - k) / 10) * 0.32).toFixed(3)})`;
+        ctx.lineWidth = 1.6;
+        ctx.stroke();
+      }
+
+      // Traza geodésica (Bézier cuadrática que proyecta el arco de círculo máximo).
+      const origin: Point2D = { x: originFrac.x * width, y: originFrac.y * height };
+      const dest: Point2D = { x: destFrac.x * width, y: destFrac.y * height };
+      const midX = (origin.x + dest.x) / 2;
+      const midY = (origin.y + dest.y) / 2;
+      const dx = dest.x - origin.x;
+      const dy = dest.y - origin.y;
+      const len = Math.hypot(dx, dy) || 1;
+      const control: Point2D = {
+        x: midX + (-dy / len) * len * 0.3,
+        y: midY + (dx / len) * len * 0.3,
+      };
+
+      ctx.beginPath();
+      ctx.moveTo(origin.x, origin.y);
+      ctx.quadraticCurveTo(control.x, control.y, dest.x, dest.y);
+      ctx.strokeStyle = 'rgba(236,182,19,0.32)';
+      ctx.setLineDash([4, 5]);
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Unidad móvil viajando por la geodésica (pulso Doppler).
+      const progress = (t * 0.12) % 1;
+      const unit = quadraticPoint(origin, control, dest, progress);
+      const pulsePhase = (t * 2.2) % 1;
+      ctx.beginPath();
+      ctx.arc(unit.x, unit.y, 4 + pulsePhase * 18, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(236,182,19,${(1 - pulsePhase).toFixed(3)})`;
+      ctx.lineWidth = 1.2;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(unit.x, unit.y, 3.4, 0, Math.PI * 2);
+      ctx.fillStyle = '#ecb613';
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(unit.x, unit.y, 5.4, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(236,182,19,0.5)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      // Pines origen (Hub Méntrida) y destino (Madrid).
+      ctx.beginPath();
+      ctx.arc(origin.x, origin.y, 4, 0, Math.PI * 2);
+      ctx.fillStyle = '#00E5FF';
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(dest.x, dest.y, 4, 0, Math.PI * 2);
+      ctx.fillStyle = '#FF2B44';
+      ctx.fill();
+
+      rafRef.current = requestAnimationFrame(render);
+    };
+
+    rafRef.current = requestAnimationFrame(render);
+    return () => {
+      cancelAnimationFrame(rafRef.current);
+      window.removeEventListener('resize', resize);
+    };
+  }, []);
 
   const handleSlideComplete = () => {
     playAnalogClick({ frequency: 720, durationMs: 24 });
-    if (onDispatch) {
-      onDispatch({ formatId: selectedFormatId, distanceKm, paxCount });
-      return;
-    }
-    const text = encodeURIComponent(
-      `🚨 DESPACHO UBER S-CLASS EAR OS\n- Formato: ${activeFormat.name}\n- Destino: ${cityTarget} (${distanceKm} km)\n- Asistentes: ${paxCount} pax (${wattsNeeded}W Acústicos)\n- Total Estimado: ${quote.total}€\n- Depósito Stripe: 100€\nSolicito confirmación de unidad móvil.`
-    );
-    window.open(`https://wa.me/${SOVEREIGN_ARTIST.phoneClean}?text=${text}`, '_blank');
+    // Contracción cinemática del radar en haz láser antes de despachar la unidad.
+    setDispatched(true);
+    window.setTimeout(() => {
+      if (onDispatch) {
+        onDispatch({ formatId: selectedFormatId, distanceKm, paxCount });
+        return;
+      }
+      const text = encodeURIComponent(
+        `🚨 DESPACHO UBER S-CLASS EAR OS\n- Formato: ${activeFormat.name}\n- Destino: ${cityTarget} (${distanceKm} km)\n- Asistentes: ${paxCount} pax (${wattsNeeded}W Acústicos)\n- Total Estimado: ${quote.total}€\n- Depósito Stripe: 100€\nSolicito confirmación de unidad móvil.`
+      );
+      window.open(`https://wa.me/${SOVEREIGN_ARTIST.phoneClean}?text=${text}`, '_blank');
+    }, 680);
   };
 
   return (
     <div className="flex flex-col min-h-screen w-full overflow-x-hidden bg-[#050505] text-white p-4 select-none relative overflow-y-auto no-scrollbar space-y-4">
 
-      {/* 📡 TOP TELEMETRY STATUS BAR */}
-      <div className="flex items-center justify-between bg-black/60 border border-white/10 px-3.5 py-2 rounded-2xl backdrop-blur-xl">
-        <div className="flex items-center gap-2">
-          <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
-          <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-400">
-            GPS LOGÍSTICA EN VIVO
+      {/* 📡 CABINA MILITAR — TELEMETRÍA EN TIEMPO REAL */}
+      <div className="grid grid-cols-3 gap-1.5 bg-black/60 border border-white/10 p-2 rounded-2xl backdrop-blur-xl">
+        <div className="flex flex-col items-center justify-center py-1.5 rounded-xl bg-white/5 border border-white/5">
+          <span className="text-[8px] font-mono uppercase tracking-widest text-white/40">ETA</span>
+          <span className="text-sm font-black font-mono text-[#ecb613] tabular-nums">{etaMinutes} MIN</span>
+        </div>
+        <div className="flex flex-col items-center justify-center py-1.5 rounded-xl bg-white/5 border border-white/5">
+          <span className="text-[8px] font-mono uppercase tracking-widest text-white/40 flex items-center gap-1">
+            <Radio size={9} className="text-emerald-400" /> STATUS
+          </span>
+          <span className="text-[9px] font-black font-mono text-emerald-400 text-center leading-tight">
+            Unidad Bose F1 Asignada
           </span>
         </div>
-        <div className="flex items-center gap-1 text-[10px] font-mono text-white/60">
-          <Clock size={12} className="text-[#ecb613]" />
-          <span>ETA: {etaMinutes} MIN</span>
+        <div className="flex flex-col items-center justify-center py-1.5 rounded-xl bg-white/5 border border-white/5">
+          <span className="text-[8px] font-mono uppercase tracking-widest text-white/40 flex items-center gap-1">
+            <ShieldCheck size={9} className="text-[#ecb613]" /> PRESIÓN SONORA
+          </span>
+          <span className="text-[9px] font-black font-mono text-white text-center leading-tight">
+            Homologada Ley 37/2003
+          </span>
         </div>
       </div>
 
-      {/* 🧭 ANIMATED UBER-STYLE RADAR DISPATCH MAP */}
-      <div className="relative w-full h-56 rounded-3xl overflow-hidden border border-[#ecb613]/30 bg-[#09090d] flex items-center justify-center shadow-2xl aura-glow-oled">
-        {/* Radar concentric rings */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="w-48 h-48 rounded-full border border-[#ecb613]/20 animate-ping opacity-25" />
-          <div className="w-36 h-36 rounded-full border border-white/10" />
-          <div className="w-24 h-24 rounded-full border border-dashed border-[#ecb613]/40" />
-          <div className="w-12 h-12 rounded-full border border-white/20" />
-          {/* Radar sweeping scan needle */}
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ repeat: Infinity, duration: 4, ease: 'linear' }}
-            className="absolute w-44 h-44 rounded-full bg-gradient-to-tr from-transparent via-[#ecb613]/10 to-transparent border-t border-[#ecb613]/60"
-          />
-        </div>
+      {/* 🧭 RADAR DOPPLER CINEMÁTICO EN CANVAS + HAZ LÁSER DE DESPACHO */}
+      <div className="relative">
+        <motion.div
+          animate={dispatched
+            ? { scaleY: 0.04, scaleX: 0.5, opacity: 0.5 }
+            : { scaleY: 1, scaleX: 1, opacity: 1 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          style={{ transformOrigin: '50% 100%' }}
+          className="relative w-full h-56 rounded-3xl overflow-hidden border border-[#ecb613]/30 bg-[#09090d] shadow-2xl aura-glow-oled"
+        >
+          <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
 
-        {/* Central Vehicle / Unit Pin */}
-        <div className="relative z-10 flex flex-col items-center">
-          <div className="w-12 h-12 rounded-2xl bg-[#ecb613] text-black flex items-center justify-center shadow-lg shadow-[#ecb613]/40 border-2 border-white">
-            <Truck size={22} className="text-black stroke-[2.5]" />
+          {/* Unidad Móvil (pin central) */}
+          <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
+            <div className="w-12 h-12 rounded-2xl bg-[#ecb613] text-black flex items-center justify-center shadow-lg shadow-[#ecb613]/40 border-2 border-white">
+              <Truck size={22} className="text-black stroke-[2.5]" />
+            </div>
           </div>
-          <span className="text-[9px] font-mono font-black uppercase tracking-wider bg-black/80 px-2 py-0.5 rounded-full border border-white/20 mt-1 text-[#ecb613]">
-            Unidad Móvil EAR 01
-          </span>
-        </div>
 
-        {/* Peripheral Hotspots */}
-        <div className="absolute top-4 left-4 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-xl border border-white/10 text-[9px] font-mono">
-          <span className="text-white/40 block">ORIGEN</span>
-          <span className="font-bold text-white">Hub Central Madrid</span>
-        </div>
+          {/* Hotspots periféricos */}
+          <div className="absolute top-3 left-3 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-xl border border-white/10 text-[9px] font-mono z-10">
+            <span className="text-white/40 block">ORIGEN</span>
+            <span className="font-bold text-white">Hub Méntrida</span>
+          </div>
 
-        <div className="absolute bottom-4 right-4 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-xl border border-[#ecb613]/40 text-[9px] font-mono text-right">
-          <span className="text-[#ecb613] block">POTENCIA REQUERIDA</span>
-          <span className="font-black text-emerald-400">{wattsNeeded}W @ 12W/pax</span>
-        </div>
+          <div className="absolute top-3 right-3 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-xl border border-white/10 text-[9px] font-mono text-right z-10">
+            <span className="text-white/40 block">POTENCIA</span>
+            <span className="font-black text-emerald-400">{wattsNeeded}W @ 12W/pax</span>
+          </div>
+
+          <div className="absolute bottom-3 right-3 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-xl border border-[#ecb613]/40 text-[9px] font-mono text-right z-10">
+            <span className="text-[#ecb613] block">GEODÉSICA HAVERSINE</span>
+            <span className="font-black text-emerald-400">{GEODESIC_KM.toFixed(1)} KM</span>
+          </div>
+        </motion.div>
+
+        {/* Haz de luz láser dorado hacia el botón de confirmación */}
+        {dispatched && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 176 }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            style={{ x: '-50%' }}
+            className="pointer-events-none absolute left-1/2 top-56 w-[3px] rounded-full bg-gradient-to-b from-[#ecb613] via-[#f5c538] to-transparent shadow-[0_0_30px_6px_rgba(236,182,19,0.75)] z-40"
+          />
+        )}
       </div>
 
       {/* 🎛️ FORMAT SELECTION CAROUSEL (UBER VEHICLE TIERS) */}

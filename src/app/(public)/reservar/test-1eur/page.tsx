@@ -19,6 +19,9 @@ import {
   Share2,
 } from 'lucide-react';
 import { CENTRALITA } from '@/lib/phone-constants';
+import Sha256StreamingBar from '@/components/mobile-fusion/Sha256StreamingBar';
+import { sha256Hex } from '@/lib/crypto/sha256';
+import QRCode from 'qrcode';
 
 function Test1EurContent() {
   const searchParams = useSearchParams();
@@ -50,6 +53,9 @@ function Test1EurContent() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [hasSignature, setHasSignature] = useState(false);
   const isDrawing = useRef(false);
+  const sigPointsRef = useRef<string>('');
+  const lastSigUpdateRef = useRef(0);
+  const [sigSeed, setSigSeed] = useState('');
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -98,10 +104,19 @@ function Test1EurContent() {
 
     ctx.lineTo(x, y);
     ctx.stroke();
+
+    // Acumula la traza biométrica (enteros) para el streaming SHA-256 en vivo.
+    sigPointsRef.current += `${Math.round(x)},${Math.round(y)};`;
+    const stamp = performance.now();
+    if (stamp - lastSigUpdateRef.current > 120) {
+      lastSigUpdateRef.current = stamp;
+      setSigSeed(sigPointsRef.current);
+    }
   };
 
   const stopDrawing = () => {
     isDrawing.current = false;
+    setSigSeed(sigPointsRef.current);
   };
 
   const clearSignature = () => {
@@ -113,6 +128,8 @@ function Test1EurContent() {
     const dpr = window.devicePixelRatio || 1;
     ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
     setHasSignature(false);
+    sigPointsRef.current = '';
+    setSigSeed('');
   };
 
   const handleCheckout = async () => {
@@ -156,6 +173,30 @@ function Test1EurContent() {
     `Hola! Aquí tienes tu enlace exclusivo de reserva con pre-firma de Edwin Agudelo y bloqueo de fecha (31 de Octubre). Depósito 1,00 €:\n\n${shareUrl}`
   );
   const whatsappShareLink = `https://wa.me/34${clientPhone.replace(/\D/g, '')}?text=${whatsappMessage}`;
+
+  // ── Reto 3: Streaming criptográfico SHA-256 (firma biométrica en vivo) ──
+  const contractPayload = `${clientName}|${clientPhone}|${eventDate}|${sigSeed}`;
+  const contractHash = sha256Hex(contractPayload);
+
+  const [qrUrl, setQrUrl] = useState<string | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    const qrValue = `EAR-OS|VIMUME|${contractHash}|${orderIdParam ?? 'SIGN'}`;
+    QRCode.toDataURL(qrValue, {
+      width: 132,
+      margin: 1,
+      color: { dark: '#0a0a0d', light: '#ffffff' },
+    })
+      .then((url: string) => {
+        if (!cancelled) setQrUrl(url);
+      })
+      .catch(() => {
+        if (!cancelled) setQrUrl(null);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [contractHash, orderIdParam]);
 
   if (statusParam === 'success') {
     return (
@@ -378,6 +419,52 @@ function Test1EurContent() {
                   Dibuja tu firma aquí (dedo o ratón)
                 </div>
               )}
+            </div>
+          </div>
+
+          {/* Reto 3: Streaming SHA-256 en vivo + Sello Diplomático VIMUME */}
+          <div className="space-y-3">
+            <Sha256StreamingBar
+              payload={contractPayload}
+              label="SHA-256 · FIRMA BIOMÉTRICA EN VIVO"
+            />
+
+            {/* Sello Diplomático Bilateral VIMUME con QR Criptográfico */}
+            <div className="rounded-2xl bg-gradient-to-br from-[#0e0e0b] to-[#09090d] border border-[#ecb613]/40 p-4 space-y-3 relative overflow-hidden">
+              <span className="text-[10px] font-mono text-[#ecb613] uppercase tracking-widest font-black flex items-center gap-1.5">
+                <ShieldCheck className="w-3.5 h-3.5" /> Sello Diplomático Bilateral VIMUME
+              </span>
+
+              <div className="grid grid-cols-2 gap-2">
+                <div className="rounded-xl bg-white/5 border border-white/10 p-2.5">
+                  <span className="text-[8px] font-mono uppercase tracking-wider text-white/40 block">Edwin Agudelo</span>
+                  <span className="text-[10px] font-black text-emerald-400 flex items-center gap-1">
+                    <CheckCircle2 className="w-3 h-3" /> Pre-firmado
+                  </span>
+                </div>
+                <div className="rounded-xl bg-white/5 border border-white/10 p-2.5">
+                  <span className="text-[8px] font-mono uppercase tracking-wider text-white/40 block">Cliente</span>
+                  <span className={`text-[10px] font-black flex items-center gap-1 ${hasSignature ? 'text-emerald-400' : 'text-white/40'}`}>
+                    <CheckCircle2 className="w-3 h-3" /> {hasSignature ? 'Firma biométrica' : 'Pendiente'}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <div className="w-[92px] h-[92px] shrink-0 rounded-xl bg-white p-1.5 flex items-center justify-center">
+                  {qrUrl ? (
+                    <img src={qrUrl} alt="QR criptográfico del contrato" className="w-full h-full" />
+                  ) : (
+                    <div className="w-full h-full bg-white/10 animate-pulse rounded" />
+                  )}
+                </div>
+                <div className="space-y-1.5 text-[10px] font-mono">
+                  <span className="text-[#ecb613] font-black uppercase tracking-wider block">Impacto Social VIMUME</span>
+                  <span className="text-white/60 block">Deducción 80% IRPF</span>
+                  <span className="text-white/60 block">SROI 4.85x</span>
+                  <span className="text-white/40 block break-all leading-snug">Hash: {contractHash.slice(0, 24)}…</span>
+                </div>
+              </div>
             </div>
           </div>
 

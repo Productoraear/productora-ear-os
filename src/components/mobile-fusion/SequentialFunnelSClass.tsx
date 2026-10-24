@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   ChevronLeft, Check, Lock, Loader2, Sparkles,
@@ -11,6 +11,8 @@ import Archetype2_UberRadar from './Archetype2_UberRadar';
 import Archetype3_AirbnbBento from './Archetype3_AirbnbBento';
 import Archetype4_BodasTimeline from './Archetype4_BodasTimeline';
 import { ARTIST_FORMATS, calculateQuote } from './types';
+import { useFunnelTracker } from '@/lib/telemetry/funnelAnalytics';
+import Sha256StreamingBar from './Sha256StreamingBar';
 
 type StepId = 1 | 2 | 3 | 4 | 5;
 
@@ -75,6 +77,17 @@ export default function SequentialFunnelSClass() {
     hasPhotocall: state.includePhotocall,
   });
 
+  const { track } = useFunnelTracker({ funnelKey: 'bodas-parejas', archetype: 'sequential-fusion' });
+
+  useEffect(() => {
+    const currentStep = FUNNEL_STEPS.find((s) => s.id === step);
+    track('STEP_REACHED', { step, stepTag: currentStep?.tag });
+    if (step === 5) {
+      track('QUOTE_VIEWED', { step: 5, stepTag: 'Lock', priceSnapshot: quote.total });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step, track]);
+
   const patch = (partial: Partial<FunnelState>) => setState(prev => ({ ...prev, ...partial }));
   const goNext = () => setStep(prev => (prev < 5 ? (prev + 1) as StepId : prev));
   const goBack = () => setStep(prev => (prev > 1 ? (prev - 1) as StepId : prev));
@@ -83,6 +96,15 @@ export default function SequentialFunnelSClass() {
     if (isLocking || lockedOrderId) return;
     setIsLocking(true);
     setLockError(null);
+
+    track('LEAD_SUBMITTED', {
+      step: 5,
+      stepTag: 'Lock',
+      priceSnapshot: quote.total,
+      leadName: clientName,
+      leadPhone: clientPhone,
+    });
+
     try {
       const res = await fetch('/api/reservar/solista/deposit', {
         method: 'POST',
@@ -101,12 +123,24 @@ export default function SequentialFunnelSClass() {
 
       if (data && typeof data.url === 'string') {
         setLockedOrderId(data.orderId ?? null);
+        track('DEPOSIT_INITIATED', {
+          step: 5,
+          stepTag: 'Lock',
+          priceSnapshot: quote.total,
+          orderId: data.orderId ?? '',
+          metadata: { priceLockHash: data.priceLockHash ?? '' },
+        });
         window.location.assign(data.url);
         return;
       }
-      setLockError(data?.reason || data?.error || 'No se pudo crear el depósito de reserva.');
+
+      const failureReason = data?.reason || data?.error || 'No se pudo crear el depósito de reserva.';
+      setLockError(failureReason);
+      track('DEPOSIT_ERROR', { step: 5, stepTag: 'Lock', error: failureReason });
     } catch (err) {
-      setLockError(err instanceof Error ? err.message : 'Error de red al crear el depósito.');
+      const failureReason = err instanceof Error ? err.message : 'Error de red al crear el depósito.';
+      setLockError(failureReason);
+      track('DEPOSIT_ERROR', { step: 5, stepTag: 'Lock', error: failureReason });
     } finally {
       setIsLocking(false);
     }
@@ -306,6 +340,11 @@ export default function SequentialFunnelSClass() {
                     className="w-full bg-black/40 border border-white/10 rounded-xl px-3 py-3 min-h-[48px] text-sm text-white placeholder-white/30 outline-none focus:border-[#ecb613]/60"
                   />
                 </div>
+
+                <Sha256StreamingBar
+                  payload={`${clientName}|${clientPhone}|${state.eventDate}|${quote.total}|EAR-OS`}
+                  label="SHA-256 · FIRMA DE BLOQUEO EN VIVO"
+                />
 
                 {lockError && (
                   <div className="p-3 rounded-2xl bg-rose-500/15 border border-rose-500/40 text-rose-300 text-xs font-mono">
