@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 import { useRouter, usePathname } from 'next/navigation';
 import {
@@ -10,19 +10,18 @@ import {
   ShieldCheck,
   MessageCircle,
   X,
-  Zap,
   Building2,
   Users,
   Phone,
-  ArrowRight,
-  CheckCircle2,
-  Volume2,
-  Lock,
   ChevronRight,
   Music,
-  Compass
+  Compass,
+  Radio,
+  FileText,
+  Sliders,
+  Flame,
 } from 'lucide-react';
-import { CENTRALITA } from '@/lib/phone-constants';
+import { playHapticClick } from '@/lib/audio/AuraAudioSynth';
 
 type MobileRole = 'B2G' | 'B2C' | 'ARTISTA' | 'PROVIDER';
 
@@ -41,12 +40,12 @@ const ROLE_INSIGHTS: Record<MobileRole, RoleInsight> = {
   B2G: {
     title: "Instituciones & FITUR 2026",
     badge: "Contrato Menor Art. 118 LCSP",
-    badgeColor: "bg-blue-500/20 text-blue-400 border-blue-500/30",
+    badgeColor: "bg-[#00E5FF]/20 text-[#00E5FF] border-[#00E5FF]/30",
     ticket: "< 14.250 € (Sin Concurso)",
     split: "E-Manager + 8 Mentorías Diáspora",
-    summary: "Rider técnico homologado Bose F1 (<75 dB SPL) para recepciones oficiales y formación gratuita a 2 artistas locales como embajadores culturales.",
+    summary: "Rider técnico homologado Bose F1 (<75 dB SPL) para recepciones oficiales y festejos con limitador telemático.",
     keyAction: "Ver Protocolo B2G FITUR",
-    actionHref: "/oraculo"
+    actionHref: "/b2g"
   },
   B2C: {
     title: "Parejas & Bodas S-Class",
@@ -54,46 +53,89 @@ const ROLE_INSIGHTS: Record<MobileRole, RoleInsight> = {
     badgeColor: "bg-[#ecb613]/20 text-[#ecb613] border-[#ecb613]/30",
     ticket: "Desde 350,00 € Base",
     split: "Split Soberano 80/10/10",
-    summary: "Sonorización profesional Bose F1 y microfonía inalámbrica incluidas. Bloqueo de fecha inmediato con depósito de 100 € en Stripe.",
-    keyAction: "Cotizar Presupuesto Exacto",
-    actionHref: "/checkout/presupuesto"
+    summary: "Sonorización profesional Bose F1 y microfonía Axient de estudio. Bloqueo de fecha inmediato con depósito deducible.",
+    keyAction: "Explorar Tinder Matcher",
+    actionHref: "/bodas/parejas"
   },
   ARTISTA: {
     title: "Artistas & Roster Diáspora",
     badge: "Gobernanza Soberana",
-    badgeColor: "bg-purple-500/20 text-purple-400 border-purple-500/30",
+    badgeColor: "bg-[#FF2B44]/20 text-[#FF2B44] border-[#FF2B44]/30",
     ticket: "Split 80% Artista Directo",
     split: "10% EAR OS / 10% VIMUME",
-    summary: "Protección contra intermediarios abusivos. Asignación de backline Shure Beta 87A / Axient y acceso al programa de mentorías de alta proyección.",
+    summary: "Protección contra intermediarios abusivos. Asignación de microfonía Shure Axient y soporte de liquidación inmediata.",
     keyAction: "Consultar Condiciones Roster",
     actionHref: "/artistas"
   },
   PROVIDER: {
     title: "Fincas & Proveedores de Red",
-    badge: "Red Territorial 11.690 Fincas",
-    badgeColor: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
+    badge: "Red Territorial Homologada",
+    badgeColor: "bg-[#00E5FF]/20 text-[#00E5FF] border-[#00E5FF]/30",
     ticket: "10% Comisión Transparente",
     split: "Póliza RC 1.000.000 €",
-    summary: "Sincronización técnica directa con organizadores de bodas y consistorios. Cero cancelaciones con garantía de sustitución <2 horas.",
-    keyAction: "Unirse a la Red Homologada",
-    actionHref: "/arsenal"
+    summary: "Sincronización técnica directa con bodas y eventos. Radar en vivo de horas muertas para alianzas B2B.",
+    keyAction: "Área de Proveedor",
+    actionHref: "/bodas/proveedor"
   }
 };
 
 export const SovereignMobileHUD: React.FC = React.memo(function SovereignMobileHUD() {
   const [isCockpitOpen, setIsCockpitOpen] = useState(false);
-  const [selectedRole, setSelectedRole] = useState<MobileRole>('B2C');
-  const [paxCount, setPaxCount] = useState<number>(120);
   const router = useRouter();
   const pathname = usePathname();
 
-  // Si estamos en /admin, el HUD público no debe interferir con el Centro de Mando
+  // Si estamos en /admin, el HUD público no interfiere
   if (pathname?.startsWith('/admin') || pathname?.startsWith('/panel')) {
     return null;
   }
 
+  // 🧭 DETECCIÓN CONTEXTUAL ESTRICTA DE LA VERTICAL (CERO CONTAMINACIÓN CRUZADA)
+  const isNovios = Boolean(
+    pathname?.startsWith('/bodas') ||
+    pathname?.startsWith('/reservar') ||
+    pathname?.startsWith('/mobile-fusion') ||
+    pathname?.startsWith('/checkout')
+  );
+  const isArtistas = Boolean(pathname?.startsWith('/artistas'));
+  const isFincas = Boolean(pathname?.startsWith('/fincas') || pathname?.startsWith('/fincasparaboda'));
+  const isProveedor = Boolean(
+    pathname?.startsWith('/bodas/proveedor') ||
+    pathname?.startsWith('/proveedores') ||
+    pathname?.startsWith('/arsenal')
+  );
+  const isB2G = Boolean(
+    pathname?.startsWith('/b2g') ||
+    pathname?.startsWith('/instituciones') ||
+    pathname?.startsWith('/ocasiones')
+  );
+
+  // Paleta de acento según la vertical activa
+  const accentColor = useMemo(() => {
+    if (isArtistas) return '#FF2B44'; // Rubí S-Class
+    if (isProveedor || isB2G) return '#00E5FF'; // Cyan Cuántico
+    return '#ecb613'; // Oro Imperial para Bodas, Fincas y Home
+  }, [isArtistas, isProveedor, isB2G]);
+
+  // Selección de rol por defecto según la URL activa
+  const defaultRole: MobileRole = useMemo(() => {
+    if (isArtistas) return 'ARTISTA';
+    if (isProveedor) return 'PROVIDER';
+    if (isB2G) return 'B2G';
+    return 'B2C';
+  }, [isArtistas, isProveedor, isB2G]);
+
+  const [selectedRole, setSelectedRole] = useState<MobileRole>(defaultRole);
+
+  // Filtrado hermético de roles visibles en el Cockpit (eliminación de ruido)
+  const allowedRoles: MobileRole[] = useMemo(() => {
+    if (isNovios || isFincas) return ['B2C', 'PROVIDER']; // CERO B2G a novios o fincas
+    if (isArtistas) return ['ARTISTA', 'B2C'];
+    if (isProveedor) return ['PROVIDER', 'ARTISTA'];
+    if (isB2G) return ['B2G'];
+    return ['B2C', 'PROVIDER', 'ARTISTA', 'B2G']; // Home muestra los 4
+  }, [isNovios, isFincas, isArtistas, isProveedor, isB2G]);
+
   const activeInsight = ROLE_INSIGHTS[selectedRole];
-  const acousticWatts = paxCount * 12; // 12 W/pax SSOT
 
   const sheetVariants: Variants = {
     hidden: { y: '100%', opacity: 0 },
@@ -110,6 +152,7 @@ export const SovereignMobileHUD: React.FC = React.memo(function SovereignMobileH
   };
 
   const handleOpenConciergeChat = () => {
+    playHapticClick(800, 0.02);
     setIsCockpitOpen(false);
     if (typeof window !== 'undefined') {
       window.dispatchEvent(new CustomEvent('open-ai-concierge'));
@@ -129,7 +172,10 @@ export const SovereignMobileHUD: React.FC = React.memo(function SovereignMobileH
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setIsCockpitOpen(false)}
+            onClick={() => {
+              playHapticClick(600, 0.02);
+              setIsCockpitOpen(false);
+            }}
             className="fixed inset-0 bg-black/75 backdrop-blur-md z-[990] md:hidden"
           />
         )}
@@ -138,7 +184,7 @@ export const SovereignMobileHUD: React.FC = React.memo(function SovereignMobileH
       {/* CONTENEDOR FLOTANTE MÓVIL (ANCLADO AL BOTTOM CON SAFE-AREA) */}
       <div className="fixed bottom-3 left-1/2 -translate-x-1/2 w-[calc(100%-1.5rem)] max-w-lg z-[995] flex flex-col justify-end pointer-events-none md:hidden">
 
-        {/* DRAWER / COCKPIT ACOMPAÑANTE ASTRA (MOMENTO WOW DEL VIAJE DEL CLIENTE) */}
+        {/* DRAWER / COCKPIT ACOMPAÑANTE ASTRA */}
         <AnimatePresence>
           {isCockpitOpen && (
             <motion.div
@@ -146,23 +192,27 @@ export const SovereignMobileHUD: React.FC = React.memo(function SovereignMobileH
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="w-full bg-[#07070b]/98 border border-[#ecb613]/30 rounded-3xl p-5 mb-3 shadow-[0_0_50px_rgba(0,0,0,0.9),0_0_30px_rgba(236,182,19,0.15)] pointer-events-auto flex flex-col gap-4 max-h-[82vh] overflow-y-auto no-scrollbar"
+              className="w-full bg-[#07070b]/98 border rounded-3xl p-5 mb-3 shadow-[0_0_50px_rgba(0,0,0,0.9)] pointer-events-auto flex flex-col gap-4 max-h-[82vh] overflow-y-auto no-scrollbar"
+              style={{ borderColor: `${accentColor}40` }}
             >
               {/* HEADER DEL COCKPIT */}
               <div className="flex justify-between items-start border-b border-white/10 pb-3">
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                    <span className="text-[10px] font-mono text-[#ecb613] font-bold uppercase tracking-widest">
-                      ASTRA NEURAL COPILOT · V4.1
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-widest" style={{ color: accentColor }}>
+                      ASTRA NEURAL COPILOT · V4.2
                     </span>
                   </div>
                   <h2 className="text-lg font-syne font-black text-white uppercase tracking-tight">
-                    Tu Viaje <span className="text-[#ecb613]">100% Asistido</span>
+                    Experiencia <span style={{ color: accentColor }}>S-Class</span>
                   </h2>
                 </div>
                 <button
-                  onClick={() => setIsCockpitOpen(false)}
+                  onClick={() => {
+                    playHapticClick(600, 0.02);
+                    setIsCockpitOpen(false);
+                  }}
                   className="p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-zinc-300 hover:text-white transition-colors"
                   aria-label="Cerrar Cockpit"
                 >
@@ -170,45 +220,50 @@ export const SovereignMobileHUD: React.FC = React.memo(function SovereignMobileH
                 </button>
               </div>
 
-              {/* SELECTOR INMEDIATO DE ROL (4 ARQUETIPOS EN 1 VISTAZO) */}
+              {/* SELECTOR DE PERFIL AISLADO HERMÉTICAMENTE */}
               <div className="space-y-1.5">
                 <span className="text-[9px] font-mono uppercase tracking-wider text-zinc-400 font-bold block">
-                  1. Selecciona tu perfil de acceso:
+                  Perfil Activo:
                 </span>
-                <div className="grid grid-cols-4 gap-1.5">
-                  {(['B2G', 'B2C', 'ARTISTA', 'PROVIDER'] as MobileRole[]).map((r) => {
+                <div className={`grid gap-1.5 ${allowedRoles.length === 1 ? 'grid-cols-1' : allowedRoles.length === 2 ? 'grid-cols-2' : 'grid-cols-4'}`}>
+                  {allowedRoles.map((r) => {
                     const isSelected = selectedRole === r;
-                    const labels: Record<MobileRole, { name: string; icon: any }> = {
+                    const labels: Record<MobileRole, { name: string; icon: React.ComponentType<{ size: number; className?: string }> }> = {
                       B2G: { name: 'FITUR B2G', icon: Building2 },
                       B2C: { name: 'Bodas', icon: Users },
                       ARTISTA: { name: 'Artistas', icon: Music },
-                      PROVIDER: { name: 'Fincas', icon: Compass }
+                      PROVIDER: { name: 'Proveedores', icon: Compass }
                     };
                     const ItemIcon = labels[r].icon;
                     return (
                       <button
                         key={r}
-                        onClick={() => setSelectedRole(r)}
-                        className={`p-2 rounded-xl flex flex-col items-center gap-1 border text-center transition-all ${isSelected
-                          ? 'bg-[#ecb613]/20 border-[#ecb613] text-white shadow-md'
-                          : 'bg-white/[0.03] border-white/5 text-zinc-400 hover:text-white'
-                          }`}
+                        onClick={() => {
+                          playHapticClick(750, 0.02);
+                          setSelectedRole(r);
+                        }}
+                        className={`p-2.5 rounded-xl flex items-center justify-center gap-2 border text-center transition-all ${
+                          isSelected
+                            ? 'bg-white/10 text-white font-bold shadow-md'
+                            : 'bg-white/[0.03] border-white/5 text-zinc-400 hover:text-white'
+                        }`}
+                        style={{ borderColor: isSelected ? accentColor : undefined }}
                       >
-                        <ItemIcon size={14} className={isSelected ? 'text-[#ecb613]' : 'text-zinc-400'} />
-                        <span className="text-[10px] font-mono font-bold leading-tight">{labels[r].name}</span>
+                        <ItemIcon size={14} className={isSelected ? 'text-white' : 'text-zinc-400'} />
+                        <span className="text-[11px] font-mono font-bold leading-tight">{labels[r].name}</span>
                       </button>
                     );
                   })}
                 </div>
               </div>
 
-              {/* TARJETA DINÁMICA DEL MOMENTO DEL VIAJE */}
+              {/* TARJETA DINÁMICA DEL MOMENTO */}
               <div className="p-4 rounded-2xl bg-gradient-to-br from-[#0e0e18] to-[#0a0a10] border border-white/10 space-y-3">
                 <div className="flex justify-between items-center">
                   <span className={`text-[9px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border ${activeInsight.badgeColor}`}>
                     {activeInsight.badge}
                   </span>
-                  <span className="text-[10px] font-mono text-[#ecb613] font-bold">
+                  <span className="text-[10px] font-mono font-bold" style={{ color: accentColor }}>
                     {activeInsight.ticket}
                   </span>
                 </div>
@@ -222,53 +277,18 @@ export const SovereignMobileHUD: React.FC = React.memo(function SovereignMobileH
                   </p>
                 </div>
 
-                {/* BARRA DEL VIAJE DEL CLIENTE EN 4 HITOS */}
-                <div className="pt-2 border-t border-white/5 space-y-1.5">
-                  <div className="flex justify-between text-[9px] font-mono text-zinc-400">
-                    <span>1. Activo & Rider</span>
-                    <span>2. Tarifa SSOT</span>
-                    <span>3. Oráculo</span>
-                    <span className="text-emerald-400 font-bold">4. Cierre 100€</span>
-                  </div>
-                  <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
-                    <div className="h-full bg-gradient-to-r from-[#ecb613] via-amber-400 to-emerald-400 w-3/4 rounded-full"></div>
-                  </div>
+                <div className="pt-2 flex justify-between items-center text-[10px] font-mono text-zinc-400 border-t border-white/5">
+                  <span>Gobernanza:</span>
+                  <span className="text-white font-bold">{activeInsight.split}</span>
                 </div>
               </div>
 
-              {/* CALCULADORA RÁPIDA DE ASISTENTES & PRESIÓN ACÚSTICA (12 W/PAX) */}
-              <div className="p-3 rounded-2xl bg-black/60 border border-white/10 flex items-center justify-between">
-                <div className="space-y-0.5">
-                  <div className="flex items-center gap-1.5 text-xs text-zinc-300 font-bold">
-                    <Volume2 size={13} className="text-[#ecb613]" />
-                    <span>Presión Acústica S-Class</span>
-                  </div>
-                  <div className="text-[10px] font-mono text-zinc-400">
-                    {paxCount} pax = <span className="text-[#ecb613] font-bold">{acousticWatts} W</span> (Bose F1 Homologado)
-                  </div>
-                </div>
-                <div className="flex items-center gap-1.5 bg-[#12121c] p-1 rounded-xl border border-white/10">
-                  <button
-                    onClick={() => setPaxCount(Math.max(20, paxCount - 20))}
-                    className="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/15 text-white font-mono text-xs flex items-center justify-center"
-                  >
-                    -
-                  </button>
-                  <span className="font-mono text-xs font-bold text-white px-1.5">{paxCount}</span>
-                  <button
-                    onClick={() => setPaxCount(paxCount + 20)}
-                    className="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/15 text-white font-mono text-xs flex items-center justify-center"
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-
-              {/* ACCIONES EJECUTIVAS 1-TAP */}
-              <div className="grid grid-cols-2 gap-2 pt-1">
+              {/* ACCIONES DEL COCKPIT */}
+              <div className="grid grid-cols-2 gap-2">
                 <button
                   onClick={handleOpenConciergeChat}
-                  className="py-3 px-3 rounded-xl bg-gradient-to-r from-[#ecb613] to-amber-500 hover:from-amber-400 hover:to-amber-600 text-black font-black uppercase text-[11px] font-mono flex items-center justify-center gap-1.5 shadow-lg shadow-amber-500/20 active:scale-95 transition-all"
+                  className="py-3 px-3 rounded-xl text-black font-black uppercase text-[11px] font-mono flex items-center justify-center gap-1.5 shadow-lg active:scale-95 transition-all"
+                  style={{ backgroundColor: accentColor }}
                 >
                   <Sparkles size={14} />
                   <span>Hablar con IA</span>
@@ -276,6 +296,7 @@ export const SovereignMobileHUD: React.FC = React.memo(function SovereignMobileH
 
                 <button
                   onClick={() => {
+                    playHapticClick(800, 0.02);
                     setIsCockpitOpen(false);
                     router.push(activeInsight.actionHref);
                   }}
@@ -286,51 +307,79 @@ export const SovereignMobileHUD: React.FC = React.memo(function SovereignMobileH
                 </button>
               </div>
 
-              {/* BOTÓN DIRECTO WHATSAPP VIP / RETENCIÓN (+34 693 693 048) */}
+              {/* ATENCIÓN DIRECTA WHATSAPP */}
               <a
                 href={officialWhatsAppUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => playHapticClick(900, 0.02)}
                 className="w-full py-2.5 px-4 rounded-xl bg-[#25D366]/15 hover:bg-[#25D366]/25 border border-[#25D366]/40 text-[#25D366] text-[11px] font-mono font-bold flex items-center justify-center gap-2 transition-all"
               >
                 <Phone size={13} />
-                <span>Atención Oficial: +34 693 693 048</span>
+                <span>Atención Inmediata: +34 693 693 048</span>
               </a>
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* 🚀 BARRA DE NAVEGACIÓN INFERIOR S-CLASS (AEROESPACIAL · CERO RUIDO · ERGONÓMICA) */}
+        {/* 🚀 BARRA DE NAVEGACIÓN INFERIOR MORPHING (MUTACIÓN DINÁMICA POR RUTA) */}
         <nav
           aria-label="Navegación Móvil Principal"
           className="w-full h-15 bg-[#06060a]/92 backdrop-blur-2xl border border-white/15 rounded-2xl flex items-center justify-between px-3 shadow-[0_10px_35px_rgba(0,0,0,0.8)] pointer-events-auto"
         >
-          {/* 1. INICIO / EXPLORAR */}
+          {/* BOTÓN 1: INICIO O CATÁLOGO VERTICAL */}
           <button
-            onClick={() => router.push('/')}
-            className={`flex flex-col items-center justify-center gap-0.5 w-14 py-1 transition-colors ${pathname === '/' ? 'text-[#ecb613]' : 'text-zinc-400 hover:text-white'
-              }`}
-            aria-label="Ir a Inicio"
+            onClick={() => {
+              playHapticClick(700, 0.02);
+              if (isNovios) router.push('/bodas');
+              else if (isArtistas) router.push('/artistas');
+              else if (isFincas) router.push('/fincasparaboda');
+              else if (isProveedor) router.push('/bodas/proveedor');
+              else if (isB2G) router.push('/b2g');
+              else router.push('/');
+            }}
+            className="flex flex-col items-center justify-center gap-0.5 w-14 py-1 text-zinc-400 hover:text-white transition-colors"
+            aria-label="Navegar a Principal"
           >
-            <Home size={18} />
-            <span className="text-[9px] font-mono font-medium">Inicio</span>
+            {isNovios ? <Flame size={17} style={{ color: pathname === '/bodas' ? accentColor : undefined }} /> :
+             isArtistas ? <Music size={17} style={{ color: pathname === '/artistas' ? accentColor : undefined }} /> :
+             isFincas ? <Compass size={17} style={{ color: pathname === '/fincasparaboda' ? accentColor : undefined }} /> :
+             isProveedor ? <FileText size={17} style={{ color: pathname === '/bodas/proveedor' ? accentColor : undefined }} /> :
+             <Home size={17} style={{ color: pathname === '/' ? accentColor : undefined }} />}
+            <span className="text-[9px] font-mono font-medium">
+              {isNovios ? 'Bodas' : isArtistas ? 'Artistas' : isFincas ? 'Fincas' : isProveedor ? 'Escaparate' : isB2G ? 'B2G' : 'Inicio'}
+            </span>
           </button>
 
-          {/* 2. COTIZADOR EXPRESS */}
+          {/* BOTÓN 2: EXPERIENCIA CLAVE SEGÚN ROL */}
           <button
-            onClick={() => router.push('/checkout/presupuesto')}
-            className={`flex flex-col items-center justify-center gap-0.5 w-14 py-1 transition-colors ${pathname?.startsWith('/checkout') ? 'text-[#ecb613]' : 'text-zinc-400 hover:text-white'
-              }`}
-            aria-label="Calcular Presupuesto"
+            onClick={() => {
+              playHapticClick(750, 0.02);
+              if (isNovios) router.push('/bodas/parejas');
+              else if (isArtistas) router.push('/artistas');
+              else if (isFincas) router.push('/fincas');
+              else if (isProveedor) router.push('/bodas/proveedor');
+              else router.push('/checkout/presupuesto');
+            }}
+            className="flex flex-col items-center justify-center gap-0.5 w-14 py-1 text-zinc-400 hover:text-white transition-colors"
+            aria-label="Experiencia del Perfil"
           >
-            <Calculator size={18} />
-            <span className="text-[9px] font-mono font-medium">Cotizar</span>
+            {isNovios ? <Sparkles size={17} style={{ color: pathname === '/bodas/parejas' ? accentColor : undefined }} /> :
+             isProveedor ? <Radio size={17} style={{ color: accentColor }} /> :
+             <Calculator size={17} />}
+            <span className="text-[9px] font-mono font-medium">
+              {isNovios ? 'Matcher' : isArtistas ? 'Repertorio' : isFincas ? 'Espacios' : isProveedor ? 'Radar B2B' : 'Cotizar'}
+            </span>
           </button>
 
-          {/* 3. BOTÓN CENTRAL WOW: ORÁCULO ASTRA ACOMPAÑANTE */}
+          {/* BOTÓN 3 CENTRAL WOW: ORÁCULO ASTRA COPILOT */}
           <button
-            onClick={() => setIsCockpitOpen(!isCockpitOpen)}
-            className="relative -top-4 w-13 h-13 rounded-full bg-gradient-to-tr from-[#ecb613] via-amber-400 to-[#fff2a3] flex items-center justify-center text-black border-4 border-[#06060a] shadow-[0_0_25px_rgba(236,182,19,0.6)] active:scale-90 transition-all group"
+            onClick={() => {
+              playHapticClick(850, 0.03);
+              setIsCockpitOpen(!isCockpitOpen);
+            }}
+            className="relative -top-4 w-13 h-13 rounded-full flex items-center justify-center text-black border-4 border-[#06060a] shadow-[0_0_25px_rgba(236,182,19,0.5)] active:scale-90 transition-all group"
+            style={{ backgroundColor: accentColor }}
             aria-label="Abrir Oráculo Copilot"
             title="Oráculo Astra Copilot"
           >
@@ -346,26 +395,36 @@ export const SovereignMobileHUD: React.FC = React.memo(function SovereignMobileH
             <span className="absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-500 border-2 border-black animate-pulse"></span>
           </button>
 
-          {/* 4. GARANTÍA & B2G */}
+          {/* BOTÓN 4: SELLO O RADAR DEL ROL */}
           <button
-            onClick={() => router.push('/ocasiones/ayuntamientos')}
-            className={`flex flex-col items-center justify-center gap-0.5 w-14 py-1 transition-colors ${pathname?.startsWith('/ocasiones') ? 'text-[#ecb613]' : 'text-zinc-400 hover:text-white'
-              }`}
-            aria-label="Garantía y Contratación"
+            onClick={() => {
+              playHapticClick(750, 0.02);
+              if (isNovios) router.push('/mobile-fusion');
+              else if (isArtistas) router.push('/rider-tecnico');
+              else if (isFincas) router.push('/soberania-tecnica');
+              else if (isProveedor) router.push('/panel');
+              else router.push('/soberania-tecnica');
+            }}
+            className="flex flex-col items-center justify-center gap-0.5 w-14 py-1 text-zinc-400 hover:text-white transition-colors"
+            aria-label="Sello o Radar"
           >
-            <ShieldCheck size={18} />
-            <span className="text-[9px] font-mono font-medium">Garantía</span>
+            {isNovios ? <Sliders size={17} style={{ color: pathname === '/mobile-fusion' ? accentColor : undefined }} /> :
+             <ShieldCheck size={17} />}
+            <span className="text-[9px] font-mono font-medium">
+              {isNovios ? 'Embudo' : isArtistas ? 'Rider' : isFincas ? 'Acústica' : isProveedor ? 'Panel' : 'Garantía'}
+            </span>
           </button>
 
-          {/* 5. WHATSAPP VIP / ORÁCULO DIRECTO */}
+          {/* BOTÓN 5: WHATSAPP DIRECTO */}
           <a
             href={officialWhatsAppUrl}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => playHapticClick(900, 0.03)}
             className="flex flex-col items-center justify-center gap-0.5 w-14 py-1 text-emerald-400 hover:text-emerald-300 transition-colors"
             aria-label="Contactar por WhatsApp Oficial"
           >
-            <MessageCircle size={18} />
+            <MessageCircle size={17} />
             <span className="text-[9px] font-mono font-medium">Directo</span>
           </a>
         </nav>

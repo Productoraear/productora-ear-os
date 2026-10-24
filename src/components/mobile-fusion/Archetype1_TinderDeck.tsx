@@ -8,6 +8,7 @@ import {
   Zap, Star
 } from 'lucide-react';
 import { ARTIST_FORMATS, SOVEREIGN_ARTIST } from './types';
+import { playAnalogClick } from '@/lib/audio/AnalogClickSynth';
 
 export default function Archetype1_TinderDeck({ onBook, onNext }: {
   onBook?: (formatId: string) => void;
@@ -25,6 +26,11 @@ export default function Archetype1_TinderDeck({ onBook, onNext }: {
   const opacityLike = useTransform(x, [20, 150], [0, 1]);
 
   const handleSwipe = (direction: 'left' | 'right') => {
+    playAnalogClick(
+      direction === 'right'
+        ? { frequency: 800, volume: 0.14 }
+        : { frequency: 520, volume: 0.1 }
+    );
     if (direction === 'right') {
       onBook?.(currentFormat.id);
     }
@@ -90,7 +96,7 @@ export default function Archetype1_TinderDeck({ onBook, onNext }: {
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.85, opacity: 0, transition: { duration: 0.2 } }}
             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-            className="absolute inset-0 rounded-[2rem] overflow-hidden border border-white/15 bg-gradient-to-b from-[#16161c] to-[#0a0a0d] shadow-2xl flex flex-col justify-end p-5 cursor-grab active:cursor-grabbing"
+            className="absolute inset-0 rounded-[2rem] overflow-hidden border border-white/15 bg-gradient-to-b from-[#16161c] to-[#0a0a0d] shadow-2xl flex flex-col justify-end p-5 cursor-grab active:cursor-grabbing aura-glow-oled"
           >
             {/* Background Image with Cinematic Overlay */}
             <div

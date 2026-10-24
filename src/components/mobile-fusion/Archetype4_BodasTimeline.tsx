@@ -110,7 +110,7 @@ export default function Archetype4_BodasTimeline({ initialPaxCount, initialInclu
           return (
             <div
               key={milestone.id}
-              className={`p-3.5 rounded-3xl border transition-all ${isAssigned
+              className={`p-3.5 rounded-3xl border transition-all aura-glow-oled ${isAssigned
                 ? 'bg-gradient-to-r from-[#181822] to-[#101016] border-[#ecb613]/50 shadow-lg shadow-[#ecb613]/5'
                 : 'bg-[#0d0d12] border-white/10 opacity-80'
                 }`}

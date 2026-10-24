@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { CENTRALITA } from '@/lib/phone-constants';
 import { SPLIT_SOBERANO, DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
+import { EventNetworkingRadar } from '@/features/vendor/ui/EventNetworkingRadar';
 
 const ARTISTA_PCT = Math.round(SPLIT_SOBERANO.artista * 100);
 const EAR_PCT = Math.round(SPLIT_SOBERANO.earOs * 100);
@@ -94,6 +95,11 @@ export default function AreaProveedorPage() {
               </div>
             ))}
           </div>
+        </section>
+
+        {/* RADAR DE NETWORKING EN EVENTOS (HORAS MUERTAS B2B) */}
+        <section className="mt-20">
+          <EventNetworkingRadar />
         </section>
 
         <section className="mt-20 rounded-3xl bg-gradient-to-br from-[#0a1214] to-[#0a0a0d] border border-[#00E5FF]/30 p-8 sm:p-12 flex flex-col md:flex-row items-center justify-between gap-8">

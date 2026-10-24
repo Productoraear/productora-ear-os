@@ -180,5 +180,39 @@ class AuraAudioSynth {
   }
 }
 
+let _cachedAudioCtx: AudioContext | null = null;
+
+/**
+ * Emite un micro-feedback auditivo de lujo (click analógico OLED S-Class).
+ * No invasivo, seguro en SSR y de latencia cero.
+ */
+export function playHapticClick(frequency = 750, duration = 0.025): void {
+  if (typeof window === 'undefined') return;
+  try {
+    const w = window as unknown as { AudioContext?: typeof AudioContext; webkitAudioContext?: typeof AudioContext };
+    const Ctor = w.AudioContext || w.webkitAudioContext;
+    if (!Ctor) return;
+    if (!_cachedAudioCtx || _cachedAudioCtx.state === 'closed') {
+      _cachedAudioCtx = new Ctor();
+    }
+    if (_cachedAudioCtx.state === 'suspended') {
+      void _cachedAudioCtx.resume();
+    }
+    const osc = _cachedAudioCtx.createOscillator();
+    const gain = _cachedAudioCtx.createGain();
+    const now = _cachedAudioCtx.currentTime;
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(frequency, now);
+    gain.gain.setValueAtTime(0.035, now);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+    osc.connect(gain);
+    gain.connect(_cachedAudioCtx.destination);
+    osc.start(now);
+    osc.stop(now + duration);
+  } catch {
+    // Fail-safe silencioso
+  }
+}
+
 export default AuraAudioSynth;
 export type { WindowWithWebkitAudio };

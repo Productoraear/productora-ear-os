@@ -222,7 +222,6 @@ export default function SolistaReservationPage() {
 
   // CERO-FACHADAS: disponibilidad real desde el motor ACID
   const [availabilityMap, setAvailabilityMap] = useState<Record<string, AvailabilityRecord>>({});
-  const [calendarLoading, setCalendarLoading] = useState<boolean>(false);
 
   // CERO-FACHADAS: geo-acoustic radar por contexto (Ley 37/2003)
   const [guestCount, setGuestCount] = useState<number>(100);
@@ -373,7 +372,6 @@ export default function SolistaReservationPage() {
     let cancelled = false;
 
     async function loadAvailability() {
-      setCalendarLoading(true);
       const daysInMonth = new Date(2026, selectedMonth, 0).getDate();
       const dates: string[] = [];
       for (let d = 1; d <= daysInMonth; d++) {
@@ -401,7 +399,6 @@ export default function SolistaReservationPage() {
       });
 
       setAvailabilityMap(map);
-      setCalendarLoading(false);
     }
 
     loadAvailability();

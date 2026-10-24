@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { CENTRALITA } from '@/lib/phone-constants';
 import { DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
+import { CouplesInteractiveFunnelSection } from '@/features/wedding/ui/CouplesInteractiveFunnelSection';
 
 export const metadata: Metadata = {
   title: 'Área de Parejas · Tu Boda Gestionada con Garantía S-Class | Productora EAR',
@@ -73,6 +74,11 @@ export default function AreaParejasPage() {
               <p className="text-xs text-white/55 leading-relaxed font-light">{f.text}</p>
             </div>
           ))}
+        </section>
+
+        {/* 🎬 EMBUDO INTERACTIVO NOVIOS (Tinder Matcher + Sequential Funnel S-Class) */}
+        <section className="mt-20">
+          <CouplesInteractiveFunnelSection />
         </section>
 
         <section className="mt-20 space-y-8">

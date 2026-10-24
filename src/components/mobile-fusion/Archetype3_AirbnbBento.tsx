@@ -66,7 +66,7 @@ export default function Archetype3_AirbnbBento({ initialFormatId, initialGuestCo
       </div>
 
       {/* 🖼️ BENTO GALLERY GRID */}
-      <div className="grid grid-cols-3 gap-2 h-52 rounded-3xl overflow-hidden border border-white/10">
+      <div className="grid grid-cols-3 gap-2 h-52 rounded-3xl overflow-hidden border border-white/10 aura-glow-oled">
         <div
           className="col-span-2 h-full bg-cover bg-center relative group"
           style={{ backgroundImage: `url(${selectedFormat.image})` }}
@@ -185,7 +185,7 @@ export default function Archetype3_AirbnbBento({ initialFormatId, initialGuestCo
       </div>
 
       {/* ⚖️ TRANSPARENT SPLIT BREAKDOWN (AIRBNB TRANSPARENCY) */}
-      <div className="p-4 rounded-3xl bg-[#111116] border border-white/10 space-y-3">
+      <div className="p-4 rounded-3xl bg-[#111116] border border-white/10 space-y-3 aura-glow-oled">
         <div
           onClick={() => setShowSplitDetails(!showSplitDetails)}
           className="flex items-center justify-between cursor-pointer"

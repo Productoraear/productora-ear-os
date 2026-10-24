@@ -8,6 +8,7 @@ import {
   Volume2, Users, ArrowRight
 } from 'lucide-react';
 import { ARTIST_FORMATS, SOVEREIGN_ARTIST, calculateQuote } from './types';
+import { playAnalogClick } from '@/lib/audio/AnalogClickSynth';
 
 export default function Archetype2_UberRadar({ onDispatch, initialFormatId, initialPaxCount, initialDistanceKm }: {
   onDispatch?: (data: { formatId: string; distanceKm: number; paxCount: number }) => void;
@@ -34,6 +35,7 @@ export default function Archetype2_UberRadar({ onDispatch, initialFormatId, init
   const wattsNeeded = paxCount * 12;
 
   const handleSlideComplete = () => {
+    playAnalogClick({ frequency: 720, durationMs: 24 });
     if (onDispatch) {
       onDispatch({ formatId: selectedFormatId, distanceKm, paxCount });
       return;
@@ -62,7 +64,7 @@ export default function Archetype2_UberRadar({ onDispatch, initialFormatId, init
       </div>
 
       {/* 🧭 ANIMATED UBER-STYLE RADAR DISPATCH MAP */}
-      <div className="relative w-full h-56 rounded-3xl overflow-hidden border border-[#ecb613]/30 bg-[#09090d] flex items-center justify-center shadow-2xl">
+      <div className="relative w-full h-56 rounded-3xl overflow-hidden border border-[#ecb613]/30 bg-[#09090d] flex items-center justify-center shadow-2xl aura-glow-oled">
         {/* Radar concentric rings */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div className="w-48 h-48 rounded-full border border-[#ecb613]/20 animate-ping opacity-25" />
@@ -198,7 +200,7 @@ export default function Archetype2_UberRadar({ onDispatch, initialFormatId, init
       </div>
 
       {/* 💳 PRICING BREAKDOWN & INSTANT SLIDE-TO-DISPATCH */}
-      <div className="bg-gradient-to-b from-[#181820] to-[#0c0c10] border border-[#ecb613]/40 p-4 rounded-3xl space-y-3">
+      <div className="bg-gradient-to-b from-[#181820] to-[#0c0c10] border border-[#ecb613]/40 p-4 rounded-3xl space-y-3 aura-glow-oled">
         <div className="flex justify-between items-end border-b border-white/10 pb-2.5">
           <div>
             <span className="text-[9px] font-mono text-white/50 block">PRESUPUESTO TOTAL CERRADO</span>

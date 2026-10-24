@@ -804,6 +804,21 @@ div[class*="netlify-identity"],
   transform: translateY(-2px);
 }
 
+/* ✨ AURA GLOW OLED S-CLASS — Micro-resplandor dorado reactivo en hover.
+   Borde tenue rgba(236,182,19,0.25) + desenfoque de 40px. Aplicado a las
+   tarjetas principales de los 4 arquetipos (Tinder / Uber / Airbnb / Bodas). */
+.aura-glow-oled {
+  transition: box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.aura-glow-oled:hover {
+  border-color: rgba(236, 182, 19, 0.25);
+  box-shadow: 0 0 40px rgba(236, 182, 19, 0.25),
+              inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
 /* Texto Tipográfico Oro Metálico Pulido */
 .text-metallic-gold {
   background: linear-gradient(135deg, #FFF7D6 0%, #ECC440 25%, #C29515 50%, #ECC440 75%, #FFFFFF 100%);
@@ -868,4 +883,44 @@ p {
 
 .text-pretty {
   text-wrap: pretty;
-}
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   🏆 MICRO-ESTÉTICA AWWWARDS S-CLASS (AURA GLOW & HAPTIC INTERACTION)
+   ═══════════════════════════════════════════════════════════════════════ */
+.glow-gold-hover {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glow-gold-hover:hover {
+  border-color: rgba(236, 182, 19, 0.45);
+  box-shadow: 0 0 35px rgba(236, 182, 19, 0.2);
+  transform: translateY(-2px);
+}
+
+.glow-cyan-hover {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glow-cyan-hover:hover {
+  border-color: rgba(0, 229, 255, 0.45);
+  box-shadow: 0 0 35px rgba(0, 229, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.glow-ruby-hover {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glow-ruby-hover:hover {
+  border-color: rgba(255, 43, 68, 0.45);
+  box-shadow: 0 0 35px rgba(255, 43, 68, 0.2);
+  transform: translateY(-2px);
+}
+
+.aura-glow-oled {
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(236, 182, 19, 0.08);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.aura-glow-oled:hover {
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.9), 0 0 35px rgba(236, 182, 19, 0.16);
+}
+
+
