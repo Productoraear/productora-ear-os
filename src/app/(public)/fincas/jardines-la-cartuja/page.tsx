@@ -8,11 +8,14 @@ import {
 } from '@/lib/constants/ear-os-ssot';
 
 export const metadata: Metadata = {
-  title: 'Jardines La Cartuja · Oferta Irresistible S-Class | EAR OS',
-  description: `Experiencia inmersiva y cotizador en tiempo real para Jardines La Cartuja (El Puig, Valencia). Reserva de depósito de ${DEPOSITO_STRIPE_EUR} € Price-Lock y garantía acústica S-Class.`,
+  title: 'Música en Directo y Sonorización para Jardines La Cartuja (Valencia) · Homologación Oficial | Productora EAR',
+  description: `Coordinación musical, limitadores acústicos Ley 37/2003 y cotizador oficial para bodas en Jardines La Cartuja (El Puig, Valencia). Reserva de depósito de ${DEPOSITO_STRIPE_EUR} € Price-Lock.`,
+  alternates: {
+    canonical: 'https://www.productoraear.com/fincas/jardines-la-cartuja',
+  },
 };
 
-const SITE_URL = 'https://ear-os.com';
+const SITE_URL = 'https://www.productoraear.com';
 const PAGE_URL = `${SITE_URL}/fincas/jardines-la-cartuja`;
 const WHATSAPP_URL = `https://wa.me/${CENTRALITA_EAR_OS.replace(/\D/g, '')}`;
 

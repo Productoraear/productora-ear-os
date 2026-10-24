@@ -2,7 +2,9 @@ import type { MetadataRoute } from 'next';
 import { PROVINCIAS_52_GRAPH } from '@/lib/constants/seo-data-hydrated';
 import { MARIACHI_LANDINGS } from '@/lib/mariachi/mariachiLandingCatalog';
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://productoraear.com';
+// Google indexa el host www (ver GSC export 2026-10-24: el 100% de las páginas son www.productoraear.com).
+// El sitemap DEBE declarar el mismo host canónico o Google parte la autoridad entre www y no-www.
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.productoraear.com';
 
 type ChangeFrequency = NonNullable<MetadataRoute.Sitemap[number]['changeFrequency']>;
 
@@ -22,9 +24,12 @@ const STATIC_ROUTES: StaticRoute[] = [
     { path: '/panel/reservas', priority: 0.85, changeFrequency: 'daily' },
     { path: '/bodas', priority: 1.0, changeFrequency: 'daily' },
     { path: '/fincas', priority: 0.95, changeFrequency: 'daily' },
+    { path: '/fincas/villa-escorial-park', priority: 0.9, changeFrequency: 'weekly' },
+    { path: '/fincas/jardines-la-cartuja', priority: 0.9, changeFrequency: 'weekly' },
     { path: '/proveedores', priority: 0.95, changeFrequency: 'daily' },
     { path: '/artistas', priority: 0.9, changeFrequency: 'daily' },
     { path: '/artistas/edwin-agudelo', priority: 0.95, changeFrequency: 'weekly' },
+    { path: '/artistas/mariachi-mexicanto', priority: 0.9, changeFrequency: 'weekly' },
     { path: '/academia', priority: 0.9, changeFrequency: 'daily' },
     { path: '/calculadora', priority: 0.9, changeFrequency: 'weekly' },
     { path: '/cotizador', priority: 0.9, changeFrequency: 'weekly' },
@@ -44,6 +49,26 @@ const STATIC_ROUTES: StaticRoute[] = [
     { path: '/empresarios', priority: 0.8, changeFrequency: 'weekly' },
     { path: '/precios', priority: 0.8, changeFrequency: 'weekly' },
     { path: '/servicios', priority: 0.75, changeFrequency: 'weekly' },
+];
+
+// Rutas hiperlocales de dinero VERIFICADAS en Google Search Console (export 2026-10-24):
+// páginas reales de venta que ya rankean en top 10 y reciben clics. Incluirlas en el sitemap
+// concentra el presupuesto de rastreo en lo que convierte, en lugar del spray doorway.
+const GSC_VERIFIED_MONEY_ROUTES: StaticRoute[] = [
+    { path: '/arsenal/alquiler-sonido/rubi', priority: 0.9, changeFrequency: 'daily' },
+    { path: '/bodas/ciudad-real/mariachi-gala/alcazar-de-san-juan', priority: 0.9, changeFrequency: 'daily' },
+    { path: '/bodas/zaragoza/catering-brasas/zaragoza', priority: 0.9, changeFrequency: 'daily' },
+    { path: '/bodas/toledo/edwin-agudelo-mariachi-6/talavera-de-la-reina', priority: 0.9, changeFrequency: 'daily' },
+    { path: '/bodas/murcia/mariachi-gala/yecla', priority: 0.9, changeFrequency: 'daily' },
+    { path: '/bodas/toledo/bodas-lujo/escalona', priority: 0.9, changeFrequency: 'daily' },
+    { path: '/bodas/bilbao/sonido-iluminacion/getxo', priority: 0.9, changeFrequency: 'daily' },
+    { path: '/bodas/toledo/catering-brasas/ocana', priority: 0.85, changeFrequency: 'daily' },
+    { path: '/bodas/ciudad-real/catering-brasas/daimiel', priority: 0.85, changeFrequency: 'daily' },
+    { path: '/arsenal/alquiler-sonido/bilbao', priority: 0.85, changeFrequency: 'daily' },
+    { path: '/bodas/zaragoza/mariachi-gala/calatayud', priority: 0.85, changeFrequency: 'daily' },
+    { path: '/bodas/granada/catering-brasas/baza', priority: 0.85, changeFrequency: 'daily' },
+    { path: '/bodas/cadiz/mariachi-gala/arcos-de-la-frontera', priority: 0.85, changeFrequency: 'daily' },
+    { path: '/arsenal/altavoces-line-array/mostoles', priority: 0.85, changeFrequency: 'daily' },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -86,6 +111,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
             lastModified,
             changeFrequency: landing.slug === 'fiestas-patronales' ? 'weekly' : 'daily',
             priority: 0.85,
+        });
+    }
+
+    // Páginas hiperlocales de dinero ya verificadas en GSC (top 10, con clics).
+    for (const route of GSC_VERIFIED_MONEY_ROUTES) {
+        entries.push({
+            url: `${BASE_URL}${route.path}`,
+            lastModified,
+            changeFrequency: route.changeFrequency,
+            priority: route.priority,
         });
     }
 

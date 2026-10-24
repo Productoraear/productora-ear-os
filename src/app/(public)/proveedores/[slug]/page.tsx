@@ -587,7 +587,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const category = cleanText(provider.atomic_specs?.category || provider.category || 'Sonido & Iluminación');
   const location = cleanText(provider.atomic_specs?.location || provider.province || 'Madrid');
   const cleanName = cleanText(provider.name);
-  const basePrice = provider.basePrice || provider.pricing?.rentalBasePrice || 650;
 
   const tier = getProviderTier({ id: provider.id || slug, slug, name: provider.name });
   const isBlacklisted = tier === 'BLACKLISTED';
@@ -598,12 +597,29 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   // fichas prov-* sin reclamar y BLACKLISTED) se emite con noindex para erradicar
   // el castigo algorítmico por "Thin Content / Doorways" y disparar el CTR real.
   const isVerifiedTier = tier === 'SOVEREIGN' || tier === 'CLAIMED';
-  const shouldNoIndex = isBlacklisted || !isVerifiedTier;
+  const isGenericDoorway = cleanName.toLowerCase().startsWith('prov-') || slug.toLowerCase().startsWith('prov-');
+  const shouldNoIndex = isBlacklisted || !isVerifiedTier || isGenericDoorway;
 
   const isGenericName = !cleanName || cleanName.toLowerCase().startsWith('prov-') || isBlacklisted;
-  const displayTitle = isGenericName
-    ? `Proveedor Homologado S-Class #${providerIdShort} (${category} en ${location}) | Productora EAR`
-    : `${cleanName} — ${category} en ${location} | Precios 2026 & Reserva Directa (Productora EAR)`;
+  const isFinca = category.toLowerCase().includes('finca') || category.toLowerCase().includes('espacio') || slug.includes('finca');
+  const isMusica = category.toLowerCase().includes('música') || category.toLowerCase().includes('musica') || category.toLowerCase().includes('mariachi') || category.toLowerCase().includes('artista') || category.toLowerCase().includes('dj');
+
+  let displayTitle: string;
+  let metaDescription: string;
+
+  if (isGenericName) {
+    displayTitle = `Proveedor Homologado S-Class #${providerIdShort} (${category} en ${location}) | Productora EAR`;
+    metaDescription = `Servicio profesional homologado S-Class (${category}) en ${location}. Conexión técnica y fianza protegida Stripe vía Productora EAR.`;
+  } else if (isFinca) {
+    displayTitle = `Música, Sonorización y Contratación para ${cleanName} (${location}) · Enlace Homologado | Productora EAR`;
+    metaDescription = `Central técnica y enlace oficial para bodas en ${cleanName} (${location}). Sonorización Bose F1 certificada (Ley 37/2003), música en directo y despacho de reserva garantizada vía n8n.`;
+  } else if (isMusica) {
+    displayTitle = `Contratación de ${cleanName} en ${location} · Enlace Directo y Split Oficial | Productora EAR`;
+    metaDescription = `Contrata a ${cleanName} en ${location} con fianza protegida Stripe, Split Soberano 80/10/10 directo al artista y despacho en tiempo real vía n8n.`;
+  } else {
+    displayTitle = `${cleanName} (${category}) en ${location} · Presupuesto Verificado y Enlace Oficial | Productora EAR`;
+    metaDescription = `Solicita presupuesto oficial para ${cleanName} (${category}) en ${location}. Enlace verificado vía n8n Dispatcher, garantía de fianza y homologación S-Class.`;
+  }
 
   const canonicalSlug = provider.slug && !provider.slug.toLowerCase().startsWith('prov-')
     ? provider.slug.toLowerCase().trim()
@@ -612,11 +628,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const firstGallery = Array.isArray(provider.gallery) ? provider.gallery[0] : undefined;
   const coverImg = isBlacklisted
     ? 'https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop'
-    : (provider.img || firstGallery || 'https://productoraear.com/images/brand/ear_logo_official_diamond.png');
-
-  const metaDescription = isBlacklisted
-    ? `Contrata servicio profesional homologado S-Class (${category}) en ${location}. Tarifas oficiales desde ${basePrice}€, rider certificado, seguro de RC y reserva con fianza protegida Stripe.`
-    : `Contrata ${cleanName || 'proveedor homologado'} (${category}) en ${location}. Tarifas oficiales desde ${basePrice}€, rider certificado (12 W/pax), seguro de RC y reserva online con Price-Lock 100€.`;
+    : (provider.img || firstGallery || 'https://www.productoraear.com/images/brand/ear_logo_official_diamond.png');
 
   return {
     title: displayTitle,
@@ -738,6 +750,48 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
         </nav>
 
 
+
+        {/* 🏛️ BANNER S-CLASS: PUENTE OFICIAL DE MEDIACIÓN & DESPACHO n8n */}
+        <div className="p-4 sm:p-5 rounded-3xl bg-[#09090f]/95 border border-[#ecb613]/30 backdrop-blur-xl space-y-3 shadow-2xl">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-3">
+            <div className="flex items-center gap-3">
+              <span className="p-2 bg-[#ecb613]/10 text-[#ecb613] rounded-2xl border border-[#ecb613]/25 shrink-0">
+                <ShieldCheck size={20} />
+              </span>
+              <div>
+                <span className="text-[10px] font-mono uppercase tracking-widest text-[#ecb613] font-bold block">
+                  Central de Contratación & Enlace Oficial EAR OS
+                </span>
+                <h2 className="text-sm sm:text-base font-bold text-white font-syne">
+                  Puente Tecnológico Certificado con {displayName}
+                </h2>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 text-[11px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-full self-start sm:self-auto">
+              <Sparkles size={13} />
+              <span>Despacho n8n en &lt; 15 min</span>
+            </div>
+          </div>
+
+          <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed font-light">
+            Productora EAR opera como <strong className="text-white font-medium">plataforma técnica y central de enlace homologada</strong>. Al solicitar presupuesto o fecha, coordinamos el rider sonoro (Ley 37/2003), protegemos tu anticipo con depósito deducible Stripe y despachamos tu petición directamente a {displayName} vía n8n sin comisiones infladas.
+          </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1 text-[11px] font-mono text-zinc-300">
+            <div className="flex items-center gap-2 bg-black/50 p-2.5 rounded-xl border border-white/5">
+              <CheckCircle2 size={14} className="text-[#ecb613] shrink-0" />
+              <span>Depósito 100€ 100% deducible</span>
+            </div>
+            <div className="flex items-center gap-2 bg-black/50 p-2.5 rounded-xl border border-white/5">
+              <CheckCircle2 size={14} className="text-emerald-400 shrink-0" />
+              <span>Split 80/10/10 sin sobrecostes</span>
+            </div>
+            <div className="flex items-center gap-2 bg-black/50 p-2.5 rounded-xl border border-white/5">
+              <CheckCircle2 size={14} className="text-cyan-400 shrink-0" />
+              <span>Garantía sonora Ley 37/2003 (12 W/pax)</span>
+            </div>
+          </div>
+        </div>
 
         {/* 🚨 BANNER DE SOCIAL PROOF / URGENCIA NUPCIAL */}
         <div className="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-blue-950/60 via-purple-950/40 to-black border border-blue-500/30 flex items-center justify-between gap-4 text-xs sm:text-sm">

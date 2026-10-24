@@ -102,15 +102,15 @@ export async function generateMetadata({ params }: ProvinciaFincasProps): Promis
     ).length;
 
     return {
-      title: `Fincas Homologadas S-Class en ${resolved.display} | Productora EAR`,
-      description: `${count === 1 ? 'Finca certificada' : `${count} fincas certificadas`} para bodas y eventos en ${resolved.display}. RC 300.000 €, acometida CETAC 32A/16A y rider Bose F1 con split 80/10/10.`,
+      title: `Fincas para Bodas y Sonorización en ${resolved.display} · Homologación Oficial | Productora EAR`,
+      description: `${count === 1 ? 'Finca certificada' : `${count} fincas certificadas`} para bodas y eventos en ${resolved.display}. RC 300.000 €, acústica calibrada Ley 37/2003 y rider Bose F1 con split 80/10/10.`,
       alternates: {
-        canonical: `https://productoraear.com/fincas/${resolved.slug}`,
+        canonical: `https://www.productoraear.com/fincas/${resolved.slug}`,
       },
       openGraph: {
-        title: `Fincas Homologadas en ${resolved.display} — Productora EAR`,
-        description: `Red certificada de fincas S-Class en ${resolved.display} para bodas de gala y eventos corporativos.`,
-        url: `https://productoraear.com/fincas/${resolved.slug}`,
+        title: `Fincas para Bodas y Sonorización en ${resolved.display} — Productora EAR`,
+        description: `Red certificada de fincas S-Class en ${resolved.display} con limitadores homologados y música en vivo.`,
+        url: `https://www.productoraear.com/fincas/${resolved.slug}`,
         type: 'website',
       },
     };

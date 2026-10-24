@@ -54,7 +54,7 @@ import { OmniAgentConsoleModal } from "@/components/agents/OmniAgentConsoleModal
 import * as React from "react";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "https://productoraear.com"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "https://www.productoraear.com"),
   robots: {
     index: true,
     follow: true,

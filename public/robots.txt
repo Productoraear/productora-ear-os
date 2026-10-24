@@ -1,5 +1,11 @@
 User-agent: *
 Allow: /
+Allow: /_next/
+Allow: /assets/
+Allow: /images/
+Allow: /fonts/
+Allow: /llms.txt
+Allow: /llms-full.txt
 Disallow: /api/
 Disallow: /admin/
 Disallow: /dashboard
@@ -9,5 +15,7 @@ Disallow: /propuesta/
 Disallow: /nexus/
 Disallow: /portal/
 Disallow: /login
+Disallow: /proveedores/prov-
 
-Sitemap: https://productoraear.com/sitemap.xml
+# Host canónico www (Google ya indexa www — GSC 2026-10-24).
+Sitemap: https://www.productoraear.com/sitemap.xml

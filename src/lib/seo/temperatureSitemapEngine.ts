@@ -51,7 +51,7 @@ const TEMPERATURE_PROFILES: Readonly<Record<LeadTemperature, TemperatureProfile>
 
 const TEMPERATURE_ORDER: readonly LeadTemperature[] = ["CALIENTE", "TEMPLADO", "FRIO"];
 
-const DEFAULT_BASE_URL = "https://productoraear.com";
+const DEFAULT_BASE_URL = "https://www.productoraear.com";
 
 export function escapeXml(value: string): string {
   return value

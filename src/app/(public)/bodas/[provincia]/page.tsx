@@ -43,12 +43,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `Bodas de Gala, Mariachis y Sonido en ${data.name} | Productora EAR`,
     description: `${data.localKeywords.mariachi}. ${data.localKeywords.sonido}. Desplazamiento desde Hub Central (${data.distanceFromHubKm} km). SLA: ${data.logisticsSpecs.wattsPerPax} W/pax.`,
     alternates: {
-      canonical: `https://productoraear.com/bodas/${data.slug}`
+      canonical: `https://www.productoraear.com/bodas/${data.slug}`
     },
     openGraph: {
       title: `Bodas Exclusivas en ${data.name} — Productora EAR`,
       description: `Música de conservatorio, sonido Bose y catering de brasas para bodas y fincas en ${data.name}.`,
-      url: `https://productoraear.com/bodas/${data.slug}`,
+      url: `https://www.productoraear.com/bodas/${data.slug}`,
       type: 'website'
     }
   };
