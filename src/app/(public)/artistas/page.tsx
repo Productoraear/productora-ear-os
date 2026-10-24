@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import ArtistasNationalCatalogClient from "@/app/artistas/ArtistasNationalCatalogClient";
+import SovereignArtistCard, {
+  SOVEREIGN_ARTISTS_ROSTER,
+} from "@/components/artists/SovereignArtistCard";
 import { SCLASS_ROSTER_14_FORMATS } from "@/lib/constants/pricing-catalog";
 import {
   TARIFA_BASE_SOLISTA_EUR,
@@ -175,6 +178,36 @@ export default function ArtistasCinematicPage(): React.JSX.Element {
       <div className="relative z-10 animate-[fadeIn_600ms_ease-out_both] motion-reduce:animate-none">
         <ArtistasNationalCatalogClient />
       </div>
+
+      {/* Constelación Roster Oficial ArtistasEuropa.com — Diamante Rojo */}
+      <section
+        aria-label="Roster Oficial ArtistasEuropa.com — Diamante Rojo"
+        className="relative z-10 mx-auto w-full max-w-6xl px-4 py-12 sm:px-6"
+      >
+        <div className="mb-8 text-center">
+          <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#FF2B44]">
+            Océano Azul · Constelación Europeo
+          </span>
+          <h2 className="mt-2 font-syne text-3xl font-black uppercase text-white sm:text-4xl">
+            Roster Oficial ArtistasEuropa.com
+          </h2>
+          <p className="mx-auto mt-3 max-w-2xl text-sm text-white/60">
+            Artistas Diamante Rojo con muestra de audio en 1-clic, Split Soberano
+            80/10/10 y contratación directa con fianza deducible de{" "}
+            {DEPOSITO_STRIPE_EUR} € (100% descontable del total).
+          </p>
+        </div>
+
+        <div className="grid gap-6 lg:grid-cols-1">
+          {SOVEREIGN_ARTISTS_ROSTER.map((artist, index) => (
+            <SovereignArtistCard
+              key={artist.id}
+              artist={artist}
+              highlight={index === 0}
+            />
+          ))}
+        </div>
+      </section>
 
       {/* Estilos locales para micro-animaciones S-Class (CTA hover, fade-in) */}
       <style

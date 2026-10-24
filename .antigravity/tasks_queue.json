@@ -1,13 +1,49 @@
 {
   "_meta": {
-    "version": "9.2-OMEGA-WAVE-35-QUANTUM-MULTIROL-SEAL",
-    "doctrine": "WAVE 35: QUANTUM MULTIROL MASTER COCKPIT & SWARM DISPATCHER — Selector Morfogenético Cuántico (Novios/Ayuntamientos/Artistas/Proveedores), Swarm IA WhatsApp Dispatcher n8n y Conector FincasParaBoda S-Class",
-    "wave": 35,
+    "version": "9.3-OMEGA-WAVE-36-ARTISTAS-EUROPA-AND-VENDOR-CARDS",
+    "doctrine": "WAVE 36: ARTISTAS EUROPA OCEANO AZUL & VENDOR CARDS BODAS.NET S-CLASS — Conector ArtistasEuropa.com, Cards de Proveedor de Alta Conversión estilo Zola/Bodas.net y Fast-Track Institucional B2G",
+    "wave": 36,
     "total_tasks": 3
   },
   "_instructions_for_worker": "Ejecuta SOLO via: call RUN_OMEGA.bat next  ->  lee .antigravity/MISSION_ACTIVE.json  ->  edita SOLO 'files'  ->  call RUN_OMEGA.bat complete <ID>. El complete ya ejecuta tsc + eslint + test. 1 tarea por sesion.",
-  "tasks": [],
+  "tasks": [
+    {
+      "id": "W36_T02_VENDOR_DIRECTORY_SCLASS_BODAS_CARD",
+      "wave": 36,
+      "status": "QUEUED",
+      "title": "VENDOR DIRECTORY S-CLASS BODAS CARD — Rediseño de tarjeta de proveedor estilo Bodas.net/Zola con imagen cinemática completa, rating de estrellas, precio SSOT y botón de presupuesto instantáneo",
+      "files": [
+        "src/components/providers/SClassVendorBodasCard.tsx",
+        "src/app/(public)/proveedores/page.tsx"
+      ],
+      "action": "Construir `src/components/providers/SClassVendorBodasCard.tsx` e integrarlo en `src/app/(public)/proveedores/page.tsx` para elevar el directorio al estándar visual de los gigantes de bodas (Bodas.net / Zola) pero con estética OLED y cero slop: 1) Imagen completa con zoom suave en hover; 2) Badge de Wedding Awards / Homologación EAR; 3) Rating con 5 estrellas doradas y número de opiniones reales; 4) Ubicación con pin geográfico; 5) Etiqueta 'Desde [Precio] €' y 'Split 80/10/10'; 6) Botón 'Solicitar Presupuesto' que abre RequestToBookModal o invoca Swarm Lead Dispatcher. Cero `any`.",
+      "scaffold": "1. Crear src/components/providers/SClassVendorBodasCard.tsx con props tipadas (vendor: ProviderItem, onSelect?: () => void).\n2. Integrar en src/app/(public)/proveedores/page.tsx sustituyendo o complementando las tarjetas de proveedor con este formato de alta conversión.\n3. Validar: npx tsc --noEmit && npx eslint src/components/providers/SClassVendorBodasCard.tsx src/app/(public)/proveedores/page.tsx",
+      "done_when": "Tarjeta de alta conversión estilo Bodas.net/Zola montada en /proveedores, con rating, precio SSOT y modal de presupuesto, compilación Exit Code 0.",
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W36_T03_B2G_TOWNHALL_INSTITUTIONAL_FAST_TRACK",
+      "wave": 36,
+      "status": "QUEUED",
+      "title": "B2G TOWNHALL INSTITUTIONAL FAST-TRACK — Tramitador instantáneo para Ayuntamientos en /ayuntamientos con contrato menor Art. 118 LCSP (<14.250€) y módulo social VIMUME Ley 49/2002",
+      "files": [
+        "src/components/b2g/TownhallInstitutionalFastTrack.tsx",
+        "src/app/(public)/ayuntamientos/page.tsx"
+      ],
+      "action": "Construir `src/components/b2g/TownhallInstitutionalFastTrack.tsx` e integrarlo en `src/app/(public)/ayuntamientos/page.tsx`. Permite a alcaldes y concejales tramitar en 1 clic: 1) Paquete Fiestas Patronales / Alumbrado Navideño con ajuste preventivo < 14.250 € (Art. 118 LCSP); 2) Módulo VIMUME geriátrico (Protocolo 40 Hz no invasivo para mayores en residencias municipales) con Modelo 182 y deducción fiscal Ley 49/2002; 3) Seguro de RC de 1.000.000 € y solvencia técnica; 4) Envío directo a n8n 'b2b-quote' y generación de propuesta formal.",
+      "scaffold": "1. Crear src/components/b2g/TownhallInstitutionalFastTrack.tsx consumiendo AJUSTE_PREVENTIVO_B2G_EUR, LIMITE_B2G_LCSP_EUR, CENTRALITA_EAR_OS de @/lib/constants/ear-os-ssot.\n2. Integrar en src/app/(public)/ayuntamientos/page.tsx corrigiendo URLs antiguas a https://www.productoraear.com/ayuntamientos.\n3. Validar: npx tsc --noEmit && npx eslint src/components/b2g/TownhallInstitutionalFastTrack.tsx src/app/(public)/ayuntamientos/page.tsx",
+      "done_when": "Componente Fast-Track B2G operativo en /ayuntamientos, con límites LCSP y VIMUME integrados, compilación Exit Code 0.",
+      "validate": "npx tsc --noEmit"
+    }
+  ],
   "completed": [
+    {
+      "id": "W36_T01_ARTISTAS_EUROPA_ROSTER_INTERCONNECT",
+      "title": "ARTISTAS EUROPA ROSTER INTERCONNECT — Conector de Roster Europeo para artistaseuropa.com en /artistas con tarjeta Diamante Rojo, Split 80/10/10 y despacho Swarm",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-24T21:38:19.482Z"
+    },
     {
       "id": "W35_T03_FINCAS_PARABODA_HIGH_CONVERTING_BRIDGE",
       "title": "FINCAS PARABODA HIGH CONVERTING BRIDGE — Conector interactivo para fincasparaboda.com con cotizador paramétrico de acústica Bose F1 (12 W/pax), limitadores Ley 37/2003 y bloqueo 100€ Stripe",
@@ -28,82 +64,12 @@
       "status": "COMPLETED",
       "exit_code": 0,
       "completed_at": "2026-10-24T21:07:34.393Z"
-    },
-    {
-      "id": "W34_T01_CONTEXTUAL_VERTICAL_ISOLATION_AND_NETWORKING_RADAR",
-      "title": "VERTICAL ISOLATION & SENSORY NETWORKING RADAR — Erradicacion total de ruido visual (fincas/artistas/novios/B2G 100% aislados), morphing cockpit con acentos S-Class, micro-feedback audio Web Audio API y Radar de Eventos para horas muertas de proveedores",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-24T17:40:00.000Z"
-    },
-    {
-      "id": "W33_T02_MOBILE_FUSION_PIPELINE",
-      "title": "MOBILE FUSION PIPELINE — Funnel secuencial S-Class multi-arquetipo (SequentialFunnelSClass + Tinder/Uber/Airbnb/Timeline + types + pagina) con cotizacion SSOT y bloqueo Stripe real",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-24T17:13:13.906Z"
-    },
-    {
-      "id": "W33_T01_IDEMPOTENT_CHECKOUT_SEAL",
-      "title": "IDEMPOTENT CHECKOUT SEAL — Confirmacion post-pago ACID idempotente (route /confirm + deposit SSOT DEPOSITO_STRIPE_EUR + pagina solista + test-1eur) con retorno de sesion Stripe",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-24T17:13:13.906Z"
-    },
-    {
-      "id": "W32_T07_VENDOR_ENTERPRISE_VALIDATION_SUITE",
-      "title": "VENDOR ENTERPRISE VALIDATION SUITE — Script forense scripts/verify_vendor_enterprise.cjs con sello Omega Diamante",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-23T19:52:27.814Z"
-    },
-    {
-      "id": "W32_T06_VENDOR_CRM_PANEL_UI",
-      "title": "VENDOR CRM PANEL UI — Pipeline de leads + inbox de chat + contadores y alertas de reserva (manifest seccion 6)",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-23T19:42:24.621Z"
-    },
-    {
-      "id": "W32_T05_VENDOR_DRAG_DROP_MEDIA",
-      "title": "VENDOR DRAG & DROP MULTIMEDIA — Gestor de media con reordenado por drag, subida por drop y límites por tier",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-23T18:54:48.993Z"
-    },
-    {
-      "id": "W32_T04_VENDOR_ESCAPARATE_PUBLICO",
-      "title": "VENDOR ESCAPARATE PUBLICO — Ficha pública estructurada inmutable + galería + CTA booking (SSOT manifest seccion 3)",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-23T18:27:20.653Z"
-    },
-    {
-      "id": "W32_T03_VENDOR_CRM_SERVER_ACTIONS",
-      "title": "VENDOR CRM SERVER ACTIONS — Acciones server tipadas (booking request 24h, chat, upload media) con Zod + defensa en profundidad",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-23T17:36:32.237Z"
-    },
-    {
-      "id": "W32_T02_VENDOR_REST_API_ENDPOINTS",
-      "title": "VENDOR REST API ENDPOINTS — Endpoints REST server-only para perfil, subida media SHA-256, clientes CRM y bolos (Split 80/10/10)",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-23T17:15:38.635Z"
-    },
-    {
-      "id": "W32_T01_VENDOR_CRM_DATA_LAYER",
-      "title": "VENDOR CRM DATA LAYER — Modelos Prisma VendorLead/VendorThread/VendorCrmClient/VendorBooking + tipos estrictos + VendorCrmRepository server-only",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-23T16:54:46.999Z"
     }
   ],
   "metadata": {
-    "last_updated": "2026-10-24T21:23:31.905Z",
-    "total_pending": 0,
-    "current_sprint": "WAVE_35_QUANTUM_MULTIROL_SEAL",
-    "ceo_mandate": "Ejecución del Master Cockpit Multirol S-Class: Selector morfogenético Novios/Ayuntamientos/Artistas/Proveedores con audio háptico, Swarm IA Lead Dispatcher n8n con formateo WhatsApp de alta conversión, y conector FincasParaBoda con simulación acústica Bose F1 (12 W/pax). 1 tarea por sesión."
+    "last_updated": "2026-10-24T21:38:19.486Z",
+    "total_pending": 2,
+    "current_sprint": "WAVE_36_ARTISTAS_EUROPA_AND_VENDOR_CARDS",
+    "ceo_mandate": "Sellado del ecosistema satélite: Conector ArtistasEuropa.com para el roster de artistas Diamante Rojo en Océano Azul, Card de Proveedores estilo Bodas.net/Zola en /proveedores y Fast-Track B2G en /ayuntamientos con pliegos Art. 118 LCSP y neuroacústica VIMUME. 1 tarea por sesión."
   }
 }
