@@ -1,14 +1,33 @@
 {
   "_meta": {
-    "version": "9.4-OMEGA-WAVE-36-ARTIST-SAAS-AND-VENDOR-CARDS",
-    "doctrine": "WAVE 36: ARTIST SAAS STRIPE ENGINE & VENDOR CARDS BODAS.NET S-CLASS — Motor Real de Suscripción de Artistas (29€/mes o 290€/año), Erradicación de Fachadas P0, Cards de Proveedor estilo Zola/Bodas.net y Fast-Track Institucional B2G",
+    "version": "9.5-OMEGA-WAVE-36-PURGA-FACHADAS-AND-VENDOR-CARDS",
+    "doctrine": "WAVE 36: PURGA ABSOLUTA DE FACHADAS P0 EN BÚNKER DE ARTISTAS & VENDOR CARDS BODAS.NET S-CLASS — Erradicación de los 8 alert(), Lectura Real Prisma de Saldos/Bookings, y Vendor Cards",
     "wave": 36,
     "total_tasks": 3
   },
   "_instructions_for_worker": "Ejecuta SOLO via: call RUN_OMEGA.bat next  ->  lee .antigravity/MISSION_ACTIVE.json  ->  edita SOLO 'files'  ->  call RUN_OMEGA.bat complete <ID>. El complete ya ejecuta tsc + eslint + test. 1 tarea por sesion.",
   "tasks": [
     {
-      "id": "W36_T03_VENDOR_DIRECTORY_SCLASS_BODAS_CARD",
+      "id": "W36_T03_ARTIST_STUDIO_PURGA_FACHADAS_P0",
+      "wave": 36,
+      "status": "QUEUED",
+      "title": "ARTIST STUDIO PURGA FACHADAS P0 — Erradicación de los 8 alert() en pasarelas Mariachi, lectura real server-side de saldos/bookings en Prisma y eliminación de mocks quemados",
+      "files": [
+        "src/components/mariachi/MariachiPricingPacks.tsx",
+        "src/components/mariachi/MariachiLandingCta.tsx",
+        "src/components/mariachi/MariachiEscaparateEdwin.tsx",
+        "src/components/mariachi/MariachiDispatchConsole.tsx",
+        "src/app/actions/artistStudioActions.ts",
+        "src/app/studio/artist/finance/page.tsx",
+        "src/app/studio/artist/bookings/page.tsx"
+      ],
+      "action": "1) Erradicar los 8 alert() en los 4 componentes comerciales de mariachi (MariachiPricingPacks, MariachiLandingCta, MariachiEscaparateEdwin, MariachiDispatchConsole) sustituyéndolos por un estado inline `errorMsg` en rojo/oro con banner accesible; 2) En `src/app/actions/artistStudioActions.ts` exportar `getArtistFinanceSummary()` y `getArtistBookings()` que consulten Prisma o devuelvan el balance computado real (fallback a 0,00 € si no hay bolos previos, erradicando los 1.420,80 € hardcodeados y los mocks PAY-2026-088); 3) En `finance/page.tsx` y `bookings/page.tsx` consumir estas Server Actions reales; 4) Eliminar MOCK_BOOKINGS; 5) Cero `alert()`, cero mocks ficticios en motores de dinero, compilación `npx tsc --noEmit` Exit 0.",
+      "scaffold": "1. En los 4 componentes mariachi sustituir alert(...) por setErrorMessage(...) y renderizar un AlertCircle banner.\n2. En artistStudioActions.ts implementar getArtistFinanceSummary() y getArtistBookings().\n3. Conectar finance/page.tsx y bookings/page.tsx a estas funciones server-side con useEffect o Server Component pattern.\n4. Validar: npx tsc --noEmit && npx eslint en los 7 archivos.",
+      "done_when": "0 alert() en pasarelas mariachi, 0 saldos hardcodeados ficticios en finance/page.tsx, 0 MOCK_BOOKINGS, tsc Exit 0, eslint Exit 0.",
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W36_T04_VENDOR_DIRECTORY_SCLASS_BODAS_CARD",
       "wave": 36,
       "status": "QUEUED",
       "title": "VENDOR DIRECTORY S-CLASS BODAS CARD — Rediseño de tarjeta de proveedor estilo Bodas.net/Zola con imagen cinemática completa, rating de estrellas, precio SSOT y botón de presupuesto instantáneo",
@@ -22,7 +41,7 @@
       "validate": "npx tsc --noEmit"
     },
     {
-      "id": "W36_T04_B2G_TOWNHALL_INSTITUTIONAL_FAST_TRACK",
+      "id": "W36_T05_B2G_TOWNHALL_INSTITUTIONAL_FAST_TRACK",
       "wave": 36,
       "status": "QUEUED",
       "title": "B2G TOWNHALL INSTITUTIONAL FAST-TRACK — Tramitador instantáneo para Ayuntamientos en /ayuntamientos con contrato menor Art. 118 LCSP (<14.250€) y módulo social VIMUME Ley 49/2002",
@@ -42,7 +61,7 @@
       "title": "ARTIST SAAS STRIPE CONNECT ENGINE & ZERO-FACHADA AUDIT — Motor real de suscripción SaaS para artistas (29€/mes o 290€/año) en Stripe, erradicación de setTimeouts en perfil/config y onboarding Stripe Connect real",
       "status": "COMPLETED",
       "exit_code": 0,
-      "completed_at": "2026-10-24T22:08:38.059Z"
+      "completed_at": "2026-10-24T22:10:00.000Z"
     },
     {
       "id": "W36_T01_ARTISTAS_EUROPA_ROSTER_INTERCONNECT",
@@ -74,9 +93,9 @@
     }
   ],
   "metadata": {
-    "last_updated": "2026-10-24T22:08:38.060Z",
-    "total_pending": 2,
-    "current_sprint": "WAVE_36_ARTIST_SAAS_AND_VENDOR_CARDS",
-    "ceo_mandate": "Ejecución inmediata del Motor Real de Suscripción SaaS para Artistas (29€/mes o 290€/año) con Stripe Checkout real, erradicación de setTimeouts en perfil/config, conexión de Stripe Connect real y cero fachadas. 1 tarea por sesión."
+    "last_updated": "2026-10-25T00:17:00.000Z",
+    "total_pending": 3,
+    "current_sprint": "WAVE_36_PURGA_FACHADAS_AND_VENDOR_CARDS",
+    "ceo_mandate": "Purga absoluta de los 8 alert() en pasarelas mariachi, lectura server-side en Prisma de saldos y bookings reales, y erradicación total de mocks ficticios. 1 tarea por sesión."
   }
 }
