@@ -1,14 +1,30 @@
 {
   "_meta": {
-    "version": "9.3-OMEGA-WAVE-36-ARTISTAS-EUROPA-AND-VENDOR-CARDS",
-    "doctrine": "WAVE 36: ARTISTAS EUROPA OCEANO AZUL & VENDOR CARDS BODAS.NET S-CLASS — Conector ArtistasEuropa.com, Cards de Proveedor de Alta Conversión estilo Zola/Bodas.net y Fast-Track Institucional B2G",
+    "version": "9.4-OMEGA-WAVE-36-ARTIST-SAAS-AND-VENDOR-CARDS",
+    "doctrine": "WAVE 36: ARTIST SAAS STRIPE ENGINE & VENDOR CARDS BODAS.NET S-CLASS — Motor Real de Suscripción de Artistas (29€/mes o 290€/año), Erradicación de Fachadas P0, Cards de Proveedor estilo Zola/Bodas.net y Fast-Track Institucional B2G",
     "wave": 36,
     "total_tasks": 3
   },
   "_instructions_for_worker": "Ejecuta SOLO via: call RUN_OMEGA.bat next  ->  lee .antigravity/MISSION_ACTIVE.json  ->  edita SOLO 'files'  ->  call RUN_OMEGA.bat complete <ID>. El complete ya ejecuta tsc + eslint + test. 1 tarea por sesion.",
   "tasks": [
     {
-      "id": "W36_T02_VENDOR_DIRECTORY_SCLASS_BODAS_CARD",
+      "id": "W36_T02_ARTIST_SAAS_STRIPE_CONNECT_ENGINE",
+      "wave": 36,
+      "status": "QUEUED",
+      "title": "ARTIST SAAS STRIPE CONNECT ENGINE & ZERO-FACHADA AUDIT — Motor real de suscripción SaaS para artistas (29€/mes o 290€/año) en Stripe, erradicación de setTimeouts en perfil/config y onboarding Stripe Connect real",
+      "files": [
+        "src/app/actions/artistSubscriptionActions.ts",
+        "src/app/studio/artist/finance/page.tsx",
+        "src/app/studio/artist/perfil/page.tsx",
+        "src/app/studio/artist/config/page.tsx"
+      ],
+      "action": "1) Construir Server Action real `src/app/actions/artistSubscriptionActions.ts` con Zod, rate limiting y Stripe Checkout en modo `subscription` para los planes canónicos `PRO_MONTHLY` (29 €/mes) y `ELITE_ANNUAL` (290 €/año); 2) Conectar el botón de membresía en `src/app/studio/artist/finance/page.tsx` a `createArtistSubscriptionCheckout` para redirección a Stripe real; 3) Conectar `handleInstantPayout` en `finance/page.tsx` con `createConnectOnboardingLink` de `src/app/actions/stripeConnectActions.ts`; 4) Erradicar los `setTimeout` y `alert()` en `perfil/page.tsx` y `config/page.tsx` conectándolos con Server Actions de persistencia real; 5) Cero `any`, cero fachadas.",
+      "scaffold": "1. Crear src/app/actions/artistSubscriptionActions.ts exportando createArtistSubscriptionCheckout(plan: 'PRO_MONTHLY' | 'ELITE_ANNUAL', artistEmail: string, artistName: string) con stripe de @/lib/payments.\n2. Conectar en finance/page.tsx la suscripción real a Stripe y el botón de retiro a createConnectOnboardingLink.\n3. En perfil/page.tsx y config/page.tsx eliminar setTimeout y conectar a Server Actions reales o persistencia segura.\n4. Validar: npx tsc --noEmit && npx eslint src/app/actions/artistSubscriptionActions.ts src/app/studio/artist/finance/page.tsx src/app/studio/artist/perfil/page.tsx src/app/studio/artist/config/page.tsx",
+      "done_when": "Suscripción Stripe de 29€/mes y 290€/año 100% operativa vía Server Action, 0 setTimeout en el búnker de artistas, 0 alert() en pasarelas, compilación tsc Exit Code 0.",
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W36_T03_VENDOR_DIRECTORY_SCLASS_BODAS_CARD",
       "wave": 36,
       "status": "QUEUED",
       "title": "VENDOR DIRECTORY S-CLASS BODAS CARD — Rediseño de tarjeta de proveedor estilo Bodas.net/Zola con imagen cinemática completa, rating de estrellas, precio SSOT y botón de presupuesto instantáneo",
@@ -22,7 +38,7 @@
       "validate": "npx tsc --noEmit"
     },
     {
-      "id": "W36_T03_B2G_TOWNHALL_INSTITUTIONAL_FAST_TRACK",
+      "id": "W36_T04_B2G_TOWNHALL_INSTITUTIONAL_FAST_TRACK",
       "wave": 36,
       "status": "QUEUED",
       "title": "B2G TOWNHALL INSTITUTIONAL FAST-TRACK — Tramitador instantáneo para Ayuntamientos en /ayuntamientos con contrato menor Art. 118 LCSP (<14.250€) y módulo social VIMUME Ley 49/2002",
@@ -67,9 +83,9 @@
     }
   ],
   "metadata": {
-    "last_updated": "2026-10-24T21:38:19.486Z",
-    "total_pending": 2,
-    "current_sprint": "WAVE_36_ARTISTAS_EUROPA_AND_VENDOR_CARDS",
-    "ceo_mandate": "Sellado del ecosistema satélite: Conector ArtistasEuropa.com para el roster de artistas Diamante Rojo en Océano Azul, Card de Proveedores estilo Bodas.net/Zola en /proveedores y Fast-Track B2G en /ayuntamientos con pliegos Art. 118 LCSP y neuroacústica VIMUME. 1 tarea por sesión."
+    "last_updated": "2026-10-24T23:58:00.000Z",
+    "total_pending": 3,
+    "current_sprint": "WAVE_36_ARTIST_SAAS_AND_VENDOR_CARDS",
+    "ceo_mandate": "Ejecución inmediata del Motor Real de Suscripción SaaS para Artistas (29€/mes o 290€/año) con Stripe Checkout real, erradicación de setTimeouts en perfil/config, conexión de Stripe Connect real y cero fachadas. 1 tarea por sesión."
   }
 }
