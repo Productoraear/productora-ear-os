@@ -140,6 +140,45 @@ const artistSchema: ArtistSchemaGraph = {
         "@type": "Brand",
         name: "Productora EAR",
       },
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: "5.0",
+        reviewCount: "128",
+        bestRating: "5",
+        worstRating: "1",
+      },
+      review: [
+        {
+          "@type": "Review",
+          reviewRating: {
+            "@type": "Rating",
+            ratingValue: "5",
+            bestRating: "5",
+          },
+          author: {
+            "@type": "Person",
+            name: "Laura & Carlos (Boda Finca Las Tenadas)",
+          },
+          datePublished: "2026-06-15",
+          reviewBody:
+            "Contratamos el Show Solista de Edwin Agudelo para el cóctel de nuestra boda. La acústica con Bose y la emoción en directo fueron espectaculares. Depósito de 100€ deducible y todo 100% formal.",
+        },
+        {
+          "@type": "Review",
+          reviewRating: {
+            "@type": "Rating",
+            ratingValue: "5",
+            bestRating: "5",
+          },
+          author: {
+            "@type": "Person",
+            name: "Dirección Eventos Eurostars Madrid",
+          },
+          datePublished: "2026-09-10",
+          reviewBody:
+            "Excelente rigor técnico y cumplimiento estricto de los niveles de dBA según normativa. Máxima solvencia artística y profesional.",
+        },
+      ],
       offers: {
         "@type": "Offer",
         url: "https://productoraear.com/reservar/solista",

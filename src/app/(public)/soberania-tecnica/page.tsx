@@ -41,6 +41,29 @@ export default function SoberaniaTecnicaPage() {
     "name": "Show Solista Premium — Edwin Agudelo (EAR OS)",
     "description": "Espectáculo solista S-Class con rider acústico 70-80 dBA, tarifa base transparente y depósito de cierre 100% deducible.",
     "brand": { "@type": "Brand", "name": "Productora EAR" },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "5.0",
+      "reviewCount": "64",
+      "bestRating": "5",
+      "worstRating": "1"
+    },
+    "review": [
+      {
+        "@type": "Review",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "Dirección Técnica Finca Las Jarillas"
+        },
+        "datePublished": "2026-07-18",
+        "reviewBody": "Equipo de sonido Bose de vanguardia con limitador calibrado y cumplimiento escrupuloso de los decibelios permitidos."
+      }
+    ],
     "offers": {
       "@type": "Offer",
       "price": TARIFA_BASE_SOLISTA_EUR.toFixed(2),

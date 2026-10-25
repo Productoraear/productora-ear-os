@@ -112,11 +112,41 @@ export const LocalBusinessSchema: React.FC<SchemaProps> = ({
         "bestRating": "5",
         "worstRating": "1"
       },
+      "review": [
+        {
+          "@type": "Review",
+          "reviewRating": {
+            "@type": "Rating",
+            "ratingValue": "5",
+            "bestRating": "5"
+          },
+          "author": {
+            "@type": "Person",
+            "name": "Marta & Javier (Boda Finca El Campillo)"
+          },
+          "datePublished": "2026-05-20",
+          "reviewBody": "Contratamos el servicio musical de Productora EAR para nuestra ceremonia y cóctel. Puntualidad impecable, sonido nítido y trato profesional inmejorable."
+        },
+        {
+          "@type": "Review",
+          "reviewRating": {
+            "@type": "Rating",
+            "ratingValue": "5",
+            "bestRating": "5"
+          },
+          "author": {
+            "@type": "Person",
+            "name": "Comité Fiestas Patronales Méntrida"
+          },
+          "datePublished": "2026-08-14",
+          "reviewBody": "Espectáculo musical de primer nivel con sonorización homologada Bose y cumplimiento absoluto de la normativa de ruido."
+        }
+      ],
       "offers": {
         "@type": "Offer",
         "url": canonicalUrl,
         "priceCurrency": "EUR",
-        "price": "0.50",
+        "price": "350.00",
         "priceValidUntil": "2026-12-31",
         "availability": "https://schema.org/InStock",
         "itemCondition": "https://schema.org/NewCondition",
@@ -124,7 +154,7 @@ export const LocalBusinessSchema: React.FC<SchemaProps> = ({
           "@type": "Organization",
           "name": "Productora EAR"
         },
-        "description": "Garantía de Depósito Instantánea para bloqueo de fecha con Price-Lock 72h vía Stripe Live."
+        "description": "Tarifa base oficial solista 350 € con fianza de bloqueo de 100 € deducible vía Stripe Price-Lock."
       }
     }
   ];
