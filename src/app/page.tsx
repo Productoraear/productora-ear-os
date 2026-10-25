@@ -3,6 +3,7 @@ import { Phone, ArrowRight, ShieldCheck, Music2, Sparkles } from 'lucide-react';
 import { HeroWeddingCinematic } from '@/components/home/HeroWeddingCinematic';
 import QuantumRoleCockpit from '@/components/home/QuantumRoleCockpit';
 import { CENTRALITA_EAR_OS, TARIFA_BASE_SOLISTA_EUR, DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
+import SovereignEntryBifurcation from '@/components/home/SovereignEntryBifurcation';
 
 export default function Home() {
   const telHref = `tel:${CENTRALITA_EAR_OS.replace(/\s+/g, '')}`;
@@ -49,8 +50,13 @@ export default function Home() {
         </div>
       </header>
 
+      {/* Puerta de Entrada Unificada: embudo bifurcado Cliente ↔ Artista (3 clics) */}
+      <div className="relative pt-24 sm:pt-28">
+        <SovereignEntryBifurcation />
+      </div>
+
       {/* Selector Multirol Quantum: cabecera inmersiva de arquetipos EAR OS */}
-      <div className="relative pt-16 sm:pt-20">
+      <div className="relative pt-10 sm:pt-14">
         <QuantumRoleCockpit />
       </div>
 

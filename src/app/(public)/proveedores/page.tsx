@@ -31,7 +31,8 @@ import {
 } from 'lucide-react';
 import { CENTRALITA } from '@/lib/phone-constants';
 import { ClaimProviderModal } from '@/components/providers/ClaimProviderModal';
-import { BentoProviderCard, ProviderItem } from '@/components/providers/BentoProviderCard';
+import type { ProviderItem } from '@/components/providers/BentoProviderCard';
+import SClassVendorBodasCard from '@/components/providers/SClassVendorBodasCard';
 import { BentoFilterBar, CategoryItem, SubcategoryItem } from '@/components/providers/BentoFilterBar';
 import { PremiumMediaCarousel } from '@/components/providers/PremiumMediaCarousel';
 import { PremiumPacksCarousel } from '@/components/providers/PremiumPacksCarousel';
@@ -806,10 +807,10 @@ function ProveedoresDirectoryContent() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full min-w-0">
             {paginatedProviders.map((provider) => (
-              <div key={provider.id} className="min-w-0 w-full">
-                <BentoProviderCard
-                  provider={provider}
-                  onSelect={openModal}
+              <div key={provider.id} className="min-w-0 w-full h-full">
+                <SClassVendorBodasCard
+                  vendor={provider}
+                  onSelect={() => openModal(provider)}
                   onClaim={(p) => setClaimModalProvider(p)}
                 />
               </div>

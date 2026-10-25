@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { B2GMemoryGenerator } from '@/features/b2g/ui/B2GMemoryGenerator';
+import TownhallInstitutionalFastTrack from '@/components/b2g/TownhallInstitutionalFastTrack';
 import {
   Building2,
   ShieldCheck,
@@ -53,7 +54,7 @@ export default function AyuntamientosB2GPage() {
               price: AJUSTE_PREVENTIVO_B2G_EUR.toFixed(2),
               priceCurrency: 'EUR',
               availability: 'https://schema.org/InStock',
-              url: 'https://ear-os.com/ayuntamientos'
+              url: 'https://www.productoraear.com/ayuntamientos'
             }
           })
         }}
@@ -77,11 +78,18 @@ export default function AyuntamientosB2GPage() {
 
           <div className="flex flex-wrap justify-center gap-3 pt-2">
             <a
-              href="#compilador"
+              href="#fast-track"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#06b6d4] to-[#0891b2] text-black font-bold text-xs font-mono uppercase tracking-wider shadow-[0_0_30px_rgba(6,182,212,0.35)] hover:scale-105 transition-all cursor-pointer"
             >
-              <FileText size={15} />
-              <span>Generar Memoria Art. 118 LCSP</span>
+              <Zap size={15} />
+              <span>Tramitar en 1 clic · Fast-Track</span>
+            </a>
+            <a
+              href="#compilador"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/5 hover:bg-white/10 text-zinc-300 border border-white/10 text-xs font-mono uppercase tracking-wider transition-all cursor-pointer"
+            >
+              <FileText size={14} />
+              <span>Generar Memoria Art. 118</span>
             </a>
             <a
               href={whatsappHref}
@@ -238,6 +246,24 @@ export default function AyuntamientosB2GPage() {
             </div>
           )}
         </div>
+
+        {/* TRAMITADOR FAST-TRACK INSTITUCIONAL */}
+        <section id="fast-track" className="space-y-6 pt-4 scroll-mt-24">
+          <div className="text-center space-y-2 max-w-2xl mx-auto">
+            <span className="text-[10px] font-mono text-[#06b6d4] uppercase tracking-[0.3em] font-bold">
+              TRAMITADOR INSTANTÁNEO // ALCALDES & CONCEJALÍAS
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-black uppercase text-white font-syne">
+              Fast-Track <span className="text-[#06b6d4]">Contrato Menor</span> en 1 clic
+            </h2>
+            <p className="text-xs text-zinc-400">
+              Presupuesto preventivo blindado &lt; 14.250 €, seguro de RC de 1.000.000 €,
+              módulo social VIMUME y despacho inmediato al cluster n8n.
+            </p>
+          </div>
+
+          <TownhallInstitutionalFastTrack />
+        </section>
 
         {/* COMPILADOR DE MEMORIAS B2G ART. 118 LCSP */}
         <section className="space-y-6 pt-4">

@@ -200,12 +200,13 @@ export default function AdminCommandCenterPage() {
     return true;
   });
 
-  const handleSimulateConsult = () => {
+  const handleSimulateConsult = (query?: string) => {
     setIsConsulting(true);
     setOracleOutput(null);
     setTimeout(() => {
       setIsConsulting(false);
       setOracleOutput(`💎 [ORÁCULO MAESTRO DE CRECIMIENTO MUSICAL EAR OS]:
+Consulta: "${query || 'Optimización de captación'}"
 1. Diagnóstico: La retención se pierde en los primeros 3 segundos si usas introducciones genéricas.
 2. Marco Mental: El cliente busca certeza, estatus y emoción real, no especificaciones de cables ni marcas.
 3. Plan de Acción: Aplica la fórmula de 4 pasos para propuestas de alto impacto y anclaje de señal 100 €.
