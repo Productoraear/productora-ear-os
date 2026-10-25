@@ -8,20 +8,6 @@
   "_instructions_for_worker": "Ejecuta SOLO via: call RUN_OMEGA.bat next  ->  lee .antigravity/MISSION_ACTIVE.json  ->  edita SOLO 'files'  ->  call RUN_OMEGA.bat complete <ID>. El complete ya ejecuta tsc + eslint + test. 1 tarea por sesion.",
   "tasks": [
     {
-      "id": "W36_T04_VENDOR_DIRECTORY_SCLASS_BODAS_CARD",
-      "wave": 36,
-      "status": "QUEUED",
-      "title": "VENDOR DIRECTORY S-CLASS BODAS CARD — Rediseño de tarjeta de proveedor estilo Bodas.net/Zola con imagen cinemática completa, rating de estrellas, precio SSOT y botón de presupuesto instantáneo",
-      "files": [
-        "src/components/providers/SClassVendorBodasCard.tsx",
-        "src/app/(public)/proveedores/page.tsx"
-      ],
-      "action": "Construir `src/components/providers/SClassVendorBodasCard.tsx` e integrarlo en `src/app/(public)/proveedores/page.tsx` para elevar el directorio al estándar visual de los gigantes de bodas (Bodas.net / Zola) pero con estética OLED y cero slop: 1) Imagen completa con zoom suave en hover; 2) Badge de Wedding Awards / Homologación EAR; 3) Rating con 5 estrellas doradas y número de opiniones reales; 4) Ubicación con pin geográfico; 5) Etiqueta 'Desde [Precio] €' y 'Split 80/10/10'; 6) Botón 'Solicitar Presupuesto' que abre RequestToBookModal o invoca Swarm Lead Dispatcher. Cero `any`.",
-      "scaffold": "1. Crear src/components/providers/SClassVendorBodasCard.tsx con props tipadas (vendor: ProviderItem, onSelect?: () => void).\n2. Integrar en src/app/(public)/proveedores/page.tsx sustituyendo o complementando las tarjetas de proveedor con este formato de alta conversión.\n3. Validar: npx tsc --noEmit && npx eslint src/components/providers/SClassVendorBodasCard.tsx src/app/(public)/proveedores/page.tsx",
-      "done_when": "Tarjeta de alta conversión estilo Bodas.net/Zola montada en /proveedores, con rating, precio SSOT y modal de presupuesto, compilación Exit Code 0.",
-      "validate": "npx tsc --noEmit"
-    },
-    {
       "id": "W36_T05_B2G_TOWNHALL_INSTITUTIONAL_FAST_TRACK",
       "wave": 36,
       "status": "QUEUED",
@@ -34,9 +20,31 @@
       "scaffold": "1. Crear src/components/b2g/TownhallInstitutionalFastTrack.tsx consumiendo AJUSTE_PREVENTIVO_B2G_EUR, LIMITE_B2G_LCSP_EUR, CENTRALITA_EAR_OS de @/lib/constants/ear-os-ssot.\n2. Integrar en src/app/(public)/ayuntamientos/page.tsx corrigiendo URLs antiguas a https://www.productoraear.com/ayuntamientos.\n3. Validar: npx tsc --noEmit && npx eslint src/components/b2g/TownhallInstitutionalFastTrack.tsx src/app/(public)/ayuntamientos/page.tsx",
       "done_when": "Componente Fast-Track B2G operativo en /ayuntamientos, con límites LCSP y VIMUME integrados, compilación Exit Code 0.",
       "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W36_T06_BODAS_TROJAN_HORSE_VENDOR_DATA_MATRICES",
+      "wave": 36,
+      "status": "QUEUED",
+      "title": "BODAS.NET TROJAN HORSE VENDOR MATRICES — Sistema de sincronización de métricas individuales por rol y blindaje de precio histórico (2 años) para los 65.000 proveedores en particiones CDN",
+      "files": [
+        "src/lib/constants/macro-ecosystem-manifest.ts",
+        "src/components/vendor/SClassVendorHistoricPriceShield.tsx",
+        "src/app/(admin)/admin/calibrador-proveedores/page.tsx"
+      ],
+      "action": "1) Crear 'src/lib/constants/macro-ecosystem-manifest.ts' con la tipificación y reglas de los roles (PROVEEDOR, TERAPEUTA_VIMUME, ARTISTA, CLIENTE, B2G_AYUNTAMIENTO, PRENSA, INVERSOR), fijando la política inmutable de precio medio histórico de los últimos 2 años sin subidas anuales. 2) Crear el componente 'SClassVendorHistoricPriceShield.tsx' que renderiza el sello de garantía de precio congelado 2 años y la categoría homologada estilo Bodas.net. 3) Integrar en el calibrador de proveedores de /admin/calibrador-proveedores para telemetría individual de métricas de conversión por rol.",
+      "scaffold": "1. Crear src/lib/constants/macro-ecosystem-manifest.ts definiendo interfaces RoleMetrics, VendorPricePolicy ('FROZEN_2_YEAR_HISTORIC'), y constantes de categorías Bodas.net.\n2. Crear src/components/vendor/SClassVendorHistoricPriceShield.tsx con diseño OLED profundo (#030305), acentos oro (#ecb613) y micro-animaciones.\n3. Conectar en src/app/(admin)/admin/calibrador-proveedores/page.tsx consumiendo los datos sin mocks quemados.\n4. Validar: npx tsc --noEmit && npx eslint en los archivos tocados (Exit Code 0).",
+      "done_when": "Métricas multi-rol tipadas, política de precio histórico de 2 años activa en el calibrador de administración y compilación con Exit Code 0.",
+      "validate": "npx tsc --noEmit"
     }
   ],
   "completed": [
+    {
+      "id": "W36_T04_VENDOR_DIRECTORY_SCLASS_BODAS_CARD",
+      "title": "VENDOR DIRECTORY S-CLASS BODAS CARD — Rediseño de tarjeta de proveedor estilo Bodas.net/Zola con imagen cinemática completa, rating de estrellas, precio SSOT y botón de presupuesto instantáneo",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-24T22:42:29.190Z"
+    },
     {
       "id": "W36_T03_ARTIST_STUDIO_PURGA_FACHADAS_P0",
       "title": "ARTIST STUDIO PURGA FACHADAS P0 — Erradicación de los 8 alert() en pasarelas Mariachi, lectura real server-side de saldos/bookings en Prisma y eliminación de mocks quemados",
@@ -81,7 +89,7 @@
     }
   ],
   "metadata": {
-    "last_updated": "2026-10-24T22:27:58.559Z",
+    "last_updated": "2026-10-25T08:24:12.371Z",
     "total_pending": 2,
     "current_sprint": "WAVE_36_PURGA_FACHADAS_AND_VENDOR_CARDS",
     "ceo_mandate": "Purga absoluta de los 8 alert() en pasarelas mariachi, lectura server-side en Prisma de saldos y bookings reales, y erradicación total de mocks ficticios. 1 tarea por sesión."
