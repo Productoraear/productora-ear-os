@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { verifyGoogleAuthenticator } from '@/lib/totp-engine';
+import { findAuthorizedMember } from '@/lib/constants/authorized-users';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -13,7 +14,7 @@ function cleanEnv(val: string | undefined, fallback: string): string {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { password, code2fa, method, role, action, bypassSovereign } = body;
+    const { password, code2fa, role, action, bypassSovereign, email } = body;
     
     const envAdminPassword = cleanEnv(process.env.EAR_ADMIN_PASSWORD, "");
     const envEditorPassword = cleanEnv(process.env.EAR_EDITOR_PASSWORD, "");
@@ -30,21 +31,34 @@ export async function POST(request: Request) {
     }
 
     const inputPassword = (password || "").trim().replace(/^["']|["']$/g, '');
+    const authorizedMember = email ? findAuthorizedMember(email) : undefined;
 
     let authenticatedRole: 'admin' | 'editor' | null = null;
 
-    if (inputPassword === sovereignMasterPassword) {
-      // Acceso soberano del CEO
-      authenticatedRole = (role === 'editor') ? 'editor' : 'admin';
-    } else if (role === 'editor' && inputPassword === envEditorPassword) {
-      authenticatedRole = 'editor';
-    } else if (inputPassword === envAdminPassword) {
-      authenticatedRole = 'admin';
+    // Validación por miembro de equipo autorizado
+    if (authorizedMember) {
+      const isPasswordValid = 
+        inputPassword === sovereignMasterPassword || 
+        inputPassword === envAdminPassword || 
+        inputPassword === envEditorPassword;
+
+      if (isPasswordValid) {
+        authenticatedRole = authorizedMember.role;
+      }
+    } else {
+      if (inputPassword === sovereignMasterPassword) {
+        // Acceso soberano del CEO
+        authenticatedRole = (role === 'editor') ? 'editor' : 'admin';
+      } else if (role === 'editor' && inputPassword === envEditorPassword) {
+        authenticatedRole = 'editor';
+      } else if (inputPassword === envAdminPassword) {
+        authenticatedRole = 'admin';
+      }
     }
 
     if (!authenticatedRole) {
       return NextResponse.json(
-        { success: false, message: 'Contraseña master o de editor incorrecta.' },
+        { success: false, message: 'Contraseña o credenciales no válidas.' },
         { status: 401 }
       );
     }
@@ -88,12 +102,24 @@ export async function POST(request: Request) {
       const response = NextResponse.json({
         success: true,
         role: 'editor',
-        message: 'Acceso de Editor Autorizado Aprobado.'
+        user: authorizedMember ? {
+          name: authorizedMember.name,
+          email: authorizedMember.email,
+          title: authorizedMember.title,
+          department: authorizedMember.department
+        } : undefined,
+        message: authorizedMember 
+          ? `Acceso de Editor Autorizado: Bienvenida ${authorizedMember.name} (${authorizedMember.title}).`
+          : 'Acceso de Editor Autorizado Aprobado.'
       });
 
       response.cookies.set('ear_session', 'editor_session_active', cookieOpts);
       response.cookies.set('ear_admin_token', 'editor_token_verified', cookieOpts);
       response.cookies.set('ear_role', 'editor', cookieOpts);
+      if (authorizedMember) {
+        response.cookies.set('ear_user_email', authorizedMember.email, cookieOpts);
+        response.cookies.set('ear_user_name', encodeURIComponent(authorizedMember.name), cookieOpts);
+      }
 
       return response;
     }
@@ -163,7 +189,7 @@ export async function POST(request: Request) {
 
     return response;
 
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { success: false, message: 'Fallo crítico de verificación serverless.' },
       { status: 500 }

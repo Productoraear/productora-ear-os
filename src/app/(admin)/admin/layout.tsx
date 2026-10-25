@@ -41,6 +41,7 @@ import {
   FileText
 } from 'lucide-react';
 import OracleAmbientInterface from '@/components/admin/OracleAmbientInterface';
+import { SilentPanicDetector } from '@/components/security/SilentPanicDetector';
 import { PROVIDERS_GRAND_TOTAL, formatProviderBadge } from '@/lib/constants/providers-manifest';
 
 const PROVIDERS_BADGE = formatProviderBadge(PROVIDERS_GRAND_TOTAL);
@@ -519,6 +520,9 @@ export default function CatminAdminMasterLayout({ children }: { children: React.
 
       {/* Oráculo Flotante S-Class */}
       <OracleAmbientInterface />
+      
+      {/* Sensor de Emergencia SOS Silencioso e Indetectable (40s ratón / 60s táctil) */}
+      <SilentPanicDetector />
     </div>
   );
 }

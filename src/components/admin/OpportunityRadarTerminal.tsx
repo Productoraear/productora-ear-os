@@ -41,6 +41,7 @@ interface RadarApiResponse {
 }
 
 export default function OpportunityRadarTerminal() {
+  const [mounted, setMounted] = useState(false);
   const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
   const [loading, setLoading] = useState(false);
   const [scanning, setScanning] = useState(false);
@@ -49,6 +50,10 @@ export default function OpportunityRadarTerminal() {
   const [searchQuery, setSearchQuery] = useState('');
   const [dispatchStatus, setDispatchStatus] = useState<Record<string, 'idle' | 'sending' | 'sent' | 'error'>>({});
   const [scanMessage, setScanMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const fetchOpportunities = useCallback(async () => {
     setLoading(true);
@@ -199,26 +204,30 @@ export default function OpportunityRadarTerminal() {
       )}
 
       {/* MÉTRICAS RÁPIDAS DEL RADAR */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3" suppressHydrationWarning>
         <div className="p-3 rounded-2xl bg-black/40 border border-white/5">
           <div className="text-[10px] font-mono text-zinc-500 uppercase">Oportunidades en Memoria</div>
-          <div className="text-xl font-bold font-mono text-white mt-0.5">{opportunities.length}</div>
+          <div className="text-xl font-bold font-mono text-white mt-0.5" suppressHydrationWarning>
+            {mounted ? opportunities.length : 0}
+          </div>
         </div>
         <div className="p-3 rounded-2xl bg-black/40 border border-white/5">
           <div className="text-[10px] font-mono text-zinc-500 uppercase">Licitaciones / TED</div>
-          <div className="text-xl font-bold font-mono text-[#ecb613] mt-0.5">
-            {opportunities.filter((o) => o.categories.includes('LICITACION_B2G') || o.source === 'TED_API').length}
+          <div className="text-xl font-bold font-mono text-[#ecb613] mt-0.5" suppressHydrationWarning>
+            {mounted ? opportunities.filter((o) => o.categories.includes('LICITACION_B2G') || o.source === 'TED_API').length : 0}
           </div>
         </div>
         <div className="p-3 rounded-2xl bg-black/40 border border-white/5">
           <div className="text-[10px] font-mono text-zinc-500 uppercase">Compatibles VIMUME (40Hz)</div>
-          <div className="text-xl font-bold font-mono text-cyan-400 mt-0.5">
-            {opportunities.filter((o) => o.vimumeCompatible).length}
+          <div className="text-xl font-bold font-mono text-cyan-400 mt-0.5" suppressHydrationWarning>
+            {mounted ? opportunities.filter((o) => o.vimumeCompatible).length : 0}
           </div>
         </div>
         <div className="p-3 rounded-2xl bg-black/40 border border-white/5">
           <div className="text-[10px] font-mono text-zinc-500 uppercase">Barridos Históricos</div>
-          <div className="text-xl font-bold font-mono text-[#ecb613] mt-0.5">{scanCount}</div>
+          <div className="text-xl font-bold font-mono text-[#ecb613] mt-0.5" suppressHydrationWarning>
+            {mounted ? scanCount : 0}
+          </div>
         </div>
       </div>
 
