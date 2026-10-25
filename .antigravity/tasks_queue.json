@@ -8,21 +8,6 @@
   "_instructions_for_worker": "Ejecuta SOLO via: call RUN_OMEGA.bat next  ->  lee .antigravity/MISSION_ACTIVE.json  ->  edita SOLO 'files'  ->  call RUN_OMEGA.bat complete <ID>. El complete ya ejecuta tsc + eslint + test. 1 tarea por sesion.",
   "tasks": [
     {
-      "id": "W37_T01_LEAN_EDGE_REGENERATE_VERIFIED",
-      "wave": 37,
-      "status": "QUEUED",
-      "title": "Regenerar particiones Edge CDN lean & verified (0 placeholders, teléfono real) desde el SSOT de proveedores",
-      "action": "Ejecutar build_lean_verified_edge.cjs para regenerar public/data/providers/*.json filtrando SOLO proveedores con teléfono real verificable (excluye centralita +34 693 693 048 y vacíos). Después audit_placeholder_phones.cjs para confirmar placeholder=0.",
-      "files": [
-        "scripts/build_lean_verified_edge.cjs",
-        "scripts/audit_placeholder_phones.cjs"
-      ],
-      "scaffold": "1) Ejecuta `node scripts/build_lean_verified_edge.cjs`. 2) Verifica que cada partición (finca, catering, musica, foto, decoracion, servicios, moda, transporte, sonido, wedding, senior_care) queda < 1 MB y que `verified:true` solo aparece en registros con teléfono real. 3) Ejecuta `node scripts/audit_placeholder_phones.cjs` y confirma placeholder=0 en las 11 particiones.",
-      "done_when": "manifest.json regenerado con conteos reales y placeholder=0 en las 11 particiones Edge CDN.",
-      "test": "node scripts/build_lean_verified_edge.cjs && node scripts/audit_placeholder_phones.cjs",
-      "validate": "npx tsc --noEmit"
-    },
-    {
       "id": "W37_T02_PRUNE_PLACEHOLDER_AND_VERIFY_VENDORS",
       "wave": 37,
       "status": "QUEUED",
@@ -100,6 +85,13 @@
   ],
   "completed": [
     {
+      "id": "W37_T01_LEAN_EDGE_REGENERATE_VERIFIED",
+      "title": "Regenerar particiones Edge CDN lean & verified (0 placeholders, teléfono real) desde el SSOT de proveedores",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-25T12:11:23.812Z"
+    },
+    {
       "id": "W36_T06_BODAS_TROJAN_HORSE_VENDOR_DATA_MATRICES",
       "title": "BODAS.NET TROJAN HORSE VENDOR MATRICES — Sistema de sincronización de métricas individuales por rol y blindaje de precio histórico (2 años) para los 65.000 proveedores en particiones CDN",
       "status": "COMPLETED",
@@ -164,8 +156,8 @@
     }
   ],
   "metadata": {
-    "last_updated": "2026-10-25T11:56:34.649Z",
-    "total_pending": 6,
+    "last_updated": "2026-10-25T12:11:23.814Z",
+    "total_pending": 5,
     "current_sprint": "WAVE_37_PROVIDER_CDN_INGESTA_AND_DEPOSIT_CAPTURE",
     "ceo_mandate": "Ingesta de proveedores en particiones CDN (0 placeholders, verified solo con teléfono real) y captación activa de depósitos de 100 € (Stripe Price-Lock SHA-256, 100% deducible)."
   }

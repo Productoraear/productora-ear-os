@@ -11,7 +11,8 @@ import {
   Filter,
   Users,
 } from 'lucide-react';
-import { getArtistBookings, STUDIO_ARTIST_USER_ID, type ArtistBookingRecord } from '@/app/actions/artistStudioActions';
+import { getArtistBookings, type ArtistBookingRecord } from '@/app/actions/artistStudioActions';
+import { STUDIO_ARTIST_USER_ID } from '@/lib/constants/artist-studio';
 
 type BookingStatus = 'CONFIRMADO' | 'PENDIENTE' | 'COMPLETADO' | 'CANCELADO';
 type FilterType = 'todos' | 'CONFIRMADO' | 'PENDIENTE' | 'COMPLETADO';

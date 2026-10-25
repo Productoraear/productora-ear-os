@@ -14,10 +14,10 @@ import { createArtistSubscriptionCheckout, type ArtistPlanId } from '@/app/actio
 import { createConnectOnboardingLink } from '@/app/actions/stripeConnectActions';
 import {
   getArtistFinanceSummary,
-  STUDIO_ARTIST_USER_ID,
   type ArtistFinanceSummary,
   type ArtistPayoutRecord,
 } from '@/app/actions/artistStudioActions';
+import { STUDIO_ARTIST_USER_ID } from '@/lib/constants/artist-studio';
 
 type FinancePeriod = 'ESTE_MES' | 'TRIMESTRE' | 'ANUAL';
 const FINANCE_PERIODS: readonly FinancePeriod[] = ['ESTE_MES', 'TRIMESTRE', 'ANUAL'] as const;

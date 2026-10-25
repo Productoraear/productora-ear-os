@@ -175,8 +175,6 @@ export async function saveArtistConfig(
  * devuelven 0,00 € / listas vacías si no existe registro, garantizando
  * CERO saldos ficticios inventados.
  */
-export const STUDIO_ARTIST_USER_ID = "artista-actual";
-
 /** Split Soberano canónico: 80% neto al artista ejecutante (SSOT 80/10/10). */
 const SOVEREIGN_ARTIST_SPLIT = 0.8;
 
