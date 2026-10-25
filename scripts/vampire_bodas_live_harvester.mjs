@@ -9,6 +9,7 @@
  */
 import fs from "node:fs";
 import path from "node:path";
+import readline from "node:readline";
 import { fileURLToPath } from "node:url";
 import * as cheerio from "cheerio";
 
@@ -22,6 +23,7 @@ const CHECKPOINT_BODAS = path.join(RESULTS_DIR, "bodas_live_harvested.json");
 const CHECKPOINT_PROGRESS = path.join(RESULTS_DIR, "master_vampire_progress.json");
 const PENDING_CATALOGS = path.join(RESULTS_DIR, "bodas_catalog_pending.json");
 const PENDING_STOREFRONTS = path.join(RESULTS_DIR, "bodas_storefront_pending.json");
+const TELEMETRY_LOG = path.join(RESULTS_DIR, "bodas_drain_telemetry.log");
 
 fs.mkdirSync(RESULTS_DIR, { recursive: true });
 fs.mkdirSync(SRC_DATA, { recursive: true });
@@ -99,7 +101,15 @@ function cleanSpanish(t) {
     "Ã±": "ñ", "Ã‘": "Ñ", "Ã ": "Á", "Ã‰": "É", "Ã“": "Ó", "Ãš": "Ú",
     "â‚¬": "€", "Â": "", "\ufffd": " ",
   };
-  for (const [k, v] of Object.entries(repl)) s = s.split(k).join(v);
+  // Reparación iterativa de doble/triple codificación UTF-8 (mojibake en cascada)
+  for (let pass = 0; pass < 3; pass++) {
+    let next = s;
+    for (const [k, v] of Object.entries(repl)) {
+      if (k && next.includes(k)) next = next.split(k).join(v);
+    }
+    if (next === s) break;
+    s = next;
+  }
   s = s.replace(/\bbodas\.net\b|\bzankyou\b|\bweddingwire\b/gi, "Productora EAR");
   s = s.replace(/\s*-\s*Consulta disponibilidad y precios.*/gi, "");
   s = s.replace(/\s*-\s*Precios.*/gi, "");
@@ -135,6 +145,162 @@ function writeJSONAtomic(file, data) {
   fs.renameSync(tmp, file);
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// MAESTRO EN STREAMING (235 MB sin OOM)
+// El catálogo maestro es un array JSON pretty-printed con un proveedor por
+// objeto y un único "name"/"slug"/"province" a 4 espacios de sangría.
+// Se indexa línea a línea y se anexa copiando bytes: nunca JSON.parse completo.
+// ─────────────────────────────────────────────────────────────────────────────
+const MASTER_FIELD_RE = /^    "(name|slug|province|sourceUrl|url)": "((?:[^"\\]|\\.)*)",?$/;
+
+const unescapeJson = (s) => s.replace(/\\"/g, '"').replace(/\\\\/g, "\\");
+
+function telemetry(entry) {
+  try {
+    fs.appendFileSync(TELEMETRY_LOG, `${JSON.stringify({ ts: new Date().toISOString(), ...entry })}\n`, "utf8");
+  } catch {
+    /* telemetría best-effort: jamás rompe la cosecha */
+  }
+}
+
+async function buildMasterIndex(file) {
+  const index = { keys: new Set(), slugs: new Set(), urls: new Set(), count: 0, streamed: false };
+  if (!fs.existsSync(file)) return index;
+  const size = fs.statSync(file).size;
+  if (size === 0) return index;
+
+  const rl = readline.createInterface({
+    input: fs.createReadStream(file, { encoding: "utf8", highWaterMark: 1 << 20 }),
+    crlfDelay: Infinity,
+  });
+
+  let name = null;
+  let province = null;
+  let slug = null;
+  for await (const line of rl) {
+    if (line.startsWith("  }")) {
+      if (name) {
+        index.keys.add(tokenKey(name, province || ""));
+        index.count++;
+        index.slugs.add(slug || slugify(name));
+      }
+      name = null;
+      province = null;
+      slug = null;
+      continue;
+    }
+    const m = MASTER_FIELD_RE.exec(line);
+    if (!m) continue;
+    const field = m[1];
+    const value = unescapeJson(m[2]);
+    if (field === "name" && name === null) name = value;
+    else if (field === "province" && province === null) province = value;
+    else if (field === "slug" && slug === null) slug = value.toLowerCase();
+    else if ((field === "sourceUrl" || field === "url") && value) index.urls.add(value);
+  }
+
+  if (index.count === 0) {
+    // Salvavidas: si el formato cambió, se degrada a la carga clásica.
+    const arr = readJSON(file, []);
+    for (const p of Array.isArray(arr) ? arr : []) {
+      const k = tokenKey(p.name, p.province);
+      if (k) index.keys.add(k);
+      if (p.slug) index.slugs.add(String(p.slug).toLowerCase());
+      if (p.sourceUrl || p.url) index.urls.add(p.sourceUrl || p.url);
+      index.count++;
+    }
+    index.streamed = false;
+    return index;
+  }
+
+  index.streamed = true;
+  return index;
+}
+
+function indentProviderEntry(obj) {
+  return JSON.stringify(obj, null, 2)
+    .split("\n")
+    .map((l) => `  ${l}`)
+    .join("\n");
+}
+
+async function appendProvidersToMaster(file, providers) {
+  if (!providers.length) return 0;
+  if (!fs.existsSync(file) || fs.statSync(file).size === 0) {
+    fs.writeFileSync(file, "[\n]\n", "utf8");
+  }
+  const size = fs.statSync(file).size;
+  const tailLen = Math.min(size, 64 * 1024);
+  const fd = fs.openSync(file, "r");
+  const buf = Buffer.allocUnsafe(tailLen);
+  fs.readSync(fd, buf, 0, tailLen, size - tailLen);
+  fs.closeSync(fd);
+
+  // Aritmética 100% en BYTES: el catálogo contiene UTF-8 multibyte (acentos, ñ, €)
+  const closeByte = buf.lastIndexOf(0x5d); // ']'
+  if (closeByte === -1) throw new Error("catálogo maestro sin cierre ']'");
+
+  let end = closeByte;
+  while (end > 0) {
+    const b = buf[end - 1];
+    if (b === 0x20 || b === 0x0a || b === 0x0d || b === 0x09) end--;
+    else break;
+  }
+  const lastSignificant = end > 0 ? buf[end - 1] : 0;
+  // Invariante: el corte debe caer justo tras '}' (hay proveedores) o '['
+  if (lastSignificant !== 0x7d && lastSignificant !== 0x5b) {
+    throw new Error(`punto de corte inseguro en el maestro (byte 0x${lastSignificant.toString(16)})`);
+  }
+  const emptyArray = lastSignificant === 0x5b;
+  const prefixEnd = size - tailLen + end; // bytes [0..prefixEnd) ya escritos
+
+  const body = providers.map(indentProviderEntry).join(",\n");
+  const suffix = `${emptyArray ? "\n" : ",\n"}${body}\n]\n`;
+  const tmp = `${file}.append.tmp`;
+
+  await new Promise((resolve, reject) => {
+    const rs = fs.createReadStream(file, { start: 0, end: prefixEnd - 1 });
+    const ws = fs.createWriteStream(tmp, { encoding: "utf8" });
+    rs.on("error", reject);
+    ws.on("error", reject);
+    ws.on("finish", resolve);
+    rs.on("end", () => ws.end(suffix));
+    rs.pipe(ws, { end: false });
+  });
+
+  const expected = prefixEnd + Buffer.byteLength(suffix, "utf8");
+  const written = fs.statSync(tmp).size;
+  if (written !== expected) {
+    fs.rmSync(tmp, { force: true });
+    throw new Error(`escritura incompleta (${written}/${expected} bytes): maestro intacto`);
+  }
+
+  fs.renameSync(tmp, file);
+  return providers.length;
+}
+
+async function flushHarvestedToMaster(index, pending, file = HARVESTED_FILE) {
+  const batch = [];
+  const local = new Set();
+  for (const p of pending) {
+    const key = tokenKey(p.name, p.province);
+    if (!key || index.keys.has(key) || local.has(key)) continue;
+    local.add(key);
+    batch.push(p);
+  }
+  if (!batch.length) return 0;
+
+  await appendProvidersToMaster(file, batch);
+
+  for (const p of batch) {
+    index.keys.add(tokenKey(p.name, p.province));
+    index.slugs.add(String(p.slug || slugify(p.name)).toLowerCase());
+    if (p.sourceUrl) index.urls.add(p.sourceUrl);
+  }
+  index.count += batch.length;
+  return batch.length;
+}
+
 const UA =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36";
 
@@ -155,7 +321,20 @@ async function fetchStealth(url, attempts = 3) {
       });
       clearTimeout(timer);
       if (!res.ok) return null;
-      return await res.text();
+      // Decodificación correcta: se intenta UTF-8 estricto y, si los bytes no son
+      // UTF-8 válidos, se cae al charset declarado (evita mojibake en descripciones).
+      const buf = Buffer.from(await res.arrayBuffer());
+      try {
+        return new TextDecoder("utf-8", { fatal: true }).decode(buf);
+      } catch {
+        const declared = /charset=([^;]+)/i.exec(res.headers.get("content-type") || "");
+        const charset = (declared ? declared[1].trim().toLowerCase() : "windows-1252").replace(/^["']|["']$/g, "");
+        try {
+          return new TextDecoder(charset, { fatal: false }).decode(buf);
+        } catch {
+          return new TextDecoder("windows-1252", { fatal: false }).decode(buf);
+        }
+      }
     } catch {
       clearTimeout(timer);
       await sleep(800 * (i + 1));
@@ -310,7 +489,8 @@ async function runPool(items, workers, fn) {
       } catch {
         /* fail-closed: se ignora el elemento, cero fabricación */
       }
-      await sleep(120);
+      // Cadencia sigilosa con jitter humano (media ~125 ms; la espera real la marca fetchStealth)
+      await sleep(70 + Math.floor(Math.random() * 110));
     }
   };
   const pool = Array.from({ length: Math.min(workers, Math.max(1, items.length)) }, () => runner());
@@ -329,24 +509,26 @@ async function main() {
   const maxCatalogs = Number(argVal("--max-catalogs", "400"));
   const catalogOffset = Number(argVal("--catalog-offset", "0"));
   const workers = Number(argVal("--workers", "6"));
+  const maxHours = Number(argVal("--max-hours", "0"));
+  const masterFile = argVal("--master", HARVESTED_FILE);
   const discoverOnly = flag("--discover-only");
   const harvestOnly = flag("--harvest-only");
   const drain = flag("--drain") || flag("--all");
+  const startedAt = Date.now();
 
   console.log("=".repeat(80));
   console.log("🦇 [EAR OS] VAMPIRO / CAZADOR BODAS.NET (NODE S-CLASS)");
   console.log(`   limit=${limit} workers=${workers} maxCatalogs=${maxCatalogs} offset=${catalogOffset} drain=${drain} discoverOnly=${discoverOnly} harvestOnly=${harvestOnly}`);
   console.log("=".repeat(80));
 
-  const existing = readJSON(HARVESTED_FILE, []);
-  const knownKeys = new Set((Array.isArray(existing) ? existing : []).map((p) => tokenKey(p.name, p.province)).filter(Boolean));
-  const knownUrls = new Set((Array.isArray(existing) ? existing : []).map((p) => p.sourceUrl || p.url).filter(Boolean));
-  const knownSlugs = new Set();
-  for (const p of (Array.isArray(existing) ? existing : [])) {
-    if (p.slug) knownSlugs.add(String(p.slug).toLowerCase());
-    const ns = slugify(p.name);
-    if (ns) knownSlugs.add(ns);
-  }
+  // Índice del maestro en streaming: 235 MB sin cargarlos en heap (RAM libre crítica)
+  const masterIndex = await buildMasterIndex(masterFile);
+  const knownKeys = new Set(masterIndex.keys);
+  const knownUrls = new Set(masterIndex.urls);
+  const knownSlugs = masterIndex.slugs;
+  console.log(
+    `[*] Índice maestro: ${masterIndex.count} proveedores (${masterIndex.streamed ? "streaming" : "JSON.parse"}) | ${masterIndex.slugs.size} slugs | ${knownUrls.size} urls fuente`,
+  );
 
   let harvested = readJSON(CHECKPOINT_BODAS, []);
   if (!Array.isArray(harvested)) harvested = [];
@@ -358,17 +540,61 @@ async function main() {
   let storefrontQueue = readJSON(PENDING_STOREFRONTS, []);
   if (!Array.isArray(storefrontQueue)) storefrontQueue = [];
 
+  // Dedupe O(1) de la cola de escaparates (includes() sería cuadrático con 100k+ URLs)
+  const queuedStorefronts = new Set(storefrontQueue);
+
+  // Perfiles cosechados aún no escritos en el maestro (fusión incremental en streaming)
+  const pendingMerge = [];
+  const pendingMergeKeys = new Set();
+  for (const p of harvested) {
+    const key = tokenKey(p.name, p.province);
+    if (!key || masterIndex.keys.has(key) || pendingMergeKeys.has(key)) continue;
+    pendingMergeKeys.add(key);
+    pendingMerge.push(p);
+  }
+
+  const persistState = () => {
+    try {
+      writeJSONAtomic(PENDING_CATALOGS, catalogQueue);
+      writeJSONAtomic(PENDING_STOREFRONTS, storefrontQueue);
+      writeJSONAtomic(CHECKPOINT_BODAS, harvested);
+    } catch {
+      /* fail-closed: jamás corrompe el estado previo ya persistido */
+    }
+  };
+
+  if (flag("--status")) {
+    console.log(`   -> Catálogos pendientes: ${catalogQueue.length}`);
+    console.log(`   -> Escaparates pendientes: ${storefrontQueue.length}`);
+    console.log(`   -> Checkpoint cosechado: ${harvested.length}`);
+    console.log(`   -> Pendientes de fusionar en maestro: ${pendingMerge.length}`);
+    return;
+  }
+
+  process.once("SIGINT", () => {
+    console.log("\n[!] SIGINT recibido: persistiendo colas y saliendo...");
+    persistState();
+    process.exit(130);
+  });
+  process.once("SIGTERM", () => {
+    persistState();
+    process.exit(143);
+  });
+
   if (!harvestOnly && catalogQueue.length === 0) {
     console.log("\n[*] FASE 0: descubriendo sub-sitemaps de catálogo...");
     const idxXml = await fetchStealth("https://www.bodas.net/sitemaps/desktop/vendor-catalog-index.xml");
     if (idxXml) {
       const subMaps = extractLocs(idxXml).filter((l) => l.includes("vendor-catalog"));
       console.log(`   -> ${subMaps.length} sub-sitemaps localizados.`);
+      const catalogSeen = new Set(catalogQueue);
       for (const sm of subMaps.slice(0, 41)) {
         const smXml = await fetchStealth(sm);
         if (!smXml) continue;
         for (const c of extractLocs(smXml).filter((l) => !l.includes("sitemap") && l.includes("bodas.net"))) {
-          if (!catalogQueue.includes(c)) catalogQueue.push(c);
+          if (catalogSeen.has(c)) continue;
+          catalogSeen.add(c);
+          catalogQueue.push(c);
         }
       }
       console.log(`   -> ${catalogQueue.length} catálogos en cola.`);
@@ -381,29 +607,55 @@ async function main() {
   let totalHarvestedNow = 0;
   let iteration = 0;
   let firstPass = true;
+  const catalogAttempts = new Map();
 
   do {
     iteration++;
     const off = firstPass ? catalogOffset : 0;
 
     if (!harvestOnly && catalogQueue.length > 0) {
+      if (maxHours > 0 && (Date.now() - startedAt) / 3600000 >= maxHours) {
+        console.log(`\n⏸ Presupuesto de ${maxHours} h agotado: colas persistidas para reanudar.`);
+        persistState();
+        break;
+      }
       console.log(`\n[*] FASE A (iter ${iteration}): descubriendo escaparates (--e\\d+) desde catálogos...`);
       const batch = catalogQueue.slice(off, off + maxCatalogs);
       let discovered = 0;
+      const failedCatalogs = [];
       await runPool(batch, workers, async (cu) => {
         const html = await fetchStealth(cu);
-        if (!html) return;
+        if (!html) {
+          failedCatalogs.push(cu);
+          return;
+        }
         for (const su of extractStorefrontUrls(html)) {
-          if (!knownUrls.has(su) && !harvestedUrls.has(su) && !storefrontQueue.includes(su)) {
-            storefrontQueue.push(su);
-            discovered++;
-          }
+          if (knownUrls.has(su) || harvestedUrls.has(su) || queuedStorefronts.has(su)) continue;
+          queuedStorefronts.add(su);
+          storefrontQueue.push(su);
+          discovered++;
         }
       });
       catalogQueue = catalogQueue.filter((_, i) => i < off || i >= off + maxCatalogs);
+
+      // Reintento único de catálogos con fallo transitorio (red / 5xx / timeout)
+      let retried = 0;
+      for (const cu of failedCatalogs) {
+        const attempts = (catalogAttempts.get(cu) || 0) + 1;
+        if (attempts > 1) {
+          catalogAttempts.delete(cu);
+          continue;
+        }
+        catalogAttempts.set(cu, attempts);
+        catalogQueue.push(cu);
+        retried++;
+      }
+
       writeJSONAtomic(PENDING_CATALOGS, catalogQueue);
       writeJSONAtomic(PENDING_STOREFRONTS, storefrontQueue);
-      console.log(`   -> ${discovered} nuevos escaparates encolados. Cola: ${storefrontQueue.length} | catálogos restantes: ${catalogQueue.length}`);
+      console.log(
+        `   -> ${discovered} nuevos escaparates encolados. Cola: ${storefrontQueue.length} | catálogos restantes: ${catalogQueue.length} | fallos=${failedCatalogs.length} reintentados=${retried}`,
+      );
     }
 
     if (discoverOnly && firstPass) {
@@ -445,50 +697,93 @@ async function main() {
         knownSlugs.add(String(profile.slug).toLowerCase());
         harvestedUrls.add(su);
         harvested.push(profile);
+        pendingMerge.push(profile);
         harvestedNow++;
         totalHarvestedNow++;
       });
       storefrontQueue = storefrontQueue.slice(target.length);
+      for (const su of target) queuedStorefronts.delete(su);
+
+      // Fusión incremental en el maestro (streaming: no duplica 235 MB en RAM)
+      let fused = 0;
+      if (pendingMerge.length > 0) {
+        try {
+          fused = await flushHarvestedToMaster(masterIndex, pendingMerge, masterFile);
+          pendingMerge.length = 0;
+        } catch (err) {
+          console.log(`   [!] Fusión diferida a la próxima iteración: ${String(err && err.message)}`);
+        }
+      }
+
       writeJSONAtomic(PENDING_STOREFRONTS, storefrontQueue);
       writeJSONAtomic(CHECKPOINT_BODAS, harvested);
+
+      const elapsedMin = Math.max(1, (Date.now() - startedAt) / 60000);
+      const ratePerMin = +(totalHarvestedNow / elapsedMin).toFixed(2);
+      const finished = catalogQueue.length === 0 && storefrontQueue.length === 0;
       writeJSONAtomic(CHECKPOINT_PROGRESS, {
         timestamp: new Date().toISOString(),
         iteration,
         harvestedNow,
+        fusedIntoMaster: fused,
+        masterTotal: masterIndex.count,
         bodas_live_harvested: harvested.length,
         pending_catalogs: catalogQueue.length,
         pending_storefronts: storefrontQueue.length,
-        status: catalogQueue.length === 0 && storefrontQueue.length === 0 ? "COMPLETED" : "RUNNING",
+        pending_merge: pendingMerge.length,
+        harvested_per_min: ratePerMin,
+        elapsed_min: +elapsedMin.toFixed(1),
+        status: finished ? "COMPLETED" : "RUNNING",
       });
-      console.log(`   [iter ${iteration}] fetched=${fetched} nullFetches=${nullFetches} extracted=${extracted} deduped=${deduped} nuevos=${harvestedNow} | cola=${storefrontQueue.length}`);
+      telemetry({
+        event: "iteration",
+        iteration,
+        fetched,
+        nullFetches,
+        extracted,
+        deduped,
+        harvestedNow,
+        fused,
+        masterTotal: masterIndex.count,
+        pending_catalogs: catalogQueue.length,
+        pending_storefronts: storefrontQueue.length,
+        pending_merge: pendingMerge.length,
+        harvested_per_min: ratePerMin,
+        elapsed_min: +elapsedMin.toFixed(1),
+        status: finished ? "COMPLETED" : "RUNNING",
+      });
+      console.log(
+        `   [iter ${iteration}] fetched=${fetched} null=${nullFetches} extraidos=${extracted} dedupe=${deduped} nuevos=${harvestedNow} fusionados=${fused} | cola=${storefrontQueue.length} | catálogos=${catalogQueue.length} | maestro=${masterIndex.count} | ${ratePerMin}/min`,
+      );
     }
 
     firstPass = false;
-  } while (drain && (catalogQueue.length > 0 || storefrontQueue.length > 0));
+  } while (
+    drain &&
+    (catalogQueue.length > 0 || storefrontQueue.length > 0) &&
+    !(maxHours > 0 && (Date.now() - startedAt) / 3600000 >= maxHours)
+  );
 
-  console.log("\n[*] Fusionando con src/data/bodas-vendors-harvested.json...");
-  const master = readJSON(HARVESTED_FILE, []);
-  if (!Array.isArray(master)) return console.error("   [!] bodas-vendors-harvested.json no es array.");
-  const masterKeys = new Set(master.map((p) => tokenKey(p.name, p.province)).filter(Boolean));
+  console.log("\n[*] Fusión final con src/data/bodas-vendors-harvested.json (streaming)...");
   let added = 0;
-  for (const p of harvested) {
-    const key = tokenKey(p.name, p.province);
-    if (!masterKeys.has(key)) {
-      master.push(p);
-      masterKeys.add(key);
-      added++;
+  if (pendingMerge.length > 0) {
+    try {
+      added = await flushHarvestedToMaster(masterIndex, pendingMerge, masterFile);
+      pendingMerge.length = 0;
+    } catch (err) {
+      console.error(`   [!] No se pudo fusionar el remanente: ${String(err && err.message)}`);
     }
   }
-  writeJSONAtomic(HARVESTED_FILE, master);
 
   console.log("\n" + "=".repeat(80));
   console.log("🏁 COSECHA BODAS.NET COMPLETADA");
   console.log(`   -> Nuevos cosechados esta sesión: ${totalHarvestedNow}`);
   console.log(`   -> Total checkpoint (bodas_live_harvested.json): ${harvested.length}`);
   console.log(`   -> Nuevos fusionados en catálogo maestro: ${added}`);
-  console.log(`   -> Catálogo maestro total: ${master.length}`);
+  console.log(`   -> Catálogo maestro total: ${masterIndex.count}`);
   console.log(`   -> Cola catálogos restante: ${catalogQueue.length}`);
   console.log(`   -> Cola escaparates restante: ${storefrontQueue.length}`);
+  console.log(`   -> Estado: ${catalogQueue.length === 0 && storefrontQueue.length === 0 ? "COMPLETED" : "PAUSED"}`);
   console.log("=".repeat(80));
 }
 

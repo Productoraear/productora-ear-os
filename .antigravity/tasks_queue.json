@@ -8,22 +8,6 @@
   "_instructions_for_worker": "Ejecuta SOLO via: call RUN_OMEGA.bat next  ->  lee .antigravity/MISSION_ACTIVE.json  ->  edita SOLO 'files'  ->  call RUN_OMEGA.bat complete <ID>. El complete ya ejecuta tsc + eslint + test. 1 tarea por sesion.",
   "tasks": [
     {
-      "id": "W37_T02_PRUNE_PLACEHOLDER_AND_VERIFY_VENDORS",
-      "wave": 37,
-      "status": "QUEUED",
-      "title": "Podar placeholders/verified falso en data lakes y blindar /api/vendors contra fachadas",
-      "action": "Ejecutar prune_placeholder_verified.cjs para eliminar registros con placeholder de los data lakes. Ejecutar verify_vendors_verified.cjs para garantizar que /api/vendors no reintroduce fachadas (Math.random, nombres fake) y que isVerifiablePhone excluye centralita.",
-      "files": [
-        "scripts/prune_placeholder_verified.cjs",
-        "scripts/verify_vendors_verified.cjs",
-        "src/app/api/vendors/route.ts"
-      ],
-      "scaffold": "1) Ejecuta `node scripts/prune_placeholder_verified.cjs`. 2) Ejecuta `node scripts/verify_vendors_verified.cjs`. 3) Si devuelve failed>0 (exit != 0), corrige src/app/api/vendors/route.ts para cumplir isVerifiablePhone y no reintroducir tokens prohibidos.",
-      "done_when": "verify_vendors_verified.cjs devuelve failed=0 y exit code 0.",
-      "test": "node scripts/verify_vendors_verified.cjs",
-      "validate": "npx tsc --noEmit"
-    },
-    {
       "id": "W37_T03_MANIFEST_SYNC_CANONICAL",
       "wave": 37,
       "status": "QUEUED",
@@ -84,6 +68,13 @@
     }
   ],
   "completed": [
+    {
+      "id": "W37_T02_PRUNE_PLACEHOLDER_AND_VERIFY_VENDORS",
+      "title": "Podar placeholders/verified falso en data lakes y blindar /api/vendors contra fachadas",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-25T16:37:17.731Z"
+    },
     {
       "id": "W37_T01_LEAN_EDGE_REGENERATE_VERIFIED",
       "title": "Regenerar particiones Edge CDN lean & verified (0 placeholders, teléfono real) desde el SSOT de proveedores",
@@ -156,8 +147,8 @@
     }
   ],
   "metadata": {
-    "last_updated": "2026-10-25T12:11:23.814Z",
-    "total_pending": 5,
+    "last_updated": "2026-10-25T16:37:17.735Z",
+    "total_pending": 4,
     "current_sprint": "WAVE_37_PROVIDER_CDN_INGESTA_AND_DEPOSIT_CAPTURE",
     "ceo_mandate": "Ingesta de proveedores en particiones CDN (0 placeholders, verified solo con teléfono real) y captación activa de depósitos de 100 € (Stripe Price-Lock SHA-256, 100% deducible)."
   }
