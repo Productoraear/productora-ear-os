@@ -227,7 +227,7 @@ async function buildProfiles(): Promise<ShieldActionBody> {
 
     for (const [tag, modelfile] of Object.entries(MODELFILES)) {
         const safeTag = sanitizeTag(tag);
-        const filePath = escapeShellPath(path.join(process.cwd(), modelfile));
+        const filePath = escapeShellPath(path.join(/*turbopackIgnore: true*/ process.cwd(), modelfile));
         const output = await runOllama(
             `ollama create ${safeTag} -f "${filePath}"`
         );

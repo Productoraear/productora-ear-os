@@ -108,11 +108,11 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     for (const folder of sourceFolders) {
       if (results.length >= limit) break;
-      if (!fs.existsSync(folder)) continue;
+      if (!fs.existsSync(/*turbopackIgnore: true*/ folder)) continue;
 
       let fileNames: string[] = [];
       try {
-        fileNames = fs.readdirSync(folder);
+        fileNames = fs.readdirSync(/*turbopackIgnore: true*/ folder);
       } catch (e) {
         console.warn(`[local-audio] No se pudo leer directorio ${folder}:`, e);
         continue;
@@ -131,10 +131,10 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
         if (categoryFilter !== "all" && cat !== categoryFilter) continue;
 
-        const fullPath = path.join(folder, name);
+        const fullPath = path.join(/*turbopackIgnore: true*/ folder, name);
         let size = 0;
         try {
-          size = fs.statSync(fullPath).size;
+          size = fs.statSync(/*turbopackIgnore: true*/ fullPath).size;
         } catch {
           // Ignorar archivos inaccesibles
         }

@@ -46,12 +46,12 @@ export async function GET(request: NextRequest) {
       ? filePathParam
       : path.join("H:", "ComfyUI", "output", filePathParam);
 
-    targetPath = path.resolve(targetPath);
+    targetPath = path.resolve(/*turbopackIgnore: true*/ targetPath);
 
     // Fallback relativo a public si no existe en la ruta primaria
-    if (!fs.existsSync(targetPath)) {
-      const publicPath = path.resolve(process.cwd(), "public", filePathParam);
-      if (fs.existsSync(publicPath)) {
+    if (!fs.existsSync(/*turbopackIgnore: true*/ targetPath)) {
+      const publicPath = path.resolve(/*turbopackIgnore: true*/ process.cwd(), "public", filePathParam);
+      if (fs.existsSync(/*turbopackIgnore: true*/ publicPath)) {
         targetPath = publicPath;
       } else {
         return NextResponse.json({ error: "Archivo no encontrado" }, { status: 404 });
@@ -71,7 +71,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: `Tipo de archivo '${ext}' no admitido para streaming` }, { status: 403 });
     }
 
-    const stat = fs.statSync(targetPath);
+    const stat = fs.statSync(/*turbopackIgnore: true*/ targetPath);
     const fileSize = stat.size;
     const range = request.headers.get("range");
 
@@ -102,7 +102,7 @@ export async function GET(request: NextRequest) {
       const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
       const chunksize = end - start + 1;
 
-      const fileStream = fs.createReadStream(targetPath, { start, end });
+      const fileStream = fs.createReadStream(/*turbopackIgnore: true*/ targetPath, { start, end });
       const stream = new ReadableStream({
         start(controller) {
           fileStream.on("data", (chunk) => controller.enqueue(chunk));
@@ -122,7 +122,7 @@ export async function GET(request: NextRequest) {
         },
       });
     } else {
-      const fileStream = fs.createReadStream(targetPath);
+      const fileStream = fs.createReadStream(/*turbopackIgnore: true*/ targetPath);
       const stream = new ReadableStream({
         start(controller) {
           fileStream.on("data", (chunk) => controller.enqueue(chunk));

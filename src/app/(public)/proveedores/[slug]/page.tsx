@@ -422,8 +422,8 @@ function findInStaticPartitions(slugNorm: string) {
           path.join(process.cwd(), '.next', 'standalone', 'public', 'data', 'providers', fileName),
         ];
         for (const p of candidatePaths) {
-          if (fs.existsSync(p)) {
-            list = JSON.parse(fs.readFileSync(p, 'utf-8'));
+          if (fs.existsSync(/*turbopackIgnore: true*/ p)) {
+            list = JSON.parse(fs.readFileSync(/*turbopackIgnore: true*/ p, 'utf-8'));
             staticPartitionCache.set(fileName, list!);
             break;
           }

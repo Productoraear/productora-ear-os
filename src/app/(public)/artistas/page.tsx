@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import ArtistasNationalCatalogClient from "@/app/artistas/ArtistasNationalCatalogClient";
-import SovereignArtistCard, {
-  SOVEREIGN_ARTISTS_ROSTER,
-} from "@/components/artists/SovereignArtistCard";
+import SovereignArtistCard from "@/components/artists/SovereignArtistCard";
+import { SOVEREIGN_ARTISTS_ROSTER } from "@/lib/constants/sovereign-artists-roster";
 import { SCLASS_ROSTER_14_FORMATS } from "@/lib/constants/pricing-catalog";
 import {
   TARIFA_BASE_SOLISTA_EUR,
