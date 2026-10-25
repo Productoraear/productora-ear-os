@@ -121,8 +121,13 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/command-center",
-        destination: "/admin",
-        permanent: false,
+        destination: "/admin/command-center",
+        permanent: true,
+      },
+      {
+        source: "/journey-heatmap",
+        destination: "/admin/journey-heatmap",
+        permanent: true,
       },
       {
         source: "/catering-brasas",

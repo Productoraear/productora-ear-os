@@ -10,16 +10,11 @@ import {
   FileSearch,
   Cpu,
   ShieldAlert,
-  Terminal,
   ExternalLink,
-  Play,
-  CheckCircle2,
-  RefreshCw,
   Sparkles,
   Layers,
   Activity,
-  Mic2,
-  Music
+  Mic2
 } from 'lucide-react';
 import { PROVIDERS_GRAND_TOTAL, formatProviderCount } from '@/lib/constants/providers-manifest';
 
@@ -29,7 +24,7 @@ interface ToolCard {
   id: string;
   title: string;
   category: 'TELEMARKETING' | 'INTELLIGENCE' | 'AUDIT' | 'HARDWARE';
-  icon: any;
+  icon: React.ComponentType<{ className?: string }>;
   tag: string;
   description: string;
   actionType: 'LINK' | 'IFRAME' | 'TRIGGER';
@@ -100,7 +95,7 @@ const TOOLS: ToolCard[] = [
     tag: 'GOLDEN PATH',
     description: 'Heatmap de navegación para leads HOT/FIRE (≤3 clics, ≤45s). Medición de fricción y score de eficiencia.',
     actionType: 'LINK',
-    targetUrl: '/journey-heatmap',
+    targetUrl: '/admin/journey-heatmap',
     localPath: 'EAR_JOURNEY_HEATMAP.html',
     status: 'ONLINE',
     telemetry: '100% Golden Path Compliance'
@@ -205,7 +200,7 @@ export default function AdminCommandCenterPage() {
     return true;
   });
 
-  const handleSimulateConsult = (prompt: string) => {
+  const handleSimulateConsult = () => {
     setIsConsulting(true);
     setOracleOutput(null);
     setTimeout(() => {
