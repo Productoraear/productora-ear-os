@@ -37,7 +37,7 @@ export function SovereignFloatingCallBar() {
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1 py-3 min-h-[48px] px-3 rounded-xl bg-[#25D366] active:scale-95 text-white font-extrabold text-xs font-mono uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-lg shadow-[#25D366]/20"
+          className="flex-1 py-3 min-h-[48px] px-3 rounded-xl bg-[#25D366] active:scale-95 text-black font-extrabold text-xs font-mono uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-lg shadow-[#25D366]/20"
         >
           <MessageCircle size={15} className="fill-current" aria-hidden="true" />
           <span>WhatsApp</span>
@@ -75,7 +75,7 @@ export function SovereignFloatingCallBar() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Contactar por WhatsApp"
-          className="p-3 bg-[#25D366] hover:bg-emerald-500 text-white rounded-full transition-transform hover:scale-105 active:scale-95 shadow-md shadow-[#25D366]/30"
+          className="p-3 bg-[#25D366] hover:bg-emerald-400 text-black rounded-full transition-transform hover:scale-105 active:scale-95 shadow-md shadow-[#25D366]/30"
           title="Enviar WhatsApp"
         >
           <MessageCircle size={16} className="fill-current" aria-hidden="true" />

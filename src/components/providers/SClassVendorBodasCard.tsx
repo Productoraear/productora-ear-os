@@ -84,7 +84,7 @@ export default function SClassVendorBodasCard({
           <span className="font-mono text-[11px] font-bold text-white">
             {(vendor.rating ?? 5).toFixed(1)}
           </span>
-          <span className="font-mono text-[10px] text-white/50">({vendor.reviews ?? 0})</span>
+          <span className="font-mono text-[10px] text-neutral-200 font-medium">({vendor.reviews ?? 0})</span>
         </div>
       </div>
 
@@ -93,20 +93,27 @@ export default function SClassVendorBodasCard({
         <h3 className="font-syne text-lg font-bold leading-snug text-white">{vendor.name}</h3>
 
         {/* Ubicación con pin geográfico */}
-        <div className="flex items-center gap-1.5 text-xs text-white/50">
-          <MapPin size={13} className="shrink-0 text-[#258DCD]" />
-          <span className="truncate font-mono">{location}</span>
+        <div className="flex items-center justify-between text-xs text-neutral-300 font-medium">
+          <div className="flex items-center gap-1.5">
+            <MapPin size={13} className="shrink-0 text-[#258DCD]" />
+            <span className="truncate font-mono">{location}</span>
+          </div>
+          {vendor.capacidadMaxPax && (
+            <span className="font-mono text-[10px] text-[#ecb613] bg-[#ecb613]/10 px-2 py-0.5 rounded-full border border-[#ecb613]/20 font-semibold">
+              {vendor.capacidadMaxPax} pax
+            </span>
+          )}
         </div>
 
         {/* Descripción */}
-        <p className="line-clamp-2 text-sm font-light leading-relaxed text-white/60">
+        <p className="line-clamp-2 text-sm font-normal leading-relaxed text-neutral-200">
           {vendor.description}
         </p>
 
         {/* Precio SSOT + Split 80/10/10 */}
-        <div className="mt-auto flex flex-wrap items-center justify-between gap-2 border-t border-white/5 pt-4">
+        <div className="mt-auto flex flex-wrap items-center justify-between gap-2 border-t border-white/10 pt-4">
           <div className="min-w-0">
-            <p className="font-mono text-[10px] uppercase tracking-widest text-white/40">Desde</p>
+            <p className="font-mono text-[10px] uppercase tracking-widest text-neutral-300 font-semibold">Desde</p>
             <p className="truncate font-syne text-xl font-black text-[#ecb613]">
               {vendor.price ?? 'Consultar'}
             </p>
@@ -116,23 +123,34 @@ export default function SClassVendorBodasCard({
           </span>
         </div>
 
-        {/* CTA Solicitar Presupuesto */}
-        <button
-          type="button"
-          onClick={onSelect}
-          aria-label={`Solicitar presupuesto de ${vendor.name}`}
-          className="mt-1 flex w-full items-center justify-center gap-2 rounded-xl bg-[#258DCD] px-4 py-3 text-xs font-bold uppercase tracking-wider text-black transition-all duration-300 ease-out hover:bg-[#258DCD]/85 hover:shadow-lg hover:shadow-[#258DCD]/20 active:scale-[0.98]"
-        >
-          <span>Solicitar Presupuesto</span>
-          <ArrowRight size={15} />
-        </button>
+        {/* CTA Solicitar Presupuesto o Ver Ficha VIP */}
+        {vendor.customUrl ? (
+          <a
+            href={vendor.customUrl}
+            aria-label={`Ver Ficha VIP y Menús de ${vendor.name}`}
+            className="mt-1 flex w-full items-center justify-center gap-2 rounded-xl bg-[#ecb613] px-4 py-3 text-xs font-bold uppercase tracking-wider text-black transition-all duration-300 ease-out hover:bg-[#ecb613]/85 hover:shadow-lg hover:shadow-[#ecb613]/20 active:scale-[0.98]"
+          >
+            <span>Ver Ficha VIP & Menús</span>
+            <ArrowRight size={15} />
+          </a>
+        ) : (
+          <button
+            type="button"
+            onClick={onSelect}
+            aria-label={`Solicitar presupuesto de ${vendor.name}`}
+            className="mt-1 flex w-full items-center justify-center gap-2 rounded-xl bg-[#258DCD] px-4 py-3 text-xs font-bold uppercase tracking-wider text-black transition-all duration-300 ease-out hover:bg-[#258DCD]/85 hover:shadow-lg hover:shadow-[#258DCD]/20 active:scale-[0.98]"
+          >
+            <span>Solicitar Presupuesto</span>
+            <ArrowRight size={15} />
+          </button>
+        )}
 
         {/* Reclamar perfil (opcional) */}
         {onClaim && (
           <button
             type="button"
             onClick={() => onClaim(vendor)}
-            className="mx-auto -mt-1 flex items-center gap-1.5 text-[11px] font-medium text-white/40 transition-colors hover:text-white/80"
+            className="mx-auto -mt-1 flex items-center gap-1.5 text-[11px] font-medium text-neutral-300 transition-colors hover:text-white"
           >
             <ShieldCheck size={12} />
             ¿Eres el propietario? Reclama tu perfil

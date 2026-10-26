@@ -183,7 +183,8 @@ export function HeroWeddingCinematic() {
                   <img
                     src={photoSrc}
                     alt="Edwin Agudelo, tenor y voz lírica"
-                    className="h-24 w-full rounded object-cover"
+                    className="h-24 w-full rounded bg-[#050507] object-cover text-neutral-200"
+                    referrerPolicy="no-referrer"
                     onError={() => setPhotoSrc(EDWIN_PHOTO_FALLBACK)}
                   />
                   <figcaption className="mt-1.5 text-center font-mono text-[10px] font-bold text-zinc-800">
@@ -218,7 +219,7 @@ export function HeroWeddingCinematic() {
                       );
                     })}
                   </div>
-                  <p className="mt-2 font-mono text-[10px] text-white/40">
+                  <p className="mt-2 font-mono text-[10px] text-neutral-200 font-medium">
                     Ave María · Bolero · Mariachi — repertorio de gala en directo
                   </p>
                 </div>
@@ -228,7 +229,7 @@ export function HeroWeddingCinematic() {
 
           {/* ═══ COLUMNA DE CONVERSIÓN: titular + precio + formulario ═══ */}
           <div className="order-1 lg:order-2">
-            <p className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-white/70">
+            <p className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-neutral-200">
               <ShieldCheck size={12} className="text-[#ecb613]" aria-hidden="true" />
               Reserva sin riesgo · Garantía de reembolso 100% en 24h
             </p>
@@ -240,7 +241,7 @@ export function HeroWeddingCinematic() {
               </span>
             </h1>
 
-            <p className="mt-4 max-w-xl font-sans text-sm leading-relaxed text-white/70 sm:text-base">
+            <p className="mt-4 max-w-xl font-sans text-sm leading-relaxed text-neutral-200 sm:text-base">
               La voz de Edwin Agudelo para tu ceremonia, cóctel y serenata, sin intermediarios
               y con acústica homologada para tu finca o salón.
             </p>
@@ -250,7 +251,7 @@ export function HeroWeddingCinematic() {
               <span className="font-syne text-2xl font-extrabold text-[#ecb613]">
                 Desde {TARIFA_BASE_SOLISTA_EUR} €
               </span>
-              <span className="font-mono text-[11px] uppercase tracking-wide text-white/70">
+              <span className="font-mono text-[11px] uppercase tracking-wide text-neutral-200 font-medium">
                 Sonido Bose F1 y Microfonía Axient incluidos
               </span>
             </div>
@@ -262,7 +263,7 @@ export function HeroWeddingCinematic() {
             >
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <label className="block">
-                  <span className="mb-1.5 flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-wider text-white/60">
+                  <span className="mb-1.5 flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-wider text-neutral-200">
                     <CalendarCheck size={12} aria-hidden="true" /> Fecha de Boda
                   </span>
                   <input
@@ -271,12 +272,12 @@ export function HeroWeddingCinematic() {
                     min={todayIso}
                     onChange={(e) => setEventDate(e.target.value)}
                     required
-                    className="w-full rounded-xl border border-white/15 bg-black/40 px-3 py-3 font-sans text-sm text-white outline-none transition-colors focus:border-[#ecb613]"
+                    className="w-full rounded-xl border border-white/20 bg-black/60 px-3 py-3 font-sans text-sm text-white outline-none transition-colors focus:border-[#ecb613]"
                   />
                 </label>
 
                 <label className="block">
-                  <span className="mb-1.5 flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-wider text-white/60">
+                  <span className="mb-1.5 flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-wider text-neutral-200">
                     <Phone size={12} aria-hidden="true" /> Tu WhatsApp
                   </span>
                   <input
@@ -286,7 +287,7 @@ export function HeroWeddingCinematic() {
                     onChange={(e) => setWhatsapp(e.target.value)}
                     placeholder="+34 600 000 000"
                     required
-                    className="w-full rounded-xl border border-white/15 bg-black/40 px-3 py-3 font-sans text-sm text-white placeholder-white/30 outline-none transition-colors focus:border-[#ecb613]"
+                    className="w-full rounded-xl border border-white/20 bg-black/60 px-3 py-3 font-sans text-sm text-white placeholder-neutral-400 outline-none transition-colors focus:border-[#ecb613]"
                   />
                 </label>
               </div>
@@ -305,13 +306,13 @@ export function HeroWeddingCinematic() {
                 Bloquear mi Fecha sin Riesgo
               </button>
 
-              <p className="mt-2.5 text-center font-mono text-[10px] text-white/50">
+              <p className="mt-2.5 text-center font-mono text-[10px] text-neutral-300 font-medium">
                 Garantía Reembolso 100% en 24h · Depósito {DEPOSITO_STRIPE_EUR} € 100% deducible del total
               </p>
             </form>
 
             {/* Micro-confianza */}
-            <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-[10px] uppercase tracking-wide text-white/50">
+            <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-[10px] uppercase tracking-wide text-neutral-300 font-medium">
               <span className="inline-flex items-center gap-1.5">
                 <Clock size={12} className="text-[#ecb613]" aria-hidden="true" />
                 Respuesta WhatsApp &lt; 10 min

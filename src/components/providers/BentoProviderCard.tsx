@@ -9,7 +9,6 @@ import {
   ShieldCheck,
   PhoneCall,
   Video,
-  Camera,
   ArrowUpRight,
   Lock,
   Sparkles
@@ -21,24 +20,39 @@ export interface ProviderItem {
   slug?: string;
   category?: string;
   province?: string;
+  municipality?: string;
   description?: string;
   description_full?: string;
   price?: string | number;
+  /** Etiqueta canónica del precio (`Desde`, `Precio cerrado`…). */
+  priceLabel?: string;
   basePrice?: number;
   rating?: number;
   reviews?: number;
+  reviewsCount?: number;
   img?: string;
   gallery?: string[];
+  imageUrls?: string[];
+  sourceImageUrls?: string[];
+  images?: Array<string | { url?: string }>;
   videos?: string[];
   isPreferred?: boolean;
   badge?: string;
   sla?: string;
   customUrl?: string;
+  address?: string;
   telephone?: string;
+  capacidadMaxPax?: number;
+  services_list?: string[];
+  faqs?: Record<string, string> | string[];
   // ── TRAZABILIDAD CANÓNICA (directivas 5, 6, 7, 8) ──
   phone?: string | null;
   has_real_phone?: boolean;
   hasDirectPhone?: boolean;
+  verified?: boolean;
+  status?: string;
+  shaHash?: string;
+  original_html?: string | null;
   profile_url?: string | null;
   sourceUrl?: string | null;
   originHtml?: string | null;

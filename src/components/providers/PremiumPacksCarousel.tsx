@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, CheckCircle2, Zap } from 'lucide-react';
 import Link from 'next/link';
+import { TARIFA_BASE_SOLISTA_EUR } from '@/lib/constants/ear-os-ssot';
 
 interface PackItem {
   title: string;
@@ -21,7 +22,9 @@ interface PremiumPacksCarouselProps {
 }
 
 export const PremiumPacksCarousel: React.FC<PremiumPacksCarouselProps> = React.memo(function PremiumPacksCarousel({ providerSlug, providerName, basePrice, servicesList }) {
-  const parsedBasePrice = typeof basePrice === 'string' ? parseFloat(basePrice.replace(/[^\d.-]/g, '')) || 900 : basePrice;
+  const parsedBasePrice = typeof basePrice === 'string'
+    ? parseFloat(basePrice.replace(/[^\d.-]/g, '')) || TARIFA_BASE_SOLISTA_EUR
+    : (basePrice || TARIFA_BASE_SOLISTA_EUR);
 
   const realServices = Array.isArray(servicesList) && servicesList.length > 0
     ? servicesList.map(s => typeof s === 'string' ? s : (s as any).name || JSON.stringify(s))

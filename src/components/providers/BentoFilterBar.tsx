@@ -4,16 +4,6 @@ import React from 'react';
 import {
   Search,
   X,
-  Layers,
-  Building2,
-  UtensilsCrossed,
-  Flower2,
-  Music2,
-  Volume2,
-  Video,
-  HeartHandshake,
-  Shirt,
-  Car,
   Filter,
   MapPin
 } from 'lucide-react';
@@ -22,7 +12,7 @@ export interface CategoryItem {
   id: string;
   label: string;
   count: number;
-  icon: any;
+  icon: React.ComponentType<{ size?: number; className?: string }>;
 }
 
 export interface SubcategoryItem {
@@ -78,11 +68,11 @@ export const BentoFilterBar: React.FC<BentoFilterBarProps> = React.memo(({
         <div className="flex flex-col sm:flex-row items-center gap-2.5 w-full md:w-auto">
           {/* Selector de Provincia */}
           <div className="relative w-full sm:w-44">
-            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-neutral-500 pointer-events-none" />
+            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-neutral-400 pointer-events-none" />
             <select
               value={selectedProvince}
               onChange={(e) => onProvinceChange(e.target.value)}
-              className="w-full bg-[#0a0a0f] border border-[#1a1a1a] hover:border-[#258DCD]/50 text-neutral-300 rounded-xl pl-8 pr-7 py-2.5 text-xs font-mono focus:outline-none focus:border-[#258DCD] transition-colors appearance-none cursor-pointer"
+              className="w-full bg-[#0a0a0f] border border-[#1a1a1a] hover:border-[#258DCD]/50 text-neutral-200 rounded-xl pl-8 pr-7 py-2.5 text-xs font-mono focus:outline-none focus:border-[#258DCD] transition-colors appearance-none cursor-pointer"
             >
               <option value="">Toda España</option>
               {provincesList.map((p) => (
@@ -91,26 +81,26 @@ export const BentoFilterBar: React.FC<BentoFilterBarProps> = React.memo(({
                 </option>
               ))}
             </select>
-            <div className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-neutral-500 text-[10px]">
+            <div className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-neutral-400 text-[10px]">
               ▼
             </div>
           </div>
 
           {/* Campo de Búsqueda Rápida */}
           <div className="relative w-full sm:w-64">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500 w-3.5 h-3.5" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 w-3.5 h-3.5" />
             <input
               type="text"
               placeholder="Filtrar por nombre o servicio..."
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
-              className="w-full bg-[#0a0a0f] border border-[#1a1a1a] hover:border-[#258DCD]/50 rounded-xl pl-9 pr-8 py-2.5 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-[#258DCD] transition-colors font-mono"
+              className="w-full bg-[#0a0a0f] border border-[#1a1a1a] hover:border-[#258DCD]/50 rounded-xl pl-9 pr-8 py-2.5 text-xs text-white placeholder-neutral-400 focus:outline-none focus:border-[#258DCD] transition-colors font-mono"
             />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => onSearchChange('')}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-white transition-colors"
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-white transition-colors"
                 title="Limpiar búsqueda"
               >
                 <X size={13} />
@@ -136,12 +126,12 @@ export const BentoFilterBar: React.FC<BentoFilterBarProps> = React.memo(({
                 onClick={() => onSelectCategory(cat.id)}
                 className={`px-3 py-2 rounded-xl text-[11px] font-mono uppercase tracking-wider flex items-center gap-1.5 shrink-0 transition-all cursor-pointer ${isSelected
                     ? 'bg-[#258DCD] text-black font-extrabold shadow-md shadow-[#258DCD]/20'
-                    : 'bg-[#0a0a0f] text-neutral-400 hover:text-white border border-[#1a1a1a] hover:border-[#258DCD]/40'
+                    : 'bg-[#0a0a0f] text-neutral-300 hover:text-white border border-[#1a1a1a] hover:border-[#258DCD]/40 font-medium'
                   }`}
               >
                 <Icon size={13} className={isSelected ? 'text-black' : 'text-[#258DCD]'} />
                 <span>{cat.label}</span>
-                <span className={`px-1.5 py-0.2 rounded-full text-[9px] font-bold ${isSelected ? 'bg-black/20 text-black' : 'bg-white/5 text-neutral-500'
+                <span className={`px-1.5 py-0.2 rounded-full text-[9px] font-bold ${isSelected ? 'bg-white/25 text-black' : 'bg-white/10 text-neutral-200'
                   }`}>
                   {cat.count}
                 </span>
@@ -156,7 +146,7 @@ export const BentoFilterBar: React.FC<BentoFilterBarProps> = React.memo(({
          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       {subcategories && subcategories.length > 0 && onSelectSubcategory && (
         <div className="pt-3 border-t border-[#1a1a1a] flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none max-w-full">
-          <span className="text-[10px] font-mono text-neutral-500 uppercase tracking-widest shrink-0 mr-1 flex items-center gap-1 font-semibold">
+          <span className="text-[10px] font-mono text-neutral-300 uppercase tracking-widest shrink-0 mr-1 flex items-center gap-1 font-semibold">
             <Filter size={11} className="text-[#258DCD]" /> Tipología:
           </span>
           {subcategories.map((sub) => {
@@ -167,13 +157,13 @@ export const BentoFilterBar: React.FC<BentoFilterBarProps> = React.memo(({
                 type="button"
                 onClick={() => onSelectSubcategory(sub.id)}
                 className={`px-3 py-1.5 rounded-xl text-[11px] font-mono tracking-wide flex items-center gap-1.5 shrink-0 transition-all cursor-pointer ${isSelected
-                    ? 'bg-[#258DCD]/20 text-[#258DCD] border border-[#258DCD] font-bold shadow-md shadow-[#258DCD]/10'
-                    : 'bg-[#0a0a0f] text-neutral-400 hover:text-white border border-[#1a1a1a] hover:border-neutral-700'
+                    ? 'bg-[#258DCD]/25 text-[#7FD4FF] border border-[#258DCD] font-bold shadow-md shadow-[#258DCD]/10'
+                    : 'bg-[#0a0a0f] text-neutral-300 hover:text-white border border-[#1a1a1a] hover:border-neutral-700 font-medium'
                   }`}
               >
                 <span>{sub.label}</span>
                 {typeof sub.count === 'number' && (
-                  <span className={`px-1.5 py-0.2 rounded-full text-[9px] font-bold ${isSelected ? 'bg-[#258DCD]/30 text-[#258DCD]' : 'bg-white/5 text-neutral-500'
+                  <span className={`px-1.5 py-0.2 rounded-full text-[9px] font-bold ${isSelected ? 'bg-[#258DCD]/30 text-white' : 'bg-white/10 text-neutral-200'
                     }`}>
                     {sub.count}
                   </span>

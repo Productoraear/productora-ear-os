@@ -2,26 +2,42 @@
 
 import * as React from 'react';
 
+export type AppTheme = 'dark' | 'light' | 'airbnb';
+
 type ThemeContextType = {
   theme: string;
-  setTheme: (theme: string) => void;
+  setTheme: (theme: AppTheme) => void;
   toggleTheme: () => void;
   resolvedTheme: string;
+  isAirbnb: boolean;
 };
 
 const ThemeContext = React.createContext<ThemeContextType>({
   theme: 'dark',
   setTheme: () => {},
   toggleTheme: () => {},
-  resolvedTheme: 'dark'
+  resolvedTheme: 'dark',
+  isAirbnb: false,
 });
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = React.useState<string>('dark');
+  const [theme, setTheme] = React.useState<AppTheme>('dark');
 
   React.useEffect(() => {
-    const savedTheme = localStorage.getItem('ear_theme');
-    if (savedTheme === 'light' || savedTheme === 'dark') {
+    // 1. Prioridad: parámetro de URL (?theme=airbnb / ?theme=dark)
+    const urlParams = new URLSearchParams(window.location.search);
+    const queryTheme = urlParams.get('theme') as AppTheme | null;
+    
+    if (queryTheme === 'airbnb' || queryTheme === 'light' || queryTheme === 'dark') {
+      setTheme(queryTheme);
+      localStorage.setItem('ear_theme', queryTheme);
+      applyTheme(queryTheme);
+      return;
+    }
+
+    // 2. LocalStorage guardado
+    const savedTheme = localStorage.getItem('ear_theme') as AppTheme | null;
+    if (savedTheme === 'airbnb' || savedTheme === 'light' || savedTheme === 'dark') {
       setTheme(savedTheme);
       applyTheme(savedTheme);
     } else {
@@ -29,19 +45,27 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  const applyTheme = (t: string) => {
-    if (t === 'light') {
-      document.documentElement.classList.remove('dark');
-      document.documentElement.classList.add('light');
-      document.documentElement.style.colorScheme = 'light';
+  const applyTheme = (t: AppTheme) => {
+    const root = document.documentElement;
+    if (t === 'airbnb') {
+      root.classList.remove('dark');
+      root.classList.add('light', 'theme-airbnb');
+      root.setAttribute('data-theme', 'airbnb');
+      root.style.colorScheme = 'light';
+    } else if (t === 'light') {
+      root.classList.remove('dark', 'theme-airbnb');
+      root.classList.add('light');
+      root.removeAttribute('data-theme');
+      root.style.colorScheme = 'light';
     } else {
-      document.documentElement.classList.remove('light');
-      document.documentElement.classList.add('dark');
-      document.documentElement.style.colorScheme = 'dark';
+      root.classList.remove('light', 'theme-airbnb');
+      root.classList.add('dark');
+      root.removeAttribute('data-theme');
+      root.style.colorScheme = 'dark';
     }
   };
 
-  const handleSetTheme = (newTheme: string) => {
+  const handleSetTheme = (newTheme: AppTheme) => {
     setTheme(newTheme);
     localStorage.setItem('ear_theme', newTheme);
     applyTheme(newTheme);
@@ -49,15 +73,17 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   const toggleTheme = React.useCallback(() => {
     setTheme(prev => {
-      const next = prev === 'dark' ? 'light' : 'dark';
+      const next: AppTheme = prev === 'dark' ? 'airbnb' : 'dark';
       localStorage.setItem('ear_theme', next);
       applyTheme(next);
       return next;
     });
   }, []);
 
+  const isAirbnb = theme === 'airbnb';
+
   return (
-    <ThemeContext.Provider value={{ theme, setTheme: handleSetTheme, toggleTheme, resolvedTheme: theme }}>
+    <ThemeContext.Provider value={{ theme, setTheme: handleSetTheme, toggleTheme, resolvedTheme: theme, isAirbnb }}>
       {children}
     </ThemeContext.Provider>
   );

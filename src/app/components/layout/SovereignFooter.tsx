@@ -94,7 +94,7 @@ function SovereignFooterContent() {
 
             {/* REDES OPERATIVAS SOBERANAS */}
             <div className="pt-1">
-              <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 block mb-2">
+              <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-300 font-semibold block mb-2">
                 Redes Operativas
               </span>
               <div className="flex items-center gap-2">
@@ -103,7 +103,7 @@ function SovereignFooterContent() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Instagram de Productora EAR"
-                  className="w-9 h-9 rounded-xl bg-white/[0.03] border border-white/10 hover:border-[#FF2B44]/70 hover:bg-[#FF2B44]/20 hover:text-[#FF2B44] text-zinc-400 flex items-center justify-center transition-all"
+                  className="w-9 h-9 rounded-xl bg-white/[0.05] border border-white/15 hover:border-[#FF2B44]/70 hover:bg-[#FF2B44]/20 hover:text-[#FF2B44] text-zinc-300 flex items-center justify-center transition-all"
                 >
                   <Instagram size={15} />
                 </a>
@@ -112,7 +112,7 @@ function SovereignFooterContent() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Facebook de Productora EAR"
-                  className="w-9 h-9 rounded-xl bg-white/[0.03] border border-white/10 hover:border-[#00E5FF]/70 hover:bg-[#00E5FF]/20 hover:text-[#00E5FF] text-zinc-400 flex items-center justify-center transition-all"
+                  className="w-9 h-9 rounded-xl bg-white/[0.05] border border-white/15 hover:border-[#00E5FF]/70 hover:bg-[#00E5FF]/20 hover:text-[#00E5FF] text-zinc-300 flex items-center justify-center transition-all"
                 >
                   <Facebook size={15} />
                 </a>
@@ -121,7 +121,7 @@ function SovereignFooterContent() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="LinkedIn de Productora EAR"
-                  className="w-9 h-9 rounded-xl bg-white/[0.03] border border-white/10 hover:border-[#00E5FF]/70 hover:bg-[#00E5FF]/20 hover:text-[#00E5FF] text-zinc-400 flex items-center justify-center transition-all"
+                  className="w-9 h-9 rounded-xl bg-white/[0.05] border border-white/15 hover:border-[#00E5FF]/70 hover:bg-[#00E5FF]/20 hover:text-[#00E5FF] text-zinc-300 flex items-center justify-center transition-all"
                 >
                   <Linkedin size={15} />
                 </a>
@@ -130,7 +130,7 @@ function SovereignFooterContent() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="YouTube de Productora EAR"
-                  className="w-9 h-9 rounded-xl bg-white/[0.03] border border-white/10 hover:border-[#FF2B44]/70 hover:bg-[#FF2B44]/20 hover:text-[#FF2B44] text-zinc-400 flex items-center justify-center transition-all"
+                  className="w-9 h-9 rounded-xl bg-white/[0.05] border border-white/15 hover:border-[#FF2B44]/70 hover:bg-[#FF2B44]/20 hover:text-[#FF2B44] text-zinc-300 flex items-center justify-center transition-all"
                 >
                   <Youtube size={15} />
                 </a>
@@ -212,7 +212,7 @@ function SovereignFooterContent() {
             {/* CTA DESTACADO DE CONVERSIÓN */}
             <Link
               href="/calculadora"
-              className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#FF2B44] via-[#E11D48] to-[#9F1239] text-white font-mono text-xs font-bold shadow-[0_0_25px_rgba(255,43,68,0.35)] hover:scale-[1.02] transition-transform group"
+              className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#D91E3C] via-[#C2183A] to-[#8F1230] text-white font-mono text-xs font-bold shadow-[0_0_25px_rgba(255,43,68,0.35)] hover:scale-[1.02] transition-transform group"
             >
               <span className="flex items-center gap-2">
                 <Lock size={13} />
@@ -221,22 +221,22 @@ function SovereignFooterContent() {
               <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </Link>
 
-            <div className="space-y-1.5 text-[11px] font-mono text-zinc-400 pt-1">
-              <div className="p-2 rounded-xl bg-white/[0.02] border border-white/5">
+            <div className="space-y-1.5 text-[11px] font-mono text-zinc-200 pt-1">
+              <div className="p-2 rounded-xl bg-white/[0.04] border border-white/10">
                 <span className="text-white font-bold block">Split Soberano</span>
-                <p className="text-[10px] text-zinc-500 leading-tight">80% Artista / 10% EAR OS / 10% VIMUME en cada actuación.</p>
+                <p className="text-[10px] text-zinc-300 leading-tight">80% Artista / 10% EAR OS / 10% VIMUME en cada actuación.</p>
               </div>
-              <div className="p-2 rounded-xl bg-white/[0.02] border border-white/5">
+              <div className="p-2 rounded-xl bg-white/[0.04] border border-white/10">
                 <span className="text-white font-bold block">Presión 12 W/pax</span>
-                <p className="text-[10px] text-zinc-500 leading-tight">Bose F1 Model 812 & Shure Beta 87A homologados.</p>
+                <p className="text-[10px] text-zinc-300 leading-tight">Bose F1 Model 812 & Shure Beta 87A homologados.</p>
               </div>
-              <div className="p-2 rounded-xl bg-white/[0.02] border border-white/5">
+              <div className="p-2 rounded-xl bg-white/[0.04] border border-white/10">
                 <span className="text-white font-bold block">Stripe Price-Lock</span>
-                <p className="text-[10px] text-zinc-500 leading-tight">Depósito de 100,00 € con firma SHA-256 válida 72h.</p>
+                <p className="text-[10px] text-zinc-300 leading-tight">Depósito de 100,00 € con firma SHA-256 válida 72h.</p>
               </div>
-              <div className="p-2 rounded-xl bg-white/[0.02] border border-white/5">
+              <div className="p-2 rounded-xl bg-white/[0.04] border border-white/10">
                 <span className="text-white font-bold block">Art. 118 LCSP B2G</span>
-                <p className="text-[10px] text-zinc-500 leading-tight">Contrato menor acotado a &lt; 14.250 € preventivo.</p>
+                <p className="text-[10px] text-zinc-300 leading-tight">Contrato menor acotado a &lt; 14.250 € preventivo.</p>
               </div>
             </div>
           </div>
@@ -248,14 +248,14 @@ function SovereignFooterContent() {
               <span>Hub Central & Contacto</span>
             </h4>
 
-            <div className="space-y-2.5 text-xs font-mono text-zinc-400">
-              <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/5 space-y-1">
+            <div className="space-y-2.5 text-xs font-mono text-zinc-300">
+              <div className="p-2.5 rounded-xl bg-white/[0.04] border border-white/10 space-y-1">
                 <span className="text-white font-bold block">Sede Operativa</span>
-                <p className="text-[11px] text-zinc-400 leading-tight">
+                <p className="text-[11px] text-zinc-200 leading-tight">
                   Calle de la Tórtola 5<br />
                   45280 Méntrida, Toledo (España)
                 </p>
-                <p className="text-[10px] text-zinc-500 mt-1">Radio Km 0 desde Hub Central</p>
+                <p className="text-[10px] text-zinc-300 mt-1 font-semibold">Radio Km 0 desde Hub Central</p>
               </div>
 
               <div className="space-y-1.5">
@@ -276,10 +276,10 @@ function SovereignFooterContent() {
                 </a>
               </div>
 
-              <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/5 text-[10px] text-zinc-500 space-y-0.5">
-                <p><span className="text-zinc-400 font-bold">Logística S-Class:</span> 1,50 €/km (&gt; 50 km)</p>
-                <p><span className="text-zinc-400 font-bold">Suplemento Hotel:</span> +120 € (&gt; 200 km / fin &ge; 03:00)</p>
-                <p><span className="text-zinc-400 font-bold">Disponibilidad:</span> Soporte 24/7 en producción</p>
+              <div className="p-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-[10px] text-zinc-300 space-y-0.5">
+                <p><span className="text-white font-bold">Logística S-Class:</span> 1,50 €/km (&gt; 50 km)</p>
+                <p><span className="text-white font-bold">Suplemento Hotel:</span> +120 € (&gt; 200 km / fin &ge; 03:00)</p>
+                <p><span className="text-white font-bold">Disponibilidad:</span> Soporte 24/7 en producción</p>
               </div>
             </div>
           </div>
@@ -287,15 +287,15 @@ function SovereignFooterContent() {
         </div>
 
         {/* PIE DE PÁGINA INFERIOR */}
-        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] font-mono text-zinc-500">
+        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] font-mono text-zinc-300">
           <div>
             © {new Date().getFullYear()} Productora EAR. Todos los derechos reservados. Infraestructura Soberana S-Class.
           </div>
           <div className="flex flex-wrap items-center gap-4">
-            <Link href="/aviso-legal" className="hover:text-zinc-300 transition-colors">Aviso Legal</Link>
-            <Link href="/privacidad" className="hover:text-zinc-300 transition-colors">Privacidad</Link>
-            <Link href="/cookies" className="hover:text-zinc-300 transition-colors">Cookies</Link>
-            <Link href="/calculadora" className="text-[#ecb613] hover:underline">Cotizador en Tiempo Real</Link>
+            <Link href="/aviso-legal" className="text-zinc-300 hover:text-white transition-colors">Aviso Legal</Link>
+            <Link href="/privacidad" className="text-zinc-300 hover:text-white transition-colors">Privacidad</Link>
+            <Link href="/cookies" className="text-zinc-300 hover:text-white transition-colors">Cookies</Link>
+            <Link href="/calculadora" className="text-[#ecb613] hover:underline font-bold">Cotizador en Tiempo Real</Link>
           </div>
         </div>
 

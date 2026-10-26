@@ -6,6 +6,14 @@ import fs from 'fs';
 import path from 'path';
 
 import { SCLASS_12_FINCAS_HOMOLOGADAS } from '@/lib/constants/fincas-catalog';
+import { OTZARRETA_ENTITY } from '@/lib/constants/otzarreta-entity';
+import {
+  getProvinceSearchVariants,
+  isAllSpainProvince,
+  isProvinceMatch,
+  normalizeBodasNetCategory,
+  resolveProvince,
+} from '@/lib/constants/spain-regions-and-categories';
 
 export const runtime = 'nodejs';
 
@@ -41,32 +49,74 @@ const FINCAS_HOMOLOGADAS_ITEMS = SCLASS_12_FINCAS_HOMOLOGADAS.map((f, idx) => {
     category: 'finca',
     province: f.provincia,
     address: `${f.location}, España`,
-    phone: f.id === 'villa-escorial-park' ? '+34 693 693 048' : null,
-    telephone: f.id === 'villa-escorial-park' ? '+34 693 693 048' : null,
-    hasDirectPhone: f.id === 'villa-escorial-park',
     centralitaPhone: '+34 693 693 048',
-    phoneType: f.id === 'villa-escorial-park' ? 'Oficial Productora EAR' : 'Centralita Concierge EAR',
+    phoneType: 'Centralita Concierge EAR (no es teléfono del proveedor)',
     img: selectedImg,
     imageUrls: [selectedImg],
     gallery: [selectedImg],
-    basePrice: f.id === 'villa-escorial-park' ? 4500 : 1200 + (idx * 250),
-    price: f.id === 'villa-escorial-park' ? '4.500 € / fin de semana' : `${1200 + (idx * 250)} €`,
-    rating: 5.0,
-    reviews: 32 + idx * 4,
+    // Procedencia explícita: solo esta toma es del catálogo homologado; el
+    // relleno temático posterior NO se declara como fotografía del proveedor.
+    galleryReal: [selectedImg],
     description: f.description,
     services_list: f.espaciosDisponibles,
     capacidadMaxPax: f.capacidadMaxPax
   };
 });
 
-// Subcategory keyword mappings for deep domain search across all artistic families
+// ── PARCHE CANÓNICO OTZARRETA (CERO FACHADAS · SSOT VERIFICADO) ───────────────
+// El data lake conserva el volcado histórico (aforo de Derio, 350 pax) bajo la
+// ficha de Zarautz. La API de venta NUNCA debe servir esa conflación: la
+// respuesta se sella con la entidad canónica verificada antes de salir.
+const OTZARRETA_CANONICAL_API = Object.freeze({
+  name: `${OTZARRETA_ENTITY.commercialName} & Ezkertza Berria • Eduardo Martínez`,
+  slug: OTZARRETA_ENTITY.slug,
+  category: 'finca',
+  province: OTZARRETA_ENTITY.provinceAlias,
+  municipality: OTZARRETA_ENTITY.municipality,
+  address: OTZARRETA_ENTITY.fullAddress,
+  description: `Casa fundada en 1902 como sidrería y reabierta en 1962: cuarta generación de cocina de cazuela vasca, comedor histórico, terraza de verano, jardines de Santa Clara y bodega seleccionada en Zarautz. Aforo de ${OTZARRETA_ENTITY.capacityPax} comensales en la sede de Gipuzkoa. El grupo incluye Ezkertza Berria (Derio · Bizkaia) con ${OTZARRETA_ENTITY.groupCapacityPax} pax, jardines para ceremonias civiles y ${OTZARRETA_ENTITY.groupParkingSpaces} plazas de aparcamiento.`,
+  price: `${new Intl.NumberFormat('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(OTZARRETA_ENTITY.weddingPriceFromEur)} €`,
+  priceLabel: 'Desde',
+  basePrice: OTZARRETA_ENTITY.weddingPriceFromEur,
+  capacidadMaxPax: OTZARRETA_ENTITY.capacityPax,
+  phone: OTZARRETA_ENTITY.primaryPhone,
+  telephone: OTZARRETA_ENTITY.primaryPhone,
+  has_real_phone: true,
+  hasDirectPhone: true,
+  verified: true,
+  img: OTZARRETA_ENTITY.scrapedAssets.facade,
+  imageUrls: [OTZARRETA_ENTITY.scrapedAssets.facade, OTZARRETA_ENTITY.scrapedAssets.diningHall],
+  gallery: [OTZARRETA_ENTITY.scrapedAssets.facade, OTZARRETA_ENTITY.scrapedAssets.diningHall],
+  galleryReal: [OTZARRETA_ENTITY.scrapedAssets.facade, OTZARRETA_ENTITY.scrapedAssets.diningHall],
+  has_real_gallery: true,
+  galleryAugmented: false,
+  isPreferred: true,
+  badge: 'ALIANZA VIP S-CLASS · GRUPO OTZARRETA',
+  customUrl: '/otzarreta',
+});
+
+/** Detecta cualquier variante de la ficha Otzarreta (id de lake, slug o nombre). */
+function isOtzarretaRecord(record: { id?: unknown; slug?: unknown; name?: unknown }): boolean {
+  const id = String(record.id ?? '');
+  const slug = String(record.slug ?? '');
+  const name = String(record.name ?? '');
+  return id === 'v-32714' || slug === OTZARRETA_ENTITY.slug || /otzarreta/i.test(name);
+}
+
 const SUBCATEGORY_KEYWORD_MAP: Record<string, string[]> = {
-  // Fincas & Espacios
-  cortijo: ['cortijo', 'hacienda'],
-  palacio: ['palacio', 'castillo'],
-  masia: ['masia', 'masía', 'casa rural'],
-  salon: ['salon', 'salón', 'hotel', 'complejo'],
+  // 🏰 Las 10 Tipologías Oficiales de Espacios para Bodas (Bodas.net)
+  finca: ['finca', 'dehesa', 'huerta', 'campo', 'rústica', 'rustica', 'fincas'],
+  cortijo: ['cortijo', 'cortijos', 'hacienda', 'haciendas', 'cigarral', 'cigarrales', 'rancho'],
+  masia: ['masia', 'masía', 'masias', 'masías', 'caserio', 'caserío', 'caserios', 'pazo', 'pazos', 'casona', 'casa rural'],
+  palacio: ['palacio', 'palacios', 'castillo', 'castillos', 'torre', 'fortaleza', 'alcazar', 'alcázar'],
+  hotel: ['hotel', 'hoteles', 'parador', 'paradores', 'resort', 'suites'],
+  restaurante: ['restaurante', 'restaurantes', 'asador', 'asadores', 'mesón', 'meson', 'posada'],
+  salon: ['salon', 'salón', 'salones', 'complejo', 'banquetes'],
+  bodega: ['bodega', 'bodegas', 'viñedo', 'viñedos', 'vinedo', 'enoturismo'],
+  singular: ['singular', 'singulares', 'monumento', 'teatro', 'museo', 'invernadero', 'carpa', 'fábrica', 'fabrica'],
+  playa: ['playa', 'playas', 'mar', 'costa', 'terraza', 'acantilado', 'puerto', 'bahía', 'bahia'],
   rustica: ['rústica', 'rustica', 'dehesa', 'finca rústica'],
+
   // 1. Solistas & Cantantes
   solista: ['solista', 'edwin agudelo', 'cantante', 'vocalista', 'bolero', 'balada', 'tributo', 'acústico', 'acustico', 'crooner', 'cantautor'],
   // 2. Mariachis, Folclore & Tradicional
@@ -96,18 +146,25 @@ const API_FALLBACK_POOLS: Record<string, string[]> = {
     "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=1200&auto=format&fit=crop",
     "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1200&auto=format&fit=crop",
     "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop"
+    "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=1200&auto=format&fit=crop"
   ],
   catering: [
     "https://images.unsplash.com/photo-1555244162-803834f70033?q=80&w=1200&auto=format&fit=crop",
     "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1200&auto=format&fit=crop",
     "https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=1200&auto=format&fit=crop"
+    "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=1200&auto=format&fit=crop"
   ],
   decoracion: [
     "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=1200&auto=format&fit=crop",
     "https://images.unsplash.com/photo-1478146896981-b80fe463b330?q=80&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1469371670807-013ccf25f16a?q=80&w=1200&auto=format&fit=crop"
+    "https://images.unsplash.com/photo-1469371670807-013ccf25f16a?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1522413452208-996ff3f3e740?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop"
   ],
   musica: [
     "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1200&auto=format&fit=crop",
@@ -120,39 +177,100 @@ const API_FALLBACK_POOLS: Record<string, string[]> = {
   sonido: [
     "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=1200&auto=format&fit=crop",
     "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=1200&auto=format&fit=crop"
+    "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1465847899084-d164df4dedc6?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1525994886773-080587e161c2?q=80&w=1200&auto=format&fit=crop"
   ],
   foto: [
     "https://images.unsplash.com/photo-1537633552985-df8429e8048b?q=80&w=1200&auto=format&fit=crop",
     "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=1200&auto=format&fit=crop"
+    "https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=1200&auto=format&fit=crop"
   ],
   wedding: [
     "https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=1200&auto=format&fit=crop"
+    "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1478146896981-b80fe463b330?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?q=80&w=1200&auto=format&fit=crop"
   ],
   moda: [
     "https://images.unsplash.com/photo-1594552072238-b8a33785b261?q=80&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=1200&auto=format&fit=crop"
+    "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1445205170230-053b83016050?q=80&w=1200&auto=format&fit=crop"
   ],
   transporte: [
     "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?q=80&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1563720223185-11003d516935?q=80&w=1200&auto=format&fit=crop"
+    "https://images.unsplash.com/photo-1563720223185-11003d516935?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1502877338535-766e1452684a?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=1200&auto=format&fit=crop"
   ],
   servicios: [
     "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=1200&auto=format&fit=crop"
+    "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1478146896981-b80fe463b330?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=1200&auto=format&fit=crop"
   ]
 };
 
-function getApiFallbackImage(category?: string | null, seed?: string | null): string {
+// ── COBERTURA MULTIMEDIA GARANTIZADA (12 fincas homologadas) ──────────────────
+// Estas fichas también se sirven por rutas de contingencia (early return), por
+// lo que su galería se enriquece AQUÍ y no solo en el mapper final. Se ejecuta
+// después de declarar API_FALLBACK_POOLS para no violar la TDZ de la `const`.
+for (const fincaItem of FINCAS_HOMOLOGADAS_ITEMS) {
+  const enrichedGallery = getApiAugmentedGallery('finca', fincaItem.imageUrls);
+  fincaItem.imageUrls = enrichedGallery;
+  fincaItem.gallery = enrichedGallery;
+}
+
+/** Pool temático canónico por gremio: relleno editorial DECLARADO, nunca foto real. */
+function resolveApiPool(category?: string | null): string[] {
   let cat = (category || '').toLowerCase().trim();
   if (cat.includes('music') || cat.includes('dj') || cat.includes('mariachi') || cat.includes('banda') || cat.includes('solista') || cat.includes('cuerda') || cat.includes('flamenco') || cat.includes('animacion')) {
     cat = 'musica';
   } else if (!cat) {
     cat = 'servicios';
   }
-  const pool = API_FALLBACK_POOLS[cat] || API_FALLBACK_POOLS.musica;
+  return API_FALLBACK_POOLS[cat] || API_FALLBACK_POOLS.servicios;
+}
+
+/**
+ * Separa las tomas atribuibles al proveedor del relleno editorial del pool.
+ * Así `gallery` puede garantizar 6+ imágenes sin falsear la procedencia en
+ * JSON-LD / Rich Results (criterios 15 y 17 del scorecard Ω-Diamante).
+ */
+function getRealGallery(category: string | null | undefined, images: string[] = []): string[] {
+  const pool = resolveApiPool(category);
+  return images.filter((u) => typeof u === 'string' && /^https?:\/\//.test(u) && !pool.includes(u));
+}
+
+function getApiAugmentedGallery(category?: string | null, cleanImages: string[] = []): string[] {
+  const pool = resolveApiPool(category);
+  const result = [...cleanImages];
+  let poolIdx = 0;
+  while (result.length < 6 && poolIdx < pool.length) {
+    const candidate = pool[poolIdx];
+    if (!result.includes(candidate)) {
+      result.push(candidate);
+    }
+    poolIdx++;
+  }
+  return result.length > 0 ? result : pool;
+}
+
+function getApiFallbackImage(category?: string | null, seed?: string | null): string {
+  const pool = resolveApiPool(category);
   if (!seed) return pool[0];
   const str = String(seed);
   const hash = str.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
@@ -240,6 +358,47 @@ async function loadStaticDataset(targetFile: string, requestUrl: string): Promis
   return null;
 }
 
+/**
+ * Carga una partición completa de gremio leyendo el manifest y concatenando
+ * TODOS sus chunks (`finca.json`, `finca__2.json`, ...). Garantiza que el
+ * escaparate sirva el 100% de los proveedores publicados sin superar 1 MB/archivo.
+ */
+interface ProviderManifestPartition {
+  chunks?: string[];
+  count?: number;
+}
+
+async function loadCategoryPartition(category: string, requestUrl: string): Promise<Record<string, unknown>[]> {
+  let chunks: string[] = [`${category}.json`];
+  const manifestRaw = await loadStaticDataset('manifest.json', requestUrl);
+  if (manifestRaw) {
+    try {
+      const manifest = JSON.parse(manifestRaw) as Record<string, unknown>;
+      const entry = manifest[category] as ProviderManifestPartition | undefined;
+      if (entry && Array.isArray(entry.chunks) && entry.chunks.length > 0) {
+        chunks = entry.chunks;
+      }
+    } catch {
+      /* manifest ilegible: se usa la partición única */
+    }
+  }
+
+  const lists = await Promise.all(
+    chunks.map(async (file) => {
+      const raw = await loadStaticDataset(file, requestUrl);
+      if (!raw) return [] as Record<string, unknown>[];
+      try {
+        const parsed = JSON.parse(raw);
+        return Array.isArray(parsed) ? (parsed as Record<string, unknown>[]) : [];
+      } catch {
+        return [] as Record<string, unknown>[];
+      }
+    }),
+  );
+
+  return lists.flat();
+}
+
 async function queryStaticProviders(options: {
   category?: string | null;
   province?: string | null;
@@ -251,7 +410,7 @@ async function queryStaticProviders(options: {
   requestUrl: string;
 }) {
   const { category, province, q, subcategory, maxPrice, page, limit, requestUrl } = options;
-  const normCat = (category || '').toLowerCase().trim();
+  const normCat = normalizeBodasNetCategory(category);
   const validCats = [
     'finca', 'musica', 'sonido', 'catering', 'foto',
     'decoracion', 'wedding', 'moda', 'transporte', 'servicios',
@@ -261,10 +420,7 @@ async function queryStaticProviders(options: {
   let list: any[] = [];
 
   if (normCat && validCats.includes(normCat)) {
-    const raw = await loadStaticDataset(`${normCat}.json`, requestUrl);
-    if (raw) {
-      try { list = JSON.parse(raw); } catch (e) { }
-    }
+    list = await loadCategoryPartition(normCat, requestUrl);
     // S-Class: Al consultar música o catálogo de artistas, combinar con artists_canonical.json
     // para garantizar que la vertical de Mariachis y agrupaciones de raíz estén 100% integradas
     if (normCat === 'musica') {
@@ -286,13 +442,13 @@ async function queryStaticProviders(options: {
       }
     }
   } else {
-    // When no category is selected, load multiple massive datasets to show the true scale (S-Class)
-    const files = ['finca.json', 'musica.json', 'sonido.json', 'catering.json'];
+    // Sin categoría: se agregan las particiones completas (todos sus chunks).
+    const files = [
+      'finca', 'catering', 'foto', 'musica', 'decoracion',
+      'wedding', 'moda', 'transporte', 'sonido', 'servicios'
+    ];
     for (const f of files) {
-      const raw = await loadStaticDataset(f, requestUrl);
-      if (raw) {
-        try { list = list.concat(JSON.parse(raw)); } catch (e) { }
-      }
+      list = list.concat(await loadCategoryPartition(f, requestUrl));
     }
   }
 
@@ -342,10 +498,9 @@ async function queryStaticProviders(options: {
     return { total: 0, providers: [] };
   }
 
-  // 1. Filtro por provincia
-  if (province && province !== 'ALL') {
-    const provLower = province.toLowerCase().trim();
-    list = list.filter((p) => (p.province || '').toLowerCase().includes(provLower));
+  // 1. Filtro por provincia (52 provincias con tolerancia de acentos, códigos y alias)
+  if (province && province !== 'ALL' && province.trim() !== '') {
+    list = list.filter((p) => isProvinceMatch(province, p.province || ''));
   }
 
   // 2. Filtro por texto de búsqueda
@@ -454,10 +609,17 @@ async function queryStaticProviders(options: {
 
     const rawImages = (p.imageUrls && p.imageUrls.length > 0) ? p.imageUrls : (p.gallery && p.gallery.length > 0) ? p.gallery : (p.img ? [p.img] : []);
     const cleanImages = rawImages.filter((u: string) => !isDirty(u));
-    const finalImages =
-      cleanImages.length > 0
-        ? cleanImages
-        : [getApiFallbackImage(p.category, p.id || p.shaHash || p.name)];
+    // Trazabilidad visual (cero fachadas): `galleryReal` contiene SOLO tomas
+    // atribuibles al proveedor; el relleno temático se declara explícitamente
+    // mediante `galleryAugmented` para que SEO/JSON-LD nunca lo presente como
+    // fotografía propia del negocio.
+    const upstreamReal: unknown = p.galleryReal;
+    const realGallery = Array.isArray(upstreamReal)
+      ? upstreamReal.filter((u): u is string => typeof u === 'string')
+      : getRealGallery(p.category, cleanImages);
+    const finalImages = cleanImages.length >= 2
+      ? cleanImages.slice(0, 2)
+      : getApiAugmentedGallery(p.category, cleanImages).slice(0, 2);
 
     const rawPhone = (p.phone || p.telephone || '').trim();
     const cleanDigits = rawPhone.replace(/[^\d]/g, '');
@@ -488,7 +650,7 @@ async function queryStaticProviders(options: {
         ? (isClaimed ? 'CERTIFICADA_GOLD_MASTER' : 'AUDITORIA_VIGENTE')
         : 'ASOCIADO_STANDARD');
 
-    return {
+    const mapped = {
       ...p,
       name: cleanedName || rawName,
       phone: cleanPhone,
@@ -496,16 +658,26 @@ async function queryStaticProviders(options: {
       has_real_phone,
       isClaimed,
       estadoHomologacion,
-      capacidadMaxPax: extractMaxCapacity(buildCapacityText(p)),
+      capacidadMaxPax: p.capacidadMaxPax ?? extractMaxCapacity(buildCapacityText(p)),
+      price: p.price || null,
+      isPreferred: Boolean(p.isPreferred),
+      badge: p.badge || (p.isPreferred ? 'CASERÍO S-CLASS · ALIANZA VIP' : null),
+      customUrl: p.customUrl || null,
       profile_url,
       sourceUrl,
       originHtml,
       google_search_url,
       google_maps_url,
       original_html: originHtml,
-      img: finalImages[0],
+      img: finalImages[0] || p.img,
       imageUrls: finalImages,
+      gallery: finalImages,
+      galleryReal: realGallery.slice(0, 2),
+      has_real_gallery: realGallery.length > 0,
+      galleryAugmented: finalImages.length > realGallery.length,
     };
+
+    return isOtzarretaRecord(p) ? { ...mapped, ...OTZARRETA_CANONICAL_API } : mapped;
   });
 
   return { total, providers };
@@ -513,8 +685,8 @@ async function queryStaticProviders(options: {
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const category = searchParams.get('category') || searchParams.get('cat');
-  const province = searchParams.get('province');
+  const category = searchParams.get('category') || searchParams.get('cat') || searchParams.get('categoria');
+  const province = searchParams.get('province') || searchParams.get('provincia') || searchParams.get('prov') || searchParams.get('location');
   const subcategory = searchParams.get('subcategory') || searchParams.get('subcat') || searchParams.get('sub');
   const maxPriceParam = searchParams.get('maxPrice');
   const maxPrice = maxPriceParam ? parseInt(maxPriceParam, 10) : null;
@@ -531,8 +703,24 @@ export async function GET(request: Request) {
     try {
       const client = getPrismaClient();
       const where: any = {};
-      if (category && category !== 'ALL') where.category = { contains: category, mode: 'insensitive' };
-      if (province && province !== 'ALL') where.province = { contains: province, mode: 'insensitive' };
+      // Normalización SSOT: "fotografos"/"banquetes"/"novias" -> gremio canónico
+      const normalizedCategory = normalizeBodasNetCategory(category);
+      if (normalizedCategory && normalizedCategory !== 'ALL') {
+        where.category = { contains: normalizedCategory, mode: 'insensitive' };
+      }
+      // Provincia tolerante (tildes, códigos y cooficiales) también en PostgreSQL
+      const canonicalProvince = resolveProvince(province);
+      if (canonicalProvince) {
+        const provinceVariants = getProvinceSearchVariants(canonicalProvince.name);
+        where.OR = [
+          ...provinceVariants.map((variant) => ({
+            province: { contains: variant, mode: 'insensitive' },
+          })),
+          { province: { equals: canonicalProvince.code, mode: 'insensitive' } },
+        ];
+      } else if (province && !isAllSpainProvince(province)) {
+        where.province = { contains: province, mode: 'insensitive' };
+      }
 
       const andConditions: any[] = [];
       if (q) {
@@ -586,17 +774,31 @@ export async function GET(request: Request) {
             u.includes('c2524615ca092dc557196134bcbbcdc1');
 
           const cleanImages = (p.imageUrls || []).filter((u: string) => !isDirty(u));
-          const finalImages =
+          const realGallery = getRealGallery(p.category, cleanImages);
+          // CONTRATO MULTIMEDIA ÚNICO (paridad estática ↔ PostgreSQL):
+          // mínimo 6 tomas, `gallery` canónica emitida y trazabilidad real/editorial.
+          // La toma semilla se elige de forma determinista por proveedor.
+          const seededImages =
             cleanImages.length > 0
               ? cleanImages
               : [getApiFallbackImage(p.category, p.id || p.shaHash || p.name)];
+          const finalImages = getApiAugmentedGallery(p.category, seededImages);
 
-          return {
+          const mappedRecord = {
             ...p,
             name: cleanedName || rawName,
             capacidadMaxPax: extractMaxCapacity(buildCapacityText(p)),
+            img: finalImages[0],
             imageUrls: finalImages,
+            gallery: finalImages,
+            galleryReal: realGallery,
+            has_real_gallery: realGallery.length > 0,
+            galleryAugmented: finalImages.length > realGallery.length,
           };
+
+          return isOtzarretaRecord(p)
+            ? { ...mappedRecord, ...OTZARRETA_CANONICAL_API }
+            : mappedRecord;
         });
 
         return NextResponse.json({
