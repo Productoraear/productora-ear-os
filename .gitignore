@@ -1,4 +1,4 @@
-node_modules
+﻿node_modules
 .next/
 .vercel/
 *.log
@@ -20,7 +20,7 @@ src/data/backups/
 .env.production.local
 !.env.example
 # Solo claves PUBLICAS (NEXT_PUBLIC_*) para el build de Docker/CI.
-# Los secretos reales (DB, Stripe secret, Telegram bot, Gemini) NO van aquí.
+# Los secretos reales (DB, Stripe secret, Telegram bot, Gemini) NO van aquÃ­.
 !.env.production
 
 # Google OAuth Credentials
@@ -73,9 +73,9 @@ scripts/reports/*.json
 !scripts/reports/vampire_swarm_master_telemetry.json
 .vercel
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# 🏛️ REGLAS INMUTABLES PURISTAS — PROTECCIÓN CONTRA ARCHIVOS PESADOS (ZTM SOVEREIGN)
-# ═══════════════════════════════════════════════════════════════════════════════
+# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+# ðŸ›ï¸ REGLAS INMUTABLES PURISTAS â€” PROTECCIÃ“N CONTRA ARCHIVOS PESADOS (ZTM SOVEREIGN)
+# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 *.pdf
 *.zip
 *.csv
@@ -102,7 +102,7 @@ src/data/staging/
 src/lib/NUCLEO_DATA/*.json
 src/infrastructure/docs/archive/
 
-# Bóvedas locales, cachés de imágenes y auditorías
+# BÃ³vedas locales, cachÃ©s de imÃ¡genes y auditorÃ­as
 public/assets/shadow_vendors/
 .firebase/
 public/images/navidad_2026/
@@ -129,7 +129,7 @@ src/data/vampirized-providers*.json
 desktop.ini
 *.ini
 
-# Bloqueo estricto Anti-Bloat (Bóvedas monolíticas crudas en local)
+# Bloqueo estricto Anti-Bloat (BÃ³vedas monolÃ­ticas crudas en local)
 *.monolith.json
 reports/*.json
 
@@ -148,7 +148,7 @@ temp_batch_*.json
 .antigravity/ted_probe_body.json
 reports/*.txt
 
-# Volcados efímeros de validación y debug (ZTM — nunca trackear)
+# Volcados efÃ­meros de validaciÃ³n y debug (ZTM â€” nunca trackear)
 t28.txt
 tsc_w28.txt
 v28.txt
@@ -157,3 +157,31 @@ validate_final.txt
 _exist.txt
 _grep.txt
 _scan.txt
+# Overture enrichment artifacts (regenerables, pesados)
+reports/overture_places_es_contactable.parquet
+reports/overture_exact_pairs.jsonl
+reports/overture_fuzzy_*.jsonl
+reports/.duckdb_tmp/
+reports/.webcrawl_cache/
+reports/_webcrawl_*.out
+reports/_webcrawl_*.err
+reports/_webcrawl_*.pid
+reports/PROVIDER_ENRICHMENT.json
+reports/_overture_*.log
+reports/_enrich_*.log
+reports/_enrich_*.out
+reports/_enrich_*.err
+reports/providers_for_match.json
+reports/_overture_fuzzy_*.jsonl
+.omni_tmp/
+reports/contrast/
+reports/*.log
+reports/*.err
+reports/run*.log
+reports/run*.err
+
+# EAR OS - estado runtime de agendas y simulaciones
+.data/
+.data/**
+reports/event_simulation_report.json
+.tsc-out*.txt

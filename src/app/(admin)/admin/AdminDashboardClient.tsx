@@ -37,6 +37,7 @@ import ScraperLiveMonitorWidget from '@/components/admin/ScraperLiveMonitorWidge
 import OpportunityRadarTerminal from '@/components/admin/OpportunityRadarTerminal';
 import VendorManagedCareDesk from '@/components/admin/VendorManagedCareDesk';
 import UberStyleBookingDispatcher from '@/components/admin/UberStyleBookingDispatcher';
+import WhatsAppPriceLockGenerator from '@/components/admin/WhatsAppPriceLockGenerator';
 
 // ============================================================================
 // CATMİN 21ST.DEV // 22 URLS OFICIALES DE EAR OS
@@ -241,6 +242,9 @@ export default function AdminDashboardClient({ data }: { data: AdminDashboardDat
       </div>
 
       {/* ===================================================================== */}
+      {/* 2.1. WHATSAPP PRICE-LOCK EXPRESS GENERATOR (CIERRE RÁPIDO NOVIAS/B2G) */}
+      {/* ===================================================================== */}
+      <WhatsAppPriceLockGenerator />
       {/* 2.2. APEX MISSION CONTROL BAR (CENTRO DE MANDO OPERATIVO S-CLASS)     */}
       {/* ===================================================================== */}
       <div className="flex flex-wrap items-center gap-2 p-2 rounded-2xl bg-zinc-950/90 border border-white/10 shadow-2xl backdrop-blur-md">

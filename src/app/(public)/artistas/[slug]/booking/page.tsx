@@ -294,13 +294,13 @@ export default async function ArtistBookingPage({ params }: PageProps) {
                 </span>
                 <span className="text-3xl font-black italic">{depositLabel}</span>
               </div>
-              <button
-                type="button"
+              <Link
+                href={`/calendario/artista/${encodeURIComponent(artist.slug)}?intent=bloquear`}
                 className="w-full bg-[#ecb613] text-black font-black uppercase tracking-[0.3em] py-5 rounded-xl flex items-center justify-center gap-4 hover:bg-white transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
-                aria-label={`Proceder al pago del depósito de ${depositLabel}`}
+                aria-label={`Abrir la agenda de ${artist.displayName} y bloquear la fecha`}
               >
-                Proceder al Pago <CreditCard size={18} />
-              </button>
+                Bloquear en su agenda <CreditCard size={18} />
+              </Link>
               <p className="text-[8px] text-white/20 uppercase tracking-widest font-bold text-center leading-relaxed">
                 Pago procesado por EAR Payments. <br />
                 No reembolsable tras validación de fecha.

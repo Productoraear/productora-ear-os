@@ -2,69 +2,152 @@
 
 /**
  * 📅 VENDOR CALENDAR ACTIONS — EAR OS S-CLASS
- * Persistencia ligera en memoria (sin modelos Prisma adicionales).
- * Cada fecha bloqueada se almacena como string YYYY-MM-DD.
+ *
+ * ANTES (fachada + fuga de agenda cruzada):
+ *   · Guardaba todo en un `Map` en memoria → los bloqueos desaparecían en cada
+ *     cold start del servidor.
+ *   · Sembraba a TODOS los proveedores con las fechas de Edwin Agudelo
+ *     (`2026-10-12`, `2026-10-25`, `2026-11-15`).
+ *   · Publicaba `/api/vendor/[slug]/ical`, endpoint que NO EXISTE (404).
+ *
+ * AHORA:
+ *   · Cada proveedor escribe en su propio calendario aislado (`kind:slug`).
+ *   · Persistencia durable y escritura atómica (entity-calendar-store).
+ *   · El feed .ics apunta al endpoint real `/api/calendar/[kind]/[slug]/ical`.
  */
 
-// Store en memoria por slug (migrar a Prisma cuando exista modelo VendorBlockedDate)
-const calendarStore = new Map<string, {
-  blockedDates: string[];
-  externalIcalUrl: string | null;
-}>();
+import { buildEntityIcalHref } from '@/lib/calendar/entity-calendar-engine';
+import {
+  getEntityCalendar,
+  sanitizeEntitySlug,
+  setEntityBlockedDates,
+  setEntityDateBlock,
+  setEntityExternalIcal,
+} from '@/lib/calendar/entity-calendar-store';
+import {
+  inferCalendarEntityKind,
+  resolveCalendarEntity,
+} from '@/lib/calendar/entity-registry';
 
-function getOrCreateStore(vendorSlug: string) {
-  if (!calendarStore.has(vendorSlug)) {
-    calendarStore.set(vendorSlug, {
-      blockedDates: ['2026-10-12', '2026-10-25', '2026-11-15'], // Fechas pre-reservadas de Edwin
-      externalIcalUrl: null
-    });
-  }
-  return calendarStore.get(vendorSlug)!;
+function resolveVendor(slug: string) {
+  const clean = sanitizeEntitySlug(slug);
+  if (!clean) return null;
+  const kind = inferCalendarEntityKind(clean);
+  const entity = resolveCalendarEntity(kind, clean);
+  return { kind, entity };
 }
 
 /**
- * Devuelve fechas bloqueadas y estado del calendario del proveedor
+ * Devuelve fechas bloqueadas y estado del calendario del proveedor.
+ * NUNCA inyecta fechas de terceros.
  */
 export async function getVendorCalendarAction(vendorSlug: string) {
-  const store = getOrCreateStore(vendorSlug);
-  return {
-    blockedDates: store.blockedDates,
-    externalIcalUrl: store.externalIcalUrl
-  };
-}
-
-/**
- * Alterna el bloqueo manual de una fecha específica
- */
-export async function toggleDateBlockAction(vendorSlug: string, dateStr: string) {
-  const store = getOrCreateStore(vendorSlug);
-  const index = store.blockedDates.indexOf(dateStr);
-
-  if (index >= 0) {
-    store.blockedDates.splice(index, 1);
-  } else {
-    store.blockedDates.push(dateStr);
+  const resolved = resolveVendor(vendorSlug);
+  if (!resolved) {
+    return { blockedDates: [] as string[], externalIcalUrl: null, displayName: vendorSlug };
   }
 
-  return { success: true, blockedDates: store.blockedDates };
-}
+  const record = await getEntityCalendar(
+    resolved.kind,
+    resolved.entity.slug,
+    resolved.entity.displayName,
+  );
 
-/**
- * Devuelve la URL canónica del feed .ics para Google/Apple Calendar
- */
-export async function exportIcalUrlAction(vendorSlug: string) {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://productoraear.com';
   return {
-    icalUrl: `${baseUrl}/api/vendor/${vendorSlug}/ical`,
-    googleCalendarUrl: `https://calendar.google.com/calendar/r?cid=${encodeURIComponent(`${baseUrl}/api/vendor/${vendorSlug}/ical`)}`
+    blockedDates: record.blockedDates,
+    externalIcalUrl: record.externalIcalUrl,
+    displayName: record.displayName,
   };
 }
 
 /**
- * Guarda la URL externa de Google/Apple Calendar para sincronización
+ * Fija el estado de bloqueo de una fecha concreta del proveedor (idempotente).
+ * Sin `toggle` ciego: dos llamadas con el mismo estado no se contradicen.
  */
+export async function toggleDateBlockAction(vendorSlug: string, dateStr: string) {
+  const resolved = resolveVendor(vendorSlug);
+  if (!resolved) {
+    return { success: false, blockedDates: [] as string[], error: 'Slug de proveedor inválido.' };
+  }
+
+  const current = await getEntityCalendar(
+    resolved.kind,
+    resolved.entity.slug,
+    resolved.entity.displayName,
+  );
+  const shouldBlock = !current.blockedDates.includes(dateStr);
+
+  const record = await setEntityDateBlock(
+    resolved.kind,
+    resolved.entity.slug,
+    dateStr,
+    shouldBlock,
+    resolved.entity.displayName,
+  );
+
+  if (!record) {
+    return { success: false, blockedDates: current.blockedDates, error: 'Fecha inválida.' };
+  }
+
+  return { success: true, blockedDates: record.blockedDates, blocked: shouldBlock };
+}
+
+/** Reemplaza la lista completa de bloqueos (import de .ics / conciliación). */
+export async function replaceVendorBlockedDatesAction(vendorSlug: string, dates: string[]) {
+  const resolved = resolveVendor(vendorSlug);
+  if (!resolved) {
+    return { success: false, blockedDates: [] as string[], error: 'Slug de proveedor inválido.' };
+  }
+
+  const record = await setEntityBlockedDates(
+    resolved.kind,
+    resolved.entity.slug,
+    dates,
+    resolved.entity.displayName,
+  );
+  return { success: true, blockedDates: record.blockedDates };
+}
+
+/**
+ * Devuelve la URL canónica del feed .ics REAL de esta entidad
+ * (y el atajo para suscribirse desde Google Calendar).
+ */
+export async function exportIcalUrlAction(vendorSlug: string) {
+  const resolved = resolveVendor(vendorSlug);
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://productoraear.com';
+
+  if (!resolved) {
+    return {
+      icalUrl: '',
+      googleCalendarUrl: '',
+      calendarPageUrl: '',
+      error: 'Slug de proveedor inválido.',
+    };
+  }
+
+  const icalPath = buildEntityIcalHref(resolved.kind, resolved.entity.slug);
+  const icalUrl = `${baseUrl}${icalPath}`;
+
+  return {
+    icalUrl,
+    googleCalendarUrl: `https://calendar.google.com/calendar/r?cid=${encodeURIComponent(icalUrl)}`,
+    calendarPageUrl: `/calendario/${resolved.kind}/${resolved.entity.slug}`,
+  };
+}
+
+/** Guarda la URL externa de Google/Apple Calendar para sincronización. */
 export async function syncExternalIcalAction(vendorSlug: string, icalUrl: string) {
-  const store = getOrCreateStore(vendorSlug);
-  store.externalIcalUrl = icalUrl;
-  return { success: true, externalIcalUrl: icalUrl };
+  const resolved = resolveVendor(vendorSlug);
+  if (!resolved) {
+    return { success: false, externalIcalUrl: null, error: 'Slug de proveedor inválido.' };
+  }
+
+  const record = await setEntityExternalIcal(
+    resolved.kind,
+    resolved.entity.slug,
+    icalUrl,
+    resolved.entity.displayName,
+  );
+
+  return { success: true, externalIcalUrl: record.externalIcalUrl };
 }

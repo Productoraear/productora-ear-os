@@ -18,7 +18,11 @@ import {
   ChevronRight,
   ChevronLeft,
   Maximize2,
-  Users
+  Users,
+  Sparkles,
+  Bot,
+  Zap,
+  Loader2
 } from 'lucide-react';
 import { PROVIDERS_GRAND_TOTAL, formatProviderCount } from '@/lib/constants/providers-manifest';
 
@@ -55,8 +59,51 @@ export default function CallCenterAdminPage() {
   const [provinceFilter, setProvinceFilter] = useState('ALL');
   const [statusFilter, setStatusFilter] = useState('ALL');
   const [selectedId, setSelectedId] = useState<string | number | null>(null);
-  const [activeTab, setActiveTab] = useState<'audit' | 'pitch' | 'wa' | 'crm'>('audit');
+  const [activeTab, setActiveTab] = useState<'audit' | 'pitch' | 'ai_pitch' | 'wa' | 'crm'>('audit');
   const [copiedField, setCopiedField] = useState<string | null>(null);
+
+  // ── Motor de Pitch Dinámico DeepSeek S-Class ──
+  const [aiPitch, setAiPitch] = useState<string>('');
+  const [isGeneratingPitch, setIsGeneratingPitch] = useState<boolean>(false);
+  const [aiPitchError, setAiPitchError] = useState<string | null>(null);
+  const [customObjection, setCustomObjection] = useState<string>('');
+
+  const generateAiPitch = async (provider: ProviderLead, customPrompt?: string) => {
+    setIsGeneratingPitch(true);
+    setAiPitchError(null);
+    try {
+      const prompt = customPrompt || `Actúa como asesor senior de Productora EAR. Genera un guión telefónico de prospección comercial de 3 pasos de alto impacto para contactar a "${provider.name}", un proveedor del gremio "${provider.category}" en "${provider.province}". Explica que en Productora EAR no cobramos cuotas fijas (a diferencia de otros portales como Bodas.net), operamos con depósito Stripe Price-Lock garantizado de 100€ deducible y conectamos con clientes cualificados. Incluye:
+1. Saludo de autoridad y reconocimiento de su trayectoria.
+2. Propuesta de valor disruptiva (cero cuotas fijas, clientes verificados).
+3. Cierre inmediato por WhatsApp con ficha verificada.
+Responde de forma ejecutiva y concisa.`;
+
+      const res = await fetch('/api/agents/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: prompt,
+          agent: 'omni-supervisor-daemon',
+          activeEntity: {
+            name: provider.name,
+            type: provider.category,
+            location: provider.province
+          }
+        })
+      });
+
+      if (!res.ok) {
+        throw new Error(`Error en servidor: ${res.status}`);
+      }
+      const data = await res.json();
+      setAiPitch(data.reply || 'Sin respuesta');
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Error al conectar con la IA';
+      setAiPitchError(msg);
+    } finally {
+      setIsGeneratingPitch(false);
+    }
+  };
 
   // ── Paginación REAL del lado del servidor (directiva 2) ──
   const [page, setPage] = useState<number>(1);
@@ -191,7 +238,6 @@ export default function CallCenterAdminPage() {
   // WhatsApp generator
   const getWhatsAppMessage = (p: ProviderLead | null) => {
     if (!p) return '';
-    const cleanPhone = (p.phone || '').replace(/\D/g, '');
     const cleanName = p.name || 'Compañero';
     const cleanCat = p.category || 'servicios para bodas';
     const cleanProv = p.province || 'España';
@@ -575,6 +621,21 @@ export default function CallCenterAdminPage() {
                   Guion Telefónico (Pitch)
                 </button>
                 <button
+                  onClick={() => {
+                    setActiveTab('ai_pitch');
+                    if (!aiPitch && selectedProvider) {
+                      generateAiPitch(selectedProvider);
+                    }
+                  }}
+                  className={`py-3 px-4 border-b-2 font-semibold transition-colors flex items-center gap-1.5 ${activeTab === 'ai_pitch'
+                    ? 'border-[#ecb613] text-[#ecb613]'
+                    : 'border-transparent text-amber-500/80 hover:text-amber-400'
+                    }`}
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
+                  Pitch IA (DeepSeek)
+                </button>
+                <button
                   onClick={() => setActiveTab('wa')}
                   className={`py-3 px-4 border-b-2 font-semibold transition-colors flex items-center gap-1.5 ${activeTab === 'wa'
                     ? 'border-[#ecb613] text-[#ecb613]'
@@ -715,6 +776,133 @@ export default function CallCenterAdminPage() {
                       <p className="text-zinc-300 leading-relaxed">
                         "Hemos preparado tu ficha verificada en nuestro sistema. ¿Te parece bien si te envío ahora mismo el enlace directo por WhatsApp para que la revises y confirmemos tu activación gratuita?"
                       </p>
+                    </div>
+                  </div>
+                )}
+
+                {activeTab === 'ai_pitch' && (
+                  <div className="space-y-4 text-xs font-sans">
+                    <div className="p-4 rounded-xl bg-gradient-to-r from-amber-950/30 to-zinc-900 border border-amber-500/30 flex items-center justify-between gap-4">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400">
+                          <Bot className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <div className="font-mono text-xs font-bold text-white flex items-center gap-2">
+                            <span>MOTOR DE CONVERSIÓN IA // DEEPSEEK S-CLASS</span>
+                            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800">TIER 1 CLOUD</span>
+                          </div>
+                          <p className="text-[11px] text-zinc-400 mt-0.5">
+                            Personalización táctica para <strong>{selectedProvider.name}</strong> ({selectedProvider.category} • {selectedProvider.province})
+                          </p>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => generateAiPitch(selectedProvider)}
+                        disabled={isGeneratingPitch}
+                        className="px-4 py-2 rounded-xl bg-[#ecb613] hover:bg-[#d4a310] text-black font-mono font-bold text-xs flex items-center gap-2 disabled:opacity-50 transition-colors shrink-0 shadow-lg shadow-amber-950/40"
+                      >
+                        {isGeneratingPitch ? (
+                          <>
+                            <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                            Invocando DeepSeek...
+                          </>
+                        ) : (
+                          <>
+                            <Zap className="w-3.5 h-3.5 fill-black" />
+                            {aiPitch ? 'Regenerar Pitch' : 'Generar Pitch IA'}
+                          </>
+                        )}
+                      </button>
+                    </div>
+
+                    {/* Objection Buster Quick Chips */}
+                    <div className="space-y-1.5">
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-500">Respuestas rápidas a objeciones:</span>
+                      <div className="flex flex-wrap gap-1.5">
+                        {[
+                          { label: '🛡️ "Ya estoy en Bodas.net"', prompt: `Genera una respuesta rápida e irresistible para ${selectedProvider.name} cuando dicen "Ya estamos anunciados en Bodas.net y no necesitamos más portales". Enfatiza que Productora EAR no es un portal publicitario, no cobra mensualidad y solo envía clientes con fecha y presupuesto cerrado.` },
+                          { label: '💶 "No pago comisiones"', prompt: `Genera una respuesta para ${selectedProvider.name} ante la objeción: "No queremos pagar comisiones a intermediarios". Explica el Split de Productora EAR donde el cliente abona su tarifa íntegra y el servicio añade valor sin restar su margen.` },
+                          { label: '⭐ "¿Quién es Edwin Agudelo?"', prompt: `Explica en 3 líneas de alta autoridad para ${selectedProvider.name} quién es Edwin Agudelo (Solista y director de Productora EAR con más de 20 años en eventos de alta gama en España) y por qué asociarse con EAR multiplica su prestigio.` },
+                          { label: '🔒 "¿Cómo funciona el depósito de 100€?"', prompt: `Explica en 3 pasos simples cómo funciona el depósito de 100€ de Stripe Price-Lock: es 100% deducible para el cliente, bloquea la fecha en exclusiva e impide citas fantasmas tanto para el artista como para el proveedor.` }
+                        ].map((chip, idx) => (
+                          <button
+                            key={idx}
+                            disabled={isGeneratingPitch}
+                            onClick={() => generateAiPitch(selectedProvider, chip.prompt)}
+                            className="text-[11px] font-mono px-2.5 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 hover:border-[#ecb613]/60 hover:text-white transition-all disabled:opacity-40"
+                          >
+                            {chip.label}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Pitch Result Display */}
+                    <div className="relative p-5 rounded-2xl bg-black/60 border border-white/10 space-y-3">
+                      <div className="flex items-center justify-between border-b border-zinc-800/80 pb-2">
+                        <span className="text-[11px] font-mono text-zinc-400 flex items-center gap-1.5">
+                          <Sparkles className="w-3.5 h-3.5 text-[#ecb613]" />
+                          Guion Generado para Operador Telefónico
+                        </span>
+                        {aiPitch && (
+                          <button
+                            onClick={() => handleCopy(aiPitch, 'ai_pitch')}
+                            className="text-xs font-mono text-[#ecb613] hover:underline flex items-center gap-1"
+                          >
+                            {copiedField === 'ai_pitch' ? <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                            {copiedField === 'ai_pitch' ? '¡Copiado!' : 'Copiar Guion'}
+                          </button>
+                        )}
+                      </div>
+
+                      {isGeneratingPitch ? (
+                        <div className="py-12 flex flex-col items-center justify-center gap-3 text-zinc-400 font-mono text-xs">
+                          <Loader2 className="w-6 h-6 animate-spin text-[#ecb613]" />
+                          <span>DeepSeek S-Class está formulando la mejor estrategia de cierre...</span>
+                        </div>
+                      ) : aiPitchError ? (
+                        <div className="p-4 rounded-xl bg-red-950/30 border border-red-800/40 text-red-400 text-xs font-mono">
+                          {aiPitchError}
+                        </div>
+                      ) : aiPitch ? (
+                        <div className="text-zinc-200 text-xs leading-relaxed whitespace-pre-wrap font-sans">
+                          {aiPitch}
+                        </div>
+                      ) : (
+                        <div className="py-10 text-center text-zinc-500 font-mono text-xs">
+                          Haz clic en <strong>"Generar Pitch IA"</strong> o selecciona una objeción para activar a DeepSeek.
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Custom Inquiry Box */}
+                    <div className="flex items-center gap-2 pt-1">
+                      <input
+                        type="text"
+                        placeholder="O escribe una instrucción específica para la IA (ej: 'Enfócate en bodas de lujo')..."
+                        value={customObjection}
+                        onChange={(e) => setCustomObjection(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' && customObjection.trim()) {
+                            generateAiPitch(selectedProvider, customObjection.trim());
+                            setCustomObjection('');
+                          }
+                        }}
+                        className="flex-1 px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-200 focus:outline-none focus:border-[#ecb613]/50"
+                      />
+                      <button
+                        onClick={() => {
+                          if (customObjection.trim()) {
+                            generateAiPitch(selectedProvider, customObjection.trim());
+                            setCustomObjection('');
+                          }
+                        }}
+                        disabled={isGeneratingPitch || !customObjection.trim()}
+                        className="px-3 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-mono text-xs disabled:opacity-40 transition-colors"
+                      >
+                        Enviar
+                      </button>
                     </div>
                   </div>
                 )}

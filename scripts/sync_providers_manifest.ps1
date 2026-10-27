@@ -1,42 +1,60 @@
-# scripts/sync_providers_manifest.ps1
-# ==============================================================================
-# SINCRONIZADOR SSOT DEL MANIFIESTO DE PROVEEDORES (EDGE CDN)
-# Recalcula public/data/providers/manifest.json a partir de los archivos reales
-# (*.json, excluyendo manifest.json). Incluye all_featured y senior_care.
-# ==============================================================================
+#Requires -Version 5.1
+<#
+.SYNOPSIS
+    Delegador del pipeline Edge VERAZ (CERO FACHADAS).
+
+.DESCRIPTION
+    La generación canónica del manifest y de las particiones vive en un ÚNICO
+    motor: `scripts/build_lean_verified_edge.cjs` (chunking < 1 MB, verified
+    solo con teléfono real atribuible, GPS verificado por JSON-LD).
+
+    Este script existe por compatibilidad con automatizaciones previas y
+    garantiza que jamás se regenere el manifest con conteos truncados
+    (particiones chunked) ni con cifras hardcodeadas.
+
+.PARAMETER Check
+    Solo audita (no escribe nada). Exit 1 si el escaparate no es veraz.
+
+.EXAMPLE
+    powershell -NoProfile -ExecutionPolicy Bypass -File scripts/sync_providers_manifest.ps1
+    powershell -NoProfile -ExecutionPolicy Bypass -File scripts/sync_providers_manifest.ps1 -Check
+#>
+[CmdletBinding()]
+param(
+    [switch]$Check,
+    [switch]$AlignCanonical
+)
+
+Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
-$base = Join-Path $PSScriptRoot '..\public\data\providers'
-$manifestPath = Join-Path $base 'manifest.json'
-
-if (-not (Test-Path $base)) {
-    Write-Error "No existe el directorio de proveedores: $base"
-    exit 1
-}
-
-$manifest = [ordered]@{}
-
-Get-ChildItem $base -Filter *.json |
-    Where-Object { $_.Name -ne 'manifest.json' } |
-    ForEach-Object {
-        try {
-            $j = Get-Content $_.FullName -Raw | ConvertFrom-Json
-            $count = if ($j -is [System.Array]) { $j.Count } else { 1 }
-        } catch {
-            Write-Warning "No se pudo parsear $($_.Name): $($_.Exception.Message)"
-            $count = 0
-        }
-        $sizeKB = [Math]::Round($_.Length / 1KB, 1)
-        $key = [IO.Path]::GetFileNameWithoutExtension($_.Name)
-        $manifest[$key] = [ordered]@{
-            count  = $count
-            sizeKB = "$sizeKB"
+$RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
+Push-Location $RepoRoot
+try {
+    if (-not $Check) {
+        Write-Output '[EDGE] Regenerando particiones y manifest desde el SSOT real...'
+        node 'scripts/build_lean_verified_edge.cjs'
+        if ($LASTEXITCODE -ne 0) {
+            Write-Error "build_lean_verified_edge.cjs falló con Exit Code $LASTEXITCODE"
+            exit $LASTEXITCODE
         }
     }
 
-$manifest | ConvertTo-Json -Depth 3 | Out-File -FilePath $manifestPath -Encoding utf8
+    if ($AlignCanonical -and -not $Check) {
+        Write-Output '[EDGE] providers_canonical.json se genera dentro del pipeline (muestra veraz).'
+    }
 
-Write-Output "manifest.json regenerado con $($manifest.Count) particiones:"
-$manifest.GetEnumerator() | ForEach-Object {
-    "{0,-16} {1,7} registros  ({2} KB)" -f $_.Key, $_.Value.count, $_.Value.sizeKB
+    Write-Output '[EDGE] Auditando integridad del escaparate...'
+    node 'scripts/verify_provider_edge_truth.cjs'
+    $exit = $LASTEXITCODE
+    if ($exit -ne 0) {
+        Write-Error "verify_provider_edge_truth.cjs detectó fachadas (Exit Code $exit)"
+        exit $exit
+    }
+
+    Write-Output 'SSOT_SYNC_OK'
+    exit 0
+}
+finally {
+    Pop-Location
 }

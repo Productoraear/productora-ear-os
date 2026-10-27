@@ -16,13 +16,43 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { password, code2fa, role, action, bypassSovereign, email } = body;
     
+    const inputPassword = (password || "").trim().replace(/^["']|["']$/g, '');
+    const inputCode = (code2fa || "").trim().replace(/^["']|["']$/g, '');
+
+    const cookieOpts = {
+      httpOnly: false,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax' as const,
+      path: '/',
+      maxAge: 60 * 60 * 24 * 7 // 7 días de sesión
+    };
+
+    // ── ACCESO SOBERANO INSTANTÁNEO DEL CEO (PIN MAESTRO 1012) ──
+    const isMasterPin = inputPassword === '1012' || inputCode === '1012';
+    if (isMasterPin) {
+      const response = NextResponse.json({
+        success: true,
+        role: 'admin',
+        bypass: 'sovereign_pin_1012',
+        message: 'Acceso Soberano Inviolable Aprobado (PIN 1012). Bienvenido Edwin Agudelo.'
+      });
+
+      response.cookies.set('ear_session', 'sovereign_admin_bypass', cookieOpts);
+      response.cookies.set('ear_admin_token', 'sclass_sovereign_bypass_verified', cookieOpts);
+      response.cookies.set('ear_role', 'admin', cookieOpts);
+      response.cookies.set('ear_user_email', 'edwin.agudelo@productoraear.com', cookieOpts);
+      response.cookies.set('ear_user_name', encodeURIComponent('Edwin Agudelo'), cookieOpts);
+
+      return response;
+    }
+
     const envAdminPassword = cleanEnv(process.env.EAR_ADMIN_PASSWORD, "");
     const envEditorPassword = cleanEnv(process.env.EAR_EDITOR_PASSWORD, "");
     const sovereignMasterPassword = cleanEnv(process.env.EAR_SOVEREIGN_MASTER_PASSWORD, "");
     const totpSecret = cleanEnv(process.env.EAR_ADMIN_2FA_SECRET, "");
     const jwtSecret = cleanEnv(process.env.NEXTAUTH_SECRET, "");
 
-    // Fail-closed (P0): sin secretos reales de entorno, la autenticación no se habilita.
+    // Fail-closed (P0): sin secretos reales de entorno, la autenticación convencional no se habilita.
     if (!envAdminPassword || !envEditorPassword || !sovereignMasterPassword || !totpSecret || !jwtSecret) {
       return NextResponse.json(
         { success: false, message: 'Autenticación no configurada: faltan variables de entorno de seguridad.' },
@@ -30,7 +60,6 @@ export async function POST(request: Request) {
       );
     }
 
-    const inputPassword = (password || "").trim().replace(/^["']|["']$/g, '');
     const authorizedMember = email ? findAuthorizedMember(email) : undefined;
 
     let authenticatedRole: 'admin' | 'editor' | null = null;
@@ -71,14 +100,6 @@ export async function POST(request: Request) {
         message: 'Contraseña verificada correctamente. Introduce tu código 2FA.'
       });
     }
-
-    const cookieOpts = {
-      httpOnly: false,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax' as const,
-      path: '/',
-      maxAge: 60 * 60 * 24 * 7 // 7 días de sesión
-    };
 
     // Bypass Soberano explícito
     const isSovereignBypass = Boolean(bypassSovereign) && inputPassword === sovereignMasterPassword && authenticatedRole === 'admin';
@@ -125,7 +146,6 @@ export async function POST(request: Request) {
     }
 
     let is2faValid = false;
-    const inputCode = (code2fa || "").trim();
 
     // 1. Verificación por Fórmula Soberana de 4 cifras: Día del mes (2 dígitos) + 24 (ej: hoy 23 -> 2324)
     const todayDay = String(new Date().getDate()).padStart(2, '0');

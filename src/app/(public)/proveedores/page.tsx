@@ -37,6 +37,8 @@ import { BentoFilterBar, CategoryItem, SubcategoryItem } from '@/components/prov
 import { PremiumMediaCarousel } from '@/components/providers/PremiumMediaCarousel';
 import { PremiumPacksCarousel } from '@/components/providers/PremiumPacksCarousel';
 import { AirbnbNeuralBookingBar } from '@/features/search/AirbnbNeuralBookingBar';
+import { buildEntityCalendarHref } from '@/lib/calendar/entity-calendar-engine';
+import { inferCalendarKindFromCategory } from '@/lib/calendar/entity-calendar-types';
 import { PROVIDERS_MANIFEST_TOTALS, PROVIDERS_B2C_TOTAL, B2C_DIRECTORY_GREMIO_TOTALS, PROVIDERS_GRAND_TOTAL } from '@/lib/constants/providers-manifest';
 import { DEPOSITO_STRIPE_EUR, TARIFA_BASE_SOLISTA_EUR } from '@/lib/constants/ear-os-ssot';
 import { ALL_SPANISH_PROVINCES, isProvinceMatch, findCanonicalProvinceName, normalizeBodasNetCategory, ALL_VENUE_TYPOLOGIES } from '@/lib/constants/spain-regions-and-categories';
@@ -1242,20 +1244,23 @@ function ProveedoresDirectoryContent() {
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 font-mono text-xs">
                         <div className="bg-white/[0.02] hover:bg-white/[0.04] transition-colors p-5 rounded-2xl border border-white/5">
                           <span className="text-neutral-500 uppercase block mb-1">Contacto Directo</span>
-                          {((activeModalProvider.phone || activeModalProvider.telephone) && activeModalProvider.has_real_phone === true) ? (
-                            <a href={makeCentralitaWaLink(activeModalProvider.name, activeModalProvider.category, activeModalProvider.province)} target="_blank" rel="noopener noreferrer" className="text-emerald-400 font-bold text-lg hover:text-emerald-300 transition-colors">
-                              🔒 Contacto Protegido · Centralita EAR VIP
-                            </a>
-                          ) : (
-                            <a
-                              href={activeModalProvider.google_search_url || `https://www.google.com/search?q=${encodeURIComponent(`${activeModalProvider.name} ${activeModalProvider.province || ''} telefono`)}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-amber-400 font-bold text-sm hover:text-amber-300 transition-colors inline-flex items-center gap-1.5"
-                            >
-                              🔍 Buscar Teléfono en Google (1 Clic)
-                            </a>
-                          )}
+                          {/*
+                            ANTI-PICARESCA: el número de la entidad nunca se publica aquí.
+                            Se retiró el atajo "Buscar Teléfono en Google", que burlaba el
+                            candado de 1,00 € y regalaba el contacto del proveedor.
+                          */}
+                          <a
+                            href={makeCentralitaWaLink(activeModalProvider.name, activeModalProvider.category, activeModalProvider.province)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-emerald-400 font-bold text-lg hover:text-emerald-300 transition-colors"
+                          >
+                            🔒 Contacto protegido · Centralita EAR
+                          </a>
+                          <span className="block text-[10px] text-neutral-500 mt-1 leading-relaxed">
+                            El teléfono directo se libera con el desbloqueo de 1,00 € (descontable)
+                            o si el proveedor reclama su ficha.
+                          </span>
                         </div>
                         <div className="bg-white/[0.02] hover:bg-white/[0.04] transition-colors p-5 rounded-2xl border border-white/5">
                           <span className="text-neutral-500 uppercase block mb-1">Desplazamiento</span>
@@ -1384,12 +1389,10 @@ function ProveedoresDirectoryContent() {
                           <span>Localizar vía Centralita</span>
                         </a>
                         <a
-                          href={activeModalProvider.google_search_url || `https://www.google.com/search?q=${encodeURIComponent(`${activeModalProvider.name} ${activeModalProvider.province || ''} telefono`)}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                          href={`/proveedores/${encodeURIComponent(String(activeModalProvider.slug || activeModalProvider.id))}#contacto`}
                           className="px-3.5 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all"
                         >
-                          <span>🔍 Google</span>
+                          <span>🔓 Desbloquear contacto</span>
                         </a>
                         <a
                           href={originUrl || `/reclamar-perfil?name=${encodeURIComponent(activeModalProvider.name)}`}
@@ -1404,11 +1407,15 @@ function ProveedoresDirectoryContent() {
                   })()}
 
                   <Link
-                    href={activeModalProvider.customUrl || `/checkout/presupuesto?proveedor=${encodeURIComponent(activeModalProvider.name)}${typeof activeModalProvider.basePrice === 'number' && activeModalProvider.basePrice > 0 ? `&base=${activeModalProvider.basePrice}` : ''}`}
+                    href={buildEntityCalendarHref(
+                      inferCalendarKindFromCategory(activeModalProvider.category),
+                      activeModalProvider.slug || String(activeModalProvider.id),
+                      { intent: 'bloquear' },
+                    )}
                     className="px-8 py-4 rounded-2xl bg-white hover:bg-neutral-200 text-black font-black uppercase tracking-widest flex items-center justify-center gap-2 transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:scale-105"
                   >
                     <Lock size={16} />
-                    <span>Bloquear {DEPOSITO_STRIPE_EUR} €</span>
+                    <span>Ver agenda · Bloquear {DEPOSITO_STRIPE_EUR} €</span>
                   </Link>
                 </div>
               </div>

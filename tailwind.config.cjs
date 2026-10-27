@@ -58,7 +58,23 @@ module.exports = {
         charcoal: "#2f2f2f",
         ash: "#898989",
         fog: "#dddddd",
-        slate: "#999999",
+        // ⚠️ NO SOMBREAR `slate`: el config anterior lo colapsaba a "#999999" y
+        // aniquilaba toda la escala slate-50…950 de Tailwind, dejando clases
+        // como text-slate-950 o bg-slate-900 SIN GENERAR (texto blanco
+        // heredado sobre ámbar = 2.15:1). Escala restaurada (Tailwind v3).
+        slate: {
+          50: "#f8fafc",
+          100: "#f1f5f9",
+          200: "#e2e8f0",
+          300: "#cbd5e1",
+          400: "#94a3b8",
+          500: "#64748b",
+          600: "#475569",
+          700: "#334155",
+          800: "#1e293b",
+          900: "#0f172a",
+          950: "#020617",
+        },
 
         // 💎 PALETA CORPORATIVA DIAMOND EAR OS (HIGH-TECH SYSTEM)
         "ear-cyan": "#00E5FF",

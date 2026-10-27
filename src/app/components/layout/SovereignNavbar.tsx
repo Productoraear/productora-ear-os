@@ -40,6 +40,7 @@ interface SubmenuItem {
 interface MenuFolder {
   id: string;
   label: string;
+  shortLabel: string;
   href: string;
   subitems: SubmenuItem[];
 }
@@ -48,6 +49,7 @@ const MENU_FOLDERS: MenuFolder[] = [
   {
     id: 'fincas',
     label: 'Fincas & Espacios',
+    shortLabel: 'Fincas',
     href: '/fincas',
     subitems: [
       {
@@ -62,6 +64,7 @@ const MENU_FOLDERS: MenuFolder[] = [
   {
     id: 'artistas',
     label: 'Artistas & Shows',
+    shortLabel: 'Artistas',
     href: '/artistas',
     subitems: [
       {
@@ -97,6 +100,7 @@ const MENU_FOLDERS: MenuFolder[] = [
   {
     id: 'sonido',
     label: 'Audiovisuales & Equipamiento',
+    shortLabel: 'Audiovisuales',
     href: '/alquiler-equipos-sonido-audiovisuales',
     subitems: [
       {
@@ -111,6 +115,7 @@ const MENU_FOLDERS: MenuFolder[] = [
   {
     id: 'proveedores',
     label: 'Catering & Servicios',
+    shortLabel: 'Catering',
     href: '/proveedores',
     subitems: [
       {
@@ -119,20 +124,6 @@ const MENU_FOLDERS: MenuFolder[] = [
         href: '/proveedores',
         badge: 'Catálogo Verificado',
         icon: Sliders
-      }
-    ]
-  },
-  {
-    id: 'vimume',
-    label: 'VIMUME Senior & B2G',
-    href: '/vimume',
-    subitems: [
-      {
-        title: 'Impacto Social VIMUME & Deducción Fiscal',
-        desc: 'Neuro-musicoterapia en residencias mayores (Hasta 80% Deducible Ley 49/2002) y Licitaciones B2G',
-        href: '/vimume',
-        badge: '80% Deducible',
-        icon: Heart
       }
     ]
   }
@@ -145,23 +136,15 @@ const SovereignNavbar = () => {
   const [expandedMobileFolder, setExpandedMobileFolder] = useState<string | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const { isSearchOpen, setIsSearchOpen } = useSharedContext();
+  const { setIsSearchOpen } = useSharedContext();
   const { scrollY } = useScroll();
   const { role, isAdmin } = useSovereignRole();
 
   const navY = useTransform(scrollY, [0, 300], [0, -5]);
   const shadowOpacity = useTransform(scrollY, [0, 100], [0.1, 0.8]);
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault();
-        setIsSearchOpen(!isSearchOpen);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isSearchOpen, setIsSearchOpen]);
+  // Atajo ⌘K/Ctrl+K: POTESTAD ÚNICA en <UnifiedSearch /> (@/lib/search).
+  // Aquí sólo se abre desde los botones de la UI para no duplicar toggles.
 
   // Cerrar menús al cambiar de ruta
   useEffect(() => {
@@ -211,12 +194,12 @@ const SovereignNavbar = () => {
       <motion.nav
         style={{ boxShadow: `0 20px 40px -10px rgba(0,0,0, ${shadowOpacity.get()})` }}
         className={cn(
-          "max-w-7xl mx-auto flex items-center justify-between px-5 py-2.5 transition-all duration-700 rounded-full border backdrop-blur-2xl",
+          "max-w-7xl 2xl:max-w-[1400px] mx-auto flex items-center justify-between px-3 xl:px-5 py-2.5 transition-all duration-700 rounded-full border backdrop-blur-2xl",
           roleStyles[role] || roleStyles.ROLE_GUEST
         )}
       >
         {/* LOGO & BRAND */}
-        <Link href="/" className="flex items-center gap-3 group shrink-0">
+        <Link href="/" className="flex items-center gap-2.5 xl:gap-3 group shrink-0">
           <div className={cn(
             "w-9 h-9 rounded-2xl overflow-hidden border p-0.5 flex items-center justify-center transition-all group-hover:scale-105 bg-black",
             pathname?.startsWith('/vimume')
@@ -248,7 +231,7 @@ const SovereignNavbar = () => {
         </Link>
 
         {/* RUTAS CON SISTEMA DE SUBMENÚS Y SUBCARPETAS (ESCRITORIO) */}
-        <div className="hidden lg:flex items-center gap-1 xl:gap-2">
+        <div className="hidden lg:flex items-center gap-1 xl:gap-1.5 2xl:gap-2 shrink min-w-0">
           {MENU_FOLDERS.map((folder) => {
             const isCurrentSection = pathname?.startsWith(folder.href);
             const isOpen = activeDropdown === folder.id;
@@ -256,21 +239,22 @@ const SovereignNavbar = () => {
             return (
               <div
                 key={folder.id}
-                className="relative"
+                className="relative shrink-0"
                 onMouseEnter={() => handleMouseEnter(folder.id)}
                 onMouseLeave={handleMouseLeave}
               >
                 <Link
                   href={folder.href}
                   className={cn(
-                    "flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-mono font-bold uppercase tracking-wider transition-all",
+                    "flex items-center gap-1 xl:gap-1.5 px-2.5 xl:px-3 py-1.5 rounded-full text-xs font-mono font-bold uppercase tracking-wider transition-all whitespace-nowrap",
                     isCurrentSection
                       ? "text-white bg-white/10 border border-white/20"
                       : "text-white/70 hover:text-white hover:bg-white/5",
                     isOpen && "bg-white/10 text-white"
                   )}
                 >
-                  <span>{folder.label}</span>
+                  <span className="hidden 2xl:inline">{folder.label}</span>
+                  <span className="inline 2xl:hidden">{folder.shortLabel}</span>
                   <ChevronDown size={13} className={cn("transition-transform duration-200 text-white/50", isOpen && "rotate-180 text-[#FF2B44]")} />
                 </Link>
 
@@ -332,21 +316,21 @@ const SovereignNavbar = () => {
 
           {/* VIMUME HIGHLIGHT */}
           <Link href="/vimume" className={cn(
-            "flex items-center gap-1.5 text-xs font-mono font-bold px-3.5 py-1.5 rounded-full border transition-all uppercase tracking-wider ml-1",
+            "shrink-0 flex items-center gap-1.5 text-xs font-mono font-bold px-2.5 xl:px-3 py-1.5 rounded-full border transition-all uppercase tracking-wider whitespace-nowrap",
             role === 'ROLE_B2G'
               ? "border-[#ecb613]/50 bg-[#ecb613]/10 hover:bg-[#ecb613]/20 text-[#ecb613]"
               : "border-[#00E5FF]/30 hover:border-[#00E5FF] hover:bg-[#00E5FF]/10 text-[#00E5FF]"
           )}>
-            <Activity size={13} />
+            <Activity size={13} className="shrink-0" />
             <span>VIMUME</span>
           </Link>
 
           {/* ALIANZAS ESTRATÉGICAS */}
           <Link
             href="/alianzas"
-            className="flex items-center gap-1.5 text-xs font-mono font-bold px-3.5 py-1.5 rounded-full border transition-all uppercase tracking-wider ml-1 border-[#FF2B44]/30 hover:border-[#FF2B44] hover:bg-[#FF2B44]/10 text-[#FF2B44]"
+            className="shrink-0 flex items-center gap-1.5 text-xs font-mono font-bold px-2.5 xl:px-3 py-1.5 rounded-full border transition-all uppercase tracking-wider border-[#FF2B44]/30 hover:border-[#FF2B44] hover:bg-[#FF2B44]/10 text-[#FF2B44] whitespace-nowrap"
           >
-            <Handshake size={13} />
+            <Handshake size={13} className="shrink-0" />
             <span>Alianzas</span>
           </Link>
 
@@ -354,34 +338,37 @@ const SovereignNavbar = () => {
           <Link
             href="/calculadora"
             className={cn(
-              "flex items-center gap-1.5 text-xs font-mono font-bold px-3.5 py-1.5 rounded-full border transition-all uppercase tracking-wider ml-1",
+              "shrink-0 flex items-center gap-1.5 text-xs font-mono font-bold px-2.5 xl:px-3.5 py-1.5 rounded-full border transition-all uppercase tracking-wider whitespace-nowrap",
               pathname === '/calculadora'
                 ? "bg-[#ecb613] text-black border-[#ecb613] shadow-[0_0_15px_rgba(236,182,19,0.35)]"
                 : "border-[#ecb613]/40 bg-[#ecb613]/10 text-[#ecb613] hover:bg-[#ecb613] hover:text-black hover:border-[#ecb613]"
             )}
           >
-            <Calculator size={13} />
-            <span>Presupuestador</span>
+            <Calculator size={13} className="shrink-0" />
+            <span className="hidden 2xl:inline">Presupuestador</span>
+            <span className="inline 2xl:hidden">Presupuesto</span>
           </Link>
         </div>
 
         {/* OMNI-SEARCH & WALLET */}
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-2 xl:gap-3 shrink-0">
           <button
-            className="flex items-center gap-2 bg-black/50 border border-white/10 hover:border-[#FF2B44]/50 px-3.5 py-1.5 rounded-full text-white/50 text-xs font-mono transition-all group cursor-pointer"
+            className="flex items-center gap-1.5 xl:gap-2 bg-black/50 border border-white/10 hover:border-[#FF2B44]/50 px-2.5 xl:px-3.5 py-1.5 rounded-full text-white/50 text-xs font-mono transition-all group cursor-pointer shrink-0"
             onClick={() => setIsSearchOpen(true)}
+            aria-label="Buscar servicio"
           >
-            <Search size={13} className="group-hover:text-[#FF2B44] transition-colors" />
-            <span className="hidden xl:inline">Buscar servicio...</span>
+            <Search size={13} className="group-hover:text-[#FF2B44] transition-colors shrink-0" />
+            <span className="hidden 2xl:inline">Buscar servicio...</span>
+            <span className="hidden xl:inline 2xl:hidden">Buscar...</span>
             <kbd className="bg-white/10 px-1.5 py-0.5 rounded text-[10px] font-mono text-white/70">⌘K</kbd>
           </button>
 
           {/* ACCIÓN DE LLAMADA INMEDIATA S-CLASS */}
           <a
             href="tel:+34693693048"
-            className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 text-[11px] font-mono text-white/80 hover:text-white transition-all"
+            className="hidden sm:inline-flex items-center gap-1.5 px-2.5 xl:px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 text-[11px] font-mono text-white/80 hover:text-white transition-all shrink-0 whitespace-nowrap"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
             <span>693 693 048</span>
           </a>
 

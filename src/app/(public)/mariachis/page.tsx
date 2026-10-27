@@ -370,7 +370,7 @@ export default function MariachisPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 font-sans">
           <div className="p-8 rounded-3xl bg-[#060609] border border-white/10 space-y-4 relative">
-            <span className="text-5xl font-black font-mono text-[#ecb613]/30">01</span>
+            <span className="text-5xl font-black font-mono text-[#ecb613]/60">01</span>
             <h3 className="text-xl font-bold font-syne text-white">Elige Formato y Destino</h3>
             <p className="text-xs sm:text-sm text-white/60 leading-relaxed">
               Selecciona entre solista de gala, cuarteto, ensamble imperial o sinfónico. Nuestro motor calcula la distancia exacta por GPS y te muestra el precio final cerrado.
@@ -387,7 +387,7 @@ export default function MariachisPage() {
           </div>
 
           <div className="p-8 rounded-3xl bg-[#060609] border border-white/10 space-y-4 relative">
-            <span className="text-5xl font-black font-mono text-[#ecb613]/30">03</span>
+            <span className="text-5xl font-black font-mono text-[#ecb613]/60">03</span>
             <h3 className="text-xl font-bold font-syne text-white">Disfruta de la Serenata</h3>
             <p className="text-xs sm:text-sm text-white/60 leading-relaxed">
               El grupo llega uniformado con traje de charro de gala y equipo de sonido Bose calibrado.

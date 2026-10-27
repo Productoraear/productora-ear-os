@@ -261,7 +261,7 @@ export default function FincasNationalCatalogClient() {
           <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1 || loading}
-            className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-600 disabled:opacity-40 disabled:cursor-not-allowed transition"
+            className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-600 disabled:opacity-100 disabled:text-slate-400 disabled:cursor-not-allowed transition"
             aria-label="Página anterior"
           >
             <ChevronLeft className="w-4 h-4" />
@@ -272,7 +272,7 @@ export default function FincasNationalCatalogClient() {
           <button
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages || loading}
-            className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-600 disabled:opacity-40 disabled:cursor-not-allowed transition"
+            className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-600 disabled:opacity-100 disabled:text-slate-400 disabled:cursor-not-allowed transition"
             aria-label="Página siguiente"
           >
             <ChevronRight className="w-4 h-4" />
@@ -313,7 +313,7 @@ export default function FincasNationalCatalogClient() {
             <button
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 1}
-              className="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white disabled:opacity-40 transition font-medium flex items-center gap-2 text-sm"
+              className="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white disabled:opacity-100 disabled:text-slate-400 transition font-medium flex items-center gap-2 text-sm"
             >
               <ChevronLeft className="w-4 h-4" /> Anterior
             </button>
@@ -325,7 +325,7 @@ export default function FincasNationalCatalogClient() {
             <button
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={currentPage === totalPages}
-              className="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white disabled:opacity-40 transition font-medium flex items-center gap-2 text-sm"
+              className="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white disabled:opacity-100 disabled:text-slate-400 transition font-medium flex items-center gap-2 text-sm"
             >
               Siguiente <ChevronRight className="w-4 h-4" />
             </button>
@@ -366,8 +366,12 @@ function RealFincaCard({ finca, onSelect }: { finca: RealFinca; onSelect: () => 
   const rawImg = finca.img || (finca.imageUrls && finca.imageUrls[0]) || (finca.gallery && finca.gallery[0]);
   const isBrokenExternalUrl = !rawImg || rawImg.includes('bodas.net') || rawImg.includes('cdn0.bodas') || rawImg.includes('tour3d');
   const displayImg = (!imgError && !isBrokenExternalUrl && rawImg) ? rawImg : fallbackImg;
-  const directPhone = finca.hasDirectPhone ? (finca.phone || finca.telephone) : null;
-  const isDirect = Boolean(directPhone);
+  /**
+   * ANTI-PICARESCA: el número de la finca NO se publica nunca en el directorio
+   * público. `hasDirectPhone` ya no decide visibilidad; el contacto se libera
+   * vía centralita o desbloqueo de 1,00 € en la ficha.
+   */
+  const isDirect = false;
 
   const cleanLocation = finca.address || finca.province || 'España';
 
@@ -472,8 +476,7 @@ function RealFincaCard({ finca, onSelect }: { finca: RealFinca; onSelect: () => 
 }
 
 function FincaDetailModal({ finca, onClose }: { finca: RealFinca; onClose: () => void }) {
-  const isDirect = Boolean(finca.hasDirectPhone);
-  const cleanPhone = finca.hasDirectPhone ? (finca.phone || finca.telephone) : CENTRALITA;
+  /** ANTI-PICARESCA: el detalle tampoco publica el número; solo centralita. */
   const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(`${finca.name} ${finca.address || finca.province || ''} bodas`)}`;
 
   return (

@@ -39,7 +39,7 @@ export interface ProposalLineItem {
   proveedorVerificado: boolean; // TRUE: Catálogo EAR / ficha verificada | FALSE: Tarifa en homologación
   motivoIa?: string;
 
-  // 🏛️ Vinculación con la Mega Base de Datos (85.946 Proveedores en public/data/providers/)
+  // 🏛️ Vinculación con la Mega Base de Datos (conteo vivo en public/data/providers/manifest.json)
   proveedorId?: string;
   proveedorNombre?: string;
   proveedorGremio?: string;

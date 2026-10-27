@@ -6,7 +6,6 @@ import { Sparkles, MapPin, ShieldCheck, ArrowRight, Phone, Clock, Award, CheckCi
 import { MUNICIPALITIES_DATASET } from '@/lib/constants/spanish-municipalities';
 import { PROVINCIAS_52_GRAPH } from '@/lib/constants/seo-data-hydrated';
 import { MeshGradientBackground } from '@/components/sclass/MeshGradientBackground';
-import { CENTRALITA } from '@/lib/phone-constants';
 import { getProvidersByLocation } from '@/lib/data/vampire-service';
 import { AdjacentMunicipalitiesCrossLinker } from '@/components/geo/AdjacentMunicipalitiesCrossLinker';
 import {
@@ -233,10 +232,11 @@ export default async function LocalMunicipalityPage({ params }: PageProps) {
                       )}
 
                       <Link
-                        href={`/checkout/presupuesto?proveedor=${encodeURIComponent(vendor.name)}&pack=${encodeURIComponent(servTitle)}&base=${(vendor as any).price || 650}`}
+                        href={`/proveedores?cat=${encodeURIComponent(vendor.category ?? 'todas')}&province=${encodeURIComponent(vendor.province ?? '')}`}
                         className="py-1.5 px-3 rounded-lg bg-[#ecb613] hover:bg-amber-400 text-black font-bold text-xs font-mono uppercase tracking-wider flex items-center gap-1 transition-all"
+                        title="Cada proveedor tiene su propia agenda: entra a su ficha para bloquear la fecha"
                       >
-                        <span>Bloquear</span>
+                        <span>Ver agendas</span>
                         <ArrowRight className="w-3 h-3" />
                       </Link>
                     </div>

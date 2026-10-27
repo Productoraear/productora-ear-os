@@ -24,6 +24,8 @@ import type {
     ProviderServiceMatchResult
 } from '@/lib/matching/providerServiceCalibratorTypes';
 import type { CoupleCalibration } from '@/lib/matching/calibratorTypes';
+import { buildEntityCalendarHref } from '@/lib/calendar/entity-calendar-engine';
+import { inferCalendarKindFromCategory } from '@/lib/calendar/entity-calendar-types';
 
 /**
  * 📦 B1.04B — NEURAL PROVIDER TINDER MATCH (200 DIMENSIONES BILATERALES)
@@ -38,7 +40,7 @@ export interface CanonicalProviderService {
     name: string;
     category: string;
     province: string;
-    basePrice: number;
+    basePrice?: number;
     priceRange?: string;
     rating?: number | null;
     reviewsCount?: number | null;
@@ -97,7 +99,8 @@ function toProviderCalibration(p: CanonicalProviderService): ProviderServiceCali
     };
 }
 
-const formatEuro = (n: number): string => `${n.toLocaleString('es-ES')} €`;
+const formatEuro = (n?: number | null): string =>
+    typeof n === 'number' && Number.isFinite(n) ? `${n.toLocaleString('es-ES')} €` : 'Consultar';
 
 export const NeuralProviderTinderMatch: React.FC<NeuralProviderTinderMatchProps> = React.memo(({
     providers,
@@ -130,7 +133,7 @@ export const NeuralProviderTinderMatch: React.FC<NeuralProviderTinderMatchProps>
                     selectedCategory === 'Todas las categorías' || p.category === selectedCategory;
                 const pasaProvincia =
                     province === 'Todas las provincias' || (p.province || '') === province;
-                const pasaPresupuesto = p.basePrice <= maxBudget;
+                const pasaPresupuesto = typeof p.basePrice !== 'number' || p.basePrice <= maxBudget;
 
                 return {
                     ...p,
@@ -298,7 +301,9 @@ export const NeuralProviderTinderMatch: React.FC<NeuralProviderTinderMatchProps>
                                     <span>{activeSwipeProvider.province}</span>
                                     <span className="text-zinc-600">·</span>
                                     <span className="text-[#ecb613] font-bold">
-                                        Ticket desde {formatEuro(activeSwipeProvider.basePrice)}
+                                        {typeof activeSwipeProvider.basePrice === 'number'
+                                            ? `Ticket desde ${formatEuro(activeSwipeProvider.basePrice)}`
+                                            : 'Precio a consultar'}
                                     </span>
                                 </p>
                             </div>
@@ -423,12 +428,16 @@ export const NeuralProviderTinderMatch: React.FC<NeuralProviderTinderMatchProps>
                                         </button>
 
                                         <a
-                                            href={p.contactHref || 'tel:+34693693048'}
+                                            href={buildEntityCalendarHref(
+                                                inferCalendarKindFromCategory(p.category),
+                                                p.slug,
+                                                { intent: 'bloquear' },
+                                            )}
                                             onClick={() => onSelectProvider?.(p)}
                                             className="py-2.5 px-3 rounded-xl bg-[#ecb613] hover:bg-[#d8a40f] text-black font-semibold font-mono text-xs flex items-center justify-center gap-1 transition-all shadow-lg shadow-[#ecb613]/10"
                                         >
-                                            <PhoneCall size={13} />
-                                            <span>Contactar</span>
+                                            <Lock size={13} />
+                                            <span>Agenda</span>
                                         </a>
                                     </div>
                                 </div>
@@ -525,14 +534,25 @@ export const NeuralProviderTinderMatch: React.FC<NeuralProviderTinderMatchProps>
                             </div>
                         </div>
 
-                        {/* CTA Final */}
-                        <div className="pt-2">
+                        {/* CTA Final: agenda REAL del proveedor (no el teléfono) */}
+                        <div className="pt-2 space-y-2">
                             <a
-                                href={inspectedProvider.provider.contactHref || 'tel:+34693693048'}
+                                href={buildEntityCalendarHref(
+                                    inferCalendarKindFromCategory(inspectedProvider.provider.category),
+                                    inspectedProvider.provider.slug,
+                                    { intent: 'bloquear' },
+                                )}
                                 className="w-full py-3 rounded-2xl bg-[#ecb613] hover:bg-[#d8a40f] text-black font-bold font-mono text-xs flex items-center justify-center gap-2 shadow-xl shadow-[#ecb613]/20"
                             >
-                                <PhoneCall size={14} />
-                                Bloquear Fecha con Depósito de 100 €
+                                <Lock size={14} />
+                                Ver agenda y bloquear fecha
+                            </a>
+                            <a
+                                href={inspectedProvider.provider.contactHref || 'tel:+34693693048'}
+                                className="w-full py-2.5 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 text-white font-mono text-[11px] flex items-center justify-center gap-2"
+                            >
+                                <PhoneCall size={13} />
+                                Llamar a {inspectedProvider.provider.name}
                             </a>
                         </div>
                     </div>

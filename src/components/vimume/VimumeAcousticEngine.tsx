@@ -124,7 +124,7 @@ export const VimumeAcousticEngine: React.FC = () => {
             className={`px-8 py-4 rounded-2xl font-mono text-xs uppercase font-black tracking-widest flex items-center gap-3 transition-all cursor-pointer shadow-xl ${
               engineState.isPlaying
                 ? 'bg-red-500/20 text-red-300 border border-red-500/50 hover:bg-red-500/30'
-                : 'bg-gradient-to-r from-[#8b5cf6] to-[#7c3aed] text-white hover:scale-105 shadow-[0_0_35px_rgba(139,92,246,0.6)] animate-pulse'
+                : 'bg-gradient-to-r from-[#6d28d9] to-[#5b21b6] text-white hover:scale-105 shadow-[0_0_35px_rgba(139,92,246,0.6)] animate-pulse'
             }`}
           >
             {engineState.isPlaying ? (

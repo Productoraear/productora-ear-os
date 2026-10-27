@@ -25,135 +25,12 @@ import {
 import StripeSmartLockCta from '@/components/programmatic/StripeSmartLockCta';
 import { DEPOSITO_STRIPE_EUR, LOGISTICA_EUR_PER_KM, LOGISTICA_KM_EXENTOS, LOGISTICA_KM_HOTEL, SUPLEMENTO_HOTEL_EUR } from '@/lib/constants/ear-os-ssot';
 
-export interface SClassArtistFormat {
-  id: string;
-  name: string;
-  role: string;
-  category: 'solista' | 'mariachi' | 'cuerdas' | 'fiesta';
-  baseRate: number;
-  rating: number;
-  reviews: number;
-  badge: string;
-  img: string;
-  description: string;
-  repertoire: string[];
-  rider: string;
-}
-
-const ARTIST_FORMATS: SClassArtistFormat[] = [
-  {
-    id: 'edwin-solista',
-    name: 'Edwin Agudelo (Tenor Lírico)',
-    role: 'Solista Insignia S-Class',
-    category: 'solista',
-    baseRate: 350.00,
-    rating: 5.0,
-    reviews: 48,
-    badge: 'Artista Insignia',
-    img: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=600&auto=format&fit=crop',
-    description: 'Voz lírica de alta tesitura para ceremonias nupciales, boleros de gala y grandes celebraciones. Microfonía Shure Axient de estudio.',
-    repertoire: ['Ave María (Schubert)', 'O Sole Mio', 'Nessun Dorma', 'Bésame Mucho', 'Por Ti Volaré'],
-    rider: 'Bose S1 Pro / F1 + Shure Beta 87A'
-  },
-  {
-    id: 'mariachi-gala-oro',
-    name: "Mariachi 'Gala de Oro' (Trío Clásico)",
-    role: 'Trío Charro Tradicional',
-    category: 'mariachi',
-    baseRate: 550.00,
-    rating: 4.9,
-    reviews: 34,
-    badge: 'Favorito Bodas',
-    img: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=600&auto=format&fit=crop',
-    description: 'Voz principal, guitarra y trompeta con auténtico traje charro de gala. Serenatas, cócteles de bienvenida y sorpresas nupciales.',
-    repertoire: ['El Rey', 'Si Nos Dejan', 'Volver Volver', 'Cielito Lindo', 'La Bikina'],
-    rider: 'Rider acústico puro + refuerzo Bose'
-  },
-  {
-    id: 'mariachi-imperial',
-    name: "Mariachi 'Imperial S-Class' (Quinteto)",
-    role: 'Edwin Agudelo + 4 Maestros',
-    category: 'mariachi',
-    baseRate: 850.00,
-    rating: 5.0,
-    reviews: 29,
-    badge: 'Top Selección',
-    img: 'https://images.unsplash.com/photo-1465847899084-d164df4dedc6?q=80&w=600&auto=format&fit=crop',
-    description: 'Quinteto estelar: tenor lírico, guitarrón mexicano, vihuela, violín y trompeta solista. Sonoridad y presencia inigualables.',
-    repertoire: ['Serenata Huasteca', 'Amor Eterno', 'Échame a Mí la Culpa', 'Sombras'],
-    rider: 'Bose F1 Model 812 (12 W/pax) + Microfonía inalámbrica'
-  },
-  {
-    id: 'mariachi-gran-ensamble',
-    name: 'Gran Ensamble Mariachi (9 Músicos)',
-    role: 'Orquesta Completa de Gala',
-    category: 'mariachi',
-    baseRate: 1300.00,
-    rating: 4.9,
-    reviews: 18,
-    badge: 'Gran Apoteosis',
-    img: 'https://images.unsplash.com/photo-1511192336575-5a79af67a629?q=80&w=600&auto=format&fit=crop',
-    description: 'Sonoridad completa de gala mexicana: 2 trompetas, 3 violines, vihuela, guitarrón y 2 voces. Para recintos mayores y fincas.',
-    repertoire: ['El Son de la Negra', 'Huapango de Moncayo', 'Guadalajara', 'El Cascabel'],
-    rider: 'Sistema Bose F1 dual + subs 1.000W + mesa digital Midas'
-  },
-  {
-    id: 'cuarteto-cuerdas',
-    name: "Cuarteto de Cuerdas 'Sinfonía Nupcial'",
-    role: '2 Violines, Viola & Violonchelo',
-    category: 'cuerdas',
-    baseRate: 650.00,
-    rating: 4.9,
-    reviews: 41,
-    badge: 'Ceremonias de Gala',
-    img: 'https://images.unsplash.com/photo-1525994886773-080587e161c2?q=80&w=600&auto=format&fit=crop',
-    description: 'Elegancia clásica para ceremonias religiosas y civiles. Piezas sacras, bandas sonoras de cine y adaptaciones pop elegantes.',
-    repertoire: ['Canon de Pachelbel', 'Viva la Vida', 'Cello Suite Bach', 'Cinema Paradiso'],
-    rider: 'Microfonía DPA 4099 para cuerdas'
-  },
-  {
-    id: 'duo-lirico-piano',
-    name: 'Dúo Lírico Clásico (Tenor + Piano Nord)',
-    role: 'Edwin Agudelo & Pianista',
-    category: 'solista',
-    baseRate: 480.00,
-    rating: 5.0,
-    reviews: 26,
-    badge: 'Alta Costura',
-    img: 'https://images.unsplash.com/photo-1507838153414-b4b713384a76?q=80&w=600&auto=format&fit=crop',
-    description: 'Voz lírica acompañada de piano de escenario Nord Stage 3. Atmósfera íntima y refinada para firmas de acta y cócteles.',
-    repertoire: ['Hasta Mi Final', 'Hallelujah (Cohen)', 'Intermezzo Cavalleria Rusticana'],
-    rider: 'Piano Nord Stage 3 + Bose S1 Pro'
-  },
-  {
-    id: 'dj-saxo-performance',
-    name: 'DJ & Live Saxo Performance (Pack Fiesta)',
-    role: 'DJ Productor + Saxofonista Live',
-    category: 'fiesta',
-    baseRate: 750.00,
-    rating: 4.8,
-    reviews: 37,
-    badge: 'Barra Libre',
-    img: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=600&auto=format&fit=crop',
-    description: 'Sonorización completa de fiesta y barra libre. Saxofón inalámbrico en pista de baile, puente de luces DMX y sonido Bose F1 < 75 dB.',
-    repertoire: ['Deep House', 'Pop Español 80/90', 'Top 50 Hits', 'Ibiza Classics'],
-    rider: 'Cabina Pioneer DJ + 2x Bose F1 + Iluminación DMX'
-  },
-  {
-    id: 'guitarra-violin-duo',
-    name: 'Dúo Guitarra Española & Violín Eléctrico',
-    role: 'Fusión Flamenco-Chillout',
-    category: 'cuerdas',
-    baseRate: 520.00,
-    rating: 4.9,
-    reviews: 22,
-    badge: 'Cóctel Chillout',
-    img: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=600&auto=format&fit=crop',
-    description: 'Melodías de guitarra española virtuosa combinadas con la calidez del violín eléctrico para cócteles al atardecer en jardines y fincas.',
-    repertoire: ['Entre Dos Aguas', 'Asturias (Albéniz)', 'Shape of You (Fusión)'],
-    rider: '2x Columnas Bose S1 Pro compactas a batería'
-  }
-];
+import { ARTIST_FORMATS, DEFAULT_ARTIST_PROFILE_ID } from '@/lib/reservar/solista-catalog';
+import {
+  EMPTY_LANDING_ATTRIBUTION,
+  readLandingAttribution,
+  type LandingAttribution,
+} from '@/lib/reservar/landing-attribution';
 
 interface CalendarDay {
   day: number;
@@ -215,10 +92,16 @@ export default function SolistaReservationPage() {
   const [dayTypeFilter, setDayTypeFilter] = useState<'all' | 'weekends' | 'high_demand'>('all');
 
   // S-Class Multi-Artist Selection State
-  const [selectedArtistId, setSelectedArtistId] = useState<string>('edwin-solista');
+  const [selectedArtistId, setSelectedArtistId] = useState<string>(DEFAULT_ARTIST_PROFILE_ID);
   const [artistCategoryFilter, setArtistCategoryFilter] = useState<ArtistCategoryFilter>('all');
   const [artistSearch, setArtistSearch] = useState<string>('');
   const [blockedAlert, setBlockedAlert] = useState<string | null>(null);
+
+  // P1 ATRIBUCIÓN: procedencia real de la landing (?cluster=&landing=&formato=).
+  // Sin este estado, 488 URLs enviaban tráfico al embudo de dinero y el depósito
+  // se cobraba sin saber de qué página venía el cliente.
+  const [attribution, setAttribution] = useState<LandingAttribution>(EMPTY_LANDING_ATTRIBUTION);
+
 
   // CERO-FACHADAS: disponibilidad real desde el motor ACID
   const [availabilityMap, setAvailabilityMap] = useState<Record<string, AvailabilityRecord>>({});
@@ -228,6 +111,21 @@ export default function SolistaReservationPage() {
   const [venueType, setVenueType] = useState<VenueType>('SALON_BODA');
   const [acousticRider, setAcousticRider] = useState<AcousticRiderState | null>(null);
   const [acousticLoading, setAcousticLoading] = useState<boolean>(false);
+
+  // P1 ATRIBUCIÓN: hidrata la procedencia y preselecciona el formato que la
+  // landing ya estaba vendiendo. Homologación SSOT → perfil en un único módulo
+  // puro (`landing-attribution`). Parámetro sucio → perfil por defecto, cero
+  // excepciones, cero bloqueo de la venta.
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const parsed = readLandingAttribution(window.location.search);
+    setAttribution(parsed);
+    if (parsed.artistProfileId) {
+      setSelectedArtistId(parsed.artistProfileId);
+      setArtistCategoryFilter('all');
+      setArtistSearch('');
+    }
+  }, []);
 
   const selectedArtist = useMemo(() => {
     return ARTIST_FORMATS.find(a => a.id === selectedArtistId) || ARTIST_FORMATS[0];
@@ -367,45 +265,45 @@ export default function SolistaReservationPage() {
     });
   }, [selectedDate]);
 
-  // CERO-FACHADAS: consultar disponibilidad real vía motor ACID para cada día del mes visible.
+  // CERO-FACHADAS: disponibilidad REAL de la agenda del artista seleccionado.
+  // Antes se consultaba `/api/availability/check?date=...` SIN identificar al
+  // artista: el motor devolvía colisiones de TODA la red y el cliente veía un
+  // día ocupado porque un catering de otra provincia tenía una reserva.
   useEffect(() => {
     let cancelled = false;
+    const monthParam = `2026-${String(selectedMonth).padStart(2, '0')}`;
 
-    async function loadAvailability() {
-      const daysInMonth = new Date(2026, selectedMonth, 0).getDate();
-      const dates: string[] = [];
-      for (let d = 1; d <= daysInMonth; d++) {
-        dates.push(`2026-${String(selectedMonth).padStart(2, '0')}-${String(d).padStart(2, '0')}`);
-      }
-
-      const settled = await Promise.allSettled(
-        dates.map((date) =>
-          fetch(`/api/availability/check?date=${date}`).then((res) => res.json())
-        )
-      );
-
-      if (cancelled) return;
-
-      const map: Record<string, AvailabilityRecord> = {};
-      settled.forEach((result, i) => {
-        if (result.status === 'fulfilled') {
-          map[dates[i]] = {
-            available: Boolean(result.value.available),
-            reason: typeof result.value.reason === 'string' ? result.value.reason : 'AVAILABLE',
+    fetch(`/api/calendar/artista/${encodeURIComponent(selectedArtistId)}?month=${monthParam}`, {
+      cache: 'no-store',
+    })
+      .then((res) => res.json())
+      .then(
+        (json: {
+          ok?: boolean;
+          month?: {
+            days?: Array<{ date: string; status: string; reason: string | null }>;
           };
-        } else {
-          map[dates[i]] = { available: false, reason: 'ERROR' };
-        }
+        }) => {
+          if (cancelled || !json?.ok || !json.month?.days) return;
+          const map: Record<string, AvailabilityRecord> = {};
+          for (const day of json.month.days) {
+            const available = day.status === 'LIBRE' || day.status === 'PARCIAL';
+            map[day.date] = {
+              available,
+              reason: available ? 'AVAILABLE' : day.reason ?? 'CALENDAR_BLOCKED',
+            };
+          }
+          setAvailabilityMap(map);
+        },
+      )
+      .catch(() => {
+        if (!cancelled) setAvailabilityMap({});
       });
 
-      setAvailabilityMap(map);
-    }
-
-    loadAvailability();
     return () => {
       cancelled = true;
     };
-  }, [selectedMonth]);
+  }, [selectedArtistId, selectedMonth]);
 
   // Generate calendar days for the selected month (Year 2026), alimentado por el motor ACID.
   const calendarDays = useMemo<CalendarDay[]>(() => {
@@ -525,10 +423,13 @@ export default function SolistaReservationPage() {
 
   const whatsappMessage = useMemo(() => {
     const locText = distance > 0 ? `${distance} km de Méntrida` : 'zona centro';
+    const originText = attribution.landingSlug
+      ? ` Vengo de la landing ${attribution.cluster}/${attribution.landingSlug}.`
+      : '';
     return encodeURIComponent(
-      `Hola Edwin, he seleccionado a *${selectedArtist.name}* (${selectedArtist.role}) para la fecha del ${formattedSelectedDate} a ${locText} (finalización estimada ~${endTime}, presupuesto est. ${totalCost.toFixed(2)}€). Quiero verificar disponibilidad final y proceder al bloqueo con el depósito de 100€.`
+      `Hola Edwin, he seleccionado a *${selectedArtist.name}* (${selectedArtist.role}) para la fecha del ${formattedSelectedDate} a ${locText} (finalización estimada ~${endTime}, presupuesto est. ${totalCost.toFixed(2)}€). Quiero verificar disponibilidad final y proceder al bloqueo con el depósito de 100€.${originText}`
     );
-  }, [formattedSelectedDate, selectedArtist, distance, endTime, totalCost]);
+  }, [formattedSelectedDate, selectedArtist, distance, endTime, totalCost, attribution]);
 
   const whatsappUrl = `https://wa.me/${whatsappPhone}?text=${whatsappMessage}`;
 
@@ -537,6 +438,7 @@ export default function SolistaReservationPage() {
     setDepositError(null);
     setDepositLoading(true);
     try {
+      const idempotencyKey = `solista_${selectedDate}_${selectedArtist.id}_${Math.round(totalCost)}`;
       const res = await fetch('/api/reservar/solista/deposit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -546,6 +448,13 @@ export default function SolistaReservationPage() {
           distanciaKm: distance,
           horaFin: endTime,
           totalEstimado: Number(totalCost.toFixed(2)),
+          artistProfileId: selectedArtist.id,
+          idempotencyKey,
+          // P1 ATRIBUCIÓN: viaja hasta Stripe (metadata) y n8n. Sin esto el
+          // depósito era ciego: se cobraba pero nadie sabía qué landing lo generó.
+          landingSlug: attribution.landingSlug ?? '',
+          landingCluster: attribution.cluster,
+          landingFormatId: attribution.formatId ?? '',
         }),
       });
       const data = await res.json();
@@ -560,7 +469,7 @@ export default function SolistaReservationPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#050505] text-[#FFFFFF] font-sans selection:bg-[#258DCD] selection:text-white pb-24">
+    <div className="min-h-screen bg-[#050505] text-[#FFFFFF] font-sans selection:bg-[#1B76B8] selection:text-white pb-24">
       {/* HEADER */}
       <header className="border-b border-white/10 bg-[#050505]/90 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
@@ -583,6 +492,24 @@ export default function SolistaReservationPage() {
       </header>
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 mt-10">
+
+        {/* P1 ATRIBUCIÓN: procedencia verificada de la landing de origen.
+            Convierte 488 URLs de SEO en datos de venta auditables. */}
+        {attribution.landingSlug && (
+          <div className="mb-6 flex flex-wrap items-center gap-x-3 gap-y-2 rounded-3xl border border-white/10 bg-[#09090d]/80 px-4 py-3 backdrop-blur-md transition-all duration-300 ease-out hover:border-[#258DCD]/40">
+            <span className="text-[10px] font-mono uppercase tracking-[0.18em] text-zinc-500">
+              Origen verificado
+            </span>
+            <span className="font-mono text-xs text-[#258DCD]">
+              {attribution.cluster}/{attribution.landingSlug}
+            </span>
+            {attribution.formatId && (
+              <span className="ml-auto rounded-full border border-[#258DCD]/30 bg-[#258DCD]/10 px-2.5 py-0.5 text-[11px] font-semibold text-[#AAD6CD]">
+                Formato aplicado: {selectedArtist.name}
+              </span>
+            )}
+          </div>
+        )}
 
         {/* POST-PAYMENT CONFIRMATION (P0 #3: funnel → confirmación idempotente) */}
         {depositConfirmStatus !== 'idle' && (
@@ -711,19 +638,19 @@ export default function SolistaReservationPage() {
                 <div className="flex items-center gap-1 bg-[#111] p-1 rounded-xl border border-white/10 text-xs font-mono">
                   <button
                     onClick={() => setSelectedMonth(9)}
-                    className={`px-3 py-1.5 rounded-lg transition-all ${selectedMonth === 9 ? 'bg-[#258DCD] text-white font-bold shadow' : 'text-zinc-400 hover:text-white'}`}
+                    className={`px-3 py-1.5 rounded-lg transition-all ${selectedMonth === 9 ? 'bg-[#1B76B8] text-white font-bold shadow' : 'text-zinc-400 hover:text-white'}`}
                   >
                     Septiembre
                   </button>
                   <button
                     onClick={() => setSelectedMonth(10)}
-                    className={`px-3 py-1.5 rounded-lg transition-all ${selectedMonth === 10 ? 'bg-[#258DCD] text-white font-bold shadow' : 'text-zinc-400 hover:text-white'}`}
+                    className={`px-3 py-1.5 rounded-lg transition-all ${selectedMonth === 10 ? 'bg-[#1B76B8] text-white font-bold shadow' : 'text-zinc-400 hover:text-white'}`}
                   >
                     Octubre
                   </button>
                   <button
                     onClick={() => setSelectedMonth(11)}
-                    className={`px-3 py-1.5 rounded-lg transition-all ${selectedMonth === 11 ? 'bg-[#258DCD] text-white font-bold shadow' : 'text-zinc-400 hover:text-white'}`}
+                    className={`px-3 py-1.5 rounded-lg transition-all ${selectedMonth === 11 ? 'bg-[#1B76B8] text-white font-bold shadow' : 'text-zinc-400 hover:text-white'}`}
                   >
                     Noviembre
                   </button>
@@ -745,7 +672,7 @@ export default function SolistaReservationPage() {
                   </button>
                   <button
                     onClick={() => setDayTypeFilter('weekends')}
-                    className={`px-2.5 py-1 rounded-lg text-xs transition-colors ${dayTypeFilter === 'weekends' ? 'bg-[#258DCD]/20 text-[#258DCD] font-bold border border-[#258DCD]/30' : 'text-zinc-500 hover:text-zinc-300'}`}
+                    className={`px-2.5 py-1 rounded-lg text-xs transition-colors ${dayTypeFilter === 'weekends' ? 'bg-[#258DCD]/20 text-[#7FD4FF] font-bold border border-[#258DCD]/30' : 'text-zinc-500 hover:text-zinc-300'}`}
                   >
                     Fines de Semana
                   </button>
@@ -816,7 +743,7 @@ export default function SolistaReservationPage() {
                         key={dateStr}
                         onClick={() => handleDateSelect(item)}
                         className={`h-14 sm:h-16 rounded-xl border p-2 flex flex-col justify-between items-start transition-all relative ${isSelected
-                          ? 'bg-[#258DCD] border-white text-white shadow-[0_0_20px_rgba(37,141,205,0.5)] scale-[1.03] z-10'
+                          ? 'bg-[#1B76B8] border-white text-white shadow-[0_0_20px_rgba(37,141,205,0.5)] scale-[1.03] z-10'
                           : 'border-amber-500/30 bg-amber-500/5 hover:border-amber-400 text-zinc-200'
                           }`}
                       >
@@ -837,7 +764,7 @@ export default function SolistaReservationPage() {
                       key={dateStr}
                       onClick={() => handleDateSelect(item)}
                       className={`h-14 sm:h-16 rounded-xl border p-2 flex flex-col justify-between items-start transition-all ${isSelected
-                        ? 'bg-[#258DCD] border-white text-white shadow-[0_0_20px_rgba(37,141,205,0.5)] scale-[1.03] z-10'
+                        ? 'bg-[#1B76B8] border-white text-white shadow-[0_0_20px_rgba(37,141,205,0.5)] scale-[1.03] z-10'
                         : 'border-white/10 bg-[#050505] hover:border-[#258DCD]/50 text-zinc-300 hover:text-white'
                         }`}
                     >
@@ -898,7 +825,7 @@ export default function SolistaReservationPage() {
                     key={tab.id}
                     onClick={() => setArtistCategoryFilter(tab.id)}
                     className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all ${artistCategoryFilter === tab.id
-                      ? 'bg-[#258DCD] text-white font-bold shadow-[0_0_15px_rgba(37,141,205,0.4)]'
+                      ? 'bg-[#1B76B8] text-white font-bold shadow-[0_0_15px_rgba(37,141,205,0.4)]'
                       : 'bg-white/5 text-zinc-400 hover:text-white hover:bg-white/10'
                       }`}
                   >
@@ -966,7 +893,7 @@ export default function SolistaReservationPage() {
                         <button
                           type="button"
                           className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${isSelected
-                            ? 'bg-[#258DCD] text-white shadow'
+                            ? 'bg-[#1B76B8] text-white shadow'
                             : 'bg-white/5 text-zinc-300 group-hover:bg-white/10'
                             }`}
                         >
@@ -1066,7 +993,7 @@ export default function SolistaReservationPage() {
                 <ShieldCheck size={16} className="text-[#258DCD]" /> Rider Acústico por Contexto <span className="font-mono text-[#AAD6CD]">(Ley 37/2003)</span>
               </h3>
               {acousticLoading && !acousticRider && (
-                <p className="text-xs text-zinc-500 font-mono animate-pulse">Calculando presión sonora y sistema recomendado…</p>
+                <p className="text-xs text-zinc-300 font-mono animate-pulse">Calculando presión sonora y sistema recomendado…</p>
               )}
               {acousticRider && (
                 <div className="space-y-3">
@@ -1190,11 +1117,11 @@ export default function SolistaReservationPage() {
               {/* DEPOSIT CARD */}
               <div className="bg-[#050505] rounded-xl p-5 mb-8 border border-[#258DCD]/20">
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-sm font-bold text-white">Depósito Vinculante de Reserva</span>
+                  <span className="text-sm font-bold text-white">Depósito Vinculante de Reserva (Price-Lock)</span>
                   <span className="font-mono font-bold text-[#258DCD]">{DEPOSIT.toFixed(2)} €</span>
                 </div>
-                <p className="text-[11px] text-zinc-500 leading-tight">
-                  Pago seguro oficial vía Stripe (SHA-256). El abono de este depósito formaliza el bloqueo inmutable de tu fecha en nuestro calendario oficial. El importe restante se liquida el día del evento.
+                <p className="text-[11px] text-zinc-400 leading-relaxed">
+                  Pago seguro oficial vía Stripe (SHA-256). El abono de este depósito formaliza el bloqueo atómico e inmutable de tu fecha en nuestro calendario oficial. <strong className="text-white">100% deducible del importe total:</strong> los {DEPOSIT.toFixed(0)} € se descuentan íntegros de la liquidación final el día del evento.
                 </p>
               </div>
 
@@ -1250,9 +1177,9 @@ export default function SolistaReservationPage() {
                   type="button"
                   onClick={handleDepositCheckout}
                   disabled={depositLoading}
-                  className="w-full flex items-center justify-center gap-2 bg-[#258DCD] hover:bg-[#1E74A8] text-white font-bold py-4 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] shadow-[0_0_20px_rgba(37,141,205,0.3)] mb-4 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full flex items-center justify-center gap-2 bg-[#1B76B8] hover:bg-[#155E90] text-white font-bold py-4 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] shadow-[0_0_20px_rgba(37,141,205,0.3)] mb-4 disabled:bg-[#155E90] disabled:opacity-100 disabled:cursor-not-allowed tracking-wide text-sm"
                 >
-                  {depositLoading ? 'Creando depósito seguro…' : 'PAGAR RESERVA (100 €)'} <ArrowRight size={18} />
+                  {depositLoading ? 'Asegurando bloqueo inmutable…' : 'RESERVAR FECHA CON PRICE-LOCK (100 € DEDUCIBLES)'} <ArrowRight size={18} />
                 </button>
               </div>
 

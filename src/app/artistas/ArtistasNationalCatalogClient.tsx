@@ -807,7 +807,7 @@ export default function ArtistasNationalCatalogClient() {
               <button
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1 || loading}
-                className="p-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white disabled:opacity-40 transition"
+                className="p-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white disabled:opacity-100 disabled:text-slate-400 transition"
                 aria-label="Página anterior"
               >
                 <ChevronLeft className="w-4 h-4" />
@@ -818,7 +818,7 @@ export default function ArtistasNationalCatalogClient() {
               <button
                 onClick={() => handlePageChange(currentPage + 1)}
                 disabled={currentPage === totalPages || loading}
-                className="p-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white disabled:opacity-40 transition"
+                className="p-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white disabled:opacity-100 disabled:text-slate-400 transition"
                 aria-label="Página siguiente"
               >
                 <ChevronRight className="w-4 h-4" />
@@ -866,7 +866,7 @@ export default function ArtistasNationalCatalogClient() {
               <button
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
-                className="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white disabled:opacity-40 transition flex items-center gap-1.5"
+                className="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white disabled:opacity-100 disabled:text-slate-400 transition flex items-center gap-1.5"
               >
                 <ChevronLeft className="w-3.5 h-3.5" /> Anterior
               </button>
@@ -878,7 +878,7 @@ export default function ArtistasNationalCatalogClient() {
               <button
                 onClick={() => handlePageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                className="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white disabled:opacity-40 transition flex items-center gap-1.5"
+                className="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white disabled:opacity-100 disabled:text-slate-400 transition flex items-center gap-1.5"
               >
                 Siguiente <ChevronRight className="w-3.5 h-3.5" />
               </button>

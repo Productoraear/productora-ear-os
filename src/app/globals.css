@@ -114,6 +114,59 @@
     --glow-ear-coral: 0 0 20px rgba(255, 43, 68, 0.35);
   }
 
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     🔴 MODO AIRBNB FRONTEND (TEST REVERSIBLE S-CLASS)
+     Lienzo Blanco Puro (#FFFFFF) · Acento Coral / Rausch (#FF385C)
+     Sombras Limpias, Textos Grafito (#222222), Cards 4:3 y Estética Pro
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  .theme-airbnb,
+  [data-theme="airbnb"] {
+    --background: #FFFFFF;
+    --foreground: #222222;
+    --card: #FFFFFF;
+    --card-foreground: #222222;
+    --card-surface-elevated: #F7F7F7;
+    --border: #EBEBEB;
+    --border-subtle: #DDDDDD;
+    --border-glass: rgba(0, 0, 0, 0.06);
+    --muted: #F7F7F7;
+    --muted-foreground: #717171;
+
+    /* Acento Rausch Airbnb Oficial */
+    --primary: #FF385C;
+    --primary-foreground: #FFFFFF;
+    --primary-light: #FF5A78;
+    --primary-dark: #E00B41;
+    --primary-aura: rgba(255, 56, 92, 0.22);
+    --color-ear-cyan: #FF385C;
+    --color-ear-blue: #E00B41;
+    --color-ear-sapphire: #FFFFFF;
+    --color-ear-sapphire-dark: #F7F7F7;
+    --color-ear-coral: #FF385C;
+    --color-ear-red-action: #FF385C;
+  }
+
+  [data-theme="airbnb"],
+  [data-theme="airbnb"] body {
+    background-color: #FFFFFF !important;
+    color: #222222 !important;
+  }
+
+  /* Tarjetas con sombras suaves estilo Airbnb */
+  [data-theme="airbnb"] article {
+    border-radius: 1.25rem;
+    border: 1px solid #EBEBEB;
+    background-color: #FFFFFF;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  [data-theme="airbnb"] article:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+    border-color: #DDDDDD;
+  }
+
   *,
   *::before,
   *::after {
@@ -506,6 +559,104 @@ html {
 .light .text-white\/30,
 .light .text-white\/20 {
   opacity: 0.6;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   CONTRASTE S-CLASS — HARDENING WCAG 2.2 AA SOBRE LIENZO OLED
+   Los grises 500/600 de Tailwind (#71717A / #52525B) rinden 3.8–4.2:1 sobre el
+   lienzo #030305 y suspenden AA en texto normal. Se reasignan a grises con
+   ratio medido (fórmula WCAG 2.x sRGB), preservando la jerarquía 400 > 500 > 600.
+   Excluido el tema claro (.light) y Airbnb, donde las superficies son blancas.
+   ═══════════════════════════════════════════════════════════════════════════════ */
+html:not(.light):not(.theme-airbnb) .text-zinc-600 {
+  color: #86868f; /* 5.73:1 sobre #030305 — antes 2.34:1 */
+}
+
+html:not(.light):not(.theme-airbnb) .text-zinc-500 {
+  color: #96969f; /* 7.05:1 sobre #030305 — antes 4.09:1 */
+}
+
+html:not(.light):not(.theme-airbnb) .text-neutral-600 {
+  color: #8a8a8a; /* 5.90:1 sobre #030305 — antes 2.40:1 */
+}
+
+html:not(.light):not(.theme-airbnb) .text-neutral-500 {
+  color: #999999; /* 7.27:1 sobre #030305 — antes 4.11:1 */
+}
+
+html:not(.light):not(.theme-airbnb) .text-gray-600 {
+  color: #8b93a3; /* 6.70:1 sobre #030305 */
+}
+
+html:not(.light):not(.theme-airbnb) .text-gray-500 {
+  color: #9199a8; /* 7.23:1 sobre #030305 — antes 3.92:1 */
+}
+
+/* Escala slate restaurada: sus tonos 500/600 también suspenden AA sobre OLED. */
+html:not(.light):not(.theme-airbnb) .text-slate-600 {
+  color: #7b899f; /* 5.83:1 sobre #030305 */
+}
+
+html:not(.light):not(.theme-airbnb) .text-slate-500 {
+  color: #8b98ad; /* 7.09:1 sobre #030305 */
+}
+
+/* Grises 700 (casi invisibles sobre negro) elevados al umbral AA. */
+html:not(.light):not(.theme-airbnb) .text-zinc-700 {
+  color: #7c7c86; /* 5.01:1 sobre #030305 */
+}
+
+html:not(.light):not(.theme-airbnb) .text-neutral-700 {
+  color: #7f7f7f; /* 5.24:1 sobre #030305 */
+}
+
+html:not(.light):not(.theme-airbnb) .text-gray-700 {
+  color: #7d8595; /* 5.58:1 sobre #030305 */
+}
+
+/* ::placeholder es texto real (WCAG 1.4.3). Firefox lo atenúa al 54% por
+   defecto, lo que hunde el ratio: se fija color y opacidad explícitos. */
+html:not(.light):not(.theme-airbnb) input::placeholder,
+html:not(.light):not(.theme-airbnb) textarea::placeholder {
+  color: #96969f; /* 7.05:1 sobre #0a0a0f */
+  opacity: 1;
+}
+
+/* ── Blancos translúcidos: por debajo de 0.45 de alfa suspenden AA en OLED ─── */
+html:not(.light):not(.theme-airbnb) .text-white\/20 {
+  color: rgb(255 255 255 / 0.55); /* 5.6:1 */
+}
+
+html:not(.light):not(.theme-airbnb) .text-white\/25 {
+  color: rgb(255 255 255 / 0.58); /* 5.9:1 */
+}
+
+html:not(.light):not(.theme-airbnb) .text-white\/30 {
+  color: rgb(255 255 255 / 0.6); /* 6.1:1 */
+}
+
+html:not(.light):not(.theme-airbnb) .text-white\/35 {
+  color: rgb(255 255 255 / 0.64); /* 6.7:1 */
+}
+
+html:not(.light):not(.theme-airbnb) .text-white\/40 {
+  color: rgb(255 255 255 / 0.72); /* 10.1:1 */
+}
+
+/* ── Violeta neuroacústico VIMUME: texto sobre OLED y relleno con texto blanco ─
+   #8b5cf6 como texto = 4.02–4.4:1 (suspende). Como relleno con blanco = 4.23:1. */
+html:not(.light):not(.theme-airbnb) .text-\[\#8b5cf6\] {
+  color: #a78bfa; /* 6.7:1 sobre #030305 */
+}
+
+html:not(.light):not(.theme-airbnb) .bg-\[\#8b5cf6\] {
+  background-color: #6d28d9; /* blanco encima = 7.1:1 */
+}
+
+/* Rubí como TEXTO: #FF2B44 rinde 4.41:1 sobre sus propias píldoras al 10% de
+   alfa (suspende AA). Se eleva al rubí claro corporativo (--primary-light). */
+html:not(.light):not(.theme-airbnb) .text-\[\#FF2B44\] {
+  color: #ff5c72; /* 6.9:1 sobre #030305 · 4.81:1 sobre rubí/10 */
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────

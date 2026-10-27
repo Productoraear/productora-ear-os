@@ -1,10 +1,14 @@
 import { createHash } from 'crypto';
 import {
-  TARIFA_BASE_SOLISTA_EUR,
   DEPOSITO_STRIPE_EUR,
   VAT_RATE,
   SPLIT_SOBERANO as SSOT_SPLIT_RATIOS,
 } from '@/lib/constants/ear-os-ssot';
+import {
+  MARIACHI_FORMATS,
+  type MariachiFormat,
+  type MariachiFormatId,
+} from './mariachi-formats';
 import {
   calculateHaversineDistance,
   calculateLogisticsFee,
@@ -23,61 +27,13 @@ import {
  * ════════════════════════════════════════════════════════════════════════════
  */
 
-export type MariachiFormatId = 'solista' | 'cuarteto' | 'gala' | 'monumental';
-
-export interface MariachiFormat {
-  id: MariachiFormatId;
-  name: string;
-  members: number;
-  basePrice: number; // En euros (sin IVA)
-  description: string;
-  recommendedFor: string;
-  depositAmount: number; // Siempre 100 € (SSOT)
-  repertoireCount: number;
-}
-
-export const MARIACHI_FORMATS: readonly MariachiFormat[] = [
-  {
-    id: 'solista',
-    name: 'Solista Serenata Express',
-    members: 1,
-    basePrice: TARIFA_BASE_SOLISTA_EUR,
-    description: 'Voz tenor solista de gala (Edwin Agudelo o voz asignada) con vihuela/guitarra o pistas de estudio en alta fidelidad.',
-    recommendedFor: 'Serenatas, aniversarios y domicilios (hasta 35 pax)',
-    depositAmount: DEPOSITO_STRIPE_EUR,
-    repertoireCount: 10,
-  },
-  {
-    id: 'cuarteto',
-    name: 'Cuarteto Clásico Ranchero',
-    members: 4,
-    basePrice: 600,
-    description: 'Trompeta solista, vihuela, guitarrón y violín. El equilibrio perfecto para cócteles y fiestas familiares.',
-    recommendedFor: 'Cócteles de boda y cumpleaños (hasta 90 pax)',
-    depositAmount: DEPOSITO_STRIPE_EUR,
-    repertoireCount: 18,
-  },
-  {
-    id: 'gala',
-    name: 'Gala Imperial Edwin Agudelo',
-    members: 6,
-    basePrice: 900,
-    description: '2 trompetas, 2 violines, vihuela y guitarrón. Traje de charro de gala, show interactivo y dirección de Edwin Agudelo.',
-    recommendedFor: 'Bodas en finca, banquetes y convenciones (hasta 200 pax)',
-    depositAmount: DEPOSITO_STRIPE_EUR,
-    repertoireCount: 26,
-  },
-  {
-    id: 'monumental',
-    name: 'Mariachi Monumental S-Class',
-    members: 8,
-    basePrice: 1300,
-    description: 'Agrupación sinfónica completa: 3 violines, 2 trompetas, vihuela, guitarrón y guitarra española. Acústica 12 W/pax.',
-    recommendedFor: 'Fiestas patronales B2G, grandes auditorios y eventos VIP',
-    depositAmount: DEPOSITO_STRIPE_EUR,
-    repertoireCount: 35,
-  },
-] as const;
+/**
+ * Catálogo canónico movido a `./mariachi-formats` (capa pura, sin dependencias
+ * de Node) para que el configurador cliente `/reservar/solista` y los
+ * guardianes puedan leer los precios del SSOT sin arrastrar `crypto`.
+ * Este módulo los re-exporta para no romper a ningún consumidor histórico.
+ */
+export * from './mariachi-formats';
 
 export interface SongRepertoireItem {
   id: string;

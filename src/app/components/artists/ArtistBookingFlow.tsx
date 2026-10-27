@@ -1,45 +1,96 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Calendar as CalendarIcon, ShieldCheck, CreditCard, Sparkles, Building2, FileText, CheckCircle, Mail, Phone, User } from 'lucide-react';
+import { Calendar as CalendarIcon, ShieldCheck, Sparkles, Building2, FileText, User } from 'lucide-react';
 
 export interface ArtistBookingFlowProps {
   city?: string;
   eventType?: string;
+  /** Slug canónico del artista cuya agenda se bloquea (por defecto, el insignia). */
+  artistSlug?: string;
+  /** Nombre visible del artista en el recibo de garantía. */
+  artistName?: string;
 }
 
-export const ArtistBookingFlow: React.FC<ArtistBookingFlowProps> = ({ city, eventType }) => {
+export const ArtistBookingFlow: React.FC<ArtistBookingFlowProps> = ({
+  city,
+  eventType,
+  artistSlug = 'edwin-agudelo',
+  artistName = 'Edwin Agudelo',
+}) => {
   const [flowType, setFlowType] = useState<'B2C' | 'B2G'>('B2C');
   const [selectedPack, setSelectedPack] = useState<'BASIC' | 'PREMIUM' | 'ROYAL'>('BASIC');
   const [eventDate, setEventDate] = useState('');
-  
+
   // B2C fields
   const [b2cName, setB2cName] = useState('');
   const [b2cPhone, setB2cPhone] = useState('');
-  
+
   // B2G fields
   const [institutionName, setInstitutionName] = useState('');
   const [cif, setCif] = useState('');
   const [contactPerson, setContactPerson] = useState('');
   const [contactEmail, setContactEmail] = useState('');
   const [contactPhone, setContactPhone] = useState('');
-  
+
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [bookingError, setBookingError] = useState<string | null>(null);
 
-  const formattedDate = eventDate 
-    ? new Date(eventDate + 'T00:00:00').toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' }) 
+  const formattedDate = eventDate
+    ? new Date(eventDate + 'T00:00:00').toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })
     : '';
 
-  const handleBooking = (e: React.FormEvent) => {
+  /**
+   * CERO FACHADAS: el botón ya no simula. Llama al motor de garantías, que
+   * escribe la reserva en la agenda DEL ARTISTA seleccionado y devuelve un
+   * recibo SHA-256 (o una sesión real de Stripe en producción).
+   */
+  const handleBooking = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!eventDate) return;
+
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
+    setBookingError(null);
+
+    try {
+      const res = await fetch('/api/events/deposit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          mode: process.env.NODE_ENV === 'production' ? 'stripe' : 'simulate',
+          eventDate,
+          timeSlot: '14:00',
+          clientEmail: contactEmail || undefined,
+          idempotencyKey: `booking-${artistSlug}-${eventDate}-${b2cPhone || contactPhone || 'anon'}`.slice(0, 80),
+          items: [{ slug: artistSlug, kind: 'artista', name: artistName }],
+        }),
+      });
+      const json = (await res.json()) as {
+        ok?: boolean;
+        error?: string;
+        receipts?: Array<{ checkoutUrl?: string | null }>;
+      };
+
+      if (!res.ok || !json.ok) {
+        setBookingError(json.error ?? 'No se pudo bloquear la fecha. Inténtalo de nuevo.');
+        return;
+      }
+
+      const checkoutUrl = json.receipts?.[0]?.checkoutUrl;
+      if (checkoutUrl) {
+        window.location.href = checkoutUrl;
+        return;
+      }
+
       setSuccess(true);
-    }, 600);
+    } catch {
+      setBookingError('Fallo de red al bloquear la fecha.');
+    } finally {
+      setLoading(false);
+    }
   };
+
 
   return (
     <div className="bg-[#0b0b0b] border border-white/5 rounded-[2.5rem] sm:rounded-[3.5rem] p-6 sm:p-12 space-y-8 relative overflow-hidden">
@@ -172,6 +223,12 @@ export const ArtistBookingFlow: React.FC<ArtistBookingFlowProps> = ({ city, even
                   ))}
                 </div>
               </div>
+
+              {bookingError && (
+                <p className="text-[11px] font-mono text-rose-400 bg-rose-500/10 border border-rose-500/30 rounded-xl px-4 py-3">
+                  {bookingError}
+                </p>
+              )}
 
               <button
                 type="submit"

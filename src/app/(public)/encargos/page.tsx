@@ -341,7 +341,7 @@ export default function EncargosStudioPage() {
             <button
               type="submit"
               disabled={loading || !protagonista.trim() || !detalles.trim()}
-              className="w-full bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:opacity-95 text-black font-extrabold text-sm md:text-base py-4 rounded-2xl flex items-center justify-center gap-2.5 shadow-xl transition-all disabled:opacity-40 disabled:cursor-not-allowed uppercase tracking-wider"
+              className="w-full bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:opacity-95 text-black font-extrabold text-sm md:text-base py-4 rounded-2xl flex items-center justify-center gap-2.5 shadow-xl transition-all disabled:bg-none disabled:bg-[#12121a] disabled:text-neutral-300 disabled:shadow-none disabled:cursor-not-allowed uppercase tracking-wider"
             >
               {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />}
               {loading ? 'Preparando Pasarela Segura...' : `Formalizar Encargo de Autor (${totalPrice.toFixed(2)} €)`}

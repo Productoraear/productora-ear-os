@@ -91,6 +91,20 @@ function OmniAuthLoginForm() {
 
     try {
       if (authRole === 'admin') {
+        // Acceso Soberano Inviolable Instantáneo con PIN 1012
+        if (password.trim() === '1012') {
+          const pinRes = await fetch('/api/auth/admin-verify', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password: '1012', role: 'admin' }),
+          });
+          const pinData = await pinRes.json();
+          if (pinRes.ok && pinData.success) {
+            window.location.href = fromPath || '/admin';
+            return;
+          }
+        }
+
         const checkRes = await fetch('/api/auth/admin-verify', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -101,7 +115,7 @@ function OmniAuthLoginForm() {
 
         if (checkRes.ok && checkData.success) {
           const today = String(new Date().getDate()).padStart(2, '0');
-          setInfoMsg(`Abre Google Authenticator e introduce tu código de 6 cifras (o usa el PIN Soberano de hoy: ${today}24).`);
+          setInfoMsg(`Abre Google Authenticator e introduce tu código de 6 cifras (o usa el PIN Maestro: 1012).`);
           setStep(2);
           return;
         } else {

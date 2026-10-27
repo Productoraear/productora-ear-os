@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   ChevronLeft,
   ChevronRight,
@@ -15,6 +15,11 @@ import {
   Sunset,
   Moon
 } from 'lucide-react';
+import {
+  buildEntityCalendarHref,
+  buildEntityIcalHref,
+} from '@/lib/calendar/entity-calendar-engine';
+import type { CalendarEntityKind } from '@/lib/calendar/entity-calendar-types';
 
 export interface RouteTimeSlot {
   id: string;
@@ -41,6 +46,10 @@ export const ROUTE_TIME_SLOTS: RouteTimeSlot[] = [
 interface ArtistAvailabilityCalendarProps {
   artistId: string;
   artistName: string;
+  /** Tipología de la entidad dueña de la agenda (artista, catering, finca…). */
+  entityKind?: CalendarEntityKind;
+  /** Slug canónico de la entidad. Si se omite, se usa `artistId`. */
+  entitySlug?: string;
   selectedDate: string | null;
   onSelectDate: (date: string) => void;
   selectedTimeSlot?: string | null;
@@ -58,45 +67,46 @@ const MONTH_NAMES = [
 const DAY_NAMES = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
 
 /**
- * Genera fechas completamente bloqueadas y horas ocupadas por ruta de forma determinista
- * garantizando que los mariachis, tunas, solistas y terapeutas en ruta puedan atender múltiples pases
- * en un mismo día sin solapamientos (tope digno de 6 actuaciones/día).
+ * Mapea la disponibilidad REAL servida por `/api/calendar/[kind]/[slug]`
+ * a las estructuras que consume esta rejilla.
+ *
+ * SUSTITUYE a `getDeterministicBlockedData`, que inventaba bloqueos con un hash
+ * del id y un generador pseudoaleatorio: el artista veía fechas ocupadas que
+ * nunca reservó y el cliente veía libres días realmente cerrados.
  */
-function getDeterministicBlockedData(artistId: string, year: number, month: number) {
+interface RemoteCalendarPayload {
+  ok: boolean;
+  blockedDates?: string[];
+  reservedSlots?: Record<string, string[]>;
+  month?: { days?: Array<{ date: string; fullDayBlocked: boolean; bookedSlots: string[] }> };
+}
+
+function mapRemoteAvailability(payload: RemoteCalendarPayload | null): {
+  fullBlockedDates: Set<string>;
+  partialBookedSlots: Record<string, Set<string>>;
+} {
   const fullBlockedDates = new Set<string>();
   const partialBookedSlots: Record<string, Set<string>> = {};
-  const idHash = artistId.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
+  if (!payload || !payload.ok) return { fullBlockedDates, partialBookedSlots };
 
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  (payload.blockedDates ?? []).forEach((date) => fullBlockedDates.add(date));
 
-  for (let day = 1; day <= daysInMonth; day++) {
-    const d = new Date(year, month, day);
-    const dayOfWeek = d.getDay(); // 0 = Domingo, 6 = Sábado, 5 = Viernes
-    const padM = String(month + 1).padStart(2, '0');
-    const padD = String(day).padStart(2, '0');
-    const dateString = `${year}-${padM}-${padD}`;
-
-    const dateSeed = (idHash + day * 19 + month * 29 + year) % 100;
-
-    // Fines de semana (viernes/sábados/domingos)
-    if (dayOfWeek === 6 || dayOfWeek === 5 || dayOfWeek === 0) {
-      if (dateSeed < 15) {
-        // Día completo bloqueado
-        fullBlockedDates.add(dateString);
-      } else if (dateSeed < 75) {
-        // Día con ruta activa: tiene tramos ya reservados, pero las demás franjas quedan disponibles
-        const booked = new Set<string>();
-        // Bloqueo canónico de 14:00 para demostrar la liberación simultánea de 18:00 y 21:30
-        booked.add('slot_1400');
-        if (dateSeed % 3 === 0) booked.add('slot_2330');
-
-        // Si alcanzara el tope de 6 actuaciones, se bloquea el día completo
-        if (booked.size >= MAX_ACTIVITIES_PER_DAY) {
-          fullBlockedDates.add(dateString);
-        } else {
-          partialBookedSlots[dateString] = booked;
-        }
-      }
+  const days = payload.month?.days ?? [];
+  for (const day of days) {
+    if (day.fullDayBlocked) {
+      fullBlockedDates.add(day.date);
+      continue;
+    }
+    if (day.bookedSlots.length === 0) continue;
+    const slotIds = new Set<string>();
+    for (const startTime of day.bookedSlots) {
+      const slot = ROUTE_TIME_SLOTS.find((candidate) => candidate.startTime === startTime);
+      if (slot) slotIds.add(slot.id);
+    }
+    if (slotIds.size >= MAX_ACTIVITIES_PER_DAY) {
+      fullBlockedDates.add(day.date);
+    } else if (slotIds.size > 0) {
+      partialBookedSlots[day.date] = slotIds;
     }
   }
 
@@ -106,31 +116,64 @@ function getDeterministicBlockedData(artistId: string, year: number, month: numb
 export default function ArtistAvailabilityCalendar({
   artistId,
   artistName,
+  entityKind = 'artista',
+  entitySlug,
   selectedDate,
   onSelectDate,
   selectedTimeSlot,
   onSelectTimeSlot,
   customBlockedDates = [],
-  tidyCalUrl = 'https://tidycal.com/b/1g54vd0/weogdde/confirmation',
+  tidyCalUrl,
   readOnly = false
 }: ArtistAvailabilityCalendarProps) {
-  const [currentDate, setCurrentDate] = useState(() => new Date(2026, 9, 1)); // Oct 2026
+  const slug = (entitySlug ?? artistId).trim().toLowerCase();
+  const [currentDate, setCurrentDate] = useState(() => new Date());
   const [feedbackMsg, setFeedbackMsg] = useState<string | null>(null);
+  const [remotePayload, setRemotePayload] = useState<RemoteCalendarPayload | null>(null);
+  const [loadingAvailability, setLoadingAvailability] = useState<boolean>(true);
 
   const currentYear = currentDate.getFullYear();
   const currentMonth = currentDate.getMonth();
+  const monthParam = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}`;
 
-  // Fechas y franjas bloqueadas
+  // CERO FACHADAS: disponibilidad real del motor por entidad (nada inventado).
+  useEffect(() => {
+    let cancelled = false;
+    const controller = new AbortController();
+
+    setLoadingAvailability(true);
+    fetch(`/api/calendar/${entityKind}/${encodeURIComponent(slug)}?month=${monthParam}`, {
+      cache: 'no-store',
+      signal: controller.signal,
+    })
+      .then((res) => res.json() as Promise<RemoteCalendarPayload>)
+      .then((json) => {
+        if (!cancelled) setRemotePayload(json);
+      })
+      .catch(() => {
+        if (!cancelled) setRemotePayload(null);
+      })
+      .finally(() => {
+        if (!cancelled) setLoadingAvailability(false);
+      });
+
+    return () => {
+      cancelled = true;
+      controller.abort();
+    };
+  }, [entityKind, slug, monthParam]);
+
+  // Fechas y franjas bloqueadas (motor + bloqueos puntuales heredados del padre)
   const { fullBlockedDates, partialBookedSlots } = useMemo(() => {
-    const { fullBlockedDates, partialBookedSlots } = getDeterministicBlockedData(artistId, currentYear, currentMonth);
-    customBlockedDates.forEach((d) => fullBlockedDates.add(d));
-    return { fullBlockedDates, partialBookedSlots };
-  }, [artistId, currentYear, currentMonth, customBlockedDates]);
+    const mapped = mapRemoteAvailability(remotePayload);
+    customBlockedDates.forEach((d) => mapped.fullBlockedDates.add(d));
+    return mapped;
+  }, [remotePayload, customBlockedDates]);
 
   // Días del mes y desfase de inicio
   const { daysArray, startOffset } = useMemo(() => {
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-    let firstDay = new Date(currentYear, currentMonth, 1).getDay();
+    const firstDay = new Date(currentYear, currentMonth, 1).getDay();
     const offset = firstDay === 0 ? 6 : firstDay - 1;
 
     const days = [];
@@ -190,6 +233,15 @@ export default function ArtistAvailabilityCalendar({
           <CalendarIcon className="w-4 h-4 text-[#ecb613]" aria-hidden="true" />
           <span className="text-xs font-black uppercase text-white tracking-wider">
             Disponibilidad & Ruta por Horas
+          </span>
+          <span
+            className={`text-[9px] px-2 py-0.5 rounded-full border font-bold ${
+              loadingAvailability
+                ? 'border-slate-700 text-slate-400 animate-pulse'
+                : 'border-emerald-500/30 bg-emerald-500/10 text-emerald-400'
+            }`}
+          >
+            {loadingAvailability ? 'Sincronizando agenda…' : 'Agenda real'}
           </span>
         </div>
 
@@ -396,18 +448,37 @@ export default function ArtistAvailabilityCalendar({
           </span>
         </div>
 
-        {tidyCalUrl && (
+        <div className="flex flex-wrap items-center gap-3">
           <a
-            href={tidyCalUrl}
+            href={buildEntityCalendarHref(entityKind, slug, { intent: 'bloquear' })}
+            className="text-[10px] text-[#ecb613] hover:text-white transition flex items-center gap-1 font-bold"
+            title={`Abrir la agenda completa de ${artistName}`}
+          >
+            <span>Agenda de {artistName}</span>
+            <ExternalLink className="w-2.5 h-2.5" aria-hidden="true" />
+          </a>
+          <a
+            href={buildEntityIcalHref(entityKind, slug)}
             target="_blank"
             rel="noopener noreferrer"
             className="text-[10px] text-slate-400 hover:text-[#ecb613] transition flex items-center gap-1"
-            title="Sincronización de reuniones o eventos con TidyCal / iCal"
+            title="Feed iCal propio de esta entidad (Google/Apple Calendar)"
           >
-            <span>Sincronizar con TidyCal / iCal</span>
+            <span>iCal propio</span>
             <ExternalLink className="w-2.5 h-2.5" aria-hidden="true" />
           </a>
-        )}
+          {tidyCalUrl && (
+            <a
+              href={tidyCalUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[10px] text-slate-500 hover:text-slate-300 transition flex items-center gap-1"
+              title="TidyCal del profesional (reuniones comerciales)"
+            >
+              <span>TidyCal</span>
+            </a>
+          )}
+        </div>
       </div>
     </div>
   );

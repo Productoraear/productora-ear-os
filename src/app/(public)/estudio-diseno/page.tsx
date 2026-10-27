@@ -30,6 +30,25 @@ import libraryData from '@/data/impecable-design-library.json';
 
 type TabKey = 'biblioteca' | 'auditor' | 'prompt-builder' | 'toolbelt';
 
+/**
+ * Tinta legible sobre un relleno arbitrario (WCAG 2.2 §1.4.3).
+ * Elige negro o blanco por luminancia relativa sRGB: nunca deja el texto
+ * por debajo de AA aunque el color venga de la biblioteca de estéticas.
+ */
+function readableInk(hex: string): '#000000' | '#FFFFFF' {
+  const match = /^#?([0-9a-f]{6})$/i.exec(hex.trim());
+  if (!match) return '#FFFFFF';
+  const value = parseInt(match[1], 16);
+  const channels = [(value >> 16) & 255, (value >> 8) & 255, value & 255].map((channel) => {
+    const c = channel / 255;
+    return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+  });
+  const luminance = 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2];
+  const contrastWithBlack = (luminance + 0.05) / 0.05;
+  const contrastWithWhite = 1.05 / (luminance + 0.05);
+  return contrastWithBlack >= contrastWithWhite ? '#000000' : '#FFFFFF';
+}
+
 export default function EstudioDisenoPage() {
   const [activeTab, setActiveTab] = useState<TabKey>('biblioteca');
   const [selectedFamilyId, setSelectedFamilyId] = useState<string>('cinematic-monochrome');
@@ -144,7 +163,7 @@ NUNCA (FILTRO ANTI-SLOP):
             onClick={() => setActiveTab('auditor')}
             className={`flex-1 min-w-[130px] flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs font-mono font-bold transition-all ${
               activeTab === 'auditor'
-                ? 'bg-[#FF2B44] text-white shadow-[0_0_20px_rgba(255,43,68,0.4)] scale-[1.02]'
+                ? 'bg-[#D91E3C] text-white shadow-[0_0_20px_rgba(255,43,68,0.4)] scale-[1.02]'
                 : 'text-zinc-400 hover:text-white hover:bg-white/5'
             }`}
           >
@@ -286,7 +305,7 @@ NUNCA (FILTRO ANTI-SLOP):
                   className="px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all shadow-lg flex items-center gap-2 cursor-pointer"
                   style={{
                     backgroundColor: selectedFamily.accent_color,
-                    color: selectedFamily.accent_color === '#FFFFFF' ? '#000' : '#FFF'
+                    color: readableInk(selectedFamily.accent_color)
                   }}
                 >
                   <Terminal size={14} />

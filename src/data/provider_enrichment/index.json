@@ -1,0 +1,77 @@
+{
+  "_meta": {
+    "version": "1.0.0-OVERTURE",
+    "generatedAt": "2026-10-25T21:21:47.657Z",
+    "dataset": "overture:2026-10-21.0",
+    "license": "CDLA-Permissive-2.0",
+    "source": "reports/PROVIDER_ENRICHMENT.json",
+    "maxFileKB": 850
+  },
+  "counts": {
+    "accepted": 6700,
+    "withPhone": 6005,
+    "withWeb": 5312,
+    "withEmail": 4159,
+    "withSocials": 4625,
+    "withGeo": 5913,
+    "verified": 5616,
+    "ambiguous": 787,
+    "disputedPhones": 0
+  },
+  "audit": {
+    "accepted": 6700,
+    "withPhone": 5686,
+    "withWeb": 5312,
+    "withEmail": 2895,
+    "withSocials": 3438,
+    "withGeo": 5913,
+    "verified": 5578,
+    "ambiguous": 787,
+    "disputedPhones": 32
+  },
+  "total": 6700,
+  "parts": [
+    {
+      "file": "part-1.json",
+      "count": 961,
+      "bytes": 869537,
+      "sha256": "9739c77e23d4b4dbb912f3452558dd9786bbd6c9a54539b27c537eccc81d5458"
+    },
+    {
+      "file": "part-2.json",
+      "count": 951,
+      "bytes": 869876,
+      "sha256": "3cc3f54e6325251622cb2ac56c71039048ea945a8687507fb34f59c6414de4f2"
+    },
+    {
+      "file": "part-3.json",
+      "count": 960,
+      "bytes": 870023,
+      "sha256": "5e611ad7dcb6780fe5ee5db66c5a6db266532e20f3a0d59d0213b2113cde1115"
+    },
+    {
+      "file": "part-4.json",
+      "count": 964,
+      "bytes": 870005,
+      "sha256": "7a9c3a0a12317dd6c5ef9e1b6f73c1310d87c612b69d91c8435f1f2dd673ff67"
+    },
+    {
+      "file": "part-5.json",
+      "count": 959,
+      "bytes": 869967,
+      "sha256": "caa95d633a7c31e37340c0a3fa7e4dfec78725ec2e8318abbc0138725440df08"
+    },
+    {
+      "file": "part-6.json",
+      "count": 963,
+      "bytes": 869703,
+      "sha256": "5715e2bcd000686cf03c5591ac256e70046ceeb921443f165b5ab85f08ccd922"
+    },
+    {
+      "file": "part-7.json",
+      "count": 942,
+      "bytes": 855168,
+      "sha256": "7fa178fea0726a3980af006d40b86fa22bdaff52e0fbc9241eb065a49ad56555"
+    }
+  ]
+}

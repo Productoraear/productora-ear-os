@@ -225,7 +225,7 @@ export function QronosGanttScheduler({ className = '' }: { className?: string })
                               : 'bg-zinc-800 border-zinc-500'
                           }`}
                         />
-                        <span className="absolute -top-5 whitespace-nowrap font-mono text-[8px] text-white/60 group-hover:text-white transition-colors">
+                        <span className="absolute -top-5 whitespace-nowrap rounded border border-white/10 bg-[#050507]/95 px-1 py-0.5 font-mono text-[8px] text-white/80 group-hover:text-white transition-colors">
                           {m.name}
                         </span>
                       </div>

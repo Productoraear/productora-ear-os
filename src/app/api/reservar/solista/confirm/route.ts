@@ -90,6 +90,10 @@ export async function GET(req: NextRequest) {
     if (isSolistaDeposit && isMatchingOrder && lockMatches && isPaid && eventDate) {
       const result = await lockDateAtomically({
         eventDate,
+        artistProfileId: meta.artistProfileId || undefined,
+        // Aislamiento por rol: solo se bloquea la agenda del artista reservado.
+        entityKind: 'artista',
+        entitySlug: meta.artistProfileId || meta.formato || 'edwin-agudelo',
         clientName: session.customer_details?.email || session.customer_email || 'Cliente EAR OS',
         location: meta.formato || 'Reserva Solista S-Class',
         stripeSessionId: session.id,

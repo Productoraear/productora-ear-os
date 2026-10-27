@@ -43,7 +43,7 @@ export const PremiumMediaCarousel: React.FC<PremiumMediaCarouselProps> = React.m
   const [[page, direction], setPage] = useState([0, 0]);
 
   const safeImages = images && images.length > 0
-    ? images
+    ? images.slice(0, 2)
     : ['https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1000&auto=format&fit=crop'];
 
   const imageIndex = Math.abs(page % safeImages.length);

@@ -5,6 +5,7 @@ import { Command } from 'cmdk';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { usePathname } from 'next/navigation';
+import { Sparkles, Bot, Zap, Loader2, MessageSquare, ArrowRight } from 'lucide-react';
 
 // Initialize Stripe (uses public key)
 // 🔒 FAIL-CLOSED STRIPE CLIENT (BLINDAJE SESSION_SECRET P0): sin public key real, no hay cliente Stripe.
@@ -18,7 +19,7 @@ interface StripeCheckoutFormProps {
   onSuccess: () => void;
 }
 
-function StripeCheckoutForm({ clientSecret, onSuccess }: StripeCheckoutFormProps): React.JSX.Element {
+function StripeCheckoutForm({ onSuccess }: StripeCheckoutFormProps): React.JSX.Element {
   const stripe = useStripe();
   const elements = useElements();
   const [error, setError] = React.useState<string | null>(null);
@@ -96,8 +97,38 @@ export function EarConcierge(): React.JSX.Element {
   const [query, setQuery] = React.useState('');
   const [clientSecret, setClientSecret] = React.useState<string | null>(null);
   const [isFetchingSecret, setIsFetchingSecret] = React.useState(false);
+  const [aiResponse, setAiResponse] = React.useState<string | null>(null);
+  const [isAskingAi, setIsAskingAi] = React.useState(false);
+  const [aiModelUsed, setAiModelUsed] = React.useState<string | null>(null);
 
   const pathname = usePathname();
+
+  const askConciergeAi = React.useCallback(async (text: string) => {
+    if (!text.trim() || isAskingAi) return;
+    setIsAskingAi(true);
+    setAiResponse(null);
+    try {
+      const res = await fetch('/api/agents/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: text,
+          pathname,
+        })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setAiResponse(data.reply || 'Sin respuesta.');
+        setAiModelUsed(data.agentUsed || 'deepseek-sclass');
+      } else {
+        setAiResponse('No se pudo conectar con el motor IA en este momento.');
+      }
+    } catch {
+      setAiResponse('Error de red al consultar al Asistente.');
+    } finally {
+      setIsAskingAi(false);
+    }
+  }, [isAskingAi, pathname]);
 
   // Web Audio API Sound Design
   const playSotaClick = React.useCallback((): void => {
@@ -232,6 +263,18 @@ export function EarConcierge(): React.JSX.Element {
               aria-label="Acciones sugeridas por el conserje"
             >
               <Command.Item
+                onSelect={() => askConciergeAi(query)}
+                className="px-4 py-3 cursor-pointer text-white hover:bg-amber-500/20 rounded-md transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#AAD6CD] flex items-center justify-between"
+                role="option"
+                aria-label={`Preguntar a Astra IA DeepSeek: ${query}`}
+              >
+                <span className="flex items-center gap-2 text-[#ecb613] font-mono text-xs">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>Consultar a DeepSeek S-Class: &ldquo;{query}&rdquo;</span>
+                </span>
+                <ArrowRight className="w-3.5 h-3.5 text-zinc-400" />
+              </Command.Item>
+              <Command.Item
                 onSelect={() => setQuery('reservar fecha')}
                 className="px-4 py-3 cursor-pointer text-white hover:bg-[#258DCD]/20 rounded-md transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#AAD6CD]"
                 role="option"
@@ -247,6 +290,53 @@ export function EarConcierge(): React.JSX.Element {
                 Auditar acústica de sala <span className="opacity-50" aria-hidden="true">(Rider S-Class)</span>
               </Command.Item>
             </Command.Group>
+          )}
+
+          {isAskingAi && (
+            <div className="p-6 text-center text-xs font-mono text-zinc-400 flex flex-col items-center gap-2">
+              <Loader2 className="w-5 h-5 animate-spin text-[#ecb613]" />
+              <span>Omni-Supervisor DeepSeek analizando consulta en tiempo real...</span>
+            </div>
+          )}
+
+          {aiResponse && !isAskingAi && (
+            <div className="m-3 p-4 rounded-xl bg-black/70 border border-amber-500/30 text-xs font-sans space-y-3">
+              <div className="flex items-center justify-between border-b border-zinc-800 pb-2">
+                <span className="font-mono text-[11px] text-[#ecb613] flex items-center gap-1.5 font-bold">
+                  <Bot className="w-3.5 h-3.5" />
+                  OMNI-SUPERVISOR // {aiModelUsed?.toUpperCase() || 'DEEPSEEK S-CLASS'}
+                </span>
+                <button
+                  onClick={() => setAiResponse(null)}
+                  className="text-zinc-500 hover:text-zinc-300 font-mono text-[10px]"
+                >
+                  ✕ Cerrar
+                </button>
+              </div>
+              <p className="text-zinc-200 leading-relaxed whitespace-pre-wrap font-sans">
+                {aiResponse}
+              </p>
+              <div className="pt-2 flex flex-wrap items-center gap-2 border-t border-zinc-800/80">
+                <button
+                  onClick={() => {
+                    setQuery('reservar');
+                  }}
+                  className="px-3 py-1.5 rounded-lg bg-[#ecb613] hover:bg-[#d4a310] text-black font-mono font-bold text-xs flex items-center gap-1.5 transition-colors"
+                >
+                  <Zap className="w-3.5 h-3.5 fill-black" />
+                  Bloquear Fecha (100€)
+                </button>
+                <a
+                  href={`https://wa.me/34693693048?text=${encodeURIComponent(`Hola Productora EAR, sobre mi consulta en el concierge: "${query}"`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-mono text-xs font-bold flex items-center gap-1.5 transition-colors"
+                >
+                  <MessageSquare className="w-3.5 h-3.5" />
+                  WhatsApp (+34 693 693 048)
+                </a>
+              </div>
+            </div>
           )}
 
           {/* Checkout Inyectado */}

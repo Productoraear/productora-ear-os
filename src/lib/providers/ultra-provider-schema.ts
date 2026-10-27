@@ -245,7 +245,7 @@ export interface UltraProviderProfile {
   weddingPlannerSpecs?: ProviderWeddingPlannerSpecs;
   animacionSpecs?: ProviderAnimacionSpecs;
 
-  // Datos enriquecidos desde los 85.946 proveedores de public/data/providers/
+  // Datos enriquecidos desde el Data Lake real (conteo vivo en public/data/providers/manifest.json)
   faqs?: Array<{ question: string; answer: string }>;
   servicesList?: string[];
   imagenesGaleria?: string[];

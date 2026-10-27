@@ -1,46 +1,281 @@
 {
+  "_meta": {
+    "version": "2.1.0-ENRICHED",
+    "generatedAt": "2026-10-26T15:50:05.030Z",
+    "doctrine": "Publicación solo con contacto real atribuible o GPS verificado. Prohibido inventar precio/rating/verified.",
+    "maxFileKB": 900,
+    "sources": [
+      "src/data/all_providers_database.json",
+      "reports/PROVIDER_HTML_INTEL.json",
+      "reports/PROVIDER_ENRICHMENT.json"
+    ],
+    "publishable": 12987,
+    "withPhone": 6179,
+    "withPhoneWithheld": 4299,
+    "withGeo": 7974,
+    "verified": 5790,
+    "withSocial": 4722,
+    "withWeb": 5312,
+    "withRating": 1521
+  },
   "finca": {
-    "count": 800,
-    "sizeKB": "836.6"
+    "count": 1547,
+    "publishable": 1547,
+    "overflow": 0,
+    "sizeKB": 4325.8,
+    "chunks": [
+      "finca.json",
+      "finca__2.json",
+      "finca__3.json",
+      "finca__4.json",
+      "finca__5.json"
+    ],
+    "sha256": [
+      "5ee3ed493c067f451cf1269a48f6eae35a0e7ef90cf113db1b69721038bf76bd",
+      "c6f454ada6ed57f1060cbae7a02ab0360e37388e2e3480a548580ca3c3e0f2e7",
+      "daf8f4750171882a99b3ee71fde269568415f7741b7903ce113c0f5a5a1f3462",
+      "7022eb007dabc2aeeb3137b435f89346a257b009cfceed644d179714d0c9511c",
+      "71c6e6c2d0aba90b725de397bb55cc6352f06c1de9c98d418cce6b41714a446d"
+    ],
+    "withPhone": 473,
+    "verified": 410,
+    "withGeo": 465,
+    "withRating": 30,
+    "withSocial": 422
   },
   "catering": {
-    "count": 546,
-    "sizeKB": "515.1"
+    "count": 514,
+    "publishable": 514,
+    "overflow": 0,
+    "sizeKB": 1347,
+    "chunks": [
+      "catering.json",
+      "catering__2.json"
+    ],
+    "sha256": [
+      "c9f31729579ae2945dc13368899d73789243ab5c609ee6720455e21238134391",
+      "782ab62bc8bc0edb6967027791eb9ec16dbf27ca8c49597fdde454d5a2016d14"
+    ],
+    "withPhone": 167,
+    "verified": 151,
+    "withGeo": 228,
+    "withRating": 44,
+    "withSocial": 158
   },
   "musica": {
-    "count": 527,
-    "sizeKB": "534.6"
+    "count": 913,
+    "publishable": 913,
+    "overflow": 0,
+    "sizeKB": 2267.1,
+    "chunks": [
+      "musica.json",
+      "musica__2.json",
+      "musica__3.json"
+    ],
+    "sha256": [
+      "c9667b00c56beacef620cdae865832650d685992f86fe87a43e90f2e37d997ab",
+      "0a4173a8c9b63c3602b48aa2ccf58ed7a2b141d2511bf29f1dc5517fddc58cf0",
+      "889536d61ba4158a56a3f483f0b8c1015728d580324ef5f11e63bc32c79d6483"
+    ],
+    "withPhone": 133,
+    "verified": 128,
+    "withGeo": 617,
+    "withRating": 360,
+    "withSocial": 130
   },
   "foto": {
-    "count": 800,
-    "sizeKB": "840.4"
+    "count": 3077,
+    "publishable": 3077,
+    "overflow": 0,
+    "sizeKB": 8451.3,
+    "chunks": [
+      "foto.json",
+      "foto__2.json",
+      "foto__3.json",
+      "foto__4.json",
+      "foto__5.json",
+      "foto__6.json",
+      "foto__7.json",
+      "foto__8.json",
+      "foto__9.json",
+      "foto__10.json"
+    ],
+    "sha256": [
+      "4ca50c09675150d1f2ff248d7b7e3416d67ff60e3ca20e196864a1da8d3af3f3",
+      "cad550173e58b6f06b3b07bef33dba2569a2aa92ccaad8210ca25b5fa68be16b",
+      "f88fc97940de42c2d561442dd9beeaa3e5022b725dcbc6046fc336f88245036d",
+      "e584829f965f6c0c32a2db85ab95d8b434e5815845af791da734744817edbd58",
+      "c7c853f695afd70cfc6c572d40f4949d84ad9c1ce2ce304fca1a6027bd98e20a",
+      "45c1e3203508597b0c360e7c6a5fdf94f5b3b3f382a15aed93241cd73eca0d27",
+      "34f3c5bea272c97b087cb6355dc626195ccc1f9b5f7f4c891f1c420164e8ed07",
+      "6ad100e2d76ec75e7b3176d290f5171ae6394d802d188113757dc9eb289cda84",
+      "0c2ef47ee5eb296fd8a1f3d02073bfbc950b7d93b251d56a066b0f5537fb5a12",
+      "5acdd117c4c43de5708bca7d592f838f85afae72f82f6c54e3519a9b2253d9f7"
+    ],
+    "withPhone": 1486,
+    "verified": 1390,
+    "withGeo": 2107,
+    "withRating": 591,
+    "withSocial": 1018
   },
   "decoracion": {
-    "count": 340,
-    "sizeKB": "329.3"
+    "count": 983,
+    "publishable": 983,
+    "overflow": 0,
+    "sizeKB": 2521.3,
+    "chunks": [
+      "decoracion.json",
+      "decoracion__2.json",
+      "decoracion__3.json"
+    ],
+    "sha256": [
+      "53f685e48d198f343ba7f6445b0c1ddb59ba847a15242512fbea6a67df17a71f",
+      "4718d31f2a84d12c18af7440dbdfe895d66d5a5341773a22a6946058936af512",
+      "6506d52f3b27b3226e11503e77861521690eb43aba73d0c24487e5ddd82aaf6d"
+    ],
+    "withPhone": 485,
+    "verified": 457,
+    "withGeo": 734,
+    "withRating": 149,
+    "withSocial": 347
   },
   "servicios": {
-    "count": 800,
-    "sizeKB": "692.2"
+    "count": 3042,
+    "publishable": 3042,
+    "overflow": 0,
+    "sizeKB": 8158.6,
+    "chunks": [
+      "servicios.json",
+      "servicios__2.json",
+      "servicios__3.json",
+      "servicios__4.json",
+      "servicios__5.json",
+      "servicios__6.json",
+      "servicios__7.json",
+      "servicios__8.json",
+      "servicios__9.json",
+      "servicios__10.json"
+    ],
+    "sha256": [
+      "d44943e9c2b4dfe1bd72e84e48c6a0f808cce0935d87d88de8de184a9602ee91",
+      "c1b63826226be342c2d10d92ed4fe6c93590f0d0a7e4066a68dad33fcddc1dd9",
+      "36d84bf05f417e95251fa44b1130278842e6ee07ff63bbdd79e52009dcc6a5af",
+      "6072962212e7af73358c450c2f0abcac53b5b527af3e1084626a2c0a27edf594",
+      "d3c7f84089f25490236132bf79b8b3739694058aec79eca4e5226d30e45954c9",
+      "c64c799a954f5da784baf4baac01c4685bf135c35801faa715863e9049d09a1f",
+      "1f13fe94a3b75d9b4daee8810d6ea567a89ced4fb37a6b7283eee6df570a10d0",
+      "b2fb808039f044cb386dba70eeb7e8cb4863efcfba4ff41fa13dfdc0fe21e381",
+      "8d73610a6b269e30201c86744e13fa5b971f21c08d57807ff03caab81222b624",
+      "07513bf0bb1774bb507236fe7b824ce9855816494d5bc529f3af286c1abd71f2"
+    ],
+    "withPhone": 2199,
+    "verified": 2071,
+    "withGeo": 2467,
+    "withRating": 199,
+    "withSocial": 1802
   },
   "moda": {
-    "count": 800,
-    "sizeKB": "771.6"
+    "count": 2139,
+    "publishable": 2139,
+    "overflow": 0,
+    "sizeKB": 5942.7,
+    "chunks": [
+      "moda.json",
+      "moda__2.json",
+      "moda__3.json",
+      "moda__4.json",
+      "moda__5.json",
+      "moda__6.json",
+      "moda__7.json"
+    ],
+    "sha256": [
+      "fe661d86c4831d57fd4a4cee84e0d5440edaa30bdaf6c1808db92bb32f471a4f",
+      "b907289b8074698dd095ed935b5a45248a189f550fb2bcfdb528f7339bebd44b",
+      "530c960779b41f75b360d092c5e2267d5e3ce8a31f75b847ef57d6a1ad709cb1",
+      "9decaa3594b2ae317d21d8e4c07211762c9cb98ec358f37490c22a164c5c396e",
+      "7977de338af43ad488c6459d25ab55480c6e6415a9a7e83e3ed092b5c5fee74a",
+      "44a951f63297215027b1b537dac5b9643c13522610c838fa09f65321b2623aa0",
+      "ee3ef26fc68c795f8ccf170b91d04944c532608b962b585e1ea80275b12589b8"
+    ],
+    "withPhone": 1065,
+    "verified": 1027,
+    "withGeo": 1112,
+    "withRating": 80,
+    "withSocial": 717
   },
   "transporte": {
-    "count": 307,
-    "sizeKB": "328.6"
+    "count": 452,
+    "publishable": 452,
+    "overflow": 0,
+    "sizeKB": 1211.3,
+    "chunks": [
+      "transporte.json",
+      "transporte__2.json"
+    ],
+    "sha256": [
+      "c06cd1b2ebd0134f37e89298760b7e8443b75144875822567e1c71984f38e738",
+      "b357a3dfbf0454f1e58223002eeaae1c150028d5b159fe3f50a9b8efc38d3ca0"
+    ],
+    "withPhone": 98,
+    "verified": 88,
+    "withGeo": 188,
+    "withRating": 67,
+    "withSocial": 80
   },
   "sonido": {
-    "count": 174,
-    "sizeKB": "195.3"
+    "count": 155,
+    "publishable": 155,
+    "overflow": 0,
+    "sizeKB": 466.8,
+    "chunks": [
+      "sonido.json"
+    ],
+    "sha256": [
+      "6104cf92abd4a97bf300f9a68cf89e9df064acffc3e6763f5a53d51b0dd0cbae"
+    ],
+    "withPhone": 26,
+    "verified": 24,
+    "withGeo": 14,
+    "withRating": 1,
+    "withSocial": 13
   },
   "wedding": {
-    "count": 172,
-    "sizeKB": "170.5"
+    "count": 165,
+    "publishable": 165,
+    "overflow": 0,
+    "sizeKB": 459.3,
+    "chunks": [
+      "wedding.json"
+    ],
+    "sha256": [
+      "f00a163a1a0049a8477eccf1f683cf3edba4b0cb23b64e342592affaf2abd647"
+    ],
+    "withPhone": 47,
+    "verified": 44,
+    "withGeo": 42,
+    "withRating": 0,
+    "withSocial": 35
   },
   "senior_care": {
-    "count": 380,
-    "sizeKB": "221.1"
+    "count": 107,
+    "pruned": 1,
+    "sizeKB": 29.3,
+    "withPhone": 107,
+    "verified": 107,
+    "chunks": [
+      "senior_care.json"
+    ]
+  },
+  "all_featured": {
+    "count": 150,
+    "sizeKB": 458.3,
+    "curated": true,
+    "note": "Selección curada por verdad verificable; no es un gremio y no suma al total."
+  },
+  "providers_canonical": {
+    "count": 310,
+    "sizeKB": 434.4,
+    "curated": true,
+    "note": "Muestra de la verdad verificable para el matcher neuronal; no suma al total."
   }
 }

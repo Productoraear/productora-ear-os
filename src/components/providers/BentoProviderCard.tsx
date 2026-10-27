@@ -13,6 +13,12 @@ import {
   Lock,
   Sparkles
 } from 'lucide-react';
+import {
+  resolveContactAccess,
+  gatedWhatsappNumber,
+  type ProviderContactTier,
+} from '@/lib/providers/contact-gate';
+import { CENTRALITA } from '@/lib/phone-constants';
 
 export interface ProviderItem {
   id: string | number;
@@ -66,6 +72,13 @@ interface BentoProviderCardProps {
   provider: ProviderItem;
   onSelect: (provider: ProviderItem) => void;
   onClaim: (provider: ProviderItem) => void;
+  /**
+   * Derecho de contacto de la entidad (doctrina anti-picaresca).
+   * Por defecto `DIRECTORY_UNCLAIMED`: FAIL-CLOSED, el número nunca se filtra.
+   */
+  contactTier?: ProviderContactTier;
+  /** El visitante ya abonó el desbloqueo de 1,00 € para esta entidad. */
+  paidUnlock?: boolean;
 }
 
 const CURATED_FALLBACK_POOLS: Record<string, string[]> = {
@@ -154,7 +167,9 @@ function isValidImage(url?: string): boolean {
 export const BentoProviderCard: React.FC<BentoProviderCardProps> = React.memo(({
   provider,
   onSelect,
-  onClaim
+  onClaim,
+  contactTier = 'DIRECTORY_UNCLAIMED',
+  paidUnlock = false,
 }) => {
   const fallbackImg = getDiverseFallback(provider.category, provider.id || provider.name);
   const rawCover = provider.img || (provider.gallery && provider.gallery[0]);
@@ -173,6 +188,18 @@ export const BentoProviderCard: React.FC<BentoProviderCardProps> = React.memo(({
   const reservationUrl = provider.customUrl
     ? provider.customUrl
     : `/checkout/presupuesto?format=Solista&base=350&venue=${encodeURIComponent(provider.name)}`;
+
+  /**
+   * ANTI-PICARESCA: el WhatsApp solo apunta al número de la entidad si es
+   * línea propia o cliente de pago (o el visitante ya pagó el desbloqueo).
+   * En cualquier otro caso cae a la centralita oficial.
+   */
+  const contactAccess = resolveContactAccess({ tier: contactTier, paidUnlock });
+  const whatsappTarget = gatedWhatsappNumber(
+    provider.phone ?? provider.telephone ?? null,
+    contactAccess,
+    CENTRALITA.raw,
+  );
 
   const whatsappMessage = encodeURIComponent(
     `Hola, solicito disponibilidad y tarifa para ${provider.name} (${provinceDisplay}) a través de Productora EAR.`
@@ -315,12 +342,21 @@ export const BentoProviderCard: React.FC<BentoProviderCardProps> = React.memo(({
         </button>
 
         <a
-          href={`https://wa.me/${(provider.hasDirectPhone && provider.phone) ? provider.phone.replace(/\D/g, '') : '34693693048'}?text=${whatsappMessage}`}
+          href={`https://wa.me/${whatsappTarget}?text=${whatsappMessage}`}
           target="_blank"
           rel="noopener noreferrer"
           onClick={(e) => e.stopPropagation()}
           className="p-2 rounded-lg bg-[#111115] hover:bg-emerald-500/10 text-neutral-400 hover:text-emerald-400 border border-[#22222a] transition-colors"
-          title={provider.hasDirectPhone ? "Consulta Directa vía WhatsApp con Proveedor" : "Consulta Centralizada vía Concierge EAR"}
+          title={
+            contactAccess.canRevealWhatsapp
+              ? 'Consulta directa verificada con el proveedor'
+              : 'Contacto protegido · Concierge EAR (el número se libera tras el desbloqueo de 1 €)'
+          }
+          aria-label={
+            contactAccess.canRevealWhatsapp
+              ? 'Abrir WhatsApp del proveedor'
+              : 'Abrir WhatsApp del Concierge EAR'
+          }
         >
           <PhoneCall className="w-3.5 h-3.5" />
         </a>

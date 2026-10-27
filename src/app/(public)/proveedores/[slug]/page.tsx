@@ -35,6 +35,17 @@ import { ProviderNavigableReviews } from '@/components/providers/ProviderNavigab
 import { ProviderFooterClaimBanner } from '@/components/providers/ProviderFooterClaimBanner';
 import sanitizeHtml from 'sanitize-html';
 import { RequestToBookButton } from '@/components/booking/RequestToBookButton';
+import {
+  contactLabelForAccess,
+  gatedPhoneNumber,
+  maskPhoneForDisplay,
+} from '@/lib/providers/contact-gate';
+import {
+  evaluateProviderContactAccess,
+  verifySupplierUnlockSession,
+} from '@/lib/providers/contact-gate-server';
+import { buildEntityCalendarHref } from '@/lib/calendar/entity-calendar-engine';
+import { inferCalendarKindFromCategory } from '@/lib/calendar/entity-calendar-types';
 
 import { isProviderPublic, isProviderBlacklisted, getProviderTier } from '@/lib/providers/visibility';
 import { INITIAL_INVENTORY } from '@/lib/constants/inventory-catalog';
@@ -125,7 +136,7 @@ function getCategoryFAQs(provider: any, category: string, location: string): Rec
   if (catLower.includes('finca') || catLower.includes('caser') || catLower.includes('restaurante') || catLower.includes('espacio') || catLower.includes('banquete')) {
     return {
       [`¿Qué tipo de instalaciones y espacios ofrece ${provName}?`]: `Disponemos de caserío y salones climatizados con capacidad de hasta 350 comensales, amplios jardines acondicionados para ceremonias civiles al aire libre y zona Chill-Out para el cóctel de bienvenida.`,
-      [`¿Qué propuesta gastronómica se ofrece para banquetes de boda?`]: `Nuestra cocina destaca por la gastronomía vasca tradicional a la parrilla (chuletón de primera calidad, pescados frescos al carbón, marisco y productos locales de temporada), además de menús adaptados para alérgenos y opción de catering exclusivo.`,
+      [`¿Qué propuesta gastronómica se ofrece para banquetes de boda?`]: `Nuestra propuesta gastronómica destaca por recetas tradicionales y de autor con producto local de primera calidad, adaptada a los gustos de los novios, además de menús adaptados para alérgenos y opción de catering exclusivo.`,
       [`¿Existe exclusividad de espacio para el día del evento?`]: `Sí, garantizamos la exclusividad de los salones y zonas ajardinadas para asegurar la máxima intimidad, privacidad y atención dedicada a vuestra boda.`,
       [`¿Disponéis de aparcamiento y accesibilidad para invitados?`]: `Disponemos de parking privado acondicionado para vehículos particulares y espacio maniobrable para autocares de gran tonelaje, además de accesos adaptados.`,
       [`¿Cómo se gestiona el sonido y la fiesta posterior al banquete?`]: `Contamos con zona de baile privada y acústica calibrada S-Class que cumple estrictamente con la normativa sonométrica ambiental (Ley 37/2003) sin limitar el horario de fiesta.`
@@ -315,8 +326,8 @@ async function getProviderData(slug: string) {
           category: found.category || 'Servicio para Eventos',
           province: found.location?.province || found.provincia || 'Madrid',
           address: found.address || `${found.location?.city || found.provincia || 'Madrid'}, España`,
-          phone: found.telephone || found.phone || CENTRALITA.tel,
-          telephone: found.telephone || found.phone || CENTRALITA.tel,
+          phone: found.telephone || found.phone || null,
+          telephone: found.telephone || found.phone || null,
           rating: found.metrics?.rating || found.rating || 5.0,
           reviews: found.metrics?.reviewCount || found.reviews?.length || 24,
           description: found.description_full || found.description || `Proveedor profesional homologado para bodas y eventos.`,
@@ -366,8 +377,8 @@ async function getProviderData(slug: string) {
           category: found.category || 'Servicio para Eventos',
           province: found.location?.province || 'Madrid',
           address: `${found.location?.city || 'Madrid'}, ${found.location?.province || 'Madrid'}`,
-          phone: found.phone || CENTRALITA,
-          telephone: found.phone || CENTRALITA,
+          phone: found.phone || null,
+          telephone: found.phone || null,
           rating: found.metrics?.rating || 4.9,
           reviews: found.metrics?.reviewCount || 18,
           description: found.description || `Proveedor profesional homologado para bodas y eventos en ${found.location?.province || 'Madrid'}.`,
@@ -397,21 +408,62 @@ async function getProviderData(slug: string) {
 
 const staticPartitionCache = new Map<string, any[]>();
 
-function findInStaticPartitions(slugNorm: string) {
-  const candidateFiles = [
-    'all_featured.json',
-    'finca.json',
-    'catering.json',
-    'musica.json',
-    'sonido.json',
-    'decoracion.json',
-    'wedding.json',
-    'transporte.json',
-    'servicios.json',
-    'foto.json',
-    'moda.json',
-    'senior_care.json'
+/** Particiones base de emergencia si el manifest del CDN no estuviera disponible. */
+const FALLBACK_PARTITION_FILES = [
+  'finca.json',
+  'catering.json',
+  'musica.json',
+  'sonido.json',
+  'decoracion.json',
+  'wedding.json',
+  'transporte.json',
+  'servicios.json',
+  'foto.json',
+  'moda.json',
+  'senior_care.json'
+];
+
+interface ManifestChunkEntry {
+  chunks?: string[];
+}
+
+/**
+ * Resuelve las particiones REALMENTE publicadas leyendo `manifest.json` (SSOT del CDN).
+ * Sin esto, los 18 chunks de overflow (`foto__2..6`, `servicios__2..6`, `finca__2/3`,
+ * `moda__2..5`, `musica__2`, `decoracion__2`) quedarían inaccesibles para la ficha.
+ */
+function resolvePartitionFiles(): string[] {
+  const files: string[] = ['all_featured.json'];
+  const manifestPaths = [
+    path.join(process.cwd(), 'public', 'data', 'providers', 'manifest.json'),
+    path.join(process.cwd(), '.next', 'standalone', 'public', 'data', 'providers', 'manifest.json'),
   ];
+
+  for (const manifestPath of manifestPaths) {
+    try {
+      if (!fs.existsSync(/*turbopackIgnore: true*/ manifestPath)) continue;
+      const raw = fs.readFileSync(/*turbopackIgnore: true*/ manifestPath, 'utf-8');
+      const manifest = JSON.parse(raw) as Record<string, ManifestChunkEntry | undefined>;
+      for (const [key, entry] of Object.entries(manifest)) {
+        if (key === '_meta' || !entry || !Array.isArray(entry.chunks)) continue;
+        for (const chunk of entry.chunks) {
+          if (typeof chunk !== 'string' || !chunk.endsWith('.json')) continue;
+          if (!files.includes(chunk)) files.push(chunk);
+        }
+      }
+      break;
+    } catch (err) {
+      console.warn('[PROVIDER_SLUG] Manifest ilegible, se usan particiones base:', err);
+      break;
+    }
+  }
+
+  if (files.length > 1) return files;
+  return [...files, ...FALLBACK_PARTITION_FILES];
+}
+
+function findInStaticPartitions(slugNorm: string) {
+  const candidateFiles = resolvePartitionFiles();
 
   for (const fileName of candidateFiles) {
     try {
@@ -448,23 +500,69 @@ function findInStaticPartitions(slugNorm: string) {
         });
 
         if (found) {
-          const rawImages = (found.imageUrls && found.imageUrls.length > 0)
-            ? found.imageUrls
-            : (found.gallery && found.gallery.length > 0)
-              ? found.gallery
-              : (found.img ? [found.img] : []);
-          const cleanImages = rawImages.filter((u: string) => typeof u === 'string' && u.length > 5 && !u.includes('.svg'));
-          const coverImg = cleanImages[0] || found.img || 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=1200&auto=format&fit=crop';
-          const finalGallery = cleanImages.length > 0 ? cleanImages : [coverImg];
+          const imageSet = new Set<string>();
+          if (found.img && typeof found.img === 'string') imageSet.add(found.img);
+          if (Array.isArray(found.imageUrls)) found.imageUrls.forEach((u: any) => typeof u === 'string' && u.length > 5 && !u.includes('.svg') && imageSet.add(u));
+          if (Array.isArray(found.gallery)) found.gallery.forEach((u: any) => typeof u === 'string' && u.length > 5 && !u.includes('.svg') && imageSet.add(u));
+          if (Array.isArray(found.photos)) found.photos.forEach((u: any) => typeof u === 'string' && u.length > 5 && !u.includes('.svg') && imageSet.add(u));
+          
+          const cleanImages = Array.from(imageSet);
+
+          // Pool de enriquecimiento visual temático para asegurar mínimo 6 imágenes por proveedor
+          const CATEGORY_VISUAL_POOLS: Record<string, string[]> = {
+            finca: [
+              "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=1200&auto=format&fit=crop"
+            ],
+            catering: [
+              "https://images.unsplash.com/photo-1555244162-803834f70033?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=1200&auto=format&fit=crop"
+            ],
+            musica: [
+              "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1511192336575-5a79af67a629?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1465847899084-d164df4dedc6?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1525994886773-080587e161c2?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1507838153414-b4b713384a76?q=80&w=1200&auto=format&fit=crop"
+            ],
+            foto: [
+              "https://images.unsplash.com/photo-1537633552985-df8429e8048b?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=1200&auto=format&fit=crop"
+            ]
+          };
+
+          const pool = CATEGORY_VISUAL_POOLS[found.category] || CATEGORY_VISUAL_POOLS.finca;
+          let poolIdx = 0;
+          while (cleanImages.length < 6 && poolIdx < pool.length) {
+            if (!cleanImages.includes(pool[poolIdx])) {
+              cleanImages.push(pool[poolIdx]);
+            }
+            poolIdx++;
+          }
+
+          const coverImg = cleanImages[0] || pool[0];
+          const finalGallery = cleanImages.length > 0 ? cleanImages : pool;
 
           return {
             id: found.id || slugNorm,
             name: (found.name || '').replace(/\s*-\s*Consulta disponibilidad y precios.*/i, '').trim(),
-            category: (found.category === 'finca' || fileName === 'finca.json') ? 'Finca para Bodas' : found.category === 'musica' ? 'Música & Espectáculos' : found.category === 'catering' ? 'Catering & Gastronomía' : found.category || 'Servicio para Eventos',
+            category: (found.category === 'finca' || fileName.startsWith('finca')) ? 'Finca para Bodas' : found.category === 'musica' ? 'Música & Espectáculos' : found.category === 'catering' ? 'Catering & Gastronomía' : found.category || 'Servicio para Eventos',
             province: found.province || found.location?.province || 'Madrid',
             address: found.address || (found.province ? `${found.province}, España` : 'España'),
-            phone: found.phone || found.telephone || CENTRALITA.tel,
-            telephone: found.phone || found.telephone || CENTRALITA.tel,
+            phone: found.phone || found.telephone || null,
+            telephone: found.phone || found.telephone || null,
             rating: found.rating || 5.0,
             reviews: found.reviews || 24,
             description: found.description_full || found.description || `Espacio y proveedor homologado para bodas y eventos en ${found.province || 'España'}.`,
@@ -500,82 +598,8 @@ function findInStaticPartitions(slugNorm: string) {
     }
   }
 
-  // 6. SÍNTESIS DINÁMICA S-CLASS (CERO 404 - AUTO-REPARACIÓN CANÓNICA)
-  const cleanTitle = slugNorm
-    .replace(/-/g, ' ')
-    .replace(/\b\w/g, l => l.toUpperCase());
-
-  const detectedCategory = slugNorm.includes('catering') ? 'Catering & Gastronomía'
-    : slugNorm.includes('musica') || slugNorm.includes('dj') || slugNorm.includes('sonido') ? 'Música & Espectáculos'
-      : slugNorm.includes('finca') || slugNorm.includes('espacio') ? 'Finca para Bodas'
-        : slugNorm.includes('foto') || slugNorm.includes('video') ? 'Fotografía & Vídeo'
-          : slugNorm.includes('vestido') || slugNorm.includes('traje') || slugNorm.includes('joyeria') ? 'Moda & Complementos'
-            : 'Servicio para Bodas & Eventos';
-
-  const detectedProv = slugNorm.includes('madrid') ? 'Madrid'
-    : slugNorm.includes('toledo') ? 'Toledo'
-      : slugNorm.includes('barcelona') ? 'Barcelona'
-        : slugNorm.includes('valencia') ? 'Valencia'
-          : slugNorm.includes('sevilla') ? 'Sevilla'
-            : 'Madrid';
-
-  // Selección inteligente de fotografía cinemática Banana Prompts XYZ
-  let selectedCover = '/images/banana/finca_minimalist.jpg';
-  let complementaryImages = ['/images/banana/bose_minimal.jpg'];
-  let acousticTier = 'Presión acústica homologada Ley 37/2003: 85-90 dBA exterior / 80-85 dBA interior';
-
-  if (slugNorm.includes('catering') || slugNorm.includes('arroz') || slugNorm.includes('paella')) {
-    selectedCover = '/images/banana/catering_minimal.jpg';
-    complementaryImages = ['/images/banana/finca_minimalist.jpg'];
-    acousticTier = 'Servicio gastronómico con plan logístico y cero perturbación acústica';
-  } else if (slugNorm.includes('mariachi') || slugNorm.includes('musica') || slugNorm.includes('tenor')) {
-    selectedCover = '/images/banana/mariachi_minimal.jpg';
-    complementaryImages = ['/images/banana/bose_minimal.jpg'];
-    acousticTier = 'Acústica de gala a 70-80 dBA (conversación elegante de los invitados garantizada)';
-  } else if (slugNorm.includes('sonido') || slugNorm.includes('audiovisual') || slugNorm.includes('led') || slugNorm.includes('dj')) {
-    selectedCover = '/images/banana/bose_minimal.jpg';
-    complementaryImages = ['/images/banana/finca_minimalist.jpg'];
-    acousticTier = 'Rider Bose F1 / Line Array homologado Ley 37/2003 (90-102 dBA festejos / 85-90 dBA bodas)';
-  } else if (slugNorm.includes('vimume') || slugNorm.includes('senior') || slugNorm.includes('terapia')) {
-    selectedCover = '/images/banana/vimume_minimal.jpg';
-    complementaryImages = ['/images/banana/bose_minimal.jpg'];
-    acousticTier = 'Protocolo VIMUME 40 Hz no invasivo (65-75 dBA) para personas mayores';
-  }
-
-  return {
-    id: slugNorm,
-    slug: slugNorm,
-    name: cleanTitle,
-    category: detectedCategory,
-    province: detectedProv,
-    address: `${detectedProv}, España`,
-    phone: CENTRALITA.tel,
-    telephone: CENTRALITA.tel,
-    rating: 4.98,
-    reviews: 28,
-    description: `Ficha pre-indexada de ${cleanTitle} en ${detectedProv}. Infraestructura homologada por Productora EAR con Split Soberano 80/10/10, cero cuotas mensuales de mantenimiento (ahorro de 150€/mes frente a portales tradicionales) y reserva garantizada mediante depósito inmutable de 100€ en Stripe.`,
-    description_full: `Ficha pre-indexada de ${cleanTitle} en ${detectedProv}. Infraestructura homologada por Productora EAR con Split Soberano 80/10/10, cero cuotas mensuales de mantenimiento (ahorro de 150€/mes frente a portales tradicionales) y reserva garantizada mediante depósito inmutable de 100€ en Stripe.`,
-    gallery: [
-      selectedCover,
-      ...complementaryImages
-    ],
-    img: selectedCover,
-    basePrice: 350,
-    price: 'Desde 350 €',
-    capacidadMaxPax: 350,
-    services_list: [
-      'Ejecución homologada S-Class sin intermediarios abusivos',
-      'Split Soberano: 80% Proveedor / 10% EAR OS / 10% VIMUME',
-      'Cero cuotas de alta o mantenimiento mensual (0€/mes vs 150€/mes)',
-      acousticTier,
-      'Póliza de Responsabilidad Civil de 1.000.000 € y firma digital SHA-256',
-      'Deducción fiscal de hasta el 80% en IRPF o 40%-50% en Sociedades (Ley 49/2002)'
-    ],
-    social_links: {},
-    reviews_list: [],
-    isClaimed: false,
-    estadoHomologacion: 'AUDITORIA_VIGENTE'
-  };
+  // 6. Si no existe en el catálogo verificado, devolver null (0% ALUCINACIÓN - CERO DATOS INVENTADOS)
+  return null;
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -666,13 +690,43 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function ProviderDetailPage({ params, searchParams }: PageProps) {
   const { slug } = await params;
+  const slugLower = (slug || '').toLowerCase();
+  if (
+    slugLower === 'otzarreta' ||
+    slugLower === 'restaurante-otzarreta' ||
+    slugLower === 'restaurante-otzarreta-32714' ||
+    slugLower === 'v-32714' ||
+    slugLower === '32714'
+  ) {
+    redirect('/otzarreta');
+  }
+
   const sParams = searchParams ? await searchParams : {};
-  const isUnlocked = sParams?.unlocked === 'true';
   const rawProvider = await getProviderData(slug);
 
   if (!rawProvider) {
     notFound();
   }
+
+  /**
+   * 🔒 DOCTRINA ANTI-PICARESCA (verificada server-side)
+   * El contacto de una entidad solo se muestra si:
+   *   · es línea propia de Productora EAR (SOVEREIGN), o
+   *   · es cliente de pago con ficha reclamada (PAYING_CLIENT), o
+   *   · el visitante ha pagado el desbloqueo de 1,00 € (sesión Stripe verificada).
+   * El antiguo `?unlocked=true` era falsificable: ahora se valida contra Stripe.
+   */
+  const paidUnlock = await verifySupplierUnlockSession(sParams?.session_id, slug);
+  const contactAccess = evaluateProviderContactAccess(
+    { id: rawProvider.id || slug, slug, name: rawProvider.name },
+    { paidUnlock },
+  );
+  const rawProviderPhone =
+    (typeof rawProvider.phone === 'string' && rawProvider.phone) ||
+    (typeof rawProvider.telephone === 'string' && rawProvider.telephone) ||
+    null;
+  const revealedPhone = gatedPhoneNumber(rawProviderPhone, contactAccess);
+  const isUnlocked = contactAccess.canRevealPhone;
 
   const category = cleanText(rawProvider.atomic_specs?.category || rawProvider.category || 'Música & Sonido');
   const location = cleanText(rawProvider.atomic_specs?.location || rawProvider.address || `${rawProvider.province || 'Madrid'}, España`);
@@ -710,11 +764,63 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
         'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=800&auto=format&fit=crop',
         'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=800&auto=format&fit=crop'
       ]
-    : (Array.isArray(rawProvider.gallery) ? rawProvider.gallery : [coverImg]);
+    : (Array.isArray(rawProvider.gallery) && rawProvider.gallery.length > 0
+        ? rawProvider.gallery
+        : (Array.isArray(rawProvider.imageUrls) && rawProvider.imageUrls.length > 0
+            ? rawProvider.imageUrls
+            : [coverImg]));
+
+  const SLUG_VISUAL_POOLS: Record<string, string[]> = {
+    finca: [
+      'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=1200&auto=format&fit=crop'
+    ],
+    catering: [
+      'https://images.unsplash.com/photo-1555244162-803834f70033?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=1200&auto=format&fit=crop'
+    ],
+    musica: [
+      'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1511192336575-5a79af67a629?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1465847899084-d164df4dedc6?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1525994886773-080587e161c2?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1507838153414-b4b713384a76?q=80&w=1200&auto=format&fit=crop'
+    ],
+    foto: [
+      'https://images.unsplash.com/photo-1537633552985-df8429e8048b?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=1200&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=1200&auto=format&fit=crop'
+    ]
+  };
+  const rawCatStr = (rawProvider.category || '').toLowerCase();
+  const catKey = rawCatStr.includes('finca') ? 'finca' : rawCatStr.includes('cater') ? 'catering' : rawCatStr.includes('foto') ? 'foto' : 'musica';
+  const slugPool = SLUG_VISUAL_POOLS[catKey] || SLUG_VISUAL_POOLS.finca;
+
   const gallery = rawGallery.map((g: string) => getProxiedImage(g));
-  if (gallery.length < 3) {
-    gallery.push('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=800&auto=format&fit=crop');
-    gallery.push('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=800&auto=format&fit=crop');
+  // `galleryReal`: únicamente tomas atribuibles al proveedor. Se calcula sobre
+  // `rawGallery` (URLs absolutas) ANTES del proxy `/api/media` y descartando las
+  // URLs del pool temático, para que JSON-LD / Rich Results nunca declare stock
+  // como fotografía propia del negocio.
+  const galleryReal = rawGallery.filter((g: string) => /^https?:\/\//.test(g) && !slugPool.includes(g));
+  let poolIdx = 0;
+  while (gallery.length < 6 && poolIdx < slugPool.length) {
+    const candidate = slugPool[poolIdx];
+    if (!gallery.includes(candidate)) {
+      gallery.push(candidate);
+    }
+    poolIdx++;
   }
 
   // FAQs
@@ -805,10 +911,14 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
             </span>
           </div>
           <Link
-            href={`/checkout/presupuesto?proveedor=${encodeURIComponent(displayName)}&base=${rawProvider.basePrice || 650}`}
+            href={buildEntityCalendarHref(
+              inferCalendarKindFromCategory(rawProvider.category),
+              rawProvider.slug || String(rawProvider.id),
+              { intent: 'bloquear' },
+            )}
             className="px-3.5 py-1.5 bg-[#ecb613] text-black font-mono text-xs font-black uppercase rounded-xl hover:scale-105 transition-all shrink-0"
           >
-            ¡Pedir Presupuesto!
+            Ver su agenda
           </Link>
         </div>
 
@@ -938,9 +1048,7 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
                     <span className="text-[10px] font-mono text-[#ecb613] uppercase tracking-widest font-bold">Alta Gastronomía</span>
                     <h3 className="text-2xl font-bold font-syne text-white uppercase">Menús de Boda & Banquetes ({rawProvider.menus_list.length})</h3>
                   </div>
-                  <span className="px-3 py-1 bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-xs font-mono rounded-full font-bold">
-                    Cocina Vasca a la Parrilla
-                  </span>
+                  <span className="px-3 py-1 bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-xs font-mono rounded-full font-bold">Gastronomía Homologada</span>
                 </div>
 
                 <div className="grid grid-cols-1 gap-4">
@@ -1001,7 +1109,7 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
                 {/* Mapa Embed iFrame Google Maps */}
                 <div className="h-64 sm:h-80 w-full rounded-2xl overflow-hidden border border-white/10 relative bg-zinc-900">
                   <iframe
-                    title="Ubicación GPS Restaurante Ezkertza Berria"
+                    title={`Ubicación GPS ${displayName}`}
                     src={rawProvider.google_maps_embed || `https://maps.google.com/maps?q=${encodeURIComponent(rawProvider.address || location)}&z=15&output=embed`}
                     className="w-full h-full border-0 filter grayscale contrast-125 opacity-90 hover:grayscale-0 hover:opacity-100 transition-all duration-500"
                     loading="lazy"
@@ -1192,6 +1300,64 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
                 </a>
               </div>
 
+              {/* 🔒 GATE DE CONTACTO · DOCTRINA ANTI-PICARESCA */}
+              <div id="contacto" className="space-y-3 pt-4 border-t border-white/10">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-white/40">
+                    Contacto de la entidad
+                  </span>
+                  <span
+                    className={`text-[9px] font-mono px-2 py-0.5 rounded-full border ${
+                      contactAccess.canRevealPhone
+                        ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300'
+                        : 'border-[#FF2B44]/30 bg-[#FF2B44]/10 text-[#FF2B44]'
+                    }`}
+                  >
+                    {contactLabelForAccess(contactAccess)}
+                  </span>
+                </div>
+
+                {contactAccess.canRevealPhone && revealedPhone ? (
+                  <div className="grid gap-2">
+                    <a
+                      href={`tel:${revealedPhone.replace(/\s+/g, '')}`}
+                      className="w-full py-3 px-4 rounded-xl bg-[#ecb613] text-black font-mono text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-[#f5d273] transition-all"
+                    >
+                      <Phone size={13} /> {revealedPhone}
+                    </a>
+                    <a
+                      href={`https://wa.me/${revealedPhone.replace(/\D/g, '')}?text=${encodeURIComponent(
+                        `Hola, contacto desde EAR OS para ${displayName} (${category}).`,
+                      )}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full py-3 px-4 rounded-xl bg-[#25D366]/15 border border-[#25D366]/30 text-[#25D366] font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-[#25D366]/25 transition-all"
+                    >
+                      <MessageCircle size={13} /> WhatsApp directo
+                    </a>
+                  </div>
+                ) : (
+                  <>
+                    <p className="text-[11px] text-zinc-400 leading-relaxed">
+                      El teléfono y el WhatsApp de esta entidad están protegidos. Se liberan al
+                      abonar el desbloqueo de <strong className="text-white">1,00 €</strong>{' '}
+                      (100 % descontable de la reserva) o de forma permanente si el proveedor
+                      reclama su ficha.
+                    </p>
+                    <SupplierBlurLock
+                      supplierId={providerId}
+                      supplierName={displayName}
+                      category={category}
+                      city={location.split(',')[0]}
+                      slug={slug}
+                      isUnlocked={false}
+                    >
+                      <div className="hidden" aria-hidden="true" />
+                    </SupplierBlurLock>
+                  </>
+                )}
+              </div>
+
               {/* Social Proof Bullets */}
               <div className="space-y-2.5 pt-4 border-t border-white/10 text-xs text-zinc-300 font-light">
                 <div className="flex items-center gap-2.5">
@@ -1299,7 +1465,9 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
               slug,
               category,
               province: location.split(',')[0],
-              phone: rawProvider.phone || ''
+              // ANTI-PICARESCA: el payload RSC viaja al navegador, así que aquí
+              // va SIEMPRE enmascarado. El número real nunca sale del servidor.
+              phone: maskPhoneForDisplay(rawProviderPhone)
             }}
           />
         )}
@@ -1313,7 +1481,7 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
               '@type': 'LocalBusiness',
               name: displayName,
               description: description || `Proveedor homologado por Productora EAR para bodas y eventos en ${location}.`,
-              image: gallery.filter((img: string) => img.startsWith('http')),
+              image: isBlacklisted || galleryReal.length === 0 ? undefined : galleryReal,
               telephone: CENTRALITA_EAR_OS,
               priceRange: priceDisplay,
               address: {

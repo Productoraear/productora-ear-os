@@ -428,7 +428,7 @@ export default function SovereignArtistCard({
               data-pulse="true"
               onClick={dispatchSwarmLead}
               disabled={dispatchState === "pending"}
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#FF2B44] py-3 text-sm font-bold uppercase tracking-wider text-white shadow-lg shadow-[#FF2B44]/25 transition-all duration-300 ease-out hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#D91E3C] py-3 text-sm font-bold uppercase tracking-wider text-white shadow-lg shadow-[#D91E3C]/25 transition-all duration-300 ease-out hover:bg-[#C2183A] disabled:cursor-not-allowed disabled:bg-[#4A1220] disabled:text-neutral-300 disabled:opacity-100"
             >
               {dispatchState === "pending" ? (
                 <>

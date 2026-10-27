@@ -1,14 +1,26 @@
 import crypto from 'crypto';
+import {
+  TARIFA_BASE_SOLISTA_EUR,
+  DEPOSITO_STRIPE_EUR,
+  LOGISTICA_EUR_PER_KM,
+  LOGISTICA_KM_EXENTOS,
+  WATTS_PER_PAX,
+  VAT_RATE,
+  SPLIT_SOBERANO,
+  CENTRALITA_EAR_OS,
+} from '@/lib/constants/ear-os-ssot';
+import { fireAndForgetN8n } from '@/lib/services/n8n-dispatcher';
 
 /**
  * 🏛️ EAR OS OMEGA — STRIPE PRICE-LOCK & SOVEREIGN REVENUE ENGINE
  * 
  * Reglas de Negocio Inmutables (SSOT S-Class):
- * - Tarifa Base Solista (Edwin Agudelo): 350 €
- * - Split Soberano: 80% Proveedor / 10% EAR OS / 10% VIMUME
- * - Presión Acústica: 12 W/pax homologados
+ * - Tarifa Base Solista (Edwin Agudelo): 350 € (SSOT: TARIFA_BASE_SOLISTA_EUR)
+ * - Split Soberano: 80% Artista / 10% EAR OS / 10% VIMUME (SSOT: SPLIT_SOBERANO)
+ * - Presión Acústica: 12 W/pax homologados (SSOT: WATTS_PER_PAX)
  * - Ventana de Congelación: 72 Horas con Hash Criptográfico SHA-256
- * - Depósito de Micro-Reserva: 10 € (Express) / 100 € (Corporativo/B2G) / 150 € (Smart-Lock High-Ticket)
+ * - Depósito Vinculante: 100 € (SSOT: DEPOSITO_STRIPE_EUR) / Micro-compromiso parametrizable
+ * - Despacho n8n: stripe-price-lock asíncrono no bloqueante con retries y DLQ
  */
 
 export interface PriceLockInput {
@@ -16,6 +28,7 @@ export interface PriceLockInput {
   serviceName?: string;
   category?: string;
   baseAmount?: number;
+  depositAmount?: number;
   musiciansCount?: number;
   pax?: number;
   location?: string;
@@ -67,19 +80,21 @@ export interface PriceLockQuote {
 }
 
 export class PriceLockEngine {
-  private static BASE_SOLISTA = 350;
-  private static PRICE_PER_KM = 0.65;
-  private static WATTS_PER_PAX = 12;
+  private static BASE_SOLISTA = TARIFA_BASE_SOLISTA_EUR;
+  private static PRICE_PER_KM = LOGISTICA_EUR_PER_KM;
+  private static EXEMPT_KM = LOGISTICA_KM_EXENTOS;
+  private static WATTS_PER_PAX = WATTS_PER_PAX;
 
   /**
    * Calcula el presupuesto exacto y genera el token criptográfico Price-Lock (72h)
+   * derivado del SSOT inmutable y despachado a n8n en background (0 leads huérfanos).
    */
   public static generateQuote(input: PriceLockInput): PriceLockQuote {
     const now = Date.now();
     const expiresAtMs = now + 72 * 60 * 60 * 1000;
     const expiresAt = new Date(expiresAtMs).toISOString();
 
-    // 1. Tarifa Base
+    // 1. Tarifa Base derivada del SSOT
     let baseRate = input.baseAmount || this.BASE_SOLISTA;
     if (input.serviceId?.includes('edwin') || input.serviceName?.toLowerCase().includes('edwin')) {
       baseRate = Math.max(baseRate, this.BASE_SOLISTA);
@@ -89,9 +104,11 @@ export class PriceLockEngine {
     const musicians = Math.max(1, input.musiciansCount || 1);
     const musiciansSurcharge = musicians > 1 ? (musicians - 1) * 200 : 0;
 
-    // 3. Desplazamiento
+    // 3. Desplazamiento S-Class (exento hasta el límite del Hub Méntrida)
     const km = Math.max(0, input.distanceKm || 0);
-    const distanceSurcharge = km > 30 ? Number(((km - 30) * this.PRICE_PER_KM).toFixed(2)) : 0;
+    const distanceSurcharge = km > this.EXEMPT_KM
+      ? Number(((km - this.EXEMPT_KM) * this.PRICE_PER_KM).toFixed(2))
+      : 0;
 
     // 4. Equipamiento Técnico
     let equipmentSurcharge = 0;
@@ -120,22 +137,18 @@ export class PriceLockEngine {
 
     // 5. Totales
     const subtotal = Number((baseRate + musiciansSurcharge + distanceSurcharge + equipmentSurcharge).toFixed(2));
-    const vatAmount = Number((subtotal * 0.21).toFixed(2));
+    const vatAmount = Number((subtotal * VAT_RATE).toFixed(2));
     const totalAmount = Number((subtotal + vatAmount).toFixed(2));
 
-    // Depósito de Micro-Reserva (10€ express / 100€ institucional / 150€ high-ticket)
-    let depositRequired = 10;
-    if (input.isB2G || totalAmount > 1500) {
-      depositRequired = 100;
-    }
-    if (totalAmount > 3000) {
-      depositRequired = 150;
-    }
+    // Depósito de Reserva S-Class: derivado de SSOT (100 €) o micro-compromiso explícito
+    const depositRequired = typeof input.depositAmount === 'number' && input.depositAmount > 0
+      ? input.depositAmount
+      : DEPOSITO_STRIPE_EUR;
 
-    // 6. Split Soberano 80/10/10
-    const provider80 = Number((subtotal * 0.80).toFixed(2));
-    const earOs10 = Number((subtotal * 0.10).toFixed(2));
-    const vimume10 = Number((subtotal * 0.10).toFixed(2));
+    // 6. Split Soberano 80/10/10 inmutable
+    const provider80 = Number((subtotal * SPLIT_SOBERANO.artista).toFixed(2));
+    const earOs10 = Number((subtotal * SPLIT_SOBERANO.earOs).toFixed(2));
+    const vimume10 = Number((subtotal * SPLIT_SOBERANO.vimume).toFixed(2));
 
     // 7. Certificación Acústica
     const paxCount = input.pax || 100;
@@ -154,6 +167,38 @@ export class PriceLockEngine {
       loc: input.location || 'Madrid',
       srv: input.serviceName || 'Servicio S-Class'
     })).toString('base64url');
+
+    const clientData = {
+      name: input.clientName || 'Cliente VIP EAR OS',
+      email: input.clientEmail || 'cliente@productoraear.com',
+      phone: input.clientPhone || CENTRALITA_EAR_OS,
+      location: input.location || 'Madrid',
+      eventDate: input.eventDate,
+      isB2G: !!input.isB2G
+    };
+
+    // 9. Despacho n8n no bloqueante (garantía 0 leads huérfanos con retries y DLQ)
+    fireAndForgetN8n('stripe-price-lock', {
+      event: 'PRICE_LOCK_QUOTE_GENERATED',
+      hash,
+      token,
+      timestamp: now,
+      expiresAt,
+      serviceName: input.serviceName || 'Servicio S-Class',
+      totalAmount,
+      depositRequired,
+      clientName: clientData.name,
+      clientEmail: clientData.email,
+      clientPhone: clientData.phone,
+      location: clientData.location,
+      eventDate: clientData.eventDate,
+      isB2G: clientData.isB2G,
+      split: {
+        provider80,
+        earOs10,
+        vimume10,
+      },
+    });
 
     return {
       hash,
@@ -183,14 +228,7 @@ export class PriceLockEngine {
         riderSummary,
         warranty: 'Garantía Cero Fallos S-Class con Seguro RC 1.000.000 € y Técnico In-Situ'
       },
-      client: {
-        name: input.clientName || 'Cliente VIP EAR OS',
-        email: input.clientEmail || 'cliente@productoraear.com',
-        phone: input.clientPhone || '+34 693 693 048',
-        location: input.location || 'Madrid',
-        eventDate: input.eventDate,
-        isB2G: !!input.isB2G
-      }
+      client: clientData
     };
   }
 

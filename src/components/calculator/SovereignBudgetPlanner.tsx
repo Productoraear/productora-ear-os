@@ -911,7 +911,7 @@ export default function SovereignBudgetPlanner() {
                 onClick={handleAutoDistribute}
                 disabled={totalBudget <= 0}
                 aria-label="Auto-distribuir presupuesto proporcionalmente entre todas las partidas"
-                className="text-[10px] font-mono text-[#ecb613] hover:underline flex items-center gap-1 font-bold disabled:opacity-30 pt-1"
+                className="text-[10px] font-mono text-[#ecb613] hover:underline flex items-center gap-1 font-bold disabled:text-neutral-400 disabled:no-underline disabled:cursor-not-allowed pt-1"
               >
                 <RefreshCw size={11} aria-hidden="true" /> Auto-distribuir proporcionalmente
               </button>

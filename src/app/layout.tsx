@@ -40,7 +40,7 @@ import { DynamicMobileExperienceOrchestrator } from "@/components/mobile/Dynamic
 
 import SovereignNavbar from "@/app/components/layout/SovereignNavbar";
 import HummingbirdFlight from "@/app/components/ambient/HummingbirdFlight";
-import OmniSearchModal from '@/app/components/ui/OmniSearchModal';
+import { UnifiedSearch } from '@/components/search/UnifiedSearch';
 import { BespokePricerModal } from "@/features/finance/ui/BespokePricerModal";
 import { SpatialIntelligence } from "@/app/components/spatial/SpatialIntelligence";
 import SovereignFooter from "@/app/components/layout/SovereignFooter";
@@ -51,6 +51,7 @@ import { SovereignFloatingCallBar } from "@/components/layout/SovereignFloatingC
 import SovereignUrgentFloatBar from "@/components/layout/SovereignUrgentFloatBar";
 import { GlobalLiveVisualEditor } from "@/components/editor/GlobalLiveVisualEditor";
 import { OmniAgentConsoleModal } from "@/components/agents/OmniAgentConsoleModal";
+import { AirbnbThemeToggleFloating } from "@/components/theme/AirbnbThemeToggleFloating";
 import * as React from "react";
 
 export const metadata: Metadata = {
@@ -113,7 +114,7 @@ export default function RootLayout({
     >
       <head />
       <body
-        className={`antialiased bg-[#050505] text-white selection:bg-[#FF2B44] selection:text-white font-inter ${syne.variable} ${montserrat.variable} ${inter.variable} ${jetbrainsMono.variable}`}
+        className={`antialiased bg-[#050505] text-white selection:bg-[#ecb613] selection:text-black font-montserrat ${montserrat.variable} ${syne.variable} ${inter.variable} ${jetbrainsMono.variable}`}
         suppressHydrationWarning
       >
         <VimumeThemeInjector />
@@ -162,12 +163,13 @@ export default function RootLayout({
                             <SovereignFooter />
                             <HummingbirdFlight />
                             <BespokePricerModal />
-                            <OmniSearchModal />
+                            <UnifiedSearch />
                             <EarConcierge />
                             <DynamicMobileExperienceOrchestrator />
                             <SovereignFloatingCallBar />
                             <SovereignUrgentFloatBar />
                             <GlobalLiveVisualEditor />
+                            <AirbnbThemeToggleFloating />
                             <React.Suspense fallback={null}>
                               <OmniAgentConsoleModal />
                             </React.Suspense>

@@ -182,7 +182,7 @@ function StripeSmartLockCta({
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
                 <button
                   onClick={handleStartUnlock}
-                  className="px-8 py-4 bg-[#258DCD] hover:bg-[#1e7ebd] text-white font-mono text-sm font-black uppercase rounded-2xl transition-all shadow-[0_0_25px_rgba(37,141,205,0.4)] flex items-center gap-2 hover:scale-105"
+                  className="px-8 py-4 bg-[#1B76B8] hover:bg-[#155E90] text-white font-mono text-sm font-black uppercase rounded-2xl transition-all shadow-[0_0_25px_rgba(37,141,205,0.4)] flex items-center gap-2 hover:scale-105"
                 >
                   <CreditCard size={16} />
                   <span>Desbloquear por 10 €</span>

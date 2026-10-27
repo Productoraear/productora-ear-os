@@ -191,10 +191,10 @@ export default async function ArtistDetailPage({ params }: PageProps) {
 
                 <div className="space-y-3 pt-2">
                   <Link
-                    href={`/checkout/presupuesto?artista=${slug}&precio=${basePrice}`}
+                    href={`/calendario/artista/${encodeURIComponent(slug)}?intent=bloquear`}
                     className="w-full py-4 bg-[#ecb613] text-black font-black uppercase tracking-[0.2em] text-xs rounded-2xl hover:bg-white transition-all text-center block shadow-lg shadow-[#ecb613]/10"
                   >
-                    Bloquear Fecha (Smart-Lock 10€)
+                    Ver agenda y bloquear fecha
                   </Link>
 
                   <a

@@ -81,18 +81,30 @@ export interface SearchIntentProfile {
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// CONSTANTES DE NEGOCIO (SSOT S-CLASS)
+// CONSTANTES DE NEGOCIO (SSOT S-CLASS CANÓNICO)
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-export const WATTS_PER_PAX = 12;
-export const SPL_LIMIT_DB = 75;
-export const BASE_SOLIST_PRICE = 350;
-export const DEPOSIT_PRICE = 100;
-export const LOGISTICS_RATE_PER_KM = 1.5;
-export const LOGISTICS_FREE_KM = 50;
-export const HOTEL_FEE = 120;
-export const HOTEL_THRESHOLD_HOUR = 3;
-export const HOTEL_THRESHOLD_KM = 200;
+import {
+  TARIFA_BASE_SOLISTA_EUR,
+  DEPOSITO_STRIPE_EUR,
+  LOGISTICA_EUR_PER_KM,
+  LOGISTICA_KM_EXENTOS,
+  SUPLEMENTO_HOTEL_EUR,
+  HORA_FIN_HOTEL,
+  LOGISTICA_KM_HOTEL,
+  LIMITE_SPL_DB,
+  WATTS_PER_PAX as SSOT_WATTS_PER_PAX,
+} from '../constants/ear-os-ssot';
+
+export const WATTS_PER_PAX = SSOT_WATTS_PER_PAX;
+export const SPL_LIMIT_DB = LIMITE_SPL_DB;
+export const BASE_SOLIST_PRICE = TARIFA_BASE_SOLISTA_EUR;
+export const DEPOSIT_PRICE = DEPOSITO_STRIPE_EUR;
+export const LOGISTICS_RATE_PER_KM = LOGISTICA_EUR_PER_KM;
+export const LOGISTICS_FREE_KM = LOGISTICA_KM_EXENTOS;
+export const HOTEL_FEE = SUPLEMENTO_HOTEL_EUR;
+export const HOTEL_THRESHOLD_HOUR = HORA_FIN_HOTEL;
+export const HOTEL_THRESHOLD_KM = LOGISTICA_KM_HOTEL;
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // REGISTRO DE INTENCIÓN POR GREMIO

@@ -4,6 +4,11 @@
  */
 
 import { Users, Music, Calendar, Camera, Briefcase, Settings, Layers } from 'lucide-react';
+import {
+  PROVIDERS_MANIFEST_TOTALS,
+  PROVIDERS_MANIFEST_META,
+  PROVIDERS_MANIFEST_GENERATED_AT,
+} from './providers-manifest';
 
 export const S_CLASS_THEME = {
   colors: {
@@ -132,21 +137,21 @@ export const MASTER_SERVICES = [
  * Prohibido el "baile de cifras": esta es la única fuente de verdad.
  */
 export const PROVIDERS_CANONICAL = {
-  total: 85946,
+  total: Object.values(PROVIDERS_MANIFEST_TOTALS).reduce((acc, n) => acc + n, 0),
   breakdown: {
-    foto: 35153,
-    fincas: 9559,
-    sonido: 8963,
-    moda: 8777,
-    servicios: 8617,
-    musica: 5359,
-    catering: 4096,
-    transporte: 1961,
-    deco: 1650,
-    wedding: 1011,
-    senior: 800,
+    foto: PROVIDERS_MANIFEST_TOTALS.foto,
+    fincas: PROVIDERS_MANIFEST_TOTALS.finca,
+    sonido: PROVIDERS_MANIFEST_TOTALS.sonido,
+    moda: PROVIDERS_MANIFEST_TOTALS.moda,
+    servicios: PROVIDERS_MANIFEST_TOTALS.servicios,
+    musica: PROVIDERS_MANIFEST_TOTALS.musica,
+    catering: PROVIDERS_MANIFEST_TOTALS.catering,
+    transporte: PROVIDERS_MANIFEST_TOTALS.transporte,
+    deco: PROVIDERS_MANIFEST_TOTALS.decoracion,
+    wedding: PROVIDERS_MANIFEST_TOTALS.wedding,
+    senior: PROVIDERS_MANIFEST_TOTALS.senior_care,
   },
-  lastAudit: '2026-09-17',
+  lastAudit: PROVIDERS_MANIFEST_GENERATED_AT,
   manifestPath: 'public/data/providers/manifest.json',
 } as const;
 
@@ -163,23 +168,27 @@ export const PROVIDERS_BREAKDOWN_SUM = Object.values(
  * Prohibido cualquier baile de cifras (45.666, 74.845, 81.000).
  */
 export const SSOT_PROVIDER_METRICS = {
-  TOTAL_PROVIDERS_VAULT: 85946,
-  TOTAL_PROVIDERS_FORMATTED: '85.946',
-  CATEGORIES_COUNT: 11,
+  TOTAL_PROVIDERS_VAULT: Object.values(PROVIDERS_MANIFEST_TOTALS).reduce((acc, n) => acc + n, 0),
+  TOTAL_PROVIDERS_FORMATTED: Object.values(PROVIDERS_MANIFEST_TOTALS)
+    .reduce((acc, n) => acc + n, 0)
+    .toLocaleString('es-ES'),
+  CATEGORIES_COUNT: Object.keys(PROVIDERS_MANIFEST_TOTALS).length,
   MANIFEST_PARTITIONS: {
-    foto: 35153,
-    finca: 9559,
-    sonido: 8963,
-    moda: 8777,
-    servicios: 8617,
-    musica: 5359,
-    catering: 4096,
-    transporte: 1961,
-    decoracion: 1650,
-    wedding: 1011,
-    senior_care: 800
+    foto: PROVIDERS_MANIFEST_TOTALS.foto,
+    finca: PROVIDERS_MANIFEST_TOTALS.finca,
+    sonido: PROVIDERS_MANIFEST_TOTALS.sonido,
+    moda: PROVIDERS_MANIFEST_TOTALS.moda,
+    servicios: PROVIDERS_MANIFEST_TOTALS.servicios,
+    musica: PROVIDERS_MANIFEST_TOTALS.musica,
+    catering: PROVIDERS_MANIFEST_TOTALS.catering,
+    transporte: PROVIDERS_MANIFEST_TOTALS.transporte,
+    decoracion: PROVIDERS_MANIFEST_TOTALS.decoracion,
+    wedding: PROVIDERS_MANIFEST_TOTALS.wedding,
+    senior_care: PROVIDERS_MANIFEST_TOTALS.senior_care
   },
-  CALL_CENTER_VERIFIED_COUNT: 85946,
+  CALL_CENTER_VERIFIED_COUNT: PROVIDERS_MANIFEST_META.withPhone ?? 0,
+  VERIFIED_BLINDADOS_COUNT: PROVIDERS_MANIFEST_META.verified ?? 0,
+  WITH_VERIFIED_GEO_COUNT: PROVIDERS_MANIFEST_META.withGeo ?? 0,
   FEATURED_EDGE_CDN_COUNT: 150
 };
 

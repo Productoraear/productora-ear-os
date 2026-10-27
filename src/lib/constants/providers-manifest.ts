@@ -1,30 +1,78 @@
 /**
  * SSOT DE CONTADORES DEL DATA LAKE PÚBLICO (TRAZABILIDAD REAL)
  * ─────────────────────────────────────────────────────────────
- * Fuente de verdad: `public/data/providers/manifest.json`
- * Generado por `scripts/sync_providers_manifest.ps1` y servido por CDN/Edge.
+ * Fuente de verdad ÚNICA: `public/data/providers/manifest.json`
+ * Generado por `scripts/build_lean_verified_edge.cjs` y servido por CDN/Edge.
  *
- * REGLA INMUTABLE:
- * - Los contadores mostrados en el frontend DEBEN derivar de este módulo.
- * - Prohibido hardcodear cifras de catálogo en vistas (dato genérico/desincronizado).
- * - Si el manifest cambia, actualizar ÚNICAMENTE este archivo.
- *
- * `all_featured` (150) se excluye del total porque es un subconjunto curado
- * duplicado de los gremios completos, no un gremio independiente.
+ * REGLA INMUTABLE (CERO FACHADAS):
+ * - Los contadores del frontend DEBEN derivar de este módulo (manifest real).
+ * - PROHIBIDO hardcodear cifras de catálogo en vistas o constantes.
+ * - El manifest solo publica proveedores con teléfono real atribuible o GPS
+ *   verificado por JSON-LD; `publishable` vs `published` queda declarado.
  */
 
+import rawManifest from '../../../public/data/providers/manifest.json';
+
+export interface ProviderManifestEntry {
+  count?: number;
+  publishable?: number;
+  overflow?: number;
+  sizeKB?: number;
+  chunks?: string[];
+  sha256?: string[];
+  withPhone?: number;
+  verified?: number;
+  withGeo?: number;
+  withRating?: number;
+  withSocial?: number;
+  curated?: boolean;
+  note?: string;
+  pruned?: number;
+}
+
+export interface ProviderManifestMeta {
+  version?: string;
+  generatedAt?: string;
+  doctrine?: string;
+  maxFileKB?: number;
+  sources?: string[];
+  publishable?: number;
+  withPhone?: number;
+  withPhoneWithheld?: number;
+  withGeo?: number;
+  verified?: number;
+  withSocial?: number;
+  withWeb?: number;
+  withRating?: number;
+}
+
+type ManifestCategoryEntry = ProviderManifestEntry | ProviderManifestMeta | undefined;
+
+const manifest = rawManifest as unknown as Record<string, ManifestCategoryEntry>;
+
+export const PROVIDERS_MANIFEST_META: ProviderManifestMeta =
+  (manifest['_meta'] as ProviderManifestMeta | undefined) ?? {};
+
+/** Lee el conteo publicado real de un gremio del manifest (0 si no existe). */
+function readCount(key: string): number {
+  const entry = manifest[key] as ProviderManifestEntry | undefined;
+  const count = entry && typeof entry.count === 'number' ? entry.count : 0;
+  return Number.isFinite(count) ? count : 0;
+}
+
+/** Contadores publicados por gremio (derivados del manifest, nunca hardcodeados). */
 export const PROVIDERS_MANIFEST_TOTALS = {
-  finca: 9559,
-  catering: 4096,
-  decoracion: 1650,
-  musica: 5359,
-  sonido: 8963,
-  foto: 35153,
-  wedding: 1011,
-  moda: 8777,
-  transporte: 1961,
-  servicios: 8617,
-  senior_care: 800,
+  finca: readCount('finca'),
+  catering: readCount('catering'),
+  decoracion: readCount('decoracion'),
+  musica: readCount('musica'),
+  sonido: readCount('sonido'),
+  foto: readCount('foto'),
+  wedding: readCount('wedding'),
+  moda: readCount('moda'),
+  transporte: readCount('transporte'),
+  servicios: readCount('servicios'),
+  senior_care: readCount('senior_care'),
 } as const;
 
 /** Gremios mostrados en el directorio B2C de bodas (sin senior_care ni all_featured). */
@@ -41,32 +89,40 @@ export const B2C_DIRECTORY_GREMIO_TOTALS: Record<string, number> = {
   servicios: PROVIDERS_MANIFEST_TOTALS.servicios,
 };
 
-/**
- * Total agregado de registros del directorio B2C.
- * NOTA DE TRAZABILIDAD: es la suma de registros por gremio del manifest,
- * no un recuento de entidades únicas (los datasets por gremio pueden
- * compartir proveedores multi-servicio).
- */
+/** Total agregado de registros del directorio B2C (suma de gremios publicados). */
 export const PROVIDERS_B2C_TOTAL = Object.values(B2C_DIRECTORY_GREMIO_TOTALS).reduce(
   (acc, n) => acc + n,
   0,
 );
 
-/**
- * TOTAL CANÓNICO DE LA RED (SSOT ÚNICO).
- * Suma de TODOS los gremios del manifest (incluye senior_care VIMUME).
- * Es el número que deben mostrar los contadores de la red nacional.
- * PROHIBIDO hardcodear este valor en cualquier vista: importar SIEMPRE esta constante.
- */
+/** TOTAL CANÓNICO DE LA RED: suma de TODOS los gremios publicados (incluye VIMUME). */
 export const PROVIDERS_GRAND_TOTAL = Object.values(PROVIDERS_MANIFEST_TOTALS).reduce(
   (acc, n) => acc + n,
   0,
 );
 
-/** Formateador canónico en español (punto de miles). Ej: 85.946 */
+/** Proveedores con teléfono real atribuible (no centralita, no compartido). */
+export const PROVIDERS_WITH_ATTRIBUTABLE_PHONE = PROVIDERS_MANIFEST_META.withPhone ?? 0;
+
+/** Proveedores con GPS verificado por JSON-LD de origen. */
+export const PROVIDERS_WITH_VERIFIED_GEO = PROVIDERS_MANIFEST_META.withGeo ?? 0;
+
+/** Proveedores blindados: teléfono real, exclusivo y no premium. */
+export const PROVIDERS_VERIFIED_BLINDADOS = PROVIDERS_MANIFEST_META.verified ?? 0;
+
+/** Teléfonos retenidos por ambigüedad (mismo número en varias empresas). */
+export const PROVIDERS_PHONE_WITHHELD = PROVIDERS_MANIFEST_META.withPhoneWithheld ?? 0;
+
+/** Proveedores con redes sociales reales detectadas en su ficha. */
+export const PROVIDERS_WITH_REAL_SOCIAL = PROVIDERS_MANIFEST_META.withSocial ?? 0;
+
+/** Fecha de la última auditoría del manifest. */
+export const PROVIDERS_MANIFEST_GENERATED_AT = PROVIDERS_MANIFEST_META.generatedAt ?? '';
+
+/** Formateador canónico en español (punto de miles). */
 export const formatProviderCount = (n: number): string => n.toLocaleString('es-ES');
 
-/** Etiqueta compacta para badges de sidebar. Ej: 85.9K */
+/** Etiqueta compacta para badges de sidebar. Ej: 6.8K */
 export const formatProviderBadge = (n: number): string =>
   n >= 1000 ? `${(n / 1000).toFixed(1)}K` : String(n);
 

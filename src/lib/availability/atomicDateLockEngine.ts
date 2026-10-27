@@ -19,6 +19,13 @@ export interface AvailabilityCheckInput {
   eventDate: string;
   /** ID del artista/proveedor a bloquear (opcional: si se omite, chequeo global) */
   artistProfileId?: string;
+  /**
+   * Tipología de la entidad dueña de la agenda (`artista`, `catering`, `finca`…).
+   * Sin esto, el lock comparaba TODAS las agendas del ecosistema entre sí.
+   */
+  entityKind?: string;
+  /** Slug canónico de la entidad dueña de la agenda (`edwin-agudelo`, `abc-espacio-71015`…). */
+  entitySlug?: string;
   /** Franja horaria solicitada (e.g. "14:00", "18:00", "21:30") */
   timeSlot?: string;
   /** ID de producción a excluir del chequeo (para re-validaciones) */
@@ -33,6 +40,8 @@ export interface AvailabilityCheckResult {
   normalizedDate: string;
   timeSlot?: string;
   dailyGigsBooked?: number;
+  /** Entidad efectivamente evaluada (auditoría: nunca "global" por accidente). */
+  entityScope?: string;
 }
 
 /**
@@ -48,6 +57,13 @@ function getDayRange(eventDate: string): { start: Date; end: Date } | null {
   end.setHours(23, 59, 59, 999);
 
   return { start, end };
+}
+
+/** Clave de aislamiento de la entidad evaluada (`kind:slug`) o `null`. */
+function entityScope(input: { entityKind?: string; entitySlug?: string }): string | null {
+  if (!input.entitySlug) return null;
+  const kind = (input.entityKind || 'servicios').trim().toLowerCase();
+  return `${kind}:${input.entitySlug.trim().toLowerCase()}`;
 }
 
 /**
@@ -68,6 +84,7 @@ export async function checkDateAvailability(
   }
 
   const { start, end } = range;
+  const scope = entityScope(input);
 
   // 1. Chequeo de calendarBlock (bloqueo manual de día completo)
   const blockWhere: Record<string, unknown> = {
@@ -88,7 +105,8 @@ export async function checkDateAvailability(
       reason: 'CALENDAR_BLOCKED',
       conflictingBlockId: conflictingBlock.id,
       normalizedDate: start.toISOString(),
-      timeSlot: input.timeSlot
+      timeSlot: input.timeSlot,
+      entityScope: scope ?? undefined
     };
   }
 
@@ -99,6 +117,14 @@ export async function checkDateAvailability(
   };
   if (input.excludeProductionId) {
     productionWhere.id = { not: input.excludeProductionId };
+  }
+  // AISLAMIENTO POR ENTIDAD: sin este filtro, la reserva de un catering
+  // bloqueaba la agenda de un mariachi en la misma fecha (colisión cruzada).
+  if (scope && input.entitySlug) {
+    productionWhere.metadata = {
+      path: ['entitySlug'],
+      equals: input.entitySlug.trim().toLowerCase()
+    };
   }
 
   const activeProductions = await prisma.productionEvent.findMany({
@@ -115,7 +141,8 @@ export async function checkDateAvailability(
       reason: 'MAX_DAILY_CAP_REACHED',
       normalizedDate: start.toISOString(),
       timeSlot: input.timeSlot,
-      dailyGigsBooked: dailyCount
+      dailyGigsBooked: dailyCount,
+      entityScope: scope ?? undefined
     };
   }
 
@@ -136,7 +163,8 @@ export async function checkDateAvailability(
         conflictingProductionId: conflictingProduction.id,
         normalizedDate: start.toISOString(),
         timeSlot: input.timeSlot,
-        dailyGigsBooked: dailyCount
+        dailyGigsBooked: dailyCount,
+        entityScope: scope ?? undefined
       };
     }
   } else if (activeProductions.length > 0) {
@@ -146,7 +174,8 @@ export async function checkDateAvailability(
       reason: 'PRODUCTION_COLLISION',
       conflictingProductionId: activeProductions[0].id,
       normalizedDate: start.toISOString(),
-      dailyGigsBooked: dailyCount
+      dailyGigsBooked: dailyCount,
+      entityScope: scope ?? undefined
     };
   }
 
@@ -155,7 +184,8 @@ export async function checkDateAvailability(
     reason: 'AVAILABLE',
     normalizedDate: start.toISOString(),
     timeSlot: input.timeSlot,
-    dailyGigsBooked: dailyCount
+    dailyGigsBooked: dailyCount,
+    entityScope: scope ?? undefined
   };
 }
 
@@ -166,6 +196,10 @@ export async function checkDateAvailability(
 export async function lockDateAtomically(input: {
   eventDate: string;
   artistProfileId?: string;
+  /** Tipología de la entidad dueña de la agenda (aislamiento por rol). */
+  entityKind?: string;
+  /** Slug canónico de la entidad dueña de la agenda. */
+  entitySlug?: string;
   productionEventId?: string;
   timeSlot?: string;
   bufferMinutes?: number;
@@ -179,6 +213,8 @@ export async function lockDateAtomically(input: {
   }
 
   const { start, end } = range;
+  const scope = entityScope(input);
+  const normalizedEntitySlug = input.entitySlug?.trim().toLowerCase() ?? null;
 
   return prisma.$transaction(async (tx) => {
     // 0. Idempotencia Stripe: si ya se materializó un bloqueo para esta sesión, devolver éxito (evita duplicados ante retries del webhook).
@@ -203,12 +239,17 @@ export async function lockDateAtomically(input: {
       return { success: false, reason: 'CALENDAR_BLOCKED', blockId: existingBlock.id };
     }
 
-    // 2. Re-verificar colisión de tramos en ProductionEvent
+    // 2. Re-verificar colisión de tramos en ProductionEvent (aislada por entidad)
     const activeEvents = await tx.productionEvent.findMany({
       where: {
         eventDate: { gte: start, lte: end },
         status: { notIn: ['CANCELLED', 'DRAFT'] },
-        ...(input.productionEventId ? { id: { not: input.productionEventId } } : {})
+        ...(input.productionEventId ? { id: { not: input.productionEventId } } : {}),
+        // Sin este filtro la reserva de un proveedor colisionaba con TODAS las
+        // agendas del ecosistema (causa raíz de las incoherencias multi-rol).
+        ...(normalizedEntitySlug
+          ? { metadata: { path: ['entitySlug'], equals: normalizedEntitySlug } }
+          : {})
       }
     });
 
@@ -244,6 +285,9 @@ export async function lockDateAtomically(input: {
           horaTramo: input.timeSlot || null,
           bufferMinutes: input.bufferMinutes || 30,
           artistProfileId: input.artistProfileId || null,
+          entityKind: input.entityKind || null,
+          entitySlug: normalizedEntitySlug,
+          entityScope: scope,
           stripeSessionId: input.stripeSessionId || null,
           lockedAt: new Date().toISOString()
         }

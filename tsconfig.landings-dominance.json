@@ -1,0 +1,18 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "incremental": false,
+    "noEmit": true
+  },
+  "include": [
+    "next-env.d.ts",
+    "src/lib/constants/centralita-mariachis-entity.ts",
+    "src/lib/seo/centralita-mariachis-dominance-engine.ts",
+    "src/lib/constants/ear-eventos-entity.ts",
+    "src/lib/seo/ear-eventos-dominance-engine.ts",
+    "src/app/(public)/centralita-mariachis/**/*.tsx",
+    "src/app/(public)/productora-ear/**/*.tsx",
+    "src/components/dominance/**/*.tsx",
+    "src/app/sitemap.ts"
+  ]
+}

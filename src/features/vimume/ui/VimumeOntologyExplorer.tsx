@@ -146,7 +146,7 @@ export const VimumeOntologyExplorer: React.FC = () => {
               >
                 <Icon size={18} />
                 <span className="text-[11px] font-mono font-black">Bloque {block.blockId}</span>
-                <span className="text-[8px] font-mono opacity-70 tracking-tighter truncate max-w-[65px]">
+                <span className="text-[8px] font-mono opacity-100 tracking-tighter truncate max-w-[65px]">
                   {block.range}
                 </span>
               </button>

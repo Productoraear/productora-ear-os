@@ -24,6 +24,7 @@ import {
   PlayCircle,
   PauseCircle
 } from 'lucide-react';
+import { maskPhoneForDisplay } from '@/lib/providers/contact-gate';
 
 interface TelemetryData {
   success: boolean;
@@ -332,13 +333,13 @@ export default function VampireViewPublicPage() {
                       </td>
                       <td className="px-6 py-4 font-mono text-xs">
                         {lead.telephone ? (
-                          <a 
-                            href={`tel:${lead.telephone}`}
-                            className="text-[#258DCD] hover:underline flex items-center gap-1.5"
+                          <span
+                            className="text-white/50 flex items-center gap-1.5"
+                            title="Contacto retenido: se libera solo al pasar por caja"
                           >
                             <Phone className="w-3.5 h-3.5" />
-                            {lead.telephone}
-                          </a>
+                            {maskPhoneForDisplay(lead.telephone)}
+                          </span>
                         ) : (
                           <span className="text-white/30 italic">Obteniendo vía RAG...</span>
                         )}

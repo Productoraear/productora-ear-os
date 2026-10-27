@@ -1,6 +1,9 @@
 import type { MetadataRoute } from 'next';
 import { PROVINCIAS_52_GRAPH } from '@/lib/constants/seo-data-hydrated';
 import { MARIACHI_LANDINGS } from '@/lib/mariachi/mariachiLandingCatalog';
+import { OTZARRETA_LANDINGS } from '@/lib/seo/otzarreta-dominance-engine';
+import { MARIACHI_LANDINGS as CENTRALITA_LANDINGS } from '@/lib/seo/centralita-mariachis-dominance-engine';
+import { EVENT_LANDINGS } from '@/lib/seo/ear-eventos-dominance-engine';
 
 // Google indexa el host www (ver GSC export 2026-10-24: el 100% de las páginas son www.productoraear.com).
 // El sitemap DEBE declarar el mismo host canónico o Google parte la autoridad entre www y no-www.
@@ -38,6 +41,8 @@ const STATIC_ROUTES: StaticRoute[] = [
     { path: '/vimume', priority: 0.95, changeFrequency: 'daily' },
     { path: '/mariachis', priority: 0.95, changeFrequency: 'daily' },
     { path: '/mariachis/unirse', priority: 0.8, changeFrequency: 'weekly' },
+    { path: '/centralita-mariachis', priority: 0.95, changeFrequency: 'daily' },
+    { path: '/productora-ear', priority: 0.95, changeFrequency: 'daily' },
     { path: '/dj-para-bodas', priority: 0.9, changeFrequency: 'daily' },
     { path: '/catering-de-brasas', priority: 0.85, changeFrequency: 'weekly' },
     { path: '/arroces', priority: 0.85, changeFrequency: 'weekly' },
@@ -111,6 +116,45 @@ export default function sitemap(): MetadataRoute.Sitemap {
             lastModified,
             changeFrequency: landing.slug === 'fiestas-patronales' ? 'weekly' : 'daily',
             priority: 0.85,
+        });
+    }
+
+    // Clúster Otzarreta · Gipuzkoa: hub + 126 landings con entidad verificada
+    // (72 geo + 54 intención). Sin entidad verificada detrás no hay URL.
+    entries.push({
+        url: `${BASE_URL}/otzarreta`,
+        lastModified,
+        changeFrequency: 'weekly',
+        priority: 0.95,
+    });
+    for (const landing of OTZARRETA_LANDINGS) {
+        entries.push({
+            url: `${BASE_URL}${landing.path}`,
+            lastModified,
+            changeFrequency: 'weekly',
+            priority: landing.kind === 'geo' ? 0.8 : 0.75,
+        });
+    }
+
+    // Clúster Centralita de Mariachis · España + Europa: hub + 220 landings
+    // (160 geo + 60 intención) con operador verificado y depósito deducible.
+    for (const landing of CENTRALITA_LANDINGS) {
+        entries.push({
+            url: `${BASE_URL}${landing.path}`,
+            lastModified,
+            changeFrequency: landing.band === 'europa' ? 'weekly' : 'daily',
+            priority: landing.kind === 'geo' ? 0.8 : 0.75,
+        });
+    }
+
+    // Clúster Productora EAR · Bodas y eventos en España: hub + 268 landings
+    // (208 provinciales + 60 intención) sobre las 52 provincias del SSOT.
+    for (const landing of EVENT_LANDINGS) {
+        entries.push({
+            url: `${BASE_URL}${landing.path}`,
+            lastModified,
+            changeFrequency: 'weekly',
+            priority: landing.kind === 'geo' ? 0.8 : 0.75,
         });
     }
 
