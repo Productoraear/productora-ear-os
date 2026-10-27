@@ -4,6 +4,11 @@
  * del Manifiesto de Dominancia (Jubilando a Bodas.net) se cumplen al 100%.
  */
 
+import {
+  LOGISTICA_EUR_PER_KM,
+  LOGISTICA_KM_EXENTOS,
+} from '../src/lib/constants/ear-os-ssot';
+
 console.log('🏛️ [TEST] Validando Manifiesto de Dominancia S-Class...\n');
 
 // 1. Verificación de Tarifas Canónicas
@@ -21,14 +26,16 @@ if (SPLIT_ARTIST !== 280 || SPLIT_EAR !== 35 || SPLIT_VIMUME !== 35) {
   throw new Error('Violación del Split 80/10/10');
 }
 
-// 2. Verificación de Logística Méntrida
+// 2. Verificación de Logística Méntrida (tarifa y franquicia del SSOT)
 const testKm = 120; // 120 km desde Méntrida
-const billableKm = Math.max(0, testKm - 50); // 70 km
-const logisticsFee = billableKm * 1.5; // 105 €
-console.log(`✅ Logística 120 km (${billableKm} km facturables a 1.50€/km): ${logisticsFee.toFixed(2)} €`);
+const billableKm = Math.max(0, testKm - LOGISTICA_KM_EXENTOS);
+const expectedLogistics = billableKm * LOGISTICA_EUR_PER_KM;
+console.log(
+  `✅ Logística 120 km (${billableKm} km facturables a ${LOGISTICA_EUR_PER_KM.toFixed(2)} €/km): ${expectedLogistics.toFixed(2)} €`,
+);
 
-if (logisticsFee !== 105) {
-  throw new Error('Error en cálculo de logística');
+if (expectedLogistics !== 35) {
+  throw new Error('Error en cálculo de logística: no coincide con el SSOT vigente');
 }
 
 // 3. Verificación de Techo B2G LCSP Art. 118

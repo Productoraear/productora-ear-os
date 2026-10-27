@@ -13,6 +13,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { resplitPartition } = require('./resplit_edge_partition.cjs');
 
 const VAULT_DIR = path.join(__dirname, '../vault/proveedores_html_indexados');
 const PROVIDERS_DIR = path.join(__dirname, '../public/data/providers');
@@ -133,7 +134,13 @@ function runAbsorber() {
     .map(d => d.name);
 
   vaultCategories.forEach(categoryFolder => {
-    const jsonTargetName = CATEGORY_MAP[categoryFolder] || 'finca.json';
+    // PROHIBIDO el fallback silencioso: una carpeta sin mapeo canónico NO puede
+    // aterrizar en finca.json (así se inyectó `v-32714`, un restaurante, en fincas).
+    const jsonTargetName = CATEGORY_MAP[categoryFolder];
+    if (!jsonTargetName) {
+      console.log(`[SKIP] Carpeta sin mapeo canónico de gremio: ${categoryFolder}`);
+      return;
+    }
     const jsonPath = path.join(PROVIDERS_DIR, jsonTargetName);
 
     if (!fs.existsSync(jsonPath)) {
@@ -215,10 +222,21 @@ function runAbsorber() {
       }
     });
 
-    // Guardar cambios en el JSON
+    // Guardar cambios en el JSON (MINIFICADO: el pretty-print rompía presupuesto y SHA-256)
     if (enrichedInFolder > 0) {
-      fs.writeFileSync(jsonPath, JSON.stringify(providersData, null, 2), 'utf8');
+      fs.writeFileSync(jsonPath, JSON.stringify(providersData), 'utf8');
       console.log(`✅ [${categoryFolder}]: ${enrichedInFolder} proveedores enriquecidos con fotos HD y telemetría.`);
+      // Cerrojo de integridad: re-empaqueta el gremio y refresca count/sizeKB/sha256.
+      const manifestPath = path.join(PROVIDERS_DIR, 'manifest.json');
+      if (fs.existsSync(manifestPath)) {
+        const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+        const category = jsonTargetName.replace(/__\d+\.json$/, '.json').replace(/\.json$/, '');
+        if (manifest[category] && Array.isArray(manifest[category].sha256)) {
+          resplitPartition(category, { manifest });
+          fs.writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
+          console.log(`[INTEGRITY] Gremio ${category} reconciliado con manifest.json.`);
+        }
+      }
     }
   });
 

@@ -2,30 +2,25 @@
 
 import React, { useState, useMemo, Suspense, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import Link from 'next/link';
 import { 
   ShieldCheck, 
   Sparkles, 
   Lock, 
-  ArrowRight, 
-  Calendar, 
-  MapPin, 
   Users, 
-  Volume2, 
   Phone, 
-  CreditCard, 
-  CheckCircle2, 
-  AlertTriangle,
-  Sliders,
-  Award,
-  Layers,
-  Flame,
-  Radio
+  CreditCard
 } from 'lucide-react';
-import { StageVisualizer3D, StageFormatType, VenueType } from '@/components/stage/StageVisualizer3D';
+import { StageVisualizer3D } from '@/components/stage/StageVisualizer3D';
 
 import { GALA_FORMATS, VENUES } from '@/data/gala-formats';
 import { useCheckoutStore } from '@/store/checkout-store';
+import {
+  COSTE_KM,
+  KM_HOTEL,
+  SPLIT_SOBERANO,
+  computeSovereignLogistics,
+} from '@/lib/pricing/logistics';
+import { VAT_RATE } from '@/lib/constants/ear-os-ssot';
 
 function ExternalVendorEscrowCheckout({
   venueParam,
@@ -392,17 +387,19 @@ function EdwinAgudeloGalaCheckout() {
   const currentFormat = GALA_FORMATS.find(f => f.id === selectedFormatId) || GALA_FORMATS[0];
   const isVimumeContext = selectedVenue === 'RESIDENCIA_MAYORES';
 
-  const billableKm = Math.max(0, distanceKm - 50);
-  const kmLogisticsCost = Math.round(billableKm * 1.50);
-  const hotelSurcharge = (distanceKm > 200 || isNightHour) ? 120 : 0;
+  // Logística canónica SSOT: franquicia de 50 km + hotel por >200 km o madrugada.
+  const logistics = computeSovereignLogistics(distanceKm, isNightHour ? 3 : undefined);
+  const billableKm = logistics.billableKm;
+  const kmLogisticsCost = logistics.travelCost;
+  const hotelSurcharge = logistics.hotelSupplement;
 
   const totalBaseBeforeVat = currentFormat.basePrice + kmLogisticsCost + hotelSurcharge;
-  const vatAmount = Math.round(totalBaseBeforeVat * 0.21 * 100) / 100;
+  const vatAmount = Math.round(totalBaseBeforeVat * VAT_RATE * 100) / 100;
   const totalWithVat = Math.round((totalBaseBeforeVat + vatAmount) * 100) / 100;
 
-  const artistNet80 = Math.round(totalBaseBeforeVat * 0.80 * 100) / 100;
-  const earInfrastructure10 = Math.round(totalBaseBeforeVat * 0.10 * 100) / 100;
-  const vimumeResearch10 = Math.round(totalBaseBeforeVat * 0.10 * 100) / 100;
+  const artistNet80 = Math.round(totalBaseBeforeVat * SPLIT_SOBERANO.artist * 100) / 100;
+  const earInfrastructure10 = Math.round(totalBaseBeforeVat * SPLIT_SOBERANO.earOs * 100) / 100;
+  const vimumeResearch10 = Math.round(totalBaseBeforeVat * SPLIT_SOBERANO.vimume * 100) / 100;
 
   useEffect(() => {
     const fetchSecureHash = async () => {
@@ -416,7 +413,7 @@ function EdwinAgudeloGalaCheckout() {
         if (data.priceLockHash) {
           setPriceLockHash(data.priceLockHash);
         }
-      } catch (err) {
+      } catch {
         setPriceLockHash('SHA256-Ω-OFFLINE-MODE');
       }
     };
@@ -621,16 +618,16 @@ function EdwinAgudeloGalaCheckout() {
                 <div className="grid grid-cols-2 gap-4 mt-6">
                   <div className="p-4 rounded-xl bg-black/60 border border-white/5 flex flex-col justify-between">
                     <span className="text-[10px] font-mono text-neutral-500 uppercase">Impacto Logístico (&gt;50km)</span>
-                    <span className="font-mono font-bold text-lg text-white mt-1">{billableKm} <span className="text-xs text-neutral-400">km</span> <span className="text-[#258DCD]">× 1,50€</span></span>
+                    <span className="font-mono font-bold text-lg text-white mt-1">{billableKm} <span className="text-xs text-neutral-400">km</span> <span className="text-[#258DCD]">× {COSTE_KM.toFixed(2).replace('.', ',')}€</span></span>
                     <span className="font-mono font-black text-[#258DCD] text-xl mt-2">{kmLogisticsCost} €</span>
                   </div>
                   <div className="p-4 rounded-xl bg-black/60 border border-white/5 flex flex-col justify-between">
-                    <span className="text-[10px] font-mono text-neutral-500 uppercase">Pernocta S-Class (&gt;200km)</span>
+                    <span className="text-[10px] font-mono text-neutral-500 uppercase">Pernocta S-Class (&gt;{KM_HOTEL}km)</span>
                     <span className="font-mono font-bold text-lg text-white mt-1">
                       {hotelSurcharge > 0 ? 'REQUERIDA' : 'EXENTA'}
                     </span>
                     <span className={`font-mono font-black text-xl mt-2 ${hotelSurcharge > 0 ? 'text-[#ecb613]' : 'text-neutral-600'}`}>
-                      {hotelSurcharge > 0 ? '+120 €' : '0 €'}
+                      {hotelSurcharge > 0 ? `+${hotelSurcharge} €` : '0 €'}
                     </span>
                   </div>
                 </div>
@@ -659,7 +656,7 @@ function EdwinAgudeloGalaCheckout() {
                   <label className="text-xs font-mono text-neutral-400 uppercase tracking-widest block mb-3">Escenario Físico</label>
                   <select
                     value={selectedVenue}
-                    onChange={(e) => setVenue(e.target.value as any)}
+                    onChange={(e) => setVenue(e.target.value as Parameters<typeof setVenue>[0])}
                     className="w-full bg-black/80 border border-white/10 rounded-xl px-4 py-3 text-white text-sm font-semibold focus:outline-none focus:border-[#258DCD] focus:ring-1 focus:ring-[#258DCD] appearance-none"
                     style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`, backgroundPosition: 'right 1rem center', backgroundRepeat: 'no-repeat', backgroundSize: '1.2em' }}
                   >

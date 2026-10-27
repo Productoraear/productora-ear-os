@@ -10,11 +10,9 @@
  */
 
 import {
-  BASE_SOLISTA,
-  COSTE_KM,
-  SUPLEMENTO_QUINTETO,
-  SUPLEMENTO_TRIO,
+  basePriceForFormat,
   calculateSovereignQuote,
+  computeSovereignLogistics,
 } from '../pricing/sovereign-pricing';
 import type { FormatType, SoundRiderType, SovereignQuoteInput } from '../pricing/sovereign-pricing';
 import { verifyAndSignStripeSession } from '../pricing/price-lock-verifier';
@@ -80,11 +78,9 @@ function formatLabel(format: FormatType): string {
   }
 }
 
-/** Precio base por formato, derivado de las constantes SSOT. */
+/** Precio base por formato, delegado al motor canónico (cero duplicidad). */
 function basePriceFor(format: FormatType): number {
-  if (format === 'trio') return BASE_SOLISTA + SUPLEMENTO_TRIO;
-  if (format === 'quinteto') return BASE_SOLISTA + SUPLEMENTO_QUINTETO;
-  return BASE_SOLISTA;
+  return basePriceForFormat(format);
 }
 
 function buildSuccessCopy(
@@ -93,9 +89,9 @@ function buildSuccessCopy(
   depositAmount: number,
 ): string {
   const base = basePriceFor(quoteInput.format);
-  const travel = Math.round(quoteInput.distanceKm * COSTE_KM);
-  // Suplemento acústico derivado del SSOT (total - base - km), sin duplicar fórmulas.
-  const sound = totalBudget - base - travel;
+  const logistics = computeSovereignLogistics(quoteInput.distanceKm, quoteInput.endHour);
+  // Suplemento acústico derivado del SSOT (total - base - logística canónica).
+  const sound = totalBudget - base - logistics.totalLogistics;
 
   const lines: string[] = [
     '🎩 *EAR OS — Experiencia S-Class*',
@@ -104,8 +100,18 @@ function buildSuccessCopy(
     '',
     '💰 *Desglose transparente (Price-Lock firmado)*',
     `• Formato ${formatLabel(quoteInput.format)}: ${base} €`,
-    `• Desplazamiento (${quoteInput.distanceKm} km × 0,35 €/km): ${travel} €`,
   ];
+
+  if (logistics.billableKm === 0) {
+    lines.push(`• Desplazamiento (${logistics.distanceKm} km — franquicia de ${logistics.franchiseKm} km): 0 €`);
+  } else {
+    lines.push(
+      `• Desplazamiento (${logistics.billableKm} km × ${logistics.ratePerKm.toFixed(2).replace('.', ',')} €/km): ${logistics.travelCost} €`,
+    );
+  }
+  if (logistics.hotelSupplement > 0) {
+    lines.push(`• Pernoctación S-Class: ${logistics.hotelSupplement} €`);
+  }
 
   if (sound > 0) {
     lines.push(`• Rider acústico Bose F1 Elite: ${sound} €`);

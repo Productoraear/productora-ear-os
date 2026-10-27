@@ -1,4 +1,16 @@
 import { geocodeAddress, normalizeCoords, GeoCoordinates } from "../geo/geocoder";
+import {
+  DEPOSITO_STRIPE_EUR,
+  LOGISTICA_EUR_PER_KM,
+  LOGISTICA_KM_EXENTOS,
+  SPLIT_SOBERANO,
+  TARIFA_BASE_SOLISTA_EUR,
+} from "../../constants/ear-os-ssot";
+import {
+  GRUPO_MIN_MUSICOS,
+  SUPLEMENTO_MUSICO_ADICIONAL_EUR,
+  SUPLEMENTO_QUINTETO,
+} from "../../pricing/logistics";
 
 export interface GeoPricingResult {
   originCoords: { latitude: number; longitude: number };
@@ -33,9 +45,20 @@ export function calculateHaversineDistance(
 }
 
 /**
+ * Redondeo monetario a 2 decimales (céntimos exactos, sin deriva flotante).
+ */
+function round2(value: number): number {
+  return Math.round(value * 100) / 100;
+}
+
+/**
  * 🏛️ S-CLASS SERVER GEO-PRICING CORE
  * Toma origen, destino, tarifa base y costo por kilómetro, calcula la distancia física real y retorna
  * el desglose financiero exacto, incluyendo el cálculo del depósito de garantía.
+ *
+ * `franchiseKm` aplica la franquicia logística del SSOT (50 km desde el Hub
+ * Méntrida para Edwin Agudelo). Por defecto 0 para no alterar a proveedores
+ * de la red nacional, cuyo kilometraje se factura desde su domicilio fiscal.
  */
 export async function calculateGeoPricing(params: {
   artistId?: string;
@@ -43,10 +66,19 @@ export async function calculateGeoPricing(params: {
   destination: GeoCoordinates | string;
   baseFee: number;
   costPerKm: number;
+  franchiseKm?: number;
   depositMode?: "fixed" | "percentage" | string;
   depositValue?: number;
 }): Promise<GeoPricingResult> {
-  const { origin, destination, baseFee, costPerKm, depositMode = "fixed", depositValue = 100 } = params;
+  const {
+    origin,
+    destination,
+    baseFee,
+    costPerKm,
+    franchiseKm = 0,
+    depositMode = "fixed",
+    depositValue = DEPOSITO_STRIPE_EUR,
+  } = params;
 
   // Resolve coordinates
   const originCoords = typeof origin === "string" ? await geocodeAddress(origin) : normalizeCoords(origin);
@@ -56,12 +88,13 @@ export async function calculateGeoPricing(params: {
   const rawDistance = calculateHaversineDistance(originCoords, destinationCoords);
   const distanceKm = Math.round(rawDistance * 100) / 100; // Redondear a 2 decimales
 
-  // Financial compilation
-  const travelCost = Math.round(distanceKm * costPerKm * 100) / 100;
+  // Financial compilation (franquicia canónica antes de facturar kilómetros)
+  const billableKm = Math.max(0, distanceKm - Math.max(0, franchiseKm));
+  const travelCost = Math.round(billableKm * costPerKm * 100) / 100;
   const totalAmount = Math.round((baseFee + travelCost) * 100) / 100;
 
   // Deposit calculation
-  let depositAmount = 100;
+  let depositAmount: number = DEPOSITO_STRIPE_EUR;
   if (depositMode === "fixed") {
     depositAmount = depositValue;
   } else if (depositMode === "percentage") {
@@ -95,39 +128,68 @@ export interface EdwinPricingInput {
   isSolistaPremium?: boolean;
   musiciansCount?: number; // Mínimo 5 si es grupo
   occasion?: OccasionType | string;
+  /** Override explícito; por defecto la tarifa del SSOT (1,50 €/km). */
   costPerKm?: number;
+  /** Override explícito; por defecto la franquicia del SSOT (50 km). */
+  franchiseKm?: number;
+  /** Modo de depósito; por defecto `fixed` (Price-Lock 100 €). */
+  depositMode?: "fixed" | "percentage";
+  /** Importe/porcentaje del depósito; por defecto `DEPOSITO_STRIPE_EUR`. */
+  depositValue?: number;
+}
+
+export interface EdwinFormatPricingResult extends GeoPricingResult {
+  readonly baseFee: number;
+  readonly effectiveMusicians: number;
+  readonly formatLabel: string;
+  readonly occasion: string;
+  readonly split: {
+    readonly providerAmount: number;
+    readonly platformEarAmount: number;
+    readonly affiliateVimumeAmount: number;
+  };
 }
 
 /**
  * 👑 MOTOR DE PRICING OFICIAL EDWIN AGUDELO S-CLASS
- * Regla Inmutable:
- * - Solista Premium: 350 € base (Cumpleaños, Fiestas Privadas, Día de la Madre/Padre, San Valentín).
- * - Formato Grupo: MÍNIMO 5 MÚSICOS OBLIGATORIO (750 € base, +100 € por músico adicional).
- * - Distancia: 0,75 €/km desde Madrid.
+ * Regla Inmutable (derivada 1:1 del SSOT sellado, cero cifras duplicadas):
+ * - Solista Premium: `TARIFA_BASE_SOLISTA_EUR` (350 €) para Cumpleaños, Fiestas
+ *   Privadas, Día de la Madre/Padre y San Valentín.
+ * - Formato Grupo: mínimo `GRUPO_MIN_MUSICOS` (5) músicos obligatorio
+ *   (350 € + suplemento de quinteto = 750 €, +100 € por músico adicional).
+ * - Distancia: `LOGISTICA_EUR_PER_KM` (1,50 €/km) con franquicia de
+ *   `LOGISTICA_KM_EXENTOS` (50 km) desde el Hub Méntrida.
+ * - Depósito: Price-Lock inmutable de `DEPOSITO_STRIPE_EUR` (100 €), deducible.
  */
-export async function calculateEdwinAgudeloFormatPricing(params: EdwinPricingInput) {
+export async function calculateEdwinAgudeloFormatPricing(
+  params: EdwinPricingInput,
+): Promise<EdwinFormatPricingResult> {
   const {
     origin = "Madrid, España",
     destination,
     isSolistaPremium = true,
     musiciansCount = 1,
     occasion = 'GENERAL',
-    costPerKm = 0.75
+    costPerKm = LOGISTICA_EUR_PER_KM,
+    franchiseKm = LOGISTICA_KM_EXENTOS,
+    depositMode = "fixed",
+    depositValue = DEPOSITO_STRIPE_EUR,
   } = params;
 
-  let baseFee = 350; // Solista Premium
-  let effectiveMusicians = 1;
-  let formatLabel = "Solista Premium S-Class (Edwin Agudelo)";
+  const isGroupFormat: boolean = !isSolistaPremium || musiciansCount > 1;
+  const effectiveMusicians: number = isGroupFormat
+    ? Math.max(GRUPO_MIN_MUSICOS, Math.trunc(musiciansCount))
+    : 1;
 
-  if (!isSolistaPremium || musiciansCount > 1) {
-    // Regla de Negocio: Mínimo 5 músicos obligatorio para formatos de grupo
-    effectiveMusicians = Math.max(5, musiciansCount);
-    baseFee = 750 + (effectiveMusicians - 5) * 100;
-    formatLabel = `Quinteto de Gala S-Class (${effectiveMusicians} Músicos Mínimo)`;
-  } else {
-    // Solista Premium con ajuste por ocasión especial si aplica
-    formatLabel = `Solista Premium S-Class · Ocasión: ${occasion}`;
-  }
+  const baseFee: number = isGroupFormat
+    ? TARIFA_BASE_SOLISTA_EUR +
+      SUPLEMENTO_QUINTETO +
+      (effectiveMusicians - GRUPO_MIN_MUSICOS) * SUPLEMENTO_MUSICO_ADICIONAL_EUR
+    : TARIFA_BASE_SOLISTA_EUR;
+
+  const formatLabel: string = isGroupFormat
+    ? `Quinteto de Gala S-Class (${effectiveMusicians} Músicos Mínimo)`
+    : `Solista Premium S-Class · Ocasión: ${occasion}`;
 
   const geoRes = await calculateGeoPricing({
     artistId: 'edwin-agudelo',
@@ -135,8 +197,9 @@ export async function calculateEdwinAgudeloFormatPricing(params: EdwinPricingInp
     destination,
     baseFee,
     costPerKm,
-    depositMode: 'percentage',
-    depositValue: 30 // 30% reserva o 10€ Smart-Lock
+    franchiseKm,
+    depositMode,
+    depositValue,
   });
 
   return {
@@ -146,10 +209,10 @@ export async function calculateEdwinAgudeloFormatPricing(params: EdwinPricingInp
     formatLabel,
     occasion,
     split: {
-      providerAmount: Math.round(geoRes.totalAmount * 0.80 * 100) / 100, // 80% Artista
-      platformEarAmount: Math.round(geoRes.totalAmount * 0.10 * 100) / 100, // 10% EAR OS
-      affiliateVimumeAmount: Math.round(geoRes.totalAmount * 0.10 * 100) / 100 // 10% VIMUME
-    }
+      providerAmount: round2(geoRes.totalAmount * SPLIT_SOBERANO.artista), // 80% Artista
+      platformEarAmount: round2(geoRes.totalAmount * SPLIT_SOBERANO.earOs), // 10% EAR OS
+      affiliateVimumeAmount: round2(geoRes.totalAmount * SPLIT_SOBERANO.vimume), // 10% VIMUME
+    },
   };
 }
 

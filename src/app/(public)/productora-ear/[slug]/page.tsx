@@ -20,6 +20,7 @@ import {
     type EventLanding,
 } from '@/lib/seo/ear-eventos-dominance-engine';
 import { EAR_EVENTOS_ENTITY } from '@/lib/constants/ear-eventos-entity';
+import { SOVEREIGN_DEMAND_CHANNEL } from '@/lib/providers/sovereign-lead-gate';
 import { buildReserveQuery } from '@/lib/reservar/landing-attribution';
 
 interface Props {
@@ -335,8 +336,8 @@ export default async function EarEventoLandingPage({
                         ))}
                     </dl>
                     <p className="mt-4 break-all font-mono text-[10px] text-gray-500">
-                        Entidad verificada · {landing.operator} · {landing.phone} · {landing.email} · regla{' '}
-                        {EAR_EVENTOS_ENTITY.verificationRule}
+                        Entidad verificada · {landing.operator} · {SOVEREIGN_DEMAND_CHANNEL.telDisplay} ·{' '}
+                        {landing.email} · regla {EAR_EVENTOS_ENTITY.verificationRule}
                     </p>
                 </section>
 

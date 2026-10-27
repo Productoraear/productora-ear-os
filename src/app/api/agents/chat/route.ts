@@ -15,6 +15,32 @@ import {
   wrapUntrustedMessage,
   SlidingWindowRateLimiter,
 } from '@/lib/agents/chatGuard';
+import {
+  buildConversationMemoryBlock,
+  collectSlots,
+  OBJECTION_LABEL,
+  resolveConsultationState,
+  sanitizeHistory,
+  summarizeSlots,
+} from '@/lib/agents/consultationMemory';
+import type {
+  ConsultationSnapshot,
+  ConsultationSlots,
+  ConversationTurn,
+} from '@/lib/agents/consultationTypes';
+import {
+  TARIFA_BASE_SOLISTA_EUR,
+  DEPOSITO_STRIPE_EUR,
+  LOGISTICA_KM_HOTEL,
+  LIMITE_SPL_DB,
+} from '@/lib/constants/ear-os-ssot';
+import { buildGroundingNeed, groundWithWebSearch } from '@/lib/agents/webGrounding';
+import {
+  buildPageContextBlock,
+  resolvePageContext,
+  stripUrls,
+  type PageContext,
+} from '@/lib/agents/pageContext';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -68,6 +94,15 @@ export async function POST(req: Request): Promise<NextResponse> {
     }
     const message: string = inputCheck.text;
 
+    // 🧭 CONTEXTO DE PÁGINA (server-side, sin fetch): resuelve la entidad que el
+    // cliente está viendo (ficha de recinto, artista o terminal de reserva) para
+    // que el Concierge no niegue datos que SÍ están verificados en el SSOT.
+    const pageContext: PageContext = resolvePageContext({ pathname, message });
+    if (pageContext.kind === 'none' && typeof pathname === 'string' && pathname.length > 0) {
+      // Telemetría de huecos de contexto (para ir poblando fichas sobre la marcha).
+      console.warn('[CONCIERGE_CONTEXT_UNRESOLVED]', pathname);
+    }
+
     // Rate limit por IP (anti-abuso / DoS).
     const forwarded = req.headers.get('x-forwarded-for');
     const clientIp: string = (forwarded ? forwarded.split(',')[0].trim() : '') ||
@@ -81,7 +116,8 @@ export async function POST(req: Request): Promise<NextResponse> {
     }
 
     // Anti-inyección de prompt / exfiltración / abuso de infraestructura.
-    if (detectInjection(message).blocked) {
+    // Las URLs pegadas por el cliente se neutralizan: son contexto, no órdenes.
+    if (detectInjection(stripUrls(message)).blocked) {
       return NextResponse.json({
         reply:
           'Gracias por escribirnos. Estoy aquí para ayudarte con los servicios de Productora EAR: fechas, presupuestos, fincas homologadas y reservas. ¿En qué puedo ayudarte con tu evento?',
@@ -92,11 +128,21 @@ export async function POST(req: Request): Promise<NextResponse> {
       });
     }
 
+    // 🧠 MEMORIA MULTI-TURNO (erradica la amnesia entre turnos).
+    // El historial llega del cliente y es DATO NO CONFIABLE: se sanea antes de usarlo.
+    const history: ConversationTurn[] = sanitizeHistory(body.history);
+    const memorySlots: ConsultationSlots = collectSlots(history, message);
+    const consultation: ConsultationSnapshot = resolveConsultationState(memorySlots, history, message);
+
     const traces: TraceEntry[] = [];
     const lower = message.toLowerCase();
 
-    // 0. Detección de Finca activa o consultada
-    let activeFincaName = activeEntity?.name || '';
+    // 0. Detección de Finca activa o consultada (fichas verificadas + red real)
+    //    Prioridad: entidad resuelta por ruta > entidad del cliente > nombre en texto > memoria.
+    let activeFincaName: string =
+      pageContext.kind === 'venue'
+        ? pageContext.name
+        : activeEntity?.name || '';
     if (!activeFincaName) {
       for (const f of KNOWN_FINCAS) {
         if (lower.includes(f.toLowerCase())) {
@@ -105,39 +151,79 @@ export async function POST(req: Request): Promise<NextResponse> {
         }
       }
     }
+    // Memoria del hilo: un recinto mencionado en un turno anterior sigue vigente.
+    if (!activeFincaName && memorySlots.fincaName) {
+      activeFincaName = memorySlots.fincaName;
+    }
     const isFincaContext =
+      pageContext.kind === 'venue' ||
       lower.includes('finca') ||
       lower.includes('villa') ||
       lower.includes('recinto') ||
+      lower.includes('restaurante') ||
       lower.includes('espacio') ||
       Boolean(activeFincaName) ||
       (pathname?.includes('/fincas') ?? false);
 
-    if (isFincaContext && !activeFincaName && (pathname?.includes('/fincas') || lower.includes('finca'))) {
-      activeFincaName = 'Villa Escorial Park • Mansión & Finca de Lujo';
+    // 🚫 ANTI-FACHADA: no se inventa ningún recinto por defecto. Si el cliente no
+    // ha nombrado una finca concreta, el prompt declara el contexto vacío y el
+    // agente ofrece coordinar la visita técnica con la dirección del recinto.
+
+    // 1. Detección de Población / Ciudad y Km desde Hub Méntrida.
+    //    Orden de precedencia: mensaje actual -> memoria del hilo -> heurística.
+    const kmMatch: RegExpMatchArray | null = message.match(/(\d+)\s*(km|kilometros|kilómetros)/i);
+    const resolvedCity = resolveCityDistance(lower);
+
+    let detectedCity: string;
+    if (resolvedCity) {
+      detectedCity = resolvedCity.city;
+    } else if (pageContext.municipality !== null) {
+      detectedCity = pageContext.municipality;
+    } else if (memorySlots.city) {
+      detectedCity = memorySlots.city;
+    } else if (lower.includes('toledo')) {
+      detectedCity = 'Toledo';
+    } else {
+      detectedCity = 'Méntrida';
     }
 
-    // 1. Detección de Población / Ciudad y Km desde Hub Méntrida
-    const kmMatch = message.match(/(\d+)\s*(km|kilometros|kilómetros)/i);
-    const resolvedCity = resolveCityDistance(lower);
-    const detectedCity = resolvedCity
-      ? resolvedCity.city
-      : lower.includes('toledo') ? 'Toledo' : 'Méntrida';
-    const distanceKm = kmMatch
-      ? Number(kmMatch[1])
-      : resolvedCity
-        ? resolvedCity.distanceKm
-        : lower.includes('toledo')
-          ? TOLEDO_DISTANCE_KM
-          : isFincaContext
-            ? FINCA_DISTANCE_KM
-            : DEFAULT_DISTANCE_KM;
+    // `null` = desplazamiento NO confirmado (fuera de la matriz del Hub).
+    // Jamás se inventa un kilometraje: ni 0 km ni los 58 km por defecto.
+    let distanceKm: number | null;
+    if (kmMatch) {
+      distanceKm = Number(kmMatch[1]);
+    } else if (resolvedCity) {
+      distanceKm = resolvedCity.distanceKm;
+    } else if (pageContext.distanceKmFromHub !== null) {
+      distanceKm = pageContext.distanceKmFromHub;
+    } else if (memorySlots.distanceKm !== null) {
+      // Provenance: la localidad viene de un turno anterior y así consta en el
+      // bloque de memoria del prompt (ciudad + km), de modo que el modelo puede
+      // recalcular si el cliente corrige el destino.
+      distanceKm = memorySlots.distanceKm;
+    } else if (lower.includes('toledo')) {
+      distanceKm = TOLEDO_DISTANCE_KM;
+    } else if (pageContext.kind === 'venue') {
+      distanceKm = null;
+    } else if (isFincaContext) {
+      distanceKm = FINCA_DISTANCE_KM;
+    } else {
+      distanceKm = DEFAULT_DISTANCE_KM;
+    }
 
-    // 2. Detección de Hora de Fin / Madrugada
-    const hourMatch = message.match(/(\d{1,2})(?::\d{2})?\s*(am|a\.m\.|h|horas)?\b/i);
-    const atMatch = message.match(/(?:a las|hasta las|terminando a las)\s*(\d{1,2})/i);
-    const rawHour = atMatch ? Number(atMatch[1]) : hourMatch && /:\d{2}|am|h/i.test(hourMatch[0]) ? Number(hourMatch[1]) : 2;
-    const endHour = rawHour >= 0 && rawHour <= 23 ? rawHour : 2;
+    // 2. Detección de Hora de Fin / Madrugada (mensaje actual -> memoria -> 2:00)
+    const hourMatch: RegExpMatchArray | null = message.match(/(\d{1,2})(?::\d{2})?\s*(am|a\.m\.|h|horas)?\b/i);
+    const atMatch: RegExpMatchArray | null = message.match(/(?:a las|hasta las|terminando a las)\s*(\d{1,2})/i);
+    const explicitHour: number | null = atMatch
+      ? Number(atMatch[1])
+      : hourMatch && /:\d{2}|am|h/i.test(hourMatch[0])
+        ? Number(hourMatch[1])
+        : null;
+    const boundedHour: number | null =
+      explicitHour !== null && Number.isInteger(explicitHour) && explicitHour >= 0 && explicitHour <= 23
+        ? explicitHour
+        : null;
+    const endHour: number = boundedHour ?? memorySlots.endHour ?? 2;
 
     // 3. Consulta de Disponibilidad Real (Fechas Explícitas vs Próximo Domingo)
     let nextDate: NextAvailableDateResult | null = null;
@@ -150,7 +236,9 @@ export async function POST(req: Request): Promise<NextResponse> {
         formattedSpanish: explicitDate.formattedSpanish,
         dayOfWeek: 'otro',
         daysUntil: 0,
-        isAvailable: true,
+        // CERO FACHADAS: una fecha nominal NO es una fecha verificada. La
+        // disponibilidad real se resuelve al bloquear en atomicDateLockEngine.
+        isAvailable: false,
         timeSlot: `${endHour}:00`,
       };
 
@@ -166,8 +254,8 @@ export async function POST(req: Request): Promise<NextResponse> {
           createdAt: new Date().toISOString(),
         },
         reply: {
-          ok: true,
-          summary: `Consulta de fecha específica (${explicitDate.formattedSpanish}): disponible en agenda.`,
+          ok: false,
+          summary: `Consulta de fecha específica (${explicitDate.formattedSpanish}): pendiente de verificación en la agenda real.`,
         },
       });
     } else {
@@ -199,8 +287,14 @@ export async function POST(req: Request): Promise<NextResponse> {
     // 4. Cotización SSOT Logística y Tarifas
     let calculatedQuote: QuoteBreakdown | null = null;
     let calculatedSplit: SplitBreakdown | null = null;
-    const quoteKeywords = ['km', 'distancia', 'toledo', 'precio', 'cotiz', 'tarifa', 'cuanto', 'cuánto', 'cuesta', 'costar', 'coste', 'presupuesto', 'serenata', 'solista', 'bolo', 'actuaci'];
-    if (quoteKeywords.some((k) => lower.includes(k))) {
+    const quoteKeywords: readonly string[] = ['km', 'distancia', 'toledo', 'precio', 'cotiz', 'tarifa', 'cuanto', 'cuánto', 'cuesta', 'costar', 'coste', 'presupuesto', 'serenata', 'solista', 'bolo', 'actuaci', 'sonido', 'equipo'];
+    // Se cotiza si el cliente pregunta por dinero O si el hilo ya acumuló datos
+    // suficientes (memoria multi-turno) para dar una cifra exacta y no genérica.
+    const shouldQuote: boolean =
+      quoteKeywords.some((k: string) => lower.includes(k)) ||
+      consultation.phase === 'COTIZACION' ||
+      consultation.phase === 'CIERRE_STRIPE';
+    if (shouldQuote && distanceKm !== null) {
       calculatedQuote = computeSoloQuote(distanceKm, endHour);
       calculatedSplit = computeSplit(calculatedQuote.total);
 
@@ -213,8 +307,8 @@ export async function POST(req: Request): Promise<NextResponse> {
 
     // 5. Rider Acústico y Aforo
     if (lower.includes('pax') || lower.includes('aforo') || lower.includes('personas') || lower.includes('ruido') || lower.includes('decibel') || lower.includes('bose') || lower.includes('sonido')) {
-      const paxMatch = message.match(/(\d+)\s*(pax|personas|invitados)/i);
-      const pax = paxMatch ? Number(paxMatch[1]) : 150;
+      const paxMatch: RegExpMatchArray | null = message.match(/(\d+)\s*(pax|personas|invitados)/i);
+      const pax: number = paxMatch ? Number(paxMatch[1]) : memorySlots.pax ?? 150;
       const riderTrace = await bus.send('supervisor', 'acoustic-rider', 'calc_rider', {
         pax,
         context: lower.includes('boda') ? 'boda_exterior' : 'solista',
@@ -243,26 +337,47 @@ export async function POST(req: Request): Promise<NextResponse> {
     // 8. Cierre y Depósito Stripe
     if (lower.includes('cerrar') || lower.includes('reserva') || lower.includes('fianza') || lower.includes('deposito') || lower.includes('depósito') || lower.includes('stripe')) {
       const closerTrace = await bus.send('supervisor', 'sales-closer', 'prepare_price_lock', {
-        totalEur: calculatedQuote ? calculatedQuote.total : computeSoloQuote(distanceKm, endHour).total,
-        depositEur: 100,
+        totalEur: calculatedQuote
+          ? calculatedQuote.total
+          : distanceKm !== null
+            ? computeSoloQuote(distanceKm, endHour).total
+            : TARIFA_BASE_SOLISTA_EUR,
+        depositEur: DEPOSITO_STRIPE_EUR,
       });
       traces.push(...closerTrace);
     }
 
     // Generar enlaces de acción para el Paciente Cero
-    const bookingDateParam = nextDate ? nextDate.dateIso : new Date().toISOString().slice(0, 10);
-    const bookingTotalParam = calculatedQuote ? calculatedQuote.total : 350;
-    const stripeBookingUrl = `/reservar/solista?date=${bookingDateParam}&km=${distanceKm}&city=${encodeURIComponent(detectedCity)}&total=${bookingTotalParam}&deposit=100`;
-    const waText = `Hola Edwin, deseo bloquear la fecha para el ${nextDate ? nextDate.formattedSpanish : 'evento'} en ${detectedCity} (presupuesto estimado: ${bookingTotalParam} € con depósito deducible de 100 €).`;
+    const bookingDateParam: string = nextDate
+      ? nextDate.dateIso
+      : memorySlots.dateIso ?? new Date().toISOString().slice(0, 10);
+    const bookingTotalParam: number = calculatedQuote ? calculatedQuote.total : TARIFA_BASE_SOLISTA_EUR;
+    // Sin kilometraje confirmado no se inventa un `km` en el enlace de reserva.
+    const kmParam: string = distanceKm === null ? '' : `&km=${distanceKm}`;
+    const stripeBookingUrl = `/reservar/solista?date=${bookingDateParam}${kmParam}&city=${encodeURIComponent(detectedCity)}&total=${bookingTotalParam}&deposit=${DEPOSITO_STRIPE_EUR}`;
+    const waText = `Hola Edwin, deseo bloquear la fecha para el ${nextDate ? nextDate.formattedSpanish : memorySlots.dateLabel ?? 'evento'} en ${detectedCity} (presupuesto estimado: ${bookingTotalParam} € con depósito deducible de ${DEPOSITO_STRIPE_EUR} €).`;
     const waUrl = `https://wa.me/34693693048?text=${encodeURIComponent(waText)}`;
 
     // 9. Síntesis conversacional S-Class (DeepSeek -> Gemini -> Determinista)
     let aiReply = '';
     const geminiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
 
-    const formattedTotalEur = calculatedQuote
+    const formattedTotalEur: string | number = calculatedQuote
       ? (calculatedQuote.total % 1 === 0 ? calculatedQuote.total : calculatedQuote.total.toFixed(2))
-      : 350;
+      : TARIFA_BASE_SOLISTA_EUR;
+
+    // 🌐 GROUNDING WEB EN VIVO (DeepSeek Search & Fetch).
+    // Solo se dispara para 3 intenciones de alto valor donde el dato externo es
+    // volátil y no está en el SSOT: normativa acústica municipal, aforo de
+    // recintos no homologados y licitaciones B2G. Fail-open y con tope de gasto.
+    const groundingNeed = buildGroundingNeed({
+      slots: memorySlots,
+      message,
+      activeEntityName: activeFincaName,
+    });
+    const grounding = groundingNeed === null
+      ? null
+      : await groundWithWebSearch({ need: groundingNeed });
 
     const systemPrompt: string = buildHardenedSystemPrompt({
       pathname: pathname ?? '',
@@ -271,10 +386,21 @@ export async function POST(req: Request): Promise<NextResponse> {
       distanceKm,
       endHour,
       formattedTotalEur,
-      explicitDateLabel: explicitDate ? explicitDate.formattedSpanish : '',
+      explicitDateLabel: explicitDate
+        ? explicitDate.formattedSpanish
+        : memorySlots.dateLabel ?? '',
       nextDateLabel: nextDate && !explicitDate ? nextDate.formattedSpanish : '',
       stripeBookingUrl,
       waUrl,
+      conversationMemory: buildConversationMemoryBlock(memorySlots),
+      consultationPhase: consultation.phase,
+      nextQuestion: pageContext.kind === 'venue' && consultation.phase === 'DESCUBRIMIENTO'
+        ? 'Confirmar la fecha de la boda y el número de invitados para el recinto.'
+        : consultation.nextQuestion,
+      turnCount: history.length,
+      objectionLabel: consultation.objection ? OBJECTION_LABEL[consultation.objection] : '',
+      webGrounding: grounding?.block ?? '',
+      pageContextBlock: buildPageContextBlock(pageContext),
     });
 
     const untrustedMessage: string = wrapUntrustedMessage(message);
@@ -286,6 +412,7 @@ export async function POST(req: Request): Promise<NextResponse> {
           model: 'deepseek-chat',
           system: systemPrompt,
           prompt: untrustedMessage,
+          history,
           temperature: 0.3,
         });
         if (dsRes.available && dsRes.content.trim()) {
@@ -302,10 +429,21 @@ export async function POST(req: Request): Promise<NextResponse> {
         const genAI = new GoogleGenerativeAI(geminiKey);
         const model = genAI.getGenerativeModel({ model: 'gemini-flash-latest' });
 
-        const result = await model.generateContent([
-          systemPrompt,
-          `Usuario: ${untrustedMessage}`
-        ]);
+        // Gemini usa roles 'user' | 'model': el system prompt viaja como primer turno
+        // y el historial real del hilo se reconstruye para no perder el contexto.
+        const geminiHistory: Array<{ role: 'user' | 'model'; parts: Array<{ text: string }> }> = [
+          { role: 'user', parts: [{ text: systemPrompt }] },
+          { role: 'model', parts: [{ text: 'Entendido. Aplico la doctrina consultiva de EAR OS y la memoria del hilo al pie de la letra.' }] },
+        ];
+        for (const turn of history) {
+          geminiHistory.push({
+            role: turn.role === 'assistant' ? 'model' : 'user',
+            parts: [{ text: turn.content }],
+          });
+        }
+
+        const chat = model.startChat({ history: geminiHistory });
+        const result = await chat.sendMessage(untrustedMessage);
         aiReply = result.response.text();
       } catch (geminiErr: unknown) {
         console.warn('⚠️ [OMNI_CHAT_GEMINI_FALLBACK]:', geminiErr);
@@ -314,15 +452,27 @@ export async function POST(req: Request): Promise<NextResponse> {
 
     // 10. Fallback Determinista S-Class Multidominio (Limpio y sin loro)
     if (!aiReply) {
-      if (isFincaContext && explicitDate) {
-        aiReply = `Para **${activeFincaName}** el **${explicitDate.formattedSpanish}**:\n\n` +
-          `La finca cuenta con alquiler íntegro y alojamiento para 30 personas en 9 suites. Al tratarse de una fecha de altísima demanda (Nochevieja), el bloqueo y la visita técnica se coordinan de forma prioritaria con la dirección del recinto a través de nuestra centralita B2B.\n\n` +
+      const fincaLabel: string = activeFincaName.length > 0 ? activeFincaName : 'el recinto';
+      if (pageContext.kind === 'venue') {
+        // Respuesta determinista con la ficha verificada: funciona incluso sin LLM
+        // y erradica el "no tengo datos de ese recinto".
+        const highlights: string = pageContext.facts.slice(0, 2).join('\n\n');
+        const pending: string = pageContext.missing.slice(0, 3).join(', ');
+        aiReply =
+          `Sí, tengo ficha verificada de **${pageContext.name}**:\n\n${highlights}\n\n` +
+          `Lo que la casa no publica (${pending}) lo cerramos en visita técnica con su dirección; Productora EAR aporta la música, la producción y el rider acústico. ` +
+          (explicitDate ? `Para el **${explicitDate.formattedSpanish}** verifico disponibilidad con el recinto antes de asegurarte nada. ` : '') +
+          `¿Para qué fecha y cuántos invitados sería?\n\n` +
+          `[💬 Coordinar visita y fecha por WhatsApp ➔](${waUrl})`;
+      } else if (isFincaContext && explicitDate) {
+        aiReply = `Para **${fincaLabel}** el **${explicitDate.formattedSpanish}**:\n\n` +
+          `Las condiciones de alquiler, aforo y horarios de ese recinto las confirma su dirección: no publico datos que no estén verificados. Coordinamos la visita técnica y el bloqueo de la fecha de forma prioritaria a través de la centralita B2B.\n\n` +
           (lower.includes('edwin') || lower.includes('solista') || lower.includes('mariachi') || lower.includes('artista')
-            ? `Respecto a **Edwin Agudelo**, para esa misma fecha figura actualmente **disponible** en agenda para actuaciones especiales.\n\n`
+            ? `Respecto a **Edwin Agudelo**, compruebo su agenda real para esa fecha antes de confirmarte nada.\n\n`
             : '') +
-          `[💬 Consultar Disponibilidad de ${activeFincaName} en WhatsApp ➔](https://wa.me/34693693048?text=${encodeURIComponent(`Hola Edwin, quiero consultar disponibilidad y condiciones de ${activeFincaName} para el ${explicitDate.formattedSpanish}.`)})`;
+          `[💬 Consultar disponibilidad y condiciones por WhatsApp ➔](${waUrl})`;
       } else if (explicitDate) {
-        aiReply = `Para el **${explicitDate.formattedSpanish}**, **Edwin Agudelo** actualmente figura **disponible** en agenda para actuaciones especiales.\n\n` +
+        aiReply = `Para el **${explicitDate.formattedSpanish}**, compruebo la agenda real de **Edwin Agudelo** antes de afirmar disponibilidad: el bloqueo definitivo se hace con el depósito de ${DEPOSITO_STRIPE_EUR} € (100% deducible).\n\n` +
           `¿Para qué localidad y horario sería el evento? Indícamelo y te calculo el presupuesto con el desplazamiento exacto.\n\n` +
           `[💬 Consultar por WhatsApp Oficial (+34 693 693 048) ➔](${waUrl})`;
       } else if (calculatedQuote) {
@@ -334,29 +484,38 @@ export async function POST(req: Request): Promise<NextResponse> {
         aiReply = `La serenata como solista de **Edwin Agudelo** en **${detectedCity}** tiene un coste total de **${cleanTotal} €**:\n\n` +
           `• Tarifa base solista: **${cleanBase} €**\n` +
           `• Desplazamiento (${distanceKm} km desde Hub Méntrida): **${cleanLogistica} €**\n` +
-          (calculatedQuote.hotel > 0 ? `• Suplemento hotel/nocturnidad: **${cleanHotel} €** (por finalizar a las ${endHour}:00 y superar 200 km).\n\n` : '\n') +
+          (calculatedQuote.hotel > 0 ? `• Suplemento hotel/nocturnidad: **${cleanHotel} €** (por finalizar de madrugada o superar ${LOGISTICA_KM_HOTEL} km).\n\n` : '\n') +
           (calculatedSplit && (lower.includes('split') || lower.includes('reparto') || lower.includes('donacion') || lower.includes('donación'))
             ? `• Split Soberano 80/10/10: Artista **${calculatedSplit.artista.toFixed(2)} €** · EAR OS **${calculatedSplit.earOs.toFixed(2)} €** · VIMUME (obra social) **${calculatedSplit.vimume.toFixed(2)} €**\n\n`
             : '') +
-          (nextDate ? `El domingo libre más próximo en el calendario es el **${nextDate.formattedSpanish}** a las **${endHour}:00**.\n\n` : '') +
-          `Puedes bloquear la fecha ahora mismo con el depósito de 100 € (100% deducible del total):\n\n` +
-          `[🔒 Bloquear Fecha (${cleanTotal} €) con Depósito de 100 € ➔](${stripeBookingUrl})\n\n` +
+          (nextDate ? `La fecha libre más próxima en el calendario es el **${nextDate.formattedSpanish}** a las **${endHour}:00**.\n\n` : '') +
+          `Puedes bloquear la fecha ahora mismo con el depósito de ${DEPOSITO_STRIPE_EUR} € (100% deducible del total):\n\n` +
+          `[🔒 Bloquear Fecha (${cleanTotal} €) con Depósito de ${DEPOSITO_STRIPE_EUR} € ➔](${stripeBookingUrl})\n\n` +
           `[💬 Confirmar por WhatsApp (+34 693 693 048) ➔](${waUrl})`;
       } else if (isFincaContext) {
-        aiReply = `Estás consultando información sobre **${activeFincaName}**.\n\n` +
-          `Este recinto forma parte de nuestra Red Homologada S-Class con garantía acústica y acometida trifásica. ¿Para qué fecha o número de invitados deseas consultar las condiciones?\n\n` +
-          `[💬 Contactar con Concierge B2B en WhatsApp ➔](https://wa.me/34693693048?text=${encodeURIComponent(`Hola Edwin, quiero información sobre ${activeFincaName}.`)})`;
+        const subject: string = activeFincaName.length > 0
+          ? `**${activeFincaName}**`
+          : 'nuestra red de recintos homologados';
+        aiReply = `Estás consultando información sobre ${subject}.\n\n` +
+          `El aforo, las condiciones de alquiler y los horarios los confirma la dirección del recinto; en la visita técnica validamos además la acometida trifásica y el rider acústico. ¿Para qué fecha y número de invitados quieres que lo consulte?\n\n` +
+          `[💬 Hablar con producción por WhatsApp ➔](${waUrl})`;
       } else if (nextDate) {
         aiReply = `La próxima fecha libre disponible en el calendario para esa franja es el **${nextDate.formattedSpanish}** a las **${endHour}:00**.\n\n` +
           `¿Para qué localidad sería el evento? Indícamelo y te calculo el presupuesto con el desplazamiento exacto.`;
       } else if (lower.includes('repertorio') || lower.includes('cancion') || lower.includes('canción')) {
-        aiReply = `Disponemos de un repertorio con más de 35 temas clásicos mexicanos: rancheras (*El Rey, Si nos dejan*), boleros románticos (*Bésame mucho, Motivos*) y Las Mañanitas. Además, podemos componer una ranchera exclusiva para el homenajeado por 180 €.\n\n` +
+        aiReply = `Disponemos de un repertorio con más de 35 temas clásicos mexicanos: rancheras (*El Rey, Si nos dejan*), boleros románticos (*Bésame mucho, Motivos*) y Las Mañanitas. También podemos componer una ranchera exclusiva para el homenajeado: el importe exacto te lo confirma producción.\n\n` +
           `[💬 Hablar con producción por WhatsApp (+34 693 693 048) ➔](${waUrl})`;
       } else if (lower.includes('ruido') || lower.includes('decibel') || lower.includes('sonido') || lower.includes('bose')) {
-        aiReply = `Utilizamos arreglos acústicos Bose calibrados por debajo de 75 dB SPL, cumpliendo estrictamente con la Ley 37/2003 del Ruido para fincas y hoteles sin riesgo de sanciones.\n\n` +
+        aiReply = `Trabajamos con arreglos acústicos calibrados por debajo de ${LIMITE_SPL_DB} dB SPL, conforme a la Ley 37/2003 del Ruido y a la ordenanza municipal aplicable. El límite exacto y el punto de medida los fijamos en la visita técnica con la dirección del recinto: no prometemos viabilidad acústica sin verificar la normativa local.\n\n` +
           `[💬 Hablar con producción por WhatsApp (+34 693 693 048) ➔](${waUrl})`;
       } else {
-        aiReply = `Hola, estoy a tu disposición para coordinar las actuaciones de Edwin Agudelo y fincas de EAR OS. ¿En qué fecha y localidad tienes pensado el evento?`;
+        // Fallback con memoria: nunca reinicia la conversación desde cero.
+        const remembered: string = summarizeSlots(memorySlots);
+        const contextLine: string = remembered.length > 0
+          ? `Perfecto, tomo nota de lo que me has contado (${remembered}). `
+          : 'Hola, soy el Concierge de EAR OS. ';
+        aiReply = `${contextLine}${consultation.nextQuestion}\n\n` +
+          `[💬 Hablar con producción por WhatsApp (+34 693 693 048) ➔](${waUrl})`;
       }
     }
 
@@ -368,6 +527,11 @@ export async function POST(req: Request): Promise<NextResponse> {
       traces,
       killSwitch: false,
       timestamp: new Date().toISOString(),
+      // 🧠 Estado del hilo para que el cliente lo persista y lo reenvíe en el
+      // siguiente turno (memoria real entre sesiones vía localStorage).
+      consultation,
+      // 🌐 Fuentes web citadas (transparencia y trazabilidad del dato verificado).
+      webSources: grounding?.sources ?? [],
     });
 
   } catch (error: unknown) {

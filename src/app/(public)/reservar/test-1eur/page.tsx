@@ -25,7 +25,8 @@ import QRCode from 'qrcode';
 
 function Test1EurContent() {
   const searchParams = useSearchParams();
-  const clientPhone = searchParams.get('telefono') || '659116376';
+  // Número de pruebas: placeholder no dialable (nunca una línea real).
+  const clientPhone = searchParams.get('telefono') || '600000000';
   const clientName = searchParams.get('nombre') || 'Cliente Exclusivo';
   const eventDate = searchParams.get('fecha') || '31 de Octubre de 2026';
   const statusParam = searchParams.get('status');

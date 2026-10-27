@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import type { ChristmasLightingProduct } from '@/data/luces-navidad';
 import { createB2GLightingCheckout } from '@/app/actions/vipCheckoutActions';
+import { buildDemandWhatsappUrl } from '@/lib/providers/sovereign-lead-gate';
 
 interface Props {
   products: ChristmasLightingProduct[];
@@ -474,7 +475,11 @@ export default function ChristmasLightingCatalogView({ products, categories, ini
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
-              href="https://wa.me/34682141077?text=Hola%2C%20solicito%20el%20expediente%20t%C3%A9cnico%20y%20precios%20del%20cat%C3%A1logo%20de%20alumbrado%20monumental%20de%20Navidad%20Productora%20EAR"
+              href={buildDemandWhatsappUrl({
+                entityName: 'Alumbrado monumental de Navidad',
+                intent: 'presupuesto',
+                detail: 'expediente técnico y precios'
+              })}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-[#ecb613] text-black font-bold text-sm hover:brightness-110 transition-all shadow-lg"
@@ -608,7 +613,11 @@ export default function ChristmasLightingCatalogView({ products, categories, ini
 
                   <div className="flex gap-2">
                     <a
-                      href={`https://wa.me/34682141077?text=Hola%2C%20solicito%20la%20memoria%20t%C3%A9cnica%20oficial%20y%20pliego%20para%20la%20referencia%20${encodeURIComponent(activeModalProduct.sku)}%20(${encodeURIComponent(activeModalProduct.name)})%20de%20Productora%20EAR`}
+                      href={buildDemandWhatsappUrl({
+                        entityName: 'Alumbrado monumental de Navidad',
+                        intent: 'presupuesto',
+                        detail: `${activeModalProduct.sku} · ${activeModalProduct.name}`
+                      })}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex-1 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-bold text-xs transition-all flex items-center justify-center gap-1.5 border border-white/15"

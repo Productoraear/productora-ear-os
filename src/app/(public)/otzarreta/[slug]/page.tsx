@@ -21,6 +21,13 @@ import {
   OTZARRETA_CANONICAL_BASE
 } from '@/lib/seo/otzarreta-dominance-engine';
 import { DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
+import {
+  SOVEREIGN_DEMAND_CHANNEL,
+  buildDemandWhatsappUrl,
+  sanitizeSchemaContact,
+  supplierContactWithheldNotice,
+  supplierLineMask
+} from '@/lib/providers/sovereign-lead-gate';
 import { OtzarretaExperienceExplorer } from '@/components/otzarreta/OtzarretaExperienceExplorer';
 
 interface Props {
@@ -82,19 +89,23 @@ export default async function OtzarretaDynamicLandingPage({ params }: Props): Pr
     notFound();
   }
 
-  const whatsappUrl = `https://wa.me/34619455396?text=${encodeURIComponent(
-    `Hola Eduardo, te contacto desde tu landing oficial de Productora EAR para consultar disponibilidad para "${landing.h1}".`
-  )}`;
+  const whatsappUrl = buildDemandWhatsappUrl({
+    entityName: 'Ezkertza Berria & Otzarreta',
+    intent: 'disponibilidad',
+    detail: landing.h1
+  });
 
   return (
     <main className="min-h-screen bg-[#030305] text-white selection:bg-[#ecb613] selection:text-black pt-28 pb-24 overflow-x-hidden">
-      {/* Schema.org JSON-LD estructurado */}
+      {/* Schema.org JSON-LD estructurado (saneado: cero líneas de proveedor) */}
       {landing.schemaOrg.map((schema, idx) => (
         <script
           key={idx}
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(schema).replace(/</g, '\\u003c')
+            __html: JSON.stringify(
+              sanitizeSchemaContact(schema, landing.municipalityName)
+            ).replace(/</g, '\\u003c')
           }}
         />
       ))}
@@ -252,7 +263,12 @@ export default async function OtzarretaDynamicLandingPage({ params }: Props): Pr
             </div>
           </dl>
           <p className="text-[10px] text-gray-500 font-mono break-all">
-            Entidad verificada · {landing.phone} · {landing.email} · fuente: restauranteotzarreta.com
+            Entidad verificada · Ezkertza Berria & Otzarreta · línea de la casa{' '}
+            {supplierLineMask(landing.phone)} (protegida) · canal único:{' '}
+            {SOVEREIGN_DEMAND_CHANNEL.telDisplay} · fuente: restauranteotzarreta.com
+          </p>
+          <p className="text-[10px] text-gray-500 leading-relaxed">
+            {supplierContactWithheldNotice('Ezkertza Berria & Otzarreta')}
           </p>
         </div>
 

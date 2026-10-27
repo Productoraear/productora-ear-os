@@ -17,12 +17,12 @@ import { createHash } from 'crypto';
 import {
   TARIFA_BASE_SOLISTA_EUR,
   DEPOSITO_STRIPE_EUR,
-  LOGISTICA_KM_EXENTOS,
-  LOGISTICA_EUR_PER_KM,
-  LOGISTICA_KM_HOTEL,
-  SUPLEMENTO_HOTEL_EUR,
   WATTS_PER_PAX as SSOT_WATTS_PER_PAX,
 } from '@/lib/constants/ear-os-ssot';
+import {
+  computeSovereignLogistics,
+  parseEndHour,
+} from '@/lib/pricing/sovereign-pricing';
 
 const BASE_SOLISTA = TARIFA_BASE_SOLISTA_EUR;
 const DEPOSITO_STRIPE = DEPOSITO_STRIPE_EUR;
@@ -32,11 +32,6 @@ const DEPOSITO_STRIPE = DEPOSITO_STRIPE_EUR;
 /* ------------------------------------------------------------------ */
 
 export const HUB_MENTRIDA = 'Méntrida, Toledo (Hub Central EAR)';
-const KM_EXENTO = LOGISTICA_KM_EXENTOS;
-const COSTE_KM_SCLASS = LOGISTICA_EUR_PER_KM; // €/km a partir del km 50
-const SUPLEMENTO_HOTELERO = SUPLEMENTO_HOTEL_EUR; // 120 €
-const DISTANCIA_MAXIMA_SIN_HOTELES_KM = LOGISTICA_KM_HOTEL;
-const HORA_LIMITE_NOCTURNA = '03:00';
 
 /* Constantes Acústicas */
 export const WATTS_PER_PAX = SSOT_WATTS_PER_PAX;
@@ -108,16 +103,16 @@ export function calculateGeoAcousticRadar(input: VenueAcousticInput): GeoAcousti
   const maxDecibelsSPL = isVimumeRestricted ? SPL_VIMUME_MAX : SPL_GENERAL_MAX;
   const isVimumeCompliant = maxDecibelsSPL < 75;
 
-  /* --- Logística S-Class desde Hub Central Méntrida --- */
-  const distanceKm = input.distanceKmFromMentrida;
-  const billableKm = Math.max(0, distanceKm - KM_EXENTO);
-  const kmCost = Math.round(billableKm * COSTE_KM_SCLASS * 100) / 100;
-
-  const requiresAccommodation =
-    distanceKm > DISTANCIA_MAXIMA_SIN_HOTELES_KM ||
-    (input.eventEndHour !== undefined && input.eventEndHour >= HORA_LIMITE_NOCTURNA);
-
-  const hotelSurcharge = requiresAccommodation ? SUPLEMENTO_HOTELERO : 0;
+  /* --- Logística S-Class desde Hub Central Méntrida (motor canónico SSOT) --- */
+  const logistics = computeSovereignLogistics(
+    input.distanceKmFromMentrida,
+    parseEndHour(input.eventEndHour),
+  );
+  const distanceKm = logistics.distanceKm;
+  const billableKm = logistics.billableKm;
+  const kmCost = logistics.travelCost;
+  const requiresAccommodation = logistics.requiresHotel;
+  const hotelSurcharge = logistics.hotelSupplement;
 
   /* --- Total Logística + Audio --- */
   const totalLogisticsAndAudioEuro = Math.round((kmCost + hotelSurcharge) * 100) / 100;
@@ -195,10 +190,11 @@ export function runGeoAcousticDiagnostics(): GeoAcousticDiagnosticResult {
     };
     const t1 = calculateGeoAcousticRadar(t1Input);
 
+    const expectedKmCost = computeSovereignLogistics(80).travelCost;
     const pass1 =
       t1.acousticRider.totalWatts === 1800 &&
       t1.acousticRider.recommendedSystem.includes('F1') &&
-      t1.logisticsBreakdown.kmCost === 45;
+      t1.logisticsBreakdown.kmCost === expectedKmCost;
 
     tests.push({
       id: 1,
@@ -210,7 +206,7 @@ export function runGeoAcousticDiagnostics(): GeoAcousticDiagnosticResult {
         expectedWatts: 1800,
         system: t1.acousticRider.recommendedSystem,
         kmCost: t1.logisticsBreakdown.kmCost,
-        expectedKmCost: 45,
+        expectedKmCost,
       },
     });
   } catch (e) {

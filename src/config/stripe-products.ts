@@ -2,7 +2,12 @@
  * 🏛️ MASTER STRIPE PRODUCTS & SERVICES REGISTRY (SSOT)
  * Catálogo maestro de productos, servicios, tarifas y suscripciones vinculadas a Stripe en EAR OS.
  * Define SKUs, conceptos de facturación, depósitos Smart-Lock, precios base y split soberano 80/10/10.
+ *
+ * Las menciones logísticas de los textos comerciales se interpolan desde el
+ * SSOT sellado (`ear-os-ssot.ts`): ningún copy puede volver a duplicar tarifas.
  */
+
+import { LOGISTICA_EUR_PER_KM, LOGISTICA_KM_EXENTOS } from '@/lib/constants/ear-os-ssot';
 
 export interface StripeProductDefinition {
   id: string;
@@ -35,7 +40,7 @@ export const STRIPE_MASTER_CATALOG: Record<string, StripeProductDefinition> = {
     billingType: 'SPLIT_SETTLEMENT',
     isHero: true,
     split: { providerPercent: 80, platformEarPercent: 10, affiliateVimumePercent: 10 },
-    description: 'Producto HERO Oficial para Regalos Emocionales, Cumpleaños, Fiestas Privadas, San Valentín, Día de la Madre y Día del Padre. Voz principal y guitarra de gala en directo con repertorio a la carta, dedicatoria personalizada y sonorización Bose HiFi calibrada a 12 W/pax (+0,75 €/km fuera de Madrid).',
+    description: `Producto HERO Oficial para Regalos Emocionales, Cumpleaños, Fiestas Privadas, San Valentín, Día de la Madre y Día del Padre. Voz principal y guitarra de gala en directo con repertorio a la carta, dedicatoria personalizada y sonorización Bose HiFi calibrada a 12 W/pax (+${LOGISTICA_EUR_PER_KM.toFixed(2).replace('.', ',')} €/km a partir del km ${LOGISTICA_KM_EXENTOS} desde el Hub Méntrida).`,
     targetLandings: [
       '/regalos/dia-de-la-madre',
       '/regalos/dia-del-padre',

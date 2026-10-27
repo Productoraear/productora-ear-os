@@ -1,7 +1,7 @@
 {
   "_meta": {
     "version": "2.1.0-ENRICHED",
-    "generatedAt": "2026-10-26T15:50:05.030Z",
+    "generatedAt": "2026-10-27T07:13:18.454Z",
     "doctrine": "Publicación solo con contacto real atribuible o GPS verificado. Prohibido inventar precio/rating/verified.",
     "maxFileKB": 900,
     "sources": [
@@ -16,7 +16,7 @@
     "verified": 5790,
     "withSocial": 4722,
     "withWeb": 5312,
-    "withRating": 1521
+    "withRating": 1522
   },
   "finca": {
     "count": 1547,
@@ -47,19 +47,19 @@
     "count": 514,
     "publishable": 514,
     "overflow": 0,
-    "sizeKB": 1347,
+    "sizeKB": 1347.3,
     "chunks": [
       "catering.json",
       "catering__2.json"
     ],
     "sha256": [
-      "c9f31729579ae2945dc13368899d73789243ab5c609ee6720455e21238134391",
+      "a00edb8973f1f5f70f8359cc4a80f5e01804277e21ecf4e93260aeb2f1268384",
       "782ab62bc8bc0edb6967027791eb9ec16dbf27ca8c49597fdde454d5a2016d14"
     ],
     "withPhone": 167,
     "verified": 151,
     "withGeo": 228,
-    "withRating": 44,
+    "withRating": 45,
     "withSocial": 158
   },
   "musica": {

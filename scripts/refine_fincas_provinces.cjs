@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { resplitPartition } = require('./resplit_edge_partition.cjs');
 
 const PROVINCE_SYNONYMS = {
   'orense': 'Ourense',
@@ -74,34 +75,51 @@ function normalize(s) {
 }
 
 function refine() {
-  const filePath = path.join(__dirname, '../public/data/providers/finca.json');
-  const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+  const manifestPath = path.join(__dirname, '../public/data/providers/manifest.json');
+  const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+  const chunks =
+    manifest && manifest.finca && Array.isArray(manifest.finca.chunks)
+      ? manifest.finca.chunks
+      : ['finca.json'];
 
   let corrected = 0;
-  for (const f of data) {
-    const normAddr = normalize(f.address || '');
-    // Try to match from address
-    let found = null;
-    for (const [syn, canonical] of Object.entries(PROVINCE_SYNONYMS)) {
-      if (
-        normAddr.endsWith(syn) || 
-        normAddr.includes(', ' + syn) || 
-        normAddr.includes('(' + syn + ')') ||
-        normAddr.includes(' ' + syn + ',') ||
-        normAddr.includes(' ' + syn)
-      ) {
-        found = canonical;
-        break;
+  for (const chunk of chunks) {
+    const filePath = path.join(__dirname, '../public/data/providers', chunk);
+    if (!fs.existsSync(filePath)) continue;
+    const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+
+    for (const f of data) {
+      const normAddr = normalize(f.address || '');
+      // Try to match from address
+      let found = null;
+      for (const [syn, canonical] of Object.entries(PROVINCE_SYNONYMS)) {
+        if (
+          normAddr.endsWith(syn) ||
+          normAddr.includes(', ' + syn) ||
+          normAddr.includes('(' + syn + ')') ||
+          normAddr.includes(' ' + syn + ',') ||
+          normAddr.includes(' ' + syn)
+        ) {
+          found = canonical;
+          break;
+        }
+      }
+      if (found && found !== f.province) {
+        f.province = found;
+        corrected++;
       }
     }
-    if (found && found !== f.province) {
-      f.province = found;
-      corrected++;
-    }
+
+    // SIEMPRE minificado: el pretty-print inflaba la partición y rompía el SHA-256.
+    fs.writeFileSync(filePath, JSON.stringify(data), 'utf8');
   }
 
   console.log(`Refined province mapping for ${corrected} more fincas!`);
-  fs.writeFileSync(filePath, JSON.stringify(data), 'utf8');
+
+  // Cerrojo de integridad: re-empaqueta el gremio y refresca count/sizeKB/sha256.
+  resplitPartition('finca', { manifest });
+  fs.writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
+  console.log('[INTEGRITY] Partición finca reconciliada con manifest.json (SHA-256 refrescado).');
 }
 
 refine();

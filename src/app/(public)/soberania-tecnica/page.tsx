@@ -8,6 +8,8 @@ import { Shield, Cpu, Network, Globe, Lock, CheckCircle, ArrowRight, Sparkles } 
 import {
   TARIFA_BASE_SOLISTA_EUR,
   DEPOSITO_STRIPE_EUR,
+  LOGISTICA_EUR_PER_KM,
+  LOGISTICA_KM_EXENTOS,
   CENTRALITA_EAR_OS,
 } from '@/lib/constants/ear-os-ssot';
 
@@ -131,7 +133,7 @@ export default function SoberaniaTecnicaPage() {
                 </p>
                 <p className="text-sm text-white/50 font-medium flex items-center gap-2">
                   <CheckCircle className="text-[#ecb613]" size={16} />
-                  Logística 1,50 €/km a partir del km 50.
+                  Logística {LOGISTICA_EUR_PER_KM.toFixed(2).replace('.', ',')} €/km a partir del km {LOGISTICA_KM_EXENTOS}.
                 </p>
               </div>
             </div>

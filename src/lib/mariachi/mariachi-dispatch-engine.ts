@@ -9,7 +9,10 @@
  */
 
 import { createHash } from 'crypto';
-import { BASE_SOLISTA, COSTE_KM, DEPOSITO_STRIPE } from '../pricing/sovereign-pricing';
+import {
+  DEPOSITO_STRIPE,
+  computeSovereignLogistics,
+} from '../pricing/sovereign-pricing';
 
 /* ------------------------------------------------------------------ */
 /* Constantes de Negocio y Tarifas Homologadas                         */
@@ -73,7 +76,9 @@ export interface MariachiDispatchResult {
 
 export function calculateMariachiDispatch(input: MariachiOrderInput): MariachiDispatchResult {
   const basePrice = TARIFAS_MARIACHI[input.format] || TARIFAS_MARIACHI.solista_edwin;
-  const travelCost = Math.round(input.distanceKm * COSTE_KM);
+  // Logística canónica SSOT: franquicia de 50 km desde Méntrida + hotel si procede.
+  const logistics = computeSovereignLogistics(input.distanceKm);
+  const travelCost = logistics.totalLogistics;
   const urgencyFee = (input.urgency === 'express_hoy' || input.urgency === 'urgencia_nocturna_24_7') 
     ? RECARGO_URGENCIA_24_7 
     : 0;
@@ -87,7 +92,7 @@ export function calculateMariachiDispatch(input: MariachiOrderInput): MariachiDi
   const vimume10 = totalPriceEur - musicians80 - earOs10;
 
   // Generación de Hash Price-Lock SHA-256
-  const payloadToHash = `MARIACHI_UBER|${input.format}|${input.distanceKm}|${totalPriceEur}|${depositAmountEur}|${input.urgency}`;
+  const payloadToHash = `MARIACHI_UBER|${input.format}|${logistics.distanceKm}|${totalPriceEur}|${depositAmountEur}|${input.urgency}`;
   const priceLockHash = createHash('sha256').update(payloadToHash).digest('hex');
 
   const orderId = `EAR-MCH-${Date.now().toString(36).toUpperCase()}-${priceLockHash.substring(0, 6).toUpperCase()}`;
@@ -168,7 +173,7 @@ export function runMariachiDispatchDiagnostics(): boolean {
     clientPhone: '+34600000000',
   });
 
-  const expectedTotalCase1 = 480 + Math.round(15 * 0.35) + 120; // 480 + 5 + 120 = 605
+  const expectedTotalCase1 = 480 + computeSovereignLogistics(15).totalLogistics + 120; // 480 + franquicia + 120
   const case1Valid = case1.totalPriceEur === expectedTotalCase1 && case1.isImmediateDispatch;
   console.log(`[MARIACHI-DISPATCH] Caso 1 (Serenata Express 24/7): ${case1Valid ? 'PASS ✔' : 'FAIL ✘'} (Total: ${case1.totalPriceEur}€)`);
 
@@ -182,7 +187,7 @@ export function runMariachiDispatchDiagnostics(): boolean {
     clientPhone: '+34600000001',
   });
 
-  const expectedTotalCase2 = 1400 + Math.round(80 * 0.35); // 1400 + 28 = 1428
+  const expectedTotalCase2 = 1400 + computeSovereignLogistics(80).totalLogistics; // 1400 + 15 km facturables
   const case2Valid = case2.totalPriceEur === expectedTotalCase2 && !case2.isImmediateDispatch;
   console.log(`[MARIACHI-DISPATCH] Caso 2 (Boda Mariachi Imperial): ${case2Valid ? 'PASS ✔' : 'FAIL ✘'} (Total: ${case2.totalPriceEur}€)`);
 

@@ -14,12 +14,13 @@
 
 import {
   BASE_SOLISTA,
-  COSTE_KM,
   DEPOSITO_STRIPE,
+  KM_HOTEL,
   SPLIT_SOBERANO,
   SUPLEMENTO_QUINTETO,
   SUPLEMENTO_TRIO,
   calculateSovereignQuote,
+  computeSovereignLogistics,
 } from '../pricing/sovereign-pricing';
 import type {
   FormatType,
@@ -226,14 +227,24 @@ function discoveryCopy(input: AstraMessageInput): string {
 
 function quoteCopy(quoteInput: SovereignQuoteInput, quote: SovereignQuoteResult): string {
   const base = basePriceFor(quoteInput.format);
-  const travel = Math.round(quoteInput.distanceKm * COSTE_KM);
-  const sound = quote.totalBudget - base - travel;
+  const logistics = computeSovereignLogistics(quoteInput.distanceKm, quoteInput.endHour);
+  const sound = quote.totalBudget - base - logistics.totalLogistics;
 
   const lines = [
     '💰 *Presupuesto firmado — Price-Lock SHA-256*',
     `• Formato ${formatLabel(quoteInput.format)}: ${base} €`,
-    `• Desplazamiento (${quoteInput.distanceKm} km × ${COSTE_KM.toFixed(2).replace('.', ',')} €/km): ${travel} €`,
   ];
+
+  if (logistics.billableKm === 0) {
+    lines.push(`• Desplazamiento (${logistics.distanceKm} km — dentro de la franquicia de ${logistics.franchiseKm} km): 0 €`);
+  } else {
+    lines.push(
+      `• Desplazamiento (${logistics.billableKm} km facturables × ${logistics.ratePerKm.toFixed(2).replace('.', ',')} €/km): ${logistics.travelCost} €`,
+    );
+  }
+  if (logistics.hotelSupplement > 0) {
+    lines.push(`• Pernoctación S-Class (> ${KM_HOTEL} km o fin ≥ 03:00 AM): ${logistics.hotelSupplement} €`);
+  }
   if (sound > 0) lines.push(`• Rider acústico Bose F1 Elite: ${sound} €`);
 
   lines.push(
@@ -247,7 +258,7 @@ function quoteCopy(quoteInput: SovereignQuoteInput, quote: SovereignQuoteResult)
   return lines.join('\n');
 }
 
-function objectionCopy(type: ObjectionType, quoteInput: SovereignQuoteInput | null): string {
+function objectionCopy(type: ObjectionType): string {
   const bonusLine = `🎁 Y recuerde el bono ${ASTRA_BONUS_CODE}: ${ASTRA_BONUS_VALUE_EUR} € en microfonía/iluminación de cortesía si cierra hoy.`;
 
   if (type === 'PRECIO') {
@@ -348,7 +359,7 @@ export function processAstraMessage(input: AstraMessageInput): AstraMessageOutpu
     return {
       phase: 'MANEJO_OBJECIONES',
       objectionDetected: objection,
-      reply: objectionCopy(objection, quoteInput),
+      reply: objectionCopy(objection),
       whatsappUrl: buildWhatsappUrl('Tengo una duda sobre el presupuesto de Edwin Agudelo.'),
       bonusCode: ASTRA_BONUS_CODE,
     };

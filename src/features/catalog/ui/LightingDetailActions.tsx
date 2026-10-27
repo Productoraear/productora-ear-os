@@ -4,6 +4,7 @@ import React, { useTransition } from 'react';
 import { Lock, PhoneCall, Loader2, ShieldCheck } from 'lucide-react';
 import type { ChristmasLightingProduct } from '@/data/luces-navidad';
 import { createB2GLightingCheckout } from '@/app/actions/vipCheckoutActions';
+import { buildDemandWhatsappUrl } from '@/lib/providers/sovereign-lead-gate';
 
 export default function LightingDetailActions({ product }: { product: ChristmasLightingProduct }) {
   const [isPending, startTransition] = useTransition();
@@ -43,7 +44,11 @@ export default function LightingDetailActions({ product }: { product: ChristmasL
         </button>
 
         <a
-          href={`https://wa.me/34682141077?text=Hola%2C%20solicito%20la%20memoria%20t%C3%A9cnica%20oficial%20y%20pliego%20para%20la%20referencia%20${encodeURIComponent(product.sku)}%20(${encodeURIComponent(product.name)})%20de%20Productora%20EAR`}
+          href={buildDemandWhatsappUrl({
+            entityName: 'Alumbrado monumental de Navidad',
+            intent: 'presupuesto',
+            detail: `${product.sku} · ${product.name}`
+          })}
           target="_blank"
           rel="noopener noreferrer"
           className="w-full sm:w-auto px-6 py-4 rounded-xl bg-white/10 hover:bg-white/15 text-white font-bold text-xs transition-all flex items-center justify-center gap-2 border border-white/15"

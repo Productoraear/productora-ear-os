@@ -117,14 +117,20 @@ const SSRF_ABUSE_RE: readonly RegExp[] = [
 
 /** Detecta intención de inyección, exfiltración o abuso de infraestructura. */
 export function detectInjection(text: string): InjectionVerdict {
+  // Una URL pegada por el cliente es CONTEXTO, no una orden: se neutraliza antes
+  // de buscar comandos/SSRF. El servidor NUNCA la abre; solo extrae su ruta.
+  const scan: string = text
+    .replace(/https?:\/\/[^\s<>"')]+/gi, ' [url] ')
+    .replace(/\b(?:localhost|127\.0\.0\.1)(?::\d{2,5})?(?:\/[^\s]*)?/gi, ' [local-page] ');
+
   for (const re of HARD_INJECTION_RE) {
-    if (re.test(text)) return { blocked: true, reason: 'prompt-injection' };
+    if (re.test(scan)) return { blocked: true, reason: 'prompt-injection' };
   }
   for (const re of SECRET_LEAK_RE) {
-    if (re.test(text)) return { blocked: true, reason: 'data-exfiltration' };
+    if (re.test(scan)) return { blocked: true, reason: 'data-exfiltration' };
   }
   for (const re of SSRF_ABUSE_RE) {
-    if (re.test(text)) return { blocked: true, reason: 'ssrf-command-abuse' };
+    if (re.test(scan)) return { blocked: true, reason: 'ssrf-command-abuse' };
   }
   return { blocked: false, reason: null };
 }
@@ -197,19 +203,34 @@ export interface HardenedSystemPromptInput {
   pathname: string;
   activeFincaName: string;
   detectedCity: string;
-  distanceKm: number;
+  /** `null` = desplazamiento fuera de matriz: se confirma por GPS real. */
+  distanceKm: number | null;
   endHour: number;
   formattedTotalEur: string | number;
   explicitDateLabel: string;
   nextDateLabel: string;
   stripeBookingUrl: string;
   waUrl: string;
+  /** Bloque de memoria multi-turno ya sintetizado (solo hechos del cliente). */
+  conversationMemory?: string;
+  /** Fase consultiva activa según la máquina de estados de Astra. */
+  consultationPhase?: string;
+  /** Siguiente pregunta de mayor valor comercial (una sola por turno). */
+  nextQuestion?: string;
+  /** Turnos previos en el hilo (0 = primer mensaje). */
+  turnCount?: number;
+  /** Objeción comercial detectada en el turno actual, en lenguaje natural. */
+  objectionLabel?: string;
+  /** Bloque de contexto web verificado (búsqueda en vivo con provenance). */
+  webGrounding?: string;
+  /** Ficha verificada de la entidad en pantalla (uso obligatorio). */
+  pageContextBlock?: string;
 }
 
 /** Construye el system prompt S-Class con clasificación de datos y anti-inyección. */
 export function buildHardenedSystemPrompt(ctx: HardenedSystemPromptInput): string {
   const fechaCtx: string = ctx.explicitDateLabel
-    ? `- El cliente ha pedido una fecha concreta: ${ctx.explicitDateLabel} (figura disponible en agenda). Confírmala con naturalidad.`
+    ? `- El cliente ha pedido una fecha concreta: ${ctx.explicitDateLabel}. NO afirmes que está disponible: di que la verificas contra la agenda real y ofrece el bloqueo con depósito.`
     : ctx.nextDateLabel
       ? `- Próxima fecha libre relativa detectada: ${ctx.nextDateLabel} a las ${ctx.endHour}:00.`
       : '- Aún no se ha detectado una fecha concreta.';
@@ -217,6 +238,33 @@ export function buildHardenedSystemPrompt(ctx: HardenedSystemPromptInput): strin
   const fincaCtx: string = ctx.activeFincaName
     ? `- Finca / recinto en pantalla o mencionado: ${ctx.activeFincaName}.`
     : '- No hay finca concreta en el contexto.';
+
+  const memoryBlock: string =
+    typeof ctx.conversationMemory === 'string' && ctx.conversationMemory.trim().length > 0
+      ? ctx.conversationMemory.trim()
+      : '- Sin datos confirmados todavía: es un cliente nuevo.';
+  const phaseLabel: string = ctx.consultationPhase ?? 'DESCUBRIMIENTO';
+  const nextQuestion: string = ctx.nextQuestion ?? 'Detectar la necesidad concreta del cliente.';
+  const turnCount: number = typeof ctx.turnCount === 'number' ? ctx.turnCount : 0;
+  const objectionLine: string = ctx.objectionLabel
+    ? `- Objeción detectada en este turno: ${ctx.objectionLabel}. Desármala con valor y prueba social, jamás con descuentos.`
+    : '';
+  const webBlock: string =
+    typeof ctx.webGrounding === 'string' && ctx.webGrounding.trim().length > 0
+      ? `\n${ctx.webGrounding.trim()}\n`
+      : '';
+  const entityBlock: string =
+    typeof ctx.pageContextBlock === 'string' && ctx.pageContextBlock.trim().length > 0
+      ? `\n${ctx.pageContextBlock.trim()}\n`
+      : '';
+  const distanceLine: string =
+    typeof ctx.distanceKm === 'number'
+      ? `- Localidad detectada: ${ctx.detectedCity} (${ctx.distanceKm} km desde el Hub Méntrida)`
+      : `- Localidad detectada: ${ctx.detectedCity}. Kilometraje PENDIENTE de GPS real: no estimes kilómetros ni asumas 0 km.`;
+  const budgetLine: string =
+    typeof ctx.distanceKm === 'number'
+      ? `- Presupuesto de referencia del solista (SSOT verificado): ${ctx.formattedTotalEur} €. Desembucha esta cifra SOLO si el cliente pregunta por precio, compara alternativas o quiere reservar; si no, guárdala.`
+      : `- Presupuesto base del solista (SSOT): ${ctx.formattedTotalEur} €; la logística se confirma con la dirección exacta del evento. Da la cifra solo si la piden y aclara que el desplazamiento se valida por GPS.`;
 
   return `Eres el Concierge oficial de atención al cliente de Productora EAR (Edwin Agudelo y la Red de Fincas Homologadas S-Class). Eres la PRIMERA IMPRESIÓN del cliente: profesional, cálida, concisa y resolutiva.
 
@@ -227,6 +275,7 @@ Responder con precisión cualquier consulta PÚBLICA sobre Productora EAR y reso
 1. Responde ESTRICTAMENTE a lo preguntado. No añadas leyes acústicas, decibelios ni limitadores telemáticos a menos que pregunten expresamente por sonido o ruido.
 2. Redactado humano y natural: máximo 2 párrafos concisos, en español de España, con la calidez de una llamada ejecutiva. Cifras en euros con coma cuando proceda y sin ceros decorativos (nunca "350.00 €", usa "350 euros").
 3. Puedes usar negritas **solo** para resaltar lo esencial y los enlaces de acción facilitados.
+4. Si el prompt incluye un bloque "CONTEXTO WEB VERIFICADO", es la ÚNICA fuente válida para datos externos (ordenanzas municipales, aforos, licitaciones): úsalo y cita siempre la fuente. Si ese bloque no existe, no inventes datos externos.
 
 ## INFORMACIÓN PÚBLICA QUE SÍ PUEDES FACILITAR
 - Quién es Edwin Agudelo y qué ofrece: solista premium, mariachi, gala, serenatas y producción integral.
@@ -253,13 +302,37 @@ Responde SOLO con hechos del contexto verificado facilitado o conocimiento públ
 
 ## CONTEXTO VERIFICADO DISPONIBLE
 - Página activa: ${ctx.pathname || '/'}
-- Localidad detectada: ${ctx.detectedCity} (${ctx.distanceKm} km desde el Hub Méntrida)
+${distanceLine}
 - ${fincaCtx}
 - ${fechaCtx}
-- Presupuesto estimado del solista: ${ctx.formattedTotalEur} €
+${budgetLine}
 - Enlaces de acción disponibles:
   - [🔒 Bloquear Fecha (${ctx.formattedTotalEur} €) con Depósito de ${DEPOSITO_STRIPE_EUR} € ➔](${ctx.stripeBookingUrl})
-  - [💬 Hablar por WhatsApp Oficial (${CENTRALITA_EAR_OS}) ➔](${ctx.waUrl})`;
+  - [💬 Hablar por WhatsApp Oficial (${CENTRALITA_EAR_OS}) ➔](${ctx.waUrl})
+${entityBlock}
+
+## MEMORIA DEL HILO (MULTI-TURNO — NO TIENES AMNESIA)
+- Turnos previos en esta conversación: ${turnCount}
+${memoryBlock}
+${objectionLine}
+
+## FASE CONSULTIVA ACTIVA: ${phaseLabel}
+- El hilo avanza por fases: DESCUBRIMIENTO -> COTIZACION -> MANEJO_OBJECIONES -> CIERRE_STRIPE. No saltes fases ni repitas preguntas ya resueltas.
+- SIGUIENTE PREGUNTA DE MAYOR VALOR (úsala, o una variante natural): ${nextQuestion}
+${webBlock}
+
+## DOCTRINA CONSULTIVA (NO ERES UN CATÁLOGO)
+1. Escucha, diagnostica y luego prescribe. Nunca sueltes un listado de datos que no te han pedido.
+2. PROHIBIDO volver a preguntar cualquiera de los datos que ya constan en la MEMORIA DEL HILO. Úsalos y demuéstralo ("para vuestra boda en Toledo del 31 de diciembre...").
+3. Una sola pregunta por turno, con la naturalidad de un asesor de confianza. Nunca dos interrogantes seguidos.
+4. Cuando el cliente aporte fecha, localidad o aforo nuevos, recalcula sobre el CONTEXTO VERIFICADO y da la cifra exacta.
+5. Si te piden un dato que NO figura en el contexto verificado (condiciones exactas de una finca, disponibilidad de un recinto concreto, extras no publicados), NO lo inventes ni lo estimes: responde que se confirma con la dirección del recinto y ofrece coordinar la visita técnica por WhatsApp (${CENTRALITA_EAR_OS}).
+6. Cierra siempre por la vía más corta y de doble vía: bloqueo con depósito de ${DEPOSITO_STRIPE_EUR} € (100% deducible del total) o WhatsApp directo.
+7. Ante una objeción, aplica prueba social y desglose de valor (rider acústico conforme a la Ley 37/2003, garantía de sustitución sin coste, split 80/10/10 con impacto social). JAMÁS rebajes la tarifa ni improvises descuentos.
+8. Si el CONTEXTO WEB VERIFICADO cita una ordenanza municipal, indica SIEMPRE el punto de medida (interior de vivienda, límite de parcela o emisor) y la franja horaria. Si el límite resulta incompatible con el rider del evento, NO prometas "sin riesgo de sanciones": ofrece visita técnica, licencia municipal y alternativa acústica o diurna, dejando claro que la autorización depende del ayuntamiento.
+9. Si aparece el bloque "FICHA VERIFICADA — ENTIDAD EN PANTALLA", ES TU FUENTE OBLIGATORIA: úsala y tienes PROHIBIDO responder que no dispones de datos del recinto. Cuando el cliente esté en esa ficha y pregunte "qué tal es", "cómo lo ves para una boda" o similar, responde con 2-3 hechos concretos de la ficha (aforo, ubicación, menús, espacios) y cierra con la visita técnica o la fecha.
+10. Un recinto colaborador NO es un servicio que EAR alquile: coordinamos con su dirección y aportamos música, producción y rider acústico. PROHIBIDO decir que "no lo cubrimos" o que "no es un servicio de Productora EAR".
+11. Si el kilometraje figura como PENDIENTE, NO inventes kilómetros ni uses la base de Méntrida como si fuera la ubicación del recinto: pide la dirección/localidad del evento y explica que el desplazamiento se valida por GPS real. Doctrina logística: el Hub Méntrida (${LOGISTICA_KM_EXENTOS} km exentos + ${LOGISTICA_EUR_PER_KM.toFixed(2).replace('.', ',')} €/km + ${SUPLEMENTO_HOTEL_EUR} € hotel) aplica EXCLUSIVAMENTE a Edwin Agudelo y empresas con base en Méntrida; para el resto de la red, el kilometraje se mide por GPS desde el origen del proveedor hasta el evento del cliente.`;
 }
 
 /** Delimita el mensaje del cliente como dato no confiable para el modelo. */

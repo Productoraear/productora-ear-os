@@ -13,10 +13,10 @@
 
 import {
   BASE_SOLISTA,
-  COSTE_KM,
   DEPOSITO_STRIPE,
   SUPLEMENTO_TRIO,
   calculateSovereignQuote,
+  computeSovereignLogistics,
 } from './sovereign-pricing';
 import type { SovereignQuoteInput, SovereignQuoteResult } from './sovereign-pricing';
 
@@ -211,8 +211,8 @@ export function runSelfDiagnostics(): boolean {
     artistSlug,
   });
 
-  // Aserción de split exacto para el caso 4 (SSOT: 350 + 250 + round(100*0.35) = 635 €).
-  const expectedTrioTotal = BASE_SOLISTA + SUPLEMENTO_TRIO + Math.round(100 * COSTE_KM);
+  // Aserción de split exacto para el caso 4 (SSOT: 350 + 250 + logística canónica de 100 km).
+  const expectedTrioTotal = BASE_SOLISTA + SUPLEMENTO_TRIO + computeSovereignLogistics(100).totalLogistics;
   let case4SplitExact = false;
   if (case4.status === 'VALID' && case4.isValid) {
     const { artist80, earOs10, vimume10 } = case4.quote.split;

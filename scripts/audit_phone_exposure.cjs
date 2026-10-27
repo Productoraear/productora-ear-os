@@ -42,6 +42,56 @@ const GATED_IDENTIFIERS = [
   'whatsappTarget',
   'maskedPhone',
   'CENTRALITA',
+  // PEAJE SOBERANO (WAVE 40): el desvío a la Conserjería EAR OS es el único
+  // camino autorizado para publicar contacto de un proveedor.
+  'SOVEREIGN_DEMAND_CHANNEL',
+  'buildDemandWhatsappUrl',
+  'supplierLineMask',
+  'maskPhoneForDisplay',
+  'sanitizeSchemaContact',
+  'sovereignContactPoint',
+  'supplierContactWithheldNotice',
+];
+
+/**
+ * Líneas de titularidad EAR OS autorizadas en superficie pública.
+ * Cualquier otro número es una fuga de peaje.
+ */
+const SOVEREIGN_ALLOWED_DIGITS = new Set([
+  '34693693048', // Centralita única · CEO Edwin Agudelo
+  '34679286157', // Línea de prensa VIMUME (titularidad EAR OS)
+]);
+
+/** Formatos admitidos de un teléfono español (móvil/fijo). */
+const PHONE_LITERAL_RE = /(?:\+34[\s.-]?)?\b[679]\d{2}[\s.-]?\d{3}[\s.-]?\d{3}\b/g;
+
+/** Link directo (`wa.me`/`tel:`) con cualquier número. */
+const PHONE_LINK_RE = /(?:wa\.me\/|tel:)\+?(\d{9,15})/gi;
+
+/** Interpolación JSX que pinta un campo de teléfono en el DOM (no `${}` de plantilla). */
+const PHONE_RENDER_RE = /(?<!\$)\{[^{}\n]*(?:\bphone\b|\bphones\b|\btelephone\b)[^{}\n]*\}/;
+
+/** Números de ejemplo (placeholders de formulario): no son líneas reales. */
+const DUMMY_PHONE_DIGITS = new Set(['34600000000', '600000000', '34000000000']);
+
+/** Contextos donde el número es un input del propio usuario o ya va enmascarado. */
+const PHONE_RENDER_EXEMPT = [
+  /formData\./,
+  /defaultValue=/,
+  /value=\{/,
+  /placeholder=/,
+  /onChange/,
+  /maskPhoneForDisplay/,
+  /maskedPhone/,
+  /supplierLineMask/,
+  /notifyPhone/,
+  /setPhone/,
+  /tel:\$\{/,
+  /wa\.me\/\$\{/,
+  // Literales de objeto (`{ ...p, phone: p.phone }`) no son render.
+  /phone:\s/,
+  // Comprobación de presencia que devuelve solo una etiqueta de texto.
+  /\{\s*[\w.]*(?:phone|telephone)\s*\?/,
 ];
 
 const RULES = [
@@ -80,6 +130,75 @@ const FILE_RULES = [
     pattern: /=\{\{[\s\S]{0,500}?phone:\s*(?:rawProvider|found|provider|item)\.(?:phone|telephone)\b/g,
   },
 ];
+
+/**
+ * Escáner del PEAJE SOBERANO (WAVE 40).
+ * Detecta cualquier vía por la que el cliente pueda saltarse la Conserjería:
+ *   1. Link `wa.me`/`tel:` con número que no es de titularidad EAR OS.
+ *   2. Teléfono español literal en copy, JSON-LD o atributos.
+ *   3. Interpolación JSX que pinta `phone`/`phones`/`telephone` sin enmascarar.
+ */
+function scanPeajeLeaks(line) {
+  const findings = [];
+  const digitsOf = (value) => String(value).replace(/\D/g, '');
+
+  /** E.164 español: un fijo/móvil de 9 dígitos se prefija con 34. */
+  const normalize = (digits) => (digits.length === 9 ? `34${digits}` : digits);
+
+  /** Placeholders y números de ejemplo: no son líneas reales. */
+  const isDummy = (digits) =>
+    DUMMY_PHONE_DIGITS.has(digits) ||
+    DUMMY_PHONE_DIGITS.has(normalize(digits)) ||
+    /^\d{1,4}0{8,}\d?$/.test(digits) ||
+    /^(?:34)?60{7}\d$/.test(digits);
+
+  PHONE_LINK_RE.lastIndex = 0;
+  let linkMatch = PHONE_LINK_RE.exec(line);
+  while (linkMatch !== null) {
+    const raw = digitsOf(linkMatch[1]);
+    if (!SOVEREIGN_ALLOWED_DIGITS.has(normalize(raw)) && !isDummy(raw)) {
+      findings.push({
+        id: 'SUPPLIER_CONTACT_LINK',
+        description: 'Enlace wa.me/tel: con línea ajena a EAR OS (fuga de peaje)',
+      });
+      break;
+    }
+    linkMatch = PHONE_LINK_RE.exec(line);
+  }
+
+  PHONE_LITERAL_RE.lastIndex = 0;
+  let literalMatch = PHONE_LITERAL_RE.exec(line);
+  while (literalMatch !== null) {
+    const digits = digitsOf(literalMatch[0]);
+    const isPlaceholder = /placeholder\s*=/.test(line);
+    if (!SOVEREIGN_ALLOWED_DIGITS.has(normalize(digits)) && !isDummy(digits) && !isPlaceholder) {
+      findings.push({
+        id: 'SUPPLIER_PHONE_LITERAL',
+        description: 'Teléfono de proveedor escrito en claro (copy, JSON-LD o atributo)',
+      });
+      break;
+    }
+    literalMatch = PHONE_LITERAL_RE.exec(line);
+  }
+
+  // Se analiza la estructura JSX sin literales de texto: `aria-describedby={
+  // fieldErrors.clientPhone ? 'booking-client-phone-error' : undefined}` no es
+  // una fuga, pero `{landing.phone}` sí.
+  const structural = line.replace(/'[^']*'|"[^"]*"/g, '""');
+
+  if (
+    PHONE_RENDER_RE.test(structural) &&
+    !PHONE_RENDER_EXEMPT.some((exempt) => exempt.test(structural)) &&
+    !isGatedLine(structural)
+  ) {
+    findings.push({
+      id: 'SUPPLIER_PHONE_RENDER',
+      description: 'Campo de teléfono pintado en el DOM sin enmascarar ni pasar por el gate',
+    });
+  }
+
+  return findings;
+}
 
 function walk(dir, files = []) {
   if (!fs.existsSync(dir)) return files;
@@ -127,6 +246,17 @@ for (const dir of SCAN_DIRS) {
           snippet: line.trim().slice(0, 160),
         });
         break;
+      }
+
+      // PEAJE SOBERANO: cualquier vía de contacto ajena a EAR OS es una fuga.
+      for (const finding of scanPeajeLeaks(line)) {
+        violations.push({
+          rule: finding.id,
+          description: finding.description,
+          file: path.relative(ROOT, file),
+          line: index + 1,
+          snippet: line.trim().slice(0, 160),
+        });
       }
     });
 

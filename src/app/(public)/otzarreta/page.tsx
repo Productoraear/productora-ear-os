@@ -14,10 +14,18 @@ import {
   TrendingUp,
   Star,
   Users,
-  Building2
+  Building2,
+  CalendarCheck
 } from 'lucide-react';
 import { CENTRALITA_EAR_OS, DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
 import { OTZARRETA_ENTITY } from '@/lib/constants/otzarreta-entity';
+import {
+  SOVEREIGN_DEMAND_CHANNEL,
+  buildDemandWhatsappUrl,
+  sanitizeSchemaContact,
+  supplierContactWithheldNotice,
+  supplierLineMask
+} from '@/lib/providers/sovereign-lead-gate';
 import { OtzarretaExperienceExplorer } from '@/components/otzarreta/OtzarretaExperienceExplorer';
 import {
   OTZARRETA_HUB,
@@ -62,7 +70,9 @@ export default function OtzarretaFlagshipPage(): React.JSX.Element {
         description:
           'Caserío tradicional vasco para banquetes de boda y eventos corporativos para hasta 350 comensales, dirigido por Eduardo Martínez de la Fuente en alianza con Productora EAR.',
         url: 'https://productoraear.com/otzarreta',
-        telephone: '+34 944 544 476',
+        // PEAJE SOBERANO: la línea del recinto NO viaja en el JSON-LD. El
+        // saneador (`sanitizeSchemaContact`) inyecta el punto de contacto de la
+        // Conserjería EAR OS en el render.
         servesCuisine: ['Basque', 'Parrilla', 'Traditional Spanish', 'Seafood', 'Asador'],
         priceRange: '€€€',
         address: {
@@ -101,20 +111,28 @@ export default function OtzarretaFlagshipPage(): React.JSX.Element {
     ]
   };
 
-  const whatsappConciergeUrl = `https://wa.me/${CENTRALITA_EAR_OS.replace(/\D/g, '')}?text=${encodeURIComponent(
-    'Hola Edwin / Eduardo, deseo información para reservar fecha para una boda/banquete en Ezkertza Berria / Otzarreta.'
-  )}`;
+  const whatsappConciergeUrl = buildDemandWhatsappUrl({
+    entityName: 'Ezkertza Berria & Otzarreta',
+    intent: 'disponibilidad',
+    detail: 'boda o banquete'
+  });
 
-  const eduardoDirectWhatsapp = `https://wa.me/34619455396?text=${encodeURIComponent(
-    'Hola Eduardo, te contacto desde la web de Productora EAR para consultar disponibilidad de banquete de boda.'
-  )}`;
+  const whatsappVisitUrl = buildDemandWhatsappUrl({
+    entityName: 'Ezkertza Berria & Otzarreta',
+    intent: 'visita-tecnica',
+    detail: 'Derio / Zarautz'
+  });
 
   return (
     <main className="min-h-screen bg-[#030305] text-white selection:bg-[#ecb613] selection:text-black pt-28 pb-24 overflow-x-hidden">
-      {/* Script Estructurado JSON-LD */}
+      {/* Script Estructurado JSON-LD (saneado: cero líneas de proveedor) */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            sanitizeSchemaContact(jsonLd, 'Derio (Bizkaia) & Zarautz (Gipuzkoa)')
+          ).replace(/</g, '\\u003c')
+        }}
       />
 
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
@@ -173,15 +191,22 @@ export default function OtzarretaFlagshipPage(): React.JSX.Element {
             </a>
 
             <a
-              href={eduardoDirectWhatsapp}
+              href={whatsappVisitUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-4 rounded-2xl bg-[#25D366]/20 text-[#25D366] font-semibold text-sm sm:text-base hover:bg-[#25D366]/30 transition-all border border-[#25D366]/40 flex items-center gap-2.5 backdrop-blur-md"
+              className="px-6 py-4 rounded-2xl bg-[#25D366]/15 text-[#25D366] font-semibold text-sm sm:text-base hover:bg-[#25D366]/25 transition-all border border-[#25D366]/40 flex items-center gap-2.5 backdrop-blur-md"
             >
-              <Phone className="w-5 h-5" />
-              <span>WhatsApp Eduardo (+34 619 455 396)</span>
+              <CalendarCheck className="w-5 h-5" />
+              <span>Solicitar visita técnica</span>
             </a>
           </div>
+
+          {/* PEAJE SOBERANO: canal único y línea del recinto protegida */}
+          <p className="max-w-3xl mx-auto text-[11px] sm:text-xs text-gray-500 font-mono leading-relaxed pt-1">
+            Conserjería única: {SOVEREIGN_DEMAND_CHANNEL.telDisplay} · Línea directa de la casa{' '}
+            {supplierLineMask(OTZARRETA_ENTITY.primaryPhone)} (verificada) — se facilita al confirmar
+            la visita técnica.
+          </p>
 
           {/* Micro Telemetría de Garantía */}
           <div className="flex flex-wrap items-center justify-center gap-6 pt-4 text-xs text-gray-400 font-mono">
@@ -465,7 +490,13 @@ export default function OtzarretaFlagshipPage(): React.JSX.Element {
                 </p>
                 <p className="flex items-center gap-2">
                   <Phone className="w-4 h-4 text-emerald-400 shrink-0" />
-                  <span>{venue.phones.join(' · ')}</span>
+                  <span>
+                    {SOVEREIGN_DEMAND_CHANNEL.telDisplay} · {SOVEREIGN_DEMAND_CHANNEL.label}
+                    <span className="block text-[11px] text-gray-500 font-mono mt-0.5">
+                      Línea de la casa {supplierLineMask(venue.phones[0])} · se facilita al confirmar
+                      la visita técnica
+                    </span>
+                  </span>
                 </p>
               </div>
 
@@ -743,15 +774,17 @@ export default function OtzarretaFlagshipPage(): React.JSX.Element {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
             <div className="font-bold text-white text-sm mb-1">Ezkertza Berria & Otzarreta</div>
-            <p>Sede Bizkaia: {OTZARRETA_ENTITY.affiliatedVenues[0].address} ({OTZARRETA_ENTITY.affiliatedVenues[0].phones[0]})</p>
-            <p className="mt-1">Sede Gipuzkoa: {OTZARRETA_ENTITY.affiliatedVenues[1].address} ({OTZARRETA_ENTITY.affiliatedVenues[1].phones[0]})</p>
-            <p className="mt-1">Atención Urgencias & Eventos: {OTZARRETA_ENTITY.affiliatedVenues[0].phones[1]} ({OTZARRETA_ENTITY.affiliatedVenues[0].name})</p>
-            <p>Email: {OTZARRETA_ENTITY.affiliatedVenues[0].email} · {OTZARRETA_ENTITY.email}</p>
+            <p>Sede Bizkaia: {OTZARRETA_ENTITY.affiliatedVenues[0].address}</p>
+            <p className="mt-1">Sede Gipuzkoa: {OTZARRETA_ENTITY.affiliatedVenues[1].address}</p>
+            <p className="mt-2 text-gray-500 leading-relaxed">
+              {supplierContactWithheldNotice('Ezkertza Berria & Otzarreta')}
+            </p>
           </div>
 
           <div>
             <div className="font-bold text-white text-sm mb-1">Centralita VIP Productora EAR</div>
             <p>Atención y Conserjería de Bodas: {CENTRALITA_EAR_OS}</p>
+            <p className="mt-1">Línea de prensa y alianzas: bajo solicitud en la Conserjería</p>
             <p className="mt-1">Director Artístico: Edwin Agudelo</p>
             <p>Soporte Técnico de Sonorización Bose S-Class</p>
           </div>

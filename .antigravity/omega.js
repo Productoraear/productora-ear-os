@@ -30,7 +30,7 @@ function writeMission(task) {
         scaffold: task.scaffold ?? null,
         done_when: task.done_when ?? null,
         test: task.test ?? null,
-        validate: 'npx tsc --noEmit && npx eslint <files>',
+        validate: 'node ./node_modules/typescript/bin/tsc --noEmit && node ./node_modules/eslint/bin/eslint.js <files>',
         complete: `call RUN_OMEGA.bat complete ${task.id}`,
         budget: 'MAX 12 lecturas de archivo. No releas lo ya leido. DETENTE al completar.'
     });
@@ -76,7 +76,7 @@ if (command === 'next') {
         ' 3. Ejecuta EXACTAMENTE lo descrito en los campos "action" y "scaffold".',
         ' 4. Edita SOLO los archivos listados en "files" (write_to_file o replace_in_file).',
         '    Si el scaffold exige leer un archivo, lee UNICAMENTE ese archivo de "files".',
-        ' 5. Valida: npx tsc --noEmit  ->  debe dar Exit Code 0.',
+        ' 5. Valida: node ./node_modules/typescript/bin/tsc --noEmit  ->  debe dar Exit Code 0.',
         ' 6. Cierra: node .antigravity/omega.js complete ' + next.id,
         ' 7. Tras el complete con Exit Code 0, DETENTE INMEDIATAMENTE. No ejecutes "next".',
         '',
@@ -112,20 +112,30 @@ if (command === 'next') {
 
     if (hasTypeScript) {
         const root = path.join(__dirname, '..');
+        // BLINDAJE ZTM: los shims de node_modules/.bin pueden no existir (npm --ignore-scripts).
+        // 'npx tsc' descargaría el paquete impostor 'tsc' -> se invoca el binario real de TypeScript.
+        const tscBin = path.join(root, 'node_modules', 'typescript', 'bin', 'tsc');
+        const tscCmd = fs.existsSync(tscBin)
+            ? `"${process.execPath}" "${tscBin}" --noEmit`
+            : 'npx --yes typescript tsc --noEmit';
         console.log('[OMEGA] Validando TypeScript...');
         try {
-            execSync('npx tsc --noEmit', { stdio: 'inherit', shell: true, cwd: root });
+            execSync(tscCmd, { stdio: 'inherit', shell: true, cwd: root });
             console.log('tsc --noEmit = Exit Code 0.');
         } catch {
             console.error('ERRORES TS. Corrige y repite complete.');
             process.exit(1);
         }
         // Scorecard 4bis: eslint Exit 0 sobre los archivos TS de la mision
+        const eslintBin = path.join(root, 'node_modules', 'eslint', 'bin', 'eslint.js');
+        const eslintCmd = fs.existsSync(eslintBin)
+            ? `"${process.execPath}" "${eslintBin}"`
+            : 'npx --yes eslint';
         const lintable = task.files.filter(f => /\.(ts|tsx)$/.test(f) && fs.existsSync(path.join(root, f)));
         if (lintable.length) {
             console.log('[OMEGA] Validando ESLint...');
             try {
-                execSync(`npx eslint ${lintable.map(f => `"${f}"`).join(' ')}`, { stdio: 'inherit', shell: true, cwd: root });
+                execSync(`${eslintCmd} ${lintable.map(f => `"${f}"`).join(' ')}`, { stdio: 'inherit', shell: true, cwd: root });
                 console.log('eslint = Exit Code 0.');
             } catch {
                 console.error('ERRORES ESLINT. Corrige y repite complete.');

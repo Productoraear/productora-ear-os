@@ -2,6 +2,11 @@
 
 import { prisma } from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
+import {
+  BASE_SOLISTA,
+  SPLIT_SOBERANO,
+  computeSovereignLogistics,
+} from '@/lib/pricing/sovereign-pricing';
 
 export interface PromotionItem {
   id: string;
@@ -108,8 +113,11 @@ const vendorInboxStore = new Map<string, VendorInboxItem[]>();
 
 /**
  * CÁLCULO LOGÍSTICO SSOT EDWIN AGUDELO
- * Tarifa Base: 350 €
- * Logística: 0,75 €/km a partir del km 50 desde Hub Méntrida (+120 € Hotel si fin >= 3:00 AM o > 200 km)
+ * Tarifa Base: `TARIFA_BASE_SOLISTA_EUR` (350 €).
+ * Logística: `LOGISTICA_EUR_PER_KM` (1,50 €/km) a partir del km 50 desde el Hub
+ * Méntrida + 120 € de hotel si fin >= 3:00 AM o distancia > 200 km.
+ * Toda la cifra nace de `computeSovereignLogistics()`: aquí no se multiplica
+ * ningún kilómetro a mano ni se duplica el split.
  */
 export async function calculateEdwinAgudeloQuoteAction(params: {
   distanceKm: number;
@@ -117,32 +125,26 @@ export async function calculateEdwinAgudeloQuoteAction(params: {
   isManualOverride?: boolean;
   manualLogisticsFee?: number;
 }) {
-  const basePrice = 350.0;
-  let kmFee = 0;
-  let hotelFee = 0;
+  const basePrice: number = BASE_SOLISTA;
+
+  let kmFee: number = 0;
+  let hotelFee: number = 0;
 
   if (params.isManualOverride && params.manualLogisticsFee !== undefined) {
     kmFee = params.manualLogisticsFee;
   } else {
-    // 0,75 €/km a partir del km 50
-    if (params.distanceKm > 50) {
-      kmFee = (params.distanceKm - 50) * 0.75;
-    }
-
-    // Suplemento hotel 120 € si termina a las 3:00 AM o más tarde, o si la distancia > 200 km
-    const isLateFinish = params.endTimeHour !== undefined && (params.endTimeHour >= 3 || params.endTimeHour === 0);
-    if (isLateFinish || params.distanceKm > 200) {
-      hotelFee = 120.0;
-    }
+    const logistics = computeSovereignLogistics(params.distanceKm, params.endTimeHour);
+    kmFee = logistics.travelCost;
+    hotelFee = logistics.hotelSupplement;
   }
 
   const logisticsTotal = kmFee + hotelFee;
   const grandTotal = basePrice + logisticsTotal;
 
-  // Split Soberano (80% Artista / 10% EAR OS / 10% VIMUME)
-  const artistShare = grandTotal * 0.80;
-  const earInfrastructureShare = grandTotal * 0.10;
-  const vimumeSocialShare = grandTotal * 0.10;
+  // Split Soberano (80% Artista / 10% EAR OS / 10% VIMUME) — ratios del SSOT
+  const artistShare = grandTotal * SPLIT_SOBERANO.artist;
+  const earInfrastructureShare = grandTotal * SPLIT_SOBERANO.earOs;
+  const vimumeSocialShare = grandTotal * SPLIT_SOBERANO.vimume;
 
   return {
     basePrice,

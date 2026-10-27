@@ -19,6 +19,7 @@ import {
     type MariachiLanding,
 } from '@/lib/seo/centralita-mariachis-dominance-engine';
 import { CENTRALITA_MARIACHIS_ENTITY } from '@/lib/constants/centralita-mariachis-entity';
+import { SOVEREIGN_DEMAND_CHANNEL } from '@/lib/providers/sovereign-lead-gate';
 import { buildReserveQuery } from '@/lib/reservar/landing-attribution';
 
 interface Props {
@@ -373,8 +374,8 @@ export default async function CentralitaMariachiLandingPage({
                         ))}
                     </dl>
                     <p className="mt-4 break-all font-mono text-[10px] text-gray-500">
-                        Entidad verificada · {landing.operator} · {landing.phone} · {landing.email} ·
-                        regla {CENTRALITA_MARIACHIS_ENTITY.verificationRule}
+                        Entidad verificada · {landing.operator} · {SOVEREIGN_DEMAND_CHANNEL.telDisplay} ·{' '}
+                        {landing.email} · regla {CENTRALITA_MARIACHIS_ENTITY.verificationRule}
                     </p>
                 </section>
 

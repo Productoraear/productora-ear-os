@@ -11,6 +11,7 @@ import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { ACG_ARTIST_OFFERS } from '@/lib/acg/acgDecisionEngine';
 import { fireAndForgetN8n } from '@/lib/services/n8n-dispatcher';
+import { computeSovereignLogistics, DEPOSITO_STRIPE } from '@/lib/pricing/sovereign-pricing';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -21,7 +22,8 @@ export const runtime = 'nodejs';
  * Firma canónica del depósito de 100 €. Reglas inmutables:
  * - Formato: catálogo ACG_SSOT (solista-edwin-agudelo 350 € / dúo 480 € /
  *   quinteto 750 €). NUNCA fallback silencioso a un índice por accidente.
- * - Logística: 1,50 €/km desde Méntrida a partir del km 50.
+ * - Logística: 1,50 €/km desde Méntrida a partir del km 50 (motor canónico
+ *   `computeSovereignLogistics`).
  * - Suplemento hotelero: +120 € si hora fin >= 03:00 AM o distancia > 200 km.
  * - Secreto HMAC: exclusivamente `process.env.STRIPE_SECRET_KEY`.
  *   Sin secreto no hay firma. PROHIBIDO cualquier fallback hardcodeado.
@@ -67,10 +69,10 @@ export async function POST(req: Request) {
       );
     }
 
-    // 2. Cálculo SSOT alineado con acgDecisionEngine.calculateLogisticsAcg.
-    const billableKm = Math.max(0, distanceKm - 50);
-    const kmLogisticsCost = Math.round(billableKm * 1.5 * 100) / 100;
-    const hotelSurcharge = distanceKm > 200 || endHour >= 3 ? 120 : 0;
+    // 2. Cálculo SSOT alineado con el motor canónico de logística (franquicia 50 km + hotel).
+    const logistics = computeSovereignLogistics(distanceKm, endHour);
+    const kmLogisticsCost = logistics.travelCost;
+    const hotelSurcharge = logistics.hotelSupplement;
     const totalBaseBeforeVat =
       Math.round((currentFormat.basePriceEur + kmLogisticsCost + hotelSurcharge) * 100) / 100;
 
@@ -100,7 +102,7 @@ export async function POST(req: Request) {
       endHour,
       eventDate,
       totalPrice: totalBaseBeforeVat,
-      depositAmount: 100.0,
+      depositAmount: DEPOSITO_STRIPE,
       priceLockHash,
       timestamp: new Date().toISOString(),
     });

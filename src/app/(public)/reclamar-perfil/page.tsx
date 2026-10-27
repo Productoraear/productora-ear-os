@@ -24,6 +24,7 @@ import {
   CENTRALITA_EAR_OS,
   SPLIT_SOBERANO
 } from '@/lib/constants/ear-os-ssot';
+import { maskPhoneForDisplay } from '@/lib/providers/contact-gate';
 
 const WHATSAPP_HREF = `https://wa.me/${CENTRALITA_EAR_OS.replace(/\D/g, '')}`;
 
@@ -177,7 +178,8 @@ function ReclamarPerfilContent() {
                   {vendorData.name}
                 </h2>
                 <p className="text-xs text-slate-400 flex items-center gap-1.5 font-mono">
-                  <MapPin size={12} className="text-[#ecb613]" /> {vendorData.city} ({vendorData.province}) • Tel: {vendorData.phone}
+                  <MapPin size={12} className="text-[#ecb613]" /> {vendorData.city} ({vendorData.province}) • Tel:{' '}
+                  {maskPhoneForDisplay(vendorData.phone)}
                 </p>
               </div>
 

@@ -9,6 +9,10 @@ import {
 } from 'lucide-react';
 import { VIP_SERVICES, QUALITY_VIP_PROVIDER_INFO } from '@/data/quality-vip-solutions';
 import { createVipChauffeurCheckout } from '@/app/actions/vipCheckoutActions';
+import {
+  SOVEREIGN_DEMAND_CHANNEL,
+  buildDemandWhatsappUrl
+} from '@/lib/providers/sovereign-lead-gate';
 
 interface Props {
   location?: string;
@@ -209,12 +213,16 @@ export default function ChauffeurVipView({ location = 'Madrid' }: Props) {
               <Lock className="w-5 h-5" /> Bloquear Tarifa (10 € / 72h)
             </a>
             <a
-              href="https://wa.me/34682141077?text=Hola%2C%20solicito%20reserva%20de%20veh%C3%ADculo%20con%20ch%C3%B3fer%20VIP"
+              href={buildDemandWhatsappUrl({
+                entityName: 'Chófer VIP',
+                intent: 'presupuesto',
+                detail: 'reserva de vehículo con chófer'
+              })}
               target="_blank"
               rel="noopener noreferrer"
               className="px-8 py-4 rounded-xl bg-white/5 border border-white/15 text-white font-semibold text-base hover:bg-white/10 transition-all flex items-center gap-2"
             >
-              <PhoneCall className="w-5 h-5 text-[#ecb613]" /> Concierge 24/7 (+34 682 141 077)
+              <PhoneCall className="w-5 h-5 text-[#ecb613]" /> Concierge 24/7 ({SOVEREIGN_DEMAND_CHANNEL.telDisplay})
             </a>
           </div>
 

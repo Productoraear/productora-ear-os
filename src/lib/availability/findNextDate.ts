@@ -61,14 +61,18 @@ export function parseExplicitDate(text: string, baseDate: Date = new Date()): Pa
     diciembre: 12, dic: 12,
   };
 
-  const regexWords = /(?:el\s+(?:dia\s+)?)?(\d{1,2})\s*(?:de\s+)?([a-z]+)(?:\s*(?:de\s+)?(\d{4}))?/i;
-  const matchWords = lower.match(regexWords);
-  if (matchWords) {
+  const regexWords = /(?:el\s+(?:dia\s+)?)?(\d{1,2})\s*(?:de\s+)?([a-z]+)(?:\s*(?:de\s+)?(\d{4}))?/gi;
+
+  // ⚠️ Se itera sobre TODOS los candidatos: un primer match inválido (ej. la
+  // cifra de "150 invitados" produce el candidato "0 invitados") abortaba el
+  // parseo y ocultaba la fecha real ("31 de diciembre") del mismo mensaje.
+  let matchWords: RegExpExecArray | null = regexWords.exec(lower);
+  while (matchWords !== null) {
     const day = Number(matchWords[1]);
     const monthKey = matchWords[2];
     const month = monthMap[monthKey];
 
-    if (month && day >= 1 && day <= 31) {
+    if (month !== undefined && day >= 1 && day <= 31) {
       let year = matchWords[3] ? Number(matchWords[3]) : baseDate.getFullYear();
       const candidate = new Date(year, month - 1, day, 12, 0, 0);
       if (!matchWords[3] && candidate.getTime() < baseDate.getTime() - 86400000) {
@@ -92,6 +96,8 @@ export function parseExplicitDate(text: string, baseDate: Date = new Date()): Pa
         isExplicit: true,
       };
     }
+
+    matchWords = regexWords.exec(lower);
   }
 
   const regexNum = /(\d{1,2})[\/\-](\d{1,2})(?:[\/\-](\d{2,4}))?/;

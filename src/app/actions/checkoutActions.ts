@@ -7,7 +7,7 @@ import { headers, cookies } from "next/headers";
 import { isRateLimited } from "@/lib/security/shield";
 import { logger } from "@/lib/logger";
 import { z } from "zod";
-import { calculateSovereignQuote } from "@/lib/pricing/sovereign-pricing";
+import { calculateSovereignQuote, basePriceForFormat, COSTE_KM, DEPOSITO_STRIPE, KM_EXENTOS } from "@/lib/pricing/sovereign-pricing";
 import { verifyAndSignStripeSession } from "@/lib/pricing/price-lock-verifier";
 import type { SovereignQuoteInput, FormatType } from "@/lib/pricing/sovereign-pricing";
 
@@ -29,6 +29,36 @@ const EliteCheckoutSchema = z.object({
   eventDate: z.string().min(1, "La fecha de evento es obligatoria"),
   formation: z.enum(['solista', 'duo', 'cuarteto', 'gran_show']).optional().default('solista'),
 });
+
+type CheckoutFormation = NonNullable<EliteCheckoutInput["formation"]>;
+
+/**
+ * Formaciones comerciales del checkout -> formatos canónicos del SSOT.
+ * `gran_show` NO está canonizado en el SSOT (>5 músicos): se aplica el suelo
+ * del quinteto canónico y se exige cotización manual para no facturar por
+ * debajo de la tarifa sancionada.
+ */
+const FORMATION_TO_SOVEREIGN_FORMAT: Readonly<Record<CheckoutFormation, FormatType>> = Object.freeze({
+  solista: 'solista',
+  duo: 'trio',
+  cuarteto: 'quinteto',
+  gran_show: 'quinteto',
+});
+
+/**
+ * Tarifas del roster externo: NO son la tarifa de Edwin Agudelo y no están
+ * canonizadas en el SSOT sellado. Se centralizan aquí para que cualquier
+ * cambio de precio del roster sea auditable en un único punto.
+ */
+const ROSTER_BASE_FEE_EUR = 1200;
+const PROVIDER_SCORE_FEE_FACTOR_EUR = 200;
+const PROVIDER_MIN_BASE_FEE_EUR = 1000;
+
+/**
+ * Tolerancia de deriva entre el motor geográfico (distancia a 2 decimales) y el
+ * motor soberano (distancia normalizada a 1 decimal). Superarla es divergencia.
+ */
+const DISTANCE_DRIFT_TOLERANCE_KM = 0.1;
 
 /**
  * 💳 S-CLASS SERVER ACTION: SECURE ELITE CHECKOUT
@@ -54,6 +84,17 @@ export async function createEliteCheckout(input: EliteCheckoutInput) {
   }
 
   const { artistId, clientId, origin, destination, eventDate } = parsed.data;
+  const formation: CheckoutFormation = parsed.data.formation;
+  const sovereignFormat: FormatType = FORMATION_TO_SOVEREIGN_FORMAT[formation];
+
+  if (formation === 'gran_show') {
+    logger.warn({
+      event: "GRAN_SHOW_REQUIRES_MANUAL_QUOTE",
+      detail: "El SSOT sellado no canoniza formatos superiores al quinteto (5 músicos): se aplica el suelo del quinteto y se exige cotización manual.",
+      artistId,
+      ip,
+    });
+  }
 
   logger.info({ event: "CHECKOUT_INIT", artistId, clientId, ip });
 
@@ -72,8 +113,8 @@ export async function createEliteCheckout(input: EliteCheckoutInput) {
   // 4. Validar perfil y verificar estatus oficial o de verificación S-Class
   let isAuthorized = false;
   let artistName = "";
-  let baseFee = 1200; // Tarifa base estándar del Roster de Élite
-  let costPerKm = 0.75; // Default cost per km
+  let baseFee: number = ROSTER_BASE_FEE_EUR; // Roster externo (no canonizado en SSOT)
+  let costPerKm: number = COSTE_KM; // SSOT logístico (1,50 €/km)
 
   // A. Buscar en el Roster de Artistas (Edwin Agudelo y Co.)
   const artist = await prisma.artistProfile.findUnique({
@@ -87,13 +128,9 @@ export async function createEliteCheckout(input: EliteCheckoutInput) {
 
     // FORENSIC STRIPE REVENUE SEAL: Edwin Agudelo Pricing Engine
     if (artist.slug === "edwin-agudelo" || artistName.toLowerCase().includes("edwin agudelo")) {
-      costPerKm = 0.35;
-      const form = parsed.data.formation || 'solista';
-      if (form === 'solista') baseFee = 350;
-      else if (form === 'duo') baseFee = 550;
-      else if (form === 'cuarteto') baseFee = 900;
-      else if (form === 'gran_show') baseFee = 1800;
-      else baseFee = 350;
+      // Tarifa base y logística derivadas 1:1 del SSOT sellado (1,50 €/km + franquicia 50 km).
+      costPerKm = COSTE_KM;
+      baseFee = basePriceForFormat(sovereignFormat);
     }
   } else {
     // B. Buscar en perfiles de proveedores verificados
@@ -110,7 +147,8 @@ export async function createEliteCheckout(input: EliteCheckoutInput) {
     if (provider && provider.isVerified) {
       isAuthorized = true;
       artistName = provider.name ?? "";
-      baseFee = (provider.roiGuaranteeScore ?? 0) > 0 ? Math.round((provider.roiGuaranteeScore ?? 0) * 200) : 1000;
+      const roiScore: number = provider.roiGuaranteeScore ?? 0;
+      baseFee = roiScore > 0 ? Math.round(roiScore * PROVIDER_SCORE_FEE_FACTOR_EUR) : PROVIDER_MIN_BASE_FEE_EUR;
     }
   }
 
@@ -120,29 +158,39 @@ export async function createEliteCheckout(input: EliteCheckoutInput) {
     throw new Error("VETO ESTRATÉGICO ACTIVADO: Operación financiera no autorizada. Este perfil no cuenta con la verificación o suscripción Stripe Connect activa.");
   }
 
-  // 5. Geocodificación y cálculo de distancia/precios en entorno seguro (Server-Side)
+  // 5. Geocodificación y cálculo de distancia en entorno seguro (Server-Side).
+  //    El importe facturable NO se toma de aquí: nace del motor soberano (SSOT).
   const pricing = await calculateGeoPricing({
     artistId,
     origin,
     destination,
     baseFee,
-    costPerKm: costPerKm, // Updated to dynamically pull from Edwin Agudelo configuration
+    costPerKm, // SSOT: 1,50 €/km (nunca una tarifa duplicada)
+    franchiseKm: KM_EXENTOS, // Franquicia canónica de 50 km desde el Hub Méntrida
     depositMode: "fixed",
-    depositValue: 150, // Garantía mínima
+    depositValue: DEPOSITO_STRIPE, // Price-Lock inmutable (100 €), deducible del total
   });
 
-  logger.info({ event: "CHECKOUT_PRICING_CALCULATED", distanceKm: pricing.distanceKm, totalAmount: pricing.totalAmount, ip });
+  logger.info({
+    event: "CHECKOUT_PRICING_CALCULATED",
+    distanceKm: pricing.distanceKm,
+    travelCost: pricing.travelCost,
+    totalAmount: pricing.totalAmount,
+    formation,
+    sovereignFormat,
+    ip,
+  });
 
   // 6. FIRMADO CRIPTOGRÁFICO PRICE-LOCK SHA-256 (SSOT: verifyAndSignStripeSession)
   const sovereignInput: SovereignQuoteInput = {
-    format: (parsed.data.formation === 'duo' ? 'trio' : parsed.data.formation === 'cuarteto' ? 'quinteto' : 'solista') as FormatType,
+    format: sovereignFormat,
     distanceKm: pricing.distanceKm,
     soundRider: 'standard',
   };
-  const clientHash = calculateSovereignQuote(sovereignInput).priceLockHash;
+  const sovereignQuote = calculateSovereignQuote(sovereignInput);
   const priceLock = verifyAndSignStripeSession({
     input: sovereignInput,
-    clientHash,
+    clientHash: sovereignQuote.priceLockHash,
     issuedAtTimestamp: Date.now(),
     artistSlug: artist?.slug ?? artistId,
   });
@@ -153,6 +201,23 @@ export async function createEliteCheckout(input: EliteCheckoutInput) {
   }
 
   const { stripeMetadata } = priceLock;
+
+  // 6 bis. INVARIANTES DE CERO DIVERGENCIA (fail-closed: nada llega a Stripe si falla)
+  const distanceDriftKm: number = Math.abs(pricing.distanceKm - sovereignQuote.logistics.distanceKm);
+  if (distanceDriftKm > DISTANCE_DRIFT_TOLERANCE_KM) {
+    logger.error({ event: "ENGINE_DIVERGENCE_DISTANCE", distanceDriftKm, artistId, ip });
+    throw new Error(`PRICE_LOCK_REJECTED: ENGINE_DIVERGENCE. Deriva de distancia de ${distanceDriftKm} km entre el motor geográfico y el motor soberano.`);
+  }
+
+  if (sovereignQuote.depositRequired !== DEPOSITO_STRIPE || stripeMetadata.depositAmount !== DEPOSITO_STRIPE) {
+    logger.error({ event: "ENGINE_DIVERGENCE_DEPOSIT", depositRequired: sovereignQuote.depositRequired, ip });
+    throw new Error("PRICE_LOCK_REJECTED: ENGINE_DIVERGENCE. El depósito firmado no coincide con el Price-Lock inmutable del SSOT (100,00 €).");
+  }
+
+  if (stripeMetadata.totalBudget !== sovereignQuote.totalBudget) {
+    logger.error({ event: "ENGINE_DIVERGENCE_TOTAL", signedTotal: stripeMetadata.totalBudget, sovereignTotal: sovereignQuote.totalBudget, ip });
+    throw new Error("PRICE_LOCK_REJECTED: ENGINE_DIVERGENCE. El total firmado no coincide con el recálculo soberano server-side.");
+  }
 
   // 7. Creación de la sesión de Stripe Checkout con metadatos firmados SHA-256
   const cookieStore = await cookies();
