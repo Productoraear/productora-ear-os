@@ -44,8 +44,17 @@ RUN mkdir .next && chown nextjs:nodejs .next
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
+# Ω MIGRACIONES EN ARRANQUE: schema + migraciones + CLI de Prisma.
+# Sin esto el runner standalone no puede aplicar `_add_outreach_models` y el
+# puente Harvey -> EAR OS devuelve 503 'table does not exist' para siempre.
+COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules/prisma ./node_modules/prisma
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules/@prisma ./node_modules/@prisma
+COPY --chown=nextjs:nodejs docker-entrypoint.cjs ./docker-entrypoint.cjs
+
 USER nextjs
 
 EXPOSE 3000
 
-CMD ["node", "server.js"]
+CMD ["node", "docker-entrypoint.cjs"]
+
