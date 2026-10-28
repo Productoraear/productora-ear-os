@@ -186,8 +186,6 @@ reports/run*.err
 # Captación: objetivos y lotes con teléfonos reales. NUNCA se publican.
 reports/outreach/
 
-
-
 # EAR OS - estado runtime de agendas y simulaciones
 .data/
 .data/**
