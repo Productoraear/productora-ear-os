@@ -70,7 +70,16 @@ jobs:
             echo "COOLIFY_AUTH=none"
           fi
           BODY_FILE="$(mktemp)"
-          CODE="$(curl -sS -m 45 -o "$BODY_FILE" -w '%{http_code}' "${AUTH[@]}" -X GET "$COOLIFY_WEBHOOK" || echo '000')"
+          # Coolify documenta el trigger como POST; algunas versiones solo aceptan GET.
+          call() {
+            CODE="$(curl -sS -m 45 -o "$BODY_FILE" -w '%{http_code}' -X "$1" "${AUTH[@]}" "$COOLIFY_WEBHOOK" || echo '000')"
+          }
+          call POST
+          echo "COOLIFY_METHOD=POST"
+          if [ "$CODE" = "405" ]; then
+            call GET
+            echo "COOLIFY_METHOD=GET (POST devolvio 405)"
+          fi
           echo "COOLIFY_HTTP=${CODE}"
           if [ -s "$BODY_FILE" ]; then
             echo "COOLIFY_BODY=$(head -c 300 "$BODY_FILE" | tr '\n\t' '  ')"
@@ -82,7 +91,7 @@ jobs:
               echo "Deploy encolado en Coolify."
               ;;
             401|403)
-              echo "::error::Coolify devuelve ${CODE} (Unauthenticated). Falta el token: crea una API key en Coolify > Keys & Tokens y guardala como secret COOLIFY_API_TOKEN. El deploy NO esta en marcha."
+              echo "::error::Coolify devuelve ${CODE} (Unauthenticated). Precondiciones: Settings > Advanced > API access = Enabled, y API key creada en Keys & Tokens con permiso Deploy. Guardala como secret COOLIFY_API_TOKEN. El deploy NO esta en marcha."
               exit 1
               ;;
             *)

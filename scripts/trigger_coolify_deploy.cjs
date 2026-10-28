@@ -87,44 +87,51 @@ async function triggerWebhookIfAvailable() {
     console.log('  [WARN] Sin COOLIFY_API_TOKEN: Coolify respondera 401 Unauthenticated.');
   }
 
-  return new Promise((resolve) => {
-    const req = transport.get(COOLIFY_WEBHOOK_URL, { timeout: 45000, headers }, (res) => {
-      let body = '';
-      res.setEncoding('utf8');
-      res.on('data', (chunk) => {
-        if (body.length < 400) body += chunk;
+  const fire = (method) =>
+    new Promise((resolve) => {
+      const req = transport.request(COOLIFY_WEBHOOK_URL, { method, timeout: 45000, headers }, (res) => {
+        let body = '';
+        res.setEncoding('utf8');
+        res.on('data', (chunk) => {
+          if (body.length < 400) body += chunk;
+        });
+        res.on('end', () => resolve({ status: res.statusCode ?? 0, body }));
       });
-      res.on('end', () => {
-        const flat = body.replace(/\s+/g, ' ').trim().slice(0, 300) || '<vacio>';
-        console.log(`  [INFO] HTTP ${res.statusCode} en ${Date.now() - startedAt}ms`);
-        console.log(`  [INFO] Respuesta Coolify: ${flat}`);
-
-        if (res.statusCode >= 200 && res.statusCode < 300) {
-          console.log('  [PASS] Coolify acepto el despliegue (encolado).');
-          resolve('OK');
-        } else {
-          console.error('  [FAIL] Coolify RECHAZO el webhook. El deploy NO esta en marcha.');
-          if (res.statusCode === 401 || res.statusCode === 403) {
-            console.error('         401/403 Unauthenticated: falta COOLIFY_API_TOKEN (Coolify > Keys & Tokens).');
-          } else {
-            console.error('         Otras causas: UUID de app invalido (404) o app en estado inconsistente (500).');
-          }
-          resolve('FAILED');
-        }
+      req.on('timeout', () => {
+        req.destroy();
+        resolve({ status: 0, body: 'timeout de 45s' });
       });
+      req.on('error', (err) => resolve({ status: 0, body: err.message }));
+      req.end();
     });
 
-    req.on('timeout', () => {
-      req.destroy();
-      console.error('\n[FAIL] Timeout de 45s esperando a Coolify: el deploy no esta confirmado.');
-      resolve('FAILED');
-    });
+  // Coolify documenta POST + Bearer; algunas versiones solo aceptan GET.
+  let method = 'POST';
+  let result = await fire(method);
+  if (result.status === 405) {
+    method = 'GET';
+    result = await fire(method);
+  }
+  console.log(`  [INFO] Metodo: ${method}`);
 
-    req.on('error', (err) => {
-      console.error(`\n[FAIL] Error de red al disparar el webhook: ${err.message}`);
-      resolve('FAILED');
-    });
-  });
+  const flat = result.body.replace(/\s+/g, ' ').trim().slice(0, 300) || '<vacio>';
+  console.log(`  [INFO] HTTP ${result.status} en ${Date.now() - startedAt}ms`);
+  console.log(`  [INFO] Respuesta Coolify: ${flat}`);
+
+  if (result.status >= 200 && result.status < 300) {
+    console.log('  [PASS] Coolify acepto el despliegue (encolado).');
+    return 'OK';
+  }
+
+  console.error('  [FAIL] Coolify RECHAZO el webhook. El deploy NO esta en marcha.');
+  if (result.status === 401 || result.status === 403) {
+    console.error('         Unauthenticated: requiere COOLIFY_API_TOKEN + Settings > Advanced > API access = Enabled.');
+  } else if (result.status === 404) {
+    console.error('         404: el UUID de la app no existe. Recoge de nuevo el Deploy webhook en Coolify > App > Webhooks.');
+  } else {
+    console.error('         Otras causas: app en estado inconsistente (500) o endpoint con otro metodo.');
+  }
+  return 'FAILED';
 }
 
 async function main() {
