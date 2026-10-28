@@ -9,6 +9,9 @@ import {
 import MariachiDispatchConsole from '@/components/mariachi/MariachiDispatchConsole';
 import MariachiEscaparateEdwin from '@/components/mariachi/MariachiEscaparateEdwin';
 import MariachiPricingPacks from '@/components/mariachi/MariachiPricingPacks';
+import MariachiViewSwitcher from '@/components/mariachi/MariachiViewSwitcher';
+import MariachiTinderDiscovery from '@/components/mariachi/MariachiTinderDiscovery';
+import { resolveMariachiViewDefault } from '@/lib/mariachi/mariachi-experience-view';
 import MariachiEventTypes from '@/components/mariachi/MariachiEventTypes';
 import MariachiGeoCoverage from '@/components/mariachi/MariachiGeoCoverage';
 import MariachiFaqSection from '@/components/mariachi/MariachiFaqSection';
@@ -17,6 +20,7 @@ import MariachiB2GProduction from '@/components/mariachi/MariachiB2GProduction';
 import MariachiCulturalDiplomacy from '@/components/mariachi/MariachiCulturalDiplomacy';
 import MariachiCentralita from '@/components/mariachi/MariachiCentralita';
 import MariachiLandingDirectory from '@/components/mariachi/MariachiLandingDirectory';
+import MundoDelMariachiArchive from '@/components/mariachi/MundoDelMariachiArchive';
 import { EdwinMariachiCulture } from '@/features/artists/ui/EdwinMariachiCulture';
 import { MARIACHI_KEYWORDS_METADATA } from '@/lib/constants/mariachi-keyword-matrix';
 import QuantumColibri from '@/components/brand/QuantumColibri';
@@ -27,7 +31,7 @@ const CANONICAL_URL = 'https://productoraear.com/mariachis';
 
 export const metadata: Metadata = {
   title: '▷ Contratar Mariachis en España | Precio Cerrado, Edwin Agudelo & Reserva Garantizada | Productora EAR',
-  description: 'Mariachis profesionales en toda España con precio cerrado desde 350€. Edwin Agudelo (Mariachi Imperial) como voz de referencia, formatos desde solista hasta 8 integrantes. Reserva segura con 100€ deducibles en Stripe, logística transparente y formación adaptada al límite de ruido de cada finca.',
+  description: 'Mariachis profesionales en toda España con precio cerrado desde 350€. Edwin Agudelo (Mariachi de Gala) como voz de referencia, formatos desde solista hasta 8 integrantes. Reserva segura con 100€ deducibles en Stripe, logística transparente y formación adaptada al límite de ruido de cada finca.',
   keywords: [...MARIACHI_KEYWORDS_METADATA],
   alternates: {
     canonical: CANONICAL_URL
@@ -44,7 +48,7 @@ export const metadata: Metadata = {
         url: 'https://productoraear.com/og-mariachis.jpg',
         width: 1200,
         height: 630,
-        alt: 'Mariachi Imperial de Gala Edwin Agudelo - Productora EAR'
+        alt: 'Mariachi de Gala Edwin Agudelo - Productora EAR'
       }
     ]
   },
@@ -71,8 +75,8 @@ export default function MariachisPage() {
       },
       {
         '@type': 'MusicGroup',
-        '@id': `${CANONICAL_URL}/#mariachi-imperial`,
-        name: 'Mariachi Imperial de Gala — Edwin Agudelo',
+        '@id': `${CANONICAL_URL}/#mariachi-gala-edwin-agudelo`,
+        name: 'Mariachi de Gala Edwin Agudelo',
         genre: ['Mariachi', 'Ranchera', 'Bolero Ranchero', 'Música Tradicional Mexicana'],
         url: CANONICAL_URL,
         description: 'Agrupación y solista tenor de música mexicana tradicional y contemporánea de gala para bodas, serenatas y festivales.',
@@ -151,7 +155,7 @@ export default function MariachisPage() {
               className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 text-white/80 hover:text-white transition-all hidden sm:inline-flex"
             >
               <Users size={12} className="text-[#ecb613]" />
-              <span>Únete al Puente (29€/mes)</span>
+              <span>Únete a la Red (0 € fijos)</span>
             </Link>
             <a
               href="https://wa.me/34693693048?text=Hola,%20deseo%20consultar%20disponibilidad%20inmediata%20de%20mariachis"
@@ -348,10 +352,15 @@ export default function MariachisPage() {
         <MariachiLandingDirectory />
       </section>
 
-      {/* BLOQUE 7: PACKS SINCRONIZADOS CON STRIPE & BANNER DE DIGNIFICACIÓN/AFILIADOS */}
+      {/* BLOQUE 7: SELECTOR DUAL — CATÁLOGO (AIRBNB) ↔ DESCUBRIMIENTO (TINDER) */}
       <section className="max-w-7xl mx-auto px-6 py-16 border-t border-white/5">
-        <MariachiPricingPacks />
+        <MariachiViewSwitcher
+          initialView={resolveMariachiViewDefault()}
+          catalog={<MariachiPricingPacks />}
+          discovery={<MariachiTinderDiscovery />}
+        />
       </section>
+
 
       {/* BLOQUE 8: CÓMO FUNCIONA EN 3 PASOS */}
       <section className="max-w-7xl mx-auto px-6 py-16 border-t border-white/5">
@@ -464,6 +473,11 @@ export default function MariachisPage() {
       {/* BLOQUE 12: GUÍAS ESENCIALES Y CULTURA MARIACHI */}
       <section className="max-w-7xl mx-auto px-6 py-16 border-t border-white/5">
         <EdwinMariachiCulture />
+      </section>
+
+      {/* BLOQUE 12b: ARCHIVO HISTÓRICO — EL MUNDO DEL MARIACHI */}
+      <section className="max-w-7xl mx-auto px-6 py-16 border-t border-white/5">
+        <MundoDelMariachiArchive />
       </section>
 
       {/* BLOQUE 13: PREGUNTAS FRECUENTES */}

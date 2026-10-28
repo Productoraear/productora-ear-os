@@ -139,7 +139,7 @@ function SovereignFooterContent() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="WhatsApp Oficial de Productora EAR"
-                  className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/30 hover:border-emerald-400 text-emerald-400 flex items-center justify-center transition-all"
+                  className="w-9 h-9 rounded-xl bg-[#ecb613]/10 border border-[#ecb613]/30 hover:border-[#ecb613]/70 hover:bg-[#ecb613]/20 hover:text-[#ecb613] text-[#ecb613] flex items-center justify-center transition-colors"
                 >
                   <MessageCircle size={15} />
                 </a>
@@ -169,7 +169,7 @@ function SovereignFooterContent() {
               <li>
                 <Link href="/proveedores" className="hover:text-white transition-colors flex items-center justify-between group">
                   <span>Empresas & Fincas B2B</span>
-                  <ArrowUpRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity text-[#10b981]" />
+                  <ArrowUpRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity text-[#00E5FF]" />
                 </Link>
               </li>
               <li>
