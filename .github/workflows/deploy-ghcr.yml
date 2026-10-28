@@ -56,9 +56,38 @@ jobs:
         env:
           COOLIFY_WEBHOOK: ${{ secrets.COOLIFY_WEBHOOK_URL }}
         run: |
-          if [ -n "$COOLIFY_WEBHOOK" ]; then
-            echo "Triggering Coolify webhook..."
-            curl -s -X GET "$COOLIFY_WEBHOOK" || true
-          else
-            echo "COOLIFY_WEBHOOK_URL not configured, skipping."
+          if [ -z "$COOLIFY_WEBHOOK" ]; then
+            echo "::error::COOLIFY_WEBHOOK_URL no esta definido en los secrets del repositorio."
+            exit 1
           fi
+          BODY_FILE="$(mktemp)"
+          CODE="$(curl -sS -m 45 -o "$BODY_FILE" -w '%{http_code}' -X GET "$COOLIFY_WEBHOOK" || echo '000')"
+          echo "COOLIFY_HTTP=${CODE}"
+          if [ -s "$BODY_FILE" ]; then
+            echo "COOLIFY_BODY=$(head -c 300 "$BODY_FILE" | tr '\n\t' '  ')"
+          else
+            echo "COOLIFY_BODY=<vacio>"
+          fi
+          case "$CODE" in
+            2*)
+              echo "Deploy encolado en Coolify."
+              ;;
+            *)
+              echo "::error::Coolify rechazo el webhook (HTTP ${CODE}). El deploy NO esta en marcha: revisar UUID de la app y el estado del panel."
+              exit 1
+              ;;
+          esac
+
+  production-smoke:
+    # Puerta dura: el run no puede quedar verde si produccion no sirve la ruta.
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Smoke de produccion (ruta viva + landing real)
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: node scripts/prod_smoke_intake.cjs --wait=1500 --post

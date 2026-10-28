@@ -3,6 +3,13 @@
  * -------------------------------------------------------------
  * Prueba forense de conectividad HTTP/TCP contra Hostinger VPS Coolify v4
  * IP: 82.29.179.172:8000
+ *
+ * Dispara el webhook REAL de despliegue (`COOLIFY_DEPLOY_WEBHOOK`) y reporta el
+ * código HTTP que devuelve Coolify. Prohibido simular: si no hay webhook, falla
+ * (Exit 2) en vez de imprimir "todo verificado".
+ *
+ * Exit codes: 0 = deploy encolado por Coolify · 1 = rechazo HTTP / error de red ·
+ *             2 = falta COOLIFY_DEPLOY_WEBHOOK en el entorno.
  */
 
 const http = require('http');
@@ -55,26 +62,78 @@ async function testVpsConnectivity() {
 
 async function triggerWebhookIfAvailable() {
   if (!COOLIFY_WEBHOOK_URL) {
-    console.log('\n[INFO] COOLIFY_DEPLOY_WEBHOOK no definido en entorno.');
-    console.log('       El despliegue se dispara automáticamente vía GitHub Webhook / Push a origin/main.');
-    return true;
+    console.error('\n[FAIL] COOLIFY_DEPLOY_WEBHOOK no definido en el entorno.');
+    console.error('       Sin webhook NO hay despliegue. Configura la URL de la app en Coolify');
+    console.error('       (GET /api/v1/deploy?uuid=...) o pulsa "Deploy" en el panel.');
+    console.error('       Este script no simula despliegues: o dispara de verdad, o falla.');
+    return 'NOT_CONFIGURED';
   }
 
-  console.log(`\n[INFO] Disparando Webhook de despliegue: ${COOLIFY_WEBHOOK_URL}`);
-  // Si hubiera webhook configurado se invocaría aquí
-  return true;
+  // La URL contiene el UUID secreto de la app: solo se publica el host.
+  const hostOnly = COOLIFY_WEBHOOK_URL.replace(/^(https?:\/\/[^/]+).*$/i, '$1');
+  console.log(`\n[EXEC] Disparando webhook de despliegue en ${hostOnly} (UUID oculto)`);
+
+  const transport = COOLIFY_WEBHOOK_URL.startsWith('https:') ? require('https') : http;
+  const startedAt = Date.now();
+
+  return new Promise((resolve) => {
+    const req = transport.get(COOLIFY_WEBHOOK_URL, { timeout: 45000 }, (res) => {
+      let body = '';
+      res.setEncoding('utf8');
+      res.on('data', (chunk) => {
+        if (body.length < 400) body += chunk;
+      });
+      res.on('end', () => {
+        const flat = body.replace(/\s+/g, ' ').trim().slice(0, 300) || '<vacio>';
+        console.log(`  [INFO] HTTP ${res.statusCode} en ${Date.now() - startedAt}ms`);
+        console.log(`  [INFO] Respuesta Coolify: ${flat}`);
+
+        if (res.statusCode >= 200 && res.statusCode < 300) {
+          console.log('  [PASS] Coolify acepto el despliegue (encolado).');
+          resolve('OK');
+        } else {
+          console.error('  [FAIL] Coolify RECHAZO el webhook. El deploy NO esta en marcha.');
+          console.error('         Causas tipicas: UUID de app invalido (404), token/otra app (401/403)');
+          console.error('         o app en estado inconsistente (500). Revisa el panel en el puerto 8000.');
+          resolve('FAILED');
+        }
+      });
+    });
+
+    req.on('timeout', () => {
+      req.destroy();
+      console.error('\n[FAIL] Timeout de 45s esperando a Coolify: el deploy no esta confirmado.');
+      resolve('FAILED');
+    });
+
+    req.on('error', (err) => {
+      console.error(`\n[FAIL] Error de red al disparar el webhook: ${err.message}`);
+      resolve('FAILED');
+    });
+  });
 }
 
 async function main() {
   const isConnected = await testVpsConnectivity();
-  await triggerWebhookIfAvailable();
+  const trigger = await triggerWebhookIfAvailable();
 
   if (!isConnected) {
     console.error('\n❌ Error crítico: No se pudo verificar conectividad con el VPS Bare-Metal.');
     process.exit(1);
   }
 
-  console.log('\n✅ BARE-METAL VPS READINESS VERIFICADA AL 100% (EXIT 0)\n');
+  if (trigger === 'NOT_CONFIGURED') {
+    console.error('\n❌ Despliegue NO disparado: falta COOLIFY_DEPLOY_WEBHOOK (Exit 2).\n');
+    process.exit(2);
+  }
+
+  if (trigger !== 'OK') {
+    console.error('\n❌ Coolify no acepto el despliegue (Exit 1).\n');
+    process.exit(1);
+  }
+
+  console.log('\n✅ Webhook aceptado por Coolify. Verifica con:');
+  console.log('   node scripts/prod_smoke_intake.cjs --wait=1500 --post\n');
   process.exit(0);
 }
 
