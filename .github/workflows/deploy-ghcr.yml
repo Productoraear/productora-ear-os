@@ -51,14 +51,20 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Trigger Coolify Webhook Deployment
+      # BEST-EFFORT a proposito: el despliegue real entra por el webhook git de
+      # Coolify al hacer push. Si la API devuelve 401 (API access deshabilitado o
+      # token sin permiso Deploy) el run NO puede morir aqui: el juez de verdad es
+      # production-smoke. Un 401 en este paso marcaba production-smoke como SKIPPED
+      # y el run quedaba verde sin haber comprobado produccion (fachada de CI).
+      - name: Trigger Coolify Webhook Deployment (best-effort)
         if: success()
+        continue-on-error: true
         env:
           COOLIFY_WEBHOOK: ${{ secrets.COOLIFY_WEBHOOK_URL }}
           COOLIFY_API_TOKEN: ${{ secrets.COOLIFY_API_TOKEN }}
         run: |
           if [ -z "$COOLIFY_WEBHOOK" ]; then
-            echo "::error::COOLIFY_WEBHOOK_URL no esta definido en los secrets del repositorio."
+            echo "::warning::COOLIFY_WEBHOOK_URL no esta definido en los secrets del repositorio."
             exit 1
           fi
           # Coolify v4 protege /api/v1/deploy con Sanctum: sin Bearer devuelve 401.
@@ -91,18 +97,22 @@ jobs:
               echo "Deploy encolado en Coolify."
               ;;
             401|403)
-              echo "::error::Coolify devuelve ${CODE} (Unauthenticated). Precondiciones: Settings > Advanced > API access = Enabled, y API key creada en Keys & Tokens con permiso Deploy. Guardala como secret COOLIFY_API_TOKEN. El deploy NO esta en marcha."
+              echo "::warning::Coolify devuelve ${CODE} (Unauthenticated). Precondiciones: Settings > Advanced > API access = Enabled, y API key creada en Keys & Tokens con permiso Deploy. Guardala como secret COOLIFY_API_TOKEN. El deploy NO esta en marcha."
               exit 1
               ;;
             *)
-              echo "::error::Coolify rechazo el webhook (HTTP ${CODE}). El deploy NO esta en marcha: revisar UUID de la app y el estado del panel."
+              echo "::warning::Coolify rechazo el webhook (HTTP ${CODE}). El deploy NO esta en marcha: revisar UUID de la app y el estado del panel."
               exit 1
               ;;
           esac
 
   production-smoke:
-    # Puerta dura: el run no puede quedar verde si produccion no sirve la ruta.
+    # Puerta dura y JUEZ UNICO del despliegue: el run no puede quedar verde si
+    # produccion no sirve la ruta. `always()` cierra el agujero: sin el, un fallo
+    # en el job previo (401 de Coolify) dejaba este job en SKIPPED y el CI verde
+    # sin haber mirado produccion.
     needs: build-and-push
+    if: always()
     runs-on: ubuntu-latest
     timeout-minutes: 40
     steps:

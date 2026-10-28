@@ -60,7 +60,12 @@ const NOT_FOUND_TITLE = /<title>\s*404\b/i;
 /** El <title> propio de una pagina real, para dejar evidencia en el log. */
 const TITLE_PATTERN = /<title>([^<]{0,160})<\/title>/i;
 /** buildId de Next dentro del payload RSC (identifica la imagen desplegada). */
-const BUILD_ID_PATTERNS = [/"b":"([A-Za-z0-9_-]{6,64})"/, /\\"b\\":\\"([A-Za-z0-9_-]{6,64})\\"/];
+/** buildId de Next dentro del payload RSC (identifica la imagen desplegada).
+ *  Next lo inyecta con profundidad de escape VARIABLE segun la plantilla
+ *  (cero, una o dos barras invertidas antes de cada comilla; medido en
+ *  produccion 2026-10-28). Un patron estricto devuelve null y deja el gate
+ *  sin huella de imagen: se admiten de 0 a 3 barras. */
+const BUILD_ID_PATTERNS = [/(?:\\{0,3})"b(?:\\{0,3})":(?:\\{0,3})"([A-Za-z0-9_-]{6,64})(?:\\{0,3})"/];
 /** Codigos que demuestran que la ruta existe (auth / metodo / validacion / BD). */
 const ROUTE_ALIVE = new Set([200, 201, 207, 400, 401, 403, 405, 422, 503]);
 /** Codigos que certifican persistencia real de un prospecto. */
@@ -275,10 +280,24 @@ async function main() {
     console.log(`  BASE=${BASE_URL}${opts.waitSeconds > 0 ? ` WAIT=${opts.waitSeconds}s` : ''}`);
 
     const image = await fingerprintImage();
-    console.log(`SMOKE_IMAGE_BUILD_ID=${image.buildId || 'UNKNOWN'} (${image.detail})`);
+    console.log(`SMOKE_IMAGE_BUILD_ID=${image.buildId || 'UNREADABLE'} (${image.detail})`);
+    if (!image.buildId) {
+        console.warn('  [WARN] Sin huella de imagen: NO se puede certificar que el despliegue se haya aplicado.');
+    }
 
     const route = await checkIntakeRoute(opts.waitSeconds);
     console.log(`SMOKE_INTAKE_GET=${route.detail}`);
+    if (image.buildId && route.code !== 0) {
+        // Re-medicion de la huella tras la espera: distingue "deploy no aplicado"
+        // de "deploy aplicado pero el commit no trae la ruta". Evidencia maquina.
+        const after = await fingerprintImage();
+        console.log(`SMOKE_IMAGE_BUILD_ID_AFTER=${after.buildId || 'UNREADABLE'}`);
+        if (after.buildId && after.buildId === image.buildId) {
+            console.error(`  [DIAG] buildId identico (${after.buildId}) tras la espera: el despliegue NO se aplico en produccion.`);
+        } else if (after.buildId && after.buildId !== image.buildId) {
+            console.error(`  [DIAG] buildId CAMBIO (${image.buildId} -> ${after.buildId}) pero la ruta sigue sin existir: el commit desplegado no la contiene.`);
+        }
+    }
 
     const landing = await checkLanding(opts);
     console.log(`SMOKE_LANDING=${landing.detail}`);
