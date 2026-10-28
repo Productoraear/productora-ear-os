@@ -1134,3 +1134,63 @@ model FunnelEvent {
   @@index([step], name: "idx_funnel_step")
 }
 
+// ==========================================
+// OUTREACH Ω — Prospección B2B de Harvey
+// ==========================================
+// Puente único: D:\HARVEY_HQ\tools\ear_os_bridge.py (SQLite de Harvey, solo
+// lectura) → POST /api/outreach/intake con CRON_SECRET.
+// `externalId` es el id real de Harvey (prospects.id / outbox.id): repetir el
+// mismo envío N veces produce exactamente 1 fila.
+
+enum OutreachStatus {
+  NEW
+  CONTACTED
+  REPLIED
+  MEETING
+  WON
+  LOST
+  OPTED_OUT
+}
+
+model OutreachProspect {
+  id          String           @id @default(cuid())
+  externalId  String           @unique
+  companyName String
+  domain      String?
+  contactName String?
+  contactRole String?
+  email       String           @unique
+  city        String?
+  country     String           @default("ES")
+  source      String           @default("harvey")
+  campaign    String?
+  status      OutreachStatus   @default(NEW)
+  score       Int              @default(0)
+  lastReplyAt DateTime?
+  meetingAt   DateTime?
+  rawSnapshot Json?
+  threads     OutreachThread[]
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  @@index([status], name: "idx_outreach_prospect_status")
+  @@index([domain], name: "idx_outreach_prospect_domain")
+  @@index([campaign], name: "idx_outreach_prospect_campaign")
+}
+
+model OutreachThread {
+  id             String           @id @default(cuid())
+  prospectId     String
+  prospect       OutreachProspect @relation(fields: [prospectId], references: [id], onDelete: Cascade)
+  externalId     String           @unique
+  direction      String
+  subject        String?
+  body           String
+  classification String?
+  sentAt         DateTime?
+  createdAt      DateTime         @default(now())
+
+  @@index([prospectId, createdAt], name: "idx_outreach_thread_prospect")
+  @@index([direction], name: "idx_outreach_thread_direction")
+}
+

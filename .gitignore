@@ -146,6 +146,10 @@ temp_batch_*.json
 .antigravity/*.txt
 .antigravity/*.log
 .antigravity/ted_probe_body.json
+# Scratch de migraciones (W42): deltas generados en local, nunca versionados
+.antigravity/migrate_diff.*
+.antigravity/schema_head.prisma
+.antigravity/outreach_delta.sql
 reports/*.txt
 
 # Volcados efÃ­meros de validaciÃ³n y debug (ZTM â€” nunca trackear)

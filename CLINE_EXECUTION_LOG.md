@@ -173,6 +173,14 @@ Tarea `W42_MAR_NET_02` completada y sellada con Exit Code 0 (sello condicionado 
 - Ω-DIAMANTE:      Bloque P1-captación. Núcleo: tsc 0 · eslint 0 · 0 `any` · 0 `verified:true` falso (selftest + guarda de teléfono) · 0 handler huérfano · 0 precio hardcodeado (0 €/10 %/80 %/100 € nacen del SSOT) · 0 TODO · 0 secretos. ❌ 9,10,11,12,13,15,16,18,20 sin evidencia máquina → **SELLO CONDICIONADO 8/20**.
 - SIGUIENTE PASO:  Commit atómico del bloque mariachi-network (los 3 untracked + `package.json`), **sin `git add -A`**, y **no push** hasta resolver `P1001` de la migración Prisma. Precondición de disparo comercial: `npm run verify:outreach` → Exit 0.
 
+## 2026-10-28 · W42_OUTREACH_MIG_01 — El puente Harvey ya es desplegable (migración aditiva)
+- HECHO_VERIFICADO: `src/app/api/outreach/intake/route.ts` (untracked) escribe en `OutreachProspect`/`OutreachThread`, modelos añadidos a `prisma/schema.prisma`, pero `prisma/migrations/` solo contenía `0_baseline` y `20261005025846_add_user_space`: un `prisma migrate deploy` no habría creado nada y la ruta habría devuelto **500** en producción. Generado `prisma/migrations/20261028123614_add_outreach_models/migration.sql` (2.574 B) con `prisma migrate diff --from-schema-datamodel <schema de HEAD> --to-schema-datamodel prisma/schema.prisma --script`: 1 `CREATE TYPE`, 2 `CREATE TABLE`, 7 `CREATE INDEX`, 1 `ADD CONSTRAINT` FK · CASCADE.
+- COMANDOS:        `prisma validate` → **Exit 0** · `prisma migrate diff` (dos schemas, sin DB) → **Exit 0** · sentencias destructivas (`DROP|TRUNCATE|ALTER … DROP`) → **0** · `tsc --noEmit` → **Exit 0** · `npm run verify:outreach` → **Exit 0** (`fallos=0/12`).
+- TRAMPA CAZADA:   `git show HEAD:prisma/schema.prisma > fichero` en PowerShell 5.1 escribe **UTF-16** → Prisma aborta con `P1012` («This line is invalid»). Escritura correcta: `[System.IO.File]::WriteAllText($path, $txt, (New-Object System.Text.UTF8Encoding($false)))`.
+- RIESGO ABIERTO:  La migración **no está aplicada en ningún sitio** (local sin PostgreSQL: `P1001 localhost:5432`). Aplicarla es una acción contra la base de producción: `prisma migrate deploy` con la `DATABASE_URL` real, decisión del CEO, no del obrero.
+- Ω-DIAMANTE:      P1 integración. ❌ 9,10,11,12,13,15,16,18,20 → se mantiene **SELLO CONDICIONADO 8/20**. Nuevo ❌ explícito en el ítem 18: `.git/objects` = **3,90 GiB** en 8 packs (+`.git/lfs` 179,5 MB) → el repo dista del objetivo < 50 MB; exige reescritura de historia (`filter-repo`), no un `gc`.
+- SIGUIENTE PASO:  `prisma migrate deploy` en el VPS y, sólo después, `git push origin main` (3 commits de retraso sobre `origin/main`).
+
 
 
 ### 2026-10-28T10:51:00Z · INFRA_VAULT_BRIDGE_H_TO_D — PUENTE DE UNIDAD `H:` => `D:` (SIN TOCAR CÓDIGO)
