@@ -57,6 +57,7 @@
     "emit:outreach": "npx tsx scripts/emit_mariachi_outreach.ts",
     "emit:outreach:selftest": "npx tsx scripts/emit_mariachi_outreach.ts --selftest",
     "verify:outreach": "powershell -NoProfile -ExecutionPolicy Bypass -File .antigravity/verify_emit_outreach.ps1",
+    "verify:outreach:ack": "npx tsx scripts/verify_outreach_intake_ack.ts",
     "typecheck:network": "node ./node_modules/typescript/bin/tsc -p tsconfig.mariachi-net.json",
     "audit:phone": "node scripts/audit_phone_exposure.cjs",
     "audit:tariff-copy": "node scripts/audit_tariff_copy_drift.cjs",

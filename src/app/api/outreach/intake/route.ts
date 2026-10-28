@@ -2,6 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 
 import { prisma } from '@/lib/prisma';
+import {
+    decideIntakeAck,
+    classifyFailure,
+    type FailureCode,
+} from '@/lib/outreach/intake-diagnostics';
 import { fireAndForgetN8n } from '@/lib/services/n8n-dispatcher';
 
 export const dynamic = 'force-dynamic';
@@ -255,7 +260,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         threadsCreated: 0,
         threadsUpdated: 0,
         optedOut: 0,
-        skipped: [] as Array<{ externalId: string; reason: string }>,
+        skipped: [] as Array<{ externalId: string; code: FailureCode; reason: string }>,
     };
 
     for (const item of parsed.data.prospects) {
@@ -298,14 +303,56 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
                 });
             }
         } catch (err) {
+            const diagnosis = classifyFailure(err);
             summary.skipped.push({
                 externalId: item.externalId,
-                reason: err instanceof Error ? err.message : 'Error desconocido',
+                code: diagnosis.code,
+                reason: diagnosis.reason,
             });
         }
     }
 
-    return NextResponse.json({ ok: true, ...summary });
+    // ── Contrato de acuse ────────────────────────────────────────────────────
+    // Un `skipped` silencioso con HTTP 200 es un acuse de recibo falso: Harvey
+    // marcaría el lead como sincronizado y no lo reintentaría NUNCA. El 2xx se
+    // reserva a lo que quedó persistido de verdad. El reintento es seguro porque
+    // la escritura es idempotente por `externalId`/`email`.
+    const ack = decideIntakeAck({
+        received: summary.received,
+        created: summary.created,
+        updated: summary.updated,
+        skipped: summary.skipped.map((row) => row.code),
+    });
+
+    const infraDiagnosis = summary.skipped.find((row) => row.code === ack.code);
+
+    if (ack.status === 503) {
+        console.error(
+            `[outreach/intake] acuse rechazado (${ack.code ?? 'ALL_SKIPPED'}): 0/${summary.received} persistidos.`,
+        );
+    } else if (ack.status === 207) {
+        console.warn(
+            `[outreach/intake] acuse parcial: ${ack.persisted}/${summary.received} persistidos, ${summary.skipped.length} para reintentar.`,
+        );
+    }
+
+    return NextResponse.json(
+        {
+            ok: ack.ok,
+            persisted: ack.persisted,
+            retryable: ack.retryable,
+            ...(ack.code ? { code: ack.code } : {}),
+            ...(ack.status === 503
+                ? {
+                      error:
+                          infraDiagnosis?.reason ??
+                          'Ningún prospecto se pudo persistir: reintentar y revisar el payload.',
+                  }
+                : {}),
+            ...summary,
+        },
+        { status: ack.status },
+    );
 }
 
 // ─── GET: salud del canal (misma auth) ────────────────────────────────────────
@@ -335,10 +382,11 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
             lastSyncAt: latest?.updatedAt ?? null,
         });
     } catch (err) {
-        console.error('[outreach/intake:GET]', err instanceof Error ? err.message : err);
+        const diagnosis = classifyFailure(err);
+        console.error(`[outreach/intake:GET] ${diagnosis.code}: ${diagnosis.reason}`);
         return NextResponse.json(
-            { error: 'Error interno al leer el estado de outreach.' },
-            { status: 500 },
+            { ok: false, code: diagnosis.code, error: diagnosis.reason },
+            { status: diagnosis.code === 'SCHEMA_MISSING' ? 503 : 500 },
         );
     }
 }
