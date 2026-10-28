@@ -25,8 +25,8 @@ const CATEGORY_ACCENT: Readonly<Record<MariachiSongCategory, string>> = Object.f
   bolero: 'text-[#ecb613] border-[#ecb613]/25 bg-[#ecb613]/5',
   ranchera: 'text-[#FF2B44] border-[#FF2B44]/20 bg-[#FF2B44]/5',
   huapango: 'text-[#00E5FF] border-[#00E5FF]/20 bg-[#00E5FF]/5',
-  popular: 'text-amber-200 border-amber-200/20 bg-amber-200/5',
-  clasico: 'text-emerald-300 border-emerald-300/20 bg-emerald-300/5',
+  popular: 'text-[#f5c531] border-[#f5c531]/20 bg-[#f5c531]/5',
+  clasico: 'text-zinc-200 border-white/20 bg-white/5',
 });
 
 /**
@@ -290,7 +290,7 @@ export default function MundoDelMariachiArchive() {
           <div className="flex flex-wrap gap-3">
             <Link
               href="/mariachis#cotizador-uber"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-[#ecb613] hover:bg-amber-300 text-black font-mono text-xs uppercase font-bold tracking-wider transition-all duration-300 ease-out shadow-lg shadow-[#ecb613]/20"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-[#ecb613] hover:bg-[#f5c531] text-black font-mono text-xs uppercase font-bold tracking-wider transition-all duration-300 ease-out shadow-lg shadow-[#ecb613]/20"
             >
               <BookOpen size={14} />
               Diseñar mi repertorio
@@ -301,7 +301,7 @@ export default function MundoDelMariachiArchive() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/15 text-white font-mono text-xs uppercase tracking-wider transition-all duration-300 ease-out"
             >
-              <MessageCircle size={14} className="text-emerald-400" />
+              <MessageCircle size={14} className="text-[#ecb613]" />
               Hablar con la Centralita
             </a>
           </div>
@@ -330,11 +330,11 @@ export default function MundoDelMariachiArchive() {
 
         <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] text-white/55">
           <li className="flex items-start gap-2">
-            <CheckCircle2 size={13} className="mt-0.5 shrink-0 text-emerald-400" />
+            <CheckCircle2 size={13} className="mt-0.5 shrink-0 text-[#ecb613]" />
             <span>Originales pesados fuera de Git en {meta.imagePolicy.heavyArchivePath}.</span>
           </li>
           <li className="flex items-start gap-2">
-            <CheckCircle2 size={13} className="mt-0.5 shrink-0 text-emerald-400" />
+            <CheckCircle2 size={13} className="mt-0.5 shrink-0 text-[#ecb613]" />
             <span>
               Solo se publican derivados {meta.imagePolicy.format.toUpperCase()} menores de{' '}
               {meta.imagePolicy.maxKilobytes} KB en {meta.imagePolicy.publishedPath}.

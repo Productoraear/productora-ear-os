@@ -48,7 +48,7 @@
     "audit:ssot": "npx tsx scripts/baseline_ssot_integrity.ts",
     "seal:ssot": "npx tsx scripts/baseline_ssot_integrity.ts --seal",
     "audit:residues": "node scripts/audit_heavy_residues.cjs",
-    "gate:prepush": "npm run audit:phone && npm run audit:edge && npm run verify:pricing && npm run verify:context && npm run verify:leadgate && npm run audit:ssot && npm run lint && npm run audit:contrast:core && npm run typecheck:landings && node ./node_modules/typescript/bin/tsc --noEmit",
+    "gate:prepush": "node scripts/audit_orphan_imports.cjs && npm run audit:phone && npm run audit:edge && npm run verify:pricing && npm run verify:context && npm run verify:leadgate && npm run audit:ssot && npm run lint && npm run audit:contrast:core && npm run typecheck:landings && node ./node_modules/typescript/bin/tsc --noEmit",
     "sim:event": "node scripts/simulate_100_services_event.mjs",
     "audit:webgl": "node scripts/audit_webgl_friction.cjs",
     "audit:webgl:strict": "node scripts/audit_webgl_friction.cjs --strict",
