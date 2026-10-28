@@ -55,13 +55,22 @@ jobs:
         if: success()
         env:
           COOLIFY_WEBHOOK: ${{ secrets.COOLIFY_WEBHOOK_URL }}
+          COOLIFY_API_TOKEN: ${{ secrets.COOLIFY_API_TOKEN }}
         run: |
           if [ -z "$COOLIFY_WEBHOOK" ]; then
             echo "::error::COOLIFY_WEBHOOK_URL no esta definido en los secrets del repositorio."
             exit 1
           fi
+          # Coolify v4 protege /api/v1/deploy con Sanctum: sin Bearer devuelve 401.
+          AUTH=()
+          if [ -n "$COOLIFY_API_TOKEN" ]; then
+            AUTH=(-H "Authorization: Bearer $COOLIFY_API_TOKEN")
+            echo "COOLIFY_AUTH=bearer"
+          else
+            echo "COOLIFY_AUTH=none"
+          fi
           BODY_FILE="$(mktemp)"
-          CODE="$(curl -sS -m 45 -o "$BODY_FILE" -w '%{http_code}' -X GET "$COOLIFY_WEBHOOK" || echo '000')"
+          CODE="$(curl -sS -m 45 -o "$BODY_FILE" -w '%{http_code}' "${AUTH[@]}" -X GET "$COOLIFY_WEBHOOK" || echo '000')"
           echo "COOLIFY_HTTP=${CODE}"
           if [ -s "$BODY_FILE" ]; then
             echo "COOLIFY_BODY=$(head -c 300 "$BODY_FILE" | tr '\n\t' '  ')"
@@ -71,6 +80,10 @@ jobs:
           case "$CODE" in
             2*)
               echo "Deploy encolado en Coolify."
+              ;;
+            401|403)
+              echo "::error::Coolify devuelve ${CODE} (Unauthenticated). Falta el token: crea una API key en Coolify > Keys & Tokens y guardala como secret COOLIFY_API_TOKEN. El deploy NO esta en marcha."
+              exit 1
               ;;
             *)
               echo "::error::Coolify rechazo el webhook (HTTP ${CODE}). El deploy NO esta en marcha: revisar UUID de la app y el estado del panel."

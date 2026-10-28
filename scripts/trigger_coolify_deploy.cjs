@@ -8,6 +8,9 @@
  * código HTTP que devuelve Coolify. Prohibido simular: si no hay webhook, falla
  * (Exit 2) en vez de imprimir "todo verificado".
  *
+ * Variables: COOLIFY_DEPLOY_WEBHOOK (URL de la app en Coolify) y
+ *            COOLIFY_API_TOKEN (API key; sin ella Coolify v4 responde 401).
+ *
  * Exit codes: 0 = deploy encolado por Coolify · 1 = rechazo HTTP / error de red ·
  *             2 = falta COOLIFY_DEPLOY_WEBHOOK en el entorno.
  */
@@ -75,9 +78,17 @@ async function triggerWebhookIfAvailable() {
 
   const transport = COOLIFY_WEBHOOK_URL.startsWith('https:') ? require('https') : http;
   const startedAt = Date.now();
+  // Coolify v4 protege /api/v1/deploy con Sanctum: sin Bearer devuelve 401.
+  const headers = {};
+  if (process.env.COOLIFY_API_TOKEN) {
+    headers.Authorization = `Bearer ${process.env.COOLIFY_API_TOKEN}`;
+    console.log('  [INFO] Autenticacion: Bearer token presente');
+  } else {
+    console.log('  [WARN] Sin COOLIFY_API_TOKEN: Coolify respondera 401 Unauthenticated.');
+  }
 
   return new Promise((resolve) => {
-    const req = transport.get(COOLIFY_WEBHOOK_URL, { timeout: 45000 }, (res) => {
+    const req = transport.get(COOLIFY_WEBHOOK_URL, { timeout: 45000, headers }, (res) => {
       let body = '';
       res.setEncoding('utf8');
       res.on('data', (chunk) => {
@@ -93,8 +104,11 @@ async function triggerWebhookIfAvailable() {
           resolve('OK');
         } else {
           console.error('  [FAIL] Coolify RECHAZO el webhook. El deploy NO esta en marcha.');
-          console.error('         Causas tipicas: UUID de app invalido (404), token/otra app (401/403)');
-          console.error('         o app en estado inconsistente (500). Revisa el panel en el puerto 8000.');
+          if (res.statusCode === 401 || res.statusCode === 403) {
+            console.error('         401/403 Unauthenticated: falta COOLIFY_API_TOKEN (Coolify > Keys & Tokens).');
+          } else {
+            console.error('         Otras causas: UUID de app invalido (404) o app en estado inconsistente (500).');
+          }
           resolve('FAILED');
         }
       });

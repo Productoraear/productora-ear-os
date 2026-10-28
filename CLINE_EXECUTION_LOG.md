@@ -243,3 +243,17 @@ Tarea `W42_OUTREACH_ACK_01` completada y sellada con Exit Code 0 (sello condicio
 - OMEGA-DIAMANTE:  Bloque P0 (deploy de la ruta del dinero): Núcleo 6/8 verificable (tsc/eslint N/A sobre `.cjs`+`.yml`, 0 any por ausencia de TS, 0 TODO, 0 secrets impresos, 0 handler huerfano, 0 precio hardcodeado). ❌ 9,10,11,12,13,15,16,18,20 sin evidencia maquina => **SELLO CONDICIONADO 6/20**.
 - SIGUIENTE PASO:  Push de los 3 ficheros -> leer `COOLIFY_HTTP`/`COOLIFY_BODY` del nuevo run. Si es 2xx y produccion sigue en 404, el problema es el pull de imagen en Coolify; si es 404/401, hay que regenerar el webhook de la app en el panel.
 
+### 2026-10-28T13:40:00Z · W42_OUTREACH_DEPLOY_GATE_02 — CAUSA RAIZ DEL 404: Coolify responde 401 Unauthenticated
+
+- HECHO_VERIFICADO:  Run CI **40696509986** (SHA `f707ecb3a`): job `build-and-push` -> `Build and push Docker image [success]` pero `Trigger Coolify Webhook Deployment [failure]`. Log literal del step: `COOLIFY_HTTP=401` · `COOLIFY_BODY={"message":"Unauthenticated."}`.
+  * **Causa raiz**: `COOLIFY_WEBHOOK_URL` apunta al endpoint de **API** de Coolify (`/api/v1/deploy`), protegido por Sanctum, que exige `Authorization: Bearer <API token>`. No es un UUID caducado ni una compilacion lenta: es **falta de credencial**.
+  * **Por que nadie lo vio durante 40 min de polling**: el step viejo ejecutaba `curl -s -X GET "$COOLIFY_WEBHOOK" || true`, que descarta el codigo HTTP y el cuerpo. Cero despliegue, run verde. El bucle de polling al 404 estaba midiendo la nada.
+  * El gate nuevo convirtio un falso verde en un rojo con diagnostico en el primer run: la puerta funciona.
+- CAMBIOS:        `.github/workflows/deploy-ghcr.yml` (soporte `COOLIFY_API_TOKEN` -> `Authorization: Bearer`; 401/403 emite `::error::` con la instruccion exacta) · `scripts/trigger_coolify_deploy.cjs` (mismas cabeceras en local) · `CLINE_EXECUTION_LOG.md`.
+- COMANDOS:       `node --check scripts/trigger_coolify_deploy.cjs` -> **Exit 0** · parse `js-yaml` del workflow -> **OK**, `env=COOLIFY_WEBHOOK,COOLIFY_API_TOKEN` · evidencia: `gh run view 40696509986 --log | Select-String COOLIFY_HTTP` -> `COOLIFY_HTTP=401`.
+- HIPOTESIS:      El token de Coolify v4 debe tener permiso de despliegue sobre la app `productora-ear-os`. Si el 401 persiste con token valido, el siguiente sospechoso es que `COOLIFY_WEBHOOK_URL` incluya un `uuid` de otra app (seria 404, no 401).
+- DECISION:       Se descarto reintentar el deploy a ciegas (mas polling al 404) y se descarto inventar credenciales del panel: la unica pieza que exige login humano es crear la API key en **Coolify > Keys & Tokens**. Todo lo demas queda automatizado y verificado.
+- RIESGOS:        Mientras no exista `COOLIFY_API_TOKEN`, cada push terminara en rojo a proposito (honesto, pero ruidoso). Si el CEO crea el token y el deploy entra, el job `production-smoke` sera el que diga la ultima palabra: 404 -> imagen no actualizada; 503 -> falta migracion o `CRON_SECRET` en el VPS.
+- OMEGA-DIAMANTE: **SELLO CONDICIONADO 6/20** (P0). Núcleo verificado en lo aplicable; ❌ 9,10,11,12,13,15,16,18,20 sin evidencia maquina.
+- SIGUIENTE PASO:  Anadir secret `COOLIFY_API_TOKEN` (y opcional `CRON_SECRET`) -> `gh workflow run deploy-ghcr.yml --ref main` -> `node scripts/prod_smoke_intake.cjs --wait=1500 --post` (esperado: `SMOKE_RESULT=OK`, EXIT 0).
+
