@@ -271,3 +271,25 @@ Tarea `W42_OUTREACH_ACK_01` completada y sellada con Exit Code 0 (sello condicio
 - OMEGA-DIAMANTE: **SELLO CONDICIONADO 6/20** (P0); ❌ 9,10,11,12,13,15,16,18,20 sin evidencia maquina.
 - SIGUIENTE PASO:  Leer `Deployment Logs` de la app en el panel (una captura de 20 lineas basta) para distinguir cola vs OOM; si es cola, cancelar duplicados y pulsar `Redeploy` una sola vez sobre el ultimo `main`.
 
+### 2026-10-28T14:55:00Z · W42_OUTREACH_DEPLOY_GATE_04 — FALSO POSITIVO DEL GATE: el soft-404 de las landings no existía; el único fallo real es la ruta intake
+
+- HECHO_VERIFICADO (1): El marcador `Error 404 // Productora EAR` que `prod_smoke_intake.cjs` usaba como detector de soft-404 es **inútil**: Next.js serializa el fallback del boundary `notFound` dentro del payload RSC de TODA página válida. Medición simultánea de 4 URLs (2026-10-28T14:48Z):
+
+  | URL | status | `<title>` | `marker404` | "Alicante" |
+  |---|---|---|---|---|
+  | `/` | 200 | Productora EAR :: Alquiler de Equipos de Sonido… | **1** | 0 |
+  | `/mariachis/red/alicante?inv=6V2G69VV` | 200 | Productora EAR \| Servicios de Eventos y Música en Alicante | 1 | **10** |
+  | `/zzz-no-existe-12345` | 404 | 404 \| Productora EAR | 1 | 0 |
+  | `/api/outreach/intake` | 404 | 404 \| Productora EAR | 1 | 0 |
+
+  La home, que funciona, también da `marker404=1` → **el detector producía un falso positivo permanente** que habría bloqueado CI para siempre y habría declarado "no desplegado" un bloque mariachi que sí está en producción desde hace tiempo. Corregido: el discriminador es el **HTTP status** + el **`<title>`** (`<title>404 | Productora EAR</title>` = página de error; `<title>` propio = página real).
+- HECHO_VERIFICADO (2): **La landing dinámica de Alicante NUNCA estuvo rota.** Renderiza `BespokeTemplate` con `location:"Alicante"`, `serviceId:"mariachis-red"`, `isApex:true`, título propio y canonical correcto, 133.233 bytes. Las entradas `SMOKE_LANDING=SOFT_404` de GATE_03 quedan **anuladas** por esta medición.
+- HECHO_VERIFICADO (3): El único fallo real es `/api/outreach/intake` → HTTP **404** con `<title>404 | Productora EAR</title>`. La ruta **sí está commiteada** (`git cat-file -e origin/main:src/app/api/outreach/intake/route.ts` → `ROUTE_EN_ORIGIN_MAIN=SI`, sin cambios pendientes, creada en `2a851956e` y retocada en `28647e67f`). Un 404 de una ruta commiteada solo significa una cosa: **la imagen viva es anterior a ese commit**.
+- HECHO_VERIFICADO (4): Nuevo fingerprint de imagen (prueba máquina, no promesa): el campo `"b":"<buildId>"` del payload RSC. Valor medido a las 14:53:12Z → `SMOKE_IMAGE_BUILD_ID=fwx6swV_TY3QKwLNaA6Qh`. Si tras un Redeploy ese valor no cambia, **el despliegue no se aplicó** aunque el panel diga "success". Es la evidencia que faltaba para no volver a confundir "build lanzado" con "build servido".
+- CAMBIOS:        `scripts/prod_smoke_intake.cjs` (detector por `<title>` + guard anti-fachada `ROUTE_MISSING_TITLE_404` + `fingerprintImage()`/`SMOKE_IMAGE_BUILD_ID` + aviso de buildId inconsistente home/landing; cabecera reescrita con la corrección forense) · `CLINE_EXECUTION_LOG.md` (esta entrada). Commit **local, sin push** (cada push encola otro build en el VPS de 1 vCPU y retrasa el despliegue que estamos esperando).
+- COMANDOS:       `node --check scripts/prod_smoke_intake.cjs` → **Exit 0** · `node scripts/prod_smoke_intake.cjs` → `SMOKE_IMAGE_BUILD_ID=fwx6swV_TY3QKwLNaA6Qh` · `SMOKE_INTAKE_GET=ROUTE_MISSING` · `SMOKE_LANDING=HTTP_200` · `SMOKE_RESULT=FAILED EXIT=1` (rojo honesto: solo por la ruta intake).
+- HIPÓTESIS:      (a) El Redeploy de la Opción A sigue en cola o murió en el VPS (no ha cambiado el buildId a las 14:53Z). (b) El build del VPS puede estar usando Dockerfile propio y no `next build` directo, así que la corrección `a85422378` (módulo `mariachi-market-intelligence`) podría no haber llegado a compilarse. Frágil cualquiera de las dos: **solo `Deployment Logs` lo resuelve**.
+- DECISIÓN:       Se descarta seguir usando el marcador del boundary (era el bug). Se descarta declarar verde sin `buildId` distinto al de la imagen vieja. Alternativa descartada: forzar despliegue por GHCR sin token — imposible, la API devuelve `401 Unauthenticated` hasta crear `COOLIFY_API_TOKEN`.
+- RIESGOS:        Si el `<title>` cambia de formato en un refactor de `not-found`/metadata, el detector pasa a falso negativo (ruta 200 con título genérico): mitigado porque el guard exige `<title>` presente y el chequeo de status 404 va primero. Si el build del VPS muere por OOM (1 vCPU), ningún reintento lo arregla: se verá en `Deployment Logs` como `Killed`.
+- OMEGA-DIAMANTE: **SELLO CONDICIONADO 6/20** (P0); ❌ 9,10,11,12,13,15,16,18,20 sin evidencia máquina. El ítem 12-13 (CWV/Lighthouse) no puede medirse sobre una imagen desactualizada.
+- SIGUIENTE PASO:  Leer `Deployment Logs` del panel (20 líneas bastan) para distinguir `Queued`/`Running` de `Failed (Killed/OOM)`; si está en cola, cancelar duplicados y un único `Redeploy` sobre `2452d14c4`. Criterio de cierre: `SMOKE_IMAGE_BUILD_ID` distinto de `fwx6swV_TY3QKwLNaA6Qh` **y** `SMOKE_INTAKE_GET=HTTP_401|HTTP_405|HTTP_503`.

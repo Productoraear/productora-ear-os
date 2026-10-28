@@ -15,11 +15,24 @@
  *   503             -> la ruta EXISTE; falla cerrado (sin secreto o sin BD).
  *   200 | 201 | 207 -> la ruta EXISTE y respondio datos.
  *
- * Trampa documentada (falso positivo real, 2026-10-28): la landing dinamica
- * /mariachis/red/<provincia> responde HTTP 200 incluso cuando la provincia no
- * existe (soft-404 con el shell del layout). El codigo de invitacion aparece en
- * el HTML solo porque la URL viaja en el payload RSC, NO porque se resolviera.
- * Por eso aqui se busca el marcador del boundary, no el codigo.
+ * CORRECCION FORENSE (2026-10-28, medida contra produccion): el marcador
+ * 'Error 404 // Productora EAR' NO es un detector de soft-404. Next.js serializa
+ * el fallback del boundary `notFound` dentro del payload RSC de TODAS las
+ * paginas validas; se comprobo que la HOME (200, contenido real) tambien lo
+ * contiene (`marker404=1`). Usarlo producia un falso positivo permanente que
+ * habria bloqueado CI para siempre.
+ *
+ * Discriminador real (el que se usa aqui):
+ *   - HTTP 404                                  -> ruta inexistente.
+ *   - <title>404 | Productora EAR</title>       -> pagina de error (soft o dura).
+ *   - <title> propio de la pagina               -> pagina real servida.
+ * Evidencia de control: `/` => 'Productora EAR :: Alquiler de Equipos...';
+ * `/mariachis/red/alicante` => '... Musica en Alicante' (10 menciones);
+ * `/zzz-no-existe-12345` y `/api/outreach/intake` => '404 | Productora EAR'.
+ *
+ * Fingerprint de imagen: el campo `"b":"<buildId>"` del payload RSC identifica
+ * la build desplegada. Si el buildId NO cambia tras un despliegue, el despliegue
+ * no se aplico (esto es evidencia maquina, no una promesa).
  *
  * Uso:
  *   node scripts/prod_smoke_intake.cjs
@@ -41,7 +54,13 @@
 
 const BASE_URL = (process.env.PROD_BASE_URL || 'https://www.productoraear.com').replace(/\/+$/, '');
 const INTAKE_PATH = '/api/outreach/intake';
-const NOT_FOUND_MARKER = 'Error 404 // Productora EAR';
+/** Discriminador real de pagina de error (ver cabecera). El marcador del boundary
+ *  NO sirve: aparece en el payload RSC de cualquier pagina valida. */
+const NOT_FOUND_TITLE = /<title>\s*404\b/i;
+/** El <title> propio de una pagina real, para dejar evidencia en el log. */
+const TITLE_PATTERN = /<title>([^<]{0,160})<\/title>/i;
+/** buildId de Next dentro del payload RSC (identifica la imagen desplegada). */
+const BUILD_ID_PATTERNS = [/"b":"([A-Za-z0-9_-]{6,64})"/, /\\"b\\":\\"([A-Za-z0-9_-]{6,64})\\"/];
 /** Codigos que demuestran que la ruta existe (auth / metodo / validacion / BD). */
 const ROUTE_ALIVE = new Set([200, 201, 207, 400, 401, 403, 405, 422, 503]);
 /** Codigos que certifican persistencia real de un prospecto. */
@@ -102,6 +121,35 @@ function tail(text, max = 320) {
     return flat.length > max ? `${flat.slice(0, max)}...` : flat;
 }
 
+/** Titulo literal del documento (evidencia legible en CI). */
+function extractTitle(html) {
+    const match = html.match(TITLE_PATTERN);
+    return match ? match[1].trim() : null;
+}
+
+/** buildId de la build viva: prueba maquina de que un despliegue se aplico. */
+function extractBuildId(html) {
+    for (const pattern of BUILD_ID_PATTERNS) {
+        const match = html.match(pattern);
+        if (match) return match[1];
+    }
+    return null;
+}
+
+/**
+ * Huella de la imagen desplegada. Se lee de la home porque es la ruta que
+ * siempre existe: si el buildId cambia, hay build nueva en produccion; si no
+ * cambia, el despliegue NO se aplico aunque el panel diga "success".
+ */
+async function fingerprintImage() {
+    const res = await hit(`${BASE_URL}/`);
+    if (!res.ok) return { buildId: null, detail: 'NETWORK' };
+    return {
+        buildId: extractBuildId(res.body),
+        detail: `HTTP_${res.status}`,
+    };
+}
+
 /** 1. La ruta del puente debe EXISTIR en la imagen desplegada. */
 async function checkIntakeRoute(waitSeconds) {
     const url = `${BASE_URL}${INTAKE_PATH}`;
@@ -133,11 +181,17 @@ async function checkIntakeRoute(waitSeconds) {
         console.error(`  [FAIL] HTTP ${last.status} inesperado. Cuerpo: ${tail(last.body)}`);
         return { code: 1, detail: `UNEXPECTED_${last.status}` };
     }
+    // Guard anti-fachada: 200 con el <title> de la pagina 404 = la ruta no existe,
+    // alguien respondio 200 con el shell de error.
+    if (NOT_FOUND_TITLE.test(last.body)) {
+        console.error(`  [FAIL] HTTP ${last.status} pero el documento es la pagina 404 (${extractTitle(last.body)}).`);
+        return { code: 1, detail: 'ROUTE_MISSING_TITLE_404' };
+    }
     console.log(`  [PASS] Ruta viva (HTTP ${last.status}). El puente Harvey -> EAR OS esta desplegado.`);
     return { code: 0, detail: `HTTP_${last.status}` };
 }
 
-/** 2. La landing dinamica no debe ser el shell del soft-404. */
+/** 2. La landing dinamica debe servirse de verdad (no el documento 404). */
 async function checkLanding(opts) {
     if (opts.skipLanding) {
         console.log('  [SKIP] Landing (--skip-landing).');
@@ -149,13 +203,22 @@ async function checkLanding(opts) {
         console.error(`  [FAIL] Landing sin respuesta (${res.body}).`);
         return { code: 4, detail: 'NETWORK' };
     }
-    if (res.body.includes(NOT_FOUND_MARKER)) {
-        console.error(`  [FAIL] Soft-404: la landing devuelve HTTP ${res.status} pero renderiza el boundary 404.`);
-        console.error('         El bloque mariachi NO esta en la imagen desplegada (el codigo del HTML solo refleja la URL).');
+    const title = extractTitle(res.body);
+    if (res.status === 404) {
+        console.error(`  [FAIL] Landing HTTP 404 (${title || 'sin titulo'}): la ruta no existe en la imagen desplegada.`);
+        return { code: 2, detail: 'LANDING_404' };
+    }
+    if (NOT_FOUND_TITLE.test(res.body)) {
+        console.error(`  [FAIL] Soft-404 real: la landing responde HTTP ${res.status} pero su <title> es "${title}".`);
+        console.error('         Detector: <title>404 | Productora EAR. (El marcador del boundary NO se usa: aparece en toda pagina valida.)');
         return { code: 2, detail: 'SOFT_404' };
     }
-    console.log(`  [PASS] Landing real (HTTP ${res.status}, ${res.body.length} bytes, sin boundary 404).`);
-    return { code: 0, detail: `HTTP_${res.status}` };
+    if (!title) {
+        console.error(`  [FAIL] Landing sin <title> reconocible (${res.body.length} bytes): documento inesperado.`);
+        return { code: 2, detail: 'LANDING_NO_TITLE' };
+    }
+    console.log(`  [PASS] Landing real (HTTP ${res.status}, ${res.body.length} bytes, title="${title}").`);
+    return { code: 0, detail: `HTTP_${res.status}`, buildId: extractBuildId(res.body) };
 }
 
 /** 3. POST autenticado: certifica persistencia (idempotente por externalId). */
@@ -211,11 +274,17 @@ async function main() {
     console.log('--- SMOKE DE PRODUCCION: PUENTE HARVEY -> EAR OS ---');
     console.log(`  BASE=${BASE_URL}${opts.waitSeconds > 0 ? ` WAIT=${opts.waitSeconds}s` : ''}`);
 
+    const image = await fingerprintImage();
+    console.log(`SMOKE_IMAGE_BUILD_ID=${image.buildId || 'UNKNOWN'} (${image.detail})`);
+
     const route = await checkIntakeRoute(opts.waitSeconds);
     console.log(`SMOKE_INTAKE_GET=${route.detail}`);
 
     const landing = await checkLanding(opts);
     console.log(`SMOKE_LANDING=${landing.detail}`);
+    if (landing.buildId && image.buildId && landing.buildId !== image.buildId) {
+        console.error(`  [WARN] buildId inconsistente entre home (${image.buildId}) y landing (${landing.buildId}): posible despliegue a medias.`);
+    }
 
     let post = { code: 0, detail: 'NOT_REQUESTED' };
     if (opts.doPost) {
