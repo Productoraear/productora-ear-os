@@ -55,6 +55,7 @@
     "test:spatial": "npx tsx scripts/verify_spatial_budget.ts",
     "verify:network": "npx tsx scripts/verify_mariachi_network_offer.ts",
     "emit:outreach": "npx tsx scripts/emit_mariachi_outreach.ts",
+    "targets:outreach": "npx tsx scripts/build_mariachi_outreach_targets.ts",
     "emit:outreach:selftest": "npx tsx scripts/emit_mariachi_outreach.ts --selftest",
     "verify:outreach": "powershell -NoProfile -ExecutionPolicy Bypass -File .antigravity/verify_emit_outreach.ps1",
     "verify:outreach:ack": "npx tsx scripts/verify_outreach_intake_ack.ts",
