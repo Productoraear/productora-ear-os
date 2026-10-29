@@ -884,3 +884,51 @@ Tarea `W42_OUTREACH_ACK_01` completada y sellada con Exit Code 0 (sello condicio
 - PREMORTEM:       Si el auditor diera un falso positivo, `build-and-push` quedaría saltado y no habría imagen nueva en GHCR; el deploy de Coolify (webhook git) seguiría entrando, así que **no hay caída de producción**, solo imagen obsoleta. Detección antes que el cliente: `--strict` imprime cada violación con `archivo:línea` en el log del run.
 - SIGUIENTE PASO:  `node .antigravity/omega.js next` → cola real = `W41_T17_GOOGLE_ADS_COCKPIT` (P2). Recomendación de Arquitecto: abrir antes un P0 nuevo (`W46_T01_CI_TYPECHECK_GATE`: `ignoreBuildErrors: false` con evidencia en contenedor limpio), porque es lo único que hoy permite publicar imagen con TS roto.
 
+---
+
+### 2026-10-29T23:59:00Z · W46_T01-CI-TYPECHECK-GATE — El CI deja de poder publicar una imagen con TypeScript roto
+
+**HECHO_VERIFICADO**: `.github/workflows/deploy-ghcr.yml:42-83` declara el job `typecheck-gate` (Node 22 · `npm ci --include=dev` · `prisma generate` con URL ficticia · `node ./node_modules/typescript/bin/tsc --noEmit` · `timeout-minutes: 20`) y `deploy-ghcr.yml:86` lo mete en `build-and-push → needs: [contract-gate, typecheck-gate]`: un error de tipos **aborta el run antes de construir y publicar** la imagen en GHCR. `scripts/audit_ci_gate_wiring.cjs` (zero-dep, ~2 s) blinda el cableado y se ejecuta en el propio `contract-gate` de CI (`deploy-ghcr.yml:39-40`) y en `gate:prepush` (`package.json:64`, script `audit:ci-gate` en `:63`).
+
+**RETO_ESPEJO**: el `done_when` original pedía "un job que ejecute tsc". Criterio más duro aplicado: *un gate que existe pero que no aborta el push sigue siendo una fachada*, así que el auditor exige que `build-and-push` lo declare en `needs:` — no basta con que el job exista. Comando que lo verifica: `node scripts/audit_ci_gate_wiring.cjs` (Exit 1 si falta el `needs`). Riesgo de no hacerlo: un `needs` borrado por refactor deja el gate en decorativo y se publica la imagen rota otra vez.
+
+**HALLAZGOS (❌ fachadas / ⚠️ riesgos)**:
+- ❌ **El propio guardián nació con una fachada** (detectada por su test negativo): comprobaba `tsc --noEmit` sobre el *texto del job*, y el **nombre del step** contiene esa cadena → borrar la línea `run:` pasaba en verde. Corregido: `runCommands()` extrae **solo líneas `run:`**, nunca `name:` ni comentarios.
+- ⚠️ Cerrojo añadido: `|| true`, `|| exit 0`, `set +e` y `continue-on-error: true` ahora se detectan. Es el modo más silencioso de degradar un CI (step verde con 300 errores de tsc) y no lo ve ninguna revisión de diff.
+- ⚠️ `contract-gate` corría en **Node 20 (EOL desde abril 2026)** mientras el `Dockerfile` usa 22 → alineado a `'22'` (`deploy-ghcr.yml:27-31`).
+- ⚠️ **P0 SIGUE ABIERTO — `next.config.ts:37` → `typescript.ignoreBuildErrors: true`**: no se voltea aquí porque exige medir memoria en el VPS de 4 GB. Lo que este bloque garantiza es que **ninguna imagen con TS roto se publica**, aunque el build siga sin typechequear.
+- ⚠️ El proceso desacoplado (`Start-Process powershell -NoProfile`) **pierde el PATH de nvm** y `node` no existe: cualquier automatización futura debe usar ruta absoluta. Diagnóstico: `TSC_EXIT=` vacío en 0,3 s.
+- ⚠️ `.antigravity/ev/` está **gitignorado** (`.gitignore:199`): la evidencia versionable va a `.antigravity/reports/*.md`; los `.ps1`/`.log` de validación quedan como artefactos locales.
+- ⚠️ El árbol tenía **3 ficheros TS ya modificados por una sesión previa y ajena a este bloque** (`OmniAgentConsoleModal.tsx`, `AIConciergeDock.tsx`, `naturalVoice.ts`): **no se han tocado ni commiteado**. Cero `git add -A`.
+
+**HIPÓTESIS**: (1) `npm ci` reproduce el lock en el runner de Actions (verificado en local con `--dry-run` → Exit 0). (2) Las credenciales ficticias de Prisma bastan para `generate` (verificado: Exit 0 sin PostgreSQL). (3) Node 26 local ≈ Node 22 de CI para TypeScript (mismo `typescript` del lock; el run real es el juez).
+
+**DECISIÓN**: gate de tipos en **job propio y aislado**, no dentro de `contract-gate`. Alternativa descartada: meter `npm ci + tsc` en `contract-gate` (habría inflado de 2 s a ~2 min el job forense y acoplado dos responsabilidades distintas). También descartado **Husky** para el pre-push: dependencia nueva y hooks no versionables sin `npm install`.
+
+**RIESGOS (premortem)**: si el guardián da un falso positivo, `build-and-push` se salta y no hay imagen nueva, pero el deploy de Coolify entra por webhook git → **sin caída de producción**, solo imagen obsoleta. Detección antes que el cliente: cada aserción imprime su nombre y `tsc` imprime `archivo:línea`.
+
+**CAMBIOS**:
+- `.github/workflows/deploy-ghcr.yml` (job `typecheck-gate`, `needs` en `build-and-push`, guardián en `contract-gate`, Node 22)
+- `scripts/audit_ci_gate_wiring.cjs` (nuevo · zero-dependency · 16 aserciones)
+- `package.json` (`typecheck`, `audit:ci-gate`, `gate:prepush`)
+- `.antigravity/reports/W46_CI_TYPECHECK_GATE_EVIDENCE.md` (nuevo · evidencia máquina versionada)
+- `CLINE_EXECUTION_LOG.md` (append-only)
+
+**VALIDACIONES (Exit Code real, visto en disco)**:
+- `node ./node_modules/typescript/bin/tsc --noEmit` → **Exit 0** · **23,5 s** · **0 bytes** de diagnóstico
+- `.antigravity/ev/w46_yaml_check.cjs` (YAML 1.2 `CORE_SCHEMA`) → **Exit 0** · `JOBS=contract-gate,typecheck-gate,build-and-push,production-smoke` · `TYPECHECK_NEEDS="contract-gate"` · `TYPECHECK_NODE=22` · `BUILD_NEEDS=["contract-gate","typecheck-gate"]` · `SMOKE_IF=always()`
+- `node scripts/audit_ci_gate_wiring.cjs` (workflow real) → **Exit 0** · 16 aserciones OK
+- `node scripts/audit_ci_gate_wiring.cjs --workflow=…/broken_needs.yml` (mutante A) → **Exit 1**
+- `node scripts/audit_ci_gate_wiring.cjs --workflow=…/broken_tsc.yml` (mutante B) → **Exit 1**
+- `node scripts/audit_ci_gate_wiring.cjs --workflow=…/broken_swallow.yml` (mutante C, `|| true`) → **Exit 1**
+- `npm ci --dry-run` → **Exit 0** (lock en sync) · `prisma generate` con env ficticia → **Exit 0**
+- `eslint` → **n/a**: el diff no contiene `.ts`/`.tsx`/`.js` de aplicación (solo `.yml`, `.cjs`, `.json`, `.md`)
+
+**Ω-DIAMANTE: SELLO CONDICIONADO 5/8 del Núcleo** (bloque P0-CI, no P0-dinero). ✅ 1 tsc Exit 0 · ✅ 3 cero `any` (sin TS nuevo) · ✅ 6 cero precios hardcodeados (no toca SSOT) · ✅ 8 cero secretos (el job usa env ficticia, ningún secret) · ⚠️ 2 eslint n/a. ❌ 5 handlers huérfanos (no aplica: no hay UI) · ❌ 7 TODO (n/a). Ítems 9-20: **SIN EVIDENCIA MÁQUINA** (12 Lighthouse, 13 CWV p75, 16 Jaccard, 17 provenance, 18 build < 60 s, 20 n8n DLQ). No se firma 20/20.
+
+**ESTADO_BLOQUE: VERIFICADO localmente · pendiente de confirmación en el primer run de GitHub Actions.**
+
+**SIGUIENTE_PASO**: abrir `W46_T02_FLIP_IGNORE_BUILD_ERRORS` (voltear `next.config.ts:37` con medición de memoria en el contenedor del VPS) — es el único punto que aún permite construir sin typechequear; el gate ya impide publicarlo.
+
+
+

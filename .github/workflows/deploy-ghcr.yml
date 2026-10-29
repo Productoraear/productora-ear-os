@@ -24,16 +24,66 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Node 22 = misma runtime que el Dockerfile (node:22-alpine). Node 20 está EOL.
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
 
       - name: Gate forense /admin/control (0 fachadas, --strict)
         run: node scripts/audit_admin_control_forensics.cjs --strict --md
 
-  build-and-push:
+      # Guardián del propio gate: si alguien borra un `needs`, condiciona un job
+      # con `if:` o deja un gate en best-effort, este paso aborta el run. Sin él,
+      # el cableado de abajo podría degradarse en silencio y volveríamos a la
+      # misma fachada que este bloque cierra.
+      - name: Gate de cableado CI/CD (needs y bloqueos reales)
+        run: node scripts/audit_ci_gate_wiring.cjs
+
+  typecheck-gate:
+    # GATE P0: el build de Docker corre con `typescript.ignoreBuildErrors: true`
+    # (next.config.ts:37) para no reventar por memoria el VPS de 4 GB. Consecuencia:
+    # sin este job el CI podia PUBLICAR en GHCR una imagen con TypeScript roto, y el
+    # unico `tsc --noEmit` real lo lanzaba un humano en local -> el gate era prosa.
+    # Aqui se typechequea de verdad y en maquina limpia (npm ci, lock en sync
+    # verificado con `--dry-run`): un error de tipos aborta el run ANTES de construir
+    # y publicar la imagen. Coste medido del tsc en local: 33 s, 0 bytes de diagnostico.
+    # No sustituye a voltear `ignoreBuildErrors` en el Dockerfile (eso exige medir
+    # memoria en el VPS); lo que garantiza es que ninguna imagen con TS roto se publique.
     needs: contract-gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      NEXT_TELEMETRY_DISABLED: '1'
+      # Credenciales ficticias: `prisma generate` valida el schema y genera el cliente,
+      # no abre conexion a PostgreSQL. Si faltan, Prisma aborta por env var ausente y
+      # el gate fallaria por infraestructura en vez de por codigo del desarrollador.
+      POSTGRES_PRISMA_URL: 'postgresql://ci:ci@127.0.0.1:5432/ci_typecheck?schema=public'
+      POSTGRES_URL_NON_POOLING: 'postgresql://ci:ci@127.0.0.1:5432/ci_typecheck?schema=public'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies (lock exacto, sin descargas de navegador)
+        env:
+          PUPPETEER_SKIP_DOWNLOAD: 'true'
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+        run: npm ci --include=dev --legacy-peer-deps --no-audit --no-fund
+
+      - name: Generate Prisma client
+        run: node ./node_modules/prisma/build/index.js generate
+
+      - name: Typecheck (tsc --noEmit con el binario real, no el impostor de npx)
+        run: node ./node_modules/typescript/bin/tsc --noEmit
+
+  build-and-push:
+    needs: [contract-gate, typecheck-gate]
     runs-on: ubuntu-latest
     permissions:
       contents: read
