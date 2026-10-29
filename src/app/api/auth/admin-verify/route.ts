@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { verifyGoogleAuthenticator } from '@/lib/totp-engine';
 import { findAuthorizedMember } from '@/lib/constants/authorized-users';
+import { safeEqual } from '@/lib/security/constantTime';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -13,7 +14,14 @@ function cleanEnv(val: string | undefined, fallback: string): string {
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
+    const body = (await request.json()) as {
+      password?: string;
+      code2fa?: string;
+      role?: string;
+      action?: string;
+      bypassSovereign?: boolean;
+      email?: string;
+    };
     const { password, code2fa, role, action, bypassSovereign, email } = body;
     
     const inputPassword = (password || "").trim().replace(/^["']|["']$/g, '');
@@ -27,14 +35,19 @@ export async function POST(request: Request) {
       maxAge: 60 * 60 * 24 * 7 // 7 días de sesión
     };
 
-    // ── ACCESO SOBERANO INSTANTÁNEO DEL CEO (PIN MAESTRO 1012) ──
-    const isMasterPin = inputPassword === '1012' || inputCode === '1012';
+    // ── ACCESO SOBERANO DE EMERGENCIA (PIN MAESTRO SIN LITERAL EN EL BINARIO) ──
+    // P0 — Doctrina fail-closed: el PIN vive EXCLUSIVAMENTE en `EAR_MASTER_PIN`.
+    // Un literal en el código es un backdoor público (el bundle y el repo son
+    // legibles). Sin la variable configurada, esta vía queda DESACTIVADA.
+    const masterPin = cleanEnv(process.env.EAR_MASTER_PIN, '');
+    const isMasterPin =
+      masterPin.length >= 4 && (safeEqual(inputPassword, masterPin) || safeEqual(inputCode, masterPin));
     if (isMasterPin) {
       const response = NextResponse.json({
         success: true,
         role: 'admin',
-        bypass: 'sovereign_pin_1012',
-        message: 'Acceso Soberano Inviolable Aprobado (PIN 1012). Bienvenido Edwin Agudelo.'
+        bypass: 'sovereign_master_pin',
+        message: 'Acceso Soberano de Emergencia aprobado. Bienvenido.'
       });
 
       response.cookies.set('ear_session', 'sovereign_admin_bypass', cookieOpts);
@@ -147,16 +160,14 @@ export async function POST(request: Request) {
 
     let is2faValid = false;
 
-    // 1. Verificación por Fórmula Soberana de 4 cifras: Día del mes (2 dígitos) + 24 (ej: hoy 23 -> 2324)
-    const todayDay = String(new Date().getDate()).padStart(2, '0');
-    const formulaPin1 = `${todayDay}24`; // ej. "2324"
-    const formulaPin2 = `24${todayDay}`; // ej. "2423"
+    // ── FÓRMULA DEL DÍA ELIMINADA (P0 · VETO ABSOLUTO) ──────────────────────
+    // `DD24` era una función determinista y pública del calendario: 31 códigos
+    // posibles y el algoritmo legible en el repositorio ⇒ bypass total del
+    // segundo factor para cualquiera. Los canales que quedan son secretos
+    // reales: OTP firmado con HMAC y enviado al canal autorizado, y TOTP de
+    // Google Authenticator.
 
-    if (inputCode === formulaPin1 || inputCode === formulaPin2) {
-      is2faValid = true;
-    }
-
-    // 2. Verificación por PIN de 4 cifras enviado al móvil / Telegram / Email (Challenge Cookie)
+    // 1. Verificación por PIN de 4-6 cifras enviado al móvil / Telegram / Email (Challenge Cookie)
     if (!is2faValid) {
       const challengeCookie = request.headers.get('cookie')?.split('; ')
         .find(c => c.startsWith('ear_otp_challenge='))?.split('=')[1];
@@ -168,8 +179,8 @@ export async function POST(request: Request) {
           const expectedPayload = `${email}:${pin}:${expiresAtStr}:${reqRole}`;
           const expectedSig = crypto.createHmac('sha256', jwtSecret).update(expectedPayload).digest('hex');
 
-          if (signature === expectedSig && Date.now() <= parseInt(expiresAtStr, 10)) {
-            if (inputCode === pin) {
+          if (safeEqual(signature, expectedSig) && Date.now() <= parseInt(expiresAtStr, 10)) {
+            if (safeEqual(inputCode, pin)) {
               is2faValid = true;
             }
           }
@@ -177,7 +188,7 @@ export async function POST(request: Request) {
       }
     }
 
-    // 3. Verificación por Google Authenticator (TOTP tradicional de 6 cifras)
+    // 2. Verificación por Google Authenticator (TOTP tradicional de 6 cifras)
     // Probamos todos los secretos conocidos del sistema para evitar bloqueos por rotación de claves
     if (!is2faValid && inputCode.length === 6) {
       const candidateSecrets = [totpSecret];
@@ -192,7 +203,7 @@ export async function POST(request: Request) {
 
     if (!is2faValid) {
       return NextResponse.json(
-        { success: false, message: 'Código 2FA incorrecto o expirado. Revisa Google Authenticator o usa la fórmula de hoy.' },
+        { success: false, message: 'Código 2FA incorrecto o expirado. Usa Google Authenticator o solicita un código nuevo.' },
         { status: 401 }
       );
     }

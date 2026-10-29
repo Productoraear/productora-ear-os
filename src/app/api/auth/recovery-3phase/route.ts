@@ -3,6 +3,7 @@ import crypto from 'crypto';
 import { findAuthorizedMember, normalizeEmail } from '@/lib/constants/authorized-users';
 import { sendTelegramNotification } from '@/lib/services/telegram';
 import { verifyGoogleAuthenticator } from '@/lib/totp-engine';
+import { safeEqual } from '@/lib/security/constantTime';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -13,10 +14,49 @@ function cleanEnv(val: string | undefined, fallback: string = ''): string {
 }
 
 /**
+ * FASE 3 · SEGUNDO FACTOR DEL EDITOR (sin códigos mágicos).
+ * El editor no tiene secreto TOTP propio (el sistema sólo enrola el de dirección),
+ * así que su segundo factor es la POSESIÓN del canal autorizado: se re-verifica
+ * el OTP firmado con HMAC de Fase 1 —mismo email, mismo rol, misma firma, no
+ * caducado— contra el código tecleado, en tiempo constante.
+ *
+ * Antes de esto existía un literal `'2026'` que abría la Fase 3 a cualquiera que
+ * lo leyera en el repositorio: un segundo factor hardcodeado es un backdoor.
+ */
+function verifyEditorChallengeCode(
+  request: NextRequest,
+  expectedEmail: string,
+  expectedRole: string,
+  input2fa: string,
+  jwtSecret: string,
+): boolean {
+  const challengeCookie: string | undefined = request.cookies.get('ear_otp_challenge')?.value;
+  if (challengeCookie === undefined) return false;
+
+  const parts: string[] = challengeCookie.split(':');
+  if (parts.length !== 5) return false;
+
+  const [email, pin, expiresAtStr, role, signature] = parts;
+  if (!safeEqual(email, expectedEmail) || !safeEqual(role, expectedRole)) return false;
+
+  const expectedSig: string = crypto
+    .createHmac('sha256', jwtSecret)
+    .update(`${email}:${pin}:${expiresAtStr}:${role}`)
+    .digest('hex');
+
+  if (!safeEqual(signature, expectedSig)) return false;
+  if (Date.now() > parseInt(expiresAtStr, 10)) return false;
+
+  return safeEqual(input2fa, pin);
+}
+
+/**
  * 🛡️ SISTEMA DE RECUPERACIÓN SOBERANO EN 3 FASES (S-CLASS)
  * Fase 1: Envío de OTP de 6 cifras al email autorizado (con resguardo a Telegram oficial).
  * Fase 2: Comprobación estricta de OTP + Contraseña del sistema (Master o Editor).
- * Fase 3: Validación de Authenticator 2FA (TOTP de 6 cifras o Fórmula Soberana del día).
+ * Fase 3: Validación del segundo factor real (TOTP de Google Authenticator para
+ *         dirección; OTP firmado de Fase 1 para editores). La «fórmula del día»
+ *         fue eliminada: era una función pública del calendario, no un secreto.
  */
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
@@ -66,8 +106,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         );
       }
 
-      // Generar OTP de 6 dígitos numéricos
-      const pin = Math.floor(100000 + Math.random() * 900000).toString();
+      // Generar OTP de 6 dígitos numéricos (CSPRNG: `Math.random` es predecible)
+      const pin = crypto.randomInt(100000, 1000000).toString();
       const expiresAt = Date.now() + 15 * 60 * 1000; // 15 minutos
 
       // Firma criptográfica HMAC-SHA256
@@ -156,14 +196,14 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       const expectedPayload = `${storedEmail}:${storedPin}:${expiresAtStr}:${storedRole}`;
       const expectedSig = crypto.createHmac('sha256', jwtSecret).update(expectedPayload).digest('hex');
 
-      if (signature !== expectedSig || Date.now() > parseInt(expiresAtStr, 10)) {
+      if (!safeEqual(signature, expectedSig) || Date.now() > parseInt(expiresAtStr, 10)) {
         return NextResponse.json(
           { success: false, message: 'El código OTP ha caducado o está manipulado. Solicita uno nuevo.' },
           { status: 401 }
         );
       }
 
-      if ((otpCode || '').trim() !== storedPin) {
+      if (!safeEqual((otpCode || '').trim(), storedPin)) {
         return NextResponse.json(
           { success: false, message: 'El código OTP introducido es incorrecto.' },
           { status: 401 }
@@ -218,7 +258,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       const expectedP2Payload = `P2_PASSED:${storedEmail}:${storedRole}:${phase2ExpiresStr}`;
       const expectedP2Sig = crypto.createHmac('sha256', jwtSecret).update(expectedP2Payload).digest('hex');
 
-      if (p2Sig !== expectedP2Sig || Date.now() > parseInt(phase2ExpiresStr, 10)) {
+      if (!safeEqual(p2Sig, expectedP2Sig) || Date.now() > parseInt(phase2ExpiresStr, 10)) {
         return NextResponse.json(
           { success: false, message: 'La autorización de Fase 2 ha expirado. Repite el proceso.' },
           { status: 401 }
@@ -228,30 +268,27 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       const input2fa = (code2fa || '').trim();
       let is2faValid = false;
 
-      // 1. Fórmula Soberana del día: Día del mes (2 dígitos) + 24
-      const todayDay = String(new Date().getDate()).padStart(2, '0');
-      const formulaPin1 = `${todayDay}24`;
-      const formulaPin2 = `24${todayDay}`;
+      // ── «FÓRMULA DEL DÍA» ELIMINADA (P0 · VETO ABSOLUTO) ──────────────────
+      // `DD24` / `24DD` eran una función pública del calendario: 31 códigos
+      // posibles con el algoritmo legible en el repositorio ⇒ bypass del
+      // segundo factor. Aquí sólo valen secretos reales.
 
-      if (input2fa === formulaPin1 || input2fa === formulaPin2) {
-        is2faValid = true;
-      }
-
-      // 2. Google Authenticator TOTP tradicional de 6 cifras
-      if (!is2faValid && input2fa.length === 6) {
+      // 1. Google Authenticator TOTP de 6 cifras (dirección)
+      if (!is2faValid && storedRole !== 'editor' && input2fa.length === 6) {
         if (verifyGoogleAuthenticator(input2fa, totpSecret)) {
           is2faValid = true;
         }
       }
 
-      // 3. Si el rol es editor y completó OTP de email + contraseña, se permite validación de rol
-      if (!is2faValid && storedRole === 'editor' && input2fa === '2026') {
-        is2faValid = true;
+      // 2. Editor: OTP firmado de Fase 1 (posesión real del canal autorizado).
+      //    Sustituye al literal hardcodeado `'2026'`, que era un backdoor.
+      if (!is2faValid && storedRole === 'editor') {
+        is2faValid = verifyEditorChallengeCode(request, storedEmail, storedRole, input2fa, jwtSecret);
       }
 
       if (!is2faValid) {
         return NextResponse.json(
-          { success: false, message: 'Código Authenticator 2FA incorrecto o expirado. Usa Google Authenticator o la fórmula de hoy.' },
+          { success: false, message: 'Código 2FA incorrecto o expirado. Usa Google Authenticator o solicita un OTP nuevo.' },
           { status: 401 }
         );
       }
