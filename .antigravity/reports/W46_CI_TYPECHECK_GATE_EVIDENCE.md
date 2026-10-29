@@ -80,3 +80,18 @@ Traducción de negocio: **el puente de captación está rechazando POSTs en prod
 perdiendo leads. No lo arregla este bloque (es configuración del VPS/Coolify, no código): exige definir `CRON_SECRET`
 en el entorno de producción y re-verificar el POST a 200. Prioridad por encima de cualquier cosmética.
 
+## 9. Límite declarado (no fachada): alcance de lint
+
+`eslint.config.mjs` ignora por diseño `scripts/**` (línea 13) y `**/*.cjs` (línea 16). Por tanto el fichero nuevo
+`scripts/audit_ci_gate_wiring.cjs` **no entra en el lint estándar del repo** (`npm run lint`). Verificado a mano:
+
+| Comando | Exit | Lectura |
+|---|---|---|
+| `eslint scripts/audit_ci_gate_wiring.cjs --max-warnings=0` | **1** | Solo el warning "file ignored" (elevado a error por `--max-warnings=0`); **0 errores de código** |
+| `eslint --no-ignore --max-warnings=0 scripts/audit_ci_gate_wiring.cjs` | **0** | Lintado de verdad: 0 errores, 0 warnings |
+
+No se toca `eslint.config.mjs` en este bloque: ampliar el scope a `scripts/**` haría estallar hallazgos históricos de
+utilidades `.cjs` ajenas a esta misión (`reto_espejo` diferido, no silenciado). La prueba de carga del bloque no es el
+lint: es `tsc --noEmit` Exit 0 + `audit:ci-gate` Exit 0 (16/16) + run real de Actions verde.
+
+
