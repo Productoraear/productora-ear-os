@@ -1,4 +1,4 @@
-﻿node_modules
+node_modules
 .next/
 .vercel/
 *.log
@@ -191,3 +191,9 @@ reports/outreach/
 .data/**
 reports/event_simulation_report.json
 .tsc-out*.txt
+
+# Efímeros de control y wrappers locales
+gate_codes.txt
+.gate_codes.txt
+.antigravity/*.cmd
+.antigravity/ev/

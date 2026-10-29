@@ -633,6 +633,42 @@ Tarea `W42_OUTREACH_ACK_01` completada y sellada con Exit Code 0 (sello condicio
 - CAMBIOS: `src/app/(admin)/admin/control/tabs/FlotaTab.tsx` (NUEVO, 954 líneas) · `src/app/(admin)/admin/control/ControlDashboard.tsx` (`FleetPanel` + `type FleetRow` local + `formatDate` huérfano eliminados; import `{ FlotaTab, type FleetRow }`; render `<FlotaTab query={query} />`; recurso del KPI intacto) · este log. **0 ficheros de Zona Cero tocados** (SSOT, guardián SHA-256, `atomicDateLockEngine`, `b2g-tender-engine`, `astra-conversation-engine` intactos).
 - VALIDACIONES: `node ./node_modules/typescript/bin/tsc --noEmit` → **Exit 0** · `node ./node_modules/eslint/bin/eslint.js` sobre los 2 archivos → **Exit 0 (0 errores, 0 warnings)** · barrido de texto sobre ambos archivos (`\bany\b`, `w-screen`, `TODO`, `FIXME`, `FleetPanel`) → **0 coincidencias** · `node .antigravity/omega.js complete W41_T14_TAB_FLOTA` → **Exit 0** (test de misión `tsc --noEmit` Exit 0, tarea purgada de la cola). **No** se ejecutó `npm run gate:prepush` (el diff no toca precios, teléfonos, edge ni landings) ni `audit:contrast:core` (dev server no levantado ⇒ evidencia vacua).
 - Ω-DIAMANTE: **11/20**. ✅ 1 tsc · ✅ 2 eslint (0 warnings) · ✅ 3 cero `any` (helpers y payloads tipados) · ✅ 4 cero `verified:true` falso (la bandera ni se lee ni se envía) · ✅ 5 cero handlers huérfanos (form→POST, select→PATCH status, Guardar→PATCH location, Refrescar→GET, «Volver a entrar»→/login, y los dos no-op que declaran «no se ha enviado ninguna escritura») · ✅ 6 cero precios hardcodeados (el tab no toca dinero) · ✅ 7 cero TODO/FIXME · ✅ 8 cero secretos en cliente · ✅ 11 escrituras sólo por el cliente auditado con `.strict()` server-side · ⚠️ 14 contraste sin medir en `/admin/control` (el auditor no cubre la ruta) · ⚠️ 18 build no medido en este bloque. ❌ 9-10 (ISO/CISQ), 12-13 (Lighthouse + CWV p75), 15 (Rich Results), 16-17 (Jaccard/provenance), 19 (ACID vivo), 20 (DLQ n8n): sin auditor en disco o sin base viva.
+
+## W41 · 2026-10-29 · VERIFICACIÓN FORENSE DE RELEASE `bb2a08735` (0 líneas de código tocadas)
+
+**HECHO_VERIFICADO (leído de disco/git, no supuesto)**
+- Commit: `git log --oneline -2` → `bb2a08735 feat(omega): liberacion s-class produccion...` · `git show --stat HEAD` → **134 files changed, 51740 insertions(+), 3078 deletions(-)** (coincide al dígito con el parte recibido).
+- Push: `git rev-parse HEAD` = `git rev-parse origin/main` = **`bb2a08735b6cfeba8c6eb1183ccef1fa01c60bbe`** → árbol local y remoto idénticos (cero deriva pendiente de subir).
+- Código de producción sin cambios sin commitear: `git diff --stat HEAD` → **vacío** (0 ficheros rastreados modificados).
+- Cola Omega: `.antigravity/tasks_queue.json` → `total_pending: 2` · `W41_T16_TAB_TESORERIA` COMPLETED (exit_code 0, 2026-10-29T21:38:38.978Z) · QUEUED: `W41_T17_GOOGLE_ADS_COCKPIT` (P2) · `W41_T18_CONTRACT_GATE` (P0).
+
+**RETO_ESPEJO**: el parte afirma «working tree limpio, sin ficheros temporales». Disco dice **NO del todo**: `git status --porcelain` devuelve **14 entradas `??`** (0 modificaciones rastreadas, así que el deploy NO está contaminado, pero sí hay ruido que un `git add -A` a ciegas arrastraría — AGENTS.md §8 lo prohíbe). Comando que lo verifica: `git status --porcelain=v1` + `git check-ignore -v <rutas>` → **Exit 1** = ninguna está ignorada.
+
+**Inventario del ruido (14)**: `gate_codes.txt` · `.gate_codes.txt` (volcados de Exit Codes de gates: `ORPHANS_EXIT=0`, `PRICING_EXIT=0`, `SSOT_EXIT=0` → **no son secretos**) · `.antigravity/run_tsc.cmd` · `run_eslint.cmd` · `run_diff.cmd` · `build_iso.cmd` · `.antigravity/ev/` (logs `eslint.err`, `cta_matrix.log`…) · `.antigravity/wave42_tasks_proposal.json` (PROPUESTA — NO MERGEADA, por diseño) · `.antigravity/webgl_friction_baseline.json` · `ABOUT_EDWIN_OS.md` · `reports/INFORME_FORENSE_MARIACHIS_ES_PLANES_B2B_2026.md` · `.antigravity/reports/WAVE_43_EDWIN_SHOWCASE_ABSORPTION.md` · `WAVE_44_EMAIL_CHANNEL_P2_P6.md` · `WAVE_45_SPATIAL_KERNEL_AND_DEEPSEEK_ROUTER.md`.
+
+**HIPÓTESIS (frágiles)**: (a) los informes WAVE 43/44/45 se autodeclaran «VERIFICADO / DESPLEGADO EN DISCO» pero **nunca entraron en git** → su provenance es local-only y se pierde si falla `D:`; (b) `.gitignore` cubre `.antigravity/*.txt` y `.antigravity/*.log` pero **no** `.antigravity/ev/` (subcarpeta) ni los `*.cmd` de raíz; (c) el despliegue en Coolify se asume disparado por push: **no observado** (sin evidencia máquina de build/release en el VPS).
+
+**DECISIÓN**: no se ejecuta `node .antigravity/omega.js next` (Pacto ZTM: prohibido encadenar tras `complete` con Exit 0 en la misma sesión). Alternativa descartada: purgar el ruido ahora — se descarta porque borrar evidencia forense (`reports/WAVE_4x`, `ev/`) sin sanción del CEO destruye provenance; lo correcto es `.gitignore` + commit selectivo de informes.
+
+**RIESGOS (premortem)**: un `git add -A` futuro mete `gate_codes.txt` y logs en el repo (bloat + ruido de auditoría) y, peor, deja los informes forenses fuera de git para siempre; se detecta con `npm run gate:prepush` + revisión de `git status --porcelain` antes de cada commit.
+
+**CAMBIOS**: 0 líneas de código de producción. Sólo esta entrada (append) en `CLINE_EXECUTION_LOG.md`. Ninguna tarea de la cola tocada, ningún estado modificado.
+
+**VALIDACIONES (Exit Code real)**
+- `git log --oneline -2` → Exit 0 (2 commits listados).
+- `git rev-parse HEAD` y `git rev-parse origin/main` → idénticos: `bb2a08735b6cfeba8c6eb1183ccef1fa01c60bbe`.
+- `git diff-tree --no-commit-id --name-only -r HEAD | Measure-Object -Line` → **134** ficheros.
+- `git diff --stat HEAD` → **vacío** (0 ficheros rastreados modificados antes de esta entrada).
+- `git check-ignore -v gate_codes.txt .gate_codes.txt .antigravity/run_tsc.cmd .antigravity/wave42_tasks_proposal.json` → **Exit 1** (ninguno ignorado).
+
+**Ω-DIAMANTE**: este bloque **no toca código**, por tanto no reclama sello. Lo único comprobable: ✅ 8 (0 secretos: los `gate_codes.txt` son Exit Codes, no claves) · ✅ 18 parcial (ningún binario nuevo; el commit no añade bloat). ❌ 12-13 Lighthouse/CWV **no re-medidos** · ❌ 19 idempotencia ACID **sin prueba viva** · ❌ 20 DLQ n8n **sin evidencia** · ⚠️ riesgo de `git add -A` mitigado sólo por disciplina, no por `.gitignore`.
+
+**ESTADO_BLOQUE: VERIFICADO** (commit `bb2a08735` = origin/main, 134 ficheros, 0 cambios rastreados de producción, cola coherente con `total_pending: 2`). **⚠️ SIN_EVIDENCIA_MÁQUINA** en: build/release real en el VPS Coolify (`82.29.179.172:8000`) y salud post-deploy. Hasta que se compruebe, «despliegue vivo» es una aserción del parte, no un hecho medido.
+
+**SIGUIENTE_PASO (una sola acción atómica, a decidir por el CEO)**: (1) sesión nueva → `node .antigravity/omega.js next` → `W41_T18_CONTRACT_GATE` (P0, convierte el auditor forense en gate de CI/CD y ataca el ítem 20) o `W41_T17_GOOGLE_ADS_COCKPIT` (P2); o (2) higiene previa: añadir a `.gitignore` `gate_codes.txt`, `.gate_codes.txt`, `.antigravity/*.cmd`, `.antigravity/ev/` y commitear selectivamente los informes `WAVE_43/44/45` + `ABOUT_EDWIN_OS.md` para que la evidencia deje de ser local-only.
+
+*Verificación del release `bb2a08735` completada sin tocar código de producción. Detención preventiva por Pacto ZTM a la espera de decisión de alcance.*
+
 - ESTADO_BLOQUE: **VERIFICADO** en compilación, lint (0 errores / 0 warnings), contrato de payload contra el zod real de la ruta y render cableado por pestaña. **⚠️ SIN_EVIDENCIA_MÁQUINA** en la persistencia viva: PostgreSQL local caído ⇒ el alta y los dos PATCH no se han visto aparecer en la tabla con datos reales.
 - SIGUIENTE_PASO: `node .antigravity/omega.js next` → `W41_T15_TAB_AFILIADOS`, replicando el patrón `notice`/`loadError`/`busy→false`, el `query` opcional y la validación previa contra el zod real de la ruta.
 
