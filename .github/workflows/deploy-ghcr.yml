@@ -11,7 +11,29 @@ env:
   IMAGE_NAME: productoraear/productora-ear-os
 
 jobs:
+  contract-gate:
+    # GATE FORENSE P0 (W41_T18): UNA sola fachada en /admin/control aborta el run
+    # ANTES de construir y publicar la imagen. Sin este job, `npm run gate:prepush`
+    # no lo ejecutaba nadie (no hay .husky ni core.hooksPath) y la regresion de
+    # fachadas entraba en main con el CI en verde.
+    # El auditor es zero-dependency (solo node:fs / node:path, solo lectura) y tarda
+    # menos de 2 s, por eso corre primero sin necesidad de `npm ci` ni de inflar el build.
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Gate forense /admin/control (0 fachadas, --strict)
+        run: node scripts/audit_admin_control_forensics.cjs --strict --md
+
   build-and-push:
+    needs: contract-gate
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -111,7 +133,7 @@ jobs:
     # produccion no sirve la ruta. `always()` cierra el agujero: sin el, un fallo
     # en el job previo (401 de Coolify) dejaba este job en SKIPPED y el CI verde
     # sin haber mirado produccion.
-    needs: build-and-push
+    needs: [contract-gate, build-and-push]
     if: always()
     runs-on: ubuntu-latest
     timeout-minutes: 40

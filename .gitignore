@@ -197,3 +197,6 @@ gate_codes.txt
 .gate_codes.txt
 .antigravity/*.cmd
 .antigravity/ev/
+# Misión activa emitida por `omega.js next`: efímera por diseño (`complete` la unlinkea,
+# omega.js:160). Trackearla ensuciaba el árbol en CADA sesión. Destrackeada en W41_T18.
+.antigravity/MISSION_ACTIVE.json

@@ -1,0 +1,57 @@
+{
+  "_meta": {
+    "status": "PROPUESTA — NO MERGEADA",
+    "doctrine": "WAVE 42: los 4 auditores que el SELLO Ω-DIAMANTE necesita y que hoy NO existen en disco. Sin ellos, 12 de los 20 ítems se firman en prosa.",
+    "base_audit": "CLINE_EXECUTION_LOG.md · GOV-ΩD-CLINERULES-001 (2026-10-27)",
+    "merge_rule": "Anexar el array `tasks` al final de tasks_queue.json preservando `_meta`, `_instructions_for_worker` y `completed`. Prohibido reordenar o purgar tareas QUEUED.",
+    "why_not_merged_now": "WAVE 41 tiene 18 tareas QUEUED. Encadenar waves rompe el Pacto ZTM (1 tarea/sesión) y diluye la prioridad de ventas (AGENTS.md §9)."
+  },
+  "tasks": [
+    {
+      "id": "W42_T01_FRONTEND_FRICTION_AUDITOR",
+      "title": "Auditor de fricción: CLS, clics muertos y reserva de espacio (hoy inexistente)",
+      "priority": "P0",
+      "files": ["scripts/audit_frontend_friction.cjs"],
+      "action": "Crear el auditor que sostiene las condiciones 5 y 6 del reto ΩD-001. Recorre las rutas comerciales indicadas por argumento (por defecto: /, /experiencia, /fincas, /artistas, /reservar/solista, /calculadora, /vimume, /licitaciones/expediente) y, sin navegador headless (fetch al dev server + regex sobre el HTML), detecta: (1) <img> sin width+height ni aspect-ratio; (2) role=button u onClick en markup sin <a href>, <button> o form; (3) animaciones de layout (height|width|top|left) en clases de transición; (4) botones sin destino. Emite reports/frontend_friction_<ISO>.json con { route, deadClicks, imagesWithoutDimensions, layoutAnimations, verdict } y Exit 0 solo si todo es 0. Prohibido any y dependencias nuevas: solo node:fs, node:path, node:crypto y fetch global.",
+      "scaffold": "'use strict';\nconst ROUTES_DEFAULT = ['/', '/experiencia', '/fincas', '/artistas', '/reservar/solista', '/calculadora', '/vimume', '/licitaciones/expediente'];\nconst BASE = process.env.AUDIT_BASE_URL ?? 'http://localhost:3007';\nasync function fetchHtml(route) -> Promise<string>\nfunction findImagesWithoutDimensions(html) -> string[]\nfunction findDeadClickTargets(html) -> string[]\nfunction findLayoutAnimations(html) -> string[]\nfunction sha256(text) -> string\nasync function main(): routes = parseArgs(process.argv.slice(2)); escribir JSON; process.exit(violations === 0 ? 0 : 1);",
+      "done_when": "El script corre contra el dev server, escribe el JSON con verdict y devuelve Exit 0 con 0 violaciones / Exit 1 con violaciones. Cero dependencias nuevas. tsc Exit 0.",
+      "test": "node scripts/audit_frontend_friction.cjs --self-test",
+      "status": "QUEUED"
+    },
+    {
+      "id": "W42_T02_INTENT_RESOLUTION_AUDITOR",
+      "title": "Auditor de intención resuelta (Q1–Q100): el reto_espejo del obrero, hecho test",
+      "priority": "P0",
+      "files": ["scripts/audit_intent_resolution.cjs"],
+      "action": "Materializar el plan secreto paralelo del RETO ΩD-001: una landing no gana por existir, gana por resolver la intención antes de que se formule. Para cada landing de public/landings/genesis, validar la cobertura del grafo de 5 dudas canónicas (precio y qué incluye · disponibilidad y bloqueo de fecha · desplazamiento y sonido · depósito 100 € deducible y cancelación · quién actúa y respaldo). Cada duda debe responderse EN EL TEXTO con coincidencia léxica verificable, no con un enlace. Una landing con dudas sin cubrir es incoherente; con ≥ 5 incoherencias globales, Exit 1. Emite reports/intent_resolution_<ISO>.json con { slug, covered, missing, score } y resumen global. Cero any, cero dependencias nuevas.",
+      "scaffold": "'use strict';\nconst INTENT_GRAPH = Object.freeze({ precio_incluye: ['desde','incluye','tarifa','350'], fecha_lock: ['disponibilidad','bloqueo','reserva','fecha'], desplazamiento_sonido: ['kilometraje','desplazamiento','sonido','equipo'], deposito_cancelacion: ['deposito','100','deducible','cancelacion'], quien_actua: ['artista','experiencia','respaldo','productora'] });\nfunction normalize(text) -> string\nfunction auditLanding(entry, text) -> { slug, covered, missing, score }\nasync function main(): leer public/landings/genesis/*.json, sumar missing, escribir JSON, process.exit(totalIncoherencias >= 5 ? 1 : 0);",
+      "done_when": "Las 10 landings semilla reportan score 1.0 y 0 incoherencias globales. Toda landing nueva del Motor Génesis debe pasar el mismo test antes de publicarse. tsc Exit 0.",
+      "test": "node scripts/audit_intent_resolution.cjs",
+      "status": "QUEUED"
+    },
+
+    {
+      "id": "W42_T03_GENESIS_DECOUPLE_COUNT",
+      "title": "Desbloquear el guardián: el auditor aborta si las landings no son exactamente 10",
+      "priority": "P0",
+      "files": ["scripts/audit_landing_duplication.cjs", "scripts/build_landing_genesis_fincas.ts"],
+      "action": "Eliminar el candado que hace imposible el RETO ΩD-001: audit_landing_duplication.cjs aborta con exit 3 cuando count !== 10 (línea ~243), por lo que validar 1.000 landings es estructuralmente imposible. Sustituir el literal por mínimo configurable (--min, default 1) y expectativa opcional (--expect=N); 'menos del mínimo' es fallo real. En el builder, extraer el límite a --count sin tocar contenido semántico ni reglas SSOT. La unicidad debe seguir midiéndose sobre TODOS los pares: con N=1000 son 499.500 comparaciones, así que cachear los 5-gramas por documento (una pasada) en vez de recalcularlos en el bucle interno.",
+      "scaffold": "audit_landing_duplication.cjs:\n  function parseArgs(argv) -> { min: number; expect: number | null }\n  if (expect !== null && count !== expect) exit(3)\n  if (count < min) exit(3)\n  const gramsCache = payload.map(e => charNGrams(e.uniqueCopy, 5));  // O(N), no O(N^2)\n  for i<j: jaccardFromSets(gramsCache[i], gramsCache[j])\nbuild_landing_genesis_fincas.ts:\n  const countArg = process.argv.find(a => a.startsWith('--count='));\n  const targetCount = countArg ? Number(countArg.split('=')[1]) : 10;\n  if (!Number.isInteger(targetCount) || targetCount < 1) throw new Error('INVALID_COUNT');",
+      "done_when": "Sin args sigue validando las 10 semilla con Exit 0; con --expect=10 idéntico; con --min=1000 y corpus insuficiente falla con mensaje claro, no con crash. El Jaccard deja de tokenizar dentro del bucle. tsc Exit 0.",
+      "test": "node scripts/audit_landing_duplication.cjs",
+      "status": "QUEUED"
+    },
+    {
+      "id": "W42_T04_N8N_DLQ_AUDITOR",
+      "title": "Auditor de no-bloqueo n8n + DLQ: cerrar el ítem 20, hoy firmado en prosa",
+      "priority": "P1",
+      "files": ["src/lib/n8n/dispatchClient.ts", "scripts/audit_n8n_dispatch_resilience.cjs"],
+      "action": "El ítem 20 del SELLO (n8n no bloqueante + DLQ, 0 leads huérfanos) no tiene comando. Crear dispatchClient.ts (server-only) con enviarEventoN8N<T extends Record<string, unknown>>(webhook, payload, opts?): Promise<N8NDispatchResult>: timeout duro con AbortController (default 2500 ms), nunca lanza al llamador, y ante fallo persiste el payload en DLQ append-only bajo .data/n8n_dlq/ (JSON Lines con timestamp, webhook y sha256 del payload). Prohibido 'no-cors' en servidor. El auditor verifica por lectura estática que ningún módulo comercial llama a los webhooks sin pasar por dispatchClient, y por ejecución que un webhook hostil devuelve { ok:false, deadLettered:true } en menos de 3 s.",
+      "scaffold": "src/lib/n8n/dispatchClient.ts:\nexport type N8NDispatchResult = Readonly<{ ok: boolean; queued: boolean; deadLettered: boolean }>;\nexport async function enviarEventoN8N<T extends Record<string, unknown>>(webhook: string, payload: T, opts?: Readonly<{ timeoutMs?: number }>): Promise<N8NDispatchResult>\nscripts/audit_n8n_dispatch_resilience.cjs:\n  function findDirectWebhookFetches(dir) -> string[]\n  async function assertHostileWebhookIsDeferred() -> boolean\n  main(): process.exit(fallos === 0 ? 0 : 1)",
+      "done_when": "Exit 0: 0 fetch directos a n8n fuera del cliente; URL hostil => deadLettered en < 3 s; el payload queda en .data/n8n_dlq/ (ruta ya ignorada por .clineignore). tsc Exit 0.",
+      "test": "node scripts/audit_n8n_dispatch_resilience.cjs",
+      "status": "QUEUED"
+    }
+
+  ]
+}

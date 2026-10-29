@@ -867,3 +867,20 @@ Tarea `W42_OUTREACH_ACK_01` completada y sellada con Exit Code 0 (sello condicio
 
 **SIGUIENTE_PASO**: Misión completada. Queda en cola `W41_T17_GOOGLE_ADS_COCKPIT`. Detención preventiva por Pacto ZTM.
 
+
+---
+
+### 2026-10-29T23:40:00Z · W41_T18-CI-WIRING-001 — El gate forense deja de ser prosa: cableado real en CI/CD + higiene de árbol
+
+- ARCHIVOS:        `.github/workflows/deploy-ghcr.yml` (job `contract-gate` nuevo; `build-and-push` y `production-smoke` pasan a depender de él) · `.gitignore` (`.antigravity/MISSION_ACTIVE.json`) · `.antigravity/MISSION_ACTIVE.json` (destrackeado con `git rm --cached`) · `.antigravity/wave42_tasks_proposal.json` (versionado: backlog W42, 8 KB, sin teléfonos ni secretos)
+- HECHO:           Auditoría forense del cierre `W41_T18_CONTRACT_GATE`. El auditor existía y devolvía Exit 0, pero **no lo ejecutaba nadie**: `npm run gate:prepush` es un script que ningún hook invoca y el único workflow iba directo a Docker. Ahora `deploy-ghcr.yml` arranca con el job `contract-gate` (`node scripts/audit_admin_control_forensics.cjs --strict --md`, zero-dependency, < 2 s) y `build-and-push` lo declara en `needs`: **una sola fachada en `/admin/control` aborta el run antes de publicar la imagen en GHCR**.
+- HALLAZGOS (❌ fachadas / ⚠️ riesgos):
+  * ❌ **`gate:prepush` era un gate huérfano**: no existe `.husky/`, `core.hooksPath` está vacío (`git config --get core.hooksPath` → sin valor) y `deploy-ghcr.yml` no invocaba ningún auditor. La regresión de fachadas entraba en `main` con el CI en verde. Cerrado con el job `contract-gate`.
+  * ❌ **P0 ABIERTO — `next.config.ts:37` → `typescript.ignoreBuildErrors: true`**: el build de Docker **no typechequea**, así que el CI puede publicar una imagen con errores de TS. Hoy el único `tsc --noEmit` real lo lanza un humano en local. No se toca en este bloque: voltearlo exige evidencia previa (`npm ci && prisma generate && tsc --noEmit` en contenedor limpio) porque su radio de daño es el despliegue.
+  * ⚠️ `scripts/audit_orphan_imports.cjs` tarda **más de 4 minutos** en este repo: descartado como gate de CI (rompería el presupuesto de build < 60 s). Sigue solo en `gate:prepush` local. El CI monta únicamente el auditor zero-dependency.
+  * ⚠️ **`omega.js:160`** hace `unlinkSync(MISSION_ACTIVE.json)` en cada `complete`: mientras el fichero estaba trackeado, **cada sesión dejaba el árbol sucio** (` D .antigravity/MISSION_ACTIVE.json`). Ahora está ignorado y destrackeado.
+- COMANDOS:        `node scripts/audit_admin_control_forensics.cjs --strict --md` → **Exit 0** (12 enlaces UI→API, 30 endpoints, 0 fachadas) · `js-yaml.load(deploy-ghcr.yml)` → **YAML_OK** (`jobs=contract-gate,build-and-push,production-smoke` · `build.needs="contract-gate"` · `smoke.needs=["contract-gate","build-and-push"]` · `gate.steps=3`) · `node ./node_modules/typescript/bin/tsc --noEmit` → **Exit 0** con **0 bytes** de diagnóstico · `eslint` → **n/a** (el diff no contiene `.ts`/`.tsx`/`.js`) · `git status --porcelain` → 4 rutas staged nombradas una a una, cero `git add -A`
+- Ω-DIAMANTE:      **SELLO CONDICIONADO 5/8 del Núcleo** (P1-gobernanza, no P0-dinero). ✅ 1 tsc Exit 0 · ✅ 3 cero `any` (no hay TS nuevo) · ✅ 5 handlers huérfanos verificados por el auditor · ✅ 6 cero precios hardcodeados · ✅ 8 cero secretos (el job no usa secrets). ❌ 2 eslint n/a (diff sin código) · ❌ 4/7 n/a. Ítems 9-20: **sin evidencia máquina** (12 Lighthouse, 13 CWV p75, 16 Jaccard, 17 provenance, 18 build < 60 s, 20 n8n DLQ).
+- PREMORTEM:       Si el auditor diera un falso positivo, `build-and-push` quedaría saltado y no habría imagen nueva en GHCR; el deploy de Coolify (webhook git) seguiría entrando, así que **no hay caída de producción**, solo imagen obsoleta. Detección antes que el cliente: `--strict` imprime cada violación con `archivo:línea` en el log del run.
+- SIGUIENTE PASO:  `node .antigravity/omega.js next` → cola real = `W41_T17_GOOGLE_ADS_COCKPIT` (P2). Recomendación de Arquitecto: abrir antes un P0 nuevo (`W46_T01_CI_TYPECHECK_GATE`: `ignoreBuildErrors: false` con evidencia en contenedor limpio), porque es lo único que hoy permite publicar imagen con TS roto.
+
