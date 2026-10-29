@@ -111,7 +111,7 @@ export async function GET(request: NextRequest) {
         },
       });
 
-      return new NextResponse(stream as any, {
+      return new NextResponse(stream as unknown as BodyInit, {
         status: 206,
         headers: {
           ...baseHeaders,
@@ -131,7 +131,7 @@ export async function GET(request: NextRequest) {
         },
       });
 
-      return new NextResponse(stream as any, {
+      return new NextResponse(stream as unknown as BodyInit, {
         status: 200,
         headers: {
           ...baseHeaders,

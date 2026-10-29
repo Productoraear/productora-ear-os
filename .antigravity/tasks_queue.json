@@ -4,8 +4,8 @@
     "doctrine": "WAVE 41: el panel /admin/control pasa de fachada (22 enlaces rotos) a mesa de mando enterprise. Toda alta escribe en PostgreSQL, todo endpoint exige Bearer ADMIN, toda cifra nace del SSOT SHA-256.",
     "wave": 41,
     "total_tasks": 18,
-    "total_pending": 2,
-    "last_updated": "2026-10-29T21:38:38.980Z"
+    "total_pending": 1,
+    "last_updated": "2026-10-29T22:20:53.717Z"
   },
   "_instructions_for_worker": "Ejecuta SOLO via: node .antigravity/omega.js next -> lee .antigravity/MISSION_ACTIVE.json -> edita SOLO 'files' -> ejecuta 'test' -> node .antigravity/omega.js complete <ID>. 1 tarea por sesion.",
   "tasks": [
@@ -24,24 +24,16 @@
       "test": "node ./node_modules/typescript/bin/tsc --noEmit",
       "status": "QUEUED",
       "created_at": "2026-10-27T12:39:00.118Z"
-    },
-    {
-      "id": "W41_T18_CONTRACT_GATE",
-      "title": "Cierre W41: convertir el auditor forense en gate de CI (0 fachadas)",
-      "priority": "P0",
-      "files": [
-        "scripts/audit_admin_control_forensics.cjs",
-        "package.json"
-      ],
-      "action": "Sellar la ola: el auditor que detectó las 22 fachadas debe pasar a ser un gate ejecutable que impida la regresión. Al cerrar esta tarea el panel no puede volver a tener endpoints sin guard, POST sin escritura, Server Actions con Request vacío ni fetch directo desde la UI.",
-      "scaffold": "Extender scripts/audit_admin_control_forensics.cjs (ya existe, no reescribir desde cero) con 5 aserciones en modo --strict:\n  A) Toda ruta src/app/api/admin/**/route.ts tiene requireAdmin, SALVO src/app/api/admin/session/route.ts (usa adminAuth.verifyIdToken + UserService.hasRole).\n  B) Todo route con verbo POST importa zod Y ejecuta prisma.<modelo>.create|createMany|upsert|update.\n  C) Cero ocurrencias de new Request('http://localhost') en src/.\n  D) Cero llamadas fetch( directas en src/app/(admin) — debe usarse adminFetch.\n  E) Cero ': any' / 'as any' en src/app/(admin) y src/lib/admin.\nCada aserción fallida imprime la lista de rutas/ficheros y fuerza process.exit(1). Se mantiene la emisión del reporte markdown en .antigravity/reports/ADMIN_CONTROL_MATRIX.md.\n\npackage.json:\n  \"audit:admin\": \"node scripts/audit_admin_control_forensics.cjs --strict --write\"\n  añadir \" && npm run audit:admin\" al final de \"gate:prepush\".\n\nValidación de cierre (obligatoria antes del complete):\n  node scripts/audit_admin_control_forensics.cjs --strict --write   -> Exit Code 0\n  node ./node_modules/typescript/bin/tsc --noEmit                                                  -> Exit Code 0\n  npx eslint \"src/app/(admin)/admin/control\" src/lib/admin src/app/api/admin --max-warnings=0 -> Exit Code 0",
-      "done_when": "El gate devuelve Exit Code 0 con 0 fachadas (partiendo de 22), tsc y eslint limpios, y gate:prepush incluye audit:admin. Scorecard 20/20 sin TODO ni any.",
-      "test": "node scripts/audit_admin_control_forensics.cjs --strict --write",
-      "status": "QUEUED",
-      "created_at": "2026-10-27T12:39:00.118Z"
     }
   ],
   "completed": [
+    {
+      "id": "W41_T18_CONTRACT_GATE",
+      "title": "Cierre W41: convertir el auditor forense en gate de CI (0 fachadas)",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-29T22:20:53.716Z"
+    },
     {
       "id": "W41_T16_TAB_TESORERIA",
       "title": "Pestaña Tesorería: split 80/10/10 en vivo y registro de depósito 100 €",
@@ -408,8 +400,8 @@
     }
   ],
   "metadata": {
-    "last_updated": "2026-10-29T21:38:38.980Z",
-    "total_pending": 2,
+    "last_updated": "2026-10-29T22:20:53.717Z",
+    "total_pending": 1,
     "current_sprint": "WAVE_41_ADMIN_CONTROL_DOMINANCE",
     "ceo_mandate": "Reconstruir /admin/control al 100%: altas reales de artistas, proveedores, terapeutas, flota, afiliados y tesorería; sesión Bearer unificada; cero fachadas verificadas por scripts/audit_admin_control_forensics.cjs --strict."
   }

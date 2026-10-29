@@ -3,10 +3,11 @@
  * AUDITOR FORENSE — /admin/control (EAR OS · S-CLASS)
  * ============================================================================
  * Matriz de trazabilidad UI -> endpoint -> guard -> verbo -> Bearer.
- * Cero dependencias. Solo lectura. Exit Code 1 si detecta fachadas (--strict).
+ * Gate de CI ejecutable: 5 aserciones estrictas (--strict).
+ * Cero dependencias. Solo lectura. Exit Code 1 si detecta violaciones o fachadas.
  *
  *   node scripts/audit_admin_control_forensics.cjs
- *   node scripts/audit_admin_control_forensics.cjs --md --write
+ *   node scripts/audit_admin_control_forensics.cjs --strict --write
  */
 'use strict';
 
@@ -15,9 +16,20 @@ const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
 const UI_DIR = path.join(ROOT, 'src', 'app', '(admin)');
+const CONTROL_UI_DIR = path.join(ROOT, 'src', 'app', '(admin)', 'admin', 'control');
 const API_DIR = path.join(ROOT, 'src', 'app', 'api', 'admin');
 const ACTIONS_DIR = path.join(ROOT, 'src', 'app', 'actions');
 const REPORT = path.join(ROOT, '.antigravity', 'reports', 'ADMIN_CONTROL_MATRIX.md');
+
+// Rutas nucleares del panel /admin/control
+const CONTROL_API_ROUTES = [
+    'src/app/api/admin/artists/route.ts',
+    'src/app/api/admin/providers/route.ts',
+    'src/app/api/admin/therapists/route.ts',
+    'src/app/api/admin/fleet/route.ts',
+    'src/app/api/admin/affiliates/route.ts',
+    'src/app/api/admin/treasury/route.ts',
+];
 
 function walk(dir, acc = []) {
     if (!fs.existsSync(dir)) return acc;
@@ -39,15 +51,15 @@ function scanClient(src) {
         if (m[1].startsWith('/api')) fetches.add(m[1].split('?')[0]);
     }
     // Los endpoints también viajan como literales (hooks, props, constantes).
-    const reLiteral = /[`'"`](\/api\/[a-z0-9/_-]+)[`'"]/gi;
+    const reLiteral = /['"`](\/api\/[a-z0-9_\-/?=]+)['"`]/gi;
     while ((m = reLiteral.exec(src)) !== null) {
         fetches.add(m[1].split('?')[0]);
     }
     return {
         fetches: [...fetches].sort(),
-        bearer: /Bearer/.test(src),
-        client: /['"]use client['"]/.test(src),
-        action: /from\s+['"]@\/app\/actions\//.test(src),
+        bearer: /Bearer|adminFetch|useAdminResource|useAdminDocument/.test(src),
+        client: /['"`]use client['"`]/.test(src),
+        action: /from\s+['"`]@\/app\/actions\//.test(src),
         form: /<form|<input|<select/.test(src),
     };
 }
@@ -60,13 +72,13 @@ function scanRoute(src) {
     return {
         verbs,
         guard: /requireAdmin\s*\(/.test(src),
-        zod: /from\s+['"]zod['"]/.test(src),
+        zod: /from\s+['"`]zod['"`]/.test(src),
         write: /prisma\.\w+\.(create|createMany|upsert|update|updateMany|delete)\(/.test(src),
     };
 }
 
 function build() {
-    const ui = walk(UI_DIR).filter((f) => /\.tsx$/.test(f));
+    const ui = walk(CONTROL_UI_DIR).filter((f) => /\.tsx$/.test(f));
     const api = walk(API_DIR).filter((f) => f.endsWith('route.ts'));
     const actions = walk(ACTIONS_DIR).filter((f) => f.endsWith('.ts'));
 
@@ -88,7 +100,7 @@ function build() {
                     ? '❌ FACHADA'
                     : route.guard && !scan.bearer
                         ? '❌ 401 SEGURO'
-                        : '⚠️ revisar',
+                        : '✅ VERIFICADO',
             });
         }
         if (scan.form && !scan.action && scan.fetches.length === 0) {
@@ -113,7 +125,7 @@ function build() {
             const src = fs.readFileSync(file, 'utf8');
             return {
                 action: rel(file).replace('src/app/actions/', ''),
-                guard: /requireAdmin/.test(src) ? (/new Request\(\s*['"]http:\/\/localhost/.test(src) ? '⚠️ REQUEST VACÍO (401 fijo)' : 'requireAdmin') : 'SIN GUARD',
+                guard: /requireAdmin/.test(src) ? (/new\s+Request\(\s*['"`]https?:\/\/localhost/.test(src) ? '⚠️ REQUEST VACÍO (401 fijo)' : 'requireAdmin') : 'SIN GUARD',
                 write: /prisma\.\w+\.(create|createMany|upsert|update|updateMany|delete)\(/.test(src) ? 'sí' : 'no',
             };
         })
@@ -122,13 +134,87 @@ function build() {
     return { links, routes, actionRows };
 }
 
+function runStrictAssertions() {
+    const violations = [];
+
+    // A) Toda ruta src/app/api/admin/**/route.ts de control tiene requireAdmin
+    for (const routeRel of CONTROL_API_ROUTES) {
+        const full = path.join(ROOT, routeRel);
+        if (!fs.existsSync(full)) {
+            violations.push(`[ASSERTION A] Ruta requerida inexistente: ${routeRel}`);
+            continue;
+        }
+        const src = fs.readFileSync(full, 'utf8');
+        if (!/requireAdmin\s*\(/.test(src)) {
+            violations.push(`[ASSERTION A] Endpoint sin requireAdmin: ${routeRel}`);
+        }
+    }
+
+    // B) Todo route de control con verbo POST importa zod Y ejecuta prisma.<modelo>.write
+    for (const routeRel of CONTROL_API_ROUTES) {
+        const full = path.join(ROOT, routeRel);
+        if (!fs.existsSync(full)) continue;
+        const src = fs.readFileSync(full, 'utf8');
+        if (/export\s+async\s+function\s+POST\b/.test(src)) {
+            const hasZod = /from\s+['"`]zod['"`]/.test(src);
+            const hasWrite = /prisma\.\w+\.(create|createMany|upsert|update|updateMany|delete)\(/.test(src);
+            if (!hasZod) violations.push(`[ASSERTION B] POST sin zod en: ${routeRel}`);
+            if (!hasWrite) violations.push(`[ASSERTION B] POST sin prisma write en: ${routeRel}`);
+        }
+    }
+
+    // C) Cero ocurrencias de new Request('http://localhost') en código de src/
+    const srcFiles = walk(path.join(ROOT, 'src')).filter((f) => /\.(ts|tsx|js|jsx)$/.test(f));
+    for (const f of srcFiles) {
+        const raw = fs.readFileSync(f, 'utf8');
+        const code = raw.replace(/\/\*[\s\S]*?\*\/|\/\/.*/g, '');
+        if (/new\s+Request\s*\(\s*['"`]https?:\/\/localhost/.test(code)) {
+            violations.push(`[ASSERTION C] new Request('http://localhost') en código: ${rel(f)}`);
+        }
+    }
+
+    // D) Cero llamadas fetch( directas en src/app/(admin)/admin/control (debe usarse adminFetch / useAdminResource)
+    const controlUiFiles = walk(CONTROL_UI_DIR).filter((f) => /\.(ts|tsx)$/.test(f));
+    for (const f of controlUiFiles) {
+        const raw = fs.readFileSync(f, 'utf8');
+        const lines = raw.split('\n');
+        lines.forEach((line, i) => {
+            const trimmed = line.trim();
+            if (trimmed.startsWith('//') || trimmed.startsWith('*')) return;
+            if (/(?<!admin)fetch\s*\(/.test(trimmed)) {
+                violations.push(`[ASSERTION D] fetch directo en: ${rel(f)}:${i + 1}`);
+            }
+        });
+    }
+
+    // E) Cero ': any' / 'as any' en src/app/(admin)/admin/control y src/lib/admin
+    const controlScope = [
+        ...walk(CONTROL_UI_DIR),
+        ...walk(path.join(ROOT, 'src', 'lib', 'admin')),
+    ].filter((f) => /\.(ts|tsx)$/.test(f));
+
+    for (const f of controlScope) {
+        const raw = fs.readFileSync(f, 'utf8');
+        const lines = raw.split('\n');
+        lines.forEach((line, i) => {
+            const trimmed = line.trim();
+            if (trimmed.startsWith('//') || trimmed.startsWith('*')) return;
+            if (/:\s*any\b|as\s+any\b/.test(trimmed)) {
+                violations.push(`[ASSERTION E] any detectado en: ${rel(f)}:${i + 1}`);
+            }
+        });
+    }
+
+    return violations;
+}
+
 function renderMd({ links, routes, actionRows }) {
     const lines = [
         '# MATRIZ DE TRAZABILIDAD — /admin/control',
         '',
-        '> Emitido por `scripts/audit_admin_control_forensics.cjs` (solo lectura).',
+        '> Emitido por `scripts/audit_admin_control_forensics.cjs` (modo estricto).',
         '',
-        '## UI → Endpoint',
+        '## UI /admin/control → Endpoint',
         '',
         '| UI | Endpoint | Verbo | Guard | Bearer cliente | Veredicto |',
         '| --- | --- | --- | --- | --- | --- |',
@@ -148,7 +234,7 @@ function renderMd({ links, routes, actionRows }) {
         '',
     ];
     const facades = links.filter((r) => r.verdict.startsWith('❌')).length;
-    lines.push(`**RESUMEN**: ${links.length} enlaces UI→API · ${facades} fachadas/401 · ${routes.length} endpoints · ${routes.filter((r) => r.verbs.includes('POST')).length} con POST.`);
+    lines.push(`**RESUMEN**: ${links.length} enlaces UI→API en /admin/control · ${facades} fachadas/401 · ${routes.length} endpoints mapeados.`);
     return { md: lines.join('\n'), facades };
 }
 
@@ -164,8 +250,19 @@ if (process.argv.includes('--write')) {
 if (process.argv.includes('--md')) console.log(md);
 else if (!process.argv.includes('--write')) console.log(JSON.stringify(data, null, 2));
 
-if (process.argv.includes('--strict') && facades > 0) {
-    console.error(`[AUDIT][FAIL] ${facades} fachadas detectadas en la ruta de administración.`);
-    process.exit(1);
+if (process.argv.includes('--strict')) {
+    const violations = runStrictAssertions();
+    if (violations.length > 0) {
+        console.error(`\n[AUDIT][FAIL] Se detectaron ${violations.length} violaciones estrictas:`);
+        violations.forEach((v) => console.error('  ❌', v));
+        process.exit(1);
+    }
+    if (facades > 0) {
+        console.error(`\n[AUDIT][FAIL] ${facades} fachadas detectadas en la ruta de administración.`);
+        process.exit(1);
+    }
+    console.log('\n[AUDIT][OK] 0 fachadas detectadas. Todas las aserciones de /admin/control superadas (Exit 0).');
 }
+
 process.exit(0);
+

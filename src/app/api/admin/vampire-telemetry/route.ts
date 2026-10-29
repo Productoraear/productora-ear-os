@@ -136,10 +136,6 @@ function safeReadText(filePath: string): string | null {
   }
 }
 
-function tailLines(content: string, max: number): string[] {
-  const lines = content.split('\n').filter((l) => l.trim().length > 0);
-  return lines.length > 0 ? lines.slice(-max) : [];
-}
 
 function jsonResponse(
   body: TelemetryResponse,

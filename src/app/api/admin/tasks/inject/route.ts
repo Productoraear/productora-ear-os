@@ -89,12 +89,6 @@ const MAX_FILES = 64;
 const MAX_FILE_PATH_LEN = 512;
 const MAX_BODY_BYTES = 256 * 1024; // 256 KB
 
-const ALLOWED_STATUSES: readonly OmegaTaskStatus[] = [
-  'QUEUED',
-  'BACKLOG',
-  'COMPLETED',
-  'FAILED'
-] as const;
 
 const SECURITY_HEADERS: Readonly<Record<string, string>> = {
   'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
