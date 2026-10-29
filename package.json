@@ -58,7 +58,7 @@
     "audit:ssot": "node ./node_modules/tsx/dist/cli.mjs scripts/baseline_ssot_integrity.ts",
     "seal:ssot": "npx tsx scripts/baseline_ssot_integrity.ts --seal",
     "audit:residues": "node scripts/audit_heavy_residues.cjs",
-    "gate:prepush": "node scripts/audit_orphan_imports.cjs && npm run audit:routes && npm run audit:phone && npm run audit:edge && npm run verify:pricing && npm run verify:context && npm run verify:leadgate && npm run audit:ssot && npm run lint && npm run audit:contrast:core && npm run typecheck:landings && node ./node_modules/typescript/bin/tsc --noEmit",
+    "gate:prepush": "node scripts/audit_orphan_imports.cjs && npm run audit:http && npm run audit:routes && npm run audit:cta-matrix && npm run audit:phone && npm run audit:edge && npm run verify:pricing && npm run verify:context && npm run verify:leadgate && npm run audit:ssot && npm run lint && npm run audit:contrast:core && npm run typecheck:landings && node ./node_modules/typescript/bin/tsc --noEmit",
     "sim:event": "node scripts/simulate_100_services_event.mjs",
     "audit:webgl": "node scripts/audit_webgl_friction.cjs",
     "audit:webgl:strict": "node scripts/audit_webgl_friction.cjs --strict",
@@ -72,6 +72,9 @@
     "typecheck:network": "node ./node_modules/typescript/bin/tsc -p tsconfig.mariachi-net.json",
     "audit:phone": "node scripts/audit_phone_exposure.cjs",
     "audit:routes": "node scripts/audit_route_conflicts.cjs",
+    "audit:http": "node scripts/audit_http_handlers.cjs",
+    "audit:http:staged": "node scripts/audit_http_handlers.cjs --staged",
+    "audit:cta-matrix": "node ./node_modules/tsx/dist/cli.mjs scripts/audit_cta_trace_matrix.ts",
     "audit:tariff-copy": "node scripts/audit_tariff_copy_drift.cjs",
     "prepush": "npm run gate:prepush"
   },

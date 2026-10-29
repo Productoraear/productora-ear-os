@@ -1,0 +1,827 @@
+{
+  "generatedAt": "2026-10-29T13:44:41.397Z",
+  "ref": "STAGED_INDEX",
+  "note": "Deuda aceptada de consumidores HTTP sin productor (rutas inexistentes en el arbol). Solo la deuda NUEVA rompe el gate audit:http.",
+  "accepted": [
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/auth/session"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/auth/refresh"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/projects"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/projects"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/projects"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/projects"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/projects"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/projects"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/assets"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/assets/upload"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/assets/upload"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/assets"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/assets"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/render/jobs"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/render/jobs"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/render/jobs"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/render/jobs"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/render/jobs"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/billing/plans"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/billing/subscribe"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/billing/subscribe"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/billing/invoices"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/billing/webhook"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/audit/events"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/audit/events"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/audit/events"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/audit/metrics"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/audit/export"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/system/health"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/system/version"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/system/config"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/system/config"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/system/config"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/webhooks"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/webhooks"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/webhooks"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/webhooks"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/webhooks"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/users"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/users/invite"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/users/invite"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/users"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/users"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/search"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/search"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/search/suggest"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/search/index"
+    },
+    {
+      "file": "src/app/(public)/(auth)/auditoria/page.tsx",
+      "url": "/api/search/index"
+    },
+    {
+      "file": "src/app/(public)/academia/oraculo/page.tsx",
+      "url": "/api/oraculo/quote"
+    },
+    {
+      "file": "src/app/(public)/academia/oraculo/page.tsx",
+      "url": "/api/oraculo/checkout"
+    },
+    {
+      "file": "src/app/(public)/academia/oraculo/page.tsx",
+      "url": "/api/oraculo/quotes"
+    },
+    {
+      "file": "src/app/(public)/academia/oraculo/page.tsx",
+      "url": "/api/oraculo/payments"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/acg/graph"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/acg/offers"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/acg/decision-steps"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/acg/interlinks"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/fincas"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/fincas/finca-valduerna"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/artists"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/artists/offers"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/bookings"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/bookings"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/bookings/price-lock"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/bookings/price-lock"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/territories"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/territories/toledo"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/territories/madrid"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/territories/guadalajara"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/split/soberano"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/split/soberano"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/health/db"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/health/redis"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/health/stripe"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/health/resend"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/health/openai"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/health/supabase"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/health/cloudflare"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/health/vercel"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/health/neon"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/health/upstash"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/health/r2"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/health/doctrine"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/health/split"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/health/price-lock"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/health/acustica"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/health/b2g"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/health/lcsp"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/health/art118"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/health/sha256"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/health/jwt"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/health/csrf"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/health/ratelimit"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/health/cors"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/health/csp"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/health/hsts"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/health/xframe"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/health/xcontent"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/health/referrer"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/health/permissions"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/health/coop"
+    },
+    {
+      "file": "src/app/(public)/acg/page.tsx",
+      "url": "/api/health/coep"
+    },
+    {
+      "file": "src/app/(public)/afiliados/reclamar/page.tsx",
+      "url": "/api/affiliates/v2/onboard"
+    },
+    {
+      "file": "src/app/(public)/arsenal/page.tsx",
+      "url": "/api/arsenal"
+    },
+    {
+      "file": "src/app/(public)/arsenal/page.tsx",
+      "url": "/api/arsenal"
+    },
+    {
+      "file": "src/app/(public)/arsenal/page.tsx",
+      "url": "/api/arsenal"
+    },
+    {
+      "file": "src/app/(public)/arsenal/page.tsx",
+      "url": "/api/audit"
+    },
+    {
+      "file": "src/app/(public)/arsenal/page.tsx",
+      "url": "/api/refactor"
+    },
+    {
+      "file": "src/app/(public)/arsenal/page.tsx",
+      "url": "/api/deploy"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/artists"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/artists/[id]"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/artists"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/artists/[id]"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/artists/[id]"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/artists/press"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/artists/press"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/artists/press/[id]"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/releases"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/releases"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/releases/[id]"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/releases/[id]"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/releases/[id]"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/tracks"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/tracks"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/tracks/[id]"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/tracks/[id]"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/tracks/[id]"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/albums"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/albums"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/albums/[id]"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/albums/[id]"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/albums/[id]"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/events"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/events"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/events/[id]"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/events/[id]"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/events/[id]"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/venues"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/venues"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/venues/[id]"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/bookings"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/bookings"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/bookings/[id]"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/bookings/[id]"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/bookings/[id]"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/contacts"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/contacts"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/contacts/[id]"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/media/upload"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/media/[id]"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/media/[id]"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/auth/session"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/metrics"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/webhooks/stripe"
+    },
+    {
+      "file": "src/app/(public)/artists/press/page.tsx",
+      "url": "/api/webhooks/resend"
+    },
+    {
+      "file": "src/app/api/admin/sysinfo/route.ts",
+      "url": "/api/tags"
+    },
+    {
+      "file": "src/app/api/admin/sysinfo/route.ts",
+      "url": "/api/ps"
+    },
+    {
+      "file": "src/app/components/SovereignMemoryTest.tsx",
+      "url": "/api/memory-test"
+    },
+    {
+      "file": "src/components/admin/WhatsAppPriceLockGenerator.tsx",
+      "url": "/api/webhooks/call-center-intake"
+    },
+    {
+      "file": "src/components/proposals/ProposalInteractiveClient.tsx",
+      "url": "/api/stripe/checkout"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/whatsapp/route"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/stripe/route"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/stripe"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/whatsapp"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/whatsapp/route"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/stripe/route"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/whatsapp"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/whatsapp/route"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/stripe/route"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/stripe"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/whatsapp"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/whatsapp/route"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/stripe/route"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/whatsapp/route"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/stripe/route"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/stripe"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/whatsapp"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/whatsapp/route"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/stripe/route"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/whatsapp"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/whatsapp/route"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/stripe/route"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/stripe"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/whatsapp"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/whatsapp/route"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/stripe/route"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/whatsapp"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/whatsapp/route"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/stripe/route"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/stripe"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/whatsapp"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/whatsapp/route"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/stripe/route"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/whatsapp/route"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/stripe/route"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/stripe"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/whatsapp"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/whatsapp/route"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/stripe/route"
+    },
+    {
+      "file": "src/data/governance/strategic_vault/instrucciones para web Ear desde Gemini 3 pro_vampirized.json",
+      "url": "/api/webhooks/whatsapp"
+    },
+    {
+      "file": "src/data/security/security_audit_report.json",
+      "url": "/api/webhooks/stripe"
+    },
+    {
+      "file": "src/data/security/security_audit_report.json",
+      "url": "/api/payments/webhook"
+    },
+    {
+      "file": "src/modules/Nexus/LogisticsDashboard.tsx",
+      "url": "/api/nexus/logistics/events"
+    },
+    {
+      "file": "src/modules/SClassScreens/panels/VimumeAtlas.tsx",
+      "url": "/api/vimume/atoms"
+    },
+    {
+      "file": "src/modules/SClassScreens/panels/VimumeCorePanel.tsx",
+      "url": "/api/vimume/sessions"
+    },
+    {
+      "file": "src/modules/SClassScreens/panels/VimumeCorePanel.tsx",
+      "url": "/api/vimume/atoms"
+    }
+  ]
+}
