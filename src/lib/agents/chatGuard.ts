@@ -285,7 +285,7 @@ export function buildHardenedSystemPrompt(ctx: HardenedSystemPromptInput): strin
       : '';
   // ── Anclaje de entidad: quién está en pantalla y de qué gremio ──
   const entityKind: PageEntityKind = ctx.pageEntityKind ?? detectEntityKind(ctx.pageContextBlock);
-  const isProviderPage: boolean = entityKind === 'provider';
+  const isDedicatedEntityPage: boolean = entityKind === 'provider' || entityKind === 'venue';
   const entityName: string =
     typeof ctx.pageEntityName === 'string' && ctx.pageEntityName.trim().length > 0
       ? ctx.pageEntityName.trim()
@@ -293,43 +293,52 @@ export function buildHardenedSystemPrompt(ctx: HardenedSystemPromptInput): strin
   const entityCategory: string =
     typeof ctx.pageEntityCategory === 'string' && ctx.pageEntityCategory.trim().length > 0
       ? ctx.pageEntityCategory.trim()
-      : 'servicios para eventos';
+      : entityKind === 'venue' ? 'restaurantes y fincas para banquetes' : 'servicios para eventos';
   const distanceLine: string =
     typeof ctx.distanceKm === 'number'
       ? `- Localidad detectada: ${ctx.detectedCity} (${ctx.distanceKm} km desde el Hub Méntrida)`
       : `- Localidad detectada: ${ctx.detectedCity}. Kilometraje PENDIENTE de GPS real: no estimes kilómetros ni asumas 0 km.`;
-  const budgetLine: string = isProviderPage
-    ? '- Presupuesto: en esta ficha NO se aplica la tarifa del solista. Calcula con la tarifa publicada del proveedor (bloque FICHA VERIFICADA); si no figura, se cierra con la Conserjería.'
+  const budgetLine: string = isDedicatedEntityPage
+    ? `- Presupuesto: en esta ficha NO se aplica la tarifa del solista. Responde estrictamente con los precios, menús o tarifas publicadas de ${entityName || 'este establecimiento'} (bloque FICHA VERIFICADA); si no figura, se cierra con la Conserjería EAR OS.`
     : typeof ctx.distanceKm === 'number'
       ? `- Presupuesto de referencia del solista (SSOT verificado): ${ctx.formattedTotalEur} €. Desembucha esta cifra SOLO si el cliente pregunta por precio, compara alternativas o quiere reservar; si no, guárdala.`
       : `- Presupuesto base del solista (SSOT): ${ctx.formattedTotalEur} €; la logística se confirma con la dirección exacta del evento. Da la cifra solo si la piden y aclara que el desplazamiento se valida por GPS.`;
 
-  // Cierre adaptado: en ficha de proveedor el CTA es su presupuesto, no el bloqueo del solista.
-  const actionLinks: string = isProviderPage
+  // Cierre adaptado: en ficha de proveedor o recinto el CTA es su presupuesto/visita, no el bloqueo del solista.
+  const actionLinks: string = isDedicatedEntityPage
     ? `- Enlaces de acción disponibles:
-  - [🔒 Solicitar presupuesto para ${entityName || 'este proveedor'} ➔](${ctx.stripeBookingUrl})
+  - [🔒 Solicitar información y presupuesto para ${entityName || 'este establecimiento'} ➔](${ctx.stripeBookingUrl})
   - [💬 Conserjería EAR OS (${CENTRALITA_EAR_OS}) ➔](${ctx.waUrl})`
     : `- Enlaces de acción disponibles:
   - [🔒 Bloquear Fecha (${ctx.formattedTotalEur} €) con Depósito de ${DEPOSITO_STRIPE_EUR} € ➔](${ctx.stripeBookingUrl})
   - [💬 Hablar por WhatsApp Oficial (${CENTRALITA_EAR_OS}) ➔](${ctx.waUrl})`;
 
-  // La tarifa del solista es información del roster: en ficha de terceros queda en cuarentena.
-  const tariffBullet: string = isProviderPage
-    ? `- Música en directo (roster): SOLO si el cliente pregunta expresamente por música, tenores, mariachi o serenata. De entrada, NO ofrezcas el roster ni su tarifa en la ficha de un proveedor de ${entityCategory}.`
+  // La tarifa del solista es información del roster: en ficha de terceros o recintos queda en cuarentena.
+  const tariffBullet: string = isDedicatedEntityPage
+    ? `- Música en directo (roster): SOLO si el cliente pregunta expresamente por música, tenores, mariachi o serenata. De entrada, NUNCA ofrezcas a Edwin Agudelo ni su tarifa solista en la ficha de ${entityName || 'este establecimiento'} (${entityCategory}).`
     : `- Tarifas y logística públicas: tarifa base solista ${TARIFA_BASE_SOLISTA_EUR} €, ${LOGISTICA_EUR_PER_KM.toFixed(2).replace('.', ',')} €/km a partir del km ${LOGISTICA_KM_EXENTOS}, suplemento hotelero de ${SUPLEMENTO_HOTEL_EUR} € si finaliza de madrugada (>= 3:00) o supera ${LOGISTICA_KM_HOTEL} km.`;
 
   // ANTI-SESGO DEL ROSTER: la ficha en pantalla manda sobre el catálogo propio.
-  const providerAnchor: string = isProviderPage
-    ? `\n## ANCLAJE AL PROVEEDOR EN PANTALLA (PRIORIDAD ABSOLUTA — ANULA EL SESGO DEL ROSTER)
-- El cliente está consultando la ficha de **${entityName || 'un proveedor'}**${ctx.detectedCity && ctx.detectedCity.length > 0 ? ` (${ctx.detectedCity})` : ''}: gremio **${entityCategory}**.
-- Responde sobre ESTE proveedor y su gremio. PROHIBIDO ofrecer la serenata, el mariachi o el roster de Edwin Agudelo salvo que el cliente pregunte EXPRESAMENTE por música en directo, tenores o serenata.
-- PROHIBIDO citar la tarifa base del solista y PROHIBIDO enlazar la terminal de reserva del solista en esta ficha: aquí el presupuesto nace de los hechos de la ficha del proveedor.
-- Si preguntan precio: usa la tarifa publicada en la FICHA VERIFICADA. Si no figura, se confirma con el proveedor a través de la Conserjería EAR OS.
-- Cierre: presupuesto del proveedor con el depósito de ${DEPOSITO_STRIPE_EUR} € (100 % deducible) o Conserjería EAR OS.
+  const providerAnchor: string = isDedicatedEntityPage
+    ? `\n## ANCLAJE A LA ENTIDAD EN PANTALLA (PRIORIDAD ABSOLUTA — ANULA EL SESGO DEL ROSTER)
+- El cliente está consultando la ficha de **${entityName || 'este establecimiento'}**${ctx.detectedCity && ctx.detectedCity.length > 0 ? ` (${ctx.detectedCity})` : ''}: sector/gremio **${entityCategory}**.
+- Responde EXCLUSIVAMENTE sobre ESTA entidad (${entityName}) y los datos verificados de su ficha (aforos, menús, instalaciones, parking, jardines, dirección).
+- PROHIBIDO hablar de Edwin Agudelo, ni de solista, ni de mariachi, salvo que el cliente pregunte EXPRESAMENTE por música en directo o animación musical.
+- PROHIBIDO citar la tarifa de 350 € del solista y PROHIBIDO enlazar la terminal de reserva de solista en esta ficha.
+- Si preguntan precio: usa los precios y menús que constan en la FICHA VERIFICADA. Si algo no figura, indica que se confirma con la dirección del recinto a través de la Conserjería EAR OS.
+- Cierre: visita técnica o propuesta del recinto con la Conserjería EAR OS.
 `
     : '';
 
-  return `Eres el Concierge oficial de atención al cliente de Productora EAR (Edwin Agudelo y la Red de Fincas Homologadas S-Class). Eres la PRIMERA IMPRESIÓN del cliente: profesional, cálida, concisa y resolutiva.
+  const conciergeRoleIntro: string = isDedicatedEntityPage
+    ? `Eres el Concierge oficial de Productora EAR para **${entityName || 'este establecimiento'}**. Tu objetivo prioritario es asesorar con rigor sobre las instalaciones, servicios y gastronomía de ${entityName || 'este recinto'}.`
+    : 'Eres el Concierge oficial de atención al cliente de Productora EAR (Edwin Agudelo y la Red de Fincas Homologadas S-Class). Eres la PRIMERA IMPRESIÓN del cliente: profesional, cálida, concisa y resolutiva.';
+
+  const publicInfoBullet: string = isDedicatedEntityPage
+    ? `- Información verificada de ${entityName || 'este establecimiento'}: menús, aforos, características y facilidades.`
+    : '- Quién es Edwin Agudelo y qué ofrece: solista premium, mariachi, gala, serenatas y producción integral.';
+
+  return `${conciergeRoleIntro}
 
 ## TU MISIÓN
 Responder con precisión cualquier consulta PÚBLICA sobre Productora EAR y resolver dudas comerciales. Cuando haga falta cerrar una reserva, aportar datos personales o gestionar algo sensible, deriva con elegancia a WhatsApp o a la centralita.
@@ -341,7 +350,7 @@ Responder con precisión cualquier consulta PÚBLICA sobre Productora EAR y reso
 4. Si el prompt incluye un bloque "CONTEXTO WEB VERIFICADO", es la ÚNICA fuente válida para datos externos (ordenanzas municipales, aforos, licitaciones): úsalo y cita siempre la fuente. Si ese bloque no existe, no inventes datos externos.
 
 ## INFORMACIÓN PÚBLICA QUE SÍ PUEDES FACILITAR
-- Quién es Edwin Agudelo y qué ofrece: solista premium, mariachi, gala, serenatas y producción integral.
+${publicInfoBullet}
 ${tariffBullet}
 - Depósito de cierre Stripe Price-Lock: ${DEPOSITO_STRIPE_EUR} €, 100 % deducible del total.
 - Red de fincas homologadas S-Class y rider acústico general (Ley 37/2003) cuando lo pregunten: salud pública < ${LIMITE_SPL_DB} dB SPL y ${WATTS_PER_PAX} W por asistente.

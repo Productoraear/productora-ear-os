@@ -398,8 +398,11 @@ export function EarConcierge(): React.JSX.Element {
 
   return (
     <>
-      {/* Lanzador táctil: en móvil no existe Cmd/Ctrl+K, así que el Concierge
-          necesita un objetivo visible de ≥44px y siempre alcanzable con el pulgar. */}
+      {/* Lanzador táctil — SOLO ESCRITORIO (≥1024px) y apilado en el carril derecho.
+          Doctrina de Superficie Única del viewport: en móvil (<lg) la base de la
+          pantalla pertenece en exclusiva al dock `SovereignMobileHUD` (z-80) y el
+          asesor IA se abre desde su botón «Asesor» (evento `open-ai-concierge`).
+          Un orbe flotante aquí a z-[1000] tapaba el dock y rompía el pulgar. */}
       <button
         type="button"
         onClick={(): void => {
@@ -409,7 +412,7 @@ export function EarConcierge(): React.JSX.Element {
         aria-label="Abrir el Concierge de EAR OS"
         aria-haspopup="dialog"
         aria-expanded={open}
-        className="fixed right-4 bottom-[calc(6rem+env(safe-area-inset-bottom))] z-[1000] flex h-14 w-14 items-center justify-center rounded-full border border-[#ecb613]/40 bg-[#09090d]/90 text-[#ecb613] shadow-[0_0_30px_rgba(236,182,19,0.25)] backdrop-blur-md transition-all duration-300 ease-out hover:scale-105 hover:bg-[#ecb613] hover:text-black focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613] sm:right-6 sm:bottom-6"
+        className="hidden lg:flex fixed right-6 bottom-[10.5rem] z-[45] h-14 w-14 items-center justify-center rounded-full border border-[#ecb613]/40 bg-[#09090d]/90 text-[#ecb613] shadow-[0_0_30px_rgba(236,182,19,0.25)] backdrop-blur-md transition-all duration-300 ease-out hover:scale-105 hover:bg-[#ecb613] hover:text-black focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613]"
       >
         <MessageSquare className="h-6 w-6" aria-hidden="true" />
       </button>

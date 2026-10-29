@@ -3,9 +3,13 @@
 import React, { useState } from 'react';
 import {
   Sparkles, Award, CheckCircle2,
-  Calendar, MessageCircle, CreditCard, Video, Disc, HeartHandshake, ShieldCheck, AlertCircle
+  Calendar, MessageCircle, CreditCard, Video, Disc, HeartHandshake, ShieldCheck, AlertCircle, Music
 } from 'lucide-react';
 import { checkoutMariachiAuthorProduct } from '@/app/actions/mariachiCheckoutActions';
+import {
+  MUNDO_DEL_MARIACHI_OCCASION_LABELS,
+  MUNDO_DEL_MARIACHI_REPERTOIRE,
+} from '@/lib/constants/mundo-del-mariachi-archive';
 
 type AuthorProductId = 'cancion_estudio_180' | 'video_dedicatoria_120';
 
@@ -65,7 +69,7 @@ export default function MariachiEscaparateEdwin() {
     const text = encodeURIComponent(
       customText ||
       `¡Hola Edwin! Deseo consultar fecha directa para tu actuación como solista / ensamble mariachi con Productora EAR.\n\n` +
-      `• Artista: Edwin Agudelo (Mariachi Imperial)\n` +
+      `• Artista: Edwin Agudelo (Mariachi de Gala Edwin Agudelo)\n` +
       `• Servicios de interés: Formato Gran Gala / Canción personalizada\n` +
       `• Teléfono centralita: +34 693 693 048`
     );
@@ -109,7 +113,7 @@ export default function MariachiEscaparateEdwin() {
               <h2 className="font-syne text-3xl sm:text-5xl font-black uppercase text-white tracking-tight mt-1">
                 Edwin Agudelo <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] via-amber-200 to-amber-500">
-                  Mariachi Imperial de Gala
+                  Mariachi de Gala Edwin Agudelo
                 </span>
               </h2>
             </div>
@@ -156,6 +160,38 @@ export default function MariachiEscaparateEdwin() {
                 <MessageCircle size={15} className="text-emerald-400" />
                 Consultar por WhatsApp (+34 693 693 048)
               </button>
+            </div>
+
+            {/* ARCHIVO HISTÓRICO: REPERTORIO CANÓNICO */}
+            <div className="rounded-3xl bg-black/30 border border-[#ecb613]/15 p-5 space-y-3">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <span className="inline-flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-[0.25em] text-[#ecb613]">
+                  <Music size={12} />
+                  Repertorio del archivo
+                </span>
+                <a
+                  href="#mundo-del-mariachi"
+                  className="text-[10px] font-mono text-white/50 hover:text-[#ecb613] transition-colors duration-300 ease-out"
+                >
+                  Ver los {MUNDO_DEL_MARIACHI_REPERTOIRE.length} temas →
+                </a>
+              </div>
+              <div className="flex flex-wrap gap-1.5">
+                {MUNDO_DEL_MARIACHI_REPERTOIRE.slice(0, 8).map((song) => (
+                  <span
+                    key={song.id}
+                    className="text-[10px] font-mono px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/10 text-white/70 transition-colors duration-300 ease-out hover:border-[#ecb613]/30"
+                  >
+                    {song.title}
+                  </span>
+                ))}
+              </div>
+              <p className="text-[10px] font-mono text-white/35 leading-relaxed">
+                {MUNDO_DEL_MARIACHI_REPERTOIRE.length} temas canónicos ·{' '}
+                {MUNDO_DEL_MARIACHI_OCCASION_LABELS.boda} ·{' '}
+                {MUNDO_DEL_MARIACHI_OCCASION_LABELS.serenata} ·{' '}
+                {MUNDO_DEL_MARIACHI_OCCASION_LABELS.misa}
+              </p>
             </div>
           </div>
 

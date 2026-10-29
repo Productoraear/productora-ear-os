@@ -149,7 +149,7 @@ export default function MariachiDispatchConsole() {
 
   const handleDirectWhatsApp = () => {
     const text = encodeURIComponent(
-      `¡Hola Edwin! Quiero consultar fecha directa para el Mariachi Imperial.\n\n` +
+      `¡Hola Edwin! Quiero consultar fecha directa para el Mariachi de Gala Edwin Agudelo.\n\n` +
       `• Formato: ${quote.format.name} (${quote.format.members} integrantes)\n` +
       `• Destino: ${quote.destinationName}\n` +
       `• Base Logística: ${quote.hub.name} (${quote.distanceKm} km)\n` +
@@ -188,8 +188,18 @@ export default function MariachiDispatchConsole() {
             return (
               <div
                 key={fmt.id}
+                role="button"
+                tabIndex={0}
+                aria-pressed={isSelected}
+                aria-label={`Seleccionar formato ${fmt.name} — ${fmt.members} integrantes`}
                 onClick={() => setSelectedFormatId(fmt.id)}
-                className={`p-6 rounded-3xl border transition-all cursor-pointer flex flex-col justify-between relative overflow-hidden ${isSelected
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    setSelectedFormatId(fmt.id);
+                  }
+                }}
+                className={`p-6 rounded-3xl border transition-all cursor-pointer flex flex-col justify-between relative overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305] ${isSelected
                   ? 'bg-[#ecb613]/10 border-[#ecb613] shadow-xl shadow-[#ecb613]/10'
                   : 'bg-[#050508] border-white/10 hover:border-white/20'
                   }`}

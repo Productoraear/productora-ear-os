@@ -11,7 +11,7 @@ export const FloatingWhatsAppCta: React.FC = React.memo(function FloatingWhatsAp
       href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(defaultMessage)}`}
       target="_blank"
       rel="noopener noreferrer"
-      className="hidden md:flex fixed bottom-6 left-6 z-[90] bg-[#25D366] text-black p-3.5 rounded-full shadow-2xl hover:scale-110 hover:shadow-[#25D366]/50 transition-all duration-300 items-center justify-center group"
+      className="hidden lg:flex fixed bottom-[5.75rem] left-6 z-[45] bg-[#25D366] text-black p-3.5 rounded-full shadow-2xl hover:scale-110 hover:shadow-[#25D366]/50 transition-all duration-300 items-center justify-center group"
       aria-label="Contactar por WhatsApp"
       title="Contactar con Soporte Directo WhatsApp"
     >

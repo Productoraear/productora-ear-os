@@ -1044,7 +1044,7 @@ const MultiPricerContent = () => {
       </AnimatePresence>
 
       {/* 📱 MOBILE STICKY BAR (< lg screens) */}
-      <div className="lg:hidden fixed bottom-16 inset-x-0 z-[80] bg-[#121212]/95 backdrop-blur-xl border-t border-[#ecb613]/30 px-4 py-3 shadow-[0_-10px_30px_rgba(0,0,0,0.8)]">
+      <div className="lg:hidden fixed bottom-[calc(var(--ear-dock-h)+0.25rem)] inset-x-0 z-[55] bg-[#121212]/95 backdrop-blur-xl border-t border-[#ecb613]/30 px-4 py-3 shadow-[0_-10px_30px_rgba(0,0,0,0.8)]">
         <div className="flex items-center justify-between gap-3">
           <div>
             <span className="text-[9px] uppercase font-mono tracking-widest text-white/40 block truncate max-w-[140px]">

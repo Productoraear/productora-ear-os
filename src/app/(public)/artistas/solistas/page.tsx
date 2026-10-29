@@ -9,7 +9,6 @@ import {
 import { ROUTES } from '@/lib/routes';
 import { ArtistPricingMatrix } from '@/app/components/artists/ArtistPricingMatrix';
 import { ArtistTestimonials } from '@/app/components/artists/ArtistTestimonials';
-import PublicNavbar from '@/app/components/public/PublicNavbar';
 
 export const metadata: Metadata = {
   title: 'Contratar Cantantes Solistas S-Class | Productora EAR',

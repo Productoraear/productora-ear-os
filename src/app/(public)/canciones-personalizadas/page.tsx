@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
+import { EDWIN_CANCION_PERSONALIZADA_BASE_EUR } from '@/lib/artists/edwin-showcase-catalog';
 import {
   Music,
   Heart,
@@ -74,7 +75,7 @@ export default function CancionesPersonalizadasPage() {
   const [videoFormat, setVideoFormat] = useState<'vertical' | 'horizontal' | 'ambos'>('vertical');
   const [isCompanyMode, setIsCompanyMode] = useState<boolean>(false);
 
-  const basePriceEur = 99; // Precio base Stripe
+  const basePriceEur = EDWIN_CANCION_PERSONALIZADA_BASE_EUR; // Precio base Stripe (SSOT del escaparate)
   const selectedInstrument = INSTRUMENT_TIERS.find((t) => t.id === instrumentTierId) || INSTRUMENT_TIERS[0];
   const formatExtraEur = videoFormat === 'ambos' ? 30 : 0;
   const subtotalEur = basePriceEur + selectedInstrument.extraEur + formatExtraEur;

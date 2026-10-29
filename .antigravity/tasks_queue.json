@@ -3,247 +3,12 @@
     "version": "9.9-OMEGA-WAVE-41-ADMIN-CONTROL-DOMINANCE",
     "doctrine": "WAVE 41: el panel /admin/control pasa de fachada (22 enlaces rotos) a mesa de mando enterprise. Toda alta escribe en PostgreSQL, todo endpoint exige Bearer ADMIN, toda cifra nace del SSOT SHA-256.",
     "wave": 41,
-    "total_tasks": 18
+    "total_tasks": 18,
+    "total_pending": 2,
+    "last_updated": "2026-10-29T21:38:38.980Z"
   },
   "_instructions_for_worker": "Ejecuta SOLO via: node .antigravity/omega.js next -> lee .antigravity/MISSION_ACTIVE.json -> edita SOLO 'files' -> ejecuta 'test' -> node .antigravity/omega.js complete <ID>. 1 tarea por sesion.",
   "tasks": [
-    {
-      "id": "W41_T01_ADMIN_FETCH_CORE",
-      "title": "Núcleo de red admin: adminFetch con Bearer Firebase y errores tipados",
-      "priority": "P0",
-      "files": [
-        "src/lib/admin/adminFetch.ts",
-        "src/lib/admin/adminTypes.ts"
-      ],
-      "action": "Crear el cliente de red ÚNICO del panel. Hoy ningún componente envía Authorization; por eso /api/admin/* responde 401 y las pestañas muestran 0. Todo fetch de administración pasa por adminFetch: obtiene el ID token de Firebase (auth de src/lib/firebase) y lo inyecta como Bearer. Prohibido any y prohibido fetch directo en módulos admin.",
-      "scaffold": "adminTypes.ts:\nexport type AdminErrorCode = 'UNAUTHORIZED' | 'FORBIDDEN' | 'NOT_FOUND' | 'CONFLICT' | 'VALIDATION' | 'SERVER' | 'CONFIG';\nexport type AdminApiError = { status: number; code: AdminErrorCode; message: string };\nexport type AdminApiResult<T> = { ok: true; data: T; total?: number } | { ok: false; error: AdminApiError };\nexport type AdminListResponse<T> = { rows: T[]; total: number };\n\nadminFetch.ts (sin 'use client', cliente-agnóstico):\nexport class AdminHttpError extends Error { readonly status: number; readonly code: AdminErrorCode; constructor(e: AdminApiError) }\nexport async function getAdminIdToken(): Promise<string>\n  - auth nulo -> throw AdminHttpError({ status:0, code:'CONFIG', message:'Firebase no configurado' })\n  - auth.currentUser nulo -> throw AdminHttpError({ status:401, code:'UNAUTHORIZED', message:'Sesion no iniciada' })\n  - return auth.currentUser.getIdToken()\nexport async function adminFetch<T>(path: string, init?: { method?: 'GET'|'POST'|'PATCH'|'PUT'|'DELETE'; body?: unknown; signal?: AbortSignal }): Promise<T>\n  - headers: Authorization Bearer <token>; Content-Type application/json SOLO si body\n  - fetch(path, { cache:'no-store', credentials:'same-origin', signal })\n  - status -> code (401 UNAUTHORIZED, 403 FORBIDDEN, 404 NOT_FOUND, 409 CONFLICT, 400 VALIDATION, >=500 SERVER)\n  - si el JSON no respeta { ok:true, data } -> throw SERVER\nexport async function adminFetchList<T>(path: string): Promise<AdminListResponse<T>>\n  - const payload = await adminFetch<{ data: T[]; total?: number }>(path); return { rows: payload.data ?? [], total: payload.total ?? payload.data?.length ?? 0 }",
-      "done_when": "Los 2 ficheros exportan las firmas exactas; cero any implícito; cero fetch fuera de adminFetch; node ./node_modules/typescript/bin/tsc --noEmit Exit Code 0.",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "status": "QUEUED",
-      "created_at": "2026-10-27T12:39:00.118Z"
-    },
-    {
-      "id": "W41_T02_ADMIN_GUARD_RBAC_FIX",
-      "title": "Blindar requireAdmin: lookup por firebaseUid y guard para Server Actions",
-      "priority": "P0",
-      "files": [
-        "src/lib/security/adminGuard.ts",
-        "src/lib/services/UserService.ts",
-        "src/app/actions/admin-providers.ts"
-      ],
-      "action": "Corregir la cadena de autorización: (1) UserService.hasRole busca por id, pero el JWT trae el UID de Firebase, que vive en User.firebaseUid -> todo admin real cae en 403. Resolver por id OR firebaseUid. (2) admin-providers.ts llama requireAdmin(new Request(\"http://localhost\")), un Request sin cabeceras: el alta de proveedores es un 401 permanente. Añadir requireAdminFromHeaders() que lea next/headers y sustituir la llamada.",
-      "scaffold": "UserService.hasRole(id: string, requiredRole: Role): Promise<boolean>\n  const user = await prisma.user.findFirst({ where: { OR: [{ id }, { firebaseUid: id }] }, select: { role: true } });\n\nadminGuard.ts — AÑADIR (sin tocar la firma de requireAdmin):\nexport async function requireAdminFromHeaders(): Promise<AdminAuthResult> {\n  const h = await headers(); // import { headers } from 'next/headers'\n  const bearer = h.get('authorization');\n  return requireAdmin(new Request('https://productoraear.com', { headers: { authorization: bearer ?? '' } }));\n}\n\nadmin-providers.ts — en create/update/delete:\n  const auth = await requireAdminFromHeaders();\n  if (!auth.ok) throw new Error('UNAUTHORIZED_ACCESS');\n  catch (err: unknown) con narrowing: err instanceof Error ? err.message : 'Error al crear el proveedor'.\n  Eliminar los tres 'err: any'.",
-      "done_when": "hasRole resuelve por firebaseUid; cero new Request(\"http://localhost\") en src/; cero any en admin-providers.ts; node ./node_modules/typescript/bin/tsc --noEmit Exit Code 0.",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "status": "QUEUED",
-      "created_at": "2026-10-27T12:39:00.118Z"
-    },
-    {
-      "id": "W41_T03_ADMIN_SESSION_BRIDGE",
-      "title": "Puente de sesión: cookies de middleware, /login real y bridge de token",
-      "priority": "P0",
-      "files": [
-        "src/app/api/admin/session/route.ts",
-        "src/components/admin/AdminSessionBridge.tsx",
-        "src/app/login/page.tsx",
-        "src/app/(admin)/admin/layout.tsx"
-      ],
-      "action": "Cerrar el punto muerto de acceso: src/middleware.ts redirige /admin a /login cuando falta __session o ear_admin_token, pero /login NO EXISTE (404). Crear el login real, el endpoint de sesión que emite las cookies que el middleware valida, y un bridge que renueve el token al arrancar el shell.",
-      "scaffold": "api/admin/session/route.ts (runtime nodejs, dynamic force-dynamic). POST sin requireAdmin:\n  const token = (request.headers.get('authorization') ?? '').replace('Bearer ', '').trim();\n  POST: token vacío -> 401; await adminAuth.verifyIdToken(token) -> si lanza, 401;\n        const ok = await UserService.hasRole(decoded.uid, Role.ADMIN); si !ok -> 403;\n        respuesta 200 con cookies:\n          __session=<token> HttpOnly, sameSite 'lax', secure process.env.NODE_ENV==='production', path '/', maxAge 3600\n          ear_role=admin (NO HttpOnly), path '/', maxAge 3600\n  DELETE: limpia __session y ear_role con maxAge 0 -> 200 { ok:true }\n  GET: { ok:true, authenticated: Boolean(cookies().get('__session')?.value) }\n  Cabeceras no-store en todas las respuestas.\n\ncomponents/admin/AdminSessionBridge.tsx ('use client'):\n  export function AdminSessionBridge(): React.ReactElement | null\n  useEffect -> onAuthStateChanged(auth, async (u) => {\n    if (!u) { await fetch('/api/admin/session', { method:'DELETE' }); return; }\n    const t = await u.getIdToken();\n    await fetch('/api/admin/session', { method:'POST', headers:{ Authorization: 'Bearer ' + t } });\n  })\n  Se monta una sola vez y no pinta DOM.\n\napp/login/page.tsx ('use client'): card rounded-3xl bg-[#09090d]/80 border border-white/10 backdrop-blur-md,\n  botón Google con signInWithPopup(auth, new GoogleAuthProvider()) y useRouter().replace(searchParams.get('from') ?? '/admin/control').\n  Prohibido w-screen y gradientes violeta/azul.\n\nlayout.tsx: importar AdminSessionBridge y montarlo justo antes de {children} (línea ~517).",
-      "done_when": "/login renderiza y autentica; POST/DELETE emiten y limpian cookies; el bridge se monta una sola vez; node ./node_modules/typescript/bin/tsc --noEmit Exit Code 0.",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "status": "QUEUED",
-      "created_at": "2026-10-27T12:39:00.118Z"
-    },
-    {
-      "id": "W41_T04_API_ARTISTS_POST",
-      "title": "Alta real de artistas: POST /api/admin/artists con transacción Prisma",
-      "priority": "P0",
-      "files": [
-        "src/app/api/admin/artists/route.ts"
-      ],
-      "action": "El endpoint solo tiene GET y PATCH: es imposible dar de alta un artista. Añadir POST con Zod estricto, creación de User (si el email no existe) + artistProfile en una sola transacción ACID, slug único normalizado y 409 ante duplicados.",
-      "scaffold": "Añadir a src/app/api/admin/artists/route.ts:\n\nconst ARTIST_STATUSES = ['DRAFT', 'PUBLISHED', 'PAUSED'] as const;\n\nconst CreateBodySchema = z.object({\n  email: z.string().trim().email().max(180),\n  name: z.string().trim().min(1).max(120).optional(),\n  stageName: z.string().trim().min(2).max(120),\n  displayName: z.string().trim().min(1).max(120).optional(),\n  slug: z.string().trim().min(1).max(120).regex(SLUG_REGEX).optional(),\n  genres: z.array(z.string().trim().min(1).max(40)).max(12).default([]),\n  status: z.enum(ARTIST_STATUSES).default('PUBLISHED'),\n}).strict();\n\nfunction slugify(value: string): string {\n  return value.normalize('NFD').replace(/[\\u0300-\\u036f]/g, '').toLowerCase()\n    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 120) || 'artista';\n}\n\nexport async function POST(req: NextRequest): Promise<NextResponse> {\n  const auth = await requireAdmin(req); if (!auth.ok) return auth.response;\n  const raw = await req.json().catch(() => null);\n  const parsed = CreateBodySchema.safeParse(raw);\n  if (!parsed.success) return jsonResponse({ ok:false, error:'Payload inválido', issues: parsed.error.issues.map(i => ({ path: i.path.join('.'), message: i.message })) }, { status: 400 });\n\n  const body = parsed.data;\n  const baseSlug = body.slug ?? slugify(body.stageName);\n\n  try {\n    const created = await prisma.$transaction(async (tx) => {\n      const user = await tx.user.upsert({\n        where: { email: body.email },\n        update: { name: body.name ?? undefined },\n        create: { email: body.email, name: body.name ?? body.stageName, role: 'ARTIST' },\n      });\n      const existing = await tx.artistProfile.findUnique({ where: { userId: user.id } });\n      if (existing) throw new Error('ARTIST_PROFILE_EXISTS');\n      return tx.artistProfile.create({\n        data: { userId: user.id, stageName: body.stageName, displayName: body.displayName ?? body.stageName, slug: baseSlug, genres: body.genres, status: body.status },\n        include: { user: { select: { email: true, name: true } } },\n      });\n    });\n    return jsonResponse({ ok: true, data: created }, { status: 201 });\n  } catch (err) {\n    if (err instanceof Error && err.message === 'ARTIST_PROFILE_EXISTS') return jsonResponse({ ok:false, error:'El artista ya tiene perfil' }, { status: 409 });\n    if (typeof err === 'object' && err !== null && 'code' in err && (err as { code?: string }).code === 'P2002') return jsonResponse({ ok:false, error:'slug o email duplicado' }, { status: 409 });\n    console.error('[admin/artists][POST]', err);\n    return jsonResponse({ ok:false, error:'Internal error' }, { status: 500 });\n  }\n}",
-      "done_when": "POST crea User+artistProfile en transacción, devuelve 201 y 409 ante duplicado; GET y PATCH intactos; node ./node_modules/typescript/bin/tsc --noEmit Exit Code 0.",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "status": "QUEUED",
-      "created_at": "2026-10-27T12:39:00.118Z"
-    },
-    {
-      "id": "W41_T05_API_THERAPISTS_POST",
-      "title": "Alta real de terapeutas: POST /api/admin/therapists (pestaña mostraba HTTP 401)",
-      "priority": "P0",
-      "files": [
-        "src/app/api/admin/therapists/route.ts"
-      ],
-      "action": "La pestaña Terapeutas del panel muestra 0 y HTTP 401 y solo existe GET/PATCH. Añadir POST que cree User + TherapistProfile en transacción, con especialidad validada y estado por defecto ACTIVE.",
-      "scaffold": "Añadir a src/app/api/admin/therapists/route.ts:\n\nconst SPECIALTIES = ['musicoterapia', 'neuroacustica', 'estimulacion_cognitiva', 'ocupacional'] as const;\n\nconst createBodySchema = z.object({\n  email: z.string().trim().email().max(180),\n  name: z.string().trim().min(1).max(120).optional(),\n  specialty: z.enum(SPECIALTIES),\n  credentials: z.string().trim().max(4000).optional(),\n  bio: z.string().trim().max(4000).optional(),\n  status: statusSchema.default('ACTIVE'),\n  isActive: z.boolean().default(true),\n}).strict();\n\nexport async function POST(request: NextRequest): Promise<NextResponse> {\n  const auth = await requireAdmin(request); if (!auth.ok) return auth.response;\n  const rawBody = await request.json().catch(() => null);\n  const parsed = createBodySchema.safeParse(rawBody);\n  if (!parsed.success) return jsonResponse({ ok:false, error:'Datos de entrada no válidos' }, 400);\n  const body = parsed.data;\n\n  try {\n    const created = await prisma.$transaction(async (tx) => {\n      const user = await tx.user.upsert({\n        where: { email: body.email },\n        update: {},\n        create: { email: body.email, name: body.name ?? body.email.split('@')[0], role: 'THERAPIST' },\n      });\n      const existing = await tx.therapistProfile.findUnique({ where: { userId: user.id } });\n      if (existing) throw new Error('THERAPIST_EXISTS');\n      return tx.therapistProfile.create({\n        data: { userId: user.id, specialty: body.specialty, credentials: body.credentials, bio: body.bio, status: body.status, isActive: body.isActive },\n        include: { user: { select: { email: true, name: true } } },\n      });\n    });\n    return jsonResponse({ ok: true, data: created }, 201);\n  } catch (error) {\n    if (error instanceof Error && error.message === 'THERAPIST_EXISTS') return jsonResponse({ ok:false, error:'El terapeuta ya existe' }, 409);\n    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') return jsonResponse({ ok:false, error:'Email duplicado' }, 409);\n    console.error('[admin/therapists] POST error', error);\n    return jsonResponse({ ok:false, error:'Error interno del servidor' }, 500);\n  }\n}",
-      "done_when": "POST crea User+TherapistProfile con 201 y 409 correctos; GET/PATCH intactos; node ./node_modules/typescript/bin/tsc --noEmit Exit Code 0.",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "status": "QUEUED",
-      "created_at": "2026-10-27T12:39:00.118Z"
-    },
-    {
-      "id": "W41_T06_API_PROVIDERS_POST",
-      "title": "Alta real de proveedores: POST /api/admin/providers con doctrina verified",
-      "priority": "P0",
-      "files": [
-        "src/app/api/admin/providers/route.ts"
-      ],
-      "action": "Solo existe GET/PATCH: el panel no puede dar de alta proveedores, y la server action de altas está muerta (401 fijo). Añadir POST con Zod sobre el enum VendorCategory, slug derivado del nombre y regla de oro: isVerified SOLO si hay teléfono real distinto de la centralita +34 693 693 048.",
-      "scaffold": "Añadir a src/app/api/admin/providers/route.ts:\n\nconst CENTRALITA = '+34693693048';\n\nfunction normalizePhone(raw?: string): string | undefined {\n  if (!raw) return undefined;\n  const cleaned = raw.replace(/[^0-9+]/g, '');\n  return cleaned.length >= 9 ? cleaned : undefined;\n}\n\nconst CreateBodySchema = z.object({\n  name: z.string().trim().min(2).max(160),\n  companyName: z.string().trim().max(160).optional(),\n  category: z.enum(VENDOR_CATEGORIES),\n  city: z.string().trim().max(120).optional(),\n  province: z.string().trim().min(2).max(120).default('Madrid / Toledo'),\n  phone: z.string().trim().max(24).optional(),\n  email: z.string().trim().email().max(180).optional(),\n  description: z.string().trim().max(4000).optional(),\n  claimStatus: z.enum(CLAIM_STATUSES).default('GHOST_UNCLAIMED'),\n  status: StatusSchema.default('DRAFT'),\n}).strict();\n\nexport async function POST(request: NextRequest): Promise<NextResponse> {\n  const auth = await requireAdmin(request); if (!auth.ok) return auth.response;\n  const parsed = CreateBodySchema.safeParse(await request.json().catch(() => null));\n  if (!parsed.success) return jsonResponse({ ok:false, error:'Payload inválido', issues: parsed.error.issues.map(i => ({ path: i.path.join('.'), message: i.message })) }, { status: 400 });\n\n  const body = parsed.data;\n  const phone = normalizePhone(body.phone);\n  const realPhone = phone !== undefined && phone !== CENTRALITA;\n  const slug = body.name.toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');\n  if (!slug) return jsonResponse({ ok:false, error:'Nombre no genera slug válido' }, { status: 400 });\n\n  try {\n    const created = await prisma.providerProfile.create({\n      data: {\n        name: body.name, slug, companyName: body.companyName ?? '', category: body.category,\n        city: body.city, province: body.province, phone,\n        email: body.email, description: body.description,\n        claimStatus: body.claimStatus, status: body.status,\n        isVerified: realPhone && body.claimStatus === 'VERIFIED_ACTIVE',\n      },\n    });\n    return jsonResponse({ ok: true, data: created }, { status: 201 });\n  } catch (error) {\n    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') return jsonResponse({ ok:false, error:'Nombre o slug ya registrado' }, { status: 409 });\n    console.error('[admin/providers][POST]', error);\n    return jsonResponse({ ok:false, error:'Internal error' }, { status: 500 });\n  }\n}",
-      "done_when": "POST crea providerProfile con slug único, isVerified false si el teléfono es la centralita o está vacío; 409 ante duplicado; node ./node_modules/typescript/bin/tsc --noEmit Exit Code 0.",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "status": "QUEUED",
-      "created_at": "2026-10-27T12:39:00.118Z"
-    },
-    {
-      "id": "W41_T07_API_FLEET_POST",
-      "title": "Alta real de flota: POST /api/admin/fleet con unidad única",
-      "priority": "P1",
-      "files": [
-        "src/app/api/admin/fleet/route.ts"
-      ],
-      "action": "La pestaña Flota solo puede leer y parchear. Añadir POST para dar de alta unidades (fleetUnit) con unitCode único, estado validado y ubicación; respuesta 201 y 409 ante duplicado.",
-      "scaffold": "Añadir a src/app/api/admin/fleet/route.ts (mantener el guard requireAdmin existente):\n\nconst FLEET_STATUSES = ['IDLE', 'EN_ROUTE', 'ON_SITE', 'MAINTENANCE'] as const;\n\nconst CreateBodySchema = z.object({\n  unitCode: z.string().trim().min(2).max(40),\n  code: z.string().trim().min(2).max(40).optional(),\n  status: z.enum(FLEET_STATUSES).default('IDLE'),\n  currentLocation: z.string().trim().max(160).optional(),\n}).strict();\n\nexport async function POST(request: Request): Promise<Response> {\n  const auth = await requireAdmin(request); if (!auth.ok) return auth.response;\n  const parsed = CreateBodySchema.safeParse(await request.json().catch(() => null));\n  if (!parsed.success) return NextResponse.json({ ok:false, error:'Payload inválido', issues: parsed.error.issues.map(i => ({ path: i.path.join('.'), message: i.message })) }, { status: 400 });\n\n  try {\n    const created = await prisma.fleetUnit.create({ data: parsed.data });\n    return NextResponse.json({ ok: true, data: created }, { status: 201 });\n  } catch (error) {\n    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') return NextResponse.json({ ok:false, error:'unitCode o code ya registrado' }, { status: 409 });\n    console.error('[admin/fleet][POST]', error);\n    return NextResponse.json({ ok:false, error:'Internal error' }, { status: 500 });\n  }\n}",
-      "done_when": "POST crea fleetUnit, 201 y 409 correctos, GET/PATCH intactos; node ./node_modules/typescript/bin/tsc --noEmit Exit Code 0.",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "status": "QUEUED",
-      "created_at": "2026-10-27T12:39:00.118Z"
-    },
-    {
-      "id": "W41_T08_API_AFFILIATES_CRUD",
-      "title": "Red de afiliados real: nueva API /api/admin/affiliates (GET/POST/PATCH)",
-      "priority": "P0",
-      "files": [
-        "src/app/api/admin/affiliates/route.ts"
-      ],
-      "action": "La pestaña Afiliados del panel es un LinkCard vacío. Crear la API con listado real, alta con código de referido único y parcheo de tier/comisión/estado. La comisión por defecto nace del motor de afiliados (10% SSOT), nunca hardcodeada en la UI.",
-      "scaffold": "NUEVO src/app/api/admin/affiliates/route.ts (runtime nodejs, dynamic force-dynamic, cabeceras no-store):\n\nimport { NextRequest, NextResponse } from 'next/server';\nimport { Prisma, KycStatus } from '@prisma/client';\nimport { z } from 'zod';\nimport { prisma } from '@/lib/prisma';\nimport { requireAdmin } from '@/lib/security/adminGuard';\nimport { AFFILIATE_TIER_CONFIG, resolveTier } from '@/lib/affiliate/affiliateCommissionEngine';\n\nconst TIERS = ['BRONZE', 'SILVER', 'GOLD', 'PLATINUM'] as const;\n\nconst CreateSchema = z.object({\n  email: z.string().trim().email().max(180),\n  name: z.string().trim().min(1).max(120).optional(),\n  companyName: z.string().trim().max(160).optional(),\n  cifNif: z.string().trim().max(20).optional(),\n  phone: z.string().trim().max(24).optional(),\n  category: z.string().trim().max(40).default('PRESCRIPTOR'),\n  tier: z.enum(TIERS).default('BRONZE'),\n}).strict();\n\nconst PatchSchema = z.object({\n  id: z.string().trim().min(1).max(64),\n  tier: z.enum(TIERS).optional(),\n  isActive: z.boolean().optional(),\n  kycStatus: z.enum(['NOT_REQUIRED', 'PENDING', 'VERIFIED', 'REJECTED']).optional(),\n}).strict();\n\nfunction makeCode(seed: string): string {\n  const base = seed.toUpperCase().normalize('NFD').replace(/[^A-Z0-9]/g, '').slice(0, 12);\n  return (base || 'EAR') + '-' + Math.random().toString(36).slice(2, 6).toUpperCase();\n}\n\nGET: requireAdmin -> prisma.affiliateProfile.findMany({ include:{ user:{ select:{ email:true, name:true } } }, orderBy:{ updatedAt:'desc' }, take:200 }) +\n     prisma.affiliateProfile.count() -> { ok:true, data, total }.\n\nPOST: requireAdmin -> validar -> transacción:\n  const user = await tx.user.upsert({ where:{ email }, update:{}, create:{ email, name, role:'AFFILIATE' } });\n  const existing = await tx.affiliateProfile.findUnique({ where:{ userId: user.id } }); if (existing) throw new Error('AFFILIATE_EXISTS');\n  const tierConfig = AFFILIATE_TIER_CONFIG.find((t) => t.tier === body.tier) ?? resolveTier(0); // TierConfig real del motor\n  return tx.affiliateProfile.create({ data:{ userId:user.id, affiliateCode: makeCode(body.companyName ?? body.name ?? body.email), companyName: body.companyName, cifNif: body.cifNif, phone: body.phone, category: body.category, tier: tierConfig.tier, commissionRate: tierConfig.commissionRate }, include:{ user:{ select:{ email:true, name:true } } } });\n  -> 201; P2002 -> 409; AFFILIATE_EXISTS -> 409.\n\nPATCH: requireAdmin -> validar -> update con data tipado Prisma.AffiliateProfileUpdateInput (sin any) -> 200; P2025 -> 404.",
-      "done_when": "GET devuelve afiliados con usuario; POST crea User+AffiliateProfile con código único y comisión del motor; PATCH actualiza tier/estado; node ./node_modules/typescript/bin/tsc --noEmit Exit Code 0.",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "status": "QUEUED",
-      "created_at": "2026-10-27T12:39:00.118Z"
-    },
-    {
-      "id": "W41_T09_API_TREASURY_PRICE_LOCK",
-      "title": "Registro de depósito 100 € Price-Lock: POST idempotente en /api/admin/treasury",
-      "priority": "P0",
-      "files": [
-        "src/app/api/admin/treasury/route.ts"
-      ],
-      "action": "La tesorería solo lee, y su GET inventa clientName/serviceName porque commissionLedger no tiene esos campos (fachada de datos). Añadir POST idempotente que registre el depósito con referencia única PRICELOCK:<stripeSessionId>, split 80/10/10 desde el SSOT y hash de origen; y corregir el mapeo del GET a campos reales.",
-      "scaffold": "En src/app/api/admin/treasury/route.ts:\n\nconst PriceLockSchema = z.object({\n  stripeSessionId: z.string().trim().min(8).max(120),\n  amountEur: z.coerce.number().min(EAR_OS_SSOT.DEPOSITO_STRIPE_EUR).max(50_000),\n  clientName: z.string().trim().min(2).max(120),\n  clientEmail: z.string().trim().email().max(180).optional(),\n  serviceName: z.string().trim().min(2).max(160),\n  paidAt: z.string().datetime().optional(),\n}).strict();\n\nexport async function POST(request: Request): Promise<NextResponse> {\n  const auth = await requireAdmin(request); if (!auth.ok) return auth.response;\n  const parsed = PriceLockSchema.safeParse(await request.json().catch(() => null));\n  if (!parsed.success) return errorResponse('INVALID_BODY', parsed.error.issues[0]?.message ?? 'Payload inválido', 400);\n  const body = parsed.data;\n\n  const reference = 'PRICELOCK:' + body.stripeSessionId;           // clave de idempotencia ACID\n  const split = {\n    artist: Number((body.amountEur * SPLIT_ARTIST).toFixed(2)),\n    earOs: Number((body.amountEur * SPLIT_EAR_OS).toFixed(2)),\n    vimume: Number((body.amountEur * SPLIT_VIMUME).toFixed(2)),\n    rule: SPLIT_RULE,\n    depositDeductible: true,\n  };\n\n  try {\n    const row = await prisma.commissionLedger.upsert({\n      where: { reference },\n      update: {},                                                    // N retries -> 1 fila\n      create: {\n        reference,\n        amount: body.amountEur,\n        currency: 'EUR',\n        sourceEvent: 'STRIPE_PRICE_LOCK',\n        description: body.clientName + ' · ' + body.serviceName,\n        notes: JSON.stringify({ ...split, clientEmail: body.clientEmail ?? null, paidAt: body.paidAt ?? new Date().toISOString() }),\n      },\n    });\n    return jsonResponse({ ok: true, data: { id: row.id, reference: row.reference, amount: row.amount, split } }, reference === row.reference ? 201 : 200);\n  } catch (err) {\n    console.error('[TREASURY API] POST error', err);\n    return errorResponse('INTERNAL_ERROR', 'Error interno del servidor', 500);\n  }\n}\n\nGET (corregir mapeo a campos reales de commissionLedger):\n  client: t.description ?? 'Sin descripción';  service: t.sourceEvent ?? 'STRIPE_PRICE_LOCK';\n  deposit: t.amount.toFixed(2) + ' €';  hash: t.reference ?? 'NO_HASH';  status: t.status;  date: formatDate(t.createdAt);\n  y eliminar readRecordField sobre campos inexistentes (clientName/serviceName/priceLockHash).",
-      "done_when": "POST con la misma stripeSessionId devuelve SIEMPRE una única fila (upsert por reference); split calculado desde EAR_OS_SSOT; GET sin campos inventados; node ./node_modules/typescript/bin/tsc --noEmit Exit Code 0.",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "status": "QUEUED",
-      "created_at": "2026-10-27T12:39:00.118Z"
-    },
-    {
-      "id": "W41_T10_CONTROL_SHELL",
-      "title": "Shell del panel: hook useAdminResource, KPIs reales y fin de las fachadas",
-      "priority": "P1",
-      "files": [
-        "src/app/(admin)/admin/control/useAdminResource.ts",
-        "src/app/(admin)/admin/control/ControlDashboard.tsx"
-      ],
-      "action": "Reescribir el shell del panel sobre el nuevo núcleo de red: eliminar fetchList local (que provocaba los 401), añadir KPIs reales por entidad, buscador global y sustituir los dos LinkCard vacíos (Afiliados y Tesorería) por listados reales conectados a sus APIs.",
-      "scaffold": "NUEVO useAdminResource.ts ('use client'):\nexport interface ResourceState<T> { status: 'idle'|'loading'|'success'|'error'; rows: T[]; total: number; error: AdminApiError | null; busy: boolean }\nexport function useAdminResource<T>(path: string): ResourceState<T> & {\n  reload: () => Promise<void>;\n  create: (body: unknown) => Promise<void>;\n  patch: (body: unknown) => Promise<void>;\n}\n  - import { adminFetch, adminFetchList, AdminHttpError } from '@/lib/admin/adminFetch'\n  - load(): status loading -> const { rows, total } = await adminFetchList<T>(path) -> success\n            catch -> error: e instanceof AdminHttpError ? { status: e.status, code: e.code, message: e.message } : { status:0, code:'SERVER', message:'Error de red' }\n  - create: setBusy -> adminFetch(path, { method:'POST', body }) -> await load()\n  - patch:  setBusy -> adminFetch(path, { method:'PATCH', body }) -> await load()\n  - useCallback con [path]; prohibido fetch directo; cero any.\n\nControlDashboard.tsx:\n  - borrar fetchList y useEntityData locales; cada panel usa useAdminResource\n  - banner si error.code === 'UNAUTHORIZED': \"Sesión caducada\" + <Link href=\"/login?from=/admin/control\">\n  - KPIs: grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 con el total real de cada pestaña\n  - <input aria-label=\"Buscar entidad\" /> que filtre filas en cliente\n  - Afiliados -> useAdminResource<AffiliateRow>('/api/admin/affiliates') (tabla: código, empresa, tier, comisión, estado)\n  - Tesorería -> adminFetch<{ metrics, transactions }>('/api/admin/treasury') (KPIs split 80/10/10 desde la API)\n  - se elimina el componente LinkCard (cero fachadas)\n  - estética OLED intacta: rounded-3xl bg-[#09090d]/80 border border-white/10 backdrop-blur-md",
-      "done_when": "Cero fetch directo en el panel; los 6 contadores muestran datos reales o error honesto; ninguna pestaña es un enlace vacío; node ./node_modules/typescript/bin/tsc --noEmit Exit Code 0.",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "status": "QUEUED",
-      "created_at": "2026-10-27T12:39:00.118Z"
-    },
-    {
-      "id": "W41_T11_TAB_ARTISTAS",
-      "title": "Pestaña Artistas: alta, edición de estado y búsqueda reales",
-      "priority": "P1",
-      "files": [
-        "src/app/(admin)/admin/control/tabs/ArtistasTab.tsx",
-        "src/app/(admin)/admin/control/ControlDashboard.tsx"
-      ],
-      "action": "Convertir la pestaña Artistas en un espacio de trabajo real: alta con formulario validado contra POST /api/admin/artists, cambio de estado con PATCH y feedback accesible. Cero estados inventados.",
-      "scaffold": "NUEVO tabs/ArtistasTab.tsx ('use client'):\nexport function ArtistasTab(): React.ReactElement\nconst { status, rows, total, error, reload, create, patch, busy } = useAdminResource<ArtistRow>('/api/admin/artists?size=100');\n\nAlta (<form onSubmit={...}>): email* (type=email required), stageName* (required, min 2), displayName, genres (texto separado por comas)\n  submit -> create({ email, stageName, displayName: displayName || undefined, genres: genres.split(',').map(t => t.trim()).filter(Boolean) })\n\nTabla: Artista (stageName/displayName), Email (user.email), Slug, Estado (badge), Actualizado\nAcción por fila: botón \"Publicar\" si status !== 'PUBLISHED' -> patch({ id, status: 'PUBLISHED' }); \"Pausar\" si es PUBLISHED.\n\nAccesibilidad y UX: cada input con <label htmlFor>, aria-busy={busy}, aria-live=\"polite\" en el contenedor de mensajes,\n  errores 409 -> \"Ese email o slug ya existe\"; 400 -> pintar issues; UNAUTHORIZED -> enlace /login.\nModal OLED: rounded-3xl border border-white/10 bg-[#09090d]/80 backdrop-blur-md, transition-all duration-300 ease-out, focus visible.\n\nControlDashboard.tsx: sustituir el panel read-only de artistas por {activeTab === 'artistas' && <ArtistasTab />} y eliminar su tabla duplicada.",
-      "done_when": "Alta de artista persiste en PostgreSQL y aparece en la tabla tras reload; PATCH de estado funciona; errores legibles; node ./node_modules/typescript/bin/tsc --noEmit y npx eslint en Exit Code 0.",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "status": "QUEUED",
-      "created_at": "2026-10-27T12:39:00.118Z"
-    },
-    {
-      "id": "W41_T12_TAB_PROVEEDORES",
-      "title": "Pestaña Proveedores: alta homologada y control de rating/estado",
-      "priority": "P1",
-      "files": [
-        "src/app/(admin)/admin/control/tabs/ProveedoresTab.tsx",
-        "src/app/(admin)/admin/control/ControlDashboard.tsx"
-      ],
-      "action": "Alta de proveedores desde el propio panel con el enum real de categorías, y control de rating/estado por fila. La UI jamás envía isVerified: la verificación la decide el servidor según el teléfono real.",
-      "scaffold": "NUEVO tabs/ProveedoresTab.tsx ('use client'):\nexport function ProveedoresTab(): React.ReactElement\nconst { status, rows, total, error, create, patch, busy } = useAdminResource<ProviderRow>('/api/admin/providers');\n\nconst CATEGORIES = ['FINCA_ALQUILER','CATERING','DJ_DISCOMOVIL','BARRA_LIBRE','FOTOGRAFIA_VIDEO','FLORISTERIA','TRANSPORTE_AUTOBUS','DECORACION_ILUMINACION'] as const;\n\nAlta: name*, companyName, category (select required), province (default 'Madrid / Toledo'), city, phone, email, description\n  submit -> create({ name, companyName: companyName || undefined, category, province, city: city || undefined, phone: phone || undefined, email: email || undefined, description: description || undefined })\n  PROHIBIDO incluir isVerified o claimStatus='VERIFIED_ACTIVE' sin teléfono real en el payload del cliente.\n\nTabla: Proveedor, Categoría, Provincia/Ciudad, Teléfono, Claim, Estado, Rating, Verificado (badge \"Real\" / \"No verificado\")\nAcciones: rating 1-5 (input number step 0.1) -> patch({ id, rating }); estado -> patch({ id, status }) con opciones DRAFT/ACTIVE_VERIFIED/SUSPENDED.\n\nUX: <label> por campo, aria-busy, aria-live=\"polite\", errores 409 \"Ese proveedor ya existe\" y 400 con issues.\nEstilo OLED rounded-3xl / bg-[#09090d]/80 / border-white/10 / backdrop-blur-md.\n\nControlDashboard.tsx: {activeTab === 'proveedores' && <ProveedoresTab />} y borrar el panel duplicado.",
-      "done_when": "Alta y PATCH persisten; isVerified solo puede venir a true del servidor con teléfono real; node ./node_modules/typescript/bin/tsc --noEmit Exit Code 0.",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "status": "QUEUED",
-      "created_at": "2026-10-27T12:39:00.118Z"
-    },
-    {
-      "id": "W41_T13_TAB_TERAPEUTAS",
-      "title": "Pestaña Terapeutas: alta VIMUME y activación de profesionales",
-      "priority": "P1",
-      "files": [
-        "src/app/(admin)/admin/control/tabs/TerapeutasTab.tsx",
-        "src/app/(admin)/admin/control/ControlDashboard.tsx"
-      ],
-      "action": "Dar de alta terapeutas del vertical VIMUME desde el panel (la pestaña mostraba 0 y HTTP 401) y permitir activar o suspender perfiles sin salir del panel.",
-      "scaffold": "NUEVO tabs/TerapeutasTab.tsx ('use client'):\nexport function TerapeutasTab(): React.ReactElement\nconst { status, rows, total, error, create, patch, busy } = useAdminResource<TherapistRow>('/api/admin/therapists');\n\nconst SPECIALTIES = ['musicoterapia','neuroacustica','estimulacion_cognitiva','ocupacional'] as const;\n\nAlta: email*, name, specialty (select required), credentials (textarea, max 4000), bio (textarea, max 4000)\n  submit -> create({ email, name: name || undefined, specialty, credentials: credentials || undefined, bio: bio || undefined })\n\nTabla: Terapeuta (user.name), Email, Especialidad, Activo (sí/no), Estado (ACTIVE/SUSPENDED/INACTIVE), Actualizado\nAcciones: \"Activar\"/\"Suspender\" -> patch({ id, isActive, status: isActive ? 'ACTIVE' : 'SUSPENDED' })\n\nUX: labels accesibles, aria-busy, aria-live=\"polite\", 409 \"El terapeuta ya existe\".\nEstilo OLED rounded-3xl / bg-[#09090d]/80 / border-white/10 / backdrop-blur-md, transiciones duration-300 ease-out.\n\nControlDashboard.tsx: {activeTab === 'terapeutas' && <TerapeutasTab />} y borrar el panel duplicado.",
-      "done_when": "Alta y suspensión persisten; node ./node_modules/typescript/bin/tsc --noEmit Exit Code 0.",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "status": "QUEUED",
-      "created_at": "2026-10-27T12:39:00.118Z"
-    },
-    {
-      "id": "W41_T14_TAB_FLOTA",
-      "title": "Pestaña Flota: alta de unidades y control de estado operativo",
-      "priority": "P1",
-      "files": [
-        "src/app/(admin)/admin/control/tabs/FlotaTab.tsx",
-        "src/app/(admin)/admin/control/ControlDashboard.tsx"
-      ],
-      "action": "Permitir dar de alta unidades de la flota y cambiar su estado operativo desde el panel, mostrando el último GPS real y sin inventar coordenadas cuando no existen.",
-      "scaffold": "NUEVO tabs/FlotaTab.tsx ('use client'):\nexport function FlotaTab(): React.ReactElement\nconst { status, rows, total, error, create, patch, busy } = useAdminResource<FleetRow>('/api/admin/fleet');\n\nconst FLEET_STATUSES = ['IDLE','EN_ROUTE','ON_SITE','MAINTENANCE'] as const;\n\nAlta: unitCode* (min 2), code, status (select, default IDLE), currentLocation\n  submit -> create({ unitCode, code: code || undefined, status, currentLocation: currentLocation || undefined })\n\nTabla: Unidad (unitCode/code), Estado, Ubicación, GPS (positions[0] -> \"lat, lng\" o \"—\"), Actualizado\nAcciones: select de estado por fila -> patch({ id, status })\n\nRegla de honestidad: si positions está vacío se muestra \"—\", nunca 0.0000, 0.0000.\nUX: labels accesibles, aria-busy, aria-live=\"polite\", 409 \"unitCode ya registrado\".\nEstilo OLED rounded-3xl / bg-[#09090d]/80 / border-white/10 / backdrop-blur-md.\n\nControlDashboard.tsx: {activeTab === 'flota' && <FlotaTab />} y borrar el panel duplicado.",
-      "done_when": "Alta y cambio de estado persisten; sin coordenadas inventadas; node ./node_modules/typescript/bin/tsc --noEmit Exit Code 0.",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "status": "QUEUED",
-      "created_at": "2026-10-27T12:39:00.118Z"
-    },
-    {
-      "id": "W41_T15_TAB_AFILIADOS",
-      "title": "Pestaña Afiliados: alta con código de referido y comisión del motor",
-      "priority": "P1",
-      "files": [
-        "src/app/(admin)/admin/control/tabs/AfiliadosTab.tsx",
-        "src/app/(admin)/admin/control/ControlDashboard.tsx"
-      ],
-      "action": "Sustituir el LinkCard vacío de Afiliados por la mesa real de la red: alta de afiliado con código único copiable, tier del motor de comisiones y activación/suspensión. La tarifa la dicta el motor, no el formulario.",
-      "scaffold": "NUEVO tabs/AfiliadosTab.tsx ('use client'):\nexport function AfiliadosTab(): React.ReactElement\nconst { status, rows, total, error, create, patch, busy } = useAdminResource<AffiliateRow>('/api/admin/affiliates');\n\nAlta: email*, name, companyName, cifNif, phone, tier (select BRONZE/SILVER/GOLD/PLATINUM, default BRONZE)\n  submit -> create({ email, name: name || undefined, companyName: companyName || undefined, cifNif: cifNif || undefined, phone: phone || undefined, tier })\n\nTabla: Código (affiliateCode + botón copiar a portapapeles), Empresa (companyName) / Email (user.email), Tier, Comisión (commissionRate %),\n        Ventas generadas (totalSalesGenerated), Estado (isActive)\nEnlace de atribución mostrado por fila: https://productoraear.com/f/<affiliateCode> (solo lectura, botón copiar con navigator.clipboard).\n\nAcciones: \"Activar\"/\"Suspender\" -> patch({ id, isActive }); cambio de tier -> patch({ id, tier }).\nLa comisión mostrada es SIEMPRE la que devuelve la API (motor de comisiones), nunca una constante de la UI.\n\nUX: labels accesibles, aria-busy, aria-live=\"polite\", 409 \"El afiliado ya existe\".\nEstilo OLED rounded-3xl / bg-[#09090d]/80 / border-white/10 / backdrop-blur-md.\n\nControlDashboard.tsx: {activeTab === 'afiliados' && <AfiliadosTab />} y borrar la tarjeta-enlace.",
-      "done_when": "Alta crea afiliado con código único y comisión del motor; enlace /f/<code> copiable; activación persiste; node ./node_modules/typescript/bin/tsc --noEmit Exit Code 0.",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "status": "QUEUED",
-      "created_at": "2026-10-27T12:39:00.118Z"
-    },
-    {
-      "id": "W41_T16_TAB_TESORERIA",
-      "title": "Pestaña Tesorería: split 80/10/10 en vivo y registro de depósito 100 €",
-      "priority": "P0",
-      "files": [
-        "src/app/(admin)/admin/control/tabs/TesoreriaTab.tsx",
-        "src/app/(admin)/admin/control/ControlDashboard.tsx"
-      ],
-      "action": "Convertir la tesorería en mesa de dinero real: KPIs del split desde la API (que nace del SSOT SHA-256), libro de movimientos y alta de depósito Price-Lock de 100 € deducible con su referencia criptográfica visible.",
-      "scaffold": "NUEVO tabs/TesoreriaTab.tsx ('use client'):\nexport function TesoreriaTab(): React.ReactElement\n\ntype TreasuryPayload = { metrics: { totalDepositsAmount: string; totalDepositsCount: number; artistSplit: string; earOsSplit: string; vimumeSplit: string; rule: string }, transactions: { id: string; client: string; service: string; deposit: string; hash: string; status: string; date: string }[] };\nestado local: const [payload, setPayload] = useState<TreasuryPayload | null>(null); const [error, setError] = useState<AdminApiError | null>(null);\n\nCarga: adminFetch<{ metrics: TreasuryPayload['metrics']; transactions: TreasuryPayload['transactions'] }>('/api/admin/treasury?limit=50')\n  -> setPayload({ metrics: res.metrics, transactions: res.transactions })\nKPIs (4 tarjetas): Total depósitos, 80% Artista, 10% EAR OS, 10% VIMUME. Mostrar la regla devuelta por la API (no hardcodear textos de porcentaje).\n\nAlta de depósito (<form>): stripeSessionId* (min 8), amountEur* (number, min 100, default 100), clientName*, serviceName*\n  submit -> adminFetch('/api/admin/treasury', { method:'POST', body:{ stripeSessionId, amountEur, clientName, serviceName } })\n  -> recargar y mostrar la referencia PRICELOCK:<id> devuelta + etiqueta \"100% deducible del total del evento\".\n\nTabla: Cliente, Servicio, Depósito, Referencia (hash), Estado, Fecha.\nErrores: 401 -> enlace /login; 400 -> pintar issues; 503 -> aviso de servicio no configurado.\n\nEstilo OLED rounded-3xl / bg-[#09090d]/80 / border-white/10 / backdrop-blur-md; acento ORO #ecb613 exclusivamente.\n\nControlDashboard.tsx: {activeTab === 'tesoreria' && <TesoreriaTab />} y borrar la tarjeta-enlace.",
-      "done_when": "Los 4 KPIs muestran cifras de la API; registrar el mismo stripeSessionId dos veces no duplica la fila; node ./node_modules/typescript/bin/tsc --noEmit Exit Code 0.",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "status": "QUEUED",
-      "created_at": "2026-10-27T12:39:00.118Z"
-    },
     {
       "id": "W41_T17_GOOGLE_ADS_COCKPIT",
       "title": "Cockpit Google Ads (addwords): conector server-only y panel honesto",
@@ -277,6 +42,125 @@
     }
   ],
   "completed": [
+    {
+      "id": "W41_T16_TAB_TESORERIA",
+      "title": "Pestaña Tesorería: split 80/10/10 en vivo y registro de depósito 100 €",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-29T21:38:38.978Z"
+    },
+    {
+      "id": "W41_T15_TAB_AFILIADOS",
+      "title": "Pestaña Afiliados: alta con código de referido y comisión del motor",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-29T20:43:18.277Z"
+    },
+    {
+      "id": "W41_T14_TAB_FLOTA",
+      "title": "Pestaña Flota: alta de unidades y control de estado operativo",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-29T12:33:56.977Z"
+    },
+    {
+      "id": "W41_T13_TAB_TERAPEUTAS",
+      "title": "Pestaña Terapeutas: alta VIMUME y activación de profesionales",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-29T12:17:55.920Z"
+    },
+    {
+      "id": "W41_T12_TAB_PROVEEDORES",
+      "title": "Pestaña Proveedores: alta homologada y control de rating/estado",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-29T12:08:48.505Z"
+    },
+    {
+      "id": "W41_T11_TAB_ARTISTAS",
+      "title": "Pestaña Artistas: alta, edición de estado y búsqueda reales",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-29T11:48:07.632Z"
+    },
+    {
+      "id": "W41_T10_CONTROL_SHELL",
+      "title": "Shell del panel: hook useAdminResource, KPIs reales y fin de las fachadas",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-29T09:40:57.020Z"
+    },
+    {
+      "id": "W41_T09_API_TREASURY_PRICE_LOCK",
+      "title": "Registro de depósito 100 € Price-Lock: POST idempotente en /api/admin/treasury",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-29T09:30:04.777Z"
+    },
+    {
+      "id": "W41_T08_API_AFFILIATES_CRUD",
+      "title": "Red de afiliados real: nueva API /api/admin/affiliates (GET/POST/PATCH)",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-28T22:57:31.908Z"
+    },
+    {
+      "id": "W41_T07_API_FLEET_POST",
+      "title": "Alta real de flota: POST /api/admin/fleet con unidad única",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-28T22:39:40.295Z"
+    },
+    {
+      "id": "W41_T06_API_PROVIDERS_POST",
+      "title": "Alta real de proveedores: POST /api/admin/providers con doctrina verified",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-28T21:42:14.232Z"
+    },
+    {
+      "id": "W41_T05_API_THERAPISTS_POST",
+      "title": "Alta real de terapeutas: POST /api/admin/therapists (pestaña mostraba HTTP 401)",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-28T21:40:02.810Z"
+    },
+    {
+      "id": "W41_T04_API_ARTISTS_POST",
+      "title": "Alta real de artistas: POST /api/admin/artists con transacción Prisma",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-28T21:37:55.584Z"
+    },
+    {
+      "id": "W41_T03_ADMIN_SESSION_BRIDGE",
+      "title": "Puente de sesión: cookies de middleware, /login real y bridge de token",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-28T21:35:43.965Z"
+    },
+    {
+      "id": "W41_T02_ADMIN_GUARD_RBAC_FIX",
+      "title": "Blindar requireAdmin: lookup por firebaseUid y guard para Server Actions",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-28T21:27:11.867Z"
+    },
+    {
+      "id": "W44_FICHA_DB_PERSISTENCE",
+      "title": "W44: persistir las 2.150 fichas en PostgreSQL 16 con upsert idempotente y verificación ACID",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-28T20:35:37.754Z"
+    },
+    {
+      "id": "W41_T01_ADMIN_FETCH_CORE",
+      "title": "Núcleo de red admin: adminFetch con Bearer Firebase y errores tipados",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-28T08:46:52.228Z"
+    },
     {
       "id": "W40_T06_CONCIERGE_PEAJE_PROMPT",
       "title": "Blindar el Concierge IA: canal único en la ficha verificada y veto explícito a facilitar teléfonos o emails del recinto",
@@ -524,8 +408,8 @@
     }
   ],
   "metadata": {
-    "last_updated": "2026-10-27T12:42:35.976Z",
-    "total_pending": 18,
+    "last_updated": "2026-10-29T21:38:38.980Z",
+    "total_pending": 2,
     "current_sprint": "WAVE_41_ADMIN_CONTROL_DOMINANCE",
     "ceo_mandate": "Reconstruir /admin/control al 100%: altas reales de artistas, proveedores, terapeutas, flota, afiliados y tesorería; sesión Bearer unificada; cero fachadas verificadas por scripts/audit_admin_control_forensics.cjs --strict."
   }

@@ -24,7 +24,7 @@ export default React.memo(function SovereignConciergeDock({
   );
 
   return (
-    <aside aria-label="Concierge flotante EAR OS" className="fixed bottom-5 right-5 z-50 animate-fade-in">
+    <aside aria-label="Concierge flotante EAR OS" className="fixed bottom-[calc(var(--ear-dock-h)+0.5rem)] right-3 lg:bottom-5 lg:right-5 z-50 animate-fade-in">
       <div className="bg-[#050508]/95 backdrop-blur-md border border-amber-500/30 rounded-2xl p-3 sm:p-4 shadow-[0_10px_35px_rgba(0,0,0,0.85)] flex items-center gap-3 sm:gap-4 max-w-[95vw] sm:max-w-md">
         <div className="hidden sm:flex items-center justify-center w-9 h-9 rounded-xl bg-amber-500/10 border border-amber-500/30 shrink-0">
           <ShieldCheck className="w-5 h-5 text-amber-400" />

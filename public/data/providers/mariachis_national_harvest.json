@@ -1,0 +1,117 @@
+{
+  "_meta": {
+    "dataset": "mariachis_national_harvest",
+    "version": "0.1.0-STAGING",
+    "generatedAt": "2026-10-27T00:00:00.000Z",
+    "doctrine": "Publicación solo con teléfono real, propio y atribuible. Prohibido rellenar con la centralita +34 693 693 048 o con números inventados.",
+    "publishable": false,
+    "publishableRecords": 0,
+    "totalRecords": 4,
+    "withPhone": 0,
+    "verified": 0,
+    "source": "https://mariachis.es/",
+    "retrievedAt": "2026-10-27T00:00:00.000Z",
+    "note": "Cosecha inicial de nombres y ciudades publicados en el listado público. Ningún teléfono se publica porque el origen no lo expone: el contacto propio es una función de pago del directorio.",
+    "requiredEvidenceForVerified": [
+      "phone real y propio (distinto de la centralita)",
+      "phoneSourceUrl con la ficha pública donde aparece",
+      "retrievedAt de la consulta",
+      "contraste en al menos una segunda fuente pública"
+    ],
+    "legal": "Datos de contacto profesional de fuentes públicas, base de interés legítimo, finalidad de propuesta comercial y baja inmediata a petición del titular."
+  },
+  "providers": [
+    {
+      "id": "mariachi-abaco-madrid",
+      "name": "Mariachi Ábaco",
+      "slug": "mariachi-abaco-madrid",
+      "category": "mariachi",
+      "province": "Madrid",
+      "municipality": "Madrid",
+      "tags": ["bodas", "serenatas", "cumpleanos"],
+      "sourceBadge": "PREMIUM",
+      "phone": null,
+      "phone_kind": null,
+      "has_real_phone": false,
+      "phoneSourceUrl": null,
+      "verified": false,
+      "publishable": false,
+      "retrievedAt": "2026-10-27T00:00:00.000Z",
+      "provenance": {
+        "source": "https://mariachis.es/",
+        "dataset": "public-listing",
+        "provenanceSha256": null
+      },
+      "notes": "Nombre, ciudad y etiquetas visibles en el listado público. Sin teléfono en origen."
+    },
+    {
+      "id": "mariachi-charros-de-jalisco-madrid",
+      "name": "Mariachi Charros de Jalisco",
+      "slug": "mariachi-charros-de-jalisco-madrid",
+      "category": "mariachi",
+      "province": "Madrid",
+      "municipality": "Madrid",
+      "tags": ["bodas", "cumpleanos", "serenatas"],
+      "sourceBadge": "PREMIUM",
+      "phone": null,
+      "phone_kind": null,
+      "has_real_phone": false,
+      "phoneSourceUrl": null,
+      "verified": false,
+      "publishable": false,
+      "retrievedAt": "2026-10-27T00:00:00.000Z",
+      "provenance": {
+        "source": "https://mariachis.es/",
+        "dataset": "public-listing",
+        "provenanceSha256": null
+      },
+      "notes": "Nombre, ciudad y etiquetas visibles en el listado público. Sin teléfono en origen."
+    },
+    {
+      "id": "mariachi-sentimiento-mexicano-valencia",
+      "name": "Mariachi Sentimiento Mexicano",
+      "slug": "mariachi-sentimiento-mexicano-valencia",
+      "category": "mariachi",
+      "province": "Valencia",
+      "municipality": "Valencia",
+      "tags": ["bodas", "serenatas", "cumpleanos"],
+      "sourceBadge": "VERIFICADO",
+      "phone": null,
+      "phone_kind": null,
+      "has_real_phone": false,
+      "phoneSourceUrl": null,
+      "verified": false,
+      "publishable": false,
+      "retrievedAt": "2026-10-27T00:00:00.000Z",
+      "provenance": {
+        "source": "https://mariachis.es/",
+        "dataset": "public-listing",
+        "provenanceSha256": null
+      },
+      "notes": "El badge «Verificado» es del directorio, no una verificación propia. Sin teléfono en origen."
+    },
+    {
+      "id": "mariachis-europa-sevilla",
+      "name": "Mariachis Europa",
+      "slug": "mariachis-europa-sevilla",
+      "category": "mariachi",
+      "province": "Sevilla",
+      "municipality": "Sevilla",
+      "tags": ["bodas", "serenatas", "cumpleanos"],
+      "sourceBadge": "PREMIUM",
+      "phone": null,
+      "phone_kind": null,
+      "has_real_phone": false,
+      "phoneSourceUrl": null,
+      "verified": false,
+      "publishable": false,
+      "retrievedAt": "2026-10-27T00:00:00.000Z",
+      "provenance": {
+        "source": "https://mariachis.es/",
+        "dataset": "public-listing",
+        "provenanceSha256": null
+      },
+      "notes": "Nombre, ciudad y etiquetas visibles en el listado público. Sin teléfono en origen."
+    }
+  ]
+}

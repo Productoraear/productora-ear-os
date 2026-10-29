@@ -2196,7 +2196,7 @@ export default function HermesTrackerOTPage() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 50 }}
-            className="fixed bottom-10 right-10 bg-[#0a0a0a] border border-[#ecb613]/30 px-8 py-4 rounded-2xl shadow-2xl z-[100] flex items-center gap-3 backdrop-blur-xl"
+            className="fixed bottom-[calc(var(--ear-dock-h)+0.75rem)] right-4 lg:bottom-10 lg:right-10 bg-[#0a0a0a] border border-[#ecb613]/30 px-8 py-4 rounded-2xl shadow-2xl z-[100] flex items-center gap-3 backdrop-blur-xl"
           >
             <Sparkles className="text-[#ecb613] animate-pulse" size={16} />
             <span className="text-[10px] font-black uppercase tracking-widest text-[#f5f1e8]">{toastMessage}</span>

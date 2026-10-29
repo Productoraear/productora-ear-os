@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
-import { requireAdmin } from "@/lib/security/adminGuard";
+import { requireAdminFromHeaders } from "@/lib/security/adminGuard";
 
 export async function createProviderAction(data: {
   name: string;
@@ -11,9 +11,9 @@ export async function createProviderAction(data: {
   telephone?: string;
   description?: string;
 }) {
-  const auth = await requireAdmin(new Request("http://localhost"));
+  const auth = await requireAdminFromHeaders();
   if (!auth.ok) {
-    throw new Error("No autorizado");
+    throw new Error("UNAUTHORIZED_ACCESS");
   }
 
   // Create a VendorShadowProfile
@@ -38,9 +38,9 @@ export async function createProviderAction(data: {
 
     revalidatePath("/admin/proveedores");
     return { success: true, provider: newProvider };
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("Error creating provider:", err);
-    throw new Error(err.message || "Error al crear el proveedor");
+    throw new Error(err instanceof Error ? err.message : "Error al crear el proveedor");
   }
 }
 
@@ -54,9 +54,9 @@ export async function updateProviderAction(
     status?: string;
   }
 ) {
-  const auth = await requireAdmin(new Request("http://localhost"));
+  const auth = await requireAdminFromHeaders();
   if (!auth.ok) {
-    throw new Error("No autorizado");
+    throw new Error("UNAUTHORIZED_ACCESS");
   }
 
   try {
@@ -66,16 +66,16 @@ export async function updateProviderAction(
     });
     revalidatePath("/admin/proveedores");
     return { success: true, provider: updated };
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("Error updating provider:", err);
-    throw new Error(err.message || "Error al actualizar el proveedor");
+    throw new Error(err instanceof Error ? err.message : "Error al actualizar el proveedor");
   }
 }
 
 export async function deleteProviderAction(id: string) {
-  const auth = await requireAdmin(new Request("http://localhost"));
+  const auth = await requireAdminFromHeaders();
   if (!auth.ok) {
-    throw new Error("No autorizado");
+    throw new Error("UNAUTHORIZED_ACCESS");
   }
 
   try {
@@ -84,8 +84,8 @@ export async function deleteProviderAction(id: string) {
     });
     revalidatePath("/admin/proveedores");
     return { success: true };
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("Error deleting provider:", err);
-    throw new Error(err.message || "Error al eliminar el proveedor");
+    throw new Error(err instanceof Error ? err.message : "Error al eliminar el proveedor");
   }
 }

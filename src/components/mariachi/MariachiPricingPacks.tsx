@@ -249,7 +249,7 @@ export default function MariachiPricingPacks() {
           <p className="text-xs sm:text-sm text-white/60 font-sans leading-relaxed">
             Garantizamos una retribución digna de <strong>100 € por músico por servicio</strong> en nuestros packs.
             Además, intégrate en nuestro <strong>Programa de Afiliados</strong>: gana comisiones recomendando clientes y acumula saldo para
-            descontar tus suscripciones anuales, producción de videoclips en plató 4K y paquetes de sonido profesional en Productora EAR.
+            producción de videoclips en plató 4K y paquetes de sonido profesional en Productora EAR.
           </p>
         </div>
 

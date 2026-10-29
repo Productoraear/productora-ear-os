@@ -34,11 +34,19 @@ export class UserService {
 
   /**
    * 🛡️ RBAC AUTHORITY CHECK
+   * ============================================================================
    * Verifica si el usuario tiene un rol específico o superior.
+   *
+   * BLINDAJE P0 (W41_T02): el JWT de Firebase entrega el UID de Firebase, NO el
+   * `User.id` interno de PostgreSQL. El lookup DEBE resolver por ambos cauces
+   * (`id` OR `firebaseUid`) o todo admin real cae en 403 permanente.
+   * ============================================================================
    */
   static async hasRole(id: string, requiredRole: Role): Promise<boolean> {
-    const user = await prisma.user.findUnique({
-      where: { id },
+    if (!id) return false;
+
+    const user = await prisma.user.findFirst({
+      where: { OR: [{ id }, { firebaseUid: id }] },
       select: { role: true },
     });
 

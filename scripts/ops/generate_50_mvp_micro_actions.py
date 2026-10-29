@@ -564,7 +564,7 @@ def generate_tasks():
             "status": "PENDING",
             "description": "Certificar que el usuario pueda autenticarse sin trabas con Ear2024Ear* y que el icono de ojo permita revisar la contraseña.",
             "scaffold": {
-                "files_to_touch": ["src/app/api/auth/admin-verify/route.ts", "src/app/(public)/(auth)/login/page.tsx"],
+                "files_to_touch": ["src/app/api/auth/admin-verify/route.ts", "src/app/login/respaldo/page.tsx"],
                 "macro_script": "Verificar que el login acepte Ear2024Ear* para roles Admin y Editor y redirija a /admin."
             },
             "validation": "npx tsc --noEmit -> Exit Code 0"

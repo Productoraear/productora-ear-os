@@ -3,11 +3,16 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { ChevronLeft, ChevronRight, Maximize2, X, Play, Image as ImageIcon } from 'lucide-react';
+import {
+  classifyProviderVideo,
+  type ProviderVideoSource,
+} from '@/lib/providers/provider-media-engine';
 
 interface MediaGalleryProps {
   providerName: string;
   featuredImage: string;
   galleryImages?: string[];
+  /** URLs de vídeo sin clasificar: se normalizan aquí (embed vs fichero). */
   videoUrls?: string[];
 }
 
@@ -19,12 +24,21 @@ export const ProviderMediaGallery: React.FC<MediaGalleryProps> = React.memo(func
 }) {
   // Deduplicar y normalizar lista de imágenes
   const allImages = Array.from(new Set([featuredImage, ...galleryImages].filter(Boolean)));
+  /**
+   * Clasificación client-side: la plataforma audiovisual acaba en `iframe`
+   * (player oficial ya normalizado por el motor) y el fichero directo
+   * (`mp4/webm/ogg/m4v`) en `<video>`. Antes TODO se metía en un `iframe`, por
+   * lo que un `.mp4` del proveedor producía un reproductor en blanco.
+   */
+  const videoSources = videoUrls
+    .map((url) => classifyProviderVideo(url))
+    .filter((video): video is ProviderVideoSource => video !== null);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<'photos' | 'videos'>('photos');
 
   const hasMultipleImages = allImages.length > 1;
-  const hasVideos = videoUrls.length > 0;
+  const hasVideos = videoSources.length > 0;
   const currentImage = allImages[selectedIndex] || featuredImage;
 
   const nextImage = () => setSelectedIndex((prev) => (prev + 1) % allImages.length);
@@ -47,11 +61,11 @@ export const ProviderMediaGallery: React.FC<MediaGalleryProps> = React.memo(func
           <button
             onClick={() => setActiveTab('videos')}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-bold uppercase transition-all ${activeTab === 'videos'
-                ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/20'
+                ? 'bg-[#00E5FF] text-black shadow-lg shadow-[#00E5FF]/20'
                 : 'bg-white/5 text-white/60 hover:text-white'
               }`}
           >
-            <Play size={14} /> Vídeos ({videoUrls.length})
+            <Play size={14} /> Vídeos ({videoSources.length})
           </button>
         </div>
       )}
@@ -135,15 +149,28 @@ export const ProviderMediaGallery: React.FC<MediaGalleryProps> = React.memo(func
       {/* VISTA DE VÍDEOS */}
       {activeTab === 'videos' && hasVideos && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {videoUrls.map((video, idx) => (
-            <div key={idx} className="aspect-video w-full rounded-2xl overflow-hidden border border-white/10 bg-black">
-              <iframe
-                src={video}
-                title={`${providerName} - Video ${idx + 1}`}
-                className="h-full w-full"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
+          {videoSources.map((video, idx) => (
+            <div key={video.src} className="aspect-video w-full rounded-2xl overflow-hidden border border-white/10 bg-black">
+              {video.kind === 'file' ? (
+                <video
+                  src={video.src}
+                  controls
+                  playsInline
+                  preload="metadata"
+                  className="h-full w-full bg-black"
+                  title={`${providerName} - Video ${idx + 1}`}
+                />
+              ) : (
+                <iframe
+                  src={video.src}
+                  title={`${providerName} - Video ${idx + 1}`}
+                  className="h-full w-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                />
+              )}
             </div>
           ))}
         </div>

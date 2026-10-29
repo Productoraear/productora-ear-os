@@ -18,8 +18,6 @@ import {
   BarChart3,
   Cpu
 } from 'lucide-react';
-import PublicNavbar from '@/app/components/public/PublicNavbar';
-import EarBottomNav from '@/components/SClassScreens/EarBottomNav';
 import { ROUTES } from '@/lib/routes';
 import Link from 'next/link';
 
@@ -298,8 +296,6 @@ export default function DossierHub() {
         </div>
       </section>
 
-      {/* NAVEGACIÓN INFERIOR */}
-      <EarBottomNav />
     </div>
   );
 }

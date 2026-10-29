@@ -24,6 +24,8 @@ import {
   CALENDAR_TIME_SLOTS,
   getCalendarEntityKindMeta,
 } from '@/lib/calendar/entity-calendar-types';
+import { DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
+import { resolveProviderContractHref } from '@/lib/providers/provider-cta-engine';
 
 export interface EntityCalendarPayload {
   ok: boolean;
@@ -95,6 +97,7 @@ export default function EntityCalendarBoard({
   canMutate,
   initialDate = null,
   initialSlot = null,
+  initialIntent = null,
 }: EntityCalendarBoardProps) {
   const meta = getCalendarEntityKindMeta(kind);
 
@@ -453,6 +456,33 @@ export default function EntityCalendarBoard({
                 </div>
               )}
             </>
+          )}
+
+          {!canMutate && (
+            <div className="space-y-2 pt-3 border-t border-white/10">
+              {initialIntent === 'bloquear' && (
+                <p className="text-[10px] font-mono text-[#f5d273] leading-relaxed">
+                  Modo bloqueo: elige día y franja en esta agenda y formaliza el depósito
+                  deducible. La fecha se bloquea <strong>en la agenda de este profesional</strong>,
+                  nunca en la de otro proveedor.
+                </p>
+              )}
+              <a
+                href={resolveProviderContractHref(
+                  { slug, category: payload?.entity.category ?? null },
+                  { date: selectedDate },
+                )}
+                className="w-full py-3 rounded-xl bg-[#ecb613] text-black font-mono text-[11px] font-black uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-[#f5d273] hover:scale-[1.01] transition-all duration-300 ease-out"
+              >
+                <CheckCircle2 size={14} />
+                Formalizar depósito {DEPOSITO_STRIPE_EUR} € (deducible)
+              </a>
+              <p className="text-[10px] font-mono text-zinc-500 leading-relaxed">
+                {selectedDate ? `Fecha seleccionada: ${selectedDate}. ` : 'Selecciona un día y una franja. '}
+                El depósito se descuenta al 100 % de la liquidación final y queda garantizado por
+                contrato con claves SHA-256.
+              </p>
+            </div>
           )}
 
           {feedback && (

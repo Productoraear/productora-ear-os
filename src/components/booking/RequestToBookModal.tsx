@@ -17,6 +17,9 @@ import {
   X,
 } from 'lucide-react';
 import { CENTRALITA_EAR_OS } from '@/lib/constants/ear-os-ssot';
+import { createIntakeKey, submitFormToAgents } from '@/lib/agents/formIntakeClient';
+import type { FormIntakeResult } from '@/lib/agents/formIntakeTypes';
+import { AgentIntakeReceipt } from '@/components/agents/AgentIntakeReceipt';
 
 // ─── Tipos (cero `any` implícito) ─────────────────────────────────────────────
 
@@ -229,6 +232,10 @@ export function RequestToBookModal({
   const [serverError, setServerError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [confirmation, setConfirmation] = useState<BookingRequestSuccess | null>(null);
+  // Puente con la flota Ω: recibo real del pipeline (cotización + rider + compliance).
+  const [agentReceipt, setAgentReceipt] = useState<FormIntakeResult | null>(null);
+  const [agentPending, setAgentPending] = useState(false);
+  const intakeKeyRef = useRef<string>('');
 
   const dialogRef = useRef<HTMLDivElement>(null);
   const previouslyFocusedRef = useRef<HTMLElement | null>(null);
@@ -240,6 +247,9 @@ export function RequestToBookModal({
       setFieldErrors({});
       setServerError(null);
       setConfirmation(null);
+      setAgentReceipt(null);
+      setAgentPending(false);
+      intakeKeyRef.current = createIntakeKey();
       setLoading(false);
     }
   }, [isOpen, defaultBudget, location]);
@@ -338,6 +348,32 @@ export function RequestToBookModal({
           return;
         }
         setConfirmation(data);
+        const receiptKey: string = intakeKeyRef.current || createIntakeKey();
+        intakeKeyRef.current = receiptKey;
+        setAgentPending(true);
+        void submitFormToAgents(
+          'booking_request',
+          {
+            clientName: payload.clientName,
+            clientPhone: payload.clientPhone,
+            eventDate: payload.eventDate.slice(0, 10),
+            eventLocation: payload.eventLocation,
+            pax: payload.guests,
+            budgetEur: payload.budgetEur,
+            providerId: payload.providerId,
+            providerName: payload.providerName,
+            category: payload.category,
+            message: payload.notes,
+            sourcePath: '/reservar',
+          },
+          { idempotencyKey: receiptKey },
+        )
+          .then((receipt: FormIntakeResult | null) => {
+            setAgentReceipt(receipt);
+          })
+          .finally(() => {
+            setAgentPending(false);
+          });
         return;
       }
 
@@ -463,6 +499,17 @@ export function RequestToBookModal({
                   confirmar tu fecha antes de liberarla.
                 </p>
               </div>
+
+              {agentReceipt ? (
+                <AgentIntakeReceipt result={agentReceipt} />
+              ) : agentPending ? (
+                <div className="min-h-[220px] w-full rounded-3xl bg-[#09090d]/80 border border-white/10 backdrop-blur-md p-5 flex items-center gap-3">
+                  <Loader2 size={18} className="animate-spin text-[#ecb613]" aria-hidden="true" />
+                  <p className="text-xs text-white/50">
+                    La flota Ω está calculando tarifa SSOT, rider acústico y compliance…
+                  </p>
+                </div>
+              ) : null}
 
               <div className="flex flex-col sm:flex-row gap-3 pt-2">
                 <a

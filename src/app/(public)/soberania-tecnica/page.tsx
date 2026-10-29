@@ -3,7 +3,6 @@
 import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import SovereignNavbar from '@/app/components/layout/SovereignNavbar';
 import { Shield, Cpu, Network, Globe, Lock, CheckCircle, ArrowRight, Sparkles } from 'lucide-react';
 import {
   TARIFA_BASE_SOLISTA_EUR,
@@ -77,8 +76,6 @@ export default function SoberaniaTecnicaPage() {
 
   return (
     <div className="min-h-screen bg-[#030305] text-white selection:bg-[#ecb613]/30 w-full overflow-x-hidden">
-      <SovereignNavbar />
-
       {/* JSON-LD Schema.org Offer/Product */}
       <script
         type="application/ld+json"

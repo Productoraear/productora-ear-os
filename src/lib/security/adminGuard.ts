@@ -1,3 +1,4 @@
+import { headers } from 'next/headers';
 import { NextResponse } from 'next/server';
 import { Role } from '@prisma/client';
 import { adminAuth } from '@/lib/firebaseAdmin';
@@ -80,4 +81,31 @@ export async function requireAdmin(request: Request): Promise<AdminAuthResult> {
     }
 
     return { ok: true, uid: decoded.uid, email: decoded.email ?? '' };
+}
+
+/**
+ * 🔐 GUARDIÁN DE ACCESO ADMIN — VARIANTE SERVER ACTION (BLINDAJE P0)
+ * ============================================================================
+ * Las Server Actions no reciben un `Request` HTTP: construir uno a mano
+ * (`new Request('http://localhost')`) produce un objeto SIN cabeceras y el
+ * guard devuelve 401 permanente, dejando la acción inutilizable.
+ *
+ * Esta variante lee las cabeceras reales de la petición en curso mediante
+ * `next/headers` y delega en `requireAdmin` (firma original intacta), de modo
+ * que la verificación RBAC es EXACTAMENTE la misma.
+ *
+ * Uso obligatorio al inicio de CADA Server Action administrativa:
+ *   const auth = await requireAdminFromHeaders();
+ *   if (!auth.ok) throw new Error('UNAUTHORIZED_ACCESS');
+ * ============================================================================
+ */
+export async function requireAdminFromHeaders(): Promise<AdminAuthResult> {
+    const headerStore = await headers();
+    const bearer = headerStore.get('authorization') ?? '';
+
+    return requireAdmin(
+        new Request('https://productoraear.com', {
+            headers: { authorization: bearer },
+        })
+    );
 }

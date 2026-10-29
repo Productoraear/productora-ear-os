@@ -6,6 +6,13 @@ import {
   CheckCircle2, ArrowRight, ShieldCheck, Clock, Crown, Phone, MessageCircle, Gift, Star
 } from 'lucide-react';
 import { CENTRALITA } from '@/lib/phone-constants';
+import {
+  EDWIN_CANCION_PERSONALIZADA_BASE_EUR,
+  EDWIN_SHOWCASE_RC_EUR,
+  formatEur,
+} from '@/lib/artists/edwin-showcase-catalog';
+import { TARIFA_BASE_SOLISTA_EUR } from '@/lib/constants/ear-os-ssot';
+import { MARIACHI_FORMATS } from '@/lib/mariachi/mariachi-formats';
 
 interface HistoricalService {
   id: string;
@@ -25,7 +32,7 @@ const HISTORICAL_SERVICES: HistoricalService[] = [
     id: 'cumpleanos',
     title: 'Mariachis para Cumpleaños',
     badge: 'Sorpresa Emocional',
-    priceTag: 'Desde 350 € · Solista / 750 € Quinteto',
+    priceTag: `Desde ${formatEur(TARIFA_BASE_SOLISTA_EUR)} · Solista / grupo desde ${formatEur(MARIACHI_FORMATS[1].basePrice)}`,
     icon: <Cake className="text-[#ecb613]" size={28} />,
     subtitle: 'Impacto directo en ventana, balcón, restaurante o salón',
     description: 'La sorpresa definitiva para celebrar la vida. Llegada milimétricamente cronometrada para irrumpir cantando "Las Mañanitas" en el instante exacto. Ramo de flores o sombrero charro disponible con bono.',
@@ -42,7 +49,7 @@ const HISTORICAL_SERVICES: HistoricalService[] = [
     id: 'bodas',
     title: 'Regalo de Boda & Compromiso',
     badge: 'Máxima Distinción',
-    priceTag: 'Desde 350 € · Solista / 750 € Quinteto 5M',
+    priceTag: `Desde ${formatEur(TARIFA_BASE_SOLISTA_EUR)} · Solista / ${formatEur(MARIACHI_FORMATS[2].basePrice)} Gala`,
     icon: <Heart className="text-[#ecb613]" size={28} />,
     subtitle: 'La serenata inolvidable para la ceremonia o el cóctel',
     description: 'Un regalo de alta etiqueta para los novios. Irrupción mágica tras el "Sí, quiero", apertura del cóctel en jardines o explosión de alegría en la barra libre.',
@@ -59,7 +66,7 @@ const HISTORICAL_SERVICES: HistoricalService[] = [
     id: 'cancion-video-personalizado',
     title: 'Canción & Vídeo Dedicatoria 4K',
     badge: 'Exclusivo Estudio de Grabación',
-    priceTag: '150 € (O GRATIS con Cupón EDWIN150)',
+    priceTag: `Desde ${formatEur(EDWIN_CANCION_PERSONALIZADA_BASE_EUR)} · Canjeable con cupón EDWIN150`,
     icon: <Video className="text-[#ecb613]" size={28} />,
     subtitle: 'Composición inédita con la historia y nombres del homenajeado',
     description: 'Un regalo eterno. Edwin Agudelo compone e interpreta en estudio profesional una canción personalizada con las anécdotas, nombres y fechas de tu ser querido, entregada en vídeo 4K de alta definición.',
@@ -76,7 +83,7 @@ const HISTORICAL_SERVICES: HistoricalService[] = [
     id: 'madre-padre',
     title: 'Día de la Madre y del Padre',
     badge: 'Gratitud Familiar',
-    priceTag: 'Desde 350 € · Incluye Ramo Floral con Cupón',
+    priceTag: `Desde ${formatEur(TARIFA_BASE_SOLISTA_EUR)} · Incluye ramo floral con cupón`,
     icon: <Users className="text-[#ecb613]" size={28} />,
     subtitle: 'El abrazo musical que agradece toda una vida',
     description: 'Homenaje de profunda emoción para padres y abuelos. Canciones que tocan la fibra más íntima y celebran el esfuerzo de toda una familia reunida en torno a la música tradicional.',
@@ -110,7 +117,7 @@ const HISTORICAL_SERVICES: HistoricalService[] = [
     id: 'quince-anos',
     title: 'Quinceañeras & Aniversarios de Oro',
     badge: 'Rito de Gala Tradicional',
-    priceTag: 'Desde 350 € · Solista / 750 € Quinteto',
+    priceTag: `Desde ${formatEur(TARIFA_BASE_SOLISTA_EUR)} · Solista / grupo desde ${formatEur(MARIACHI_FORMATS[1].basePrice)}`,
     icon: <Sparkles className="text-[#ecb613]" size={28} />,
     subtitle: 'El protocolo solemne y emotivo para fechas históricas',
     description: 'El homenaje más solemne y alegre para celebrar los 15 años o los 50 años de matrimonio. Entrada triunfal con el vals tradicional y entrega de recuerdos.',
@@ -127,7 +134,7 @@ const HISTORICAL_SERVICES: HistoricalService[] = [
     id: 'serenata-virtual',
     title: 'Serenata Virtual & Streaming HD',
     badge: 'Conexión Sin Fronteras',
-    priceTag: 'Desde 120 € · En Directo 100% Interactivo',
+    priceTag: 'Presupuesto cerrado sin desplazamiento',
     icon: <Video className="text-[#ecb613]" size={28} />,
     subtitle: 'Videollamada en directo con el homenajeado en cualquier parte del mundo',
     description: 'Un detalle especial para la persona que quieres, amas y admiras desde cualquier rincón del planeta. Edwin Agudelo conecta en directo vía Zoom, Meet o WhatsApp interpretando las canciones más emotivas con dedicatoria personalizada.',
@@ -144,7 +151,7 @@ const HISTORICAL_SERVICES: HistoricalService[] = [
     id: 'cancion-personalizada',
     title: 'Canción Inédita Personalizada',
     badge: 'Obra de Autor Registrada',
-    priceTag: '150 € · Grabación en Estudio',
+    priceTag: `Desde ${formatEur(EDWIN_CANCION_PERSONALIZADA_BASE_EUR)} · Grabación en estudio`,
     icon: <Heart className="text-[#ecb613]" size={28} />,
     subtitle: 'Composición musical exclusiva con los nombres y anécdotas de tu historia',
     description: 'Un regalo diferente y exclusivo que llega directo al corazón. Edwin Agudelo escribe e interpreta una canción única basada en vuestra historia de amor, gratitud o superación, grabada profesionalmente con arreglos de conservatorio.',
@@ -173,19 +180,19 @@ const VALUE_PROPOSITIONS = [
   {
     icon: <ShieldCheck size={20} className="text-[#ecb613]" />,
     title: 'Garantía 0 Fallos & Trajes de Gala',
-    desc: 'Botonaduras de plata auténticas, músicos de conservatorio y sonido Bose HiFi 12 W/pax. La opción mejor valorada de España (4.9★).'
+    desc: 'Botonaduras de plata auténticas, músicos de conservatorio y sonido profesional 12 W/pax con Price-Lock SHA-256.'
   }
 ];
 
 const COMPETITOR_COMPARISON = [
   {
     feature: 'Formato Mínimo Mariachi Completo',
-    edwin: '5 Músicos de Conservatorio Garantizados (750 €)',
+    edwin: `${MARIACHI_FORMATS[2].members} músicos de conservatorio garantizados (${formatEur(MARIACHI_FORMATS[2].basePrice)})`,
     others: 'Envían 2 o 3 aficionados sin trompeta'
   },
   {
     feature: 'Transparencia de Tarifas',
-    edwin: 'Tarifas Públicas Cerradas (Solista 350 € / Quinteto 750 €)',
+    edwin: `Tarifas públicas cerradas (Solista ${formatEur(TARIFA_BASE_SOLISTA_EUR)} / Gala ${formatEur(MARIACHI_FORMATS[2].basePrice)})`,
     others: 'Precios ocultos que inflan al llegar al evento'
   },
   {
@@ -200,7 +207,7 @@ const COMPETITOR_COMPARISON = [
   },
   {
     feature: 'Seguro de Responsabilidad Civil',
-    edwin: 'Cobertura oficial de 300.000 € para fincas y salas',
+    edwin: `Cobertura oficial de ${formatEur(EDWIN_SHOWCASE_RC_EUR)} para fincas y salas`,
     others: 'Sin seguro legal para eventos'
   }
 ];

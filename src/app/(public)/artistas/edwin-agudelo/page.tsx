@@ -2,6 +2,8 @@ import React from 'react';
 import { Metadata } from 'next';
 import { SClassPricingTerminal } from '@/components/pricing/SClassPricingTerminal';
 import { EdwinLegacyPlayer } from '@/features/artists/ui/EdwinLegacyPlayer';
+import { EdwinEscaparateSClass } from '@/features/artists/ui/EdwinEscaparateSClass';
+import { EDWIN_SHOWCASE_VERTICALS } from '@/lib/artists/edwin-showcase-catalog';
 import { Mic2, Star, Sparkles, ArrowRight, MessageCircle, ShieldCheck, Clock, Music2 } from 'lucide-react';
 import Link from 'next/link';
 import {
@@ -77,9 +79,32 @@ interface JsonLdFaq {
   mainEntity: JsonLdQuestion[];
 }
 
+interface JsonLdListItem {
+  '@type': 'ListItem';
+  position: number;
+  item: {
+    '@type': 'Service';
+    name: string;
+    url: string;
+    provider: {
+      '@type': 'Person';
+      name: string;
+      '@id': string;
+    };
+  };
+}
+
+interface JsonLdItemList {
+  '@type': 'ItemList';
+  '@id': string;
+  name: string;
+  numberOfItems: number;
+  itemListElement: JsonLdListItem[];
+}
+
 interface JsonLdGraph {
   '@context': 'https://schema.org';
-  '@graph': [JsonLdPerson, JsonLdFaq];
+  '@graph': [JsonLdPerson, JsonLdFaq, JsonLdItemList];
 }
 
 export default function EdwinAgudeloPage(): React.JSX.Element {
@@ -145,6 +170,28 @@ export default function EdwinAgudeloPage(): React.JSX.Element {
             },
           },
         ],
+      },
+      {
+        '@type': 'ItemList',
+        '@id': `${ARTIST_CANONICAL_URL}#escaparate`,
+        name: 'Escaparate de servicios de Edwin Agudelo',
+        numberOfItems: EDWIN_SHOWCASE_VERTICALS.length,
+        itemListElement: EDWIN_SHOWCASE_VERTICALS.map(
+          (vertical, index): JsonLdListItem => ({
+            '@type': 'ListItem',
+            position: index + 1,
+            item: {
+              '@type': 'Service',
+              name: vertical.title,
+              url: `https://productoraear.com${vertical.href}`,
+              provider: {
+                '@type': 'Person',
+                name: 'Edwin Agudelo',
+                '@id': `${ARTIST_CANONICAL_URL}#artist`,
+              },
+            },
+          }),
+        ),
       },
     ],
   };
@@ -231,6 +278,9 @@ export default function EdwinAgudeloPage(): React.JSX.Element {
               <SClassPricingTerminal />
             </div>
           </div>
+
+          {/* 🏛️ ESCAPARATE S-CLASS · 9 verticales absorbidas del legado, precios SSOT */}
+          <EdwinEscaparateSClass />
 
           {/* 🎵 Jukebox Multimedia S-Class de Edwin Agudelo */}
           <section className="space-y-6 pt-8 border-t border-white/10">

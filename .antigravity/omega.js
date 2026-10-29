@@ -177,9 +177,14 @@ if (command === 'next') {
 
     // Purgar de tasks pendientes y actualizar contadores
     data.tasks.splice(idx, 1);
-    if (data.metadata) {
-        data.metadata.total_pending = data.tasks.length;
-        data.metadata.last_updated = new Date().toISOString();
+    // La cola viva usa la clave `_meta` (WAVE 41 en adelante); versiones previas usaban `metadata`.
+    // Antes solo se actualizaba `metadata`, por lo que `total_pending` nunca se refrescaba.
+    for (const metaKey of ['_meta', 'metadata']) {
+        const meta = data[metaKey];
+        if (meta !== null && typeof meta === 'object') {
+            meta.total_pending = data.tasks.length;
+            meta.last_updated = new Date().toISOString();
+        }
     }
     writeJSON(QUEUE_FILE, data);
     updateJournal(data);

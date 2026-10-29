@@ -91,6 +91,21 @@ const PatchBodySchema = z
         message: 'no hay campos validos para actualizar',
     });
 
+const CreateBodySchema = z
+    .object({
+        name: z.string().trim().min(2).max(160),
+        companyName: z.string().trim().max(160).optional(),
+        category: z.enum(VENDOR_CATEGORIES),
+        city: z.string().trim().max(120).optional(),
+        province: z.string().trim().min(2).max(120).default('Madrid / Toledo'),
+        phone: z.string().trim().max(24).optional(),
+        email: z.string().trim().email().max(180).optional(),
+        description: z.string().trim().max(4000).optional(),
+        claimStatus: z.enum(CLAIM_STATUSES).default('GHOST_UNCLAIMED'),
+        status: StatusSchema.default('DRAFT'),
+    })
+    .strict();
+
 /* -------------------------------------------------------------------------- */
 /*  Helpers                                                                   */
 /* -------------------------------------------------------------------------- */
@@ -106,6 +121,43 @@ function parseEnumParam<T extends string>(
         return { ok: true, value: normalized as T };
     }
     return { ok: false };
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Doctrina del dato verificado (Zona Cero: cero verified de fachada)        */
+/* -------------------------------------------------------------------------- */
+
+/** Centralita del CEO: NUNCA es un teléfono de proveedor verificable. */
+const CENTRALITA = '+34693693048';
+const CENTRALITA_DIGITS = CENTRALITA.replace(/\D/g, '');
+
+function normalizePhone(raw?: string): string | undefined {
+    if (!raw) return undefined;
+    const cleaned = raw.replace(/[^0-9+]/g, '');
+    return cleaned.length >= 9 ? cleaned : undefined;
+}
+
+/**
+ * Compara por dígitos para no dejar pasar la centralita escrita en formato
+ * nacional (693693048) o internacional (0034693693048).
+ */
+function isCentralita(phone: string): boolean {
+    const digits = phone.replace(/\D/g, '');
+    if (digits.length < 9) return false;
+    return (
+        digits.endsWith(CENTRALITA_DIGITS) ||
+        CENTRALITA_DIGITS.endsWith(digits)
+    );
+}
+
+function slugify(raw: string): string {
+    return raw
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '')
+        .slice(0, 120);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -261,6 +313,100 @@ export async function PATCH(request: NextRequest): Promise<NextResponse> {
         console.error('[admin/providers] PATCH error', error);
         return jsonResponse(
             { ok: false, error: 'Error interno del servidor' },
+            { status: 500 },
+        );
+    }
+}
+
+/* -------------------------------------------------------------------------- */
+/*  POST /api/admin/providers                                                 */
+/* -------------------------------------------------------------------------- */
+
+export async function POST(request: NextRequest): Promise<NextResponse> {
+    const auth = await requireAdmin(request);
+    if (!auth.ok) return auth.response;
+
+    let rawBody: unknown;
+    try {
+        rawBody = await request.json();
+    } catch {
+        return jsonResponse(
+            { ok: false, error: 'JSON invalido' },
+            { status: 400 },
+        );
+    }
+
+    const parsed = CreateBodySchema.safeParse(rawBody);
+    if (!parsed.success) {
+        return jsonResponse(
+            {
+                ok: false,
+                error: 'Payload inválido',
+                issues: parsed.error.issues.map((issue) => ({
+                    path: issue.path.join('.'),
+                    message: issue.message,
+                })),
+            },
+            { status: 400 },
+        );
+    }
+
+    const body = parsed.data;
+    const phone = normalizePhone(body.phone);
+    const realPhone = phone !== undefined && !isCentralita(phone);
+    const slug = slugify(body.name);
+
+    if (!slug) {
+        return jsonResponse(
+            { ok: false, error: 'Nombre no genera slug válido' },
+            { status: 400 },
+        );
+    }
+
+    // Doctrina del dato verificado: sin teléfono real no hay VERIFIED_ACTIVE
+    // ni isVerified. La centralita y el vacío degradan a pendiente de verificar.
+    const claimStatus: ClaimStatus =
+        body.claimStatus === 'VERIFIED_ACTIVE' && !realPhone
+            ? 'CLAIMED_PENDING_VERIFICATION'
+            : body.claimStatus;
+    const isVerified = realPhone && claimStatus === 'VERIFIED_ACTIVE';
+    const effectiveStatus =
+        !isVerified && body.status === 'ACTIVE_VERIFIED'
+            ? 'DRAFT'
+            : body.status;
+
+    try {
+        const created = await prisma.providerProfile.create({
+            data: {
+                name: body.name,
+                slug,
+                companyName: body.companyName ?? '',
+                category: body.category,
+                city: body.city,
+                province: body.province,
+                phone,
+                email: body.email,
+                description: body.description,
+                claimStatus,
+                status: effectiveStatus,
+                isVerified,
+            },
+        });
+
+        return jsonResponse({ ok: true, data: created }, { status: 201 });
+    } catch (error) {
+        if (
+            error instanceof Prisma.PrismaClientKnownRequestError &&
+            error.code === 'P2002'
+        ) {
+            return jsonResponse(
+                { ok: false, error: 'Nombre o slug ya registrado' },
+                { status: 409 },
+            );
+        }
+        console.error('[admin/providers][POST]', error);
+        return jsonResponse(
+            { ok: false, error: 'Internal error' },
             { status: 500 },
         );
     }

@@ -194,7 +194,7 @@ function ContactoSlugContent({ slug }: { slug: string }) {
       </div>
 
       {/* STICKY BOTTOM ACTION BAR FOR MOBILE */}
-      <div className="fixed bottom-0 left-0 right-0 p-4 bg-card/95 backdrop-blur-xl border-t border-border z-50 md:hidden flex justify-between items-center gap-4">
+      <div className="fixed bottom-[var(--ear-dock-h)] left-0 right-0 p-4 bg-card/95 backdrop-blur-xl border-t border-border z-50 lg:hidden flex justify-between items-center gap-4">
         <div className="flex flex-col">
           <span className="text-[8px] text-primary font-black uppercase tracking-widest">PRODUCTORA EAR</span>
           <span className="text-[10px] text-muted-foreground font-bold font-mono">

@@ -3,6 +3,8 @@
 import React, { useState, useEffect, useCallback, Suspense } from 'react';
 import Link from 'next/link';
 import { ProvidersAdminTable } from './ProvidersAdminTable';
+import type { ProviderProfileTarget } from './ProvidersAdminTable';
+import { ProviderProfileDrawer } from './ProviderProfileDrawer';
 import {
   Users,
   Search,
@@ -28,11 +30,30 @@ import {
   PROVIDERS_GRAND_TOTAL,
   formatProviderCount,
 } from '@/lib/constants/providers-manifest';
+import { TARIFA_BASE_SOLISTA_EUR } from '@/lib/constants/ear-os-ssot';
 
 const GRAND_TOTAL_FORMATTED = formatProviderCount(PROVIDERS_GRAND_TOTAL);
 
+/**
+ * Espejo en cliente de `normalizeProviderSlug` (servidor). Sólo construye la
+ * clave con la que se abre el drawer de ficha: el servidor re-normaliza
+ * SIEMPRE antes de tocar PostgreSQL, así que esto es presentación, nunca
+ * fuente de verdad ni dato inventado.
+ */
+function toProviderSlug(primary: string | undefined, fallback: string): string {
+  const source = primary !== undefined && primary.trim().length > 0 ? primary : fallback;
+  return source
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
 interface ProviderItem {
   id?: string;
+  /** Clave canónica de la partición (`otzarreta-finca`, `v-57523`...). */
+  slug?: string;
   name: string;
   category: string;
   province?: string;
@@ -173,6 +194,27 @@ function ProveedoresSyncContent(): React.ReactElement {
   const [fetchError, setFetchError] = useState<string | null>(null);
   const [selectedProvider, setSelectedProvider] = useState<ProviderItem | null>(null);
   const [viewMode, setViewMode] = useState<'grid' | 'table'>('table');
+  const [profileTarget, setProfileTarget] = useState<{
+    slug: string;
+    name: string;
+    category: string;
+  } | null>(null);
+
+  /**
+   * Abre la ficha editable de 380 campos del nodo seleccionado. La categoría
+   * viaja tal cual la declara la partición: el catálogo SSOT decide qué campos
+   * editables se pintan (finca ≠ fotografía ≠ senior_care).
+   */
+  const openProviderProfile = useCallback((provider: ProviderProfileTarget): void => {
+    setProfileTarget({
+      slug: toProviderSlug(provider.slug ?? provider.id, provider.name),
+      name: provider.name,
+      category: provider.category !== undefined && provider.category.length > 0
+        ? provider.category
+        : 'servicios',
+    });
+    setSelectedProvider(null);
+  }, []);
 
   // Carga de datos real desde el endpoint de búsqueda y Data Lake
   const fetchProviders = useCallback(async (): Promise<void> => {
@@ -403,6 +445,7 @@ function ProveedoresSyncContent(): React.ReactElement {
         <ProvidersAdminTable 
           providers={providers as any} 
           onRefresh={() => void fetchProviders()} 
+          onOpenProfile={openProviderProfile}
         />
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -530,17 +573,36 @@ function ProveedoresSyncContent(): React.ReactElement {
               </div>
             </div>
 
-            <div className="pt-3 border-t border-white/10 flex items-center justify-between font-mono text-xs">
-              <span className="text-zinc-400">Tarifa Referencia: <strong className="text-emerald-400">{selectedProvider.price || 350} €</strong></span>
-              <button
-                onClick={() => setSelectedProvider(null)}
-                className="px-4 py-2 rounded-xl bg-[#ecb613] text-black font-bold text-xs"
-              >
-                Cerrar Ficha
-              </button>
+            <div className="pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-3 font-mono text-xs">
+              <span className="text-zinc-400">Tarifa Referencia: <strong className="text-emerald-400">{selectedProvider.price || TARIFA_BASE_SOLISTA_EUR} €</strong></span>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => openProviderProfile(selectedProvider)}
+                  className="px-4 py-2 rounded-xl bg-[#ecb613]/15 border border-[#ecb613]/40 text-[#ecb613] font-bold text-xs flex items-center gap-2 hover:bg-[#ecb613]/25 transition-colors duration-300"
+                >
+                  <Sliders className="w-3.5 h-3.5" />
+                  Editar ficha (380 campos)
+                </button>
+                <button
+                  onClick={() => setSelectedProvider(null)}
+                  className="px-4 py-2 rounded-xl bg-[#ecb613] text-black font-bold text-xs"
+                >
+                  Cerrar Ficha
+                </button>
+              </div>
             </div>
           </div>
         </div>
+      )}
+
+      {/* Drawer de ficha editable: 380 campos SSOT por categoría + métodos de cobro */}
+      {profileTarget !== null && (
+        <ProviderProfileDrawer
+          providerSlug={profileTarget.slug}
+          providerName={profileTarget.name}
+          category={profileTarget.category}
+          onClose={() => setProfileTarget(null)}
+        />
       )}
     </div>
   );

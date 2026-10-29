@@ -806,6 +806,17 @@ div[class*="netlify-identity"],
 /* 🔮 S-CLASS CRYSTAL HERO CINEMATIC DESIGN UTILITIES (ASTRYN VAMPIRIZED CORE) */
 :root {
   --hero-scale: 1;
+  /* Zona segura inferior ÚNICA del móvil: alto real del SovereignMobileHUD dock.
+     Todo elemento flotante (pricer, concierge, avisos) se ancla por encima. */
+  --ear-dock-h: calc(5.5rem + env(safe-area-inset-bottom));
+}
+
+/* El dock móvil es `fixed`: se reserva su altura para que nunca tape contenido
+   ni el pie de página. En escritorio no existe dock => 0. */
+@media (max-width: 1023px) {
+  body {
+    padding-bottom: var(--ear-dock-h);
+  }
 }
 
 .crystal-glass-fx {

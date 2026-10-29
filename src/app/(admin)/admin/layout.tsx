@@ -41,6 +41,7 @@ import {
   FileText
 } from 'lucide-react';
 import OracleAmbientInterface from '@/components/admin/OracleAmbientInterface';
+import { AdminSessionBridge } from '@/components/admin/AdminSessionBridge';
 import { SilentPanicDetector } from '@/components/security/SilentPanicDetector';
 import { PROVIDERS_GRAND_TOTAL, formatProviderBadge } from '@/lib/constants/providers-manifest';
 
@@ -514,6 +515,8 @@ export default function CatminAdminMasterLayout({ children }: { children: React.
 
         {/* ÁREA DE CONTENIDO PRINCIPAL */}
         <main className="flex-1 min-w-0 bg-[#030305] p-4 sm:p-6 lg:p-8 relative overflow-y-auto">
+          {/* Puente de sesión: mantiene __session/ear_role sincronizadas con Firebase */}
+          <AdminSessionBridge />
           {children}
         </main>
       </div>

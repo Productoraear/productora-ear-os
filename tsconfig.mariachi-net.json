@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "incremental": false,
+    "types": ["node"]
+  },
+  "include": [
+    "scripts/emit_mariachi_outreach.ts",
+    "scripts/verify_mariachi_network_offer.ts"
+  ],
+  "exclude": ["node_modules"]
+}

@@ -23,7 +23,7 @@ export default function QuantumColibri({
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end pointer-events-auto">
+    <div className="fixed bottom-[calc(var(--ear-dock-h)+0.5rem)] right-3 lg:bottom-6 lg:right-6 z-50 flex flex-col items-end pointer-events-auto">
       {/* Menú Flotante Expandido */}
       {isExpanded && (
         <div className="mb-3 w-80 rounded-3xl bg-[#09090e]/95 backdrop-blur-2xl border border-white/10 p-5 shadow-2xl shadow-black/80 animate-in fade-in slide-in-from-bottom-3 duration-200">

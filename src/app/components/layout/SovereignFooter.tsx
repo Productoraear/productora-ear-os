@@ -34,7 +34,7 @@ export default function SovereignFooter() {
   if (isCleanFunnel) {
     if (isHomePage) return null;
     return (
-      <footer className="bg-[#030305] border-t border-white/5 py-8 text-white">
+      <footer className="bg-[#030305] border-t border-white/5 pt-8 pb-[calc(5.5rem+env(safe-area-inset-bottom))] lg:pb-8 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500 font-sans">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-[#ecb613]" />
@@ -57,7 +57,7 @@ export default function SovereignFooter() {
 
 function SovereignFooterContent() {
   return (
-    <footer className="bg-[#030305] border-t border-white/10 pt-16 pb-28 text-white selection:bg-[#FF2B44] selection:text-white">
+    <footer className="bg-[#030305] border-t border-white/10 pt-16 pb-[calc(7rem+env(safe-area-inset-bottom))] lg:pb-28 text-white selection:bg-[#FF2B44] selection:text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
 
         {/* 💎 FILA SUPERIOR: ESTRUCTURA SOBERANA DE 4 COLUMNAS (CUADERNO DE MARCA OFICIAL) */}

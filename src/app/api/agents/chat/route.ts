@@ -361,27 +361,25 @@ export async function POST(req: Request): Promise<NextResponse> {
     const waUrl = `https://wa.me/34693693048?text=${encodeURIComponent(waText)}`;
 
     // ── ANTI-SESGO DEL ROSTER (P0) ────────────────────────────────────────────
-    // En la ficha de un proveedor de terceros NO se vende la serenata del solista:
-    // el CTA y el mensaje de WhatsApp se anclan al proveedor REAL que el cliente
-    // está mirando. El número sale del SSOT (nunca un literal duplicado).
-    const isProviderPage: boolean = pageContext.kind === 'provider';
-    // ⚠️ RETO_ESPEJO (fusion por máximo): la orden original pedía `?vendor=<id>`,
-    // pero `/checkout/presupuesto` sólo consume `venue|proveedor|artista`,
-    // `format|pack` y `base|precio`. Emitir `vendor` sería un PARÁMETRO MUERTO
-    // (clic muerto garantizado). Se emite el parámetro REAL que la terminal
-    // entiende: `venue` con el nombre del proveedor → formulario pre-cargado.
-    // (Pendiente P0 aparte: cablear el id en /api/quote/generate-lock.)
+    // En la ficha de un proveedor de terceros o recinto (p. ej. Otzarreta) NO se vende
+    // la serenata del solista: el CTA y el mensaje de WhatsApp se anclan a la entidad
+    // REAL que el cliente está mirando.
+    const isDedicatedEntity: boolean = pageContext.kind === 'provider' || pageContext.kind === 'venue';
     const providerQuoteUrl: string =
-      isProviderPage && pageContext.name.trim().length > 0
+      isDedicatedEntity && pageContext.name.trim().length > 0
         ? `/checkout/presupuesto?venue=${encodeURIComponent(pageContext.name)}`
         : '';
-    // Si el id del proveedor no llega, se degrada al embudo público de presupuesto.
-    const actionBookingUrl: string = providerQuoteUrl.length > 0 ? providerQuoteUrl : isProviderPage ? '/presupuesto' : stripeBookingUrl;
-    const providerWhatsAppText: string = `Hola, deseo información y presupuesto para el proveedor ${pageContext.name}${
-      pageContext.municipality !== null ? ` en ${pageContext.municipality}` : ''
-    }.`;
-    const actionWaUrl: string = isProviderPage
-      ? `https://wa.me/${CENTRALITA_EAR_OS.replace(/\D/g, '')}?text=${encodeURIComponent(providerWhatsAppText)}`
+    // Si la entidad no tiene enlace directo, degrada al embudo de presupuesto en vez de solista.
+    const actionBookingUrl: string = providerQuoteUrl.length > 0 ? providerQuoteUrl : isDedicatedEntity ? '/presupuesto' : stripeBookingUrl;
+    const entityWhatsAppText: string = pageContext.kind === 'venue'
+      ? `Hola, solicito información y visita técnica para ${pageContext.name}${
+          pageContext.municipality !== null ? ` en ${pageContext.municipality}` : ''
+        }.`
+      : `Hola, deseo información y presupuesto para el proveedor ${pageContext.name}${
+          pageContext.municipality !== null ? ` en ${pageContext.municipality}` : ''
+        }.`;
+    const actionWaUrl: string = isDedicatedEntity
+      ? `https://wa.me/${CENTRALITA_EAR_OS.replace(/\D/g, '')}?text=${encodeURIComponent(entityWhatsAppText)}`
       : waUrl;
 
     // 9. Síntesis conversacional S-Class (DeepSeek -> Gemini -> Determinista)
@@ -493,7 +491,7 @@ export async function POST(req: Request): Promise<NextResponse> {
           `Lo que la casa no publica (${pending}) lo cerramos en visita técnica con su dirección; Productora EAR aporta la música, la producción y el rider acústico. ` +
           (explicitDate ? `Para el **${explicitDate.formattedSpanish}** verifico disponibilidad con el recinto antes de asegurarte nada. ` : '') +
           `¿Para qué fecha y cuántos invitados sería?\n\n` +
-          `[💬 Coordinar visita y fecha por WhatsApp ➔](${waUrl})`;
+          `[💬 Coordinar visita y fecha por WhatsApp ➔](${actionWaUrl})`;
       } else if (pageContext.kind === 'provider') {
         // GROUNDING EXTREMO SIN LLM: la ficha real basta para vender con verdad.
         // Cero invención (sólo hechos de `public/data/fichas/*.json`) y CERO sesgo

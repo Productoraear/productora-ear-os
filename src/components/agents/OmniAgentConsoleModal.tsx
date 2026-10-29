@@ -679,7 +679,7 @@ function detectActiveDOMContext(): { name?: string; type?: string } | undefined 
         {/* Botón de acceso flotante discreto */}
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 z-50 flex items-center gap-2 rounded-full border border-[#ecb613]/40 bg-[#09090d]/90 px-4 py-2.5 text-xs font-mono text-[#ecb613] shadow-[0_0_20px_rgba(236,182,19,0.25)] backdrop-blur-md transition-all hover:scale-105 hover:border-[#ecb613] hover:bg-[#12121a]"
+          className="hidden lg:flex fixed bottom-[10.25rem] right-6 z-[45] items-center gap-2 rounded-full border border-[#ecb613]/40 bg-[#09090d]/90 px-4 py-2.5 text-xs font-mono text-[#ecb613] shadow-[0_0_20px_rgba(236,182,19,0.25)] backdrop-blur-md transition-all hover:scale-105 hover:border-[#ecb613] hover:bg-[#12121a]"
           title="Consola de Agentes (Atajos: Ctrl + Shift + A | Mantén 10s pulsado | URL: ?agent=true)"
         >
           <span className="relative flex h-2 w-2">

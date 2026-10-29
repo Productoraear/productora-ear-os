@@ -10,8 +10,13 @@ export default function Home() {
 
   return (
     <main className="relative w-full max-w-full min-h-screen overflow-x-hidden transition-colors duration-500 bg-[var(--background)] text-[var(--foreground)] font-sans selection:bg-[#ecb613] selection:text-black">
-      {/* Header Comercial S-Class: Marca, Teléfono y Acceso Rápido */}
-      <header className="fixed top-0 left-0 right-0 z-40 p-3 sm:p-5 flex items-center justify-between gap-3">
+      {/* Header Comercial S-Class: Marca, Teléfono y Acceso Rápido.
+          Barra OPACA (bg-black/95 + backdrop-blur-2xl) con borde inferior: el copy
+          ya no se cuela cortado entre píldoras al hacer scroll. */}
+      <header
+        data-ear-chrome="top"
+        className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between gap-3 bg-black/95 backdrop-blur-2xl border-b border-white/10 px-3 py-2.5 sm:px-5 sm:py-3"
+      >
         {/* Identidad de marca oficial */}
         <Link
           href="/"
@@ -50,8 +55,10 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Puerta de Entrada Unificada: embudo bifurcado Cliente ↔ Artista (3 clics) */}
-      <div className="relative pt-24 sm:pt-28">
+      {/* Puerta de Entrada Unificada: embudo bifurcado Cliente ↔ Artista (3 clics).
+          pt-28/pt-32 = altura real de la cabecera opaca (2,5rem + wrap móvil) para
+          que el primer titular nunca nazca debajo de ella. */}
+      <div className="relative pt-28 sm:pt-32">
         <SovereignEntryBifurcation />
       </div>
 

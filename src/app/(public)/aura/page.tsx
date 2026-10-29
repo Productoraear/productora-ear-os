@@ -105,7 +105,7 @@ function AuraPortfolioEmptyState(): React.JSX.Element {
 function AuraConciergeSkeleton(): React.JSX.Element {
   return (
     <div
-      className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#030305] border border-[#C9A227]/30 animate-pulse motion-reduce:animate-none"
+      className="fixed bottom-[calc(var(--ear-dock-h)+0.5rem)] lg:bottom-6 right-4 lg:right-6 z-50 w-14 h-14 rounded-full bg-[#030305] border border-[#C9A227]/30 animate-pulse motion-reduce:animate-none"
       role="status"
       aria-live="polite"
       aria-busy="true"

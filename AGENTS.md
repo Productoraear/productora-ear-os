@@ -181,6 +181,17 @@ Sustituye y amplía el scorecard base (8/8) para todo componente CORE/Dinero (P0
 19. Idempotencia ACID (Stripe).
 20. n8n no bloqueante + DLQ (0 leads huérfanos).
 
+━━ 15. DOCTRINA DE FRICCIÓN CERO, GATE PREMORTEM Y SELLO CONDICIONADO (v9.1) ━━━━━━━━
+- FRICCIÓN = FUGA DE DINERO (evidencia de campo, Microsoft Clarity · 3.832 sesiones): rebote 99,95%, 49 s activos, 1,00 páginas/sesión, CLS 0,87, 2,22% clics muertos. Ningún bloque frontend se cierra ignorando estos números.
+  * CLS objetivo ≤ 0,05 (techo 0,10); CWV p75: LCP ≤ 2,5 s · INP ≤ 200 ms · CLS ≤ 0,1.
+  * 0 clics muertos: todo elemento interactivo escribe de verdad (href, Server Action, Stripe, modal cableado o WhatsApp `+34 693 693 048`).
+  * `next/font` obligatorio; cero animación de layout (solo `transform`/`opacity`); reserva de espacio en media y banners.
+- GATE PREMORTEM (obligatorio antes de cualquier `complete`): propósito · asunciones frágiles · alternativa descartada · premortem ("¿qué se rompe y cómo lo detectamos antes que el cliente?") · consecuencias al firmar. Se anexa en `CLINE_EXECUTION_LOG.md` (append-only), nunca en el chat.
+- LEY DEL AUDITOR REAL: un ítem del scorecard sin comando ejecutable en disco vale **0 puntos**, no "pendiente". Prohibido citar en un `done_when` un script que no exista: un auditor fantasma es una fachada de papel.
+- ALCANCE DEL SELLO: Ω-DIAMANTE 20/20 es **obligatorio** para todo bloque P0 (dinero, disponibilidad, seguridad, lock, split, depósito). Para P1–P3 el suelo innegociable es el Núcleo 8/8; quien quiera el sello completo en un P2 lo obtiene, pero nadie puede rebajar un P0 a 8/8.
+- SELLO CONDICIONADO: si hay ❌ por falta de evidencia máquina, se firma `n/20` con la lista de ❌ a la vista. Declarar 20/20 sin comando es el fraude máximo del sistema.
+
+
 <!-- BEGIN:nextjs-agent-rules -->
 
 # This is NOT the Next.js you know

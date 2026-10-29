@@ -28,9 +28,23 @@ import {
 } from '@/lib/providers/sovereign-lead-gate';
 import { OtzarretaExperienceExplorer } from '@/components/otzarreta/OtzarretaExperienceExplorer';
 import {
+  resolveProviderCalendarHref,
+  resolveProviderContractHref,
+} from '@/lib/providers/provider-cta-engine';
+import {
   OTZARRETA_HUB,
   OTZARRETA_MUNICIPALITIES
 } from '@/lib/seo/otzarreta-dominance-engine';
+
+/**
+ * Sujeto canónico de los CTAs de esta alianza. Vive en el Data Lake de
+ * proveedores como `restaurante-otzarreta` (partición `catering.json`), por lo
+ * que su calendario soberano es `/calendario/catering/restaurante-otzarreta`.
+ */
+const OTZARRETA_CTA_SOURCE = {
+  slug: 'restaurante-otzarreta',
+  category: 'catering',
+} as const;
 
 export const metadata: Metadata = {
   title: 'Restaurante Ezkertza Berria & Otzarreta · Eduardo Martínez | Bodas & Banquetes en Bizkaia y Gipuzkoa',
@@ -117,12 +131,14 @@ export default function OtzarretaFlagshipPage(): React.JSX.Element {
     detail: 'boda o banquete'
   });
 
-  const whatsappVisitUrl = buildDemandWhatsappUrl({
-    entityName: 'Ezkertza Berria & Otzarreta',
-    intent: 'visita-tecnica',
-    detail: 'Derio / Zarautz'
-  });
-
+  // ── CTAs POR ENTIDAD (W48) ────────────────────────────────────────────────
+  // El «Bloquear Fecha» de esta alianza deja de aterrizar en la agenda de
+  // Edwin Agudelo: se resuelve contra el calendario real del proveedor
+  // (`restaurante-otzarreta`, gremio catering del Data Lake) y el depósito
+  // deducible se formaliza en el expediente contractual con importes del SSOT.
+  const calendarBlockHref = resolveProviderCalendarHref(OTZARRETA_CTA_SOURCE, { intent: 'bloquear' });
+  const calendarVisitHref = resolveProviderCalendarHref(OTZARRETA_CTA_SOURCE, { intent: 'ver' });
+  const contractHref = resolveProviderContractHref(OTZARRETA_CTA_SOURCE);
   return (
     <main className="min-h-screen bg-[#030305] text-white selection:bg-[#ecb613] selection:text-black pt-28 pb-24 overflow-x-hidden">
       {/* Script Estructurado JSON-LD (saneado: cero líneas de proveedor) */}
@@ -173,7 +189,7 @@ export default function OtzarretaFlagshipPage(): React.JSX.Element {
           {/* CTA Group */}
           <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
             <a
-              href="/reservar/solista"
+              href={calendarBlockHref}
               className="px-8 py-4 rounded-2xl bg-gradient-to-r from-[#ecb613] via-[#f7cb45] to-[#ecb613] text-black font-extrabold text-sm sm:text-base hover:brightness-110 transition-all shadow-xl shadow-[#ecb613]/25 flex items-center gap-2.5 hover:scale-[1.02] active:scale-[0.98]"
             >
               <CreditCard className="w-5 h-5" />
@@ -191,14 +207,19 @@ export default function OtzarretaFlagshipPage(): React.JSX.Element {
             </a>
 
             <a
-              href={whatsappVisitUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-6 py-4 rounded-2xl bg-[#25D366]/15 text-[#25D366] font-semibold text-sm sm:text-base hover:bg-[#25D366]/25 transition-all border border-[#25D366]/40 flex items-center gap-2.5 backdrop-blur-md"
+              href={calendarVisitHref}
+              className="px-6 py-4 rounded-2xl bg-[#00E5FF]/10 text-[#7DF0FF] font-semibold text-sm sm:text-base hover:bg-[#00E5FF]/20 transition-all border border-[#00E5FF]/40 flex items-center gap-2.5 backdrop-blur-md"
             >
               <CalendarCheck className="w-5 h-5" />
               <span>Solicitar visita técnica</span>
             </a>
+
+            <Link
+              href={contractHref}
+              className="text-[11px] font-mono text-zinc-400 hover:text-[#ecb613] underline decoration-dotted underline-offset-4 transition-colors"
+            >
+              Ver condiciones del depósito deducible ({DEPOSITO_STRIPE_EUR} €) y split 80/10/10
+            </Link>
           </div>
 
           {/* PEAJE SOBERANO: canal único y línea del recinto protegida */}
@@ -743,7 +764,7 @@ export default function OtzarretaFlagshipPage(): React.JSX.Element {
 
           <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
             <a
-              href="/reservar/solista"
+              href={calendarBlockHref}
               className="px-8 py-4 rounded-xl bg-[#ecb613] text-black font-extrabold text-sm hover:bg-[#ffe066] transition-all flex items-center gap-2 shadow-lg shadow-[#ecb613]/20"
             >
               <CreditCard className="w-4 h-4" />

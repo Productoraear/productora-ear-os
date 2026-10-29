@@ -49,6 +49,35 @@ const patchBodySchema = z
     })
     .strict();
 
+const SPECIALTIES = [
+    'musicoterapia',
+    'neuroacustica',
+    'estimulacion_cognitiva',
+    'ocupacional',
+] as const;
+
+/**
+ * Roles que un alta de terapeuta puede promocionar. Nunca degrada un rol
+ * de mayor privilegio (ADMIN, COMMANDER, ARQUITECTO, FLEET_OPERATOR...).
+ */
+const PROMOTABLE_ROLES: ReadonlySet<string> = new Set([
+    'USER',
+    'CLIENT',
+    'EXPLORADOR',
+]);
+
+const createBodySchema = z
+    .object({
+        email: z.string().trim().email().max(180),
+        name: z.string().trim().min(1).max(120).optional(),
+        specialty: z.enum(SPECIALTIES),
+        credentials: z.string().trim().max(4000).optional(),
+        bio: z.string().trim().max(4000).optional(),
+        status: statusSchema.default('ACTIVE'),
+        isActive: z.boolean().default(true),
+    })
+    .strict();
+
 type ApiError = { ok: false; error: string };
 type ApiSuccess<T> = { ok: true; data: T; total?: number };
 
@@ -174,6 +203,96 @@ export async function PATCH(request: NextRequest): Promise<NextResponse> {
             );
         }
         console.error('[admin/therapists] PATCH error', error);
+        return jsonResponse(
+            { ok: false, error: 'Error interno del servidor' },
+            500,
+        );
+    }
+}
+
+export async function POST(request: NextRequest): Promise<NextResponse> {
+    const auth = await requireAdmin(request);
+    if (!auth.ok) return auth.response;
+
+    let rawBody: unknown;
+    try {
+        rawBody = await request.json();
+    } catch {
+        return jsonResponse(
+            { ok: false, error: 'Cuerpo de solicitud no válido' },
+            400,
+        );
+    }
+
+    const parsed = createBodySchema.safeParse(rawBody);
+    if (!parsed.success) {
+        return jsonResponse(
+            { ok: false, error: 'Datos de entrada no válidos' },
+            400,
+        );
+    }
+
+    const body = parsed.data;
+    const email = body.email.toLowerCase();
+
+    try {
+        const created = await prisma.$transaction(async (tx) => {
+            const user = await tx.user.upsert({
+                where: { email },
+                update: {},
+                create: {
+                    email,
+                    name: body.name ?? email.split('@')[0],
+                    role: 'THERAPIST',
+                },
+                select: { id: true, role: true },
+            });
+
+            if (PROMOTABLE_ROLES.has(user.role)) {
+                await tx.user.update({
+                    where: { id: user.id },
+                    data: { role: 'THERAPIST' },
+                });
+            }
+
+            const existing = await tx.therapistProfile.findUnique({
+                where: { userId: user.id },
+                select: { id: true },
+            });
+            if (existing) throw new Error('THERAPIST_EXISTS');
+
+            return tx.therapistProfile.create({
+                data: {
+                    userId: user.id,
+                    specialty: body.specialty,
+                    credentials: body.credentials,
+                    bio: body.bio,
+                    status: body.status,
+                    isActive: body.isActive,
+                },
+                include: {
+                    user: {
+                        select: { email: true, name: true },
+                    },
+                },
+            });
+        });
+
+        return jsonResponse({ ok: true, data: created }, 201);
+    } catch (error) {
+        if (error instanceof Error && error.message === 'THERAPIST_EXISTS') {
+            return jsonResponse(
+                { ok: false, error: 'El terapeuta ya existe' },
+                409,
+            );
+        }
+        if (
+            error instanceof Prisma.PrismaClientKnownRequestError &&
+            error.code === 'P2002'
+        ) {
+            return jsonResponse({ ok: false, error: 'Email duplicado' }, 409);
+        }
+        console.error('[admin/therapists] POST error', error);
         return jsonResponse(
             { ok: false, error: 'Error interno del servidor' },
             500,

@@ -44,8 +44,17 @@ import {
   evaluateProviderContactAccess,
   verifySupplierUnlockSession,
 } from '@/lib/providers/contact-gate-server';
-import { buildEntityCalendarHref } from '@/lib/calendar/entity-calendar-engine';
-import { inferCalendarKindFromCategory } from '@/lib/calendar/entity-calendar-types';
+import { collectProviderMedia } from '@/lib/providers/provider-media-engine';
+import { ProviderProfileSections } from '@/components/providers/ProviderProfileSections';
+import { ProviderPaymentRequestPanel } from '@/components/providers/ProviderPaymentRequestPanel';
+import {
+  listPublicPaymentMethodOffers,
+  type PublicPaymentMethodOffer,
+} from '@/lib/providers/provider-profile-store';
+import {
+  resolveProviderCalendarHref,
+  resolveProviderContractHref,
+} from '@/lib/providers/provider-cta-engine';
 
 import { isProviderPublic, isProviderBlacklisted, getProviderTier } from '@/lib/providers/visibility';
 import { INITIAL_INVENTORY } from '@/lib/constants/inventory-catalog';
@@ -737,6 +746,24 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
   const isBlacklisted = tier === 'BLACKLISTED';
   const isUnclaimed = tier === 'DIRECTORY_UNCLAIMED';
 
+  /**
+   * 🧾 FICHA DECLARADA POR EL PROVEEDOR (380 campos editables desde
+   * `/admin/proveedores → Editar ficha completa`) + oferta de cobro.
+   * La clave es el `slug` de la URL (mismo que ve el admin) y la categoría
+   * viaja SIN limpiar para que el resolver del catálogo decida los campos.
+   * Si la migración aún no está aplicada, el bloque no se pinta: la ficha
+   * pública jamás se cae por una tabla ausente.
+   */
+  const profileCategory = rawProvider.category || rawProvider.atomic_specs?.category || 'servicios';
+  let paymentOffers: readonly PublicPaymentMethodOffer[] = [];
+  if (!isBlacklisted) {
+    try {
+      paymentOffers = await listPublicPaymentMethodOffers(slug);
+    } catch (paymentError: unknown) {
+      console.error('[PROVIDER_PAGE] Oferta de cobro no disponible:', paymentError);
+    }
+  }
+
   // 🏛️ IDENTIDAD S-CLASS: Mostrar nombre real si es legítimo; si está en optout/protegido, anonimizar completamente
   const cleanName = isBlacklisted ? '' : cleanText(rawProvider.name);
   const displayName = isBlacklisted
@@ -754,21 +781,43 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
     ? `Servicio profesional homologado de ${category} para bodas y eventos en ${location}. Gestión centralizada vía Productora EAR con Split Soberano 80/10/10, fianza protegida Stripe de 100€ y garantía de ejecución S-Class.`
     : cleanText(rawProvider.atomic_specs?.description || rawProvider.description_full || rawProvider.description);
 
-  // Galería de imágenes (si está protegido/opt-out, usar archivo editorial neutro sin marcas de terceros)
+  /**
+   * 📸 DOCTRINA DE MEDIA VERIFICADA (W48) — todas las capas, cero relleno.
+   * Antes: se leía UN solo campo (`gallery` o `imageUrls`) y los huecos se
+   * tapaban con un pool de fotos de banco de imágenes (`images.unsplash.com`),
+   * de modo que un proveedor con 2 fotos reales mostraba 6 (4 falsas) y CERO
+   * vídeos aunque su ficha tuviera varios. Ahora se unifican raíz +
+   * `atomic_specs` + `media` + `atomic_specs.media`, el stock se descarta y el
+   * vídeo se clasifica (player oficial ⇒ `iframe`, fichero ⇒ `<video>`).
+   */
+  const providerMedia = isBlacklisted
+    ? { images: [] as readonly string[], videos: [] as readonly string[] }
+    : collectProviderMedia({
+        gallery: rawProvider.gallery,
+        imageUrls: rawProvider.imageUrls,
+        images: rawProvider.images,
+        img: rawProvider.img,
+        coverImage: rawProvider.atomic_specs?.media?.coverImage,
+        video_url: rawProvider.video_url,
+        videoUrl: rawProvider.videoUrl,
+        videos: rawProvider.videos,
+        media: rawProvider.atomic_specs?.media,
+        atomic_specs: rawProvider.atomic_specs,
+      });
+
+  // Marco editorial neutro: SOLO para fichas blacklisted/protegidas (nunca para
+  // rellenar huecos de un proveedor con material propio insuficiente).
+  const NEUTRAL_COVER = 'https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop';
   const coverImg = isBlacklisted
-    ? 'https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop'
-    : (rawProvider.atomic_specs?.media?.coverImage || rawProvider.img);
-  const rawGallery = isBlacklisted
+    ? NEUTRAL_COVER
+    : (providerMedia.images[0] || rawProvider.img || NEUTRAL_COVER);
+  const rawGallery: string[] = isBlacklisted
     ? [
-        'https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop',
+        NEUTRAL_COVER,
         'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=800&auto=format&fit=crop',
         'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=800&auto=format&fit=crop'
       ]
-    : (Array.isArray(rawProvider.gallery) && rawProvider.gallery.length > 0
-        ? rawProvider.gallery
-        : (Array.isArray(rawProvider.imageUrls) && rawProvider.imageUrls.length > 0
-            ? rawProvider.imageUrls
-            : [coverImg]));
+    : (providerMedia.images.length > 0 ? [...providerMedia.images] : [coverImg]);
 
   const SLUG_VISUAL_POOLS: Record<string, string[]> = {
     finca: [
@@ -808,20 +857,11 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
   const catKey = rawCatStr.includes('finca') ? 'finca' : rawCatStr.includes('cater') ? 'catering' : rawCatStr.includes('foto') ? 'foto' : 'musica';
   const slugPool = SLUG_VISUAL_POOLS[catKey] || SLUG_VISUAL_POOLS.finca;
 
-  const gallery = rawGallery.map((g: string) => getProxiedImage(g));
+  const gallery: string[] = rawGallery.map((g: string) => getProxiedImage(g));
   // `galleryReal`: únicamente tomas atribuibles al proveedor. Se calcula sobre
-  // `rawGallery` (URLs absolutas) ANTES del proxy `/api/media` y descartando las
-  // URLs del pool temático, para que JSON-LD / Rich Results nunca declare stock
-  // como fotografía propia del negocio.
+  // `rawGallery` (URLs absolutas) ANTES del proxy `/api/media`, para que JSON-LD
+  // / Rich Results nunca declare stock como fotografía propia del negocio.
   const galleryReal = rawGallery.filter((g: string) => /^https?:\/\//.test(g) && !slugPool.includes(g));
-  let poolIdx = 0;
-  while (gallery.length < 6 && poolIdx < slugPool.length) {
-    const candidate = slugPool[poolIdx];
-    if (!gallery.includes(candidate)) {
-      gallery.push(candidate);
-    }
-    poolIdx++;
-  }
 
   // FAQs
   const faqs = getCategoryFAQs(rawProvider, category, location);
@@ -911,11 +951,7 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
             </span>
           </div>
           <Link
-            href={buildEntityCalendarHref(
-              inferCalendarKindFromCategory(rawProvider.category),
-              rawProvider.slug || String(rawProvider.id),
-              { intent: 'bloquear' },
-            )}
+            href={resolveProviderCalendarHref(rawProvider, { intent: 'bloquear' })}
             className="px-3.5 py-1.5 bg-[#ecb613] text-black font-mono text-xs font-black uppercase rounded-xl hover:scale-105 transition-all shrink-0"
           >
             Ver su agenda
@@ -972,7 +1008,7 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
               providerName={displayName}
               featuredImage={coverImg}
               galleryImages={gallery}
-              videoUrls={rawProvider.video_url ? [rawProvider.video_url] : []}
+              videoUrls={[...providerMedia.videos]}
             />
 
             {/* BARRA DE TABS DE NAVEGACIÓN */}
@@ -1229,6 +1265,19 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
               </div>
             </section>
 
+            {/* FICHA DECLARADA POR EL PROVEEDOR (380 campos editables en /admin/proveedores) */}
+            <ProviderProfileSections providerSlug={slug} category={profileCategory} />
+
+            {paymentOffers.length > 0 && (
+              <section id="pago-directo" className="pt-4">
+                <ProviderPaymentRequestPanel
+                  providerSlug={slug}
+                  providerName={displayName}
+                  offers={paymentOffers}
+                />
+              </section>
+            )}
+
             {/* SECCIÓN OPINIONES REALES & VALORACIONES GOOGLE / BODAS.NET NAVEGABLES */}
             <section id="opiniones" className="space-y-4 pt-4">
               <ProviderNavigableReviews
@@ -1298,6 +1347,19 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
                   <MessageCircle size={14} className="text-emerald-400" />
                   <span>WhatsApp Directo · Ruta Libre</span>
                 </a>
+
+                {/* 💳 CTA POR ENTIDAD (W48): contrato + depósito deducible del
+                    PROVEEDOR (nunca la agenda ni la tarifa de Edwin Agudelo). */}
+                <Link
+                  href={resolveProviderContractHref(rawProvider, {
+                    city: location.split(',')[0].trim(),
+                    amount: typeof rawProvider.basePrice === 'number' ? rawProvider.basePrice : null,
+                  })}
+                  className="w-full py-3.5 px-5 rounded-2xl bg-[#ecb613]/10 hover:bg-[#ecb613]/20 border border-[#ecb613]/40 text-[#ecb613] font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all"
+                >
+                  <ShieldCheck size={14} />
+                  <span>Contrato & Depósito {DEPOSITO_STRIPE_EUR} € (deducible)</span>
+                </Link>
               </div>
 
               {/* 🔒 GATE DE CONTACTO · DOCTRINA ANTI-PICARESCA */}

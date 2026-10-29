@@ -119,6 +119,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
         });
     }
 
+    // EXCLUIDO A PROPÓSITO: /mariachis/red/{provincia}.
+    // Son 24 plazas de captación B2B servidas con `robots: noindex` y
+    // distribuidas 1:1 por WhatsApp (ver src/app/(public)/mariachis/red/
+    // [provincia]/page.tsx). Listarlas aquí convertiría el sitemap en una
+    // puerta de doorway casi idéntica y diluiría el clúster comercial de
+    // clientes. Si algún día se indexan, esta exclusión debe revisarse.
+
     // Clúster Otzarreta · Gipuzkoa: hub + 126 landings con entidad verificada
     // (72 geo + 54 intención). Sin entidad verificada detrás no hay URL.
     entries.push({

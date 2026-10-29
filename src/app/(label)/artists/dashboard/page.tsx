@@ -123,7 +123,7 @@ export default function LabelDashboardPage() {
     <main className="min-h-screen bg-[#050505] text-white selection:bg-[#ecb613]/30 overflow-hidden font-sans pt-12 pb-24">
       {/* Dynamic Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-8 right-8 z-50 bg-[#ecb613] text-black px-6 py-4 rounded-xl font-black uppercase tracking-wider text-xs shadow-2xl flex items-center gap-3 animate-bounce">
+        <div className="fixed bottom-[calc(var(--ear-dock-h)+0.75rem)] right-4 lg:bottom-8 lg:right-8 z-50 bg-[#ecb613] text-black px-6 py-4 rounded-xl font-black uppercase tracking-wider text-xs shadow-2xl flex items-center gap-3 animate-bounce">
           <ShieldCheck size={16} /> {toastMessage}
         </div>
       )}

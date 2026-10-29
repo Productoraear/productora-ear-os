@@ -19,36 +19,10 @@ export function SovereignFloatingCallBar() {
   )}`;
 
   return (
-    <>
-      {/* 📱 MOBILE STICKY BAR: Visible en pantallas < md (la mayor fuente de tráfico de bodas/eventos) */}
-      <aside
-        aria-label="Atención Telefónica y WhatsApp"
-        className="md:hidden fixed bottom-0 left-0 right-0 z-[95] bg-[#09090e]/95 backdrop-blur-xl border-t border-amber-500/30 p-2.5 px-3 flex items-center justify-between gap-2 shadow-[0_-10px_30px_rgba(0,0,0,0.8)]"
-      >
-        <a
-          href={`tel:${phone}`}
-          className="flex-1 py-3 min-h-[48px] px-3 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-500 active:scale-95 text-black font-extrabold text-xs font-mono uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-lg shadow-emerald-600/20"
-        >
-          <Phone size={15} className="fill-current" aria-hidden="true" />
-          <span>Llamar {displayPhone}</span>
-        </a>
-
-        <a
-          href={whatsappUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex-1 py-3 min-h-[48px] px-3 rounded-xl bg-[#25D366] active:scale-95 text-black font-extrabold text-xs font-mono uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-lg shadow-[#25D366]/20"
-        >
-          <MessageCircle size={15} className="fill-current" aria-hidden="true" />
-          <span>WhatsApp</span>
-        </a>
-      </aside>
-
-      {/* 💻 DESKTOP FLOATING PILL: Visible en pantallas md+ en esquina inferior derecha */}
-      <aside
-        aria-label="Contacto Directo Gabinete Técnico"
-        className="hidden md:flex fixed bottom-6 right-6 z-[95] items-center gap-2 bg-[#09090e]/90 backdrop-blur-xl border border-amber-500/30 p-1.5 pl-4 rounded-full shadow-[0_10px_40px_rgba(0,0,0,0.8)] hover:border-amber-400 transition-all duration-300"
-      >
+    <aside
+      aria-label="Contacto Directo Gabinete Técnico"
+      className="hidden lg:flex fixed bottom-[5.75rem] right-6 z-[45] items-center gap-2 bg-[#09090e]/90 backdrop-blur-xl border border-amber-500/30 p-1.5 pl-4 rounded-full shadow-[0_10px_40px_rgba(0,0,0,0.8)] hover:border-amber-400 transition-all duration-300"
+    >
         <div className="flex flex-col text-right pr-2">
           <span className="text-[9px] font-mono text-amber-400 uppercase tracking-widest font-bold">
             Atención Telefónica 24/7
@@ -81,7 +55,6 @@ export function SovereignFloatingCallBar() {
           <MessageCircle size={16} className="fill-current" aria-hidden="true" />
         </a>
       </aside>
-    </>
   );
 }
 

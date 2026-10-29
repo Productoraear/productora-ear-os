@@ -6,19 +6,18 @@ import {
   ShieldCheck,
   CheckCircle2,
   X,
-  Lock,
   Mail,
   Phone,
   User,
-  Building2,
   FileText,
-  Sparkles,
-  ArrowRight,
   Loader2,
   KeyRound,
   ExternalLink,
   BadgeCheck
 } from 'lucide-react';
+import { createIntakeKey, submitFormToAgents } from '@/lib/agents/formIntakeClient';
+import type { FormIntakeResult } from '@/lib/agents/formIntakeTypes';
+import { AgentIntakeReceipt } from '@/components/agents/AgentIntakeReceipt';
 
 interface ClaimProviderModalProps {
   isOpen: boolean;
@@ -43,6 +42,8 @@ export const ClaimProviderModal: React.FC<ClaimProviderModalProps> = React.memo(
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // Recibo real de la flota: qué auditó el agente de compliance sobre esta ficha.
+  const [agentReceipt, setAgentReceipt] = useState<FormIntakeResult | null>(null);
 
   // Step 1: Form State
   const [formData, setFormData] = useState({
@@ -68,7 +69,7 @@ export const ClaimProviderModal: React.FC<ClaimProviderModalProps> = React.memo(
     setError(null);
 
     try {
-      // Simulación de generación criptográfica de código OTP seguro
+      // Código de demostración (el envío real por SMS/WhatsApp se delega a n8n).
       const code = Math.floor(100000 + Math.random() * 900000).toString();
       const slug = provider.slug || provider.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
       const token = `claim_${slug}_${Date.now().toString(36)}`;
@@ -76,12 +77,33 @@ export const ClaimProviderModal: React.FC<ClaimProviderModalProps> = React.memo(
       setGeneratedOtp(code);
       setClaimToken(token);
 
-      // Simular delay de envío por SMS / WhatsApp
-      await new Promise(r => setTimeout(r, 600));
-
+      setAgentReceipt(null);
+      // El paso 2 no espera a la flota: cero latencia percibida en el reclamo.
       setStep(2);
-    } catch (err: any) {
-      setError(err.message || 'Error al iniciar la verificación.');
+
+      // Puente real con la flota: `vendor-compliance-auditor` audita la ficha y
+      // `venue-profiler` la perfila. El recibo prueba qué contestó cada agente.
+      void submitFormToAgents(
+        'provider_claim',
+        {
+          clientName: formData.contactName,
+          clientEmail: formData.corporateEmail,
+          clientPhone: formData.phone,
+          company: formData.companyRole,
+          taxId: formData.cifNif,
+          website: formData.officialWebsite,
+          providerId: provider.id,
+          providerName: provider.name,
+          category: provider.category,
+          message: `Reclamo de ficha · rol declarado: ${formData.companyRole}`,
+          sourcePath: '/proveedores',
+        },
+        { idempotencyKey: createIntakeKey() },
+      ).then((receipt: FormIntakeResult | null): void => {
+        setAgentReceipt(receipt);
+      });
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Error al iniciar la verificación.');
     } finally {
       setLoading(false);
     }
@@ -94,7 +116,7 @@ export const ClaimProviderModal: React.FC<ClaimProviderModalProps> = React.memo(
     setError(null);
 
     try {
-      if (inputOtp !== generatedOtp && inputOtp !== '123456') {
+      if (inputOtp !== generatedOtp) {
         throw new Error('El código de verificación de 6 dígitos es incorrecto o ha caducado.');
       }
 
@@ -104,8 +126,8 @@ export const ClaimProviderModal: React.FC<ClaimProviderModalProps> = React.memo(
       if (onClaimSuccess) {
         onClaimSuccess(provider.id, claimToken);
       }
-    } catch (err: any) {
-      setError(err.message || 'Error al validar el código.');
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Error al validar el código.');
     } finally {
       setLoading(false);
     }
@@ -168,7 +190,7 @@ export const ClaimProviderModal: React.FC<ClaimProviderModalProps> = React.memo(
             <div className="h-0.5 flex-1 bg-white/10" />
             <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl ${step === 3 ? 'bg-emerald-500 text-black font-bold' : 'text-zinc-500'}`}>
               <span>3</span>
-              <span>Verificado</span>
+              <span>Registrado</span>
             </div>
           </div>
 
@@ -329,12 +351,16 @@ export const ClaimProviderModal: React.FC<ClaimProviderModalProps> = React.memo(
 
               <div className="space-y-2">
                 <h3 className="text-2xl font-black uppercase text-white font-syne">
-                  ¡Ficha Reclamada y Verificada!
+                  Reclamo Registrado
                 </h3>
                 <p className="text-xs text-zinc-400 max-w-md mx-auto">
-                  La propiedad de <strong className="text-white">{provider.name}</strong> ha sido verificada en 2 pasos bajo el estándar S-Class. Tu insignia dorada de Proveedor Homologado ya está visible en el directorio.
+                  Hemos recibido la titularidad de <strong className="text-white">{provider.name}</strong>. El
+                  agente de compliance audita el teléfono real y la web oficial antes de activar la insignia
+                  dorada: la verificación no se declara hasta que exista dato verificable.
                 </p>
               </div>
+
+              {agentReceipt ? <AgentIntakeReceipt result={agentReceipt} /> : null}
 
               <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 text-left font-mono text-xs space-y-1.5 max-w-sm mx-auto">
                 <div className="flex justify-between text-zinc-400">
@@ -343,7 +369,13 @@ export const ClaimProviderModal: React.FC<ClaimProviderModalProps> = React.memo(
                 </div>
                 <div className="flex justify-between text-zinc-400">
                   <span>Estado:</span>
-                  <span className="text-emerald-400 font-bold">SOVEREIGN_VERIFIED</span>
+                  <span className={agentReceipt?.qualified ? 'text-[#ecb613] font-bold' : 'text-rose-300 font-bold'}>
+                    {agentReceipt
+                      ? agentReceipt.qualified
+                        ? 'COMPLIANCE_OK_PENDIENTE_VALIDACION'
+                        : 'PENDIENTE_DE_COMPLIANCE'
+                      : 'SIN_TRAZA_DE_AGENTE'}
+                  </span>
                 </div>
                 <div className="flex justify-between text-zinc-400">
                   <span>Split Artista/Proveedor:</span>

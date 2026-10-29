@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
-import SovereignNavbar from '@/app/components/layout/SovereignNavbar';
 import About from '@/widgets/about/AboutWidget';
 import SocialImpactWidget from '@/widgets/about/SocialImpactWidget';
 
@@ -152,7 +151,6 @@ export default function AboutPage(): React.JSX.Element {
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutJsonLd) }}
       />
-      <SovereignNavbar />
       <div className="relative isolate">
         <div
           aria-hidden="true"

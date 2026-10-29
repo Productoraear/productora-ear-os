@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { Brain, Heart, Shield, Globe, ArrowRight, FileText, Landmark } from "lucide-react";
 import Link from "next/link";
 import { ROUTES } from "@/lib/routes";
-import PublicNavbar from "@/app/components/public/PublicNavbar";
 import PublicFooter from "@/app/components/public/PublicFooter";
 import { SubPageNavigation } from "@/app/components/public/SubPageNavigation";
 

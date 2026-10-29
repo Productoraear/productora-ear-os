@@ -50,7 +50,8 @@ export function DynamicMobileExperienceOrchestrator() {
       {/* Navegación móvil + Oráculo Astra Copilot (roles, acústica 12 W/pax, IA y retención) */}
       <SovereignMobileHUD />
 
-      {/* Refuerzo WhatsApp en estrategia clásica (desktop; el móvil ya tiene la barra sticky global) */}
+      {/* Refuerzo WhatsApp en estrategia clásica (solo desktop: en móvil el dock
+          unificado ya cubre WhatsApp/Teléfono y cualquier flotante taparía el dock) */}
       {effectiveMode === 'CLASSIC_WHATSAPP' && <FloatingWhatsAppCta />}
     </>
   );

@@ -12,7 +12,7 @@ export default function SovereignUrgentFloatBar() {
   );
 
   return (
-    <div className="fixed bottom-20 left-4 md:bottom-6 md:left-6 z-50 flex flex-col items-start">
+    <div className="hidden lg:flex fixed bottom-[10.25rem] left-6 z-[45] flex-col items-start">
       {/* Modal Desplegable al Hacer Clic */}
       {isOpen && (
         <div className="mb-3 w-80 p-5 rounded-3xl bg-black/95 text-white border border-[#ecb613]/50 shadow-[0_10px_40px_rgba(236,182,19,0.3)] backdrop-blur-2xl animate-in fade-in slide-in-from-bottom-4 duration-300">

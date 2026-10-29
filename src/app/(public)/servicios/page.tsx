@@ -483,7 +483,7 @@ function UnifiedMatchmakerContent() {
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 100, opacity: 0 }}
-            className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-5xl bg-[#0a0a0a]/90 border border-[#ecb613]/40 p-4 md:p-5 rounded-3xl shadow-[0_0_50px_rgba(0,0,0,0.8)] flex flex-col md:flex-row items-center justify-between gap-4 z-50 backdrop-blur-2xl"
+            className="fixed bottom-[calc(var(--ear-dock-h)+0.5rem)] lg:bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-5xl bg-[#0a0a0a]/90 border border-[#ecb613]/40 p-4 md:p-5 rounded-3xl shadow-[0_0_50px_rgba(0,0,0,0.8)] flex flex-col md:flex-row items-center justify-between gap-4 z-50 backdrop-blur-2xl"
           >
             <div className="flex items-center gap-6 md:gap-10">
               <div>

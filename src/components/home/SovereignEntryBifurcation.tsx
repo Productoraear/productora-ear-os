@@ -131,10 +131,9 @@ export default function SovereignEntryBifurcation(): React.JSX.Element {
           {ENTRY_CARDS.map((card) => {
             const Icon = card.icon;
             return (
-              <Link
+              <article
                 key={card.id}
-                href={card.ctaHref}
-                className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-white/10 bg-[#09090d]/90 p-6 backdrop-blur-md transition-all duration-300 ease-out hover:scale-[1.02] hover:border-white/20 shadow-xl"
+                className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-white/10 bg-[#09090d]/90 p-6 backdrop-blur-md transition-all duration-300 ease-out hover:scale-[1.02] hover:border-white/20 focus-within:border-white/30 shadow-xl"
               >
                 <div
                   aria-hidden="true"
@@ -202,8 +201,13 @@ export default function SovereignEntryBifurcation(): React.JSX.Element {
                   </ul>
                 </div>
 
-                <span
-                  className="mt-6 flex min-h-[46px] w-full items-center justify-center gap-2 rounded-2xl px-5 py-2.5 font-mono text-sm font-bold uppercase tracking-wide text-black transition-all duration-300 ease-out group-hover:gap-3"
+                {/* CTA REAL Y FOCALIZABLE: el botón ES el enlace (sin anclas anidadas).
+                    Antes era un <span> decorativo dentro de un <Link> que envolvía la
+                    tarjeta: el usuario no podía tabular al botón y parecía inerte. */}
+                <Link
+                  href={card.ctaHref}
+                  aria-label={`${card.ctaLabel} — ${card.title}`}
+                  className="mt-6 flex min-h-[52px] w-full items-center justify-center gap-2 rounded-2xl px-5 py-2.5 font-mono text-sm font-bold uppercase tracking-wide text-black transition-all duration-300 ease-out group-hover:gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#09090d] active:scale-[0.99]"
                   style={{
                     backgroundColor: card.accentHex,
                     boxShadow: `0 0 24px ${card.accentGlow}`,
@@ -211,8 +215,8 @@ export default function SovereignEntryBifurcation(): React.JSX.Element {
                 >
                   {card.ctaLabel}
                   <ArrowRight size={15} aria-hidden="true" />
-                </span>
-              </Link>
+                </Link>
+              </article>
             );
           })}
         </div>

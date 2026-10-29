@@ -6,21 +6,9 @@ import Link from 'next/link';
 import {
   Search,
   Menu,
-  X,
   ChevronDown,
   Activity,
   Sparkles,
-  Music,
-  Users,
-  Building2,
-  Sliders,
-  Radio,
-  Heart,
-  Flame,
-  Camera,
-  Lock,
-  ArrowRight,
-  ShieldCheck,
   Calculator,
   Handshake
 } from 'lucide-react';
@@ -28,117 +16,21 @@ import { cn } from '@/lib/utils';
 import { useSharedContext } from '@/app/context/SharedContext';
 import { useSovereignRole } from '@/shared/hooks/useSovereignRole';
 import { usePathname } from 'next/navigation';
-
-interface SubmenuItem {
-  title: string;
-  desc: string;
-  href: string;
-  badge?: string;
-  icon?: any;
-}
-
-interface MenuFolder {
-  id: string;
-  label: string;
-  shortLabel: string;
-  href: string;
-  subitems: SubmenuItem[];
-}
-
-const MENU_FOLDERS: MenuFolder[] = [
-  {
-    id: 'fincas',
-    label: 'Fincas & Espacios',
-    shortLabel: 'Fincas',
-    href: '/fincas',
-    subitems: [
-      {
-        title: 'Directorio Unificado de Fincas y Espacios (9.559 Espacios)',
-        desc: 'Catálogo nacional S-Class con Motor Omni-Builder 2030 en tiempo real y reserva Price-Lock de 100 €',
-        href: '/fincas',
-        badge: '9.559 Espacios',
-        icon: Building2
-      }
-    ]
-  },
-  {
-    id: 'artistas',
-    label: 'Artistas & Shows',
-    shortLabel: 'Artistas',
-    href: '/artistas',
-    subitems: [
-      {
-        title: 'Directorio Nacional de Artistas & Shows (5.359 Auditados)',
-        desc: 'Catálogo de música en directo: Solistas, Mariachis, DJs, Bandas y Lírico con Rider Bose F1',
-        href: '/artistas',
-        badge: '5.359 Artistas',
-        icon: Music
-      },
-      {
-        title: 'Edwin Agudelo · Solista Premium (350 €)',
-        desc: 'Show 1h (2 pases), Bose 2.000W, sombreros charros, flores y fotos',
-        href: '/reservar/solista',
-        badge: '350 €',
-        icon: Sparkles
-      },
-      {
-        title: 'Mariachis & Cuartetos de Gala',
-        desc: 'Packs Trío (450€), Quinteto Imperial (750€) o Monumental (1.300€)',
-        href: '/simulacion-mariachis',
-        badge: 'Packs',
-        icon: Users
-      },
-      {
-        title: 'Experiencia 360° (Multirrol)',
-        desc: 'Portal interactivo: Atmosphere Matcher, Split 80/10/10 y Licitaciones LCSP',
-        href: '/experiencia',
-        badge: 'Nuevo 360°',
-        icon: Sparkles
-      }
-    ]
-  },
-  {
-    id: 'sonido',
-    label: 'Audiovisuales & Equipamiento',
-    shortLabel: 'Audiovisuales',
-    href: '/alquiler-equipos-sonido-audiovisuales',
-    subitems: [
-      {
-        title: 'Alquiler Sonido Bose F1 812 & S1 Pro',
-        desc: 'Equipos de alta presión sonora con calibración acústica',
-        href: '/alquiler-equipos-sonido-audiovisuales',
-        badge: 'Bose F1',
-        icon: Radio
-      }
-    ]
-  },
-  {
-    id: 'proveedores',
-    label: 'Catering & Servicios',
-    shortLabel: 'Catering',
-    href: '/proveedores',
-    subitems: [
-      {
-        title: 'Directorio Canónico de Proveedores Verificados',
-        desc: 'Catering de Autor, Fotografía, Vídeo, Decoración y Planners',
-        href: '/proveedores',
-        badge: 'Catálogo Verificado',
-        icon: Sliders
-      }
-    ]
-  }
-];
+import { MENU_FOLDERS, MOBILE_MENU_EVENT } from '@/lib/config/sovereign-navigation';
 
 const SovereignNavbar = () => {
   const pathname = usePathname();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-  const [expandedMobileFolder, setExpandedMobileFolder] = useState<string | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const { setIsSearchOpen } = useSharedContext();
   const { scrollY } = useScroll();
   const { role, isAdmin } = useSovereignRole();
+  // Zonas privadas: el SovereignMobileHUD no se monta ahí, así que la hamburguesa
+  // no puede quedar como clic muerto (Doctrina de Fricción Cero).
+  const isPrivateZone = Boolean(
+    pathname?.startsWith('/admin') || pathname?.startsWith('/panel')
+  );
 
   const navY = useTransform(scrollY, [0, 300], [0, -5]);
   const shadowOpacity = useTransform(scrollY, [0, 100], [0.1, 0.8]);
@@ -146,10 +38,9 @@ const SovereignNavbar = () => {
   // Atajo ⌘K/Ctrl+K: POTESTAD ÚNICA en <UnifiedSearch /> (@/lib/search).
   // Aquí sólo se abre desde los botones de la UI para no duplicar toggles.
 
-  // Cerrar menús al cambiar de ruta
+  // Cerrar desplegables al cambiar de ruta
   useEffect(() => {
     setActiveDropdown(null);
-    setMobileMenuOpen(false);
   }, [pathname]);
 
   if (
@@ -163,16 +54,18 @@ const SovereignNavbar = () => {
     return null;
   }
 
+  // Opacidad reforzada a /95: el texto que pasa por detrás de la cabecera nunca
+  // debe asomar cortado (Doctrina de Fricción Cero · cabecera opaca + blur real).
   const roleStyles: Record<string, string> = {
-    ROLE_B2G: "border-[#ecb613]/40 bg-[#0c0a05]/85 shadow-[0_0_30px_rgba(236,182,19,0.2)]",
-    ROLE_B2B: "border-[#ecb613]/25 bg-[#050507]/90 shadow-[0_0_30px_rgba(236,182,19,0.05)]",
-    ROLE_B2C: "border-white/15 bg-[#050507]/90",
-    ROLE_ADMIN: "border-[#ecb613]/50 bg-black/90 shadow-[0_0_40px_rgba(236,182,19,0.3)]",
-    ROLE_GUEST: "border-white/15 bg-[#050507]/90",
-    ROLE_ARTIST: "border-[#FF2B44]/30 bg-[#0f0507]/90",
-    ROLE_PROVIDER: "border-[#ecb613]/25 bg-[#0a0805]/90",
-    ROLE_AFFILIATE: "border-[#ecb613]/25 bg-[#0a0805]/90",
-    ROLE_CLIENT: "border-white/15 bg-[#050507]/90"
+    ROLE_B2G: "border-[#ecb613]/40 bg-[#0c0a05]/95 shadow-[0_0_30px_rgba(236,182,19,0.2)]",
+    ROLE_B2B: "border-[#ecb613]/25 bg-[#050507]/95 shadow-[0_0_30px_rgba(236,182,19,0.05)]",
+    ROLE_B2C: "border-white/15 bg-[#050507]/95",
+    ROLE_ADMIN: "border-[#ecb613]/50 bg-black/95 shadow-[0_0_40px_rgba(236,182,19,0.3)]",
+    ROLE_GUEST: "border-white/15 bg-[#050507]/95",
+    ROLE_ARTIST: "border-[#FF2B44]/30 bg-[#0f0507]/95",
+    ROLE_PROVIDER: "border-[#ecb613]/25 bg-[#0a0805]/95",
+    ROLE_AFFILIATE: "border-[#ecb613]/25 bg-[#0a0805]/95",
+    ROLE_CLIENT: "border-white/15 bg-[#050507]/95"
   };
 
   const handleMouseEnter = (folderId: string) => {
@@ -189,7 +82,7 @@ const SovereignNavbar = () => {
   return (
     <motion.header
       style={{ y: navY }}
-      className="fixed top-0 left-0 w-full z-[100] px-3 py-3 md:px-8"
+      className="fixed top-0 left-0 w-full z-[100] bg-black/95 backdrop-blur-2xl border-b border-white/10 px-3 py-3 md:px-8"
     >
       <motion.nav
         style={{ boxShadow: `0 20px 40px -10px rgba(0,0,0, ${shadowOpacity.get()})` }}
@@ -394,120 +287,24 @@ const SovereignNavbar = () => {
           )}
         </div>
 
-        {/* MOBILE TOGGLE */}
-        <button
-          aria-label="Abrir Menú de Navegación"
-          className="lg:hidden text-white hover:text-[#FF2B44] transition-colors p-1"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        >
-          {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
-        </button>
+        {/* MOBILE TOGGLE — dispara el menú ÚNICO del SovereignMobileHUD (< lg) */}
+        {!isPrivateZone && (
+          <button
+            type="button"
+            aria-label="Abrir menú de navegación"
+            aria-controls="ear-mobile-menu-sheet"
+            className="lg:hidden -mr-1 flex h-11 w-11 items-center justify-center rounded-xl text-white transition-colors hover:text-[#FF2B44] active:bg-white/10 touch-manipulation"
+            onClick={() => {
+              if (typeof window !== 'undefined') {
+                window.dispatchEvent(new CustomEvent(MOBILE_MENU_EVENT));
+              }
+            }}
+          >
+            <Menu size={22} />
+          </button>
+        )}
       </motion.nav>
 
-      {/* MOBILE MENU (CON ACORDEONES POR SUBCARPETAS) */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            className="absolute top-20 left-3 right-3 bg-[#07070b]/98 backdrop-blur-3xl border border-white/15 rounded-3xl p-5 flex flex-col gap-3 shadow-[0_25px_60px_rgba(0,0,0,0.95)] lg:hidden max-h-[85vh] overflow-y-auto z-50"
-          >
-            {/* Buscador Móvil */}
-            <button
-              className="flex items-center justify-between bg-white/5 border border-white/10 px-4 py-2.5 rounded-xl text-white/70 text-xs font-mono"
-              onClick={() => {
-                setIsSearchOpen(true);
-                setMobileMenuOpen(false);
-              }}
-            >
-              <span className="flex items-center gap-2"><Search size={14} /> Buscar en todo el ecosistema...</span>
-              <kbd className="bg-white/10 px-1.5 py-0.5 rounded text-[10px] text-white/60">⌘K</kbd>
-            </button>
-
-            <div className="border-t border-white/10 pt-2 space-y-1">
-              {MENU_FOLDERS.map((folder) => {
-                const isExpanded = expandedMobileFolder === folder.id;
-
-                return (
-                  <div key={folder.id} className="rounded-xl border border-white/5 bg-black/40 overflow-hidden">
-                    <button
-                      onClick={() => setExpandedMobileFolder(isExpanded ? null : folder.id)}
-                      className="w-full flex items-center justify-between p-3 text-left hover:bg-white/5 transition-colors"
-                    >
-                      <span className="font-syne text-sm font-bold uppercase text-white tracking-wide">
-                        {folder.label}
-                      </span>
-                      <ChevronDown size={16} className={cn("text-white/50 transition-transform", isExpanded && "rotate-180 text-[#FF2B44]")} />
-                    </button>
-
-                    {isExpanded && (
-                      <div className="px-3 pb-3 pt-1 space-y-1 border-t border-white/5 bg-white/[0.02]">
-                        <Link
-                          href={folder.href}
-                          onClick={() => setMobileMenuOpen(false)}
-                          className="block text-xs font-mono text-[#AAD6CD] hover:underline py-1"
-                        >
-                          → Ver Portada de {folder.label}
-                        </Link>
-                        {folder.subitems.map((sub, sIdx) => (
-                          <Link
-                            key={sIdx}
-                            href={sub.href}
-                            onClick={() => setMobileMenuOpen(false)}
-                            className="flex items-center justify-between py-2 px-2.5 rounded-lg hover:bg-white/5 text-xs text-white/80"
-                          >
-                            <span className="font-medium text-white">{sub.title}</span>
-                            {sub.badge && (
-                              <span className="font-mono text-[9px] font-black uppercase px-1.5 py-0.5 rounded bg-[#FF2B44]/20 text-[#FF2B44]">
-                                {sub.badge}
-                              </span>
-                            )}
-                          </Link>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-
-              <Link
-                href="/vimume"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between p-3 rounded-xl border border-[#00E5FF]/20 bg-[#00E5FF]/5 text-[#00E5FF] font-syne text-sm font-bold uppercase"
-              >
-                <span className="flex items-center gap-2"><Activity size={16} /> VIMUME OS</span>
-                <span className="font-mono text-[10px] text-white/60">Neuroacústica</span>
-              </Link>
-
-              <Link
-                href="/alianzas"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between p-3 rounded-xl border border-[#FF2B44]/20 bg-[#FF2B44]/5 text-[#FF2B44] font-syne text-sm font-bold uppercase"
-              >
-                <span className="flex items-center gap-2"><Handshake size={16} /> Alianzas</span>
-                <span className="font-mono text-[10px] text-white/60">Red de Fincas & Partners</span>
-              </Link>
-
-              <Link
-                href="/calculadora"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between p-3 rounded-xl border border-[#ecb613]/30 bg-[#ecb613]/10 text-[#ecb613] font-syne text-sm font-bold uppercase"
-              >
-                <span className="flex items-center gap-2"><Calculator size={16} /> Presupuestador S-Class</span>
-                <span className="font-mono text-[10px] text-white/60">13 Partidas</span>
-              </Link>
-            </div>
-
-            <div className="border-t border-white/10 pt-3 flex items-center justify-between font-mono text-xs text-white/60">
-              <a href="tel:+34693693048" className="text-[#FF2B44] font-bold">
-                Tel: +34 693 693 048
-              </a>
-              <span>Base: Méntrida (Toledo)</span>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </motion.header>
   );
 };

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { RefreshCw, Trash2, Edit2, CheckCircle2, XCircle, ShieldCheck, Search, Plus } from 'lucide-react';
+import { RefreshCw, Trash2, Edit2, CheckCircle2, XCircle, ShieldCheck, Search, Plus, Sliders } from 'lucide-react';
 import { updateProviderAction, deleteProviderAction, createProviderAction } from '@/app/actions/admin-providers';
 
 interface ProviderItem {
@@ -13,12 +13,22 @@ interface ProviderItem {
   status: string;
 }
 
+/** Mínimo estructural para abrir la ficha editable (380 campos) de un nodo. */
+export interface ProviderProfileTarget {
+  id?: string;
+  slug?: string;
+  name: string;
+  category?: string;
+}
+
 interface ProvidersAdminTableProps {
   providers: ProviderItem[];
   onRefresh: () => void;
+  /** Abre el drawer de ficha completa. Sin este cable, el botón sería un clic muerto. */
+  onOpenProfile: (provider: ProviderProfileTarget) => void;
 }
 
-export function ProvidersAdminTable({ providers, onRefresh }: ProvidersAdminTableProps) {
+export function ProvidersAdminTable({ providers, onRefresh, onOpenProfile }: ProvidersAdminTableProps) {
   const [loadingId, setLoadingId] = useState<string | null>(null);
   const [search, setSearch] = useState('');
   const [editingProvider, setEditingProvider] = useState<ProviderItem | null>(null);
@@ -170,6 +180,13 @@ export function ProvidersAdminTable({ providers, onRefresh }: ProvidersAdminTabl
                     )}
                   </td>
                   <td className="px-4 py-3 text-right flex items-center justify-end gap-2">
+                    <button
+                      onClick={() => onOpenProfile(p)}
+                      className="p-1.5 rounded-lg bg-[#ecb613]/10 text-[#ecb613] hover:bg-[#ecb613]/20 transition-colors"
+                      title="Editar ficha completa (380 campos)"
+                    >
+                      <Sliders className="w-4 h-4" />
+                    </button>
                     <button
                       onClick={() => handleHomologate(p.id, p.status)}
                       disabled={loadingId === p.id}

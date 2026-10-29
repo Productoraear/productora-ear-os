@@ -1194,3 +1194,107 @@ model OutreachThread {
   @@index([direction], name: "idx_outreach_thread_direction")
 }
 
+// ==========================================
+// 📇 FICHAS DE PROVEEDOR — PERSISTENCIA ACID (W44)
+// ==========================================
+// Espejo en PostgreSQL 16 de las fichas construidas por
+// `scripts/build_provider_fichas.cjs` (misma clave natural que el artefacto
+// `fichas_index.json`). Invariantes heredados y NO negociables:
+//   · `key` es PK natural  ->  N upserts de la misma ficha = 1 fila exacta.
+//   · `htmlSha256` sella el HTML fuente absorbido (§17 provenance). `null` si
+//     el corpus no contiene ese HTML: dato AUSENTE declarado, nunca inventado.
+//   · `provenanceHash` sella el contenido propio de la ficha (SHA-256).
+//   · `verified:true` SÓLO con teléfono real publicable (§4bis): jamás la
+//     centralita +34 693 693 048 ni un placeholder.
+model ProviderFicha {
+  key            String   @id
+  vendorId       String?
+  slug           String?
+  name           String
+  category       String?
+  province       String?
+  municipality   String?
+  phone          String?
+  priceEur       Float?
+  rating         Float?
+  verified       Boolean  @default(false)
+  completeness   Int      @default(0)
+  provenanceHash String
+  htmlSha256     String?
+  sources        String[]
+  matchMode      String?
+  syncedAt       DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([vendorId], name: "idx_provider_ficha_vendor")
+  @@index([verified], name: "idx_provider_ficha_verified")
+  @@index([province], name: "idx_provider_ficha_province")
+}
+
+// ==================================================
+// 🗂️ FICHA EDITABLE POR PROVEEDOR (300+ CAMPOS POR CATEGORÍA)
+// ==================================================
+// El Data Lake tiene 13.554 fichas, pero NADIE podía editar sus campos desde
+// el panel: la ficha pública sólo leía el JSON de origen. Estos modelos
+// habilitan la edición real por proveedor sin tocar las particiones edge.
+//
+// Invariantes:
+//   · `providerSlug` es la clave natural (misma que usa la ficha pública).
+//   · `@@unique([providerSlug, fieldKey])` garantiza idempotencia: N guardados
+//     del mismo campo = 1 fila.
+//   · El catálogo de claves válidas vive en
+//     `src/lib/providers/provider-field-catalog.ts` (SSOT de campos).
+//   · Los métodos de pago NUNCA se exponen sin captura de lead previa.
+model ProviderProfileField {
+  id           String   @id @default(cuid())
+  providerSlug String
+  fieldKey     String
+  valueText    String   @db.Text
+  category     String?
+  updatedBy    String   @default("admin")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([providerSlug, fieldKey], name: "uniq_provider_field")
+  @@index([providerSlug], name: "idx_provider_field_slug")
+}
+
+model ProviderPaymentMethod {
+  id                  String   @id @default(cuid())
+  providerSlug        String
+  /// bizum | transferencia | tarjeta | paypal | efectivo | cripto_btc | cripto_eth | cripto_usdt | otro
+  kind                String
+  label               String
+  holder              String?
+  /// Dato de cobro (teléfono Bizum, IBAN, wallet, email PayPal). Nunca público sin lead.
+  reference           String?  @db.Text
+  instructions        String?  @db.Text
+  isActive            Boolean  @default(true)
+  requiresLeadCapture Boolean  @default(true)
+  sortOrder           Int      @default(0)
+  updatedBy           String   @default("admin")
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@unique([providerSlug, kind], name: "uniq_provider_payment_kind")
+  @@index([providerSlug], name: "idx_provider_payment_slug")
+}
+
+/// Trazabilidad de solicitudes de datos de pago (0 leads huérfanos).
+/// No almacena datos bancarios: sólo quién pidió qué método y cuándo.
+model ProviderPaymentRequestLog {
+  id           String   @id @default(cuid())
+  providerSlug String
+  clientName   String
+  clientPhone  String
+  clientEmail  String?
+  methodKinds  String
+  eventDate    String?
+  channel      String   @default("ficha")
+  deliveredN8n Boolean  @default(false)
+  createdAt    DateTime @default(now())
+
+  @@index([providerSlug], name: "idx_payment_request_slug")
+  @@index([createdAt], name: "idx_payment_request_created")
+}
+

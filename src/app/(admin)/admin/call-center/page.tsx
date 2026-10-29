@@ -78,12 +78,21 @@ export default function CallCenterAdminPage() {
 3. Cierre inmediato por WhatsApp con ficha verificada.
 Responde de forma ejecutiva y concisa.`;
 
+      // GROUNDING REAL: se envía la ruta de la ficha para que el servidor inyecte
+      // sus datos verificados (provenanceHash). El cliente NUNCA lee el sistema
+      // de ficheros ni abre la URL del proveedor.
+      const fichaPath: string =
+        typeof provider.profile_url === 'string' && provider.profile_url.length > 0
+          ? provider.profile_url
+          : `/proveedores/${String(provider.id)}`;
+
       const res = await fetch('/api/agents/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message: prompt,
           agent: 'omni-supervisor-daemon',
+          pathname: fichaPath,
           activeEntity: {
             name: provider.name,
             type: provider.category,
