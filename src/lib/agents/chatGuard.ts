@@ -27,6 +27,7 @@ import {
   WATTS_PER_PAX,
   CENTRALITA_EAR_OS,
 } from '@/lib/constants/ear-os-ssot';
+import type { PageEntityKind } from '@/lib/agents/pageContext';
 
 // ─── Límites operativos ──────────────────────────────────────────────────────
 export const MAX_MESSAGE_LENGTH: number = 2000;
@@ -225,6 +226,31 @@ export interface HardenedSystemPromptInput {
   webGrounding?: string;
   /** Ficha verificada de la entidad en pantalla (uso obligatorio). */
   pageContextBlock?: string;
+  /**
+   * Tipo de entidad en pantalla, ya tipado server-side. Si se omite, se deduce
+   * del bloque de ficha (fail-safe: sin dato fiable ⇒ `none`).
+   */
+  pageEntityKind?: PageEntityKind;
+  /** Nombre de la entidad en pantalla (proveedor/recinto) para el anclaje. */
+  pageEntityName?: string;
+  /** Gremio real de la entidad en pantalla (`catering`, `fincas`…). */
+  pageEntityCategory?: string | null;
+}
+
+/** Deduce el tipo de entidad del bloque de ficha si el llamador no lo tipó. */
+function detectEntityKind(block: string | undefined): PageEntityKind {
+  if (typeof block !== 'string') return 'none';
+  const match: RegExpMatchArray | null = block.match(/^- Entidad: .+?\((venue|provider|artist|service)\)\.$/m);
+  if (match === null) return 'none';
+  const kind: string = match[1];
+  return kind === 'venue' || kind === 'provider' || kind === 'artist' || kind === 'service' ? kind : 'none';
+}
+
+/** Extrae el nombre de la entidad del bloque de ficha (fallback sin tipar). */
+function extractEntityName(block: string | undefined): string {
+  if (typeof block !== 'string') return '';
+  const match: RegExpMatchArray | null = block.match(/^- Entidad: (.+?) \((?:venue|provider|artist|service)\)\.$/m);
+  return match === null ? '' : match[1].trim();
 }
 
 /** Construye el system prompt S-Class con clasificación de datos y anti-inyección. */
@@ -257,14 +283,51 @@ export function buildHardenedSystemPrompt(ctx: HardenedSystemPromptInput): strin
     typeof ctx.pageContextBlock === 'string' && ctx.pageContextBlock.trim().length > 0
       ? `\n${ctx.pageContextBlock.trim()}\n`
       : '';
+  // ── Anclaje de entidad: quién está en pantalla y de qué gremio ──
+  const entityKind: PageEntityKind = ctx.pageEntityKind ?? detectEntityKind(ctx.pageContextBlock);
+  const isProviderPage: boolean = entityKind === 'provider';
+  const entityName: string =
+    typeof ctx.pageEntityName === 'string' && ctx.pageEntityName.trim().length > 0
+      ? ctx.pageEntityName.trim()
+      : extractEntityName(ctx.pageContextBlock);
+  const entityCategory: string =
+    typeof ctx.pageEntityCategory === 'string' && ctx.pageEntityCategory.trim().length > 0
+      ? ctx.pageEntityCategory.trim()
+      : 'servicios para eventos';
   const distanceLine: string =
     typeof ctx.distanceKm === 'number'
       ? `- Localidad detectada: ${ctx.detectedCity} (${ctx.distanceKm} km desde el Hub Méntrida)`
       : `- Localidad detectada: ${ctx.detectedCity}. Kilometraje PENDIENTE de GPS real: no estimes kilómetros ni asumas 0 km.`;
-  const budgetLine: string =
-    typeof ctx.distanceKm === 'number'
+  const budgetLine: string = isProviderPage
+    ? '- Presupuesto: en esta ficha NO se aplica la tarifa del solista. Calcula con la tarifa publicada del proveedor (bloque FICHA VERIFICADA); si no figura, se cierra con la Conserjería.'
+    : typeof ctx.distanceKm === 'number'
       ? `- Presupuesto de referencia del solista (SSOT verificado): ${ctx.formattedTotalEur} €. Desembucha esta cifra SOLO si el cliente pregunta por precio, compara alternativas o quiere reservar; si no, guárdala.`
       : `- Presupuesto base del solista (SSOT): ${ctx.formattedTotalEur} €; la logística se confirma con la dirección exacta del evento. Da la cifra solo si la piden y aclara que el desplazamiento se valida por GPS.`;
+
+  // Cierre adaptado: en ficha de proveedor el CTA es su presupuesto, no el bloqueo del solista.
+  const actionLinks: string = isProviderPage
+    ? `- Enlaces de acción disponibles:
+  - [🔒 Solicitar presupuesto para ${entityName || 'este proveedor'} ➔](${ctx.stripeBookingUrl})
+  - [💬 Conserjería EAR OS (${CENTRALITA_EAR_OS}) ➔](${ctx.waUrl})`
+    : `- Enlaces de acción disponibles:
+  - [🔒 Bloquear Fecha (${ctx.formattedTotalEur} €) con Depósito de ${DEPOSITO_STRIPE_EUR} € ➔](${ctx.stripeBookingUrl})
+  - [💬 Hablar por WhatsApp Oficial (${CENTRALITA_EAR_OS}) ➔](${ctx.waUrl})`;
+
+  // La tarifa del solista es información del roster: en ficha de terceros queda en cuarentena.
+  const tariffBullet: string = isProviderPage
+    ? `- Música en directo (roster): SOLO si el cliente pregunta expresamente por música, tenores, mariachi o serenata. De entrada, NO ofrezcas el roster ni su tarifa en la ficha de un proveedor de ${entityCategory}.`
+    : `- Tarifas y logística públicas: tarifa base solista ${TARIFA_BASE_SOLISTA_EUR} €, ${LOGISTICA_EUR_PER_KM.toFixed(2).replace('.', ',')} €/km a partir del km ${LOGISTICA_KM_EXENTOS}, suplemento hotelero de ${SUPLEMENTO_HOTEL_EUR} € si finaliza de madrugada (>= 3:00) o supera ${LOGISTICA_KM_HOTEL} km.`;
+
+  // ANTI-SESGO DEL ROSTER: la ficha en pantalla manda sobre el catálogo propio.
+  const providerAnchor: string = isProviderPage
+    ? `\n## ANCLAJE AL PROVEEDOR EN PANTALLA (PRIORIDAD ABSOLUTA — ANULA EL SESGO DEL ROSTER)
+- El cliente está consultando la ficha de **${entityName || 'un proveedor'}**${ctx.detectedCity && ctx.detectedCity.length > 0 ? ` (${ctx.detectedCity})` : ''}: gremio **${entityCategory}**.
+- Responde sobre ESTE proveedor y su gremio. PROHIBIDO ofrecer la serenata, el mariachi o el roster de Edwin Agudelo salvo que el cliente pregunte EXPRESAMENTE por música en directo, tenores o serenata.
+- PROHIBIDO citar la tarifa base del solista y PROHIBIDO enlazar la terminal de reserva del solista en esta ficha: aquí el presupuesto nace de los hechos de la ficha del proveedor.
+- Si preguntan precio: usa la tarifa publicada en la FICHA VERIFICADA. Si no figura, se confirma con el proveedor a través de la Conserjería EAR OS.
+- Cierre: presupuesto del proveedor con el depósito de ${DEPOSITO_STRIPE_EUR} € (100 % deducible) o Conserjería EAR OS.
+`
+    : '';
 
   return `Eres el Concierge oficial de atención al cliente de Productora EAR (Edwin Agudelo y la Red de Fincas Homologadas S-Class). Eres la PRIMERA IMPRESIÓN del cliente: profesional, cálida, concisa y resolutiva.
 
@@ -279,7 +342,7 @@ Responder con precisión cualquier consulta PÚBLICA sobre Productora EAR y reso
 
 ## INFORMACIÓN PÚBLICA QUE SÍ PUEDES FACILITAR
 - Quién es Edwin Agudelo y qué ofrece: solista premium, mariachi, gala, serenatas y producción integral.
-- Tarifas y logística públicas: tarifa base solista ${TARIFA_BASE_SOLISTA_EUR} €, ${LOGISTICA_EUR_PER_KM.toFixed(2).replace('.', ',')} €/km a partir del km ${LOGISTICA_KM_EXENTOS}, suplemento hotelero de ${SUPLEMENTO_HOTEL_EUR} € si finaliza de madrugada (>= 3:00) o supera ${LOGISTICA_KM_HOTEL} km.
+${tariffBullet}
 - Depósito de cierre Stripe Price-Lock: ${DEPOSITO_STRIPE_EUR} €, 100 % deducible del total.
 - Red de fincas homologadas S-Class y rider acústico general (Ley 37/2003) cuando lo pregunten: salud pública < ${LIMITE_SPL_DB} dB SPL y ${WATTS_PER_PAX} W por asistente.
 - VIMUME: neuro-musicoterapia a 40 Hz para mayores y deducción fiscal Ley 49/2002, cuando lo pregunten.
@@ -306,10 +369,8 @@ ${distanceLine}
 - ${fincaCtx}
 - ${fechaCtx}
 ${budgetLine}
-- Enlaces de acción disponibles:
-  - [🔒 Bloquear Fecha (${ctx.formattedTotalEur} €) con Depósito de ${DEPOSITO_STRIPE_EUR} € ➔](${ctx.stripeBookingUrl})
-  - [💬 Hablar por WhatsApp Oficial (${CENTRALITA_EAR_OS}) ➔](${ctx.waUrl})
-${entityBlock}
+${actionLinks}
+${entityBlock}${providerAnchor}
 
 ## MEMORIA DEL HILO (MULTI-TURNO — NO TIENES AMNESIA)
 - Turnos previos en esta conversación: ${turnCount}
@@ -332,7 +393,8 @@ ${webBlock}
 8. Si el CONTEXTO WEB VERIFICADO cita una ordenanza municipal, indica SIEMPRE el punto de medida (interior de vivienda, límite de parcela o emisor) y la franja horaria. Si el límite resulta incompatible con el rider del evento, NO prometas "sin riesgo de sanciones": ofrece visita técnica, licencia municipal y alternativa acústica o diurna, dejando claro que la autorización depende del ayuntamiento.
 9. Si aparece el bloque "FICHA VERIFICADA — ENTIDAD EN PANTALLA", ES TU FUENTE OBLIGATORIA: úsala y tienes PROHIBIDO responder que no dispones de datos del recinto. Cuando el cliente esté en esa ficha y pregunte "qué tal es", "cómo lo ves para una boda" o similar, responde con 2-3 hechos concretos de la ficha (aforo, ubicación, menús, espacios) y cierra con la visita técnica o la fecha.
 10. Un recinto colaborador NO es un servicio que EAR alquile: coordinamos con su dirección y aportamos música, producción y rider acústico. PROHIBIDO decir que "no lo cubrimos" o que "no es un servicio de Productora EAR".
-11. Si el kilometraje figura como PENDIENTE, NO inventes kilómetros ni uses la base de Méntrida como si fuera la ubicación del recinto: pide la dirección/localidad del evento y explica que el desplazamiento se valida por GPS real. Doctrina logística: el Hub Méntrida (${LOGISTICA_KM_EXENTOS} km exentos + ${LOGISTICA_EUR_PER_KM.toFixed(2).replace('.', ',')} €/km + ${SUPLEMENTO_HOTEL_EUR} € hotel) aplica EXCLUSIVAMENTE a Edwin Agudelo y empresas con base en Méntrida; para el resto de la red, el kilometraje se mide por GPS desde el origen del proveedor hasta el evento del cliente.`;
+11. Si el kilometraje figura como PENDIENTE, NO inventes kilómetros ni uses la base de Méntrida como si fuera la ubicación del recinto: pide la dirección/localidad del evento y explica que el desplazamiento se valida por GPS real. Doctrina logística: el Hub Méntrida (${LOGISTICA_KM_EXENTOS} km exentos + ${LOGISTICA_EUR_PER_KM.toFixed(2).replace('.', ',')} €/km + ${SUPLEMENTO_HOTEL_EUR} € hotel) aplica EXCLUSIVAMENTE a Edwin Agudelo y empresas con base en Méntrida; para el resto de la red, el kilometraje se mide por GPS desde el origen del proveedor hasta el evento del cliente.
+12. Si existe el bloque "ANCLAJE AL PROVEEDOR EN PANTALLA", MANDA sobre todo lo anterior: habla del gremio y de los datos reales de ESE proveedor. El roster de artistas, la serenata y la tarifa del solista quedan FUERA de esa conversación salvo que el cliente los pida expresamente.`;
 }
 
 /** Delimita el mensaje del cliente como dato no confiable para el modelo. */

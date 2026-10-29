@@ -33,6 +33,8 @@ import {
   DEPOSITO_STRIPE_EUR,
   LOGISTICA_KM_HOTEL,
   LIMITE_SPL_DB,
+  SPLIT_SOBERANO,
+  CENTRALITA_EAR_OS,
 } from '@/lib/constants/ear-os-ssot';
 import { buildGroundingNeed, groundWithWebSearch } from '@/lib/agents/webGrounding';
 import {
@@ -358,6 +360,30 @@ export async function POST(req: Request): Promise<NextResponse> {
     const waText = `Hola Edwin, deseo bloquear la fecha para el ${nextDate ? nextDate.formattedSpanish : memorySlots.dateLabel ?? 'evento'} en ${detectedCity} (presupuesto estimado: ${bookingTotalParam} € con depósito deducible de ${DEPOSITO_STRIPE_EUR} €).`;
     const waUrl = `https://wa.me/34693693048?text=${encodeURIComponent(waText)}`;
 
+    // ── ANTI-SESGO DEL ROSTER (P0) ────────────────────────────────────────────
+    // En la ficha de un proveedor de terceros NO se vende la serenata del solista:
+    // el CTA y el mensaje de WhatsApp se anclan al proveedor REAL que el cliente
+    // está mirando. El número sale del SSOT (nunca un literal duplicado).
+    const isProviderPage: boolean = pageContext.kind === 'provider';
+    // ⚠️ RETO_ESPEJO (fusion por máximo): la orden original pedía `?vendor=<id>`,
+    // pero `/checkout/presupuesto` sólo consume `venue|proveedor|artista`,
+    // `format|pack` y `base|precio`. Emitir `vendor` sería un PARÁMETRO MUERTO
+    // (clic muerto garantizado). Se emite el parámetro REAL que la terminal
+    // entiende: `venue` con el nombre del proveedor → formulario pre-cargado.
+    // (Pendiente P0 aparte: cablear el id en /api/quote/generate-lock.)
+    const providerQuoteUrl: string =
+      isProviderPage && pageContext.name.trim().length > 0
+        ? `/checkout/presupuesto?venue=${encodeURIComponent(pageContext.name)}`
+        : '';
+    // Si el id del proveedor no llega, se degrada al embudo público de presupuesto.
+    const actionBookingUrl: string = providerQuoteUrl.length > 0 ? providerQuoteUrl : isProviderPage ? '/presupuesto' : stripeBookingUrl;
+    const providerWhatsAppText: string = `Hola, deseo información y presupuesto para el proveedor ${pageContext.name}${
+      pageContext.municipality !== null ? ` en ${pageContext.municipality}` : ''
+    }.`;
+    const actionWaUrl: string = isProviderPage
+      ? `https://wa.me/${CENTRALITA_EAR_OS.replace(/\D/g, '')}?text=${encodeURIComponent(providerWhatsAppText)}`
+      : waUrl;
+
     // 9. Síntesis conversacional S-Class (DeepSeek -> Gemini -> Determinista)
     let aiReply = '';
     const geminiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
@@ -390,8 +416,8 @@ export async function POST(req: Request): Promise<NextResponse> {
         ? explicitDate.formattedSpanish
         : memorySlots.dateLabel ?? '',
       nextDateLabel: nextDate && !explicitDate ? nextDate.formattedSpanish : '',
-      stripeBookingUrl,
-      waUrl,
+      stripeBookingUrl: actionBookingUrl,
+      waUrl: actionWaUrl,
       conversationMemory: buildConversationMemoryBlock(memorySlots),
       consultationPhase: consultation.phase,
       nextQuestion: pageContext.kind === 'venue' && consultation.phase === 'DESCUBRIMIENTO'
@@ -401,6 +427,10 @@ export async function POST(req: Request): Promise<NextResponse> {
       objectionLabel: consultation.objection ? OBJECTION_LABEL[consultation.objection] : '',
       webGrounding: grounding?.block ?? '',
       pageContextBlock: buildPageContextBlock(pageContext),
+      // Anclaje tipado de la entidad en pantalla (anti-sesgo del roster).
+      pageEntityKind: pageContext.kind,
+      pageEntityName: pageContext.name,
+      pageEntityCategory: pageContext.category,
     });
 
     const untrustedMessage: string = wrapUntrustedMessage(message);
@@ -464,6 +494,27 @@ export async function POST(req: Request): Promise<NextResponse> {
           (explicitDate ? `Para el **${explicitDate.formattedSpanish}** verifico disponibilidad con el recinto antes de asegurarte nada. ` : '') +
           `¿Para qué fecha y cuántos invitados sería?\n\n` +
           `[💬 Coordinar visita y fecha por WhatsApp ➔](${waUrl})`;
+      } else if (pageContext.kind === 'provider') {
+        // GROUNDING EXTREMO SIN LLM: la ficha real basta para vender con verdad.
+        // Cero invención (sólo hechos de `public/data/fichas/*.json`) y CERO sesgo
+        // del roster: ni tarifa de solista ni serenata en la ficha de un tercero.
+        const highlights: string = pageContext.facts.slice(0, 3).join('\n\n');
+        const pending: string = pageContext.missing.slice(0, 2).join(', ');
+        const categoryLabel: string =
+          pageContext.category !== null && pageContext.category.length > 0
+            ? pageContext.category
+            : 'servicios para eventos';
+        const splitLabel: string =
+          `${Math.round(SPLIT_SOBERANO.artista * 100)}% ejecutante / ` +
+          `${Math.round(SPLIT_SOBERANO.earOs * 100)}% infraestructura EAR OS / ` +
+          `${Math.round(SPLIT_SOBERANO.vimume * 100)}% VIMUME (obra social)`;
+        aiReply =
+          `Ficha verificada de **${pageContext.name}**${pageContext.municipality !== null ? ` (${pageContext.municipality})` : ''} — **${categoryLabel}**:\n\n${highlights}\n\n` +
+          `El presupuesto se calcula con la tarifa publicada en su ficha: aquí lo que contratas es ${categoryLabel}. ` +
+          `Lo que su ficha no certifica (${pending}) lo cierra la Conserjería EAR OS directamente con el proveedor. ` +
+          `El bloqueo de la fecha se formaliza con el depósito de **${DEPOSITO_STRIPE_EUR} €** (100% deducible del total) y reparto **${splitLabel}**.\n\n` +
+          `[🔒 Solicitar presupuesto para ${pageContext.name} ➔](${actionBookingUrl})\n\n` +
+          `[💬 Conserjería EAR OS (${CENTRALITA_EAR_OS}) ➔](${actionWaUrl})`;
       } else if (isFincaContext && explicitDate) {
         aiReply = `Para **${fincaLabel}** el **${explicitDate.formattedSpanish}**:\n\n` +
           `Las condiciones de alquiler, aforo y horarios de ese recinto las confirma su dirección: no publico datos que no estén verificados. Coordinamos la visita técnica y el bloqueo de la fecha de forma prioritaria a través de la centralita B2B.\n\n` +

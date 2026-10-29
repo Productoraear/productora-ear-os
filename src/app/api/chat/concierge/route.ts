@@ -3,6 +3,13 @@ import { getProvidersByLocation } from '@/lib/data/vampire-service';
 import { runDeepSeekChat, isDeepSeekConfigured } from '@/lib/compiler/deepseek-inference';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { normalizeCurrencyAndNumbers } from '@/lib/voice/speechNormalizer';
+import { resolvePageContext } from '@/lib/agents/pageContext';
+import {
+  TARIFA_BASE_SOLISTA_EUR,
+  DEPOSITO_STRIPE_EUR,
+  CENTRALITA_EAR_OS,
+  WATTS_PER_PAX,
+} from '@/lib/constants/ear-os-ssot';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -97,11 +104,31 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    const { message, provinceSlug, categorySlug } = body;
+    const { message, provinceSlug, categorySlug, pathname } = body;
 
     if (!message || typeof message !== 'string') {
       return NextResponse.json({ error: 'Mensaje inválido' }, { status: 400 });
     }
+
+    // ── ANTI-SESGO DEL ROSTER (P0): si el usuario está en la ficha de un
+    // proveedor de terceros, el concierge habla de ESE proveedor y de su gremio.
+    // La ficha manda sobre el catálogo propio (nada de serenata ni tarifa del
+    // solista) salvo pregunta expresa por música en directo.
+    const pageContext = resolvePageContext({ pathname, message });
+    const isProviderFicha: boolean = pageContext.kind === 'provider';
+    const fichaCategory: string =
+      pageContext.category !== null && pageContext.category.length > 0 ? pageContext.category : 'servicios para eventos';
+    const fichaQuoteUrl: string =
+      pageContext.name.trim().length > 0 ? `/checkout/presupuesto?venue=${encodeURIComponent(pageContext.name)}` : '/presupuesto';
+    const providerBlock: string = isProviderFicha
+      ? `
+4. ANCLAJE AL PROVEEDOR EN PANTALLA (PRIORIDAD ABSOLUTA — ANULA EL SESGO DEL ROSTER):
+   - El usuario está en la ficha de "${pageContext.name}"${pageContext.municipality !== null ? ` (${pageContext.municipality})` : ''} · gremio: ${fichaCategory}.
+   - Responde sobre ESTE proveedor y su gremio. PROHIBIDO ofrecer el roster de artistas, la serenata, el mariachi o la tarifa del solista, salvo que el usuario pregunte EXPRESAMENTE por música en directo o tenores.
+   - Datos verificados de su ficha: ${pageContext.facts.join(' ')}
+   - Datos que su ficha NO publica: ${pageContext.missing.join(', ')} → se cierran con el proveedor a través de la Conserjería EAR OS (${CENTRALITA_EAR_OS}).
+   - Presupuesto del proveedor: ${fichaQuoteUrl}`
+      : '';
 
     const lower = message.toLowerCase();
 
@@ -131,17 +158,26 @@ export async function POST(request: Request) {
     const providers = await getProvidersByLocation(detectedProv, detectedCat, 4);
 
     // 3. Recomendación del Roster Soberano (Venta Cruzada)
+    // Cifras desde el SSOT (cero precios hardcodeados).
     const rosterRecommendation = {
       artist: 'Edwin Agudelo — Solista de Gala & Tenor Lírico',
-      soundSystem: 'Sonorización Bose F1 Line Array (12 W/pax) + Microfonía Shure Axient',
-      startingPrice: 350,
+      soundSystem: `Sonorización Bose F1 Line Array (${WATTS_PER_PAX} W/pax) + Microfonía Shure Axient`,
+      startingPrice: TARIFA_BASE_SOLISTA_EUR,
       split: '80% Artista / 10% EAR OS / 10% VIMUME',
-      holdDeposit: 100,
+      holdDeposit: DEPOSITO_STRIPE_EUR,
       claimText: 'Bloquea este espacio junto con la producción musical oficial en un solo clic.',
     };
 
     const provName = detectedProv.charAt(0).toUpperCase() + detectedProv.slice(1);
     const catName = detectedCat || 'Espacios y Proveedores';
+    // Regla de precio condicionada al anclaje: en ficha de proveedor NO se vende
+    // la tarifa del solista (sesgo del roster), se vende la tarifa de su ficha.
+    const priceRule: string = isProviderFicha
+      ? `   - Si preguntan precio: usa SOLO la tarifa publicada en la ficha del proveedor (bloque 4). PROHIBIDO aplicar, mencionar o insinuar la tarifa del solista de Edwin Agudelo.
+   - Depósito de bloqueo: ${DEPOSITO_STRIPE_EUR} euros, íntegramente deducible del total del evento.`
+      : `   - Si preguntan precio: tarifa base de Edwin Agudelo como solista es de ${TARIFA_BASE_SOLISTA_EUR} euros (incluye sonido Bose F1 de alta fidelidad).
+   - Para bloquear la fecha en exclusiva en agenda se realiza un depósito de ${DEPOSITO_STRIPE_EUR} euros íntegramente deducible del total del evento.
+   - Escribe siempre cantidades redondas y naturales ("${TARIFA_BASE_SOLISTA_EUR} euros", "${DEPOSITO_STRIPE_EUR} euros"). Cero decimales mecánicos como ".00".`;
 
     // 4. Síntesis Conversacional S-Class (Tier 1: DeepSeek Cloud -> Tier 2: Gemini Flash -> Tier 3: Determinista)
     let reply = '';
@@ -154,14 +190,12 @@ DIRECTIVA INMUTABLE (HUMANO, EMPÁTICO Y RESOLUTIVO — CERO LORO):
    - PROHIBIDO mencionar leyes acústicas (Ley 37/2003), decibelios, homologaciones o el reparto del split (80/10/10) a menos que el usuario pregunte expresamente por acústica o finanzas.
    - PROHIBIDO soltar discursos largos. Máximo 2 párrafos concisos y elegantes.
 2. PRECIOS Y NÚMEROS LIMPIOS:
-   - Si preguntan precio: tarifa base de Edwin Agudelo como solista es de 350 euros (incluye sonido Bose F1 de alta fidelidad).
-   - Para bloquear la fecha en exclusiva en agenda se realiza un depósito de 100 euros íntegramente deducible del total del evento.
-   - Escribe siempre cantidades redondas y naturales ("350 euros", "100 euros"). Cero decimales mecánicos como ".00".
+${priceRule}
 3. CONTEXTO DISPONIBLE:
    - Ubicación detectada: ${provName}
    - Categoría consultada: ${catName}
    - Proveedores encontrados en la base de datos: ${providersList || 'Búsqueda personalizada en curso'}
-   - Teléfono / WhatsApp oficial: +34 693 693 048`;
+   - Teléfono / WhatsApp oficial: ${CENTRALITA_EAR_OS}${providerBlock}`;
 
     if (isDeepSeekConfigured()) {
       try {
@@ -192,7 +226,10 @@ DIRECTIVA INMUTABLE (HUMANO, EMPÁTICO Y RESOLUTIVO — CERO LORO):
     }
 
     if (!reply) {
-      if (providers.length > 0) {
+      if (isProviderFicha) {
+        // Determinista anclado a la ficha: cero lobby del roster, cero invención.
+        reply = `Estás en la ficha de **${pageContext.name}**${pageContext.municipality !== null ? ` (${pageContext.municipality})` : ''}, dentro de **${fichaCategory}**. ${pageContext.facts.slice(0, 2).join(' ')} Lo que su ficha no publica (${pageContext.missing.slice(0, 2).join(', ')}) lo cerramos con el proveedor desde la Conserjería EAR OS (${CENTRALITA_EAR_OS}).`;
+      } else if (providers.length > 0) {
         reply = `He seleccionado perfiles destacados de **${catName}** en **${provName}** para tu evento. Puedes revisar las opciones a continuación o escribirnos directamente a WhatsApp para armar un paquete personalizado con Edwin Agudelo.`;
       } else {
         reply = `He registrado tu solicitud para **${provName}**. Nuestro equipo en el Hub Central de Méntrida te contactará de inmediato con opciones a medida y fechas disponibles.`;
@@ -209,17 +246,25 @@ DIRECTIVA INMUTABLE (HUMANO, EMPÁTICO Y RESOLUTIVO — CERO LORO):
       detectedLocation: {
         province: provName,
         provinceSlug: detectedProv,
-        category: detectedCat || 'General',
+        category: isProviderFicha ? fichaCategory : detectedCat || 'General',
       },
-      rosterRecommendation,
-      suggestedChips: [
-        `Fincas rústicas en ${provName}`,
-        `Catering a las brasas en ${provName}`,
-        `Mariachi y Solista en ${provName}`,
-        `Discomóvil Bose F1 en ${provName}`,
-      ],
+      // En ficha de proveedor NO se inyecta la tarjeta del roster (sesgo).
+      rosterRecommendation: isProviderFicha ? undefined : rosterRecommendation,
+      suggestedChips: isProviderFicha
+        ? [
+            `Más datos de ${pageContext.name}`,
+            'Verificar disponibilidad de fecha',
+            'Presupuesto para mi evento',
+            'Hablar con la Conserjería',
+          ]
+        : [
+            `Fincas rústicas en ${provName}`,
+            `Catering a las brasas en ${provName}`,
+            `Mariachi y Solista en ${provName}`,
+            `Discomóvil Bose F1 en ${provName}`,
+          ],
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('[CONCIERGE_CHAT_ERROR]', error);
     return NextResponse.json(
       { error: 'Error procesando la consulta conversacional' },

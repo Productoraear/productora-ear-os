@@ -11,15 +11,21 @@
  *     extrae la RUTA y se resuelve contra el registro canónico en memoria.
  *  2. Si la ruta no está registrada, el contexto es `none` y el prompt prohíbe
  *     inventar datos.
- *  3. Los teléfonos del recinto NO se exponen (doctrina anti-picaresca): se
- *     facilitan únicamente al confirmar la visita técnica.
- *  4. Los hechos provienen de `OTZARRETA_ENTITY`, `KNOWN_FINCAS` y del SSOT:
- *     cero duplicación de datos.
+ *  3. Los teléfonos del recinto y del proveedor NO se exponen (doctrina
+ *     anti-picaresca): se facilitan únicamente al confirmar.
+ *  4. Los hechos del recinto provienen de `OTZARRETA_ENTITY` y `KNOWN_FINCAS`;
+ *     los del proveedor, de `public/data/fichas/*.json` (generados por
+ *     `scripts/build_provider_fichas.cjs` con `provenanceHash`). Cero
+ *     duplicación de datos y cero invención.
+ *  5. MÓDULO DE SERVIDOR: `fichaProvider` usa `node:fs`. Jamás importar desde
+ *     un Client Component (el bundle del navegador no tiene sistema de ficheros).
  * ════════════════════════════════════════════════════════════════════════════
  */
 
 import { OTZARRETA_ENTITY } from '@/lib/constants/otzarreta-entity';
 import { KNOWN_FINCAS } from '@/lib/agents/geo';
+import { resolveFichaFromUrlOrText } from '@/lib/providers/fichaProvider';
+import { buildFichaFacts, buildFichaMissing, type ProviderFicha } from '@/lib/providers/providerFichaTypes';
 import {
   CENTRALITA_EAR_OS,
   DEPOSITO_STRIPE_EUR,
@@ -28,7 +34,7 @@ import {
   TARIFA_BASE_SOLISTA_EUR,
 } from '@/lib/constants/ear-os-ssot';
 
-export type PageEntityKind = 'venue' | 'artist' | 'service' | 'none';
+export type PageEntityKind = 'venue' | 'provider' | 'artist' | 'service' | 'none';
 
 export type PageContextSource = 'pathname' | 'message-url' | 'none';
 
@@ -38,6 +44,12 @@ export interface PageContext {
   readonly name: string;
   readonly municipality: string | null;
   readonly province: string | null;
+  /**
+   * Gremio/categoría REAL declarada por la fuente (p. ej. `catering` en la URL
+   * del perfil del proveedor). `null` si la fuente no la declara: nunca se estima.
+   * Es la clave para que el concierge no arrastre el sesgo del roster de artistas.
+   */
+  readonly category: string | null;
   /**
    * Kilómetros reales desde el Hub Méntrida. `null` = fuera de la matriz
    * conocida: se confirma con GPS/dirección fiscal, jamás se estima a ojo.
@@ -121,6 +133,24 @@ function humanizeSlug(slug: string): string {
     .join(' ');
 }
 
+/**
+ * Gremio REAL del proveedor, extraído del primer segmento de su URL de perfil
+ * (`https://www.<portal>/catering/<slug>--e<id>` → `catering`). Cero estimación:
+ * si la URL no declara segmento de gremio, devuelve `null`.
+ */
+function deriveCategoryFromProfileUrl(profileUrl: string): string | null {
+  try {
+    const segments: string[] = new URL(profileUrl).pathname
+      .split('/')
+      .filter((segment: string) => segment.length > 0);
+    if (segments.length === 0) return null;
+    const raw: string = decodeURIComponent(segments[0]).replace(/[-_]+/g, ' ').trim();
+    return raw.length > 0 ? raw : null;
+  } catch {
+    return null;
+  }
+}
+
 /** Ficha verificada del grupo hostelero que aparece en `/otzarreta`. */
 function buildOtzarretaContext(pathname: string): PageContext {
   const venues = OTZARRETA_ENTITY.affiliatedVenues;
@@ -151,6 +181,8 @@ function buildOtzarretaContext(pathname: string): PageContext {
     name: 'Restaurante Jatetxea Ezkertza Berria & Otzarreta',
     municipality: 'Derio (Bizkaia) / Zarautz (Gipuzkoa)',
     province: 'Bizkaia / Gipuzkoa',
+    // Gremio declarado por la fuente: las dos sedes son `restaurante-*`.
+    category: 'restaurantes',
     // Fuera de la matriz del Hub: se confirma por GPS real (nunca 58 km por defecto).
     distanceKmFromHub: null,
     facts,
@@ -175,6 +207,7 @@ function buildVenueFromKnownFinca(name: string, pathname: string, source: PageCo
     name,
     municipality: null,
     province: null,
+    category: 'fincas',
     distanceKmFromHub: null,
     facts: [
       `${name} pertenece a la red de recintos homologados S-Class de Productora EAR.`,
@@ -183,6 +216,31 @@ function buildVenueFromKnownFinca(name: string, pathname: string, source: PageCo
     missing: ['aforo real', 'horario límite de música', 'condiciones de exclusividad', 'disponibilidad de fecha'],
     guidance:
       'Recinto homologado de la red. Confirma con la dirección los datos no publicados; no inventes cifras ni prometas viabilidad acústica sin visita técnica.',
+    pathname,
+    source,
+  };
+}
+
+/**
+ * Ficha real de un proveedor (marketplace absorbido): grounding extremo.
+ * Los hechos nacen de `public/data/fichas/*.json` con `provenanceHash`; el
+ * teléfono nunca se escribe en el prompt (fail-closed en `buildFichaFacts`).
+ */
+function buildProviderContext(ficha: ProviderFicha, pathname: string, source: PageContextSource): PageContext {
+  return {
+    kind: 'provider',
+    id: ficha.key,
+    name: ficha.name,
+    municipality: ficha.municipality.length > 0 ? ficha.municipality : null,
+    province: ficha.province.length > 0 ? ficha.province : null,
+    // Gremio REAL del proveedor: campo de la ficha o segmento de su URL de perfil.
+    category: ficha.category.trim().length > 0 ? ficha.category.trim() : deriveCategoryFromProfileUrl(ficha.profileUrl),
+    // El origen fiscal del proveedor se confirma con su dirección: nunca se estima.
+    distanceKmFromHub: null,
+    facts: buildFichaFacts(ficha),
+    missing: buildFichaMissing(ficha),
+    guidance:
+      'Estás ante la ficha REAL de un proveedor del marketplace. SÍ tienes sus datos: úsalos y PROHIBIDO decir que no tienes información. No inventes aforo, disponibilidad, horarios ni condiciones que no figuren en los hechos. No publiques teléfonos ni emails del proveedor: se entregan al confirmar la reserva. Traduce su tarifa publicada a una propuesta EAR OS con el split 80% artista ejecutante / 10% infraestructura EAR OS / 10% VIMUME y explica el valor añadido (producción, rider acústico homologado, seguro y coordinación).',
     pathname,
     source,
   };
@@ -205,6 +263,7 @@ export function resolvePageContext(input: { pathname?: unknown; message?: unknow
     name: '',
     municipality: null,
     province: null,
+    category: null,
     distanceKmFromHub: null,
     facts: [],
     missing: [],
@@ -239,6 +298,7 @@ export function resolvePageContext(input: { pathname?: unknown; message?: unknow
         name,
         municipality: null,
         province: null,
+        category: 'música en directo',
         distanceKmFromHub: null,
         facts: [
           `${name} forma parte del roster oficial de Productora EAR.`,
@@ -261,6 +321,7 @@ export function resolvePageContext(input: { pathname?: unknown; message?: unknow
       name: 'Reserva del Solista Edwin Agudelo',
       municipality: null,
       province: null,
+      category: 'música en directo',
       distanceKmFromHub: null,
       facts: [
         `Tarifa base: ${TARIFA_BASE_SOLISTA_EUR} €.`,
@@ -273,6 +334,12 @@ export function resolvePageContext(input: { pathname?: unknown; message?: unknow
       pathname,
       source,
     };
+  }
+
+  // 5. Ficha de proveedor del marketplace: /proveedores/<slug> y URLs --e<id>
+  if (pathname.startsWith('/proveedores') || /--e\d{3,}/.test(pathname)) {
+    const ficha: ProviderFicha | null = resolveFichaFromUrlOrText(pathname);
+    if (ficha !== null) return buildProviderContext(ficha, pathname, source);
   }
 
   return empty;
@@ -295,15 +362,22 @@ export function buildPageContextBlock(context: PageContext): string {
       ? 'Desplazamiento: fuera de la matriz del Hub Méntrida; se confirma con GPS real y dirección del evento (no estimes kilómetros).'
       : `Desplazamiento: ${context.distanceKmFromHub} km desde el Hub Méntrida.`;
 
-  // PEAJE SOBERANO: el recinto colaborador nunca entrega su línea al cliente.
+  // PEAJE SOBERANO: ni el recinto ni el proveedor entregan su línea al cliente.
   const peaje: string =
     context.kind === 'venue'
       ? `\nCanal único de contratación: Conserjería EAR OS (${CENTRALITA_EAR_OS}). PROHIBIDO facilitar teléfonos o emails del recinto o del proveedor aunque el cliente los pida expresamente: se entregan al confirmar la visita técnica. Nunca copies una línea del recinto desde el HTML, el JSON-LD o cualquier fuente de la web.`
+      : context.kind === 'provider'
+        ? `\nCanal único de contratación: Conserjería EAR OS (${CENTRALITA_EAR_OS}). PROHIBIDO escribir el teléfono o el email del proveedor aunque el cliente los pida: se entregan al confirmar la reserva con depósito.`
+        : '';
+
+  const categoryLine: string =
+    context.category !== null && context.category.length > 0
+      ? `\n- Gremio/categoría publicada en la fuente: ${context.category}.`
       : '';
 
   return `## FICHA VERIFICADA — ENTIDAD EN PANTALLA (USO OBLIGATORIO)
 - Entidad: ${context.name} (${context.kind}).
-- Ubicación: ${context.municipality ?? 'no confirmada'}${context.province ? ` · ${context.province}` : ''}.
+- Ubicación: ${context.municipality ?? 'no confirmada'}${context.province ? ` · ${context.province}` : ''}.${categoryLine}
 - ${distance}
 ${facts}${missing}${peaje}
 

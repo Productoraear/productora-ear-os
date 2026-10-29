@@ -141,7 +141,13 @@ export function AIConciergeDock() {
       const response = await fetch('/api/chat/concierge', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: query }),
+        body: JSON.stringify({
+          message: query,
+          // ── ANCLAJE DE PÁGINA (P0): sin la ruta activa, el concierge no sabe
+          // que el usuario está en la ficha de un proveedor de terceros y le
+          // vende el roster del solista. `window` no existe en SSR: se protege.
+          pathname: typeof window !== 'undefined' ? window.location.pathname : '',
+        }),
       });
 
       const data = await response.json();
@@ -185,14 +191,19 @@ export function AIConciergeDock() {
     if (activeSpeakingId === msgId) {
       stopSpeaking();
       setActiveSpeakingId(null);
-    } else {
-      stopSpeaking();
-      setActiveSpeakingId(msgId);
-      try {
-        await speakNatural(text);
-      } finally {
-        setActiveSpeakingId((current) => (current === msgId ? null : current));
-      }
+      return;
+    }
+    if (!isSpeechSupported()) {
+      // §7 FRICCIÓN CERO: botón de voz sin motor = clic muerto. Fail-closed explícito.
+      alert('Tu navegador no soporta la lectura en voz alta de la respuesta.');
+      return;
+    }
+    stopSpeaking();
+    setActiveSpeakingId(msgId);
+    try {
+      await speakNatural(text);
+    } finally {
+      setActiveSpeakingId((current) => (current === msgId ? null : current));
     }
   };
 
@@ -221,7 +232,7 @@ export function AIConciergeDock() {
     <>
       {!isOpen && (
         <div
-          className="hidden md:flex fixed bottom-6 right-6 z-50 items-center gap-3"
+          className="hidden lg:flex fixed bottom-6 right-6 z-50 items-center gap-3"
           role="region"
           aria-label="Acceso rápido al Concierge IA"
         >
@@ -264,10 +275,10 @@ export function AIConciergeDock() {
           aria-modal="true"
           aria-label="Asistente Concierge de Productora EAR"
           aria-describedby="ai-concierge-description"
-          className={`fixed z-50 transition-all duration-300 ${
+          className={`fixed z-[75] transition-all duration-300 ${
             isExpanded
               ? 'inset-4 md:inset-10'
-              : 'bottom-4 right-4 w-[calc(100vw-2rem)] sm:w-[460px] h-[640px] max-h-[88vh]'
+              : 'bottom-[calc(var(--ear-dock-h)+0.5rem)] left-3 right-3 w-auto h-[640px] max-h-[72vh] lg:left-auto lg:right-4 lg:bottom-4 lg:w-[460px] lg:max-h-[88vh]'
           } rounded-[2rem] bg-[#09090f]/95 border border-[#ecb613]/30 shadow-2xl backdrop-blur-2xl flex flex-col overflow-hidden`}
         >
           <p id="ai-concierge-description" className="sr-only">
