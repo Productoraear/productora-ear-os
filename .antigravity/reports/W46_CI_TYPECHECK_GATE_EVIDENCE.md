@@ -57,3 +57,26 @@ Y se añadió el cerrojo que faltaba: `|| true`, `|| exit 0`, `set +e` y `contin
 Si el guardián diera un falso positivo, `build-and-push` quedaría saltado y no habría imagen nueva en GHCR; el deploy
 de Coolify entra por webhook git, así que no hay caída de producción, solo imagen obsoleta. Detección antes que el
 cliente: el guardián imprime cada aserción con su nombre y `--strict`-style `[FAIL]`, y `tsc` imprime `archivo:línea`.
+
+## 7. Confirmación en GitHub Actions (run real)
+
+Run **40970254060** (`push` a `main`, commit `5c93eb164`) — run URL:
+`https://github.com/Productoraear/productora-ear-os/actions/runs/40970254060`
+
+| Job | Estado | Duración |
+|---|---|---|
+| `contract-gate` | ✅ success | 11 s |
+| `typecheck-gate` | ✅ **success** | **1 m 21 s** |
+| `build-and-push` | ▶ lanzado (el gate le dio paso) | — |
+
+`npm ci` + `prisma generate` + `tsc --noEmit` en runner limpio = **1 m 21 s**, muy por debajo del `timeout-minutes: 20`.
+El gate dejó de ser prosa: es el job que da o niega el paso a la publicación de la imagen.
+
+## 8. Hallazgo colateral P0 (fuera de este bloque, detectado aquí)
+
+El run anterior (`40966992946`) falla por **`production-smoke` → exit 3**: el intake real devuelve
+`POST HTTP 503: {"error":"CRON_SECRET no configurado en el servidor."}`.
+Traducción de negocio: **el puente de captación está rechazando POSTs en producción**, es decir, se pueden estar
+perdiendo leads. No lo arregla este bloque (es configuración del VPS/Coolify, no código): exige definir `CRON_SECRET`
+en el entorno de producción y re-verificar el POST a 200. Prioridad por encima de cualquier cosmética.
+

@@ -926,9 +926,12 @@ Tarea `W42_OUTREACH_ACK_01` completada y sellada con Exit Code 0 (sello condicio
 
 **Ω-DIAMANTE: SELLO CONDICIONADO 5/8 del Núcleo** (bloque P0-CI, no P0-dinero). ✅ 1 tsc Exit 0 · ✅ 3 cero `any` (sin TS nuevo) · ✅ 6 cero precios hardcodeados (no toca SSOT) · ✅ 8 cero secretos (el job usa env ficticia, ningún secret) · ⚠️ 2 eslint n/a. ❌ 5 handlers huérfanos (no aplica: no hay UI) · ❌ 7 TODO (n/a). Ítems 9-20: **SIN EVIDENCIA MÁQUINA** (12 Lighthouse, 13 CWV p75, 16 Jaccard, 17 provenance, 18 build < 60 s, 20 n8n DLQ). No se firma 20/20.
 
-**ESTADO_BLOQUE: VERIFICADO localmente · pendiente de confirmación en el primer run de GitHub Actions.**
+**ESTADO_BLOQUE: VERIFICADO · confirmado en CI real** (run `40970254060`, commit `5c93eb164`): `contract-gate` ✅ 11 s · **`typecheck-gate` ✅ 1 m 21 s** (npm ci + prisma generate + tsc en runner limpio) · `build-and-push` lanzado solo tras el gate.
 
-**SIGUIENTE_PASO**: abrir `W46_T02_FLIP_IGNORE_BUILD_ERRORS` (voltear `next.config.ts:37` con medición de memoria en el contenedor del VPS) — es el único punto que aún permite construir sin typechequear; el gate ya impide publicarlo.
+**HALLAZGO COLATERAL P0 (fuera del bloque)**: el run `40966992946` falla por `production-smoke → exit 3`: el intake live devuelve `POST HTTP 503 {"error":"CRON_SECRET no configurado en el servidor."}`. Consecuencia de negocio: **el puente de captación rechaza POSTs en producción → leads en riesgo de perderse**. No es código: es configuración de entorno del VPS/Coolify.
+
+**SIGUIENTE_PASO**: `W46_T02_P0_CRON_SECRET_INTAKE` — definir `CRON_SECRET` en el entorno de producción (Coolify) y verificar `scripts/prod_smoke_intake.cjs --post` → HTTP 200 / Exit 0. Prioridad absoluta: es el único fallo rojo del CI y afecta a la captación de dinero. Después, `W46_T03_FLIP_IGNORE_BUILD_ERRORS` con medición de memoria en el VPS.
+
 
 
 
