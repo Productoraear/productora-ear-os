@@ -101,3 +101,27 @@ Si el SHA no llega al contenedor, la puerta de frescura acusara STALE para siemp
 equipo podria "aprender" a ignorarla. Mitigacion: el mensaje de fallo imprime la causa y
 la remediacion, y el modo diagnostico (`npm run deploy:freshness`) permite distinguir
 "no desplegado" de "desplegado mal" en 5 segundos.
+
+---
+
+## 9. Evidencia medida EN CI (run 41022160443, commit 996e0e9c0)
+
+La puerta nueva **no quedo SKIPPED pese al fallo del smoke** (`if: always()`), y su
+veredicto es exactamente el hecho real:
+
+| Job / paso | Resultado |
+|---|---|
+| `contract-gate` | OK 7s |
+| `typecheck-gate` (incluye `verify:voice` 5/5) | OK 1m55s |
+| `build-and-push` (imagen con `EAR_BUILD_SHA=996e0e9c0`) | OK 5m20s |
+| `Smoke de produccion` | **X** `SMOKE_POST=POST_HTTP_503` · `SMOKE_LANDING=HTTP_200` · `SMOKE_RESULT=FAILED EXIT=3` |
+| `Frescura del despliegue` | **X** `HEALTH intento 1..8 http=200 buildSha=<ausente> esperado=996e0e9` -> `VERDICT=UNVERIFIABLE` |
+
+Prueba adicional de que no hubo redeploy: `SMOKE_IMAGE_BUILD_ID=30e6yKASYBBg4vbXA-1Hn` es
+**identico** al medido 17 minutos antes (07:37 y 07:54). Un despliegue real habria cambiado
+el build id de Next. **Produccion no se ha movido.**
+
+Lectura correcta del estado del pipeline: hay 2 rojos y los 2 son verdaderos —
+(1) el despliegue no se ejecuta (falta `COOLIFY_API_TOKEN`), (2) `CRON_SECRET` no existe en
+el entorno de la app en Coolify. Ninguno de los dos se puede cerrar desde este repositorio.
+
