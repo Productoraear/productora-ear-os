@@ -746,6 +746,11 @@ function detectActiveDOMContext(): { name?: string; type?: string } | undefined 
                       <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400"></span>
                     </span>
                   )}
+                  {lastPlaybackSource && (
+                    <span className="font-mono text-[9px] uppercase tracking-wider text-white/40">
+                      [{lastPlaybackSource}]
+                    </span>
+                  )}
                 </div>
                 {selectedVoiceMode === 'browser' && availableVoices.length > 0 && (
                   <div className="flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-2 py-0.5">
@@ -867,37 +872,31 @@ function detectActiveDOMContext(): { name?: string; type?: string } | undefined 
           <div ref={chatEndRef} />
         </div>
 
-        {/* CHIPS DE ACCIÓN RÁPIDA (PACIENTE CERO & SSOT) */}
+        {/* CHIPS DE ACCIÓN RÁPIDA (ASISTENCIA CORPORATIVA S-CLASS) */}
         <div className="flex flex-wrap gap-2 border-t border-white/10 bg-[#09090d] px-6 py-2.5">
           <button
-            onClick={() => sendMessage('¿Cuánto le costaría a un cliente de Valencia una serenata como solista premium de Edwin Agudelo en Alaquàs a las 3 AM del domingo libre más próximo?')}
-            className="rounded-full border border-[#ecb613]/40 bg-[#ecb613]/10 px-3 py-1 font-mono text-[11px] font-semibold text-[#ecb613] hover:bg-[#ecb613] hover:text-black"
+            onClick={() => sendMessage('¿Cómo funciona el depósito de 100 € de Stripe Price-Lock y por qué es 100% deducible?')}
+            className="rounded-full border border-[#ecb613]/40 bg-[#ecb613]/10 px-3 py-1 font-mono text-[11px] font-semibold text-[#ecb613] hover:bg-[#ecb613] hover:text-black transition-colors"
           >
-            ⚡ Serenata Alaquàs 3 AM domingo libre
+            🔒 Garantía Price-Lock 100 € Deducible
           </button>
           <button
-            onClick={() => sendMessage('¿Cómo funciona el depósito de 100 € de Stripe y por qué es 100% deducible?')}
-            className="rounded-full border border-white/10 bg-white/5 px-3 py-1 font-mono text-[11px] text-white/70 hover:border-[#ecb613]/50 hover:bg-[#ecb613]/10 hover:text-white"
+            onClick={() => sendMessage('Presupuesto y disponibilidad para evento corporativo de gala con sonorización y música en vivo')}
+            className="rounded-full border border-white/10 bg-white/5 px-3 py-1 font-mono text-[11px] text-white/70 hover:border-[#ecb613]/50 hover:bg-[#ecb613]/10 hover:text-white transition-colors"
           >
-            🔒 Fianza Stripe 100 € Deducible
+            🏛️ Producción Eventos & Gala Corporativa
           </button>
           <button
-            onClick={() => sendMessage('¿Puedo personalizar el repertorio y cuáles son las canciones clásicas disponibles?')}
-            className="rounded-full border border-white/10 bg-white/5 px-3 py-1 font-mono text-[11px] text-white/70 hover:border-[#ecb613]/50 hover:bg-[#ecb613]/10 hover:text-white"
+            onClick={() => sendMessage('Especificaciones técnicas del Rider acústico Bose y cumplimiento normativo Ley 37/2003')}
+            className="rounded-full border border-white/10 bg-white/5 px-3 py-1 font-mono text-[11px] text-white/70 hover:border-[#ecb613]/50 hover:bg-[#ecb613]/10 hover:text-white transition-colors"
           >
-            🎵 Repertorio & Gala Mariachi
+            🔊 Rider Acústico & Normativa Ley 37/2003
           </button>
           <button
-            onClick={() => sendMessage('¿Cumple el sonido con la normativa de ruido Ley 37/2003 para fincas?')}
-            className="rounded-full border border-white/10 bg-white/5 px-3 py-1 font-mono text-[11px] text-white/70 hover:border-[#ecb613]/50 hover:bg-[#ecb613]/10 hover:text-white"
+            onClick={() => sendMessage('Protocolo clínico VIMUME 40 Hz, certificación de impacto y deducción fiscal Ley 49/2002')}
+            className="rounded-full border border-white/10 bg-white/5 px-3 py-1 font-mono text-[11px] text-white/70 hover:border-[#ecb613]/50 hover:bg-[#ecb613]/10 hover:text-white transition-colors"
           >
-            🔊 Rider Bose & Ley 37/2003
-          </button>
-          <button
-            onClick={() => sendMessage('Estima las sesiones de VIMUME a 40 Hz y la deducción fiscal')}
-            className="rounded-full border border-white/10 bg-white/5 px-3 py-1 font-mono text-[11px] text-white/70 hover:border-[#ecb613]/50 hover:bg-[#ecb613]/10 hover:text-white"
-          >
-            🧠 VIMUME 40 Hz & Deducción
+            🧠 VIMUME Impacto Clínico & Deducción Fiscal
           </button>
         </div>
 

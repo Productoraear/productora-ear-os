@@ -45,12 +45,44 @@ export function stopSpeaking(): void {
   if (isSpeechSupported()) window.speechSynthesis.cancel();
 }
 
-/** Habla el texto frase a frase. Resuelve cuando termina o se cancela. */
+/** Habla el texto frase a frase con soporte blindado para móviles (iOS/Android). */
 export async function speakNatural(text: string): Promise<void> {
   if (!isSpeechSupported()) return;
   const synth: SpeechSynthesis = window.speechSynthesis;
   synth.cancel();
-  const voice: SpeechSynthesisVoice | null = pickVoice(synth.getVoices());
+
+  // En Safari iOS y Chrome Android, si está en pausa o suspendido, forzamos resume
+  if (synth.paused) {
+    synth.resume();
+  }
+
+  // Si las voces no se han poblado todavía (típico en Safari/WebKit móvil), esperamos brevemente
+  let voices = synth.getVoices();
+  if (voices.length === 0) {
+    await new Promise<void>((resolve) => {
+      let resolved = false;
+      const handler = () => {
+        if (!resolved) {
+          resolved = true;
+          window.speechSynthesis.onvoiceschanged = null;
+          resolve();
+        }
+      };
+      window.speechSynthesis.onvoiceschanged = handler;
+      setTimeout(() => {
+        if (!resolved) {
+          resolved = true;
+          if (window.speechSynthesis.onvoiceschanged === handler) {
+            window.speechSynthesis.onvoiceschanged = null;
+          }
+          resolve();
+        }
+      }, 250);
+    });
+    voices = synth.getVoices();
+  }
+
+  const voice: SpeechSynthesisVoice | null = pickVoice(voices);
   const cleanSpeechText = toConversationalSpeech(text);
   const sentences: string[] = splitSentences(cleanSpeechText.slice(0, 2000));
 
@@ -65,9 +97,14 @@ export async function speakNatural(text: string): Promise<void> {
       utterance.onend = (): void => resolve();
       utterance.onerror = (): void => resolve();
       synth.speak(utterance);
+
+      // Heartbeat para navegadores móviles donde speechSynthesis puede colgarse tras unos segundos
+      if (synth.paused) {
+        synth.resume();
+      }
     });
     await new Promise<void>((resolve): void => {
-      window.setTimeout(resolve, 120 + Math.random() * 120);
+      window.setTimeout(resolve, 80 + Math.random() * 80);
     });
   }
 }

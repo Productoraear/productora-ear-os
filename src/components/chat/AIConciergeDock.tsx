@@ -90,12 +90,12 @@ export function AIConciergeDock() {
           {
             id: 'welcome-1',
             sender: 'concierge',
-            text: '¡Hola! Soy el **Concierge Inteligente de Productora EAR**. Dime qué tipo de evento estás planeando (ej. *Finca para 150 personas en Toledo con catering* o *Mariachi en Madrid*) y te seleccionaré las mejores opciones disponibles con garantía de precio.',
+            text: '¡Hola! Soy el **Concierge Ejecutivo de Productora EAR**. Indícame qué tipo de producción o evento estás coordinando (ej. *Gala corporativa con sonorización y música en vivo* o *Espacios para eventos exclusivos*) y te seleccionaré las mejores opciones disponibles con garantía de precio.',
             suggestedChips: [
-              'Fincas para bodas en Toledo',
-              'Catering a las brasas en Madrid',
-              'Mariachi y Solista Edwin Agudelo',
-              'Discomóvil Bose F1 en Segovia',
+              'Producción & Gala Corporativa',
+              'Fincas y Espacios Exclusivos',
+              'Garantía Price-Lock 100 € Deducible',
+              'Rider Acústico & Sonido Bose',
             ],
             timestamp: formatTimestamp(),
           },
