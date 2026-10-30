@@ -1109,3 +1109,48 @@ Tarea `W42_OUTREACH_ACK_01` completada y sellada con Exit Code 0 (sello condicio
 - **Premortem**: el riesgo no es que la doctrina sea larga, es que un agente la cite sin ejecutar G-0/G-6; mitigado con `estado_bloque` derivado de evidencias y SIG-2 (n/20 con huecos a la vista).
 - **Omega-Diamante**: 8/20. Sello CONDICIONADO. Huecos declarados en .clinerules seccion 13 (no se declara 20/20 sin comando).
 - **Siguiente paso**: construir `src/app/confianza/page.tsx` renderizada desde `.antigravity/evidence/ledger.jsonl` (U13).
+
+---
+
+## 2026-10-30 · W42_T02_CONFIANZA_WIRING_AND_CONTRAST_HONESTY — cierre de bloque (Exit 0 en motor)
+
+- **Hecho verificado**: `npm run gate:prepush` -> **GATE_EXIT=0** (21 comandos encadenados).
+  Puerta 13 `audit:contrast:core`: `[PREFLIGHT] probed=true · source=live · mode=REAL`,
+  `ROUTES_SIN_EVIDENCIA=0`, `VERDICT=PASS`. Puerta 20 `verify:confianza`:
+  `SUMMARY {"exit_code":0,"rows":7,"facades":0,"degraded":0,"anomalies":0,"checks":10,"failed":[]}`.
+- **Causa raiz del rojo previo de G-3**: arranque intermitente del standalone (no contraste).
+  `BOOT_MS=1030` medido con `.antigravity/diag_standalone_boot.cjs` en la misma maquina y build;
+  la invocacion exacta del gate repetida a mano daba PASS. Blindaje aplicado en
+  `scripts/audit_wcag_contrast_live.cjs`: preflight 30 s, 2 intentos (reintento en puerto
+  efimero), log de exit/stderr del hijo y guard de integridad (si `probed=false` no lanza Chrome
+  ni sobrescribe `reports/contrast/wcag_report.json`: antes una corrida rota borraba la evidencia).
+- **Ledger**: fila `AF-1` en `SOSPECHOSO` con `supersedes:AF-1` (AMD-1, sancionado). El hallazgo NO
+  se retira: `verify:confianza` pasa `NO_FACADE` porque la fila vigente deja de ser `FACHADA`.
+- **Commit / push**: `ddf11aab` (13 ficheros, 1072+/27-), `3ebf5e04..ddf11aab main -> main`,
+  `PUSH_EXIT=0`, `HEAD == origin/main`.
+- **G-7 (frescura)**: `node scripts/prod_deploy_freshness.cjs --expect=ddf11aab…` ->
+  `VERDICT=STALE` `buildSha=3ebf5e048081d9cc4b0c833d561a27a92e9500f7`, **EXIT=4**. Con `--wait=1500`
+  (15 s/intento) 26 intentos sin movimiento: Coolify no arranco el build.
+- **G-6 (sonda en produccion)**: dry-run `node .antigravity/probe_af1_g6.cjs` ->
+  `SUMMARY {"exit_code":1,"verdict":"SIN_EVIDENCIA","failures":6}` (AF-1 sin `probed/source/mode`;
+  `/confianza` 404). La sonda falla cerrada a proposito contra el build viejo. Sin `--append`: no
+  escribio ledger.
+- **Deploy NO ejecutado (y por que)**: sin `COOLIFY_API_TOKEN` en entorno ni en `.env*`
+  (0 apariciones); el rango `3ebf5e04..ddf11aab` son 6 commits e incluye `024d51d1` (5 rutas cron
+  fail-closed con `CRON_SECRET`), que no esta en la imagen viva (`merge-base --is-ancestor`=1).
+  Si Coolify no tiene `CRON_SECRET`, `hold-timeout` deja de liberar bloqueos de fecha ->
+  disponibilidad (SEV-1). CHG-5/CHG-3 lo prohiben a ciegas y el rollback no se pudo ensayar.
+- **Deuda P2 registrada**: 41 fallos AA en `/confianza`, causa unica token `#71717a` sobre
+  `#08080b` = 4.14:1 (AA 4.5:1), 168 nodos. Fichero fuera de alcance de T02. Cierre:
+  `npm run audit:contrast -- --routes=/confianza --shots=0` -> `TOTAL_FALLOS=0`. Las 10 rutas del
+  gate estan a 0 fallos: el token solo falla en esa pagina.
+- **Premortem**: lo que se rompe si se despliega sin mirar es `hold-timeout` + 4 crons (503 por
+  `CRON_SECRET` ausente); se detectaria al ver 503 en `/api/cron/*` justo despues del deploy, es
+  decir, tarde. Mitigacion: verificar `CRON_SECRET` en Coolify ANTES de desplegar y tener el
+  redeploy de `3ebf5e0` localizado como rollback.
+- **Omega-Diamante**: 14/20 (nucleo 8/8 + idempotencia, presupuesto y DLQ medidos; faltan ISO 25010,
+  ISO 5055, ASVS L3 automatizado, Lighthouse 100x4, CWV p75 de campo y Rich Results).
+  Sello CONDICIONADO: `AF-1` y `U13` quedan `SOSPECHOSO` hasta que produccion sirva `ddf11aab`.
+- **Siguiente paso**: el CEO/Arquitecto dispara el deploy en Coolify (82.29.179.172:8000) con
+  `CRON_SECRET` verificado; despues `node .antigravity/probe_af1_g6.cjs --append` promueve AF-1 y
+  U13 a `VERIFICADO` sin tocar codigo.

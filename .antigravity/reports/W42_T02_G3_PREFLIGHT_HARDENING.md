@@ -125,7 +125,7 @@ cobra (`/reservar/solista`), proveedores y VIMUME están limpios.
 
 ## 7. G-3 medida tras el blindaje: `gate:prepush` VERDE (21 comandos encadenados)
 
-Ejecución desacoplada (el gate dura >10 min y el terminal de Cline es de un solo hilo; ver §8):
+Ejecución desacoplada (el gate dura >10 min y el terminal de Cline es de un solo hilo; ver §9):
 
 ```
 .antigravity/run_gate_bg.cmd  →  npm run gate:prepush > %TEMP%\ear_gate4.log
@@ -185,8 +185,59 @@ Segundo modo de fallo detectado hoy: **dos gates simultáneos** (uno huérfano d
 matado) duplican el trabajo de git y pueden escribir el mismo `wcag_report.json`; antes de
 lanzar el gate hay que verificar que no quede cadena viva.
 
-Contenido del lanzador (el fichero no se versiona: `.gitignore:201` ignora `.antigravity/*.cmd`,
-regla preexistente que NO se toca):
+## 10. Cierre del ciclo: push hecho, deploy NO ejecutado (medido, no supuesto)
+
+```
+git push origin main        → 3ebf5e04..ddf11aab main -> main · PUSH_EXIT=0
+git rev-parse HEAD          → ddf11aabecac5f9a55c88129d67ae99e36eae124
+git rev-parse origin/main   → ddf11aabecac5f9a55c88129d67ae99e36eae124
+node scripts/prod_deploy_freshness.cjs --expect=ddf11aab…  
+                            → HEALTH intento 1 http=200 buildSha=3ebf5e048081d9cc4b0c833d561a27a92e9500f7
+                              VERDICT=STALE produccion sirve 3ebf5e0 pero este run construyo ddf11aa · EXIT=4
+```
+
+Reintentos con `--wait=1500` (15 s por intento): intentos 1..26 sin cambio de `buildSha`
+durante ~7 min ⇒ **Coolify no ha arrancado el build**. No es una suposición: es el SHA servido
+por `/api/health` sin moverse.
+
+### Por qué NO he disparado el deploy yo
+
+| Motivo | Medición |
+|---|---|
+| Sin credenciales | `COOLIFY_API_TOKEN` = ausente en el entorno y **0 apariciones** en `.env`, `.env.local`, `.env.production`. `script trigger_coolify_deploy.cjs` sólo las lee de `process.env` (`:20-22`, `:83-84`). Sin token, Coolify responde 401. |
+| Alcance real del deploy | `git log 3ebf5e04..ddf11aab` = **6 commits**: `024d51d1` (cron fail-closed), `b309b607` (U13 + AF-1), `b7d25e60`/`21e5783c` (docs), `f96679cb` (higiene git), `ddf11aab` (este). No es "mi diff de una línea". |
+| Riesgo verificado | `024d51d1` **no** es ancestro del build vivo (`git merge-base --is-ancestor` = 1). Al desplegar, 5 rutas cron pasan a exigir `CRON_SECRET`: `src/app/api/cron/{b2g-hunter,b2g-telegram-hunter,hold-timeout,obsidian-sync,opportunity-radar}/route.ts`. Si Coolify no tiene `CRON_SECRET`, las 5 devuelven 503 y `hold-timeout` deja de liberar bloqueos de fecha ⇒ toca **disponibilidad** (SEV-1 por §10), que es exactamente lo que CHG-5 prohíbe desplegar a ciegas. |
+| Rollback no ensayado | CHG-3 exige rollback probado < 5 min; sin acceso a Coolify no puedo ensayarlo hoy. |
+
+Decisión: **el deploy lo ejecuta quien tenga acceso a Coolify** (`82.29.179.172:8000`), con dos
+comprobaciones previas (no negociables):
+1. `CRON_SECRET` existe en las variables de entorno de la app en Coolify.
+2. Rollback = redeploy del build `3ebf5e0` (imagen disponible), ensayado o al menos localizado.
+
+### Comando único que cierra AF-1 + U13 en cuanto producción sirva `ddf11aa`
+
+```
+node scripts/prod_deploy_freshness.cjs --expect=ddf11aabecac5f9a55c88129d67ae99e36eae124 --wait=1800   # G-7: VERDICT=FRESH
+node .antigravity/probe_af1_g6.cjs --append    # G-6: escribe las filas VERIFICADO de AF-1 y U13
+npm run verify:confianza                       # debe seguir en exit 0 con 0 fachadas
+```
+
+Contra el build actual ese mismo comando devuelve `SIN_EVIDENCIA` / `EXIT=1` (§8): está calibrado
+para no poder firmar `VERIFICADO` con el build viejo. Mientras no se despliegue, `AF-1` y `U13`
+quedan en **`SOSPECHOSO`** — nunca se presentan como terminados (CEO-4).
+
+### Deuda P2 registrada (no se toca en T02)
+
+| Ítem | Medición | Fichero | Comando que la cierra |
+|---|---|---|---|
+| 41 fallos AA en `/confianza` | token `#71717a` sobre `#08080b` = **4.14:1** (AA exige 4.5:1), 168 nodos escaneados | `src/app/(public)/confianza/page.tsx` | `npm run audit:contrast -- --routes=/confianza --shots=0` → `TOTAL_FALLOS=0` |
+
+No se ha "arreglado" en este bloque a propósito: el fichero no está en el alcance autorizado y una
+corrida del medidor contra el build local no es la medición que importa (importa la del deploy).
+Queda anotada con su token exacto, su ratio y su comando de cierre.
+
+
+## 11. Lanzador local del gate (contenido versionado aquí; el .cmd está gitignorado)
 
 ```bat
 @echo off
