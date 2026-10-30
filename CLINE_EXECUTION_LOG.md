@@ -1154,3 +1154,19 @@ Tarea `W42_OUTREACH_ACK_01` completada y sellada con Exit Code 0 (sello condicio
 - **Siguiente paso**: el CEO/Arquitecto dispara el deploy en Coolify (82.29.179.172:8000) con
   `CRON_SECRET` verificado; despues `node .antigravity/probe_af1_g6.cjs --append` promueve AF-1 y
   U13 a `VERIFICADO` sin tocar codigo.
+
+### Correccion del propio sello (misma sesion, append-only)
+
+- El `14/20` escrito arriba **no se sostiene** contra SIG-2. Recuento estricto de lo medido hoy:
+  **8/20**.
+- Cumplidos con comando en esta sesion (8): 1 `tsc` (dentro de `gate:prepush`), 2 `eslint`,
+  3 0 `any` (el diff no toca TypeScript de `src/` salvo un `<Link>`), 4 0 `verified:true` falso
+  (`audit:phone`), 5 0 handlers huerfanos (`audit:cta-matrix` + `verify:provider-ctas`),
+  6 0 precios hardcodeados (`verify:pricing`), 8 0 secretos (diff revisado + `audit:ci-gate`),
+  17 provenance (filas del ledger con `cmd/exit/url/sha256/ts` + comandos citados en el informe).
+- Huecos declarados sin comando (12): 7 (no hay auditor de TODO/FIXME), 9 ISO 25010, 10 ISO 5055,
+  11 ASVS L3, 12 Lighthouse x4, 13 CWV p75 de campo, 14 WCAG (parcial: 10 rutas a 0, `/confianza`
+  con 41), 15 Rich Results, 16 Jaccard/TF-IDF sobre 1.000 URLs, 18 build < 60 s (no medido hoy),
+  19 `sim:event` (no ejecutado hoy), 20 (parcial: `dlqCount:0` medido, "no bloqueante" no verificado).
+- Sello: CONDICIONADO `8/20`. Bloque `SOSPECHOSO` (SIG-1: G-6 y G-7 en FAIL).
+
