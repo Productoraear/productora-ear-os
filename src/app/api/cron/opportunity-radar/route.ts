@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { runOpportunityRadar } from '@/lib/services/opportunity-radar/opportunity-radar';
+import { describeCronAuthFailure, verifyCronSecret } from '@/lib/security/cronSecretGuard';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -17,11 +18,13 @@ export const runtime = 'nodejs';
  *  - TED_API_KEY              (licitaciones UE)
  */
 export async function GET(req: NextRequest) {
-    const authHeader = req.headers.get('authorization');
-    const cronSecret = process.env.CRON_SECRET;
-
-    if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
-        return NextResponse.json({ error: 'UNAUTHORIZED_CRON_ACCESS' }, { status: 401 });
+    // 🔒 P0: antes `if (cronSecret && authHeader !== ...)` FALLABA ABIERTO con
+    // `CRON_SECRET` ausente (cron público en producción). Ahora el veredicto es
+    // el SSOT `cronSecretGuard`: fail-closed (503) sin secreto y comparación en
+    // tiempo constante con huellas públicas en el 401.
+    const verdict = verifyCronSecret(req);
+    if (!verdict.ok) {
+        return NextResponse.json(describeCronAuthFailure(verdict), { status: verdict.status });
     }
 
     try {

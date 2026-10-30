@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { stripe } from '@/lib/payments';
 import { getProvidersByLocation } from '@/lib/data/vampire-service';
+import { describeCronAuthFailure, verifyCronSecret } from '@/lib/security/cronSecretGuard';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -15,14 +16,12 @@ export const runtime = 'nodejs';
  */
 export async function GET(req: Request) {
   try {
-    const authHeader = req.headers.get('authorization');
-    const cronSecret = process.env.CRON_SECRET;
-
-    // Validación de seguridad de cron en producción
-    if (process.env.NODE_ENV === 'production' && cronSecret) {
-      if (authHeader !== `Bearer ${cronSecret}`) {
-        return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
-      }
+    // 🔒 P0: el guard anterior sólo miraba en producción Y con secreto presente,
+    // así que sin `CRON_SECRET` el worker de holds quedaba PÚBLICO y cualquiera
+    // podía cancelar PaymentIntents. SSOT `cronSecretGuard`: fail-closed (503).
+    const verdict = verifyCronSecret(req);
+    if (!verdict.ok) {
+      return NextResponse.json(describeCronAuthFailure(verdict), { status: verdict.status });
     }
 
     const now = Math.floor(Date.now() / 1000);
@@ -31,7 +30,7 @@ export async function GET(req: Request) {
 
     // 1. Listar PaymentIntents pendientes de captura en Stripe
     let processedHolds = 0;
-    let releasedHolds: Array<{
+    const releasedHolds: Array<{
       paymentIntentId: string;
       customerPhone?: string;
       province?: string;

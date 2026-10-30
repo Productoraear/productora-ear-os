@@ -204,6 +204,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # DIAGNOSTICO P0 (2026-10-30): cuando el POST sale 401 nadie sabia si el
+      # problema era un secreto distinto, una cabecera ausente o un VPS sin
+      # secreto. Esta sonda compara HUELLAS (sha256 truncado, nunca el valor) y
+      # lanza un GET autenticado de lectura pura. `continue-on-error` esta
+      # acotado a este diagnostico: el juez del despliegue sigue siendo el smoke
+      # (exit 3) y la puerta de frescura; aqui solo se gana la causa raiz.
+      - name: Huella de CRON_SECRET (GitHub Secrets vs servidor vivo)
+        if: always()
+        continue-on-error: true
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: node scripts/cron_secret_probe.cjs
+
       - name: Smoke de produccion (ruta viva + landing real)
         env:
           CRON_SECRET: ${{ secrets.CRON_SECRET }}

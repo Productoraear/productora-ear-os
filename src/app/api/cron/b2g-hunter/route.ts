@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { sendB2GTelegramAlert, B2GTenderAlertPayload } from '@/lib/b2g/telegram-notifier';
 import { fetchTedNotices, TedNotice } from '@/lib/services/ted-connector';
 import { SAFE_LCSP_CEILING_EUR } from '@/lib/constants/ear-os-ssot';
+import { describeCronAuthFailure, verifyCronSecret } from '@/lib/security/cronSecretGuard';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -120,11 +121,13 @@ function mapTedNoticeToAlert(notice: TedNotice): B2GTenderAlertPayload {
 }
 
 export async function GET(req: NextRequest) {
-  const authHeader = req.headers.get('authorization');
-  const cronSecret = process.env.CRON_SECRET;
-
-  if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
-    return NextResponse.json({ error: 'UNAUTHORIZED_CRON_ACCESS' }, { status: 401 });
+  // 🔒 SSOT `cronSecretGuard`: antes era `if (cronSecret && ...)`, de modo que
+  // un despliegue SIN `CRON_SECRET` dejaba este radar PÚBLICO (fallo abierto:
+  // cualquiera disparaba consultas a TED y notificaciones Telegram). Ahora es
+  // fail-closed (503) y el 401 publica huellas truncadas para diagnóstico.
+  const verdict = verifyCronSecret(req);
+  if (!verdict.ok) {
+    return NextResponse.json(describeCronAuthFailure(verdict), { status: verdict.status });
   }
 
   try {

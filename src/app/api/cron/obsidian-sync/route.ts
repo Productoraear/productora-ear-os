@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { ObsidianIngestor } from "@/lib/services/rag/obsidianIngestor";
 import { sendTelegramNotification } from "@/lib/services/telegram";
 import { logger } from "@/lib/logger";
+import { describeCronAuthFailure, verifyCronSecret } from "@/lib/security/cronSecretGuard";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -12,27 +13,21 @@ export const dynamic = "force-dynamic";
  * Diseñado para ser invocado por Vercel Cron Jobs mediante Bearer Token.
  */
 export async function GET(req: Request) {
-  const authHeader = req.headers.get("authorization");
-
-  // 🔒 BLINDAJE P0-4: sin CRON_SECRET definido en el entorno, el cron queda DESHABILITADO.
-  // Prohibido cualquier fallback predecible.
-  const cronSecret = process.env.CRON_SECRET;
-  if (!cronSecret) {
-    logger.error({ event: "CRON_SYNC_MISCONFIGURED", description: "CRON_SECRET no definido." });
-    return NextResponse.json({ error: "CONFIGURACION_SEGURIDAD_INVALIDA" }, { status: 500 });
-  }
-
-  // 1. Verificación del Guardián Bearer Token
-  if (
-    !authHeader ||
-    !authHeader.startsWith("Bearer ") ||
-    authHeader.split(" ")[1] !== cronSecret
-  ) {
-    logger.warn({
-      event: "CRON_SYNC_UNAUTHORIZED",
-      ip: req.headers.get("x-forwarded-for") || "unknown",
-    });
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  // 🔒 SSOT `cronSecretGuard` (sustituye el `!==` en claro y el 500 ambiguo):
+  // sin `CRON_SECRET` → 503 fail-closed; credencial distinta → 401 con huellas
+  // truncadas; comparación en tiempo constante sobre SHA-256, nunca en claro.
+  const verdict = verifyCronSecret(req);
+  if (!verdict.ok) {
+    if (verdict.reason === "NOT_CONFIGURED") {
+      logger.error({ event: "CRON_SYNC_MISCONFIGURED", description: "CRON_SECRET no definido." });
+    } else {
+      logger.warn({
+        event: "CRON_SYNC_UNAUTHORIZED",
+        reason: verdict.reason,
+        ip: req.headers.get("x-forwarded-for") || "unknown",
+      });
+    }
+    return NextResponse.json(describeCronAuthFailure(verdict), { status: verdict.status });
   }
 
   try {
@@ -62,10 +57,11 @@ export async function GET(req: Request) {
       status: "SYNCED",
       fragmentsProcessed: fragments.length,
     });
-  } catch (err: any) {
-    logger.error({ event: "CRON_SYNC_FAILED", error: err.message });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    logger.error({ event: "CRON_SYNC_FAILED", error: message });
     return NextResponse.json(
-      { error: `Sync execution failed: ${err.message}` },
+      { error: `Sync execution failed: ${message}` },
       { status: 500 }
     );
   }

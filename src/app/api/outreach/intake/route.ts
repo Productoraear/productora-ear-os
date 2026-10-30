@@ -7,6 +7,7 @@ import {
     classifyFailure,
     type FailureCode,
 } from '@/lib/outreach/intake-diagnostics';
+import { describeCronAuthFailure, verifyCronSecret } from '@/lib/security/cronSecretGuard';
 import { fireAndForgetN8n } from '@/lib/services/n8n-dispatcher';
 
 export const dynamic = 'force-dynamic';
@@ -26,7 +27,9 @@ export const runtime = 'nodejs';
  *  · Dirección única: el estado solo avanza (NEW → CONTACTED → REPLIED →
  *    MEETING → WON). OPTED_OUT gana siempre y nunca se revierte.
  *  · Auth por `CRON_SECRET` de extremo a extremo; sin secreto en producción el
- *    endpoint falla cerrado (503) en vez de escribir a ciegas.
+ *    endpoint falla cerrado (503) en vez de escribir a ciegas. La comparación
+ *    vive en `@/lib/security/cronSecretGuard` (tiempo constante + huellas
+ *    públicas en el 401 para diagnosticar GitHub vs Coolify sin filtrar valor).
  */
 
 const OutreachStatusSchema = z.enum([
@@ -92,22 +95,33 @@ type ThreadPayload = z.infer<typeof ThreadSchema>;
 
 // ─── Auth ─────────────────────────────────────────────────────────────────────
 
+/**
+ * Puerta de autenticación delegada al SSOT `cronSecretGuard`.
+ * Antes: `headers.get('authorization') !== \`Bearer ${secret}\`` — comparación
+ * vulnerable a temporización y muda ante un secreto con un salto de línea. Ahora
+ * el 401 publica huellas truncadas (presentada vs configurada) para que el
+ * operador vea en el log de CI si el valor de GitHub y el de Coolify difieren.
+ */
 function authorize(req: NextRequest): NextResponse | null {
-    const secret = process.env.CRON_SECRET;
-    if (!secret) {
-        if (process.env.NODE_ENV === 'production') {
-            console.error('[outreach/intake] CRON_SECRET no configurado: fallo cerrado.');
-            return NextResponse.json(
-                { error: 'CRON_SECRET no configurado en el servidor.' },
-                { status: 503 },
-            );
+    const verdict = verifyCronSecret(req);
+
+    if (verdict.ok) {
+        if (verdict.reason === 'DEV_BYPASS') {
+            console.warn('[outreach/intake] CRON_SECRET ausente en desarrollo: ruta abierta (no en produccion).');
         }
         return null;
     }
-    if (req.headers.get('authorization') !== `Bearer ${secret}`) {
-        return NextResponse.json({ error: 'No autorizado.' }, { status: 401 });
+
+    const body = describeCronAuthFailure(verdict);
+    if (verdict.status === 503) {
+        console.error('[outreach/intake] CRON_SECRET no configurado: fallo cerrado (503).');
+    } else {
+        console.warn(
+            `[outreach/intake] ${verdict.reason} (${verdict.status}): presentada=${body.presented} ` +
+                `len=${body.presentedLength} configuradas=${body.configured.join('|') || 'SIN_CLAVES'}`,
+        );
     }
-    return null;
+    return NextResponse.json(body, { status: verdict.status });
 }
 
 // ─── Estado monotónico ────────────────────────────────────────────────────────

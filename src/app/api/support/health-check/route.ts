@@ -24,12 +24,12 @@ import {
     dispatchCriticalSupportAlert,
     dispatchWarningSupportAlert
 } from '@/lib/services/support-alert-engine';
+import { describeCronAuthFailure, verifyCronSecret } from '@/lib/security/cronSecretGuard';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 const APP_URL = process.env.APP_URL || process.env.VERCEL_URL || 'https://productoraear.com';
-const CRON_SECRET = process.env.CRON_SECRET;
 
 interface ProbeResult {
     name: string;
@@ -60,12 +60,12 @@ async function probeHttp(name: string, url: string): Promise<ProbeResult> {
 }
 
 export async function GET(request: Request): Promise<NextResponse> {
-    const authHeader = request.headers.get('authorization');
-
-    if (process.env.NODE_ENV === 'production' && CRON_SECRET) {
-        if (authHeader !== `Bearer ${CRON_SECRET}`) {
-            return NextResponse.json({ error: 'UNAUTHORIZED' }, { status: 401 });
-        }
+    // 🔒 SSOT `cronSecretGuard`: antes `if (production && CRON_SECRET)`, así que
+    // sin secreto desplegado este endpoint quedaba PÚBLICO y cualquiera podía
+    // forzar ristras de alertas Telegram/WhatsApp/Email. Ahora fail-closed (503).
+    const verdict = verifyCronSecret(request);
+    if (!verdict.ok) {
+        return NextResponse.json(describeCronAuthFailure(verdict), { status: verdict.status });
     }
 
     const results: ProbeResult[] = [];

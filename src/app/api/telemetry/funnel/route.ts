@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { Prisma } from '@prisma/client';
 import { prisma } from '@/lib/database/prisma';
 import { fireAndForgetN8n, type N8nWebhookSlug } from '@/lib/services/n8n-dispatcher';
+import { describeCronAuthFailure, verifyCronSecret } from '@/lib/security/cronSecretGuard';
 import {
   FUNNEL_EVENT_NAMES,
   isConversionEvent,
@@ -146,9 +147,13 @@ interface StepAggregateRow {
 }
 
 export async function GET(req: Request): Promise<Response> {
-  const secret = process.env.CRON_SECRET;
-  if (secret && req.headers.get('x-admin-secret') !== secret) {
-    return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
+  // 🔒 SSOT `cronSecretGuard` (antes `if (secret && x-admin-secret !== secret)`:
+  // sin `CRON_SECRET` desplegado, el embudo de conversión quedaba PÚBLICO).
+  // Acepta `Authorization: Bearer`, `x-cron-secret` y el histórico
+  // `x-admin-secret` que ya usaba esta ruta: mismo valor, misma verificación.
+  const verdict = verifyCronSecret(req);
+  if (!verdict.ok) {
+    return NextResponse.json(describeCronAuthFailure(verdict), { status: verdict.status });
   }
 
   try {

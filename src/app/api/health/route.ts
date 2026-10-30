@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 
+import { cronSecretHealth } from '@/lib/security/cronSecretGuard';
+
 export const runtime = 'nodejs';
 
 export const dynamic = 'force-dynamic';
@@ -38,5 +40,15 @@ export async function GET() {
     buildSha,
     buildTime: process.env.EAR_BUILD_TIME ?? 'unknown',
     buildSource,
+    /**
+     * HUELLA DEL SECRETO DE CRON (P0, incidente 401 de 2026-10-30).
+     * Sin esto, "GitHub Secrets ≠ Coolify" era invisible hasta el 401 y se
+     * confundía con "secreto ausente" o "cabecera mal formada". Se publica SÓLO
+     * `sha256:<12 hex>` (48 bits) y la longitud: confirma igualdad/desigualdad
+     * con el valor de GitHub y no permite recuperar el secreto (que por diseño
+     * mide ≥32 caracteres; si mide menos, la huella se RETIENE y `weak` es true).
+     * Diagnóstico máquina: `npm run probe:cron`.
+     */
+    cron: cronSecretHealth(),
   });
 }

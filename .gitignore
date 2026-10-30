@@ -87,6 +87,9 @@ scripts/reports/*.json
 *.bak
 *.bak.*
 *.jsonl
+# [V10_SIGMA · EP-4] Excepción quirúrgica: el ledger de evidencias ES la prueba del
+# contrato. Se versiona siempre; el resto de .jsonl sigue ignorado.
+!.antigravity/evidence/ledger.jsonl
 
 # Bases de datos pesadas de scraping y volcados masivos (> 1MB)
 src/data/all_providers_database.json
