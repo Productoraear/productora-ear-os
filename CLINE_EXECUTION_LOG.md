@@ -1170,3 +1170,21 @@ Tarea `W42_OUTREACH_ACK_01` completada y sellada con Exit Code 0 (sello condicio
   19 `sim:event` (no ejecutado hoy), 20 (parcial: `dlqCount:0` medido, "no bloqueante" no verificado).
 - Sello: CONDICIONADO `8/20`. Bloque `SOSPECHOSO` (SIG-1: G-6 y G-7 en FAIL).
 
+
+## 2026-10-30 Â· W42_T03_PSEO_DATASET_REAL_DISTANCES_255 â€” VERIFICADO (local) / SOSPECHOSO (deploy)
+
+- Dataset provincial: 255/255 nodos con `distanceFromMentrideKm` real y comarca autentica.
+  Antes: 53/255 con distancia (60 km placeholder) y 202/255 con `Comarca Principal`.
+- 4 nodos defectuosos sustituidos por municipios reales (no se borran URLs, se sustituye el nodo):
+  toledo `santa-cruz-de-retamar` (duplicado) -> Los Navalmorales; baleares `palencia` (typo) -> Manacor;
+  baleares `baleares` (Palma duplicada) -> Inca; las-palmas `las-palmas` (duplicado) -> Santa Lucia de Tirajana.
+- Motor geo `MUNICIPALITIES_DATABASE`: 250/250 filas con `comarca` + `distanceFromMentrideKm`.
+- Nuevo auditor: `scripts/verify_pseo_dataset_integrity.ts` (13 puertas, incluidas 12 anclas de calibracion).
+- Evidencia: `audit_pseo_coverage` dataset_distance_ratio=100 Â· differentiator_ratio=98.93 Â· exit 0;
+  `verify_pseo_dataset_integrity` 13/13 EXIT=0; `tsc --noEmit` Exit 0; `eslint` 0 errores;
+  `gate:prepush` cadena completa alcanzo `verify:confianza` SUMMARY exit_code:0.
+- Commit `f11c0737` pusheado a origin/main. Produccion aun sirve `ef31a343` (VERDICT=STALE).
+- Hallazgo abierto P1: la landing publica `/bodas/toledo` muestra "44 KM" desde `PROVINCIAS_52_GRAPH`
+  (44) frente a los 58 km reales del dataset. Alinear el grafo toca `deliveryCostBase` => dinero: requiere sancion del CEO.
+- Hallazgo abierto P2: `/bodas/...` cae en `comarca || 'Comarca Historica'` y `?? 35` como fallbacks (AF-5).
+- Hallazgo abierto P2: `sitemap.xml` publica el apex (308 -> www) en vez del host canonico.

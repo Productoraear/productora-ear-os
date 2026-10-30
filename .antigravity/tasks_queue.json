@@ -4,27 +4,11 @@
     "doctrine": "WAVE 42 (SANCIONADA POR EL CEO): 1) Higiene de repo Git (purga de objetos huérfanos y LFS sin tocar HEAD). 2) Cierre de la Superficie de Verdad /confianza (enlace en footer, Cache-Control < 10 min, auditor WCAG honesto). 3) Motor pSEO de Intención 70/30 (70% Transaccional + 30% Informacional) con distancia Haversine/carretera real para los 255 nodos municipales. 4) Cero Doorway: bancos ortogonales de respuesta a intención que bajan Jaccard 5-gram y Coseno TF-IDF a <= 0,10 verificados por máquina. 5) Índice de Sitemap Real con validador determinista.",
     "wave": 42,
     "total_tasks": 7,
-    "total_pending": 5,
-    "last_updated": "2026-10-30T15:55:51.861Z"
+    "total_pending": 4,
+    "last_updated": "2026-10-30T17:10:04.402Z"
   },
   "_instructions_for_worker": "Ejecuta SOLO via: node .antigravity/omega.js next -> lee .antigravity/MISSION_ACTIVE.json -> edita SOLO 'files' -> ejecuta 'test' -> node .antigravity/omega.js complete <ID>. 1 tarea por sesion.",
   "tasks": [
-    {
-      "id": "W42_T03_PSEO_DATASET_REAL_DISTANCES_255",
-      "title": "F1 · Datos reales antes que URLs: 100% de distancias en MUNICIPALITIES_DATASET (255/255) y sincronización con MUNICIPALITIES_DATABASE",
-      "priority": "P0",
-      "files": [
-        "src/lib/constants/spanish-municipalities.ts",
-        "src/lib/geo/spanish-municipalities.ts",
-        "scripts/verify_pseo_dataset_integrity.ts"
-      ],
-      "action": "Cerrar el agujero denunciado en el Anexo pSEO (`DATASET_DISTANCE_HEALTHY: FAIL`, donde solo 53 de 255 nodos tenían `distanceFromMentrideKm`). Completar en `src/lib/constants/spanish-municipalities.ts` los kilómetros reales por carretera desde el Hub Central de Méntrida (Toledo, 40.2369° N, 4.1942° W) y la comarca real para los 255 nodos de las 52 provincias, eliminando el placeholder `distanceFromMentrideKm: 60` que tenían pegado capitales como Barcelona, Sevilla o Cádiz. Sincronizar `MUNICIPALITIES_DATABASE` en `src/lib/geo/spanish-municipalities.ts` para que ambos catálogos compartan slugs canónicos y 100% de diferenciales.",
-      "scaffold": "1. En `src/lib/constants/spanish-municipalities.ts`:\n   - Todo `TownNode` en `MUNICIPALITIES_DATASET` DEBE tener `distanceFromMentrideKm: number` real (> 0, coherente con la distancia real por carretera desde Méntrida: ej. Méntrida=0, Navalcarnero=19, Madrid=54, Toledo=58, Talavera=82, Barcelona=665, Sevilla=515, Cádiz=625, Valencia=402, Málaga=530, Bilbao=435, Zaragoza=368, etc., usando la distancia provincial de `PROVINCIAS_52_GRAPH[prov].distanceFromHubKm` ajustada por la posición real de cada municipio).\n   - Reemplazar las comarcas genéricas `\"Comarca Principal\"` por la comarca real del municipio (ej. `\"Campiña del Guadarrama\"`, `\"La Sagra\"`, `\"Costa del Sol Occidental\"`, `\"Vallès Occidental\"`, `\"Marco de Jerez\"`, `\"Vega Baja\"`, `\"Marina Alta\"`, etc.).\n   - Eliminar duplicados dentro de una misma provincia (ej. en `toledo` aparecía `santa-cruz-de-retamar` y `santa-cruz-del-retamar`; en `baleares` aparecía `Palencia` por error tipográfico -> corregir o sustituir por `Manacor` / `Inca` / `Ciutadella de Menorca`).\n\n2. En `src/lib/geo/spanish-municipalities.ts`:\n   - Añadir el campo opcional `distanceFromMentrideKm?: number` y `comarca?: string` a la interfaz `Municipality` y poblarlo en todas las entradas de `MUNICIPALITIES_DATABASE` para que el motor de poblaciones tenga distancia determinista en el 100% de sus filas.\n   - Asegurar que `differentiator_ratio` en `node scripts/audit_pseo_coverage.cjs` se mantenga >= 95% y `dataset_distance_ratio` suba del 20,78% al **100,00%**.\n\n3. NUEVO `scripts/verify_pseo_dataset_integrity.ts`:\n   - Importa `MUNICIPALITIES_DATASET`, `SERVICES_PSEO_EXPANDED` y `MUNICIPALITIES_DATABASE`.\n   - Verifica:\n     a) Las 52 provincias existen en `MUNICIPALITIES_DATASET`.\n     b) 100% de los `TownNode` tienen `typeof distanceFromMentrideKm === 'number' && distanceFromMentrideKm >= 0 && distanceFromMentrideKm <= 2500`.\n     c) 0 nodos tienen la comarca placeholder `\"Comarca Principal\"`.\n     d) 0 provincias lejanas (>150 km de Méntrida, como Barcelona, Cádiz, Almería, Baleares) tienen el falso `distanceFromMentrideKm: 60`.\n     e) Ejecuta `node scripts/audit_pseo_coverage.cjs --json` y comprueba que `dataset_distance_ratio === 100` y `differentiator_ratio >= 95`.",
-      "done_when": "`node scripts/audit_pseo_coverage.cjs` muestra `dataset 100%` en diferenciales de distancia (0 fallos en `DATASET_DISTANCE_HEALTHY` y `DIFFERENTIATORS_HEALTHY`), y `verify_pseo_dataset_integrity.ts` termina con Exit Code 0.",
-      "test": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_pseo_dataset_integrity.ts && node scripts/audit_pseo_coverage.cjs",
-      "status": "QUEUED",
-      "created_at": "2026-10-30T12:48:00.000Z"
-    },
     {
       "id": "W42_T04_SEARCH_INTENT_70_30_ANTI_DOORWAY_ENGINE",
       "title": "F4a · Motor de Intención 70% Transaccional / 30% Informacional con ≤10% de repetición (Jaccard 5-gram ≤ 0,10)",
@@ -92,6 +76,13 @@
   ],
   "completed": [
     {
+      "id": "W42_T03_PSEO_DATASET_REAL_DISTANCES_255",
+      "title": "F1 · Datos reales antes que URLs: 100% de distancias en MUNICIPALITIES_DATASET (255/255) y sincronización con MUNICIPALITIES_DATABASE",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-30T17:10:04.401Z"
+    },
+    {
       "id": "W42_T02_CONFIANZA_WIRING_AND_CONTRAST_HONESTY",
       "title": "U13 + Hallazgos 6, 7 y 8 · Enlace público a /confianza en Footer, Cache-Control < 10 min (JUR-5) y guardia fail-closed en audit:contrast",
       "status": "COMPLETED",
@@ -114,8 +105,8 @@
     }
   ],
   "metadata": {
-    "last_updated": "2026-10-30T15:55:51.861Z",
-    "total_pending": 5,
+    "last_updated": "2026-10-30T17:10:04.402Z",
+    "total_pending": 4,
     "current_sprint": "WAVE_42_PSEO_DIAMOND_INTENT_ENGINE",
     "ceo_mandate": "Cero excusas de contenido repetitivo: máximo 10% de repetición (Jaccard 5-gram <= 0,10) combinando 70% de respuesta a intención transaccional (precios SSOT, logística real por municipio, Price-Lock 100€) y mínimo 30% de intención informacional (acústica Ley 37/2003, 12 W/pax, logística comarcal). Sancionada la higiene de Git (Hallazgo 9) y el despliegue de /confianza + fix AF-1."
   }
