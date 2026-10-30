@@ -53,6 +53,9 @@ const STATIC_ROUTES: StaticRoute[] = [
     { path: '/ayuntamientos', priority: 0.8, changeFrequency: 'weekly' },
     { path: '/empresarios', priority: 0.8, changeFrequency: 'weekly' },
     { path: '/precios', priority: 0.8, changeFrequency: 'weekly' },
+    // U13 · Registro público de pruebas (.clinerules §4): una fila por promesa,
+    // con su estado y su URL de verificación. Generada en build desde el ledger.
+    { path: '/confianza', priority: 0.6, changeFrequency: 'daily' },
     { path: '/servicios', priority: 0.75, changeFrequency: 'weekly' },
 ];
 

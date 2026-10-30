@@ -45,18 +45,15 @@ const CANONICAL_WEBHOOKS: readonly { slug: N8nWebhookSlug; description: string }
 export async function GET(req: NextRequest): Promise<NextResponse> {
     try {
         const { searchParams } = new URL(req.url);
-        const shouldPing = searchParams.get('ping') === 'true';
+        const pingRequested = searchParams.get('ping') === 'true';
 
-        let instanceHealth: N8nInstanceHealth = {
-            alive: true,
-            status: 200,
-            latencyMs: 12,
-            checkedAt: new Date().toISOString(),
-        };
-
-        if (shouldPing) {
-            instanceHealth = await pingN8nInstance();
-        }
+        // AF-1 / AF-5 (§3 · .clinerules): la sonda se ejecuta SIEMPRE.
+        // Antes esta ruta devolvía `alive:true, status:200, latencyMs:12` con un
+        // `checkedAt` recién fabricado sin haber tocado n8n: un "verde por
+        // defecto" que convertía la monitorización en una fachada (una caída se
+        // detecta, una mentira se confía). `?ping=true` se conserva por
+        // compatibilidad con los monitores, pero ya no decide si se mide o se finge.
+        const instanceHealth: N8nInstanceHealth = await pingN8nInstance();
 
         const dlq = getDeadLetterQueue();
 
@@ -71,10 +68,22 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 
         return NextResponse.json({
             status: isDegraded ? 'degraded' : 'ok',
+            // Campos obligatorios de la LEY ANTI-FACHADA (AF-1): quién midió,
+            // de dónde sale el dato y en qué modo. Sin ellos, un OK no es prueba.
+            probed: true,
+            source: 'live',
+            mode: 'REAL',
+            checkedAt: instanceHealth.checkedAt,
+            probeRequestedByQuery: pingRequested,
             clusterUrl: process.env.N8N_BASE_URL || 'https://n8n.productoraear.com',
             instance: instanceHealth,
             dlqCount: dlq.length,
+            // La DLQ vive en memoria del proceso: no sobrevive a un redeploy y no
+            // es compartida entre réplicas. Declararlo evita vender 0 como absoluto.
+            dlqScope: 'process-local',
             totalWebhooks: webhooks.length,
+            // Lista canónica de configuración, no una consulta a n8n (AF-2).
+            webhookSource: 'canonical-config',
             webhooks,
             timestamp: new Date().toISOString(),
         }, {
