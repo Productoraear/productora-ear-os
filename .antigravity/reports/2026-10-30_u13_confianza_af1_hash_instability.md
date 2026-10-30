@@ -354,3 +354,46 @@ Estado del anexo: `SIN_EVIDENCIA` para F1–F4 salvo la medición de la tabla (q
 `VERIFICADO` por `npm run audit:pseo` · Exit 0). ⚠️ SIN_URL_PUBLICA hasta que F2 publique
 el índice en producción.
 
+## Hallazgo 9 — El repositorio pesa 3,98 GiB (INV-15 en rojo, medido hoy)
+
+Medido al verificar los tres commits locales de esta sesión, no antes:
+
+| Medición | Valor | Comando |
+|---|---|---|
+| Tamaño real de `.git` | **4 278 692 263 B ≈ 3,98 GiB** | `Get-ChildItem .git -Recurse \| Measure-Object Length -Sum` |
+| `size-pack` según git | **3,80 GiB** en 8 packs | `git count-objects -vH` |
+| Pack mayor | 1 920,0 MB (`pack-cd4b6ced…pack`) | tamaño en disco |
+| Objetos empaquetados | 69 356 | `git count-objects -vH` |
+| Objetos **alcanzables** desde refs | **33 852** | `git rev-list --objects --all \| Measure -Line` |
+| Objetos **inalcanzables** (basura) | **≈ 35 504 → 51 %** | resta de las dos cifras |
+| Fichero más pesado en `HEAD` | 1,68 MB (`src/data/b2g/fitur_institutional_leads.json`) | `git ls-tree -r -l HEAD` |
+| Ficheros > 1 MB en `HEAD` | 5 (1,40–1,68 MB) | `git ls-tree -r -l HEAD` |
+| Blob mayor en la historia | **559,73 MB** (`af4cce6…`, inalcanzable) | `git cat-file --batch-all-objects` |
+| Blob histórico alcanzable mayor | 185,02 MB (`reports/overture_places_es_contactable.parquet`) | `git rev-list --objects --all` |
+| Restos de Git LFS | 162,6 MB en `.git/lfs/objects` | tamaño en disco |
+| Punteros LFS en `HEAD` | **0** → el deploy no depende de LFS | `git grep "git-lfs.github.com/spec" HEAD` |
+| `.gitattributes` | solo `* text=auto eol=lf` → **ninguna regla LFS** | lectura directa |
+| `origin/main` | `3ebf5e048` · local **3 commits por delante** | `git rev-list --count origin/main..main` |
+
+**Consecuencia operativa (traducida):** cada vez que Coolify clona o actualiza el proyecto
+arrastra ~3,8 GB de los cuales la mitad es basura que nadie va a leer. Eso es tiempo de build,
+disco del VPS y un día —el día que el disco se llene— un deploy que falla sin avisar.
+Los dos ficheros LFS huérfanos (162 MB) y los tres blobs >230 MB **no están en `HEAD`**: son
+restos de intentos anteriores, no backups. No hay nada que perder al limpiarlos, pero
+`git gc --prune=now` es **irreversible** y por eso no lo ejecuto sin tu firma (AMD-1).
+
+**Plan de limpieza propuesto (F0, antes de F1):**
+1. `git gc --prune=now` → recupera ~1,9 GB de objetos inalcanzables. Verificación:
+   `git count-objects -vH` otra vez y comparar.
+2. Purga de `.git/lfs/objects` (162 MB) tras confirmar `0` punteros LFS en `HEAD`.
+3. Sacar de `git` los 5 ficheros de 1,4–1,68 MB (AGENTS §8 prohíbe > 1 MB) a
+   `H:\00_PRODUCTORA_EAR\EAR_ABSORBED_VAULT\` y sustituirlos por particiones edge.
+   Ojo: `fitur_institutional_leads.json` y `proveedores_index.json` alimentan rutas que
+   venden → se tocan con `verify:provider-ctas` y `audit:phone` en verde, no a ciegas.
+4. Si se quiere bajar de 50 MB de verdad, la historia necesita `git filter-repo` + force-push
+   coordinado con Coolify. Eso es una operación de **ventana anunciada (CHG-2)**, no un martes
+   cualquiera: reescribe todos los SHA y hay que re-apuntar el deploy.
+
+Estado del hallazgo: `VERIFICADO` en la medición (comandos arriba, exit 0) · `SIN_EJECUTAR`
+en la remediación, a la espera de sanción del CEO.
+
