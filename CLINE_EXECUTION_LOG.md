@@ -1045,3 +1045,42 @@ Tarea `W42_OUTREACH_ACK_01` completada y sellada con Exit Code 0 (sello condicio
 - PREMORTEM:       Si alguien "limpia" `SOURCE_COMMIT` o cambia la app a otra fuente Git, el sello volvera a `unknown` y la puerta lo dira en 5 s con la causa exacta. El riesgo residual realista es un `CRON_SECRET` desalineado dejando el smoke en rojo permanente: se detecta porque el propio script imprime el diagnostico de discrepancia.
 - SIGUIENTE PASO:  Copiar el MISMO valor de `CRON_SECRET` en GitHub (Settings > Secrets) y en la app de Coolify, y re-lanzar el workflow: criterio de exito `SMOKE_RESULT=OK` y `VERDICT=FRESH` en el mismo run.
 
+### 2026-10-30T09:20:00Z · W46_T05_P0_CRON_SECRET_SSOT — El 401 del smoke pasa de misterio a huella comparable (y 4 rutas fail-open cierran)
+
+- ARCHIVOS:        `src/lib/security/cronSecretGuard.ts` (NUEVO, SSOT) · `src/app/api/outreach/intake/route.ts` · `src/app/api/health/route.ts` · `src/app/api/cron/{opportunity-radar,b2g-telegram-hunter,hold-timeout,b2g-hunter,obsidian-sync}/route.ts` · `src/app/api/support/health-check/route.ts` · `src/app/api/telemetry/funnel/route.ts` · `scripts/cron_secret_probe.cjs` (NUEVO) · `scripts/verify_cron_secret_guard.ts` (NUEVO) · `package.json` (`probe:cron`, `verify:cron-secret` + `gate:prepush`) · `.github/workflows/deploy-ghcr.yml` (paso de huella) · este log
+- HECHO:           El 401 del `POST /api/outreach/intake` deja de ser mudo: ahora se compara HUELLA contra HUELLA.
+  * SSOT unico `cronSecretGuard`: normaliza el valor por el MISMO camino en servidor y cliente (BOM, `trim`, comillas, `Bearer` interno), compara en tiempo constante sobre SHA-256 (`safeEqual`, nunca el valor crudo), acepta precedencia `CRON_SECRET` -> `_SECONDARY` -> `_LEGACY` (rotacion sin caida) y cabeceras `authorization` / `x-cron-secret` / `x-admin-secret`.
+  * Veredictos separados: `NOT_CONFIGURED` (503 fail-closed en produccion), `NO_CREDENTIAL` (401 cabecera ausente) y `MISMATCH` (401 valor distinto, publicando `presented` vs `configured` como `sha256:<12 hex>`). Un secreto de menos de 32 caracteres NO publica huella (`WITHHELD_WEAK_SECRET`) y marca `weak:true`.
+  * `/api/health` publica el bloque `cron` (huellas, sin valor): `npm run probe:cron` compara local vs vivo y devuelve veredicto con exit codes 0 MATCH / 3 MISMATCH-o-401 / 4 red / 5 huella distinta / 6 servidor sin secreto / 7 sin secreto local.
+  * CUATRO RUTAS ESTABAN EN FALLO ABIERTO (`if (secret && ...)`): sin `CRON_SECRET` desplegado quedaban publicas. Cerradas a fail-closed: `cron/b2g-hunter` (disparaba TED + Telegram), `telemetry/funnel` (embudo de conversion), `support/health-check` (forzaba ristras de alertas Telegram/WhatsApp/Email) y `cron/obsidian-sync` (ademas cambia el 500 ambiguo por 503 y elimina un `!==` en claro y un `catch (err: any)`).
+  * MEDIDO HOY CONTRA PRODUCCION: `CRON_FP_LOCAL=sha256:c28c01e91d4d` (43 caracteres) · `CRON_FP_SERVER=SIN_DATO` + `CRON_SERVER_DETAIL=health sin bloque cron` => la imagen viva es ANTERIOR a esta sonda, asi que la comparacion definitiva exige desplegar este commit. El `GET` autenticado sigue dando `HTTP_401` con el cuerpo viejo `{"error":"No autorizado."}` (sin `code`), prueba de que aun corre el codigo previo.
+- COMANDOS:        `node ./node_modules/typescript/bin/tsc --noEmit` -> **Exit 0** (0 lineas) · `eslint` sobre los 10 ficheros tocados -> **Exit 0** (0 errores, 0 warnings) · `node ./node_modules/tsx/dist/cli.mjs scripts/verify_cron_secret_guard.ts` -> **Exit 0 / RESUMEN 15/15 [OK]** · `npm run audit:ssot` -> **Exit 0** (hash `ebc011a0…` == referencia, invariantes OK) · `node --env-file=.env.local scripts/cron_secret_probe.cjs` -> `CRON_VERDICT=AUTH_401_FP_UNKNOWN` Exit 3 (esperado con la imagen vieja) · `node -v` -> v26.12.1.
+- OMEGA-DIAMANTE:  8/20 (+11 saneamiento server-side de la comparacion, +19 idempotencia de la sonda). ❌ sin evidencia maquina: 9,10,12,13,14,15,20; 16/17 no aplican (no hay landings nuevas).
+- PREMORTEM:       Un `CRON_SECRET` con salto de linea o comillas en Coolify es HOY la hipotesis mas probable del 401, y el guard lo tolera por normalizacion: si al desplegar el smoke pasa a verde SIN tocar GitHub Secrets, la causa era la forma del valor, no el valor. Si sigue en 401, `CRON_MATCH=0` + las dos huellas en el log de CI dicen en 5 segundos cual de los dos sitios hay que re-pegar. Riesgo residual: la huella de 48 bits es publica por diseno (permite confirmar igualdad, no reconstruir el secreto de 32+ caracteres); vigilar que nadie reduzca el secreto por debajo de 32 caracteres, porque entonces `weak:true` y no hay huella que comparar.
+- SIGUIENTE PASO:  Desplegar este commit en Coolify y ejecutar `npm run probe:cron`: criterio de exito `CRON_MATCH=1` + `CRON_LIVE_AUTH=HTTP_200`. Si sale `CRON_MATCH=0`, pegar el valor EXACTO de la huella servidor en GitHub Secrets y repetir; si sale `CRON_SERVER_NOT_CONFIGURED`, definir `CRON_SECRET` en el entorno de la app.
+
+---
+
+
+---
+
+## [2026-10-30] GOB-V10-SIGMA - Sustitucion del contrato operativo (P0 gobernanza)
+
+- **ID**: GOB-V10-SIGMA
+- **Motivo**: elevacion a doctrina de grado produccion militar (seguridad, escudo juridico, capa CEO, evidencia verificable por URL).
+- **Archivos tocados**:
+  - `.clinerules` REESCRITO v2.0 -> v10.0 SIGMA (24 100 B, 15 secciones 0-14)
+  - `.antigravity/backups/.clinerules.v2.0_2026-10-30.bak` (16 628 B)
+  - `.antigravity/backups/AGENTS.v9.0_2026-10-30.bak` (20 775 B)
+  - `.antigravity/evidence/ledger.jsonl` NUEVO - 4 CLAIMs (U1,U2,U4 VERIFICADO / AF-1 FACHADA)
+  - `CLINE_EXECUTION_LOG.md` (append)
+- **Comandos ejecutados / exit**:
+  - Test-Path sobre 30 rutas -> 29 OK, 1 MISS (`src/app/confianza/page.tsx` = U13 NO_EXISTE)
+  - Validacion de los 13 `npm run` citados contra package.json -> 13/13 OK, 0 fantasma
+  - Conteo secciones / marcadores -> 15 secciones, 0 `<!--CHUNK-->`
+  - HTTP GET www.productoraear.com `/`, `/api/webhooks/health`, `/api/omega/heartbeat` -> 200 + SHA-256
+  - Apex `productoraear.com` -> 308 Permanent Redirect (host canonico = www)
+- **Hallazgo P0 abierto**: AF-1. `/api/webhooks/health` sin `?ping=true` devuelve `alive:true`/`latencyMs:12` hardcodeados (route.ts:50-55). Una URL de salud que miente por defecto.
+- **Premortem**: el riesgo no es que la doctrina sea larga, es que un agente la cite sin ejecutar G-0/G-6; mitigado con `estado_bloque` derivado de evidencias y SIG-2 (n/20 con huecos a la vista).
+- **Omega-Diamante**: 8/20. Sello CONDICIONADO. Huecos declarados en .clinerules seccion 13 (no se declara 20/20 sin comando).
+- **Siguiente paso**: construir `src/app/confianza/page.tsx` renderizada desde `.antigravity/evidence/ledger.jsonl` (U13).
