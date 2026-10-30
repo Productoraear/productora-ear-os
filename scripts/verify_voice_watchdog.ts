@@ -249,9 +249,9 @@ async function main(): Promise<number> {
 
   const passed = checks.filter((c: Check): boolean => c.ok).length;
   console.log('');
-  console.log('─'.repeat(72));
-  console.log(`RESUMEN: ${passed}/${checks.length} [OK] · motor de voz`);
-  console.log('─'.repeat(72));
+  console.log('='.repeat(72));
+  console.log(`RESUMEN: ${passed}/${checks.length} [OK] | motor de voz`);
+  console.log('='.repeat(72));
   if (passed !== checks.length) {
     checks
       .filter((c: Check): boolean => !c.ok)

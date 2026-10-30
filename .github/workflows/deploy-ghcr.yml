@@ -82,6 +82,12 @@ jobs:
       - name: Typecheck (tsc --noEmit con el binario real, no el impostor de npx)
         run: node ./node_modules/typescript/bin/tsc --noEmit
 
+      # El motor de voz es una ruta P0 de dinero indirecto: si el watchdog se rompe,
+      # el asistente se queda mudo o cuelga la conversación en iOS/Android.
+      # Evidencia determinista: 5 casos hostiles, Exit 0 sólo con 5/5.
+      - name: Verificador del motor de voz (watchdog móvil, 5 casos)
+        run: npm run verify:voice
+
   build-and-push:
     needs: [contract-gate, typecheck-gate]
     runs-on: ubuntu-latest

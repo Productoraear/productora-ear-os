@@ -37,7 +37,11 @@ Tres defectos reales, corregidos y medidos aquí.
 
 **`src/components/chat/AIConciergeDock.tsx`** — `primeSpeechSynthesis()` dentro del `onClick` antes del `await speakNatural()`.
 
-**`scripts/verify_voice_watchdog.ts`** (nuevo) · **`package.json`** (`verify:voice` + dentro de `gate:prepush`) · **`eslint.config.mjs`** (bloque real para `scripts/**/*.ts`: antes `eslint --no-ignore` devolvía "File ignored because no matching configuration").
+**Defectos detectados al auditar mi propia primera versión (corregidos antes de commitear)**
+- El **dictado por micrófono** termina en `rec.onend → sendMessage()`, que ya corre **fuera** del gesto: sin prime en el clic del micrófono, el móvil silenciaba la respuesta de una consulta dictada. Añadido `primeMobileAudio()` en `toggleMic()`.
+- Reutilizar el elemento primario podía **reanudar la locución del mensaje anterior a volumen 1**: ahora el elemento lleva la marca `data-ear-primer` y sólo se reanuda si sigue portando el WAV silencioso; al cargar audio real (`audio.src = url`) la marca se borra.
+
+**`scripts/verify_voice_watchdog.ts`** (nuevo) · **`package.json`** (`verify:voice` + dentro de `gate:prepush`) · **`eslint.config.mjs`** (bloque real para `scripts/**/*.ts`: antes `eslint --no-ignore` devolvía "File ignored because no matching configuration") · **`.github/workflows/deploy-ghcr.yml`** (paso `npm run verify:voice` en `typecheck-gate`: la evidencia deja de ser local y pasa a ser permanente en CI).
 
 ---
 
@@ -66,6 +70,8 @@ Prueba negativa del verificador: si `speakSentence` se revierte a `utterance.one
 | `eslint src/lib/voice/naturalVoice.ts src/components/agents/OmniAgentConsoleModal.tsx src/components/chat/AIConciergeDock.tsx --max-warnings=0` | **Exit 0** |
 | `eslint --no-ignore --max-warnings=0 --rule '{"prefer-const":"error"}' scripts/verify_voice_watchdog.ts` | **Exit 0** (con reglas reales, no falso verde) |
 | `node ./node_modules/tsx/dist/cli.mjs scripts/verify_voice_watchdog.ts` | **Exit 0** · 5/5 |
+| `npm run verify:voice` (comando exacto que ejecuta CI) | **Exit 0** · 5/5 |
+| `npm run lint` (todo `src/`) | **Exit 0** · 3252 warnings preexistentes · 0 errores |
 | `node scripts/audit_ci_gate_wiring.cjs` | **Exit 0** · 4 jobs · 2 gates bloqueantes · 0 fugas |
 | `node scripts/audit_admin_control_forensics.cjs --strict` | **Exit 0** · 0 fachadas |
 

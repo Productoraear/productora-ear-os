@@ -982,3 +982,6 @@ Tarea `W42_OUTREACH_ACK_01` completada y sellada con Exit Code 0 (sello condicio
 
 **SIGUIENTE_PASO**: prueba humana en el iPhone (abrir modal Omni, chip "depósito 100 €", confirmar voz) y, en paralelo, `W46_T02_P0_CRON_SECRET_INTAKE` — definir `CRON_SECRET` en Coolify y verificar `scripts/prod_smoke_intake.cjs --post` → HTTP 200 (sigue siendo el único rojo del CI que afecta a captación de dinero).
 
+
+**ADENDA (mismo bloque, segundo commit)**: `npm run verify:voice` cableado en `.github/workflows/deploy-ghcr.yml` (`typecheck-gate`) → la evidencia del motor de voz deja de ser local y pasa a ser **permanente en CI** (Job bloqueante: si el watchdog muere, no se construye imagen ni se despliega). `node scripts/audit_ci_gate_wiring.cjs` → **Exit 0** (4 jobs, 2 gates bloqueantes, 0 fugas). `npm run verify:voice` → **Exit 0** (5/5). Salida del harness convertida a ASCII puro: el marco `─` se renderizaba como mojibake en consola Windows y ensuciaba la evidencia que lee el CEO.
+
