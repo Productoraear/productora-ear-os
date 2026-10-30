@@ -124,16 +124,23 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
+          # Sello de procedencia: el SHA viaja DENTRO de la imagen y /api/health
+          # lo publica. Sin esto el pipeline no puede probar que produccion sirve
+          # el commit de este run (fallo real del 30-oct-2026: deploy 401, run verde).
+          build-args: |
+            EAR_BUILD_SHA=${{ github.sha }}
+            EAR_BUILD_TIME=${{ github.event.head_commit.timestamp || github.run_id }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      # BEST-EFFORT a proposito: el despliegue real entra por el webhook git de
-      # Coolify al hacer push. Si la API devuelve 401 (API access deshabilitado o
-      # token sin permiso Deploy) el run NO puede morir aqui: el juez de verdad es
-      # production-smoke. Un 401 en este paso marcaba production-smoke como SKIPPED
-      # y el run quedaba verde sin haber comprobado produccion (fachada de CI).
+      # HECHO MEDIDO (no supuesto): el trigger por API devuelve 401 porque el
+      # secret COOLIFY_API_TOKEN no existe en el repo (solo hay COOLIFY_WEBHOOK_URL)
+      # y Coolify exige Sanctum Bearer. Con continue-on-error el job quedaba verde
+      # mientras "el deploy NO esta en marcha". Por eso el disparo ya NO es el juez:
+      # el juez es la frescura del SHA en production-smoke. Este paso sigue siendo
+      # best-effort para no bloquear la publicacion de la imagen en GHCR.
       - name: Trigger Coolify Webhook Deployment (best-effort)
         if: success()
         continue-on-error: true
@@ -201,3 +208,14 @@ jobs:
         env:
           CRON_SECRET: ${{ secrets.CRON_SECRET }}
         run: node scripts/prod_smoke_intake.cjs --wait=1500 --post
+
+      # PUERTA DE FRESCURA: prueba que produccion sirve EL COMMIT DE ESTE RUN.
+      # Un trigger de Coolify que devuelve 401 deja la imagen en GHCR pero no
+      # despliega; antes eso era invisible (job verde, bundle viejo). Ahora falla.
+      # `if: always()` es obligatorio: si el smoke anterior revienta (hoy sale con
+      # exit 3 por el 503 de CRON_SECRET) el juez del despliegue quedaria SKIPPED.
+      - name: Frescura del despliegue (sha vivo == sha construido)
+        if: always()
+        env:
+          EAR_EXPECTED_SHA: ${{ github.sha }}
+        run: node scripts/prod_deploy_freshness.cjs --wait=120

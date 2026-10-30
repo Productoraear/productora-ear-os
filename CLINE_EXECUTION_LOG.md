@@ -985,3 +985,28 @@ Tarea `W42_OUTREACH_ACK_01` completada y sellada con Exit Code 0 (sello condicio
 
 **ADENDA (mismo bloque, segundo commit)**: `npm run verify:voice` cableado en `.github/workflows/deploy-ghcr.yml` (`typecheck-gate`) → la evidencia del motor de voz deja de ser local y pasa a ser **permanente en CI** (Job bloqueante: si el watchdog muere, no se construye imagen ni se despliega). `node scripts/audit_ci_gate_wiring.cjs` → **Exit 0** (4 jobs, 2 gates bloqueantes, 0 fugas). `npm run verify:voice` → **Exit 0** (5/5). Salida del harness convertida a ASCII puro: el marco `─` se renderizaba como mojibake en consola Windows y ensuciaba la evidencia que lee el CEO.
 
+
+---
+
+## 2026-10-30 · W46_T04_P0_DEPLOY_FRESHNESS_GATE — correccion de un reporte de despliegue FALSO
+
+**HECHO_VERIFICADO**: el cierre anterior afirmo "imagen en GHCR + webhook Coolify disparado -> el arreglo va camino de produccion". **Era falso.** Medido contra produccion: en el grafo de chunks vivo (19 chunks, HOME 200, 139.197 bytes) la aguja de CONTROL `Omni-Supervisor coordinando` aparece 1 vez en `/_next/static/chunks/3ipane50c-3ff.js`, y las agujas del fix (`earPrimer`, `primeSpeechSynthesis`) aparecen **0 veces** -> `VERDICT=STALE`. Produccion sirve una imagen vieja: **el deploy nunca se ejecuto**. Causa: `gh secret list` muestra `COOLIFY_WEBHOOK_URL` y `CRON_SECRET`, pero **no `COOLIFY_API_TOKEN`**; el paso llama a `/api/v1/deploy` sin `Authorization` (`COOLIFY_AUTH=none`) y Coolify v4 (Sanctum) devuelve 401. Mi lectura previa fallo porque un paso con `continue-on-error: true` normaliza `conclusion=success` en la API de GitHub aunque su `outcome` sea `failure`: el 401 solo queda como anotacion y el job sale verde.
+
+**RETO_ESPEJO**: no basta con arreglar el 401 (requiere credencial que no poseo). El criterio mas duro es que el pipeline **mida** el despliegue: el SHA del commit viaja dentro de la imagen y se compara con el SHA vivo. Verificacion: `node scripts/prod_deploy_freshness.cjs --expect=<sha>` -> exit 0 solo si coinciden.
+
+**HIPOTESIS**: que Coolify propague un `ENV` del Dockerfile al proceso de Next en runtime (lo hace: las ENV de la imagen entran en el contenedor) y que el panel siga accesible en `82.29.179.172:8000`. Fragil: si la app define su propio `EAR_BUILD_SHA` en el panel, sobreescribiria el sello.
+
+**DECISION**: publicar `buildSha`/`buildTime` en `/api/health`, inyectar `EAR_BUILD_SHA=${{ github.sha }}` como `build-args` del Dockerfile y añadir un paso bloqueante de frescura en `production-smoke`. Descartada la alternativa de comparar hashes de chunks del cliente: se rompe con commits que solo tocan backend y depende de nombres de chunk no estables.
+
+**RIESGOS**: la puerta nueva pondra el run en ROJO hasta que exista un deploy real (rojo honesto, intencionado). Si alguien "aprende" a ignorarla, el mensaje imprime causa y remediacion, y `npm run deploy:freshness` distingue "no desplegado" de "desplegado mal" en 5 segundos.
+
+**CAMBIOS**: `src/app/api/health/route.ts` · `Dockerfile` (ARG/ENV en stage runner) · `.github/workflows/deploy-ghcr.yml` (build-args + paso de frescura + comentario corregido con el hecho medido) · `scripts/prod_deploy_freshness.cjs` (nuevo, 0 dependencias) · `package.json` (`deploy:freshness`) · `.antigravity/reports/W46_T04_DEPLOY_FRESHNESS_GATE.md` (nuevo) · este log.
+
+**VALIDACIONES**: `tsc --noEmit` -> **Exit 0** · `eslint src/app/api/health/route.ts` -> **Exit 0** · `eslint scripts/prod_deploy_freshness.cjs` -> Exit 0 pero **IGNORADO** por `.eslintignore` (limite ya declarado en 0206ece) · `node scripts/prod_deploy_freshness.cjs` (diagnostico) -> **Exit 0**, `buildSha=<ausente>` · `node scripts/prod_deploy_freshness.cjs --expect=4a7c11ebe` -> **Exit 5** `VERDICT=UNVERIFIABLE` + receta Coolify · `npm run audit:ci-gate` -> **Exit 0** (4 jobs, 2 gates bloqueantes, 0 fugas).
+
+**OMEGA-DIAMANTE: 7/20** (+18 presupuesto de rendimiento: sello de procedencia medible). Siguen SIN EVIDENCIA MAQUINA: 9, 10, 11, 12, 13, 14, 15, 19, 20. No se firma 20/20.
+
+**ESTADO_BLOQUE: SOSPECHOSO** — el codigo del fix de voz esta commiteado y verificado por simulador, pero **no esta sirviendose**; el despliegue esta BLOQUEADO por una credencial que solo el CEO puede crear.
+
+**SIGUIENTE_PASO**: crear el secret `COOLIFY_API_TOKEN` (Coolify: Settings > Advanced > API access = Enabled; Keys & Tokens > Create con permiso Deploy) y re-ejecutar el workflow; criterio de exito: `npm run deploy:freshness` devuelve `buildSha=<sha del commit>` y el paso de frescura pasa a verde. En paralelo, definir `CRON_SECRET` en el entorno de la app en Coolify para matar el 503 de intake.
+

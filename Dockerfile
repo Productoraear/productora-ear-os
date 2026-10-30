@@ -29,10 +29,18 @@ RUN --mount=type=cache,target=/app/.next/cache \
 FROM node:22-alpine AS runner
 WORKDIR /app
 
+# Sello de procedencia: el CI pasa el SHA del commit como build-arg y /api/health
+# lo devuelve. Es el unico dato que permite probar que produccion sirve el commit
+# construido (un deploy que no se ejecuta ya no puede pasar por verde).
+ARG EAR_BUILD_SHA=unknown
+ARG EAR_BUILD_TIME=unknown
+
 ENV NODE_ENV=production \
     NEXT_TELEMETRY_DISABLED=1 \
     PORT=3000 \
-    HOSTNAME="0.0.0.0"
+    HOSTNAME="0.0.0.0" \
+    EAR_BUILD_SHA=${EAR_BUILD_SHA} \
+    EAR_BUILD_TIME=${EAR_BUILD_TIME}
 
 RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nextjs
