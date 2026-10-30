@@ -254,3 +254,26 @@ endlocal
 
 
 
+
+## 12. Corrección del SHA objetivo en el runbook de despliegue (para quien lo ejecute mañana)
+
+El §10 se escribió cuando `HEAD` era `ddf11aab`. Tras los dos commits documentales de cierre
+(`c1ccb9fa`, `206c0815`) el objetivo cambió: **el build debe servir el `origin/main` del momento
+del deploy, sea cual sea**. Comando que no caduca:
+
+```
+git fetch origin
+node scripts/prod_deploy_freshness.cjs --expect=$(git rev-parse origin/main) --wait=1800
+node .antigravity/probe_af1_g6.cjs --append
+npm run verify:confianza
+```
+
+Estado del remoto en el cierre: `HEAD = origin/main = 206c0815`. Para que G-7 diga `VERDICT=FRESH`
+ese SHA exacto debe ser el que publique `/api/health` (`buildSource=coolify-source-commit`); hoy
+publica `3ebf5e0`, por eso el veredicto medido es `STALE` (exit 4) y no un fallo de la sonda.
+
+Nota de honestidad: los commits `c1ccb9fa` y `206c0815` son **sólo documentación** (`.md` fuera de
+`src/`), así que el código que se desplegará es idéntico a `ddf11aab`, que sí pasó el gate completo.
+No se ha vuelto a correr `gate:prepush` para ellos y se declara aquí, en lugar de insinuar que el
+gate cubre el árbol entero.
+
