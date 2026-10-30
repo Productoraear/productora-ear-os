@@ -1012,3 +1012,20 @@ Tarea `W42_OUTREACH_ACK_01` completada y sellada con Exit Code 0 (sello condicio
 
 **MEDICION EN CI DEL BLINDAJE (run 41022160443, commit 996e0e9c0)**: `contract-gate` OK 7s · `typecheck-gate` OK 1m55s (incluye `verify:voice` 5/5) · `build-and-push` OK 5m20s (imagen con `EAR_BUILD_SHA=996e0e9c0`) · `Smoke de produccion` **X** (`SMOKE_POST=POST_HTTP_503`, `SMOKE_LANDING=HTTP_200`) · `Frescura del despliegue` **X** con `HEALTH intento 1..8 http=200 buildSha=<ausente> esperado=996e0e9` -> `VERDICT=UNVERIFIABLE`. La puerta NO quedo SKIPPED gracias a `if: always()`. Prueba extra de no-redeploy: `SMOKE_IMAGE_BUILD_ID=30e6yKASYBBg4vbXA-1Hn` identico al medido 17 min antes (07:37 y 07:54): un deploy real cambia el build id de Next y no cambio. Los 2 rojos del pipeline son verdaderos y ninguno se puede cerrar desde el repositorio (credenciales en Coolify).
 
+
+---
+
+### 2026-10-30T08:30:00Z · W46_T04b_P0_SELLO_PROCEDENCIA_DUAL — Correccion: el fix de voz SI se desplego; el sello leia una sola fuente
+
+- ARCHIVOS:        `src/app/api/health/route.ts` · `scripts/prod_deploy_freshness.cjs` · `.antigravity/reports/W46_T04_DEPLOY_FRESHNESS_GATE.md` (§10) · este log
+- HECHO:           Medido contra produccion (no contra el CI) que el deploy del run 41025070925 SI se aplico:
+  * `COOLIFY_AUTH=bearer` · `COOLIFY_HTTP=200` · `Deploy encolado en Coolify.` (el 401 murio con el token del CEO).
+  * `SMOKE_IMAGE_BUILD_ID` `30e6yKASYBBg4vbXA-1Hn` -> **`GFYJk3VArlbN5NITyWtN3`** (build nueva viva).
+  * Chunk vivo `/_next/static/chunks/2u2_c44foel4l.js` contiene las agujas del fix `primeSpeechSynthesis` + `earPrimer` (2/2) y la de control; el chunk viejo `3ipane50c-3ff.js` da **404**.
+  * `GET /api/health` responde 200 con `buildSha=unknown` -> **el fallo es de sello, no de despliegue**: Coolify compila desde Git y no pasa `--build-arg`, asi que el `ARG EAR_BUILD_SHA` cae al valor por defecto. `SOURCE_COMMIT` (commit desplegado) es variable predefinida de Coolify, excluida de los builds Docker por defecto (docs oficiales verificadas).
+  * Se corrige el diagnostico: el sello lee ahora `EAR_BUILD_SHA` o `SOURCE_COMMIT` y publica `buildSource`; el auditor separa "sin clave buildSha" (deploy no aplicado) de "clave con valor unknown" (imagen sin sello).
+- COMANDOS:        `node --check scripts/prod_deploy_freshness.cjs` -> Exit 0 · `node ./node_modules/typescript/bin/tsc --noEmit` -> Exit 0 (0 lineas) · `node ./node_modules/eslint/bin/eslint.js src/app/api/health/route.ts` -> Exit 0 · `node scripts/prod_deploy_freshness.cjs` -> Exit 0 con el veredicto nuevo sobre produccion real · `node scripts/audit_ci_gate_wiring.cjs` -> Exit 0 (4 jobs, 2 gates, 0 fugas) · sondas HTTP a produccion (health + 19 chunks + chunk viejo).
+- OMEGA-DIAMANTE:  7/20 · ❌ sin evidencia maquina: 9,10,11,12,13,14,15,19,20. No se firma 20/20.
+- PREMORTEM:       Si Coolify no inyecta `SOURCE_COMMIT` en runtime, el sello seguira en `unknown` — pero el mensaje ya lo dira con la causa y la receta exacta, sin fingir "imagen vieja". Se detecta con `npm run deploy:freshness` (5 s) antes de que el cliente note nada.
+- SIGUIENTE PASO:  En Coolify: (1) definir `CRON_SECRET` en el entorno de la app (mata el 503 de intake que hoy rechaza leads) y (2) `EAR_BUILD_SHA = $SOURCE_COMMIT` con "Available during build" para que el sello de procedencia quede verde y honesto.
+

@@ -125,3 +125,54 @@ Lectura correcta del estado del pipeline: hay 2 rojos y los 2 son verdaderos —
 (1) el despliegue no se ejecuta (falta `COOLIFY_API_TOKEN`), (2) `CRON_SECRET` no existe en
 el entorno de la app en Coolify. Ninguno de los dos se puede cerrar desde este repositorio.
 
+
+---
+
+## 10. CORRECCION MEDIDA (30-oct-2026, 08:14-08:21Z · run 41025070925 · commit 1611398d9)
+
+El §9 era verdad a las 07:54Z y **dejo de serlo a las 08:18Z**. Con `COOLIFY_API_TOKEN` ya
+creado (`gh secret list` -> `2026-10-30T08:08:03Z`), el mismo disparo que antes daba 401
+paso a dar 200:
+
+| Medicion (maquina, no opinion) | Valor |
+|---|---|
+| `COOLIFY_AUTH` / `COOLIFY_HTTP` (log del job) | `bearer` / **200** + `Deploy encolado en Coolify.` |
+| `build-args` reales del `buildx` | `EAR_BUILD_SHA=1611398d9bd5d72d7e3e15019c0cc5b2b36b709c` · `EAR_BUILD_TIME=41025070925` |
+| `SMOKE_IMAGE_BUILD_ID` antes -> despues | `30e6yKASYBBg4vbXA-1Hn` -> **`GFYJk3VArlbN5NITyWtN3`** |
+| Chunk vivo con la aguja de CONTROL | `/_next/static/chunks/2u2_c44foel4l.js` (574.112 bytes) |
+| Chunk viejo `3ipane50c-3ff.js` | **404** |
+| Agujas del FIX `primeSpeechSynthesis` / `earPrimer` | **2/2 PRESENTES** en el chunk vivo |
+| `GET /api/health` (08:21:04Z) | 200 `{"buildSha":"unknown","buildTime":"unknown"}` |
+| Veredicto del fix de voz | **DESPLEGADO Y SIRVIENDOSE** |
+
+Conclusion: **el arreglo de voz SI esta en produccion.** La frase "tu iPhone sigue ejecutando
+el codigo de voz viejo" ya es falsa desde las 08:18Z.
+
+### 10.1 Segundo fallo, distinto del 401: es de sello, no de despliegue
+
+`buildSha=unknown` **no** significa imagen vieja: significa que la imagen la construyo
+**Coolify desde Git**, que no pasa `--build-arg`; el `ARG EAR_BUILD_SHA` del `Dockerfile` cae
+a su valor por defecto. Prueba de que el contenedor NO es la imagen del CI: esa imagen si
+lleva el build-arg (tabla de arriba) y el contenedor responde `unknown`.
+
+Documentacion oficial de Coolify (verificada, no supuesta): `SOURCE_COMMIT` = "Deployed Git
+commit" es una variable predefinida del recurso, y Coolify **la excluye de los builds Docker
+por defecto** para preservar la cache.
+
+### 10.2 Lo corregido en este bloque
+
+1. `src/app/api/health/route.ts`: el sello acepta las dos procedencias (`EAR_BUILD_SHA` del
+   CI o `SOURCE_COMMIT` de Coolify) y publica `buildSource`
+   (`ci-build-arg` / `coolify-source-commit` / `none`). Cero `any`.
+2. `scripts/prod_deploy_freshness.cjs`: ya no acusa "imagen anterior al sello" cuando la
+   clave existe pero viene vacia. Separa los dos modos de fallo con remediacion distinta
+   (despliegue vs sello) y firma `REMEDIACION (sello)` con la ruta exacta del panel.
+
+### 10.3 Lo que sigue sin poder cerrarse desde el repositorio
+
+- `CRON_SECRET` en el entorno de la app de Coolify: el `503` de intake sigue vivo (medido
+  `SMOKE_INTAKE_GET=HTTP_503` y `SMOKE_POST=POST_HTTP_503`; el route falla cerrado por diseno).
+- Para que el sello quede verde de forma permanente: `EAR_BUILD_SHA = $SOURCE_COMMIT` marcada
+  como "Available during build" (viaja como build-arg) **o** desplegar la imagen de GHCR por
+  referencia en vez de compilar desde Git.
+
