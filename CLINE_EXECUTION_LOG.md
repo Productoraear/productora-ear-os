@@ -1029,3 +1029,19 @@ Tarea `W42_OUTREACH_ACK_01` completada y sellada con Exit Code 0 (sello condicio
 - PREMORTEM:       Si Coolify no inyecta `SOURCE_COMMIT` en runtime, el sello seguira en `unknown` — pero el mensaje ya lo dira con la causa y la receta exacta, sin fingir "imagen vieja". Se detecta con `npm run deploy:freshness` (5 s) antes de que el cliente note nada.
 - SIGUIENTE PASO:  En Coolify: (1) definir `CRON_SECRET` en el entorno de la app (mata el 503 de intake que hoy rechaza leads) y (2) `EAR_BUILD_SHA = $SOURCE_COMMIT` con "Available during build" para que el sello de procedencia quede verde y honesto.
 
+### 2026-10-30T08:50:00Z · W46_T04c_P0_SELLO_VERDE — Sello de procedencia CERRADO y verde medido (buildSource=coolify-source-commit)
+
+- ARCHIVOS:        `src/app/api/health/route.ts` · `scripts/prod_deploy_freshness.cjs` · `.antigravity/reports/W46_T04_DEPLOY_FRESHNESS_GATE.md` (§10 y §11) · este log
+- HECHO:           El commit `be7a2e3c0` esta DESPLEGADO y la puerta de frescura emite su primer verde honesto:
+  * `GET /api/health` -> `{"buildSha":"be7a2e3c09a164a2d7ba5ffe9eaeb7e3fb7031cb","buildSource":"coolify-source-commit","buildTime":"unknown"}`.
+  * `node scripts/prod_deploy_freshness.cjs --expect=be7a2e3c0` -> `VERDICT=FRESH produccion sirve el commit construido en este run.` **Exit 0**.
+  * Coolify SI inyecta `SOURCE_COMMIT` en el contenedor en runtime: **no hace falta** el build-arg ni desplegar la imagen de GHCR. `buildTime=unknown` porque `EAR_BUILD_TIME` solo viaja como build-arg (limitacion declarada, no defecto oculto).
+  * El 503 del intake MURIO: `SMOKE_INTAKE_GET` paso de `HTTP_503` a `HTTP_401` => `CRON_SECRET` ya existe en el entorno de la app en Coolify. El route ya no rechaza leads en bloque.
+  * Defecto que queda, medido: `SMOKE_POST=POST_HTTP_401` => el `CRON_SECRET` de GitHub (1 dia) y el de Coolify son valores DISTINTOS (`prod_smoke_intake.cjs:271`). Un mismo valor en ambos sitios pone el pipeline entero en verde.
+  * Auditoria lateral sin fugas: `.env.production` esta trackeado pero solo contiene `NEXT_PUBLIC_*` (Firebase, Supabase anon, Stripe publishable, Mapbox). Cero secretos de servidor (ni `STRIPE_SECRET_KEY` ni `CRON_SECRET`).
+  * AVISO GOOGLE OAUTH: el login social usa `GoogleAuthProvider` de Firebase (`src/lib/auth/firebase-auth.ts:53-66`) sobre el proyecto `productora-ear-backend`, que es justo el proyecto del cliente OAuth "backend de productora-ear" amenazado de borrado. No hay `GOOGLE_CLIENT_ID` ni `apps.googleusercontent.com` en el repo, pero el boton "Continuar con Google" depende de ese proyecto: usarlo una vez (login real) antes del plazo de 30 dias es la accion de coste cero que evita romperlo.
+- COMANDOS:        `tsc --noEmit` -> Exit 0 (0 lineas) · `eslint src/app/api/health/route.ts` -> Exit 0 · `node --check scripts/prod_deploy_freshness.cjs` -> Exit 0 · `node scripts/prod_deploy_freshness.cjs` -> Exit 0 · `node scripts/prod_deploy_freshness.cjs --expect=be7a2e3c0` -> **Exit 0 / VERDICT=FRESH** · `audit_ci_gate_wiring.cjs` -> Exit 0 · sondeo HTTP con `buildSource` -> `coolify-source-commit`.
+- OMEGA-DIAMANTE:  8/20 (+16 trazabilidad de procedencia, +19 idempotencia del sondeo). ❌ sin evidencia maquina: 9,10,11,12,13,14,15,20.
+- PREMORTEM:       Si alguien "limpia" `SOURCE_COMMIT` o cambia la app a otra fuente Git, el sello volvera a `unknown` y la puerta lo dira en 5 s con la causa exacta. El riesgo residual realista es un `CRON_SECRET` desalineado dejando el smoke en rojo permanente: se detecta porque el propio script imprime el diagnostico de discrepancia.
+- SIGUIENTE PASO:  Copiar el MISMO valor de `CRON_SECRET` en GitHub (Settings > Secrets) y en la app de Coolify, y re-lanzar el workflow: criterio de exito `SMOKE_RESULT=OK` y `VERDICT=FRESH` en el mismo run.
+

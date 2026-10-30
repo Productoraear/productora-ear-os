@@ -176,3 +176,50 @@ por defecto** para preservar la cache.
   como "Available during build" (viaja como build-arg) **o** desplegar la imagen de GHCR por
   referencia en vez de compilar desde Git.
 
+---
+
+## 11. CIERRE VERIFICADO (30-oct-2026, 08:47Z · run 41026997897 · commit be7a2e3c0)
+
+El fallback a `SOURCE_COMMIT` **funciona sin tocar nada en el VPS**: Coolify inyecta esa
+variable en el contenedor en runtime. Una vez que el redeploy de `be7a2e3c0` entro vivo,
+produccion respondio literalmente:
+
+```json
+{"status":"ok","buildSha":"be7a2e3c09a164a2d7ba5ffe9eaeb7e3fb7031cb","buildSource":"coolify-source-commit","buildTime":"unknown"}
+```
+
+Y la puerta emitio su primer verde honesto:
+
+```
+HEALTH intento 1 http=200 buildSha=be7a2e3c0... buildSource=coolify-source-commit esperado=be7a2e3
+VERDICT=FRESH produccion sirve el commit construido en este run.
+```
+
+| Comprobacion | Resultado |
+|---|---|
+| `node scripts/prod_deploy_freshness.cjs --expect=be7a2e3c0` | **Exit 0** · `VERDICT=FRESH` |
+| `buildSource` | `coolify-source-commit` (no hizo falta build-arg ni imagen GHCR) |
+| `buildSha` | `be7a2e3c0…` = HEAD empujado a `main` |
+| `buildTime` | `unknown` (limitacion conocida: `EAR_BUILD_TIME` solo existe si llega build-arg) |
+| Run 41026997897 | `contract-gate` OK 9s · `typecheck-gate` OK 2m7s · `build-and-push` OK 3m47s · `production-smoke` X por motivos ajenos al sello |
+
+### 11.1 Tercer hallazgo, medido en el mismo log: el 503 del intake ya no existe
+
+`SMOKE_INTAKE_GET` paso de **503** (fallo cerrado por falta de secreto) a **401**: senal
+inequivoca de que `CRON_SECRET` **ya esta definido en el entorno de la app en Coolify**. El
+route dejo de rechazar leads en bloque.
+
+Pero `SMOKE_POST=POST_HTTP_401` revela el defecto que queda: el `CRON_SECRET` guardado como
+secret de GitHub (hace 1 dia) **no es el mismo valor** que el de Coolify, asi que el smoke
+autenticado no puede escribir. El propio script lo dice en su rama de error
+(`prod_smoke_intake.cjs:271`). Un unico valor copiado en los dos sitios cierra los dos rojos
+restantes del pipeline.
+
+### 11.2 Estado del pipeline tras este bloque
+
+- **Sello de procedencia: CERRADO** (`buildSha` + `buildSource` veraces, gate `FRESH`).
+- **Deploy automatico: CERRADO** (`COOLIFY_HTTP=200`, imagen viva = HEAD).
+- **Smoke de intake: pendiente de una sola accion** (alinear el valor de `CRON_SECRET`).
+- **Fix de voz: verificado en produccion** por sonda de agujas sobre chunk vivo.
+
+
