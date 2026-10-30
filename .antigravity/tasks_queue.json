@@ -1,408 +1,132 @@
 {
   "_meta": {
-    "version": "9.9-OMEGA-WAVE-41-ADMIN-CONTROL-DOMINANCE",
-    "doctrine": "WAVE 41: el panel /admin/control pasa de fachada (22 enlaces rotos) a mesa de mando enterprise. Toda alta escribe en PostgreSQL, todo endpoint exige Bearer ADMIN, toda cifra nace del SSOT SHA-256.",
-    "wave": 41,
-    "total_tasks": 18,
-    "total_pending": 1,
-    "last_updated": "2026-10-29T22:20:53.717Z"
+    "version": "10.0-OMEGA-WAVE-42-PSEO-DIAMOND-INTENT-ENGINE",
+    "doctrine": "WAVE 42 (SANCIONADA POR EL CEO): 1) Higiene de repo Git (purga de objetos huérfanos y LFS sin tocar HEAD). 2) Cierre de la Superficie de Verdad /confianza (enlace en footer, Cache-Control < 10 min, auditor WCAG honesto). 3) Motor pSEO de Intención 70/30 (70% Transaccional + 30% Informacional) con distancia Haversine/carretera real para los 255 nodos municipales. 4) Cero Doorway: bancos ortogonales de respuesta a intención que bajan Jaccard 5-gram y Coseno TF-IDF a <= 0,10 verificados por máquina. 5) Índice de Sitemap Real con validador determinista.",
+    "wave": 42,
+    "total_tasks": 7,
+    "total_pending": 6,
+    "last_updated": "2026-10-30T12:59:04.902Z"
   },
   "_instructions_for_worker": "Ejecuta SOLO via: node .antigravity/omega.js next -> lee .antigravity/MISSION_ACTIVE.json -> edita SOLO 'files' -> ejecuta 'test' -> node .antigravity/omega.js complete <ID>. 1 tarea por sesion.",
   "tasks": [
     {
-      "id": "W41_T17_GOOGLE_ADS_COCKPIT",
-      "title": "Cockpit Google Ads (addwords): conector server-only y panel honesto",
-      "priority": "P2",
+      "id": "W42_T02_CONFIANZA_WIRING_AND_CONTRAST_HONESTY",
+      "title": "U13 + Hallazgos 6, 7 y 8 · Enlace público a /confianza en Footer, Cache-Control < 10 min (JUR-5) y guardia fail-closed en audit:contrast",
+      "priority": "P0",
       "files": [
-        "src/lib/ads/googleAdsClient.ts",
-        "src/app/api/admin/ads/route.ts",
-        "src/app/(admin)/admin/ads/page.tsx"
+        "src/app/components/layout/SovereignFooter.tsx",
+        "next.config.ts",
+        "scripts/audit_wcag_contrast_live.cjs",
+        "scripts/verify_trust_ledger.ts"
       ],
-      "action": "Añadir el vertical de adquisición de pago: conector Google Ads por REST (sin SDK nuevo) que lea métricas reales de campañas. Sin credenciales NO se inventan datos: el endpoint devuelve 503 ADS_NOT_CONFIGURED y el panel muestra el checklist de configuración.",
-      "scaffold": "NUEVO src/lib/ads/googleAdsClient.ts (server-only, import 'server-only'):\nexport interface AdsCampaignMetric { campaignId: string; campaignName: string; status: string; impressions: number; clicks: number; costEur: number; conversions: number; ctr: number }\nexport function isGoogleAdsConfigured(): boolean  // exige GOOGLE_ADS_DEVELOPER_TOKEN, CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN, CUSTOMER_ID\nasync function getAccessToken(): Promise<string>\n  POST https://oauth2.googleapis.com/token  (application/x-www-form-urlencoded: client_id, client_secret, refresh_token, grant_type=refresh_token)\n  -> access_token; si falla -> throw new Error('GOOGLE_ADS_AUTH_FAILED')\nexport async function fetchCampaignMetrics(days = 30): Promise<AdsCampaignMetric[]>\n  const cid = (process.env.GOOGLE_ADS_CUSTOMER_ID ?? '').replace(/-/g, '');\n  POST https://googleads.googleapis.com/v19/customers/${cid}/googleAds:search\n  headers: Authorization Bearer, developer-token, login-customer-id (si existe), Content-Type application/json\n  GAQL: SELECT campaign.id, campaign.name, campaign.status, metrics.impressions, metrics.clicks, metrics.cost_micros, metrics.conversions, metrics.ctr FROM campaign WHERE segments.date DURING LAST_30_DAYS ORDER BY metrics.cost_micros DESC\n  map: costEur = cost_micros / 1_000_000; ctr = Number(metrics.ctr) * 100\n  PROHIBIDO any y PROHIBIDO exponer secretos al cliente.\n\nNUEVO src/app/api/admin/ads/route.ts (nodejs, force-dynamic, no-store):\n  const auth = await requireAdmin(request); if (!auth.ok) return auth.response;\n  if (!isGoogleAdsConfigured()) return NextResponse.json({ ok:false, code:'ADS_NOT_CONFIGURED', error:'Google Ads sin configurar' }, { status: 503 });\n  const days = Number(new URL(request.url).searchParams.get('days') ?? '30'); clamp 1..90\n  return NextResponse.json({ ok:true, data: await fetchCampaignMetrics(days) });\n\nNUEVO src/app/(admin)/admin/ads/page.tsx (Server Component, export const dynamic='force-dynamic'):\n  const auth = await requireAdminFromHeaders(); if (!auth.ok) redirect('/login?from=/admin/ads');\n  si !isGoogleAdsConfigured() -> checklist de las 5 variables de entorno (nombres, jamás valores) y estado \"Sin configurar\".\n  si configurado -> tabla de campañas (nombre, estado, impresiones, clics, CTR, coste €, conversiones) y totales.\n  Estética OLED: rounded-3xl bg-[#09090d]/80 border border-white/10 backdrop-blur-md, acento Cyan #00E5FF.\n  Añadir submenú en MASTER_TABS (prospeccion) -> { id:'ads', name:'Google Ads', href:'/admin/ads', badge:'ADS' }.",
-      "done_when": "Sin credenciales el panel muestra el checklist y la API responde 503 tipado (cero datos falsos); con credenciales devuelve campañas reales; node ./node_modules/typescript/bin/tsc --noEmit Exit Code 0.",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "action": "Cerrar los Hallazgos 6, 7 y 8 del reporte U13: 1) Enlazar `/confianza` en ambas variantes de `SovereignFooter.tsx` (funnel limpio y footer completo) para que la Superficie de Verdad sea clicable desde todo el sitio. 2) Añadir cabecera `Cache-Control: public, max-age=0, s-maxage=300, stale-while-revalidate=60` para `/confianza` en `next.config.ts` (cumpliendo JUR-5: retirada < 10 min). 3) Blindar `scripts/audit_wcag_contrast_live.cjs` para que NUNCA devuelva Exit 0 si `scanned === 0` o hay conexión rechazada (auto-arrancando `.next/standalone/server.js` en un puerto libre si el servidor objetivo no responde). 4) Ampliar `scripts/verify_trust_ledger.ts` con los checks `FOOTER_LINK` y `CACHE_HEADER`.",
+      "scaffold": "1. En `src/app/components/layout/SovereignFooter.tsx`:\n   - En la barra inferior de `isCleanFunnel` (junto a Aviso Legal / Privacidad / Cookies) añadir:\n     `<Link href=\"/confianza\" className=\"hover:text-white transition-colors\">Registro de Pruebas</Link>`\n   - En `SovereignFooterContent` (pie inferior junto a Aviso Legal / Privacidad / Cookies) añadir:\n     `<Link href=\"/confianza\" className=\"text-zinc-300 hover:text-white transition-colors\">Registro Público de Pruebas (/confianza)</Link>`\n\n2. En `next.config.ts` dentro de `async headers()`:\n   - Añadir antes o después de `/:path*` una regla específica para `source: \"/confianza\"` con:\n     `{ key: \"Cache-Control\", value: \"public, max-age=0, s-maxage=300, stale-while-revalidate=60\" }`\n\n3. En `scripts/audit_wcag_contrast_live.cjs`:\n   - Antes de abrir Puppeteer, hacer una sonda HTTP rápida a `BASE`. Si `BASE` no responde y existe `.next/standalone/server.js`, spawnear un subproceso `node .next/standalone/server.js` con `PORT` en el puerto de `BASE` (o 3999 reajustando `BASE`), esperando hasta que responda 200 (timeout 15s) y matándolo en el `finally`.\n   - Al final del bucle de rutas: contabilizar `routesWithZeroScan = Object.values(report.routes).filter(r => r.scanned === 0 || r.status === 0).length`.\n   - Si `routesWithZeroScan > 0`: imprimir `SIN_EVIDENCIA: ${routesWithZeroScan} ruta(s) con 0 elementos medidos (AF-5 prohíbe verde sin medir)` y forzar `process.exitCode = 1`.\n\n4. En `scripts/verify_trust_ledger.ts`:\n   - Añadir check `FOOTER_LINK`: lee `src/app/components/layout/SovereignFooter.tsx` y verifica que contiene `href=\"/confianza\"`.\n   - Añadir check `CACHE_HEADER`: lee `next.config.ts` y verifica que declara `source: \"/confianza\"` (o `'/confianza'`) y `s-maxage=300`.",
+      "done_when": "`verify_trust_ledger.ts` valida `FOOTER_LINK` y `CACHE_HEADER` en verde; `audit_wcag_contrast_live.cjs` falla con Exit 1 si no puede escanear elementos (cero falsos verdes AF-5); `tsc --noEmit` y `eslint` Exit 0.",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node ./node_modules/eslint/bin/eslint.js src/app/components/layout/SovereignFooter.tsx next.config.ts scripts/verify_trust_ledger.ts",
       "status": "QUEUED",
-      "created_at": "2026-10-27T12:39:00.118Z"
+      "created_at": "2026-10-30T12:48:00.000Z"
+    },
+    {
+      "id": "W42_T03_PSEO_DATASET_REAL_DISTANCES_255",
+      "title": "F1 · Datos reales antes que URLs: 100% de distancias en MUNICIPALITIES_DATASET (255/255) y sincronización con MUNICIPALITIES_DATABASE",
+      "priority": "P0",
+      "files": [
+        "src/lib/constants/spanish-municipalities.ts",
+        "src/lib/geo/spanish-municipalities.ts",
+        "scripts/verify_pseo_dataset_integrity.ts"
+      ],
+      "action": "Cerrar el agujero denunciado en el Anexo pSEO (`DATASET_DISTANCE_HEALTHY: FAIL`, donde solo 53 de 255 nodos tenían `distanceFromMentrideKm`). Completar en `src/lib/constants/spanish-municipalities.ts` los kilómetros reales por carretera desde el Hub Central de Méntrida (Toledo, 40.2369° N, 4.1942° W) y la comarca real para los 255 nodos de las 52 provincias, eliminando el placeholder `distanceFromMentrideKm: 60` que tenían pegado capitales como Barcelona, Sevilla o Cádiz. Sincronizar `MUNICIPALITIES_DATABASE` en `src/lib/geo/spanish-municipalities.ts` para que ambos catálogos compartan slugs canónicos y 100% de diferenciales.",
+      "scaffold": "1. En `src/lib/constants/spanish-municipalities.ts`:\n   - Todo `TownNode` en `MUNICIPALITIES_DATASET` DEBE tener `distanceFromMentrideKm: number` real (> 0, coherente con la distancia real por carretera desde Méntrida: ej. Méntrida=0, Navalcarnero=19, Madrid=54, Toledo=58, Talavera=82, Barcelona=665, Sevilla=515, Cádiz=625, Valencia=402, Málaga=530, Bilbao=435, Zaragoza=368, etc., usando la distancia provincial de `PROVINCIAS_52_GRAPH[prov].distanceFromHubKm` ajustada por la posición real de cada municipio).\n   - Reemplazar las comarcas genéricas `\"Comarca Principal\"` por la comarca real del municipio (ej. `\"Campiña del Guadarrama\"`, `\"La Sagra\"`, `\"Costa del Sol Occidental\"`, `\"Vallès Occidental\"`, `\"Marco de Jerez\"`, `\"Vega Baja\"`, `\"Marina Alta\"`, etc.).\n   - Eliminar duplicados dentro de una misma provincia (ej. en `toledo` aparecía `santa-cruz-de-retamar` y `santa-cruz-del-retamar`; en `baleares` aparecía `Palencia` por error tipográfico -> corregir o sustituir por `Manacor` / `Inca` / `Ciutadella de Menorca`).\n\n2. En `src/lib/geo/spanish-municipalities.ts`:\n   - Añadir el campo opcional `distanceFromMentrideKm?: number` y `comarca?: string` a la interfaz `Municipality` y poblarlo en todas las entradas de `MUNICIPALITIES_DATABASE` para que el motor de poblaciones tenga distancia determinista en el 100% de sus filas.\n   - Asegurar que `differentiator_ratio` en `node scripts/audit_pseo_coverage.cjs` se mantenga >= 95% y `dataset_distance_ratio` suba del 20,78% al **100,00%**.\n\n3. NUEVO `scripts/verify_pseo_dataset_integrity.ts`:\n   - Importa `MUNICIPALITIES_DATASET`, `SERVICES_PSEO_EXPANDED` y `MUNICIPALITIES_DATABASE`.\n   - Verifica:\n     a) Las 52 provincias existen en `MUNICIPALITIES_DATASET`.\n     b) 100% de los `TownNode` tienen `typeof distanceFromMentrideKm === 'number' && distanceFromMentrideKm >= 0 && distanceFromMentrideKm <= 2500`.\n     c) 0 nodos tienen la comarca placeholder `\"Comarca Principal\"`.\n     d) 0 provincias lejanas (>150 km de Méntrida, como Barcelona, Cádiz, Almería, Baleares) tienen el falso `distanceFromMentrideKm: 60`.\n     e) Ejecuta `node scripts/audit_pseo_coverage.cjs --json` y comprueba que `dataset_distance_ratio === 100` y `differentiator_ratio >= 95`.",
+      "done_when": "`node scripts/audit_pseo_coverage.cjs` muestra `dataset 100%` en diferenciales de distancia (0 fallos en `DATASET_DISTANCE_HEALTHY` y `DIFFERENTIATORS_HEALTHY`), y `verify_pseo_dataset_integrity.ts` termina con Exit Code 0.",
+      "test": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_pseo_dataset_integrity.ts && node scripts/audit_pseo_coverage.cjs",
+      "status": "QUEUED",
+      "created_at": "2026-10-30T12:48:00.000Z"
+    },
+    {
+      "id": "W42_T04_SEARCH_INTENT_70_30_ANTI_DOORWAY_ENGINE",
+      "title": "F4a · Motor de Intención 70% Transaccional / 30% Informacional con ≤10% de repetición (Jaccard 5-gram ≤ 0,10)",
+      "priority": "P0",
+      "files": [
+        "src/lib/seo/intent-70-30-composer.ts",
+        "scripts/verify_intent_70_30_engine.ts"
+      ],
+      "action": "Implementar la orden directa del CEO: un motor determinista de generación de contenido para landings que garantice por construcción matemática un máximo del 10% de texto compartido (Jaccard 5-gram ≤ 0,10 y Coseno TF-IDF ≤ 0,10) estructurando cada página en un 70% de respuesta a Intención Transaccional (presupuesto SSOT con kilómetros reales del municipio, desglose de franquicia de 50 km, suplemento de hotel >200 km, bloqueo de fecha Stripe 100 € deducible, comparativa de formatos Solista 350 € / Quinteto) y un 30% de respuesta a Intención Informacional (normativa acústica municipal Ley 37/2003 en dBA según contexto interior/exterior, cálculo de potencia 12 W/pax para distintos aforos, logística de acceso por comarca y preguntas técnicas de contratación).",
+      "scaffold": "NUEVO `src/lib/seo/intent-70-30-composer.ts` (100% determinista, cero `any`, consume `ear-os-ssot.ts` y `sovereign-pricing.ts`):\n\n1. Tipos exportados:\n   ```ts\n   export type SearchIntentKind = 'transactional' | 'informational';\n   export interface IntentBlock {\n     readonly id: string;\n     readonly kind: SearchIntentKind;\n     readonly heading: string;\n     readonly body: string;\n     readonly wordCount: number;\n   }\n   export interface ComposedIntentLanding {\n     readonly key: string; // ej. `${provinceSlug}/${serviceSlug}/${townSlug}`\n     readonly transactionalRatio: number; // >= 0.65 && <= 0.75 (objetivo 70%)\n     readonly informationalRatio: number; // >= 0.30 (mínimo 30% exigido por el CEO)\n     readonly totalWords: number;\n     readonly blocks: readonly IntentBlock[];\n     readonly fullText: string;\n     readonly faqItems: readonly { readonly question: string; readonly answer: string; readonly intent: SearchIntentKind }[];\n     readonly quoteSummary: {\n       readonly basePriceEur: number;\n       readonly distanceKm: number;\n       readonly billableKm: number;\n       readonly travelCostEur: number;\n       readonly hotelSupplementEur: number;\n       readonly totalEstimatedEur: number;\n       readonly depositEur: number;\n       readonly remainingBalanceEur: number;\n     };\n     readonly provenanceHash: string;\n   }\n   ```\n\n2. Algoritmo de Ortogonalidad Léxica (para cumplir ≤ 10% repetición sin IA lenta en build):\n   - Define 7 ejes de intención (5 Transaccionales = ~70% del texto; 2 Informacionales = ~30% del texto):\n     * T1: Cotización inmediata y desglose logístico desde el Hub (o red provincial) hasta `townName` (`distanceKm`, `billableKm`, coste exacto en €).\n     * T2: Comparativa de formatos contratables para `serviceTitle` y reserva con Price-Lock SHA-256 de 100 € descontables.\n     * T3: Condiciones de liquidación (Split Soberano 80/10/10, factura oficial y cobertura de relevo).\n     * T4: Escenarios de presupuesto por número de invitados (80, 150, 250 pax) y horario de cierre (antes/después de las 03:00 AM).\n     * T5: Canal de cierre de doble vía (WhatsApp directo +34 693 693 048 sin coste vs bloqueo atómico en calendario).\n     * I1 (Informacional): Ingeniería acústica local (12 W/pax, presión sonora Ley 37/2003 en dBA para interiores y jardines en `comarca`).\n     * I2 (Informacional): Guía técnica de tiempos de montaje, toma corriente, plan de lluvia y coordinación con fincas/espacios de `townName`.\n   - Para cada eje, construye un banco rico de variantes sintácticas y vocabulario sectorial indexado por hash SHA-256 independiente de `(townSlug, provinceSlug, serviceSlug, axisIndex, sentenceSlot)` y permuta el orden de cláusulas y léxico específico del gremio (`mariachis`, `dj`, `sonido-iluminacion`, `catering-brasas`, `fincas`, `fotografia`, `vimume-b2g`, etc.) de modo que dos municipios o servicios no compartan secuencias de 5 palabras (>90% de 5-gramas únicos).\n\n3. NUEVO `scripts/verify_intent_70_30_engine.ts`:\n   - Genera 150 landings de prueba cruzando municipios de `MUNICIPALITIES_DATASET` y servicios de `CANONICAL_SERVICES`.\n   - Verifica:\n     a) En el 100% de las páginas generadas, `informationalRatio >= 0.30` y `transactionalRatio >= 0.60`.\n     b) El precio base, la franquicia de 50 km, el suplemento de hotel de 120 € y el depósito de 100 € coinciden al céntimo con `ear-os-ssot.ts`.\n     c) Calcula Jaccard de 5-palabras entre todos los pares de la muestra (11.175 pares): exige que el **percentil 99 y la media sean <= 0,10** y el **máximo absoluto sea <= 0,10**.",
+      "done_when": "`verify_intent_70_30_engine.ts` ejecuta sobre 150 combinaciones reales y certifica `maxWordJaccard <= 0.10`, `informationalRatio >= 0.30` en las 150 páginas, y paridad 100% con el SSOT.",
+      "test": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_intent_70_30_engine.ts",
+      "status": "QUEUED",
+      "created_at": "2026-10-30T12:48:00.000Z"
+    },
+    {
+      "id": "W42_T05_UPGRADE_CLUSTER_ENGINES_TO_JACCARD_010",
+      "title": "F4b · Elevar los 3 clústeres de dominancia (614 URLs: Otzarreta, Centralita, Productora EAR) a Jaccard ≤ 0,10 + 70/30 Intent",
+      "priority": "P0",
+      "files": [
+        "src/lib/seo/otzarreta-dominance-engine.ts",
+        "src/lib/seo/centralita-mariachis-dominance-engine.ts",
+        "src/lib/seo/ear-eventos-dominance-engine.ts",
+        "scripts/lib/landing_cluster_audit.cjs",
+        "scripts/audit_otzarreta_landings.cjs"
+      ],
+      "action": "Eliminar la deuda `PENDIENTE OLA 2` en los 3 motores de dominancia que hoy dan `Jaccard 5-palabras max = 0.54 - 0.58` y `Coseno TF-IDF max = 0.76 - 0.82`. Enriquecer la composición de `uniqueCopy` en los tres motores incorporando los bloques de intención 70% Transaccional / 30% Informacional y ampliando la rotación léxica por semilla para que las 126 URLs de Otzarreta, las 220 de Centralita y las 268 de Productora EAR cumplan `Jaccard 5-palabras <= 0,10` y `Coseno TF-IDF <= 0,10` de verdad. Endurecer los auditores para que el umbral doctrinal 0,10 sea bloqueante (Exit 1 si se supera).",
+      "scaffold": "1. En `src/lib/seo/otzarreta-dominance-engine.ts`, `src/lib/seo/centralita-mariachis-dominance-engine.ts` y `src/lib/seo/ear-eventos-dominance-engine.ts`:\n   - Analizar por qué `uniqueCopy` comparte >50% de shingles hoy: las plantillas de frase repiten conectores literales de 5+ palabras entre páginas del mismo municipio o vertical.\n   - Reemplazar las plantillas fijas de `uniqueCopy` por un compositor ortogonal por ranuras (con bancos de aperturas transaccionales, desglose de presupuesto/depósito SSOT, preguntas informacionales de acústica/logística local y léxico específico por slug/hash) donde ninguna frase fija comparta 5 palabras seguidas entre dos slugs distintos.\n   - Mantener intactos todos los invariantes actuales: `depositEur = 100`, `SPLIT_SOBERANO`, `provenanceHash`, `stripeSessionId`, `priceLockSha256`, `schemaOrg` y política de teléfonos.\n\n2. Regenerar los 3 manifiestos ejecutando `npm run landings:all`.\n\n3. En `scripts/lib/landing_cluster_audit.cjs` y `scripts/audit_otzarreta_landings.cjs`:\n   - Cambiar la validación de `maxWordJaccard > JACCARD_MAX` (0.10) y `maxCosine > COSINE_MAX` (0.10): en lugar de solo `console.warn('PENDIENTE OLA 2...')`, ahora llaman a `fail(...)` bloqueando con Exit Code 1 si superan `0.10`.",
+      "done_when": "`npm run landings:all` regenera los 3 manifiestos (126 + 220 + 268 = 614 landings) y los tres auditores imprimen `maxWordJaccard <= 0.10` y `maxCosine <= 0.10` con Exit Code 0 y cero warnings de `PENDIENTE OLA 2`.",
+      "test": "npm run landings:all",
+      "status": "QUEUED",
+      "created_at": "2026-10-30T12:48:00.000Z"
+    },
+    {
+      "id": "W42_T06_MUNICIPAL_LANDING_70_30_INTEGRATION",
+      "title": "F3 · Integrar el Motor 70/30 + JSON-LD Schema.org en `/bodas/[provincia]/[servicio]/[municipio]` con ISR ligero",
+      "priority": "P1",
+      "files": [
+        "src/app/(public)/bodas/[provincia]/[servicio]/[municipio]/page.tsx",
+        "scripts/verify_municipal_landing_render.ts"
+      ],
+      "action": "Conectar la ruta hiperlocal `/bodas/[provincia]/[servicio]/[municipio]/page.tsx` al nuevo compositor `composeIntentLanding` (`src/lib/seo/intent-70-30-composer.ts`). Sustituir los textos genéricos y el fallback `distanceKm ?? 35` por el cálculo logístico real del municipio, renderizar la sección Transaccional (70%: tabla de inversión SSOT, franquicia 50 km, Price-Lock 100 € y CTA a reserva/WhatsApp) y la sección Informacional (30%: guía técnica local Ley 37/2003, potencia 12 W/pax y FAQ desplegable), e inyectar el grafo JSON-LD válido (`Service`, `Offer`, `FAQPage`, `BreadcrumbList`) con `provenanceHash` visible.",
+      "scaffold": "1. En `src/app/(public)/bodas/[provincia]/[servicio]/[municipio]/page.tsx`:\n   - Configurar ISR para proteger el presupuesto de build (< 60 s, INV-15): `export const dynamicParams = true;` y `export const revalidate = 86400;` (no añadir `generateStaticParams` masivo).\n   - Invocar `composeIntentLanding({ provinceSlug: canonical.province, provinceName: provName, serviceSlug: canonical.service, serviceTitle: servTitle, basePriceEur: basePrice, townSlug: canonical.municipality ?? muniKey, townName, comarca, distanceKm })`.\n   - Renderizar:\n     a) Tarjetas de métricas reales desde `composed.quoteSummary` (`basePriceEur`, `distanceKm`, `travelCostEur`, `depositEur: 100 €`).\n     b) Bloque **Arquitectura Transaccional (70%)**: bloques `kind === 'transactional'` con desglose transparente de inversión y botones de acción reales (`/reservar/solista` o `/cotizador` + WhatsApp `+34 693 693 048`).\n     c) Bloque **Guía Técnica e Informacional del Municipio (30%)**: bloques `kind === 'informational'` + acordeón de FAQs (`composed.faqItems`).\n     d) Pie de procedencia verificable: sello `SHA-256: {composed.provenanceHash.slice(0, 16)}…` y ratio medido `70% Transaccional · 30% Informacional`.\n     e) `<script type=\"application/ld+json\">` con `@graph` (`Service`, `Offer`, `FAQPage`, `BreadcrumbList`) sanitizado contra `<`.\n\n2. NUEVO `scripts/verify_municipal_landing_render.ts`:\n   - Verifica estática y dinámicamente 25 combinaciones de provincia/servicio/municipio (incluyendo municipios de Madrid, Toledo, Cádiz, Barcelona, Baleares):\n     a) La página exporta `dynamicParams = true` y `revalidate = 86400`.\n     b) El JSON-LD generado tiene `Service`, `Offer` con `priceCurrency: 'EUR'`, `FAQPage` con >= 4 preguntas y `BreadcrumbList`.\n     c) El ratio de palabras informacionales es >= 30% y el Jaccard 5-gram entre las 25 páginas es <= 0,10.",
+      "done_when": "`verify_municipal_landing_render.ts`, `tsc --noEmit` y `eslint` devuelven Exit Code 0.",
+      "test": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_municipal_landing_render.ts && node ./node_modules/typescript/bin/tsc --noEmit",
+      "status": "QUEUED",
+      "created_at": "2026-10-30T12:48:00.000Z"
+    },
+    {
+      "id": "W42_T07_SITEMAP_INDEX_AND_GLOBAL_PSEO_GATE",
+      "title": "F2 + Cierre Wave 42 · Sitemap unificado con los 255 municipios × servicios canónicos y auditor `verify:sitemap` en `gate:prepush`",
+      "priority": "P1",
+      "files": [
+        "src/app/sitemap.ts",
+        "scripts/verify_sitemap_integrity.ts",
+        "package.json"
+      ],
+      "action": "Expandir `src/app/sitemap.ts` para incluir de forma determinista y sin duplicados las rutas hiperlocales defendibles (`/bodas/{provincia}/{servicio}/{municipio}` para los municipios con distancia real verificada en `MUNICIPALITIES_DATASET` y los servicios canónicos principales), manteniéndose dentro de los límites de Google (< 50.000 URLs por fichero, 100% host canónico `https://www.productoraear.com`, 0 slugs con provincia==municipio duplicada). Crear `scripts/verify_sitemap_integrity.ts` (`npm run verify:sitemap`) y añadirlo al pipeline.",
+      "scaffold": "1. En `src/app/sitemap.ts`:\n   - Importar `MUNICIPALITIES_DATASET` de `@/lib/constants/spanish-municipalities`.\n   - Definir los servicios transaccionales clave de alta conversión para la matriz municipal en el sitemap principal: `const MUNICIPAL_SITEMAP_SERVICES = ['mariachis', 'dj', 'sonorizacion', 'catering', 'fincas'] as const;` (5 servicios × ~203 municipios no-capital = ~1.015 URLs hiperlocales defendibles adicionales, sumando ~1.800 URLs totales en `/sitemap.xml`, muy por debajo del techo de 50.000 de Google y con 0 doorway porque todas pasan por el motor 70/30 con distancia real).\n   - Añadir un `Set<string>` de deduplicación estricta para garantizar que ninguna URL aparezca dos veces en el array devuelto por `sitemap()`.\n\n2. NUEVO `scripts/verify_sitemap_integrity.ts`:\n   - Importa y ejecuta `sitemap()` de `src/app/sitemap.ts`.\n   - Verifica:\n     a) `entries.length >= 1500 && entries.length <= 50000` (límite de protocolo Sitemaps).\n     b) 100% de las URLs empiezan por `https://www.productoraear.com` (cero mezcla `www` / no-`www`).\n     c) 0 URLs duplicadas.\n     d) 0 URLs con caracteres inválidos RFC 3986 o doble barra `//` en el path.\n     e) Incluye `/confianza`, `/reservar/solista`, `/otzarreta`, `/centralita-mariachis`, `/productora-ear` y al menos 1.000 rutas municipales `/bodas/{prov}/{serv}/{muni}`.\n\n3. En `package.json` > `scripts`:\n   - Añadir `\"verify:sitemap\": \"node ./node_modules/tsx/dist/cli.mjs scripts/verify_sitemap_integrity.ts\"`.\n   - Añadir `\"verify:intent-70-30\": \"node ./node_modules/tsx/dist/cli.mjs scripts/verify_intent_70_30_engine.ts\"`.",
+      "done_when": "`npm run verify:sitemap` y `npm run verify:intent-70-30` devuelven Exit Code 0 con > 1.500 URLs canónicas verificadas, 0 duplicadas y 100% bajo `https://www.productoraear.com`.",
+      "test": "npm run verify:sitemap && npm run verify:intent-70-30 && node scripts/audit_pseo_coverage.cjs",
+      "status": "QUEUED",
+      "created_at": "2026-10-30T12:48:00.000Z"
     }
   ],
   "completed": [
+    {
+      "id": "W42_T01_GIT_PACK_AND_LFS_HYGIENE",
+      "title": "F0 · Higiene sancionada de Git: purga de objetos inalcanzables (~1,9 GB), limpieza de restos LFS huérfanos y auditor de salud de empaquetado",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-30T12:59:04.901Z"
+    },
     {
       "id": "W41_T18_CONTRACT_GATE",
       "title": "Cierre W41: convertir el auditor forense en gate de CI (0 fachadas)",
       "status": "COMPLETED",
       "exit_code": 0,
       "completed_at": "2026-10-29T22:20:53.716Z"
-    },
-    {
-      "id": "W41_T16_TAB_TESORERIA",
-      "title": "Pestaña Tesorería: split 80/10/10 en vivo y registro de depósito 100 €",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-29T21:38:38.978Z"
-    },
-    {
-      "id": "W41_T15_TAB_AFILIADOS",
-      "title": "Pestaña Afiliados: alta con código de referido y comisión del motor",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-29T20:43:18.277Z"
-    },
-    {
-      "id": "W41_T14_TAB_FLOTA",
-      "title": "Pestaña Flota: alta de unidades y control de estado operativo",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-29T12:33:56.977Z"
-    },
-    {
-      "id": "W41_T13_TAB_TERAPEUTAS",
-      "title": "Pestaña Terapeutas: alta VIMUME y activación de profesionales",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-29T12:17:55.920Z"
-    },
-    {
-      "id": "W41_T12_TAB_PROVEEDORES",
-      "title": "Pestaña Proveedores: alta homologada y control de rating/estado",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-29T12:08:48.505Z"
-    },
-    {
-      "id": "W41_T11_TAB_ARTISTAS",
-      "title": "Pestaña Artistas: alta, edición de estado y búsqueda reales",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-29T11:48:07.632Z"
-    },
-    {
-      "id": "W41_T10_CONTROL_SHELL",
-      "title": "Shell del panel: hook useAdminResource, KPIs reales y fin de las fachadas",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-29T09:40:57.020Z"
-    },
-    {
-      "id": "W41_T09_API_TREASURY_PRICE_LOCK",
-      "title": "Registro de depósito 100 € Price-Lock: POST idempotente en /api/admin/treasury",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-29T09:30:04.777Z"
-    },
-    {
-      "id": "W41_T08_API_AFFILIATES_CRUD",
-      "title": "Red de afiliados real: nueva API /api/admin/affiliates (GET/POST/PATCH)",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-28T22:57:31.908Z"
-    },
-    {
-      "id": "W41_T07_API_FLEET_POST",
-      "title": "Alta real de flota: POST /api/admin/fleet con unidad única",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-28T22:39:40.295Z"
-    },
-    {
-      "id": "W41_T06_API_PROVIDERS_POST",
-      "title": "Alta real de proveedores: POST /api/admin/providers con doctrina verified",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-28T21:42:14.232Z"
-    },
-    {
-      "id": "W41_T05_API_THERAPISTS_POST",
-      "title": "Alta real de terapeutas: POST /api/admin/therapists (pestaña mostraba HTTP 401)",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-28T21:40:02.810Z"
-    },
-    {
-      "id": "W41_T04_API_ARTISTS_POST",
-      "title": "Alta real de artistas: POST /api/admin/artists con transacción Prisma",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-28T21:37:55.584Z"
-    },
-    {
-      "id": "W41_T03_ADMIN_SESSION_BRIDGE",
-      "title": "Puente de sesión: cookies de middleware, /login real y bridge de token",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-28T21:35:43.965Z"
-    },
-    {
-      "id": "W41_T02_ADMIN_GUARD_RBAC_FIX",
-      "title": "Blindar requireAdmin: lookup por firebaseUid y guard para Server Actions",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-28T21:27:11.867Z"
-    },
-    {
-      "id": "W44_FICHA_DB_PERSISTENCE",
-      "title": "W44: persistir las 2.150 fichas en PostgreSQL 16 con upsert idempotente y verificación ACID",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-28T20:35:37.754Z"
-    },
-    {
-      "id": "W41_T01_ADMIN_FETCH_CORE",
-      "title": "Núcleo de red admin: adminFetch con Bearer Firebase y errores tipados",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-28T08:46:52.228Z"
-    },
-    {
-      "id": "W40_T06_CONCIERGE_PEAJE_PROMPT",
-      "title": "Blindar el Concierge IA: canal único en la ficha verificada y veto explícito a facilitar teléfonos o emails del recinto",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-27T11:11:54.798Z"
-    },
-    {
-      "id": "W40_T05_PEAJE_AUDIT_CI",
-      "title": "Auditor anti-picaresca ampliado (enlaces, literales, renders JSX) + suite verify:leadgate 34/34 dentro de gate:prepush",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-27T11:11:54.798Z"
-    },
-    {
-      "id": "W40_T04_THIRD_PARTY_VERTICALS",
-      "title": "Cerrar fugas de peaje en verticales de terceros (alumbrado navideño, chófer VIP) y enmascarar el teléfono en la ficha de reclamación",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-27T11:11:54.798Z"
-    },
-    {
-      "id": "W40_T03_OTZARRETA_CLUSTER_PEAJE",
-      "title": "Sanear las 126 landings /otzarreta/[slug]: CTA a la centralita, provenance con línea enmascarada y Schema.org sin teléfono/email del recinto",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-27T11:11:54.798Z"
-    },
-    {
-      "id": "W40_T02_OTZARRETA_PEAJE_HUB",
-      "title": "Erradicar la línea directa de Eduardo del hub /otzarreta (hero, tarjetas de sede, footer y JSON-LD) y sustituirla por visita técnica + Conserjería",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-27T11:11:54.798Z"
-    },
-    {
-      "id": "W40_T01_SOVEREIGN_LEAD_GATE",
-      "title": "Módulo canónico `sovereign-lead-gate`: canal único Conserjería EAR OS, enlaces cualificados, enmascarado de líneas de proveedor y saneado recursivo de JSON-LD",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-27T11:11:54.798Z"
-    },
-    {
-      "id": "W39_T05_CONTEXT_FORENSIC_SUITE",
-      "title": "Suite verify:context (21 aserciones) + E2E real contra el dev server del CEO + auditoría móvil Playwright 390x844",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-27T10:25:28.417Z"
-    },
-    {
-      "id": "W39_T04_CONCIERGE_MOBILE_SHEET",
-      "title": "Concierge móvil: FAB táctil sobre el CTA de WhatsApp (z-1000), sheet 100dvh z-1200, composer inferior con safe-area, 16px y targets ≥44px",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-27T10:25:28.417Z"
-    },
-    {
-      "id": "W39_T03_HONEST_LOGISTICS_NULL_DISTANCE",
-      "title": "distanceKm nullable: sin ubicación confirmada no se cotiza logística (ni 0 ni 58 km) y el enlace de reserva omite el km",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-27T10:25:28.417Z"
-    },
-    {
-      "id": "W39_T02_ANTI_SSRF_URL_CONTEXT",
-      "title": "Neutralizar URLs pegadas antes del escaneo de inyección: navegar no es atacar, y jamás se abre la URL del cliente",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-27T10:25:28.417Z"
-    },
-    {
-      "id": "W39_T01_PAGE_CONTEXT_RESOLVER",
-      "title": "Resolver server-side pathname/URL → entidad canónica (Otzarreta, fincas, artistas, reserva) sin fetch y con ficha verificada obligatoria en el prompt",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-27T10:25:28.417Z"
-    },
-    {
-      "id": "W38_T04_PRICING_PARITY_FORENSIC_SUITE",
-      "title": "Suite forense anti-divergencia (24 aserciones dinámicas + bloqueo estático) e inscripción en el gate:prepush",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-27T08:54:22.168Z"
-    },
-    {
-      "id": "W38_T03_HEAVY_RESIDUES_EVACUATION",
-      "title": "Auditar y evacuar residuos pesados untracked a la bóveda EAR_ABSORBED_VAULT con manifiesto forense y cero referencias en código",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-27T08:54:22.168Z"
-    },
-    {
-      "id": "W38_T02_SSOT_LOGISTICS_050_SANCTIONED_SEAL",
-      "title": "Sellar la tarifa sancionada de 0,50 €/km en ear-os-ssot.ts, actualizar invariantes del guardián y regenerar KNOWN_GOOD_SSOT_HASH vía baselining sancionado",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-27T08:54:22.168Z"
-    },
-    {
-      "id": "W38_T01_SOVEREIGN_PRICING_SSOT_UNIFICATION",
-      "title": "Unificar sovereign-pricing.ts con el SSOT (franquicia 50 km + hotel + rider) y erradicar motores sombra en Astra, Deal-Closer, Mariachi, Geo-Radar, Price-Lock y Checkout",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-27T08:54:22.168Z"
-    },
-    {
-      "id": "W38_T05_VENUE_FORENSIC_AUDITOR",
-      "title": "Auditor forense de fincas y recintos en tiempo real vía DeepSeek Search & Fetch con Provenance SHA-256",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-27T08:35:00.000Z"
-    },
-    {
-      "id": "W38_T04_B2G_LIVE_TENDER_RADAR",
-      "title": "Radar autónomo de licitaciones B2G con escaneo de contratos menores < 14.250 € en PLACSP",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-27T08:30:00.000Z"
-    },
-    {
-      "id": "W38_T03_SSOT_PRICING_UNIFICATION",
-      "title": "Unificación canónica de sovereign-pricing con el SSOT (franquicia 50 km + hotel + 24/24 tests superados)",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-27T08:25:00.000Z"
-    },
-    {
-      "id": "W38_T02_WEB_GROUNDING_CONCIERGE",
-      "title": "Grounding web en vivo para EarConcierge con chips de fuentes y sanitización anti-XSS",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-27T08:15:00.000Z"
-    },
-    {
-      "id": "W38_T01_DEEPSEEK_SEARCH_FETCH_ENGINE",
-      "title": "Implementación y tipado de Search & Fetch API de DeepSeek en deepseek-inference.ts con fail-open y presupuesto",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-27T08:00:00.000Z"
-    },
-    {
-      "id": "W37_T06_PRICE_LOCK_ENGINE_SSOT",
-      "title": "Auditar PriceLockEngine para consumir SSOT + SHA-256 y despachar n8n sin leads huérfanos",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-25T18:38:18.501Z"
-    },
-    {
-      "id": "W37_T05_RESERVAR_SOLISTA_CTA_DEPOSIT",
-      "title": "Cablear el CTA de reserva de solista a la pasarela real de depósito de 100 € (Price-Lock SHA-256)",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-25T18:17:51.721Z"
-    },
-    {
-      "id": "W37_T04_DEPOSIT_100_FLOW_AUDIT",
-      "title": "Auditar el endpoint de depósito de 100 € para garantizar SSOT, lock atómico ACID y webhook n8n no bloqueante",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-25T18:07:48.753Z"
-    },
-    {
-      "id": "W37_T03_MANIFEST_SYNC_CANONICAL",
-      "title": "Sincronizar manifest.json y providers_canonical.json con los conteos reales de las particiones CDN",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-25T17:57:13.034Z"
-    },
-    {
-      "id": "W37_T02_PRUNE_PLACEHOLDER_AND_VERIFY_VENDORS",
-      "title": "Podar placeholders/verified falso en data lakes y blindar /api/vendors contra fachadas",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-25T16:37:17.731Z"
-    },
-    {
-      "id": "W37_T01_LEAN_EDGE_REGENERATE_VERIFIED",
-      "title": "Regenerar particiones Edge CDN lean & verified (0 placeholders, teléfono real) desde el SSOT de proveedores",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-25T12:11:23.812Z"
-    },
-    {
-      "id": "W36_T06_BODAS_TROJAN_HORSE_VENDOR_DATA_MATRICES",
-      "title": "BODAS.NET TROJAN HORSE VENDOR MATRICES — Sistema de sincronización de métricas individuales por rol y blindaje de precio histórico (2 años) para los 65.000 proveedores en particiones CDN",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-25T09:21:09.221Z"
-    },
-    {
-      "id": "W36_T05_B2G_TOWNHALL_INSTITUTIONAL_FAST_TRACK",
-      "title": "B2G TOWNHALL INSTITUTIONAL FAST-TRACK — Tramitador instantáneo para Ayuntamientos en /ayuntamientos con contrato menor Art. 118 LCSP (<14.250€) y módulo social VIMUME Ley 49/2002",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-25T08:47:00.569Z"
-    },
-    {
-      "id": "W36_T04_VENDOR_DIRECTORY_SCLASS_BODAS_CARD",
-      "title": "VENDOR DIRECTORY S-CLASS BODAS CARD — Rediseño de tarjeta de proveedor estilo Bodas.net/Zola con imagen cinemática completa, rating de estrellas, precio SSOT y botón de presupuesto instantáneo",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-24T22:42:29.190Z"
-    },
-    {
-      "id": "W36_T03_ARTIST_STUDIO_PURGA_FACHADAS_P0",
-      "title": "ARTIST STUDIO PURGA FACHADAS P0 — Erradicación de los 8 alert() en pasarelas Mariachi, lectura real server-side de saldos/bookings en Prisma y eliminación de mocks quemados",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-24T22:27:58.557Z"
-    },
-    {
-      "id": "W36_T02_ARTIST_SAAS_STRIPE_CONNECT_ENGINE",
-      "title": "ARTIST SAAS STRIPE CONNECT ENGINE & ZERO-FACHADA AUDIT — Motor real de suscripción SaaS para artistas (29€/mes o 290€/año) en Stripe, erradicación de setTimeouts en perfil/config y onboarding Stripe Connect real",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-24T22:10:00.000Z"
-    },
-    {
-      "id": "W36_T01_ARTISTAS_EUROPA_ROSTER_INTERCONNECT",
-      "title": "ARTISTAS EUROPA ROSTER INTERCONNECT — Conector de Roster Europeo para artistaseuropa.com en /artistas con tarjeta Diamante Rojo, Split 80/10/10 y despacho Swarm",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-24T21:38:19.482Z"
-    },
-    {
-      "id": "W35_T03_FINCAS_PARABODA_HIGH_CONVERTING_BRIDGE",
-      "title": "FINCAS PARABODA HIGH CONVERTING BRIDGE — Conector interactivo para fincasparaboda.com con cotizador paramétrico de acústica Bose F1 (12 W/pax), limitadores Ley 37/2003 y bloqueo 100€ Stripe",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-24T21:23:31.903Z"
-    },
-    {
-      "id": "W35_T02_SWARM_AI_LEAD_DISPATCHER_N8N_WHATSAPP",
-      "title": "SWARM AI LEAD DISPATCHER & WHATSAPP ENGINE — Motor de cribado multi-agente, formateo de mensaje WhatsApp de alta conversión y despacho no bloqueante a n8n",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-24T21:12:33.115Z"
-    },
-    {
-      "id": "W35_T01_MULTIROL_QUANTUM_COCKPIT_SELECTOR",
-      "title": "QUANTUM ROLE MORPHING COCKPIT — Selector Multirol inmersivo (Novios/Ayuntamientos/Artistas/Proveedores) con transiciones hápticas, paletas OLED adaptativas y cero layout shift",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-10-24T21:07:34.393Z"
     }
   ],
   "metadata": {
-    "last_updated": "2026-10-29T22:20:53.717Z",
-    "total_pending": 1,
-    "current_sprint": "WAVE_41_ADMIN_CONTROL_DOMINANCE",
-    "ceo_mandate": "Reconstruir /admin/control al 100%: altas reales de artistas, proveedores, terapeutas, flota, afiliados y tesorería; sesión Bearer unificada; cero fachadas verificadas por scripts/audit_admin_control_forensics.cjs --strict."
+    "last_updated": "2026-10-30T12:59:04.902Z",
+    "total_pending": 6,
+    "current_sprint": "WAVE_42_PSEO_DIAMOND_INTENT_ENGINE",
+    "ceo_mandate": "Cero excusas de contenido repetitivo: máximo 10% de repetición (Jaccard 5-gram <= 0,10) combinando 70% de respuesta a intención transaccional (precios SSOT, logística real por municipio, Price-Lock 100€) y mínimo 30% de intención informacional (acústica Ley 37/2003, 12 W/pax, logística comarcal). Sancionada la higiene de Git (Hallazgo 9) y el despliegue de /confianza + fix AF-1."
   }
 }

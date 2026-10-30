@@ -844,6 +844,31 @@ Tarea `W42_OUTREACH_ACK_01` completada y sellada con Exit Code 0 (sello condicio
 
 **RIESGOS**: Si un desarrollador añade un formulario en `/admin/control` sin endpoint o sin Bearer, `audit:admin` abortará el pre-push con Exit Code 1 impidiendo el despliegue.
 
+---
+
+## 2026-10-30 · W42_T01_GIT_PACK_AND_LFS_HYGIENE — F0 · Higiene sancionada de Git
+
+- **ID**: W42_T01_GIT_PACK_AND_LFS_HYGIENE (WAVE 42 · F0)
+- **Sancion previa**: CEO / AMD-1 (Hallazgo 9). Enmienda de purga autorizada por escrito; `git filter-repo` NO autorizado.
+- **Motivo**: INV-15 en rojo. `.git` medía 4 278 692 263 B (≈ 3,98 GiB), 51 % objetos inalcanzables y 179,49 MiB de restos Git LFS huerfanos que ningun arbol usaba. Cada deploy arrastraba basura al VPS.
+- **Archivos tocados**:
+  - `scripts/verify_git_pack_health.cjs` NUEVO (auditor, 4 puertas, `--json` y `--remediate`)
+  - `package.json` (+`verify:git-pack`)
+- **Comandos ejecutados / exit**:
+  - `node scripts/verify_git_pack_health.cjs` (pre) -> exit 1, 3 puertas rojas (LFS 179,49 MiB · loose 2 617 · size-pack 3 891,75 MiB)
+  - `node scripts/verify_git_pack_health.cjs --remediate` -> exit 0 en 64,9 s (`reflog expire` 316 ms + `gc --prune=now` 64 259 ms)
+  - `npm run verify:git-pack` -> exit 0, 4/4 puertas verdes
+  - `git fsck --no-progress --connectivity-only` -> exit 0 (0 dano colateral)
+  - `node ./node_modules/typescript/bin/tsc --noEmit` -> exit 0
+  - `eslint scripts/verify_git_pack_health.cjs` -> exit 0, 0 errores (el fichero cae en ignore-pattern del config)
+- **Resultado medido**: size-pack 3 891,75 -> **1 813,77 MiB** (−2 077,98 MiB); packs 8 -> 1; loose 2 617 -> 0; `.git/lfs/objects` 179,49 -> 0 MiB; in-pack 69 356 -> 33 874 (= objetos alcanzables exactos).
+- **Falso positivo cazado (y corregido)**: la primera version del detector marcaba "1 puntero LFS en HEAD" — era este mismo informe citando el comando. Sustituido el `grep` de cadena cruda por la cabecera real `^version https://git-lfs[.]github[.]com/spec/v1$`. Sensibilidad probada (`true` sobre puntero real) y especificidad probada (`false` sobre documentacion). Un detector que nunca dispara tambien es una fachada.
+- **Hallazgo P1 abierto**: INV-15 sigue en rojo en su letra estricta (repo 1 813,77 MiB > 50 MB). El criterio de esta tarea (< 2 500 MiB) se cumple; el de la doctrina exige fase 2 (sacar de git los 5 ficheros de 1,40-1,68 MB + `git filter-repo` en ventana anunciada, que reescribe SHAs y obliga a re-apuntar Coolify).
+- **Premortem**: (1) ¿Cumple `done_when`? Si: 0 LFS, 0 sueltos, −2 078 MiB > 1 500. (2) Asuncion fragil: que ningun objeto podado fuera necesario — desmentida con `fsck` + igualdad alcanzables/in-pack. (3) Alternativa descartada: `git filter-repo` hoy (reescribe SHAs sin ventana = CHG-2 violado). (4) Que se rompe: un clon viejo en el VPS — lo detecta `deploy:freshness` antes que el cliente. (5) Acepto al firmar: purga irreversible ya ejecutada, cubierta por `respaldo` de refs intacto y fsck en verde.
+- **Omega-Diamante**: **9/20**. Nucleo 8/8 PASS. Diamante: 17 (provenance) PASS; 18 (repo < 50 MB) FAIL con cifra a la vista; 9-16 y 19-20 no aplican a higiene de git y NO se autoasignan.
+- **Siguiente paso**: W42_T02_CONFIANZA_WIRING_AND_CONTRAST_HONESTY. Detencion por Pacto ZTM.
+
+
 **CAMBIOS**:
 - `scripts/audit_admin_control_forensics.cjs`
 - `package.json`

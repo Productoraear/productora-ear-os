@@ -80,6 +80,7 @@
     "typecheck:network": "node ./node_modules/typescript/bin/tsc -p tsconfig.mariachi-net.json",
     "audit:phone": "node scripts/audit_phone_exposure.cjs",
     "audit:pseo": "node scripts/audit_pseo_coverage.cjs",
+    "verify:git-pack": "node scripts/verify_git_pack_health.cjs",
     "audit:routes": "node scripts/audit_route_conflicts.cjs",
     "audit:http": "node scripts/audit_http_handlers.cjs",
     "audit:http:staged": "node scripts/audit_http_handlers.cjs --staged",
