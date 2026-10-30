@@ -5,24 +5,29 @@ import "./globals.css";
 
 const syne = Syne({
   subsets: ["latin"],
-  variable: "--font-syne",
+  // ⚠️ Prefijo `--font-src-*`: next/font NO puede compartir nombre con el alias de
+  // globals.css. Si comparte (`--font-syne: var(--font-syne), …`) el token se
+  // auto-referencia, es inválido en tiempo de cómputo y el texto cae al serif del UA.
+  variable: "--font-src-syne",
   display: "swap",
 });
 
 const montserrat = Montserrat({
   subsets: ["latin"],
-  variable: "--font-montserrat",
+  variable: "--font-src-montserrat",
   display: "swap",
 });
 
 const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-src-inter",
   display: "swap",
 });
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
+  // Este token NO se define en globals.css (no había ciclo): se mantiene su nombre
+  // original porque tailwind.config.cjs lo consume directo en `fontFamily.mono`.
   variable: "--font-jetbrains-mono",
   display: "swap",
 });

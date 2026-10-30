@@ -3,9 +3,9 @@
  * MOTOR SOBERANO DE PRECIOS — CERO DIVERGENCIA CON EL SSOT (FIRMA SHA-256)
  * ════════════════════════════════════════════════════════════════════════════
  * Este módulo SOLO compone el presupuesto y firma el Price-Lock. Toda la
- * logística (franquicia de 50 km, hotel, suplementos) vive en `logistics.ts`,
- * que es isomorfo y puede importarse desde componentes cliente sin arrastrar
- * `node:crypto`.
+ * logística (franquicia del Hub Méntrida, hotel, suplementos) vive en
+ * `logistics.ts`, que es isomorfo y puede importarse desde componentes cliente
+ * sin arrastrar `node:crypto`.
  *
  * Server-only por la firma criptográfica. Los re-exports mantienen la API
  * histórica (`COSTE_KM`, `BASE_SOLISTA`, `computeSovereignLogistics`, ...).
@@ -35,6 +35,14 @@ export interface SovereignQuoteInput {
    * Activa el suplemento hotelero cuando >= `HORA_FIN_HOTEL_CANONICA`.
    */
   endHour?: number;
+  /**
+   * Franquicia logística aplicable AL SUJETO que despacha.
+   * - Hub Méntrida (Edwin Agudelo / base Méntrida): `LOGISTICA_KM_EXENTOS` (50).
+   * - Red Nacional: 0 — factura desde el km 0 de su propia base fiscal.
+   * Si se omite, se aplica la franquicia del SSOT (comportamiento histórico).
+   * Se resuelve SIEMPRE server-side con `logistics-origin.ts`.
+   */
+  franchiseKm?: number;
 }
 
 export interface SovereignSplit {
@@ -55,7 +63,9 @@ export interface SovereignQuoteResult {
 
 export function calculateSovereignQuote(input: SovereignQuoteInput): SovereignQuoteResult {
   const baseFormatPrice: number = basePriceForFormat(input.format);
-  const logistics: SovereignLogistics = computeSovereignLogistics(input.distanceKm, input.endHour);
+  const logistics: SovereignLogistics = computeSovereignLogistics(input.distanceKm, input.endHour, {
+    franchiseKm: input.franchiseKm,
+  });
   const soundSupplement: number = input.soundRider === 'bose_f1_elite' ? 150 : 0;
 
   const totalBudget: number =
@@ -67,7 +77,14 @@ export function calculateSovereignQuote(input: SovereignQuoteInput): SovereignQu
   const earOs10 = Math.round(totalBudget * SPLIT_SOBERANO.earOs);
   const vimume10 = totalBudget - artist80 - earOs10;
 
-  const payloadToHash = `${input.format}|${logistics.distanceKm}|${totalBudget}|${DEPOSITO_STRIPE}`;
+  /**
+   * Payload firmado. La franquicia entra en la firma: dos sujetos con la misma
+   * distancia pero distinta franquicia (Hub 50 km vs Red 0 km) NO pueden
+   * compartir `priceLockHash`. Recomputado y verificado siempre server-side en
+   * `price-lock-verifier.ts` con el mismo `input`, sin hashes persistidos de
+   * versiones anteriores.
+   */
+  const payloadToHash = `${input.format}|${logistics.distanceKm}|${logistics.franchiseKm}|${totalBudget}|${DEPOSITO_STRIPE}`;
   const priceLockHash = createHash('sha256').update(payloadToHash).digest('hex');
 
   return {

@@ -9,9 +9,10 @@ import {
   BASE_SOLISTA,
   COSTE_KM,
   DEPOSITO_STRIPE,
-  KM_EXENTOS,
   calculateSovereignQuote,
 } from "@/lib/pricing/sovereign-pricing";
+import { resolveLogisticsOrigin } from "@/lib/pricing/logistics-origin";
+import type { LogisticsOrigin } from "@/lib/pricing/logistics-origin";
 import { prisma } from "@/lib/prisma";
 
 const StripeCheckoutSchema = z.object({
@@ -41,6 +42,54 @@ export interface StripeCheckoutResult {
 const STRIPE_API_VERSION = "2026-04-22.dahlia" as Stripe.LatestApiVersion;
 const DEFAULT_ORIGIN = "https://productoraear.com";
 
+/**
+ * Base física facturable del sujeto. Se resuelve SIEMPRE en servidor desde el
+ * perfil real: el cliente no puede declarar su propio origen (le regalaría
+ * kilómetros) ni heredar la franquicia de Méntrida si no es del Hub.
+ */
+async function resolveOriginForSubject(artistId: string): Promise<LogisticsOrigin> {
+  const artist = await prisma.artistProfile.findFirst({
+    where: { OR: [{ id: artistId }, { slug: artistId }] },
+    select: { id: true, slug: true, displayName: true, stageName: true },
+  });
+  if (artist) {
+    return resolveLogisticsOrigin({
+      id: artist.id,
+      slug: artist.slug,
+      name: artist.displayName ?? artist.stageName,
+    });
+  }
+
+  const provider = await prisma.providerProfile.findFirst({
+    where: { OR: [{ id: artistId }, { slug: artistId }] },
+    select: {
+      id: true,
+      slug: true,
+      name: true,
+      isVerified: true,
+      city: true,
+      province: true,
+      location: true,
+    },
+  });
+
+  if (provider) {
+    if (!provider.isVerified) {
+      throw new Error("VETO ESTRATÉGICO ACTIVADO: proveedor sin verificación S-Class.");
+    }
+    return resolveLogisticsOrigin({
+      id: provider.id,
+      slug: provider.slug,
+      name: provider.name,
+      city: provider.city,
+      province: provider.province,
+      location: provider.location,
+    });
+  }
+
+  throw new Error(`VETO ESTRATÉGICO ACTIVADO: perfil no autorizado (${artistId}).`);
+}
+
 export async function createBookingCheckout(
   input: unknown,
 ): Promise<StripeCheckoutResult> {
@@ -62,13 +111,16 @@ export async function createBookingCheckout(
   });
   if (!user) throw new Error("Invalid client context");
 
+  // Base física del sujeto (servidor) — el origen del payload NO se usa.
+  const logisticsOrigin = await resolveOriginForSubject(payload.artistId);
+
   const pricing = await calculateGeoPricing({
     artistId: payload.artistId,
-    origin: { lat: payload.originLat, lng: payload.originLng },
+    origin: logisticsOrigin.coordinates, // Hub Méntrida o base fiscal del proveedor
     destination: { lat: payload.destinationLat, lng: payload.destinationLng },
     baseFee: BASE_SOLISTA, // SSOT: 350 € (flujo embebido del Solista Premium)
     costPerKm: COSTE_KM, // SSOT: 1,50 €/km
-    franchiseKm: KM_EXENTOS, // SSOT: franquicia de 50 km
+    franchiseKm: logisticsOrigin.franchiseKm, // Hub: 50 km · Red Nacional: 0 km
     depositMode: "fixed",
     depositValue: DEPOSITO_STRIPE, // SSOT: Price-Lock inmutable de 100 €
   });
@@ -78,6 +130,7 @@ export async function createBookingCheckout(
     format: "solista",
     distanceKm: pricing.distanceKm,
     soundRider: "standard",
+    franchiseKm: pricing.franchiseKm,
   });
 
   const session = await stripe.checkout.sessions.create({
@@ -101,8 +154,11 @@ export async function createBookingCheckout(
       artistId: payload.artistId,
       clientId: payload.clientId,
       eventDate: payload.eventDate,
-      originLat: String(payload.originLat),
-      originLng: String(payload.originLng),
+      originLat: String(logisticsOrigin.coordinates.latitude),
+      originLng: String(logisticsOrigin.coordinates.longitude),
+      originKind: logisticsOrigin.kind,
+      franchiseKm: String(pricing.franchiseKm),
+      billableKm: String(pricing.billableKm),
       destinationLat: String(payload.destinationLat),
       destinationLng: String(payload.destinationLng),
       totalAmountCalculated: String(sovereignQuote.totalBudget),

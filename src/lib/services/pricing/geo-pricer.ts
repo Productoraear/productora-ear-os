@@ -1,4 +1,4 @@
-import { geocodeAddress, normalizeCoords, GeoCoordinates } from "../geo/geocoder";
+import { geocodeAddress, geocodeAddressSync, normalizeCoords, GeoCoordinates } from "../geo/geocoder";
 import {
   DEPOSITO_STRIPE_EUR,
   LOGISTICA_EUR_PER_KM,
@@ -10,12 +10,17 @@ import {
   GRUPO_MIN_MUSICOS,
   SUPLEMENTO_MUSICO_ADICIONAL_EUR,
   SUPLEMENTO_QUINTETO,
+  normalizeFranchiseKm,
 } from "../../pricing/logistics";
 
 export interface GeoPricingResult {
   originCoords: { latitude: number; longitude: number };
   destinationCoords: { latitude: number; longitude: number };
   distanceKm: number;
+  /** Kilómetros efectivamente facturables (distancia − franquicia aplicada). */
+  billableKm: number;
+  /** Franquicia realmente aplicada: 50 = Hub Méntrida · 0 = Red Nacional. */
+  franchiseKm: number;
   travelCost: number;
   totalAmount: number;
   depositAmount: number;
@@ -56,9 +61,14 @@ function round2(value: number): number {
  * Toma origen, destino, tarifa base y costo por kilómetro, calcula la distancia física real y retorna
  * el desglose financiero exacto, incluyendo el cálculo del depósito de garantía.
  *
- * `franchiseKm` aplica la franquicia logística del SSOT (50 km desde el Hub
- * Méntrida para Edwin Agudelo). Por defecto 0 para no alterar a proveedores
- * de la red nacional, cuyo kilometraje se factura desde su domicilio fiscal.
+ * `franchiseKm` NO se decide aquí: lo dicta el resolutor de origen
+ * (`src/lib/pricing/logistics-origin.ts`) según el sujeto que despacha.
+ *  - Hub Méntrida (Edwin Agudelo / base Méntrida) -> 50 km de franquicia.
+ *  - Red Nacional -> 0 km: factura desde el km 0 de su propia base fiscal.
+ *
+ * `strictGeocoding` (fail-closed) hace que una dirección no reconocida lance
+ * `GEOCODE_UNRESOLVED` en lugar de facturarse sobre el fallback de Madrid
+ * (AF-5: prohibido el verde por defecto en la ruta de dinero).
  */
 export async function calculateGeoPricing(params: {
   artistId?: string;
@@ -69,6 +79,7 @@ export async function calculateGeoPricing(params: {
   franchiseKm?: number;
   depositMode?: "fixed" | "percentage" | string;
   depositValue?: number;
+  strictGeocoding?: boolean;
 }): Promise<GeoPricingResult> {
   const {
     origin,
@@ -78,18 +89,35 @@ export async function calculateGeoPricing(params: {
     franchiseKm = 0,
     depositMode = "fixed",
     depositValue = DEPOSITO_STRIPE_EUR,
+    strictGeocoding = false,
   } = params;
 
   // Resolve coordinates
-  const originCoords = typeof origin === "string" ? await geocodeAddress(origin) : normalizeCoords(origin);
-  const destinationCoords = typeof destination === "string" ? await geocodeAddress(destination) : normalizeCoords(destination);
+  const resolveCoords = async (
+    value: GeoCoordinates | string,
+    role: "origin" | "destination"
+  ): Promise<{ latitude: number; longitude: number }> => {
+    if (typeof value !== "string") return normalizeCoords(value);
+    if (!strictGeocoding) return geocodeAddress(value);
+    const strict = geocodeAddressSync(value);
+    if (!strict) {
+      throw new Error(
+        `GEOCODE_UNRESOLVED: ${role} "${value}" no es geocodificable en la matriz canónica. Añadir municipio + provincia.`
+      );
+    }
+    return strict;
+  };
+
+  const originCoords = await resolveCoords(origin, "origin");
+  const destinationCoords = await resolveCoords(destination, "destination");
 
   // Calculate Haversine distance
   const rawDistance = calculateHaversineDistance(originCoords, destinationCoords);
   const distanceKm = Math.round(rawDistance * 100) / 100; // Redondear a 2 decimales
 
   // Financial compilation (franquicia canónica antes de facturar kilómetros)
-  const billableKm = Math.max(0, distanceKm - Math.max(0, franchiseKm));
+  const appliedFranchiseKm = normalizeFranchiseKm(franchiseKm, 0);
+  const billableKm = Math.max(0, Math.round((distanceKm - appliedFranchiseKm) * 100) / 100);
   const travelCost = Math.round(billableKm * costPerKm * 100) / 100;
   const totalAmount = Math.round((baseFee + travelCost) * 100) / 100;
 
@@ -105,6 +133,8 @@ export async function calculateGeoPricing(params: {
     originCoords,
     destinationCoords,
     distanceKm,
+    billableKm,
+    franchiseKm: appliedFranchiseKm,
     travelCost,
     totalAmount,
     depositAmount

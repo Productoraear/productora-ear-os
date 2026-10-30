@@ -10,6 +10,7 @@ import { CENTRALITA } from '@/lib/phone-constants';
 import { DarkFeatureGrid, FeatureCardItem } from '@/components/ui/DarkFeatureGrid';
 import { StatDisplayBand, StatItem } from '@/components/ui/StatDisplayBand';
 import { isCanonicalProvinceSlug, resolveGeoSegment } from '@/lib/navigation/canonical-taxonomy';
+import { LOGISTICS_ORIGIN_COPY } from '@/lib/pricing/logistics-origin';
 
 interface Props {
   params: Promise<{ provincia: string }>;
@@ -18,7 +19,7 @@ interface Props {
 export const dynamicParams = true;
 
 export function generateStaticParams() {
-  // Pre-renderizamos en build únicamente las provincias cabecera del Hub Central.
+  // Pre-renderizamos en build únicamente las provincias cabecera del Hub Méntrida.
   // El resto de las 52 provincias se sirven dinámicamente bajo demanda (ISR / dynamicParams = true).
   const topProvinces = ['madrid', 'toledo', 'guadalajara', 'segovia', 'ciudad-real'];
   return topProvinces.map((provincia) => ({
@@ -41,7 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: `Bodas de Gala, Mariachis y Sonido en ${data.name} | Productora EAR`,
-    description: `${data.localKeywords.mariachi}. ${data.localKeywords.sonido}. Desplazamiento desde Hub Central (${data.distanceFromHubKm} km). SLA: ${data.logisticsSpecs.wattsPerPax} W/pax.`,
+    description: `${data.localKeywords.mariachi}. ${data.localKeywords.sonido}. Despacho del solista desde el Hub Méntrida (${data.distanceFromHubKm} km). SLA: ${data.logisticsSpecs.wattsPerPax} W/pax.`,
     alternates: {
       canonical: `https://www.productoraear.com/bodas/${data.slug}`
     },
@@ -136,7 +137,7 @@ export default async function ProvincialWeddingPage({ params }: Props) {
 
   const statsList: StatItem[] = [
     { value: '12', superscript: 'W/pax', label: `Presión Acústica Homologada en ${data.name}` },
-    { value: `${data.distanceFromHubKm}`, superscript: 'KM', label: 'Distancia Logística desde Hub Central' },
+    { value: `${data.distanceFromHubKm}`, superscript: 'KM', label: 'Despacho del Solista desde el Hub Méntrida (Toledo)' },
     { value: '100', superscript: '€', label: 'Depósito de Garantía Reembolsable (Stripe)' }
   ];
 
@@ -248,8 +249,11 @@ export default async function ProvincialWeddingPage({ params }: Props) {
             </p>
           </div>
         </div>
-      </section>
 
+        <p className="max-w-5xl mx-auto mt-8 text-[11px] font-mono text-ash leading-relaxed text-center">
+          {LOGISTICS_ORIGIN_COPY.hub}. {LOGISTICS_ORIGIN_COPY.networkNote}
+        </p>
+      </section>
       {/* 5. CIERRE CON CENTRALITA Y COTIZADOR */}
       <section className="py-24 px-6 max-w-4xl mx-auto text-center space-y-8">
         <div className="space-y-3">

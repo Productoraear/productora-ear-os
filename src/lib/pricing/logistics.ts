@@ -7,8 +7,11 @@
  * dependencias de servidor. La firma SHA-256 vive en `sovereign-pricing.ts`.
  *
  * Reglas canónicas (SSOT verificado en runtime):
- *  - Franquicia: los primeros `LOGISTICA_KM_EXENTOS` (50 km) son 0,00 €.
- *  - Tarifa: `LOGISTICA_EUR_PER_KM` por km facturable (a partir del km 51).
+ *  - Franquicia: los primeros `LOGISTICA_KM_EXENTOS` (50 km) son 0,00 € — SOLO
+ *    para el Hub Méntrida (Edwin Agudelo y empresas con base en Méntrida).
+ *    La Red Nacional factura desde el km 0 de su propia base física: ver
+ *    `logistics-origin.ts` (`NETWORK_FRANCHISE_KM = 0`).
+ *  - Tarifa: `LOGISTICA_EUR_PER_KM` por km facturable (a partir del km 51 del Hub).
  *  - Hotel: +`SUPLEMENTO_HOTEL_EUR` si distancia > 200 km o fin >= 03:00 AM.
  * ════════════════════════════════════════════════════════════════════════════
  */
@@ -97,6 +100,20 @@ export function normalizeDistanceKm(value: unknown): number {
 }
 
 /**
+ * Normaliza la franquicia logística aplicable al sujeto facturable.
+ * Fail-closed: valores no finitos o negativos => `fallback` acotado.
+ * El Hub Méntrida usa `KM_EXENTOS` (50); la Red Nacional usa 0
+ * (`NETWORK_FRANCHISE_KM` en `logistics-origin.ts`).
+ */
+export function normalizeFranchiseKm(value: unknown, fallback: number = KM_EXENTOS): number {
+  const numeric: number = typeof value === 'number' ? value : Number(value);
+  if (!Number.isFinite(numeric) || numeric < 0) {
+    return Math.min(MAX_DISTANCE_KM, Math.max(0, fallback));
+  }
+  return Math.min(MAX_DISTANCE_KM, Math.round(numeric * 10) / 10);
+}
+
+/**
  * Convierte una hora de fin textual ("03:30", "3", "02:15") en número decimal.
  * Devuelve `undefined` si el dato no es interpretable (nunca inventa datos).
  */
@@ -112,12 +129,26 @@ export function parseEndHour(raw: unknown): number | undefined {
 }
 
 /**
- * Motor logístico canónico (Hub Méntrida -> destino del cliente).
- * ÚNICA implementación autorizada de la franquicia de 50 km y del hotel.
+ * Motor logístico canónico (base física del proveedor -> destino del cliente).
+ * ÚNICA implementación autorizada de la franquicia logística y del hotel.
+ *
+ * `options.franchiseKm` es OBLIGATORIO para cualquier sujeto que no sea el Hub
+ * Méntrida: la Red Nacional factura desde el km 0 de su propia base
+ * (`logistics-origin.ts`). Si se omite (API histórica) se mantiene la
+ * franquicia del SSOT para no alterar a los consumidores ya sellados.
  */
-export function computeSovereignLogistics(distanceKm: unknown, endHour?: unknown): SovereignLogistics {
+export function computeSovereignLogistics(
+  distanceKm: unknown,
+  endHour?: unknown,
+  options?: { readonly franchiseKm?: unknown },
+): SovereignLogistics {
   const normalizedDistance: number = normalizeDistanceKm(distanceKm);
-  const billableKm: number = Math.max(0, normalizedDistance - KM_EXENTOS);
+  // Basura en la franquicia => 0 (nunca regalar kilómetros por un dato corrupto).
+  const franchiseKm: number =
+    options === undefined || options.franchiseKm === undefined
+      ? KM_EXENTOS
+      : normalizeFranchiseKm(options.franchiseKm, 0);
+  const billableKm: number = Math.max(0, normalizedDistance - franchiseKm);
   const travelCost: number = Math.round(billableKm * COSTE_KM);
 
   const normalizedEndHour: number | undefined = parseEndHour(endHour);
@@ -133,7 +164,7 @@ export function computeSovereignLogistics(distanceKm: unknown, endHour?: unknown
     requiresHotel,
     hotelSupplement,
     totalLogistics: travelCost + hotelSupplement,
-    franchiseKm: KM_EXENTOS,
+    franchiseKm,
     ratePerKm: COSTE_KM,
   };
 }

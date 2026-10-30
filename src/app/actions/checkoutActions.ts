@@ -3,12 +3,19 @@
 import { prisma } from "@/lib/prisma";
 import { stripe } from "@/lib/payments";
 import { calculateGeoPricing } from "@/lib/services/pricing/geo-pricer";
+import type { GeoCoordinates } from "@/lib/services/geo/geocoder";
 import { headers, cookies } from "next/headers";
 import { isRateLimited } from "@/lib/security/shield";
 import { logger } from "@/lib/logger";
 import { z } from "zod";
-import { calculateSovereignQuote, basePriceForFormat, COSTE_KM, DEPOSITO_STRIPE, KM_EXENTOS } from "@/lib/pricing/sovereign-pricing";
+import { calculateSovereignQuote, basePriceForFormat, COSTE_KM, DEPOSITO_STRIPE } from "@/lib/pricing/sovereign-pricing";
 import { verifyAndSignStripeSession } from "@/lib/pricing/price-lock-verifier";
+import {
+  LogisticsOriginError,
+  NETWORK_FRANCHISE_KM,
+  resolveLogisticsOrigin,
+} from "@/lib/pricing/logistics-origin";
+import type { LogisticsOrigin, LogisticsOriginSubject } from "@/lib/pricing/logistics-origin";
 import type { SovereignQuoteInput, FormatType } from "@/lib/pricing/sovereign-pricing";
 
 export interface EliteCheckoutInput {
@@ -116,19 +123,34 @@ export async function createEliteCheckout(input: EliteCheckoutInput) {
   let baseFee: number = ROSTER_BASE_FEE_EUR; // Roster externo (no canonizado en SSOT)
   let costPerKm: number = COSTE_KM; // SSOT logístico (1,50 €/km)
 
+  /**
+   * Sujeto que despacha. Se rellena SOLO desde el perfil resuelto en servidor:
+   * el payload del cliente jamás decide la base física ni la franquicia.
+   */
+  let subject: LogisticsOriginSubject | null = null;
+
   // A. Buscar en el Roster de Artistas (Edwin Agudelo y Co.)
   const artist = await prisma.artistProfile.findUnique({
     where: { id: artistId },
-    select: { id: true, displayName: true, slug: true },
+    select: { id: true, displayName: true, stageName: true, slug: true },
   });
 
   if (artist) {
     isAuthorized = true;
     artistName = artist.displayName ?? "";
+    subject = {
+      id: artist.id,
+      slug: artist.slug,
+      name: artist.displayName ?? artist.stageName,
+      city: null,
+      province: null,
+      location: null,
+    };
 
     // FORENSIC STRIPE REVENUE SEAL: Edwin Agudelo Pricing Engine
     if (artist.slug === "edwin-agudelo" || artistName.toLowerCase().includes("edwin agudelo")) {
-      // Tarifa base y logística derivadas 1:1 del SSOT sellado (1,50 €/km + franquicia 50 km).
+      // Tarifa base y logística derivadas 1:1 del SSOT sellado (1,50 €/km).
+      // La franquicia (50 km) NO se fija aquí: la decide `resolveLogisticsOrigin`.
       costPerKm = COSTE_KM;
       baseFee = basePriceForFormat(sovereignFormat);
     }
@@ -141,7 +163,16 @@ export async function createEliteCheckout(input: EliteCheckoutInput) {
           { slug: artistId },
         ],
       },
-      select: { id: true, name: true, isVerified: true, roiGuaranteeScore: true },
+      select: {
+        id: true,
+        slug: true,
+        name: true,
+        isVerified: true,
+        roiGuaranteeScore: true,
+        city: true,
+        province: true,
+        location: true,
+      },
     });
 
     if (provider && provider.isVerified) {
@@ -149,6 +180,16 @@ export async function createEliteCheckout(input: EliteCheckoutInput) {
       artistName = provider.name ?? "";
       const roiScore: number = provider.roiGuaranteeScore ?? 0;
       baseFee = roiScore > 0 ? Math.round(roiScore * PROVIDER_SCORE_FEE_FACTOR_EUR) : PROVIDER_MIN_BASE_FEE_EUR;
+      // Base fiscal real del proveedor (Red Nacional). Sin base declarada, no
+      // hay franquicia posible: se factura desde el km 0 y se marca la incidencia.
+      subject = {
+        id: provider.id,
+        slug: provider.slug,
+        name: provider.name,
+        city: provider.city,
+        province: provider.province,
+        location: provider.location,
+      };
     }
   }
 
@@ -158,22 +199,50 @@ export async function createEliteCheckout(input: EliteCheckoutInput) {
     throw new Error("VETO ESTRATÉGICO ACTIVADO: Operación financiera no autorizada. Este perfil no cuenta con la verificación o suscripción Stripe Connect activa.");
   }
 
-  // 5. Geocodificación y cálculo de distancia en entorno seguro (Server-Side).
+  // 5. Resolución SERVER-SIDE de la base física facturable (multi-origen).
+  //    La franquicia de Méntrida NO se hereda: la dicta el sujeto que despacha.
+  let logisticsOrigin: LogisticsOrigin | null = null;
+  if (subject) {
+    try {
+      logisticsOrigin = resolveLogisticsOrigin(subject);
+    } catch (error) {
+      const reason: string = error instanceof LogisticsOriginError ? error.message : String(error);
+      logger.warn({
+        event: "LOGISTICS_ORIGIN_UNRESOLVED",
+        artistId,
+        reason,
+        detail: "Se factura sin franquicia (km 0) hasta que el perfil declare city/province/location.",
+        ip,
+      });
+    }
+  }
+
+  const franchiseKm: number = logisticsOrigin ? logisticsOrigin.franchiseKm : NETWORK_FRANCHISE_KM;
+  // Origen del Hub y base fiscal del proveedor vienen del SERVIDOR: el cliente
+  // no puede declarar un origen que le regale kilómetros de franquicia.
+  const originForPricing: GeoCoordinates | string = logisticsOrigin ? logisticsOrigin.coordinates : origin;
+  const originLabel: string = logisticsOrigin ? logisticsOrigin.label : origin;
+
+  // 5 bis. Geocodificación y cálculo de distancia en entorno seguro (Server-Side).
   //    El importe facturable NO se toma de aquí: nace del motor soberano (SSOT).
   const pricing = await calculateGeoPricing({
     artistId,
-    origin,
+    origin: originForPricing,
     destination,
     baseFee,
     costPerKm, // SSOT: 1,50 €/km (nunca una tarifa duplicada)
-    franchiseKm: KM_EXENTOS, // Franquicia canónica de 50 km desde el Hub Méntrida
+    franchiseKm, // Hub Méntrida: 50 km · Red Nacional: 0 km (sin herencia)
     depositMode: "fixed",
     depositValue: DEPOSITO_STRIPE, // Price-Lock inmutable (100 €), deducible del total
+    strictGeocoding: true, // Fail-closed: prohibido facturar sobre el fallback de Madrid
   });
 
   logger.info({
     event: "CHECKOUT_PRICING_CALCULATED",
     distanceKm: pricing.distanceKm,
+    billableKm: pricing.billableKm,
+    franchiseKm: pricing.franchiseKm,
+    logisticsOrigin: logisticsOrigin?.label ?? "UNRESOLVED",
     travelCost: pricing.travelCost,
     totalAmount: pricing.totalAmount,
     formation,
@@ -182,10 +251,12 @@ export async function createEliteCheckout(input: EliteCheckoutInput) {
   });
 
   // 6. FIRMADO CRIPTOGRÁFICO PRICE-LOCK SHA-256 (SSOT: verifyAndSignStripeSession)
+  //    La franquicia entra en la firma: Hub (50 km) y Red (0 km) no comparten hash.
   const sovereignInput: SovereignQuoteInput = {
     format: sovereignFormat,
     distanceKm: pricing.distanceKm,
     soundRider: 'standard',
+    franchiseKm: pricing.franchiseKm,
   };
   const sovereignQuote = calculateSovereignQuote(sovereignInput);
   const priceLock = verifyAndSignStripeSession({
@@ -203,6 +274,17 @@ export async function createEliteCheckout(input: EliteCheckoutInput) {
   const { stripeMetadata } = priceLock;
 
   // 6 bis. INVARIANTES DE CERO DIVERGENCIA (fail-closed: nada llega a Stripe si falla)
+  if (sovereignQuote.logistics.franchiseKm !== pricing.franchiseKm) {
+    logger.error({
+      event: "ENGINE_DIVERGENCE_FRANCHISE",
+      geoFranchiseKm: pricing.franchiseKm,
+      sovereignFranchiseKm: sovereignQuote.logistics.franchiseKm,
+      artistId,
+      ip,
+    });
+    throw new Error("PRICE_LOCK_REJECTED: ENGINE_DIVERGENCE. La franquicia del motor geográfico y la del motor soberano no coinciden (Hub 50 km / Red 0 km).");
+  }
+
   const distanceDriftKm: number = Math.abs(pricing.distanceKm - sovereignQuote.logistics.distanceKm);
   if (distanceDriftKm > DISTANCE_DRIFT_TOLERANCE_KM) {
     logger.error({ event: "ENGINE_DIVERGENCE_DISTANCE", distanceDriftKm, artistId, ip });
@@ -232,7 +314,7 @@ export async function createEliteCheckout(input: EliteCheckoutInput) {
           currency: "eur",
           product_data: {
             name: `Reserva Roster Oficial Elite - ${artistName}`,
-            description: `Actuación oficial programada para el ${eventDate}. Trayecto: ${origin} -> ${destination} (${pricing.distanceKm} km)`,
+            description: `Actuación oficial programada para el ${eventDate}. Base: ${originLabel} -> ${destination} (${pricing.distanceKm} km · franquicia ${pricing.franchiseKm} km)`,
           },
           unit_amount: Math.round(stripeMetadata.totalBudget * 100), // Stripe procesa en céntimos
         },
@@ -243,9 +325,13 @@ export async function createEliteCheckout(input: EliteCheckoutInput) {
       artistId: artistId,
       clientId: resolvedClientId || "GUEST",
       calculatedDistance: String(pricing.distanceKm),
+      billableDistance: String(pricing.billableKm),
+      franchiseKm: String(pricing.franchiseKm),
+      logisticsOrigin: logisticsOrigin?.kind ?? "UNRESOLVED",
+      logisticsOriginLabel: originLabel,
       totalAmount: String(stripeMetadata.totalBudget),
       eventDate: eventDate,
-      origin: origin,
+      origin: originLabel,
       destination: destination,
       priceLockHash: stripeMetadata.priceLockHash,
       artistSplit: String(stripeMetadata.artistSplit),
@@ -266,6 +352,9 @@ export async function createEliteCheckout(input: EliteCheckoutInput) {
     url: session.url,
     totalAmount: stripeMetadata.totalBudget,
     distanceKm: pricing.distanceKm,
+    billableKm: pricing.billableKm,
+    franchiseKm: pricing.franchiseKm,
+    logisticsOrigin: logisticsOrigin?.kind ?? "UNRESOLVED",
     priceLockHash: stripeMetadata.priceLockHash,
     depositAmount: stripeMetadata.depositAmount,
   };

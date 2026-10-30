@@ -56,11 +56,44 @@
     --glow-ear-coral: 0 0 20px rgba(255, 43, 68, 0.35);
     --glow-ear-red: 0 0 25px rgba(255, 43, 68, 0.4);
 
-    /* 🖋️ TIPOGRAFÍA SOBERANA S-CLASS: MONTSERRAT (BODY GLOBAL) + SYNE (DISPLAY TITLES) */
-    --font-montserrat: var(--font-montserrat), 'Montserrat', sans-serif;
-    --font-inter: var(--font-montserrat), 'Montserrat', sans-serif;
-    --font-sans: var(--font-montserrat), 'Montserrat', sans-serif;
-    --font-syne: var(--font-syne), 'Syne', sans-serif;
+    /* 🖋️ TIPOGRAFÍA SOBERANA S-CLASS: MONTSERRAT (BODY GLOBAL) + SYNE (DISPLAY TITLES)
+     *
+     * ⚠️ CICLO DE AUTO-REFERENCIA (defecto corregido 2026-10-30):
+     * antes se declaraba `--font-syne: var(--font-syne), 'Syne', sans-serif`, es decir,
+     * la propiedad se referenciaba a sí misma → valor inválido en tiempo de cómputo →
+     * el navegador rompía la declaración y el texto caía al serif del UA (Times New
+     * Roman). Que se viera bien o mal dependía del orden de inyección de los chunks CSS
+     * frente a la clase `next/font` del <html>. Es el "token de fuente muerto" que
+     * detecta V07 SERIF_FALLBACK en scripts/visual_prototype_audit.cjs.
+     *
+     * Regla nueva: next/font expone sus variables como `--font-src-*` (src/app/layout.tsx)
+     * y aquí solo se hace de ALIAS con fallback explícito. Nunca se referencia el mismo
+     * nombre que se define.
+     */
+    --font-montserrat: var(--font-src-montserrat, 'Montserrat'), 'Montserrat', ui-sans-serif, system-ui, sans-serif;
+    --font-inter: var(--font-src-inter, 'Inter'), 'Inter', ui-sans-serif, system-ui, sans-serif;
+    --font-sans: var(--font-src-montserrat, 'Montserrat'), 'Montserrat', ui-sans-serif, system-ui, sans-serif;
+    --font-syne: var(--font-src-syne, 'Syne'), 'Syne', ui-sans-serif, system-ui, sans-serif;
+    --font-mono: var(--font-jetbrains-mono, 'JetBrains Mono'), 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+    /* 🖋️ FAMILIA EDITORIAL (Fraunces) — token que faltaba (defecto N-1, 2026-10-30)
+     *
+     * `tailwind.config.cjs:141-143` (francia / fraunces / serif) y las clases
+     * `.font-francia` / `.heading-sclass-center` (globals.css:342-351) ya consumían
+     * `var(--font-fraunces)` / `var(--font-francia)`, pero NINGUNO de los dos estaba
+     * definido: `var()` sin fallback sobre una custom property inexistente es inválido
+     * en tiempo de cómputo → el navegador descarta la declaración → el titular se
+     * pintaba con la Montserrat heredada de `body`, en silencio y sin error.
+     *
+     * Se define un ÚNICO origen (`--font-fraunces`) y `--font-francia` queda como
+     * alias, para que no vuelvan a divergir dos nombres del mismo concepto.
+     * Si `next/font` algún día monta Fraunces, basta con exponer `--font-src-fraunces`
+     * en el layout: aquí no hay que tocar nada (nunca se referencia a sí mismo).
+     * Fallback declarado a propósito: Georgia → Times New Roman → serif. Así la
+     * intención editorial sobrevive aunque el webfont no esté descargado.
+     */
+    --font-fraunces: var(--font-src-fraunces, 'Fraunces'), Georgia, 'Times New Roman', serif;
+    --font-francia: var(--font-fraunces);
   }
 
   .light,

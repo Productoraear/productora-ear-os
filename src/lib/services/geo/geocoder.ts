@@ -98,19 +98,27 @@ function normalizeQuery(query: string): string {
     .trim();
 }
 
+/** Kilómetro Cero de la Península: SOLO como último recurso de la API tolerante. */
+const MADRID_FALLBACK: { latitude: number; longitude: number } = {
+  latitude: 40.416775,
+  longitude: -3.703790,
+};
+
 /**
- * Geocodifica una dirección o ubicación de texto libre.
- * Si detecta coordenadas en formato "lat,lng" o similar, las parsea directamente.
+ * 🎯 GEOCODIFICACIÓN ESTRICTA (FAIL-CLOSED)
+ * Devuelve `null` si la ubicación no es identificable en la matriz canónica.
+ *
+ * Motivo doctrinal (AF-5, prohibido el "verde por defecto"): atribuir Madrid a
+ * una dirección desconocida convierte un presupuesto en una factura falsa
+ * (error de hasta 600 km). Todo motor que facture kilometraje DEBE usar esta
+ * función, nunca `geocodeAddress`.
  */
-export async function geocodeAddress(address: string): Promise<{ latitude: number; longitude: number }> {
-  if (!address || !address.trim()) {
-    // Default fallback: Madrid (KM 0 de España)
-    return { latitude: 40.416775, longitude: -3.703790 };
-  }
+export function geocodeAddressSync(address: string): { latitude: number; longitude: number } | null {
+  if (!address || !address.trim()) return null;
 
   const normalized = normalizeQuery(address);
 
-  // 1. Verificar si contiene coordenadas explícitas e.g. "40.416,-3.703"
+  // 1. Coordenadas explícitas e.g. "40.416,-3.703"
   const geoRegex = /(-?\d+\.\d+)\s*,\s*(-?\d+\.\d+)/;
   const match = address.match(geoRegex);
   if (match) {
@@ -121,14 +129,14 @@ export async function geocodeAddress(address: string): Promise<{ latitude: numbe
     }
   }
 
-  // 2. Buscar en la matriz provincial estática
+  // 2. Matriz provincial estática (coincidencia por subcadena normalizada)
   for (const key of Object.keys(PROVINCES_MAP)) {
     if (normalized.includes(key)) {
       return PROVINCES_MAP[key];
     }
   }
 
-  // 3. Fallback inteligente: buscar palabras individuales
+  // 3. Coincidencia por palabra individual
   const words = address.toLowerCase().split(/[\s,]+/);
   for (const word of words) {
     const normWord = normalizeQuery(word);
@@ -137,6 +145,18 @@ export async function geocodeAddress(address: string): Promise<{ latitude: numbe
     }
   }
 
-  // Fallback definitivo: Kilómetro Cero de la Península
-  return { latitude: 40.416775, longitude: -3.703790 };
+  return null;
+}
+
+/**
+ * Geocodificación tolerante (compatibilidad histórica).
+ * Si detecta coordenadas en formato "lat,lng" o similar, las parsea directamente.
+ *
+ * ⚠️ NO usar en la ruta de dinero: cae a Madrid cuando no reconoce la
+ * dirección. Para facturación usar `geocodeAddressSync` + rechazo explícito.
+ */
+export async function geocodeAddress(address: string): Promise<{ latitude: number; longitude: number }> {
+  const strict = geocodeAddressSync(address);
+  if (strict) return strict;
+  return { ...MADRID_FALLBACK };
 }
