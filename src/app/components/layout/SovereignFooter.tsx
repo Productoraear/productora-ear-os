@@ -44,6 +44,7 @@ export default function SovereignFooter() {
             <Link href="/aviso-legal" className="hover:text-white transition-colors">Aviso Legal</Link>
             <Link href="/privacidad" className="hover:text-white transition-colors">Privacidad</Link>
             <Link href="/cookies" className="hover:text-white transition-colors">Cookies</Link>
+            <Link href="/confianza" className="hover:text-white transition-colors">Registro de Pruebas</Link>
             <Link href="/calculadora" className="text-[#ecb613] hover:underline font-bold">Cotizador</Link>
             <a href="tel:+34693693048" className="text-zinc-400 hover:text-white">+34 693 693 048</a>
           </div>
@@ -295,6 +296,7 @@ function SovereignFooterContent() {
             <Link href="/aviso-legal" className="text-zinc-300 hover:text-white transition-colors">Aviso Legal</Link>
             <Link href="/privacidad" className="text-zinc-300 hover:text-white transition-colors">Privacidad</Link>
             <Link href="/cookies" className="text-zinc-300 hover:text-white transition-colors">Cookies</Link>
+            <Link href="/confianza" className="text-zinc-300 hover:text-white transition-colors">Registro Público de Pruebas (/confianza)</Link>
             <Link href="/calculadora" className="text-[#ecb613] hover:underline font-bold">Cotizador en Tiempo Real</Link>
           </div>
         </div>

@@ -12,6 +12,10 @@
  *   4. Alguna fila `VERIFICADO` fue degradada por quíntupla incompleta (EP-1).
  *   5. El ledger tiene anomalías de formato, no se puede leer o está vacío:
  *      un registro vacío no prueba nada y no puede pasar por verde (AF-5).
+ *   6. La página no es alcanzable desde el sitio: `SovereignFooter` debe enlazar
+ *      `/confianza` en sus DOS variantes (funnel limpio y footer completo).
+ *   7. La ruta no puede retirarse en < 10 min: `next.config.ts` debe declarar
+ *      `source: "/confianza"` con `Cache-Control` acotado (JUR-5).
  *
  * Uso:
  *   node ./node_modules/tsx/dist/cli.mjs scripts/verify_trust_ledger.ts
@@ -29,6 +33,10 @@ const ROOT = process.cwd();
 const PAGE_RELATIVE_PATH = 'src/app/(public)/confianza/page.tsx';
 const SITEMAP_RELATIVE_PATH = 'src/app/sitemap.ts';
 const EXPECTED_ROUTE = '/confianza';
+const FOOTER_RELATIVE_PATH = 'src/app/components/layout/SovereignFooter.tsx';
+const NEXT_CONFIG_RELATIVE_PATH = 'next.config.ts';
+const FOOTER_HREF = 'href="/confianza"';
+const CACHE_HEADER_TOKEN = 's-maxage=300';
 
 const jsonMode = process.argv.includes('--json');
 
@@ -67,6 +75,21 @@ function main(): void {
   checks.push(sitemap !== null && sitemap.includes(EXPECTED_ROUTE)
     ? { id: 'SITEMAP', ok: true, detail: `${EXPECTED_ROUTE} publicada en sitemap.ts` }
     : { id: 'SITEMAP', ok: false, detail: `${EXPECTED_ROUTE} no aparece en ${SITEMAP_RELATIVE_PATH}` });
+
+  const footer = readRelative(FOOTER_RELATIVE_PATH);
+  const footerLinks = footer === null ? 0 : footer.split(FOOTER_HREF).length - 1;
+  checks.push(footer === null
+    ? { id: 'FOOTER_LINK', ok: false, detail: `No existe ${FOOTER_RELATIVE_PATH}` }
+    : footerLinks >= 2
+      ? { id: 'FOOTER_LINK', ok: true, detail: `${footerLinks} enlaces a ${EXPECTED_ROUTE} (funnel limpio + footer completo)` }
+      : { id: 'FOOTER_LINK', ok: false, detail: `Solo ${footerLinks} enlace(s) a ${EXPECTED_ROUTE}: una de las dos variantes del footer queda huérfana` });
+
+  const nextConfig = readRelative(NEXT_CONFIG_RELATIVE_PATH);
+  const declaresSource = nextConfig !== null && new RegExp(`source:\\s*["']${EXPECTED_ROUTE}["']`).test(nextConfig);
+  const declaresCache = nextConfig !== null && nextConfig.includes(CACHE_HEADER_TOKEN);
+  checks.push(declaresSource && declaresCache
+    ? { id: 'CACHE_HEADER', ok: true, detail: `${EXPECTED_ROUTE} declara ${CACHE_HEADER_TOKEN} (declarativo: G-6 debe confirmarlo en producción)` }
+    : { id: 'CACHE_HEADER', ok: false, detail: `Falta la regla de ${EXPECTED_ROUTE} en ${NEXT_CONFIG_RELATIVE_PATH} (source=${declaresSource} · ${CACHE_HEADER_TOKEN}=${declaresCache})` });
 
   const ledger = readEvidenceLedger(ROOT);
 

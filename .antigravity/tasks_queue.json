@@ -4,28 +4,11 @@
     "doctrine": "WAVE 42 (SANCIONADA POR EL CEO): 1) Higiene de repo Git (purga de objetos huérfanos y LFS sin tocar HEAD). 2) Cierre de la Superficie de Verdad /confianza (enlace en footer, Cache-Control < 10 min, auditor WCAG honesto). 3) Motor pSEO de Intención 70/30 (70% Transaccional + 30% Informacional) con distancia Haversine/carretera real para los 255 nodos municipales. 4) Cero Doorway: bancos ortogonales de respuesta a intención que bajan Jaccard 5-gram y Coseno TF-IDF a <= 0,10 verificados por máquina. 5) Índice de Sitemap Real con validador determinista.",
     "wave": 42,
     "total_tasks": 7,
-    "total_pending": 6,
-    "last_updated": "2026-10-30T12:59:04.902Z"
+    "total_pending": 5,
+    "last_updated": "2026-10-30T15:55:51.861Z"
   },
   "_instructions_for_worker": "Ejecuta SOLO via: node .antigravity/omega.js next -> lee .antigravity/MISSION_ACTIVE.json -> edita SOLO 'files' -> ejecuta 'test' -> node .antigravity/omega.js complete <ID>. 1 tarea por sesion.",
   "tasks": [
-    {
-      "id": "W42_T02_CONFIANZA_WIRING_AND_CONTRAST_HONESTY",
-      "title": "U13 + Hallazgos 6, 7 y 8 · Enlace público a /confianza en Footer, Cache-Control < 10 min (JUR-5) y guardia fail-closed en audit:contrast",
-      "priority": "P0",
-      "files": [
-        "src/app/components/layout/SovereignFooter.tsx",
-        "next.config.ts",
-        "scripts/audit_wcag_contrast_live.cjs",
-        "scripts/verify_trust_ledger.ts"
-      ],
-      "action": "Cerrar los Hallazgos 6, 7 y 8 del reporte U13: 1) Enlazar `/confianza` en ambas variantes de `SovereignFooter.tsx` (funnel limpio y footer completo) para que la Superficie de Verdad sea clicable desde todo el sitio. 2) Añadir cabecera `Cache-Control: public, max-age=0, s-maxage=300, stale-while-revalidate=60` para `/confianza` en `next.config.ts` (cumpliendo JUR-5: retirada < 10 min). 3) Blindar `scripts/audit_wcag_contrast_live.cjs` para que NUNCA devuelva Exit 0 si `scanned === 0` o hay conexión rechazada (auto-arrancando `.next/standalone/server.js` en un puerto libre si el servidor objetivo no responde). 4) Ampliar `scripts/verify_trust_ledger.ts` con los checks `FOOTER_LINK` y `CACHE_HEADER`.",
-      "scaffold": "1. En `src/app/components/layout/SovereignFooter.tsx`:\n   - En la barra inferior de `isCleanFunnel` (junto a Aviso Legal / Privacidad / Cookies) añadir:\n     `<Link href=\"/confianza\" className=\"hover:text-white transition-colors\">Registro de Pruebas</Link>`\n   - En `SovereignFooterContent` (pie inferior junto a Aviso Legal / Privacidad / Cookies) añadir:\n     `<Link href=\"/confianza\" className=\"text-zinc-300 hover:text-white transition-colors\">Registro Público de Pruebas (/confianza)</Link>`\n\n2. En `next.config.ts` dentro de `async headers()`:\n   - Añadir antes o después de `/:path*` una regla específica para `source: \"/confianza\"` con:\n     `{ key: \"Cache-Control\", value: \"public, max-age=0, s-maxage=300, stale-while-revalidate=60\" }`\n\n3. En `scripts/audit_wcag_contrast_live.cjs`:\n   - Antes de abrir Puppeteer, hacer una sonda HTTP rápida a `BASE`. Si `BASE` no responde y existe `.next/standalone/server.js`, spawnear un subproceso `node .next/standalone/server.js` con `PORT` en el puerto de `BASE` (o 3999 reajustando `BASE`), esperando hasta que responda 200 (timeout 15s) y matándolo en el `finally`.\n   - Al final del bucle de rutas: contabilizar `routesWithZeroScan = Object.values(report.routes).filter(r => r.scanned === 0 || r.status === 0).length`.\n   - Si `routesWithZeroScan > 0`: imprimir `SIN_EVIDENCIA: ${routesWithZeroScan} ruta(s) con 0 elementos medidos (AF-5 prohíbe verde sin medir)` y forzar `process.exitCode = 1`.\n\n4. En `scripts/verify_trust_ledger.ts`:\n   - Añadir check `FOOTER_LINK`: lee `src/app/components/layout/SovereignFooter.tsx` y verifica que contiene `href=\"/confianza\"`.\n   - Añadir check `CACHE_HEADER`: lee `next.config.ts` y verifica que declara `source: \"/confianza\"` (o `'/confianza'`) y `s-maxage=300`.",
-      "done_when": "`verify_trust_ledger.ts` valida `FOOTER_LINK` y `CACHE_HEADER` en verde; `audit_wcag_contrast_live.cjs` falla con Exit 1 si no puede escanear elementos (cero falsos verdes AF-5); `tsc --noEmit` y `eslint` Exit 0.",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node ./node_modules/eslint/bin/eslint.js src/app/components/layout/SovereignFooter.tsx next.config.ts scripts/verify_trust_ledger.ts",
-      "status": "QUEUED",
-      "created_at": "2026-10-30T12:48:00.000Z"
-    },
     {
       "id": "W42_T03_PSEO_DATASET_REAL_DISTANCES_255",
       "title": "F1 · Datos reales antes que URLs: 100% de distancias en MUNICIPALITIES_DATASET (255/255) y sincronización con MUNICIPALITIES_DATABASE",
@@ -109,6 +92,13 @@
   ],
   "completed": [
     {
+      "id": "W42_T02_CONFIANZA_WIRING_AND_CONTRAST_HONESTY",
+      "title": "U13 + Hallazgos 6, 7 y 8 · Enlace público a /confianza en Footer, Cache-Control < 10 min (JUR-5) y guardia fail-closed en audit:contrast",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-10-30T15:55:51.860Z"
+    },
+    {
       "id": "W42_T01_GIT_PACK_AND_LFS_HYGIENE",
       "title": "F0 · Higiene sancionada de Git: purga de objetos inalcanzables (~1,9 GB), limpieza de restos LFS huérfanos y auditor de salud de empaquetado",
       "status": "COMPLETED",
@@ -124,8 +114,8 @@
     }
   ],
   "metadata": {
-    "last_updated": "2026-10-30T12:59:04.902Z",
-    "total_pending": 6,
+    "last_updated": "2026-10-30T15:55:51.861Z",
+    "total_pending": 5,
     "current_sprint": "WAVE_42_PSEO_DIAMOND_INTENT_ENGINE",
     "ceo_mandate": "Cero excusas de contenido repetitivo: máximo 10% de repetición (Jaccard 5-gram <= 0,10) combinando 70% de respuesta a intención transaccional (precios SSOT, logística real por municipio, Price-Lock 100€) y mínimo 30% de intención informacional (acústica Ley 37/2003, 12 W/pax, logística comarcal). Sancionada la higiene de Git (Hallazgo 9) y el despliegue de /confianza + fix AF-1."
   }

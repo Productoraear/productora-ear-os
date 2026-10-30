@@ -71,6 +71,21 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
+        // U13 · Superficie de Verdad Pública (`/confianza`).
+        // JUR-5 exige poder retirar un claim en < 10 minutos. max-age=0 evita
+        // que el navegador congele el registro; s-maxage=300 + stale-while-
+        // revalidate=60 acotan a 5 min la ventana de una CDN intermedia.
+        // Se declara ANTES de "/:path*" para que su Cache-Control prevalezca
+        // (Next.js resuelve por primera regla que define la misma cabecera).
+        source: "/confianza",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=0, s-maxage=300, stale-while-revalidate=60",
+          },
+        ],
+      },
+      {
         source: "/:path*",
         headers: [
           {
