@@ -935,3 +935,50 @@ Tarea `W42_OUTREACH_ACK_01` completada y sellada con Exit Code 0 (sello condicio
 
 
 
+
+---
+
+## W46_T01_P0_MOBILE_VOICE_UNLOCK — Desbloqueo de audio en gesto + watchdog real + verificador ejecutable
+
+**FECHA**: 2026-10-30 · **HEAD de partida**: `71cba0789` (== `origin/main`, árbol limpio)
+**DISPARADOR**: queja directa del CEO — el asistente no suena en su móvil (iOS/Android).
+
+**HECHO_VERIFICADO**: el commit `71cba0789` saneó el copy correctamente, pero su "heartbeat continuo" era **código muerto** (`if (synth.paused) synth.resume()` ejecutado síncronamente justo después de `speak()`, con `paused === false`). Además `speak()` hacía `await fetch('/api/voice/synthesize')` **antes** de `new Audio().play()`, por lo que iOS Safari y Chrome Android descartaban la reproducción por política de autoplay. Sin watchdog, un `onend` ausente congelaba la conversación. Correcciones:
+- `src/lib/voice/naturalVoice.ts`: `primeSpeechSynthesis()` (locución de activación volume 0), `waitForVoices()` (`onvoiceschanged` + sondeo 150 ms, techo 1200 ms), `speakSentence()` con `UTTERANCE_START_GUARD_MS=2500`, latido real `SPEECH_HEARTBEAT_MS=600` y techo duro `max(6000, len×110 ms)` que **no trunca** voz activa.
+- `src/components/agents/OmniAgentConsoleModal.tsx`: `buildSilentWavUrl()` (WAV PCM generado en código, sin base64 ni binarios), `primeMobileAudio()` síncrono en `sendMessage()` (Enter / 4 chips / botón enviar), en el botón 🔊 de cada mensaje y en `toggleMic()` (el dictado termina en `onend` → fuera del gesto); audio cloud reutiliza el elemento ya desbloqueado; guardia de arranque + telemetría honesta `browser-blocked` en `fallbackToBrowser`.
+- `src/components/chat/AIConciergeDock.tsx`: prime dentro del `onClick`.
+- `scripts/verify_voice_watchdog.ts` (nuevo, 5 casos hostiles) + `package.json` (`verify:voice`, y añadido a `gate:prepush`) + `eslint.config.mjs` (bloque real para `scripts/**/*.ts`; antes `eslint --no-ignore` devolvía "File ignored because no matching configuration", falso verde).
+
+**RETO_ESPEJO**: el informe previo cerraba con "heartbeat continuo" sin comando que lo probara. Criterio más duro impuesto: **ningún blindaje de voz se firma sin simulador de motores hostiles**. Comando: `npm run verify:voice` (SILENT_START / NO_END / NORMAL / PAUSED_MID / PRIME) → Exit 0 exige 5/5.
+
+**HIPÓTESIS**: (1) la política de autoplay de WebKit se satisface con `play()` de un WAV silencioso en el mismo tick del gesto; (2) el permiso de audio sobrevive en el elemento durante la sesión de página; (3) `onvoiceschanged` llega tarde en WebKit y exige sondeo. Frágil: (1) y (2) dependen de la versión de iOS; **no hay dispositivo real en este entorno** → audibilidad final SOSPECHOSA hasta prueba humana.
+
+**DECISIÓN**: descarté mantener el elemento primario separado del de reproducción (dos `Audio`) porque el desbloqueo es por elemento y multiplicaba fallos; en su lugar, una marca `data-ear-primer` impide reanudar el elemento cuando ya porta locución real (evita soltar un fragmento del mensaje anterior a volumen 1). Descarté también truncar por techo duro cuando `synth.speaking` es verdadero: el techo existe para cuelgues, no para cortar frases.
+
+**RIESGOS (premortem)**: si un navegador ignora el WAV silencioso, el `play()` de la respuesta se descarta otra vez y el usuario vuelve a oír silencio; se detecta antes que el cliente porque el modal pinta `browser-blocked` en su cabecera y `speakNatural` deja de colgarse (turno liberado a los 2,5 s en vez de congelar el chat).
+
+**CAMBIOS**:
+- `src/lib/voice/naturalVoice.ts`
+- `src/components/agents/OmniAgentConsoleModal.tsx`
+- `src/components/chat/AIConciergeDock.tsx`
+- `scripts/verify_voice_watchdog.ts` (nuevo)
+- `package.json` (`verify:voice`, `gate:prepush`)
+- `eslint.config.mjs` (cobertura `scripts/**/*.ts`)
+- `.antigravity/reports/W46_MOBILE_VOICE_HARDENING_EVIDENCE.md` (nuevo · evidencia máquina)
+- `CLINE_EXECUTION_LOG.md` (este anexo)
+
+**VALIDACIONES (Exit Code real, visto en disco)**:
+- `node ./node_modules/tsx/dist/cli.mjs scripts/verify_voice_watchdog.ts` → **Exit 0** · **5/5 [OK]** (A 2644 ms cancel=2 · B 6146 ms cancel=1 · C 3 frases · D resume=1 paused=false · E sin motor no lanza)
+- `node ./node_modules/typescript/bin/tsc --noEmit` → **Exit 0**
+- `eslint src/lib/voice/naturalVoice.ts src/components/agents/OmniAgentConsoleModal.tsx src/components/chat/AIConciergeDock.tsx --max-warnings=0` → **Exit 0**
+- `eslint --no-ignore --max-warnings=0 scripts/verify_voice_watchdog.ts` → **Exit 0** (con reglas reales tras cerrar el hueco de config)
+- `npm run lint` (todo `src/`) → **Exit 0** · 3252 warnings preexistentes · **0 errores**
+- `node scripts/audit_ci_gate_wiring.cjs` → **Exit 0** · 4 jobs · 2 gates bloqueantes · 0 fugas
+- `node scripts/audit_admin_control_forensics.cjs --strict` → **Exit 0** · 0 fachadas
+
+**Ω-DIAMANTE: 6/20 (bloque P0-UX/dinero indirecto)**. ✅ 1 tsc · ✅ 2 eslint · ✅ 3 cero `any` (verificado en diff) · ✅ 6 cero precios hardcodeados (no toca SSOT) · ✅ 7 cero TODO · ✅ 8 cero secretos cliente. ❌ 4/5 n/a (no hay teléfonos ni handlers nuevos de venta) · ❌ 9,10,11,12,13,14,15,19,20 **SIN EVIDENCIA MÁQUINA** (Lighthouse, CWV p75, WCAG AAA, Rich Results, ISO/CISQ, idempotencia Stripe, DLQ n8n). No se firma 20/20.
+
+**ESTADO_BLOQUE: SOSPECHOSO (por diseño honesto)** — la lógica está verificada por simulador determinista y compila/linta limpio, pero **la audibilidad en iOS/Android reales no es medible desde este entorno**. Promoción a VERIFICADO exige prueba en el iPhone del CEO con sonido audible y sin `browser-blocked` en cabecera.
+
+**SIGUIENTE_PASO**: prueba humana en el iPhone (abrir modal Omni, chip "depósito 100 €", confirmar voz) y, en paralelo, `W46_T02_P0_CRON_SECRET_INTAKE` — definir `CRON_SECRET` en Coolify y verificar `scripts/prod_smoke_intake.cjs --post` → HTTP 200 (sigue siendo el único rojo del CI que afecta a captación de dinero).
+

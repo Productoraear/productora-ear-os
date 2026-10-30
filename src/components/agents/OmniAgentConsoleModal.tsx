@@ -8,6 +8,7 @@ import {
   getVoiceById,
 } from '@/lib/voice/voiceRegistry';
 import { toConversationalSpeech } from '@/lib/voice/speechNormalizer';
+import { primeSpeechSynthesis } from '@/lib/voice/naturalVoice';
 
 interface ChatMessage {
   id: string;
@@ -137,6 +138,36 @@ function FormattedMessageContent({ text, isUser }: { text: string; isUser: boole
   );
 }
 
+/**
+ * Construye un WAV silencioso (50 ms, PCM 8 kHz) como object URL.
+ * Se usa para desbloquear el canal de audio en iOS/Android con `play()` dentro
+ * del gesto del usuario. Se genera aquí, sin base64 opaco ni binarios en el repo.
+ */
+function buildSilentWavUrl(): string {
+  const sampleRate = 8000;
+  const samples = Math.floor(sampleRate * 0.05);
+  const buffer = new ArrayBuffer(44 + samples);
+  const view = new DataView(buffer);
+  const writeAscii = (offset: number, text: string): void => {
+    for (let i = 0; i < text.length; i += 1) view.setUint8(offset + i, text.charCodeAt(i));
+  };
+  writeAscii(0, 'RIFF');
+  view.setUint32(4, 36 + samples, true);
+  writeAscii(8, 'WAVE');
+  writeAscii(12, 'fmt ');
+  view.setUint32(16, 16, true);
+  view.setUint16(20, 1, true);
+  view.setUint16(22, 1, true);
+  view.setUint32(24, sampleRate, true);
+  view.setUint32(28, sampleRate, true);
+  view.setUint16(32, 1, true);
+  view.setUint16(34, 8, true);
+  writeAscii(36, 'data');
+  view.setUint32(40, samples, true);
+  new Uint8Array(buffer, 44).fill(128);
+  return URL.createObjectURL(new Blob([buffer], { type: 'audio/wav' }));
+}
+
 export function OmniAgentConsoleModal(): React.JSX.Element | null {
   const [isListening, setIsListening] = React.useState<boolean>(false);
   const [speakReplies, setSpeakReplies] = React.useState<boolean>(true);
@@ -152,6 +183,8 @@ export function OmniAgentConsoleModal(): React.JSX.Element | null {
   const audioRef = React.useRef<HTMLAudioElement | null>(null);
   const audioUrlRef = React.useRef<string | null>(null);
   const synthAbortControllerRef = React.useRef<AbortController | null>(null);
+  /** Elemento <audio> ya desbloqueado por un gesto: iOS permite reutilizarlo. */
+  const primedAudioRef = React.useRef<HTMLAudioElement | null>(null);
   const recRef = React.useRef<SpeechRec | null>(null);
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const [inputMessage, setInputMessage] = React.useState<string>('');
@@ -320,6 +353,37 @@ export function OmniAgentConsoleModal(): React.JSX.Element | null {
     }
   }, [messages, isOpen]);
 
+  /**
+   * Desbloqueo móvil. DEBE llamarse de forma SÍNCRONA dentro del gesto del usuario:
+   * si `play()`/`speak()` llega después de un `await` (el fetch del TTS), iOS Safari
+   * y Chrome Android lo descartan en silencio y el agente parece mudo.
+   * Devuelve el elemento ya desbloqueado para reutilizarlo con el audio en la nube.
+   */
+  const primeMobileAudio = React.useCallback((): HTMLAudioElement | null => {
+    if (typeof window === 'undefined') return null;
+    primeSpeechSynthesis();
+    const existing = primedAudioRef.current;
+    if (existing) {
+      // El elemento ya está desbloqueado por un gesto previo (el permiso de audio
+      // sobrevive a toda la sesión de la página). SÓLO se reanuda si sigue llevando
+      // el WAV silencioso: si porta una locución real (audio en la nube), reanudarlo
+      // a ciegas soltaría un fragmento del mensaje anterior a todo volumen.
+      if (existing.paused && existing.dataset.earPrimer === '1') {
+        void existing.play().catch((): void => undefined);
+      }
+      return existing;
+    }
+    const silentUrl = buildSilentWavUrl();
+    const audio = new Audio(silentUrl);
+    audio.volume = 0;
+    audio.preload = 'auto';
+    audio.dataset.earPrimer = '1';
+    void audio.play().catch((): void => undefined);
+    primedAudioRef.current = audio;
+    window.setTimeout((): void => URL.revokeObjectURL(silentUrl), 2000);
+    return audio;
+  }, []);
+
   const stopAudio = React.useCallback((): void => {
     if (synthAbortControllerRef.current) {
       synthAbortControllerRef.current.abort();
@@ -368,6 +432,9 @@ export function OmniAgentConsoleModal(): React.JSX.Element | null {
       recRef.current?.stop();
       return;
     }
+    // El gesto del micrófono también desbloquea el audio: el dictado termina en
+    // `onend` → `sendMessage()`, que ya NO corre dentro de un gesto del usuario.
+    primeMobileAudio();
     const w = window as unknown as { SpeechRecognition?: SpeechRecCtor; webkitSpeechRecognition?: SpeechRecCtor };
     const Ctor = w.SpeechRecognition ?? w.webkitSpeechRecognition;
     if (!Ctor) {
@@ -424,21 +491,50 @@ export function OmniAgentConsoleModal(): React.JSX.Element | null {
       }
       u.rate = 1.0;
       u.pitch = 1.0;
+
+      let started = false;
+      let heartbeat: number | null = null;
+      const clearHeartbeat = (): void => {
+        if (heartbeat !== null) {
+          window.clearInterval(heartbeat);
+          heartbeat = null;
+        }
+      };
+
       u.onstart = () => {
+        started = true;
         setIsAudioLoading(false);
         setIsAudioPlaying(true);
         if (msgId) setCurrentlySpeakingMsgId(msgId);
+        // Latido real: reanuda el motor si el navegador móvil lo suspende a mitad de locución.
+        heartbeat = window.setInterval(() => {
+          if (window.speechSynthesis.paused) window.speechSynthesis.resume();
+        }, 600);
       };
       u.onend = () => {
+        clearHeartbeat();
         setIsAudioPlaying(false);
         setCurrentlySpeakingMsgId(null);
       };
       u.onerror = () => {
+        clearHeartbeat();
         setIsAudioLoading(false);
         setIsAudioPlaying(false);
         setCurrentlySpeakingMsgId(null);
       };
       window.speechSynthesis.speak(u);
+
+      // Guardia de arranque: si el motor no arranca (bloqueo por falta de gesto), se
+      // declara `browser-blocked` en la telemetría en vez de fingir que está sonando.
+      window.setTimeout(() => {
+        if (started) return;
+        clearHeartbeat();
+        window.speechSynthesis.cancel();
+        setIsAudioLoading(false);
+        setIsAudioPlaying(false);
+        setCurrentlySpeakingMsgId(null);
+        setLastPlaybackSource('browser-blocked');
+      }, 2500);
     },
     [selectedVoice]
   );
@@ -488,7 +584,12 @@ export function OmniAgentConsoleModal(): React.JSX.Element | null {
           const blob = await res.blob();
           const url = URL.createObjectURL(blob);
           audioUrlRef.current = url;
-          const audio = new Audio(url);
+          const audio: HTMLAudioElement = primedAudioRef.current ?? new Audio();
+          audio.src = url;
+          audio.volume = 1;
+          // El elemento deja de llevar el WAV silencioso: a partir de aquí NO debe
+          // reanudarse desde `primeMobileAudio` (sonaría el mensaje anterior).
+          delete audio.dataset.earPrimer;
           audioRef.current = audio;
 
           audio.onended = () => {
@@ -561,6 +662,10 @@ function detectActiveDOMContext(): { name?: string; type?: string } | undefined 
   const sendMessage = async (customText?: string): Promise<void> => {
     const textToSend = customText ?? inputMessage;
     if (!textToSend.trim() || isSending) return;
+
+    // Desbloqueo de audio en el mismo tick del gesto (chip, Enter o botón enviar).
+    // Sin esto, el `play()`/`speak()` que llega tras el fetch del agente es silenciado por iOS.
+    primeMobileAudio();
 
     const userMsg: ChatMessage = {
       id: `user-${Date.now()}`,
@@ -843,6 +948,7 @@ function detectActiveDOMContext(): { name?: string; type?: string } | undefined 
                         if (isAudioPlaying && currentlySpeakingMsgId === m.id) {
                           stopAudio();
                         } else {
+                          primeMobileAudio();
                           void speak(m.text, m.agentUsed, m.id);
                         }
                       }}

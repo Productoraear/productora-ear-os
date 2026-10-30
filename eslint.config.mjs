@@ -44,4 +44,31 @@ export default [
       "no-undef": "off", // TypeScript handles this
     },
   },
+
+  // Verificadores ejecutables en TypeScript (scripts/**.ts). El bloque global de
+  // `ignores` mantiene `scripts/**` fuera de `npm run lint`; esta configuración
+  // existe para que `eslint --no-ignore scripts/**.ts` tenga reglas reales y no
+  // devuelva el falso verde "File ignored because no matching configuration".
+  {
+    files: ["scripts/**/*.ts"],
+    languageOptions: {
+      parser: tsparser,
+      parserOptions: {
+        ecmaVersion: "latest",
+        sourceType: "module",
+      },
+    },
+    linterOptions: {
+      reportUnusedDisableDirectives: "off",
+    },
+    plugins: {
+      "@typescript-eslint": tseslint,
+    },
+    rules: {
+      "@typescript-eslint/no-unused-vars": "error",
+      "@typescript-eslint/no-explicit-any": "error",
+      "prefer-const": "warn",
+      "no-undef": "off",
+    },
+  },
 ];

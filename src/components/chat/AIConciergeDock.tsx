@@ -24,6 +24,7 @@ import {
   speakNatural,
   stopSpeaking,
   isSpeechSupported,
+  primeSpeechSynthesis,
   listenOnce,
   isListeningSupported,
 } from '@/lib/voice/naturalVoice';
@@ -199,6 +200,8 @@ export function AIConciergeDock() {
       return;
     }
     stopSpeaking();
+    // Desbloqueo del motor de voz dentro del gesto (iOS/Android silencian si llega tras un await).
+    primeSpeechSynthesis();
     setActiveSpeakingId(msgId);
     try {
       await speakNatural(text);

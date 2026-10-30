@@ -45,64 +45,146 @@ export function stopSpeaking(): void {
   if (isSpeechSupported()) window.speechSynthesis.cancel();
 }
 
+/** Presupuesto máximo de arranque de una frase: si el motor no arranca, se suelta. */
+const UTTERANCE_START_GUARD_MS = 2500;
+/** Suelo del techo por frase: un `onend` perdido JAMÁS puede colgar la locución. */
+const UTTERANCE_MIN_BUDGET_MS = 6000;
+/** Margen por carácter para frases largas (~1,3× la velocidad real de locución). */
+const UTTERANCE_PER_CHAR_MS = 110;
+/** Latido real: reanuda el motor móvil cuando el navegador lo suspende. */
+const SPEECH_HEARTBEAT_MS = 600;
+/** Ventana de espera para que Safari/WebKit móvil pueble `getVoices()`. */
+const VOICES_WAIT_MS = 1200;
+
+/**
+ * Desbloquea el motor de voz DENTRO del gesto del usuario.
+ * iOS Safari y Chrome Android ignoran `speak()` si la primera llamada llega fuera
+ * de una activación de usuario (p. ej. después de un `await fetch`). Invocar en el `onClick`.
+ */
+export function primeSpeechSynthesis(): void {
+  if (!isSpeechSupported()) return;
+  const synth: SpeechSynthesis = window.speechSynthesis;
+  try {
+    const primer = new SpeechSynthesisUtterance(' ');
+    primer.volume = 0;
+    primer.lang = 'es-ES';
+    synth.speak(primer);
+  } catch {
+    /* Entornos sin motor real: no es bloqueante, `speakNatural` sigue su curso. */
+  }
+  if (synth.paused) synth.resume();
+}
+
+/** Espera a que el navegador publique las voces (en iOS llegan tarde o nunca). */
+async function waitForVoices(synth: SpeechSynthesis): Promise<SpeechSynthesisVoice[]> {
+  const immediate: SpeechSynthesisVoice[] = synth.getVoices();
+  if (immediate.length > 0) return immediate;
+
+  await new Promise<void>((resolve): void => {
+    let done = false;
+    let polling: ReturnType<typeof setInterval> | null = null;
+    let deadline: ReturnType<typeof setTimeout> | null = null;
+
+    function finish(): void {
+      if (done) return;
+      done = true;
+      if (polling) clearInterval(polling);
+      if (deadline) clearTimeout(deadline);
+      if (synth.onvoiceschanged === onVoices) synth.onvoiceschanged = null;
+      resolve();
+    }
+    function onVoices(): void {
+      finish();
+    }
+
+    synth.onvoiceschanged = onVoices;
+    polling = setInterval((): void => {
+      if (synth.getVoices().length > 0) finish();
+    }, 150);
+    deadline = setTimeout(finish, VOICES_WAIT_MS);
+  });
+
+  return synth.getVoices();
+}
+
+/**
+ * Locuta una frase con tres guardias: arranque, latido y techo duro.
+ * Sin ellas, un `onend` que no llega (iOS deja el motor en pausa) cuelga la promesa
+ * para siempre y el asistente se queda mudo sin recuperarse.
+ */
+function speakSentence(
+  synth: SpeechSynthesis,
+  sentence: string,
+  voice: SpeechSynthesisVoice | null
+): Promise<void> {
+  return new Promise<void>((resolve): void => {
+    const utterance = new SpeechSynthesisUtterance(sentence);
+    utterance.lang = 'es-ES';
+    if (voice) utterance.voice = voice;
+    const isQuestion: boolean = sentence.endsWith('?');
+    utterance.rate = Math.min(1.1, Math.max(0.9, jitter(0.98, 0.04)));
+    utterance.pitch = Math.min(1.2, Math.max(0.9, jitter(isQuestion ? 1.08 : 1.0, 0.04)));
+
+    let settled = false;
+    let started = false;
+    let heartbeat: ReturnType<typeof setInterval> | null = null;
+    let startGuard: ReturnType<typeof setTimeout> | null = null;
+    let hardCap: ReturnType<typeof setTimeout> | null = null;
+
+    const settle = (): void => {
+      if (settled) return;
+      settled = true;
+      if (heartbeat) clearInterval(heartbeat);
+      if (startGuard) clearTimeout(startGuard);
+      if (hardCap) clearTimeout(hardCap);
+      resolve();
+    };
+
+    utterance.onstart = (): void => {
+      started = true;
+      if (startGuard) {
+        clearTimeout(startGuard);
+        startGuard = null;
+      }
+    };
+    utterance.onend = (): void => settle();
+    utterance.onerror = (): void => settle();
+
+    synth.speak(utterance);
+
+    heartbeat = setInterval((): void => {
+      if (synth.paused) synth.resume();
+    }, SPEECH_HEARTBEAT_MS);
+
+    startGuard = setTimeout((): void => {
+      if (settled || started) return;
+      synth.cancel();
+      settle();
+    }, UTTERANCE_START_GUARD_MS);
+
+    hardCap = setTimeout((): void => {
+      // Si el motor sigue hablando, NO truncamos: se suelta el control y se deja
+      // terminar. El techo protege contra el cuelgue, nunca contra la locución.
+      if (!synth.speaking) synth.cancel();
+      settle();
+    }, Math.max(UTTERANCE_MIN_BUDGET_MS, sentence.length * UTTERANCE_PER_CHAR_MS));
+  });
+}
+
 /** Habla el texto frase a frase con soporte blindado para móviles (iOS/Android). */
 export async function speakNatural(text: string): Promise<void> {
   if (!isSpeechSupported()) return;
   const synth: SpeechSynthesis = window.speechSynthesis;
   synth.cancel();
+  if (synth.paused) synth.resume();
 
-  // En Safari iOS y Chrome Android, si está en pausa o suspendido, forzamos resume
-  if (synth.paused) {
-    synth.resume();
-  }
-
-  // Si las voces no se han poblado todavía (típico en Safari/WebKit móvil), esperamos brevemente
-  let voices = synth.getVoices();
-  if (voices.length === 0) {
-    await new Promise<void>((resolve) => {
-      let resolved = false;
-      const handler = () => {
-        if (!resolved) {
-          resolved = true;
-          window.speechSynthesis.onvoiceschanged = null;
-          resolve();
-        }
-      };
-      window.speechSynthesis.onvoiceschanged = handler;
-      setTimeout(() => {
-        if (!resolved) {
-          resolved = true;
-          if (window.speechSynthesis.onvoiceschanged === handler) {
-            window.speechSynthesis.onvoiceschanged = null;
-          }
-          resolve();
-        }
-      }, 250);
-    });
-    voices = synth.getVoices();
-  }
-
+  const voices: SpeechSynthesisVoice[] = await waitForVoices(synth);
   const voice: SpeechSynthesisVoice | null = pickVoice(voices);
   const cleanSpeechText = toConversationalSpeech(text);
   const sentences: string[] = splitSentences(cleanSpeechText.slice(0, 2000));
 
   for (const sentence of sentences) {
-    await new Promise<void>((resolve): void => {
-      const utterance = new SpeechSynthesisUtterance(sentence);
-      utterance.lang = 'es-ES';
-      if (voice) utterance.voice = voice;
-      const isQuestion: boolean = sentence.endsWith('?');
-      utterance.rate = Math.min(1.1, Math.max(0.9, jitter(0.98, 0.04)));
-      utterance.pitch = Math.min(1.2, Math.max(0.9, jitter(isQuestion ? 1.08 : 1.0, 0.04)));
-      utterance.onend = (): void => resolve();
-      utterance.onerror = (): void => resolve();
-      synth.speak(utterance);
-
-      // Heartbeat para navegadores móviles donde speechSynthesis puede colgarse tras unos segundos
-      if (synth.paused) {
-        synth.resume();
-      }
-    });
+    await speakSentence(synth, sentence, voice);
     await new Promise<void>((resolve): void => {
       window.setTimeout(resolve, 80 + Math.random() * 80);
     });
