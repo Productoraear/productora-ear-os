@@ -27,6 +27,7 @@ import {
   supplierLineMask
 } from '@/lib/providers/sovereign-lead-gate';
 import { OtzarretaExperienceExplorer } from '@/components/otzarreta/OtzarretaExperienceExplorer';
+import { EzkertzaVenueListing } from '@/components/otzarreta/EzkertzaVenueListing';
 import {
   resolveProviderCalendarHref,
   resolveProviderContractHref,
@@ -49,7 +50,7 @@ const OTZARRETA_CTA_SOURCE = {
 export const metadata: Metadata = {
   title: 'Restaurante Ezkertza Berria & Otzarreta · Eduardo Martínez | Bodas & Banquetes en Bizkaia y Gipuzkoa',
   description:
-    'Banquetes nupciales exclusivos para hasta 350 comensales en caserío tradicional con jardines, carpa para ceremonias civiles y parrilla al carbón de encina. Menús oficiales 2026 desde 100 € + IVA y sonorización homologada Bose S-Class.',
+    'Banquetes nupciales exclusivos para hasta 350 comensales en caserío tradicional con jardines, carpa para ceremonias civiles y parrilla al carbón de encina. Valoración 4,8/5 sobre 23 opiniones (el 96% de las parejas lo recomienda). Menús oficiales 2026 desde 100 € + IVA y sonorización homologada Bose S-Class.',
   alternates: {
     canonical: 'https://productoraear.com/otzarreta'
   },
@@ -318,6 +319,16 @@ export default function OtzarretaFlagshipPage(): React.JSX.Element {
           </div>
         </div>
       </section>
+
+
+      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      {/* 2B. FICHA COMPLETA DEL VENUE — EZKERTZA BERRIA (DERIO)  */}
+      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <EzkertzaVenueListing
+        blockHref={calendarBlockHref}
+        visitHref={calendarVisitHref}
+        whatsappUrl={whatsappConciergeUrl}
+      />
 
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       {/* 3. ANÁLISIS FINANCIERO: EAR OS VS BODAS.NET (SIN REBAJA) */}

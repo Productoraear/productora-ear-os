@@ -167,10 +167,10 @@ export default function EventLandingScreen({ model }: EventLandingScreenProps) {
               Consultar por WhatsApp
             </a>
             <a
-              href={`tel:${EVENT_SSOT_COPY.phone.replace(/[^0-9+]/g, '')}`}
+              href={`tel:${EVENT_SSOT_COPY.CENTRALITA.replace(/[^0-9+]/g, '')}`}
               className="inline-flex items-center justify-center rounded-full border border-white/10 px-6 py-3 font-mono text-sm text-[#a1a1aa] transition-all duration-300 ease-out hover:text-[#f5f5f7]"
             >
-              {EVENT_SSOT_COPY.phone}
+              {EVENT_SSOT_COPY.CENTRALITA}
             </a>
           </div>
         </section>

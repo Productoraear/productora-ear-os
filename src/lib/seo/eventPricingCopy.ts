@@ -71,5 +71,5 @@ export const EVENT_SSOT_COPY = Object.freeze({
   lcspSafeCeiling: formatEur(AJUSTE_PREVENTIVO_B2G_EUR),
   splLimit: LIMITE_SPL_DB,
   wattsPerPax: WATTS_PER_PAX,
-  phone: CENTRALITA_EAR_OS,
+  CENTRALITA: CENTRALITA_EAR_OS,
 } as const);
