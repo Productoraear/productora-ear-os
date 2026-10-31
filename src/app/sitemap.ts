@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next';
+import { resolveSitemapOrigin } from '@/lib/seo/canonicalSite';
 import { PROVINCIAS_52_GRAPH } from '@/lib/constants/seo-data-hydrated';
 import { MARIACHI_LANDINGS } from '@/lib/mariachi/mariachiLandingCatalog';
 import { OTZARRETA_LANDINGS } from '@/lib/seo/otzarreta-dominance-engine';
@@ -7,9 +8,41 @@ import { EVENT_LANDINGS } from '@/lib/seo/ear-eventos-dominance-engine';
 
 // Google indexa el host www (ver GSC export 2026-10-24: el 100% de las páginas son www.productoraear.com).
 // El sitemap DEBE declarar el mismo host canónico o Google parte la autoridad entre www y no-www.
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.productoraear.com';
+// `resolveSitemapOrigin()` fija ese host en producción y mata el apex con 308 (canonicalSite.ts).
+const BASE_URL = resolveSitemapOrigin();
 
 type ChangeFrequency = NonNullable<MetadataRoute.Sitemap[number]['changeFrequency']>;
+
+/**
+ * `lastmod` del sitemap curado.
+ *
+ * Hallazgo medido en producción el 2026-10-30: `GET /sitemap.xml` servía el MISMO
+ * timestamp (`2026-10-30T21:32:19.851Z`) en las ~778 entradas, regenerado en cada
+ * respuesta. Un `lastmod` que dice "todo cambió en este segundo" en cada visita
+ * entrena a Google a ignorar el campo por completo: es ruido, no señal.
+ *
+ * Regla: se resuelve UNA vez por build/proceso.
+ *  1. `SITEMAP_LAST_MODIFIED` (ISO) si el despliegue lo declara.
+ *  2. `SOURCE_DATE_EPOCH` (segundos, estándar reproducible-build).
+ *  3. En su defecto, el instante de arranque del proceso/build.
+ */
+function resolveSitemapLastModified(): Date {
+    const iso = (process.env.SITEMAP_LAST_MODIFIED ?? '').trim();
+    if (iso) {
+        const parsed = new Date(iso);
+        if (!Number.isNaN(parsed.getTime())) return parsed;
+    }
+
+    const epoch = (process.env.SOURCE_DATE_EPOCH ?? '').trim();
+    if (epoch) {
+        const seconds = Number(epoch);
+        if (Number.isFinite(seconds) && seconds > 0) return new Date(seconds * 1000);
+    }
+
+    return new Date();
+}
+
+const SITEMAP_LAST_MODIFIED = resolveSitemapLastModified();
 
 interface StaticRoute {
     path: string;
@@ -80,7 +113,7 @@ const GSC_VERIFIED_MONEY_ROUTES: StaticRoute[] = [
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    const lastModified = new Date();
+    const lastModified = SITEMAP_LAST_MODIFIED;
     const entries: MetadataRoute.Sitemap = [];
 
     for (const route of STATIC_ROUTES) {

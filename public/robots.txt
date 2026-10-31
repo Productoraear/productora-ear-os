@@ -1,3 +1,20 @@
+# ⚠️ ESPEJO ESTÁTICO de src/app/robots.ts — NO son dos fuentes libres, es una.
+#
+# Hallazgo medido el 2026-10-30 (`GET https://www.productoraear.com/robots.txt`,
+# 439 B): el cuerpo servido declara UN SOLO sitemap (/sitemap.xml) y no contiene
+# la línea `Host:` que emite src/app/robots.ts. Hay dos causas posibles y NO se
+# puede distinguir sin `npm run deploy:freshness`:
+#   (a) este fichero de public/ gana a la ruta dinámica (shadowing de public/),
+#   (b) el build desplegado es anterior a la versión actual de robots.ts.
+# Mientras siga sin resolverse, los dos ficheros declaran EXACTAMENTE los mismos
+# sitemaps: así el resultado es correcto en ambos escenarios.
+#
+# Regla de mantenimiento: cualquier cambio en src/app/robots.ts se replica aquí.
+# Auditor ejecutable:  npm run verify:sitemap
+# Deuda declarada (P1, dueño: Arquitectura): colapsar a una sola fuente borrando
+# este fichero y dejando que src/app/robots.ts (env-aware, origen canónico www)
+# sea la única verdad.
+
 User-agent: *
 Allow: /
 Allow: /_next/
@@ -6,6 +23,10 @@ Allow: /images/
 Allow: /fonts/
 Allow: /llms.txt
 Allow: /llms-full.txt
+Allow: /sitemap.xml
+Allow: /sitemap-index.xml
+Allow: /sitemap-predictivo.xml
+Allow: /sitemaps/
 Disallow: /api/
 Disallow: /admin/
 Disallow: /dashboard
@@ -18,4 +39,10 @@ Disallow: /login
 Disallow: /proveedores/prov-
 
 # Host canónico www (Google ya indexa www — GSC 2026-10-24).
+# 1) Índice maestro: al leerlo, Google descubre el curado, el predictivo y las 6
+#    particiones del catálogo masivo en una sola pasada.
+Sitemap: https://www.productoraear.com/sitemap-index.xml
+# 2) Rutas curadas que venden (dinero primero).
 Sitemap: https://www.productoraear.com/sitemap.xml
+# 3) Temperatura de lead (CALIENTE / TEMPLADO / FRIO).
+Sitemap: https://www.productoraear.com/sitemap-predictivo.xml

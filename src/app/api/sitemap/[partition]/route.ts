@@ -1,47 +1,54 @@
 import { NextResponse } from 'next/server';
 import { generateSitemapPartition } from '@/lib/seo/sitemapGenerator';
+import { normalizePartitionParam, renderUrlsetXml } from '@/lib/seo/sitemapRegistry';
 
+/**
+ * SEC-2 · role: public | tenant: global.
+ *
+ * LEGACY / COMPATIBILIDAD · `GET /api/sitemap/{0..5}.xml`
+ *
+ * La ruta pública canónica es `GET /sitemaps/{0..5}.xml`, fuera de /api/, porque
+ * robots.txt declara `Disallow: /api/`: Google no puede descargar un sitemap
+ * alojado bajo /api/ aunque el índice lo referencie. Antes de este cambio el
+ * índice maestro apuntaba justo aquí y las ~6.370 URLs del catálogo masivo eran
+ * invisibles para el rastreador.
+ *
+ * Se mantiene por compatibilidad, con el MISMO render escapado que la ruta
+ * pública (`renderUrlsetXml`) y cerrada por defecto ante ids no canónicos.
+ */
 export const runtime = 'nodejs';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export async function GET(
-  request: Request,
+  _request: Request,
   props: { params: Promise<{ partition: string }> }
 ) {
-  try {
-    const resolvedParams = await props.params;
-    const cleanId = resolvedParams.partition.replace(/\.xml$/, '');
+  const resolvedParams = await props.params;
+  const cleanId = normalizePartitionParam(resolvedParams.partition);
 
+  if (!cleanId) {
+    return new NextResponse('Partición de sitemap no canónica', { status: 404 });
+  }
+
+  try {
     const entries = await generateSitemapPartition(cleanId);
 
-    const xmlEntries = entries
-      .map(
-        (entry) => `  <url>
-    <loc>${entry.url}</loc>
-    <lastmod>${entry.lastModified}</lastmod>
-    <changefreq>${entry.changeFrequency || 'weekly'}</changefreq>
-    <priority>${entry.priority ?? 0.8}</priority>
-  </url>`
-      )
-      .join('\n');
-
-    const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${xmlEntries}
-</urlset>`;
-
-    return new NextResponse(xml, {
+    return new NextResponse(renderUrlsetXml(entries), {
       status: 200,
       headers: {
         'Content-Type': 'application/xml; charset=utf-8',
         'Cache-Control': 'no-cache, no-store, must-revalidate',
+        Link: `</sitemaps/${cleanId}.xml>; rel="canonical"`,
+        'X-Sitemap-Partition': cleanId,
+        'X-Sitemap-Urls': String(entries.length),
       },
     });
   } catch (error) {
-    console.error('[SITEMAP_PARTITION_ERROR]', error);
+    console.error('[SITEMAP_PARTITION_ERROR]', cleanId, error);
     return new NextResponse('Error generating sitemap partition', { status: 500 });
   }
 }
+
 

@@ -17,6 +17,7 @@ import {
   BASE_SOLISTA,
   DEPOSITO_STRIPE,
   SPLIT_SOBERANO,
+  SUPLEMENTO_RIDER_ELITE,
   basePriceForFormat,
   computeSovereignLogistics,
   type FormatType,
@@ -66,7 +67,8 @@ export function calculateSovereignQuote(input: SovereignQuoteInput): SovereignQu
   const logistics: SovereignLogistics = computeSovereignLogistics(input.distanceKm, input.endHour, {
     franchiseKm: input.franchiseKm,
   });
-  const soundSupplement: number = input.soundRider === 'bose_f1_elite' ? 150 : 0;
+  const soundSupplement: number =
+    input.soundRider === 'bose_f1_elite' ? SUPLEMENTO_RIDER_ELITE : 0;
 
   const totalBudget: number =
     baseFormatPrice + logistics.travelCost + logistics.hotelSupplement + soundSupplement;

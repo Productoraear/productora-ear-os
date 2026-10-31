@@ -3,17 +3,29 @@ import fs from 'fs';
 import path from 'path';
 import { PROVINCIAS_52_GRAPH } from '@/lib/constants/seo-data-hydrated';
 import { CHRISTMAS_LIGHTING_PRODUCTS } from '@/data/luces-navidad';
-import { MUNICIPALITIES_DATASET, SERVICES_PSEO_EXPANDED } from '@/lib/constants/spanish-municipalities';
 import { MUNICIPALITIES_DATABASE } from '@/lib/geo/spanish-municipalities';
 import { isProviderPublic } from '@/lib/providers/visibility';
 import { CANONICAL_GREMIO_SLUGS } from '@/lib/seo/searchIntentEngine';
+import { CANONICAL_SERVICES, resolveServiceSlug } from '@/lib/navigation/canonical-taxonomy';
+import { getMunicipalSitemapEntries } from '@/lib/seo/eventSitemapPlanner';
 import { SCLASS_12_FINCAS_HOMOLOGADAS } from '@/lib/constants/fincas-catalog';
 import { normalizeForUrl } from '@/lib/acg/acgSemanticGraph';
 import gscIntentData from '@/data/telemetry/gsc-sitemap-intent-landings.json';
+import { resolveSitemapOrigin } from '@/lib/seo/canonicalSite';
+import { SITEMAP_PARTITION_IDS } from '@/lib/seo/sitemapRegistry';
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://productoraear.com';
+// Host final (www), NUNCA el apex: `https://productoraear.com/...` responde 308 →
+// www (next.config.ts). Un <loc> que redirige quema presupuesto de rastreo y GSC
+// lo contabiliza como "página con redirección" en lugar de URL indexable.
+// Medido el 2026-10-30: las 6 particiones publicaban apex. Ver canonicalSite.ts.
+const BASE_URL = resolveSitemapOrigin();
 
-export const SITEMAP_PARTITIONS = ['0', '1', '2', '3', '4', '5'] as const;
+/**
+ * Compatibilidad: la fuente de verdad de las particiones vive en
+ * `sitemapRegistry` (una sola lista para el índice maestro, robots.txt y las
+ * rutas públicas). Este alias evita que vuelvan a existir dos listas distintas.
+ */
+export const SITEMAP_PARTITIONS: readonly string[] = SITEMAP_PARTITION_IDS;
 
 // Servicios prioritarios regionales por provincia
 const REGIONAL_SERVICES = [
@@ -110,7 +122,10 @@ export async function generateSitemapPartition(partitionId: string): Promise<Met
       addEntry(`${BASE_URL}/artistas`, 0.95, 'daily');
       addEntry(`${BASE_URL}/artistas/edwin-agudelo`, 0.95, 'weekly');
       addEntry(`${BASE_URL}/artistas/representacion`, 0.95, 'daily');
-      addEntry(`${BASE_URL}/catering-brasas`, 0.95, 'weekly');
+      // Corregido: /catering-brasas responde 308 → /catering-de-brasas
+      // (next.config.ts, redirects permanent:true). Un <loc> que redirige quema
+      // presupuesto de rastreo: se publica el destino final, no el alias.
+      addEntry(`${BASE_URL}/catering-de-brasas`, 0.95, 'weekly');
       addEntry(`${BASE_URL}/arroces`, 0.98, 'daily');
       addEntry(`${BASE_URL}/alquiler-pantallas-led-madrid`, 0.85, 'weekly');
       addEntry(`${BASE_URL}/alquiler-equipos-sonido-audiovisuales`, 0.90, 'weekly');
@@ -246,13 +261,27 @@ export async function generateSitemapPartition(partitionId: string): Promise<Met
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     case '1': {
       const provinceSlugs = Object.keys(PROVINCIAS_52_GRAPH);
+
+      // Servicios regionales normalizados al vocabulario canónico. Un alias que
+      // no resuelve (`fiestas-patronales-ayuntamientos`) NO se publica: su URL
+      // respondería 301 o 404, y un <loc> hacia una redirección es presupuesto
+      // de rastreo tirado (ver canonicalSite.ts).
+      const regionalServices: string[] = Array.from(
+        new Set(
+          REGIONAL_SERVICES.map((service) => resolveServiceSlug(service)).filter(
+            (service): service is string => service !== null
+          )
+        )
+      );
+
       for (const prov of provinceSlugs) {
         addEntry(`${BASE_URL}/bodas/${prov}`, 0.85, 'weekly');
-        addEntry(`${BASE_URL}/bodas/${prov}/eventos`, 0.85, 'weekly');
+        // Antes se publicaba `/bodas/{prov}/eventos`: 'eventos' es alias de
+        // 'produccion-integral', así que esa URL era un 301 por diseño.
         addEntry(`${BASE_URL}/b2g/${prov}`, 0.85, 'weekly');
 
-        // Servicios regionales de bodas S-Class
-        for (const s of REGIONAL_SERVICES) {
+        // Servicios regionales de bodas S-Class (ya canónicos)
+        for (const s of regionalServices) {
           addEntry(`${BASE_URL}/bodas/${prov}/${s}`, 0.90, 'weekly');
         }
 
@@ -274,18 +303,22 @@ export async function generateSitemapPartition(partitionId: string): Promise<Met
     // PARTITION 2: PSEO — Municipios × servicios expandidos (alta conversión)
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     case '2': {
-      const servicePseoList = SERVICES_PSEO_EXPANDED || [];
-      for (const provKey of Object.keys(MUNICIPALITIES_DATASET)) {
-        const towns = MUNICIPALITIES_DATASET[provKey] || [];
-        for (const t of towns) {
-          // Anti-duplicados: Evitar /bodas/madrid/dj/madrid cuando la provincia coincide con el municipio
-          if (!t.slug || t.slug.toLowerCase() === provKey.toLowerCase()) continue;
-          for (const s of servicePseoList) {
-            const sPath = s.path || s.id;
-            if (sPath) {
-              addEntry(`${BASE_URL}/bodas/${provKey}/${sPath}/${t.slug}`, 0.75, 'weekly');
-            }
-          }
+      // ── DEFECTO CORREGIDO (medido en disco, no hipótesis) ────────────────
+      // Antes: 255 municipios × N servicios en 3 niveles
+      //   /bodas/{provincia}/{servicio}/{municipio}
+      // `resolveCanonicalBodasMunicipio()` devuelve SIEMPRE `needsRedirect: true`
+      // y colapsa a 2 niveles (canonical-taxonomy.ts:237-248). Es decir: la
+      // partición publicaba ~30.000 URLs que respondían 301 en masa — el peor
+      // uso posible del presupuesto de rastreo, y GSC las cuenta como "página
+      // con redirección", no como indexables.
+      //
+      // Ahora P2 publica la rejilla canónica de 2 niveles que SÍ responde 200:
+      //   14 servicios canónicos × 52 provincias = 728 URLs reales.
+      // Las fichas municipales viven en la partición 4 (8.131 URLs, ruta propia).
+      const provinceSlugs = Object.keys(PROVINCIAS_52_GRAPH);
+      for (const prov of provinceSlugs) {
+        for (const service of CANONICAL_SERVICES) {
+          addEntry(`${BASE_URL}/bodas/${prov}/${service.slug}`, 0.75, 'weekly');
         }
       }
       break;
@@ -320,16 +353,20 @@ export async function generateSitemapPartition(partitionId: string): Promise<Met
     // PARTITION 4: DIRECTORIO Y COBERTURA MUNICIPAL
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     case '4': {
+      // ── COBERTURA MUNICIPAL REAL ─────────────────────────────────────────
+      // Antes: `/directorio/{provincia}` y `/directorio/{provincia}/{municipio}`.
+      // Esas rutas NO existen en el App Router (sólo `/directorio` estático):
+      // caían en el catch-all `[...slug]` sin garantía de contenido propio.
+      //
+      // Ahora: las 8.131 fichas municipales del dataset INE con provincia
+      // resuelta, servidas por una ruta que sí existe y renderiza datos reales:
+      //   /eventos/local/{provincia}/{municipio}
+      // Fuente única: el inventario del planificador (`getMunicipalSitemapEntries`).
+      addEntry(`${BASE_URL}/directorio`, 0.85, 'weekly');
+
       try {
-        const provinceSlugs = Object.keys(PROVINCIAS_52_GRAPH);
-        for (const prov of provinceSlugs) {
-          addEntry(`${BASE_URL}/directorio/${prov}`, 0.80, 'weekly');
-          addEntry(`${BASE_URL}/proveedores-servicios/${prov}`, 0.80, 'weekly');
-        }
-        for (const muni of MUNICIPALITIES_DATABASE) {
-          if (muni.slug && muni.provinceSlug) {
-            addEntry(`${BASE_URL}/directorio/${muni.provinceSlug}/${muni.slug}`, 0.70, 'weekly');
-          }
+        for (const entry of getMunicipalSitemapEntries(BASE_URL)) {
+          addEntry(entry.url, 0.70, 'monthly');
         }
       } catch (err) {
         console.warn('[SITEMAP-4] Error generando cobertura municipal:', err);
