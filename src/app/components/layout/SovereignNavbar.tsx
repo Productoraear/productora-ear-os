@@ -16,11 +16,15 @@ import { cn } from '@/lib/utils';
 import { useSharedContext } from '@/app/context/SharedContext';
 import { useSovereignRole } from '@/shared/hooks/useSovereignRole';
 import { usePathname } from 'next/navigation';
-import { MENU_FOLDERS, MOBILE_MENU_EVENT } from '@/lib/config/sovereign-navigation';
+import { MENU_FOLDERS, MOBILE_MENU_EVENT, SPOTLIGHT_LINKS } from '@/lib/config/sovereign-navigation';
 
 const SovereignNavbar = () => {
   const pathname = usePathname();
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  // W46_T01 · Panel único de exploración para la franja 1024–1279 px. Un solo
+  // disparador no puede solaparse consigo mismo: es la garantía estructural de
+  // que el rótulo «Catering & Servicios» no volverá a montarse sobre «VIMUME».
+  const [exploreOpen, setExploreOpen] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const { setIsSearchOpen } = useSharedContext();
@@ -41,7 +45,18 @@ const SovereignNavbar = () => {
   // Cerrar desplegables al cambiar de ruta
   useEffect(() => {
     setActiveDropdown(null);
+    setExploreOpen(false);
   }, [pathname]);
+
+  // Escape cierra el panel de exploración (teclado = misma potencia que ratón).
+  useEffect(() => {
+    if (!exploreOpen) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setExploreOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [exploreOpen]);
 
   if (
     pathname === '/' ||
@@ -87,7 +102,7 @@ const SovereignNavbar = () => {
       <motion.nav
         style={{ boxShadow: `0 20px 40px -10px rgba(0,0,0, ${shadowOpacity.get()})` }}
         className={cn(
-          "max-w-7xl 2xl:max-w-[1400px] mx-auto flex items-center justify-between px-3 xl:px-5 py-2.5 transition-all duration-700 rounded-full border backdrop-blur-2xl",
+          "max-w-7xl 2xl:max-w-[1500px] mx-auto flex items-center justify-between px-3 xl:px-5 py-2.5 transition-all duration-700 rounded-full border backdrop-blur-2xl",
           roleStyles[role] || roleStyles.ROLE_GUEST
         )}
       >
@@ -123,9 +138,14 @@ const SovereignNavbar = () => {
           </div>
         </Link>
 
-        {/* RUTAS CON SISTEMA DE SUBMENÚS Y SUBCARPETAS (ESCRITORIO) */}
-        <div className="hidden lg:flex items-center gap-1 xl:gap-1.5 2xl:gap-2 shrink min-w-0">
-          {MENU_FOLDERS.map((folder) => {
+        {/* RUTAS CON SISTEMA DE SUBMENÚS Y SUBCARPETAS (ESCRITORIO · 2xl+)
+            Presupuesto medido: 4 carpetas en rótulo corto (453 px) + 3
+            destacados (335 px) + marca (~190 px) + acciones (~260 px) ≈ 1.240 px.
+            Solo a partir de 1.536 px hay margen real; por debajo manda el
+            disparador compacto. Los 4.000 px de rótulos largos que había antes
+            no caben ni en un monitor de 1.920 px. */}
+        <div className="hidden 2xl:flex items-center justify-center gap-1 2xl:gap-2 flex-1 min-w-0 px-2">
+          {MENU_FOLDERS.map((folder, index) => {
             const isCurrentSection = pathname?.startsWith(folder.href);
             const isOpen = activeDropdown === folder.id;
 
@@ -138,6 +158,7 @@ const SovereignNavbar = () => {
               >
                 <Link
                   href={folder.href}
+                  onFocus={() => handleMouseEnter(folder.id)}
                   className={cn(
                     "flex items-center gap-1 xl:gap-1.5 px-2.5 xl:px-3 py-1.5 rounded-full text-xs font-mono font-bold uppercase tracking-wider transition-all whitespace-nowrap",
                     isCurrentSection
@@ -146,8 +167,7 @@ const SovereignNavbar = () => {
                     isOpen && "bg-white/10 text-white"
                   )}
                 >
-                  <span className="hidden 2xl:inline">{folder.label}</span>
-                  <span className="inline 2xl:hidden">{folder.shortLabel}</span>
+                  <span className="whitespace-nowrap">{folder.shortLabel}</span>
                   <ChevronDown size={13} className={cn("transition-transform duration-200 text-white/50", isOpen && "rotate-180 text-[#FF2B44]")} />
                 </Link>
 
@@ -159,7 +179,13 @@ const SovereignNavbar = () => {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 10, scale: 0.97 }}
                       transition={{ duration: 0.15 }}
-                      className="absolute top-full left-0 mt-3 w-80 rounded-2xl border border-white/15 bg-[#08080c]/95 backdrop-blur-2xl p-2.5 shadow-[0_25px_60px_rgba(0,0,0,0.95)] z-50 space-y-1"
+                      className={cn(
+                        // Los dos últimos desplegables se anclan a la derecha:
+                        // abiertos desde el borde del viewport ya no se salen
+                        // de pantalla (causa real de recortes en 1280–1400 px).
+                        "absolute top-full mt-3 w-80 max-w-[calc(100vw-2rem)] rounded-2xl border border-white/15 bg-[#08080c]/95 backdrop-blur-2xl p-2.5 shadow-[0_25px_60px_rgba(0,0,0,0.95)] z-50 space-y-1",
+                        index >= MENU_FOLDERS.length - 2 ? "right-0" : "left-0"
+                      )}
                     >
                       <div className="px-3 py-1.5 border-b border-white/10 mb-1 flex items-center justify-between">
                         <span className="font-mono text-[9px] uppercase tracking-widest text-zinc-400">
@@ -238,9 +264,102 @@ const SovereignNavbar = () => {
             )}
           >
             <Calculator size={13} className="shrink-0" />
-            <span className="hidden 2xl:inline">Presupuestador</span>
-            <span className="inline 2xl:hidden">Presupuesto</span>
+            {/* Rótulo corto también en 2xl: «Presupuestador» añadía 32 px que
+                el botón ADMIN necesita cuando hay sesión iniciada. */}
+            <span className="whitespace-nowrap">Presupuesto</span>
           </Link>
+        </div>
+
+        {/* DISPARADOR COMPACTO · franja 1024–1535 px (lg → 2xl).
+            Antes vivía aquí la franja completa con `shrink-0`: 4 carpetas + 3
+            destacados no caben en 1024 px y desbordaban sobre el buscador y el
+            teléfono (el «Frankenstein» reportado en /otzarreta). Ahora la
+            navegación de escritorio estrecha se resuelve con UN disparador y su
+            panel, que jamás excede el viewport. */}
+        <div className="hidden lg:flex 2xl:hidden items-center justify-center flex-1 min-w-0 px-2 relative">
+          <button
+            type="button"
+            onClick={() => setExploreOpen((open) => !open)}
+            aria-expanded={exploreOpen}
+            aria-controls="ear-explore-panel"
+            aria-haspopup="true"
+            className={cn(
+              "flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border text-xs font-mono font-bold uppercase tracking-wider transition-all whitespace-nowrap",
+              exploreOpen
+                ? "bg-white/10 border-white/25 text-white"
+                : "border-white/15 text-white/75 hover:text-white hover:bg-white/5"
+            )}
+          >
+            <Menu size={13} className="shrink-0" />
+            <span>Explorar</span>
+            <ChevronDown
+              size={13}
+              className={cn("shrink-0 transition-transform duration-200 text-white/50", exploreOpen && "rotate-180 text-[#FF2B44]")}
+            />
+          </button>
+
+          <AnimatePresence>
+            {exploreOpen && (
+              <motion.div
+                id="ear-explore-panel"
+                initial={{ opacity: 0, y: 10, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 10, scale: 0.98 }}
+                transition={{ duration: 0.15 }}
+                className="absolute top-full left-1/2 -translate-x-1/2 mt-4 z-50 w-[min(92vw,46rem)] max-w-[calc(100vw-2rem)] rounded-3xl border border-white/15 bg-[#08080c]/95 backdrop-blur-2xl p-4 shadow-[0_30px_80px_rgba(0,0,0,0.95)]"
+              >
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {MENU_FOLDERS.map((folder) => (
+                    <div key={folder.id} className="rounded-2xl border border-white/10 bg-black/30 p-3">
+                      <Link
+                        href={folder.href}
+                        onClick={() => setExploreOpen(false)}
+                        className="flex items-center justify-between gap-2 group/folder"
+                      >
+                        <span className="font-syne text-xs font-bold text-white group-hover/folder:text-[#FF2B44] transition-colors">
+                          {folder.label}
+                        </span>
+                        <span className="font-mono text-[10px] text-[#AAD6CD] shrink-0">Ver todo →</span>
+                      </Link>
+                      <div className="mt-2 space-y-1">
+                        {folder.subitems.map((subitem) => (
+                          <Link
+                            key={subitem.href}
+                            href={subitem.href}
+                            onClick={() => setExploreOpen(false)}
+                            className="block px-2 py-1.5 rounded-lg text-[11px] text-zinc-300 hover:text-white hover:bg-white/5 transition-colors truncate"
+                          >
+                            {subitem.title}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-3 pt-3 border-t border-white/10 grid grid-cols-1 sm:grid-cols-3 gap-2">
+                  {SPOTLIGHT_LINKS.map((link) => (
+                    <Link
+                      key={link.id}
+                      href={link.href}
+                      onClick={() => setExploreOpen(false)}
+                      className={cn(
+                        "flex flex-col rounded-xl border px-3 py-2 transition-colors",
+                        link.accent === 'gold'
+                          ? "border-[#ecb613]/40 text-[#ecb613] hover:bg-[#ecb613]/10"
+                          : link.accent === 'cyan'
+                            ? "border-[#00E5FF]/40 text-[#00E5FF] hover:bg-[#00E5FF]/10"
+                            : "border-[#FF2B44]/40 text-[#FF2B44] hover:bg-[#FF2B44]/10"
+                      )}
+                    >
+                      <span className="text-xs font-mono font-bold uppercase tracking-wider">{link.label}</span>
+                      <span className="text-[10px] text-zinc-400 font-sans">{link.hint}</span>
+                    </Link>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* OMNI-SEARCH & WALLET */}
@@ -251,9 +370,10 @@ const SovereignNavbar = () => {
             aria-label="Buscar servicio"
           >
             <Search size={13} className="group-hover:text-[#FF2B44] transition-colors shrink-0" />
-            <span className="hidden 2xl:inline">Buscar servicio...</span>
-            <span className="hidden xl:inline 2xl:hidden">Buscar...</span>
-            <kbd className="bg-white/10 px-1.5 py-0.5 rounded text-[10px] font-mono text-white/70">⌘K</kbd>
+            {/* En 2xl el teléfono y las carpetas ya ocupan su espacio: el texto
+                del buscador se retira y queda icono + ⌘K (cero solapes). */}
+            <span className="hidden lg:inline 2xl:hidden">Buscar...</span>
+            <kbd className="hidden lg:inline bg-white/10 px-1.5 py-0.5 rounded text-[10px] font-mono text-white/70">⌘K</kbd>
           </button>
 
           {/* ACCIÓN DE LLAMADA INMEDIATA S-CLASS */}

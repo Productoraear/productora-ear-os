@@ -24,6 +24,7 @@ import { EZKERTZA_DERIO_VENUE } from '@/lib/constants/ezkertza-derio-venue';
 import CinematicVanguardCarousel from '@/components/sclass/CinematicVanguardCarousel';
 import VenueReviewsCarousel from './VenueReviewsCarousel';
 import VenueExperienceHub from './VenueExperienceHub';
+import { EzkertzaCinematicJourney } from './EzkertzaCinematicJourney';
 
 /**
  * ════════════════════════════════════════════════════════════════════════════
@@ -204,6 +205,15 @@ export function EzkertzaVenueLanding({
             <VenueExperienceHub
                 blockHref={blockHref}
                 visitHref={visitHref}
+                whatsappUrl={whatsappUrl}
+            />
+
+            {/* ━━━ 1C. RECORRIDO CINEMÁTICO + GALERÍA PANORÁMICA (W46_T02) ━━━
+                Vista de pájaro Bilbao→Derio, llegada del coche nupcial, salón y
+                cartas en cristal líquido. Sin recortes, sin verticales en el
+                carrusel principal y sin iframes de terceros. */}
+            <EzkertzaCinematicJourney
+                blockHref={blockHref}
                 whatsappUrl={whatsappUrl}
             />
 
