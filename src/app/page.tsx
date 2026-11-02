@@ -1,62 +1,15 @@
 import Link from 'next/link';
-import { Phone, ArrowRight, ShieldCheck, Music2, Sparkles } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Music2, Sparkles } from 'lucide-react';
 import { HeroWeddingCinematic } from '@/components/home/HeroWeddingCinematic';
 import QuantumRoleCockpit from '@/components/home/QuantumRoleCockpit';
 import { CENTRALITA_EAR_OS, TARIFA_BASE_SOLISTA_EUR, DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
 import SovereignEntryBifurcation from '@/components/home/SovereignEntryBifurcation';
 
 export default function Home() {
-  const telHref = `tel:${CENTRALITA_EAR_OS.replace(/\s+/g, '')}`;
-
   return (
     <main className="relative w-full max-w-full min-h-screen overflow-x-hidden transition-colors duration-500 bg-[var(--background)] text-[var(--foreground)] font-sans selection:bg-[#ecb613] selection:text-black">
-      {/* Header Comercial S-Class: Marca, Teléfono y Acceso Rápido.
-          Barra OPACA (bg-black/95 + backdrop-blur-2xl) con borde inferior: el copy
-          ya no se cuela cortado entre píldoras al hacer scroll. */}
-      <header
-        data-ear-chrome="top"
-        className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between gap-3 bg-black/95 backdrop-blur-2xl border-b border-white/10 px-3 py-2.5 sm:px-5 sm:py-3"
-      >
-        {/* Identidad de marca oficial */}
-        <Link
-          href="/"
-          className="pointer-events-auto flex items-center gap-2.5 bg-black/80 dark:bg-black/70 light:bg-white/90 backdrop-blur-xl border border-white/10 dark:border-white/10 light:border-zinc-200 px-3.5 py-1.5 rounded-full shadow-lg transition-all hover:border-[#ecb613]/50"
-        >
-          <div className="relative w-8 h-8 rounded-full overflow-hidden border border-[#ecb613]/70 shadow-[0_0_12px_rgba(236,182,19,0.45)] shrink-0 bg-black">
-            <img
-              src="/images/brand/ear_logo_official_diamond.png"
-              alt="Productora EAR Logotipo Oficial"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div className="flex items-center gap-1.5">
-            <span className="font-bold text-xs tracking-tight font-mono">PRODUCTORA</span>
-            <span className="font-bold text-xs tracking-tight text-[#ecb613] font-mono">EAR</span>
-          </div>
-        </Link>
-
-        {/* Contacto directo y botón de conversión */}
-        <div className="pointer-events-auto flex items-center gap-2 sm:gap-3">
-          <a
-            href={telHref}
-            className="flex items-center gap-2 px-3 py-2 rounded-full bg-black/60 dark:bg-black/60 light:bg-white/90 hover:bg-white/10 backdrop-blur-xl border border-white/15 dark:border-white/15 light:border-zinc-200 text-xs font-mono transition-all shadow-sm"
-          >
-            <Phone size={13} className="text-[#ecb613]" />
-            <span className="hidden sm:inline font-medium">{CENTRALITA_EAR_OS}</span>
-          </a>
-
-          <Link
-            href="/reservar/solista"
-            className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#ecb613] hover:bg-amber-400 text-black font-bold text-xs transition-all shadow-[0_0_20px_rgba(236,182,19,0.3)] hover:scale-105 cursor-pointer font-mono"
-          >
-            <ArrowRight size={13} className="text-black" />
-            <span>Reservar {TARIFA_BASE_SOLISTA_EUR} €</span>
-          </Link>
-        </div>
-      </header>
-
       {/* Puerta de Entrada Unificada: embudo bifurcado Cliente ↔ Artista (3 clics).
-          pt-28/pt-32 = altura real de la cabecera opaca (2,5rem + wrap móvil) para
+          pt-28/pt-32 = altura real de la cabecera opaca SovereignNavbar para
           que el primer titular nunca nazca debajo de ella. */}
       <div className="relative pt-28 sm:pt-32">
         <SovereignEntryBifurcation />

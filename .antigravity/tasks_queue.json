@@ -1,15 +1,108 @@
 {
   "_meta": {
-    "version": "12.0-OMEGA-WAVE-45-MOTOR-MAGIA-NEGRA",
-    "doctrine": "WAVE 45 (SANCIONADA POR EL CEO): 1) Materializar la Fórmula Magia Negra (Budget Allocator 50/15/15/10/10 con aritmética en céntimos enteros, largest remainder y candados tipados). 2) Erradicar las constantes hardcodeadas en OmniChannelHub360.tsx conectándolo al SSOT. 3) Verificación determinista sobre 10.000 presupuestos (FAILURES=0).",
-    "wave": 45,
-    "total_tasks": 2,
-    "total_pending": 0,
-    "last_updated": "2026-11-02T21:54:06.335Z"
+    "version": "12.0-OMEGA-WAVE-47-ANTI-FRANKENSTEIN-GLOBAL",
+    "doctrine": "WAVE 47 (ORDEN DIRECTA CEO — DESMANTELAR EL FRANKENSTEIN GLOBAL DE EAR OS): El problema no es una sola barra ni una sola página; es la superposición global de capas heredadas, menús duplicados, héroes dobles, iframes RGPD-hostiles, recorte de fotos (object-cover vs object-contain + filtro de verticales) y la falta del Panel de Métricas para Eduardo (Ezkertza Berria) y del Simulador Universal de Proveedores. Se encolan 4 bloques quirúrgicos de purga y consolidación en tasks_queue.json para el obrero.",
+    "wave": 47,
+    "total_tasks": 4,
+    "total_pending": 3,
+    "last_updated": "2026-11-02T23:09:48.118Z"
   },
   "_instructions_for_worker": "Ejecuta SOLO via: node .antigravity/omega.js next -> lee .antigravity/MISSION_ACTIVE.json -> edita SOLO 'files' -> ejecuta 'test' -> node .antigravity/omega.js complete <ID>. 1 tarea por sesion.",
-  "tasks": [],
+  "tasks": [
+    {
+      "id": "W47_T02_PURGE_OTZARRETA_DUPLICATES_AND_GLOBAL_GALLERY",
+      "title": "Cirugía Anti-Frankenstein en /otzarreta y Galerías Globales · 1 Hero, 1 Vídeo sin iframe, 0 Fotos Verticales Cortadas",
+      "status": "QUEUED",
+      "priority": "P0_SHOWCASE_PURITY",
+      "files": [
+        "src/app/(public)/otzarreta/page.tsx",
+        "src/components/otzarreta/EzkertzaVenueLanding.tsx",
+        "src/components/sclass/CinematicVanguardCarousel.tsx",
+        "src/components/providers/ProviderMediaGallery.tsx"
+      ],
+      "action": "Eliminar la esquizofrenia visual de `/otzarreta` (donde se apilaban dos páginas completas: la página antigua y `EzkertzaVenueLanding` dentro) y aplicar la regla global del CEO para TODAS las galerías de EAR OS (nunca cortar horizontales, excluir verticales de la presentación panorámica): 1) En `src/app/(public)/otzarreta/page.tsx`: eliminar la sección 2 antigua ('GALERÍA VISUAL DE ACTIVOS OFICIALES VAMPIRIZADOS', líneas 268-331, que usaba `object-cover` e incluía la foto vertical `novios-1022x1536.jpg` cortada), eliminar la sección 5 redundante ('Diseña tu banquete al céntimo' que mandaba con un ancla arriba, líneas 564-587) y eliminar la sección 6 de reseñas duplicadas (líneas 592-626); corregir además el texto 'la Dirección Gastronómica' por 'Eduardo (Dirección Gastronómica de Ezkertza Berria & Otzarreta)' donde quedaba con minúscula inicial tras un reemplazo automático. 2) En `src/components/otzarreta/EzkertzaVenueLanding.tsx`: eliminar el bloque 4 del `<iframe src=\"https://player.vimeo.com/...\">` (líneas 279-299) que contradecía el blindaje RGPD/CSP de `EzkertzaCinematicJourney` y duplicaba el vídeo oficial. 3) En `src/components/sclass/CinematicVanguardCarousel.tsx` y `src/components/providers/ProviderMediaGallery.tsx`: exportar/aplicar el filtro canónico de geometría apaisada (descartar URLs con sufijo `-WxH` donde `W/H < 1.15` o miniaturas `< 500px` en el carrusel panorámico principal) y cambiar el visor principal de `object-cover` a `object-contain bg-[#030305]` para que NINGUNA foto horizontal de ningún proveedor en EAR OS sufra amputación de encuadre.",
+      "scaffold": {
+        "invariants": [
+          "Cero `object-cover` que recorte fotografías horizontales en `ProviderMediaGallery.tsx` y `CinematicVanguardCarousel.tsx` (usar `object-contain` sobre fondo OLED `#030305`)",
+          "Cero fotografías verticales (ej. `-1022x1536` o `W/H < 1.15`) en los carruseles panorámicos principales",
+          "Cero iframes de Vimeo sin consentimiento en `EzkertzaVenueLanding.tsx` (el enlace externo limpio ya vive en `EzkertzaCinematicJourney.tsx`)",
+          "Cero bloques duplicados de galería/reseñas/cta-ancla en `src/app/(public)/otzarreta/page.tsx`"
+        ],
+        "forbidden": [
+          "Prohibido tocar `ear-os-ssot.ts`",
+          "Prohibido inventar precios o alterar los 7 menús oficiales de Ezkertza Berria"
+        ]
+      },
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node ./node_modules/eslint/bin/eslint.js \"src/app/(public)/otzarreta/page.tsx\" \"src/components/otzarreta/EzkertzaVenueLanding.tsx\" \"src/components/sclass/CinematicVanguardCarousel.tsx\" \"src/components/providers/ProviderMediaGallery.tsx\"",
+      "done_when": "1) `/otzarreta` tiene un flujo lineal limpio sin galerías duplicadas ni iframes de terceros. 2) `CinematicVanguardCarousel` y `ProviderMediaGallery` respetan relación de aspecto nativa (`object-contain`) y filtran verticales en vista panorámica. 3) `tsc --noEmit` y `eslint` devuelven Exit Code 0."
+    },
+    {
+      "id": "W47_T03_EDUARDO_PARTNER_METRICS_AND_CEO_RADAR",
+      "title": "Panel de Métricas de Escaparate para Eduardo (Ezkertza Berria) + Telemetría Global EAR OS en Admin CEO y Área Privada del Restaurante",
+      "status": "QUEUED",
+      "priority": "P0_COMMERCIAL_CLOSING",
+      "files": [
+        "src/lib/analytics/venue-showcase-telemetry.ts",
+        "src/components/otzarreta/PartnerShowcaseMetricsPanel.tsx",
+        "src/components/otzarreta/EzkertzaVenueLanding.tsx",
+        "src/app/(admin)/admin/AdminDashboardClient.tsx"
+      ],
+      "action": "Construir el sistema de métricas reales y trazables que pidió el CEO para motivar a Eduardo (dueño de Restaurante Ezkertza Berria) a firmar el contrato, visible tanto en el Área Privada de Gestión de Escaparate del Restaurante como en el Panel Admin CEO (`/admin`): 1) Crear `src/lib/analytics/venue-showcase-telemetry.ts` (tipado estricto, 0 `any`) que consolide las métricas verificables del activo en EAR OS: a) Superficie indexada real de Ezkertza/Otzarreta (`126 landings propietarias`: 72 geográficas en 18 municipios + 54 de intención, más la flagship `/otzarreta`), b) Tráfico global medido de EAR OS (sesiones auditadas Microsoft Clarity `3.832 sesiones`, `29.165 URLs pSEO`, `64.618 proveedores`), c) Contador en vivo persistido en `localStorage` + eventos de sesión (`views`, `simulator_interactions`, `map_route_clicks`, `visit_requests`, `deposit_lock_clicks`, `whatsapp_concierge_clicks`) con desglose semanal de las últimas 6 semanas de campaña en EAR OS y atribución por origen (Bilbao, Derio, Getxo, Donostia, Zarautz, Búsqueda IA). 2) Crear `src/components/otzarreta/PartnerShowcaseMetricsPanel.tsx` (`'use client'`, estética OLED `#030305`/`#09090d` y oro `#ecb613`) que muestre a Eduardo: - Pestaña 1: 'Rendimiento de Tu Escaparate (Ezkertza Berria)' (visitas acumuladas en estas semanas de EAR OS, evolución semanal, clics en 'Cómo llegar desde Bilbao', simulaciones de menús 2026 y solicitudes de bloqueo 100 €). - Pestaña 2: 'Comparativa con Tráfico Total EAR OS' (cuota de visibilidad del caserío frente al ecosistema global de Productora EAR y ventaja de 0% fuga frente a directorios pasivos). - Pestaña 3: 'Área Privada de Gestión de Ficha (Eduardo)' (estado de los 7 menús oficiales 2026, estado de la Llave Soberana, galería panorámica homologada sin recortes y botón directo para activar la Alianza / solicitar informe ejecutivo por WhatsApp). 3) Montar `PartnerShowcaseMetricsPanel` en `src/components/otzarreta/EzkertzaVenueLanding.tsx` justo debajo del bloque de Llave Soberana / Recorrido Cinemático (accesible directamente y mediante `?panel=eduardo` o acordeón ejecutivo abierto para demostración). 4) Montar un bloque resumen de 'Telemetría de Escaparates Flagship (Ezkertza Berria & Global EAR OS)' en `src/app/(admin)/admin/AdminDashboardClient.tsx` para que el CEO vea en `/admin` exactamente los mismos números que ve Eduardo.",
+      "scaffold": {
+        "invariants": [
+          "Toda cifra de infraestructura nace de constantes reales del repo (`OTZARRETA_HUB.total = 126`, `DEPOSITO_STRIPE_EUR = 100`, `SPLIT_SOBERANO 80/10/10`, sesiones auditadas de campo `3832`)",
+          "Los contadores interactivos registran e incrementan en tiempo real cuando el usuario abre el simulador, pulsa Google Maps o solicita reserva en `/otzarreta`",
+          "Sincronización visual entre el Panel de Admin CEO (`/admin`) y el Área Privada del Restaurante en `/otzarreta`"
+        ],
+        "forbidden": [
+          "Prohibido usar `any`",
+          "Prohibido tocar ZONA CERO (`ear-os-ssot.ts`)"
+        ]
+      },
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node ./node_modules/eslint/bin/eslint.js \"src/lib/analytics/venue-showcase-telemetry.ts\" \"src/components/otzarreta/PartnerShowcaseMetricsPanel.tsx\" \"src/components/otzarreta/EzkertzaVenueLanding.tsx\" \"src/app/(admin)/admin/AdminDashboardClient.tsx\"",
+      "done_when": "1) Eduardo puede ver en su panel de escaparate las visitas semanales/totales de Ezkertza Berria, las interacciones de menús/mapa y el volumen global de EAR OS. 2) El CEO ve la misma telemetría en `/admin`. 3) `tsc --noEmit` y `eslint` devuelven Exit Code 0."
+    },
+    {
+      "id": "W47_T04_UNIVERSAL_PROVIDER_SIMULATOR_ADAPTER",
+      "title": "Simulador Universal de Proveedores · Adaptar el Cotizador Dinámico y Motor Magia Negra a los Datos Reales de Cada Ficha",
+      "status": "QUEUED",
+      "priority": "P1_UNIVERSAL_CONVERSION",
+      "files": [
+        "src/lib/providers/universal-provider-simulator.ts",
+        "src/components/providers/UniversalProviderSimulatorCard.tsx",
+        "src/app/(public)/proveedores/[slug]/page.tsx"
+      ],
+      "action": "Cumplir la orden del CEO de que un solo motor de simulación probado y fiable se adapte dinámicamente a cada proveedor según los datos de su propia ficha (en vez de tener simuladores Frankenstein distintos en cada página): 1) Crear `src/lib/providers/universal-provider-simulator.ts` (puro, tipado, 0 `any`, conectado a `src/lib/budget/budget-allocator-engine.ts` y `src/lib/constants/ear-os-ssot.ts`) que reciba los metadatos de cualquier ficha de proveedor (`slug`, `name`, `category`, `province`, `basePrice`, `capacityPax`, `menus`) y devuelva su perfil de simulación: - Si es Finca/Restaurante/Catering: calcula por comensales (`pax`), menús o cubierto base, e integra la partida del 50% del Motor Magia Negra. - Si es Música/Artista/DJ/Audiovisuales: calcula por formato/pases, aplica logística oficial S-Class (`1,50 €/km` > 50 km, hotel `120 €` > 200 km o fin >= 03:00) y rider acústico `12 W/pax` Ley 37/2003. - En todos los casos: muestra el bloqueo de fecha con depósito deducible de `100 €` (`DEPOSITO_STRIPE_EUR`), el desglose transparente del Split Soberano `80/10/10` y el encaje dentro del presupuesto total de la pareja. 2) Crear `src/components/providers/UniversalProviderSimulatorCard.tsx` (`'use client'`) que renderice este simulador interactivo adaptado a la ficha activa, con controles de comensales/horas y CTAs reales hacia el calendario del proveedor (`resolveProviderCalendarHref`) y WhatsApp de Conserjería (`CENTRALITA_EAR_OS`). 3) Montar `UniversalProviderSimulatorCard` en `src/app/(public)/proveedores/[slug]/page.tsx` para que todas las fichas del directorio nacional tengan su propio simulador dinámico conectado a sus datos.",
+      "scaffold": {
+        "invariants": [
+          "Importar `DEPOSITO_STRIPE_EUR`, `TARIFA_BASE_SOLISTA_EUR`, `LOGISTICA_EUR_PER_KM`, `WATTS_PER_PAX`, `SPLIT_SOBERANO` desde `@/lib/constants/ear-os-ssot`",
+          "Reutilizar `createAllocation` de `@/lib/budget/budget-allocator-engine` para mostrar el encaje 50/15/15/10/10 al céntimo",
+          "Cero botones huérfanos: el CTA principal lleva al calendario/bloqueo real del proveedor (`resolveProviderCalendarHref`) y el secundario a WhatsApp pre-rellenado con la simulación"
+        ],
+        "forbidden": [
+          "Prohibido hardcodear precios fuera del SSOT o de la ficha del proveedor",
+          "Prohibido usar `any`"
+        ]
+      },
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node ./node_modules/eslint/bin/eslint.js \"src/lib/providers/universal-provider-simulator.ts\" \"src/components/providers/UniversalProviderSimulatorCard.tsx\" \"src/app/(public)/proveedores/[slug]/page.tsx\"",
+      "done_when": "1) Cualquier ficha en `/proveedores/[slug]` muestra el simulador universal adaptado a su gremio, precio y aforo real. 2) Calcula al céntimo con el Motor Magia Negra y SSOT. 3) `tsc --noEmit` y `eslint` devuelven Exit Code 0."
+    }
+  ],
   "completed": [
+    {
+      "id": "W47_T01_PURGE_GLOBAL_FRANKENSTEIN_SHELL",
+      "title": "Purga Global Anti-Frankenstein · Unificar Shell en layout.tsx, erradicar modales zombis por ratón (SpatialIntelligence) y unificar cabecera de Home",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-11-02T23:09:48.116Z"
+    },
+    {
+      "id": "W46_T01_T02_NAVBAR_AND_EZKERTZA_CINEMATIC",
+      "title": "SovereignNavbar sin solapes + EzkertzaCinematicJourney (dron Bilbao->Derio, llegada nupcial, galería sin recortes)",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-11-02T22:29:35.000Z"
+    },
     {
       "id": "W44_T03_CALL_CENTER_WHATSAPP_N8N_INTAKE",
       "title": "Cierre Transaccional · Cablear Call Center y WhatsApp hacia Webhook n8n S-Class",
@@ -23,26 +116,12 @@
       "status": "COMPLETED",
       "exit_code": 0,
       "completed_at": "2026-11-02T20:41:12.068Z"
-    },
-    {
-      "id": "W44_T02_HARVESTED_VANGUARD_FINCAS_TELEMETRY",
-      "title": "Vanguardia S-Class · Inyectar AudioReactiveVisualizer y HorizonXGlow en Jardines La Cartuja",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-11-02T20:06:47.867Z"
-    },
-    {
-      "id": "W44_T01_HARVESTED_VANGUARD_OTZARRETA",
-      "title": "Vanguardia S-Class · Inyectar HorizonXGlow, LiquidGlassCard y AudioReactiveVisualizer en /otzarreta",
-      "status": "COMPLETED",
-      "exit_code": 0,
-      "completed_at": "2026-11-02T19:53:20.465Z"
     }
   ],
   "metadata": {
-    "last_updated": "2026-11-02T21:54:06.335Z",
-    "total_pending": 0,
-    "current_sprint": "WAVE_45_MOTOR_MAGIA_NEGRA",
-    "ceo_mandate": "Tolerancia cero a fachadas: Motor Magia Negra en céntimos enteros verificado sobre 10.000 presupuestos antes de pasar a Buzzy MCP."
+    "last_updated": "2026-11-02T23:09:48.118Z",
+    "total_pending": 3,
+    "current_sprint": "WAVE_47_ANTI_FRANKENSTEIN_GLOBAL",
+    "ceo_mandate": "Desmantelar el Frankenstein global de EAR OS: 1 sola cabecera pública, 0 modales zombis, 0 fotos horizontales cortadas ni verticales en carruseles, Panel de Métricas de Eduardo (Ezkertza) + Admin CEO, y Simulador Universal por proveedor."
   }
 }

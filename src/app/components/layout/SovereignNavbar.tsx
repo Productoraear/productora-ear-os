@@ -58,8 +58,9 @@ const SovereignNavbar = () => {
     return () => window.removeEventListener('keydown', onKey);
   }, [exploreOpen]);
 
+  // W47_T01 · La Home ya no es una excepción: usa la misma SovereignNavbar
+  // S-Class que el resto de rutas públicas. Solo las zonas privadas la ocultan.
   if (
-    pathname === '/' ||
     pathname?.startsWith('/admin') ||
     pathname?.startsWith('/panel') ||
     pathname?.startsWith('/pro') ||

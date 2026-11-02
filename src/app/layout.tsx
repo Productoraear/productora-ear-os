@@ -43,10 +43,8 @@ import { TenantRoleProvider } from "@/contexts/TenantRoleContext";
 import { MobileExperienceProvider } from "@/lib/config/mobile-experience-store";
 
 import SovereignNavbar from "@/app/components/layout/SovereignNavbar";
-import HummingbirdFlight from "@/app/components/ambient/HummingbirdFlight";
 import { UnifiedSearch } from '@/components/search/UnifiedSearch';
 import { BespokePricerModal } from "@/features/finance/ui/BespokePricerModal";
-import { SpatialIntelligence } from "@/app/components/spatial/SpatialIntelligence";
 import SovereignFooter from "@/app/components/layout/SovereignFooter";
 // W44_T03 · El CTA flotante de WhatsApp es la superficie que capta el lead.
 // Estaba importado sólo por DynamicMobileExperienceOrchestrator, que hoy no se
@@ -158,7 +156,6 @@ export default function RootLayout({
                     <AtmosphereProvider>
                       <EventCartProvider>
                         <SmoothScrollProvider>
-                          <SpatialIntelligence />
                           <div className="min-h-screen relative flex flex-col">
                             <GeoStructuredData />
                             <SovereignNavbar />
@@ -167,7 +164,6 @@ export default function RootLayout({
                             </main>
                             <SovereignFooter />
                             <FloatingWhatsAppCta />
-                            <HummingbirdFlight />
                             <BespokePricerModal />
                             <UnifiedSearch />
                                                                                                                                                                       </div>
