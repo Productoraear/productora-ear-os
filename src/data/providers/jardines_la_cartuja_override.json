@@ -3,17 +3,17 @@
   "providerName": "Jardines La Cartuja",
   "location": "El Puig, Valencia",
   "category": "Finca para Bodas & Eventos S.XVII (BIC)",
-  "publishedHash": "SHA256: 8f9a2e9b104c81...e530lock",
-  "lastPublishedAt": "2026-09-24T08:25:00Z",
+  "publishedHash": "SIN SELLO PUBLICADO",
+  "lastPublishedAt": null,
   "blocks": [
     {
       "id": "block-hero-1",
       "type": "hero",
       "visible": true,
-      "badgeText": "OFERTA EXCLUSIVA DE TEMPORADA · SIN INTERMEDIARIOS",
-      "h1": "Celebra tu boda inolvidable en Jardines La Cartuja con Tarifa Congelada SHA-256 y Reserva Reembolsable de 100 €",
-      "subheadline": "Garantía de espacio histórico del Siglo XVII, sonido Bose/Shure sin límites acústicos y catering de autor directamente con la propiedad.",
-      "ctaText": "Bloquear Tarifa y Fecha con 100,00 €"
+      "badgeText": "ALIANZA DIRECTA CON LA PROPIEDAD · EAR OS",
+      "h1": "Celebra tu boda inolvidable en Jardines La Cartuja con depósito deducible de 100 €",
+      "subheadline": "Espacio histórico del Siglo XVII, sonido Bose/Shure calibrado a 12 W/pax y catering de autor directamente con la propiedad.",
+      "ctaText": "Bloquear Fecha con 100,00 €"
     },
     {
       "id": "block-carousel-1",
@@ -1539,7 +1539,7 @@
       "type": "value_stack",
       "visible": true,
       "title": "Stack de Valor e Instalaciones Incluidas",
-      "savingsBadge": "Ahorro Estimado +2.400 €",
+      "savingsBadge": "Sin intermediarios",
       "items": [
         {
           "title": "Exclusividad de Salón & Jardines Históricos",
@@ -1547,14 +1547,14 @@
           "description": "Acceso exclusivo al Salón Ara Christi (200 pax) o Salón Invernadero (400 pax) con la Noria del S.XVII."
         },
         {
-          "title": "Rider Acústico Certificado (Bose F1 / Shure)",
+          "title": "Rider Acústico S-Class (Bose F1 / Shure)",
           "price": "850 €",
-          "description": "Sonido calibrado a 12 W/pax con microfonía Shure Beta 87A. Cero sanciones y sonido cristalino."
+          "description": "Sonido calibrado a 12 W/pax con microfonía Shure Beta 87A. Cumplimiento acústico verificable y sonido cristalino."
         },
         {
-          "title": "Inmutabilidad de Tarifa SHA-256",
-          "price": "Incalculable",
-          "description": "Tu precio queda congelado en el bloque SHA-256. Sin sorpresas por inflación ni sobrecostes."
+          "title": "Sello de contenido SHA-256",
+          "price": "Verificable",
+          "description": "La ficha publicada queda sellada con SHA-256. El presupuesto se cierra en la visita técnica, sin sobrecostes por inflación."
         },
         {
           "title": "Compromiso Social VIMUME",
@@ -1599,7 +1599,7 @@
       "faqs": [
         {
           "question": "¿Qué incluye la celebración hasta las 06:00 AM?",
-          "answer": "Jardines La Cartuja cuenta con licencia para mantener la celebración musical y barra libre hasta las 06:00 AM en sus salones insonorizados, sin riesgo de cortes ni sanciones."
+          "answer": "Jardines La Cartuja cuenta con licencia para mantener la celebración musical y barra libre hasta las 06:00 AM en sus salones insonorizados, con la sonorización calibrada y el limitador homologado."
         },
         {
           "question": "¿Cómo funciona la Garantía de Depósito 100,00 € Price-Lock?",

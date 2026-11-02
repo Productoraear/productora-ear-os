@@ -48,6 +48,63 @@ import { OTZARRETA_ENTITY } from '@/lib/constants/otzarreta-entity';
 const formatEuro = (value: number): string =>
   `${new Intl.NumberFormat('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value)} €`;
 
+/**
+ * INV-06 · Doctrina del Dato Verificado.
+ * `verified:true` solo es legítimo cuando existe un teléfono REAL de la entidad:
+ * nunca la centralita EAR OS, nunca un placeholder, nunca un campo vacío.
+ */
+function hasVerifiablePhone(provider: ProviderItem): boolean {
+  if (provider.has_real_phone !== true) return false;
+  const digits = String(provider.phone || provider.telephone || '').replace(/\D/g, '');
+  if (digits.length < 9) return false;
+  const centralitaDigits = CENTRALITA.display.replace(/\D/g, '').slice(-9);
+  return !digits.endsWith(centralitaDigits);
+}
+
+/** Normaliza texto para búsqueda: sin acentos, sin mayúsculas, sin ruido. */
+function normalizeSearchText(value: string): string {
+  return value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim();
+}
+
+/**
+ * Normalizador único de fichas del directorio (se aplica a TODO proveedor,
+ * venga del Data Lake, del fallback estático o del catálogo curado).
+ * Corrige de una sola vez: sellos VERIFICADO sin teléfono, ratings inventados,
+ * provincias en minúsculas, precios vacíos y badges de homologación sin prueba.
+ */
+function normalizeDirectoryProvider(provider: ProviderItem): ProviderItem {
+  const verified = provider.verified === true && hasVerifiablePhone(provider);
+  const rawPrice =
+    typeof provider.price === 'number'
+      ? `${provider.price} €`
+      : (provider.price || '').trim();
+  const reviewTotal = provider.reviews ?? 0;
+  const province =
+    findCanonicalProvinceName(provider.province || '') || (provider.province || '');
+  const rawBadge = (provider.badge || '').trim();
+  const badgeClaimsVerification = /verificad|homologad/i.test(rawBadge);
+
+  return {
+    ...provider,
+    province,
+    price: rawPrice.length > 0 ? rawPrice : undefined,
+    rating:
+      reviewTotal > 0 && typeof provider.rating === 'number' ? provider.rating : undefined,
+    reviews: reviewTotal > 0 ? reviewTotal : undefined,
+    verified,
+    has_real_phone: verified,
+    phone: verified ? (provider.phone || provider.telephone || null) : null,
+    telephone: verified ? (provider.telephone || provider.phone || undefined) : undefined,
+    badge: verified
+      ? (rawBadge || 'VERIFICADO S-CLASS')
+      : (rawBadge && !badgeClaimsVerification ? rawBadge : 'FICHA DEL DIRECTORIO'),
+  };
+}
+
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // SUBCATEGORÍAS S-CLASS: FINCAS & ESPACIOS SINGULARES
@@ -237,6 +294,28 @@ function ProveedoresDirectoryContent() {
       setCurrentPage(1);
     }
   }, [urlProv]);
+
+  /**
+   * BUSCADOR ÚNICO: la paleta global (⌘K) y el filtro del directorio comparten
+   * el parámetro `q`. Lo que se escribe en cualquiera de los dos aterriza en el
+   * mismo estado y en la misma URL compartible. Sin duplicar lógica ni perder
+   * los filtros de categoría, provincia y subcategoría.
+   */
+  useEffect(() => {
+    setSearchQuery(urlQ);
+    setCurrentPage(1);
+  }, [urlQ]);
+
+  const handleSearchChange = (q: string): void => {
+    setSearchQuery(q);
+    setCurrentPage(1);
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+    if (q) params.set('q', q);
+    else params.delete('q');
+    const newUrl = `${window.location.pathname}${params.toString() ? `?${params.toString()}` : ''}`;
+    window.history.replaceState(null, '', newUrl);
+  };
 
   const pageSize = 24;
   
@@ -700,7 +779,7 @@ function ProveedoresDirectoryContent() {
       list.push(SOVEREIGN_EDWIN_AGUDELO);
     }
     list.push(...cleanApi);
-    return list;
+    return list.map(normalizeDirectoryProvider);
   }, [apiProviders, selectedCategory, selectedProvince]);
 
   const categories: CategoryItem[] = [
@@ -780,7 +859,7 @@ function ProveedoresDirectoryContent() {
         reviews: 48,
         img: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&auto=format&fit=crop&q=80',
         isPreferred: true,
-        badge: 'HOMOLOGADO S-CLASS',
+        badge: 'SERVICIO EAR OS',
         customUrl: '/catering-brasas'
       }
     ];
@@ -812,15 +891,14 @@ function ProveedoresDirectoryContent() {
         }
       }
 
-      // 3. Filtrado de Búsqueda Inteligente
+      // 3. Filtrado de Búsqueda Inteligente (sin acentos ni mayúsculas)
       if (searchQuery && searchQuery.trim()) {
-        const q = searchQuery.toLowerCase().trim();
-        const name = (p.name || '').toLowerCase();
-        const desc = (p.description || '').toLowerCase();
-        const cat = (p.category || '').toLowerCase();
-        const prov = (p.province || '').toLowerCase();
+        const q = normalizeSearchText(searchQuery);
+        const haystack = normalizeSearchText(
+          `${p.name || ''} ${p.description || ''} ${p.category || ''} ${p.province || ''} ${p.municipality || ''}`
+        );
 
-        if (!name.includes(q) && !desc.includes(q) && !cat.includes(q) && !prov.includes(q)) {
+        if (!haystack.includes(q)) {
           return false;
         }
       }
@@ -830,12 +908,14 @@ function ProveedoresDirectoryContent() {
       if (a.isPreferred && !b.isPreferred) return -1;
       if (!a.isPreferred && b.isPreferred) return 1;
       return 0;
-    });
+    }).map(normalizeDirectoryProvider);
   }, [providersData, selectedCategory, selectedProvince, searchQuery]);
 
-  const effectiveTotal = totalApiProviders > 0
-    ? totalApiProviders
-    : (STATIC_CATEGORY_TOTALS[selectedCategory] || filteredProviders.length);
+  const effectiveTotal = searchQuery.trim()
+    ? filteredProviders.length
+    : totalApiProviders > 0
+      ? totalApiProviders
+      : (STATIC_CATEGORY_TOTALS[selectedCategory] || filteredProviders.length);
 
   const totalPages = Math.max(1, Math.ceil(effectiveTotal / pageSize));
   // apiProviders ya viene paginado a nivel servidor / fallback estático por currentPage y pageSize
@@ -887,19 +967,20 @@ function ProveedoresDirectoryContent() {
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
               <div>
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FFF0F2] text-[#FF385C] text-xs font-bold uppercase tracking-wider mb-2">
-                  <Sparkles size={13} className="text-[#FF385C]" /> Catálogo Homologado · 13.094 Profesionales
+                  <Sparkles size={13} className="text-[#FF385C]" /> Directorio nacional · {PROVIDERS_B2C_TOTAL.toLocaleString()} fichas
                 </span>
                 <h1 className="text-2xl sm:text-3xl font-extrabold text-[#222222] tracking-tight">
-                  Encuentra el mejor proveedor o espacio para tu evento
+                  Encuentra proveedor o espacio para tu evento
                 </h1>
                 <p className="text-[#717171] text-sm max-w-2xl mt-1">
-                  Reserva verificada con seguro de RC de 1.000.000 €, rider acústico homologado y depósito de 100 € deducible.
+                  El seguro de RC y el rider acústico se acreditan ficha a ficha. La reserva
+                  protegida de 100 € se formaliza en Stripe Price-Lock.
                 </p>
               </div>
 
               <div className="flex items-center gap-2 text-xs font-mono text-[#717171]">
                 <span className="px-3 py-1.5 rounded-full bg-[#F7F7F7] border border-[#EBEBEB] flex items-center gap-1.5 font-bold">
-                  <ShieldCheck size={14} className="text-[#FF385C]" /> 100% Verificado
+                  <ShieldCheck size={14} className="text-[#FF385C]" /> Sello por ficha
                 </span>
                 <a
                   href={`tel:${CENTRALITA.tel}`}
@@ -932,16 +1013,16 @@ function ProveedoresDirectoryContent() {
                   <Sparkles size={12} className="text-[#258DCD]" /> Productora EAR · Directorio Nacional
                 </div>
                 <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white uppercase tracking-tight font-syne">
-                  Directorio Homologado de Proveedores
+                  Directorio de Proveedores con Sello Verificado
                 </h1>
                 <p className="text-neutral-400 text-xs sm:text-sm max-w-3xl font-light leading-relaxed">
-                  Selección de profesionales de España con seguro de RC de 1.000.000 €, rider acústico estandarizado y reserva protegida de 100,00 €.
+                  Selección de profesionales de España. El seguro de RC de 1.000.000 €, el rider acústico y la reserva protegida de 100,00 € se acreditan ficha a ficha: solo las fichas con teléfono real verificable muestran el sello S-Class.
                 </p>
               </div>
 
               <div className="flex flex-wrap md:flex-col items-start md:items-end gap-2 font-mono text-[10px] text-neutral-300 shrink-0">
                 <span className="px-2.5 py-1 rounded-lg bg-black/60 border border-white/10 flex items-center gap-1.5">
-                  <ShieldCheck size={12} className="text-emerald-400" /> Cobertura RC: 1.000.000 €
+                  <ShieldCheck size={12} className="text-emerald-400" /> RC acreditada por ficha
                 </span>
                 <span className="px-2.5 py-1 rounded-lg bg-black/60 border border-white/10 flex items-center gap-1.5">
                   <Lock size={12} className="text-[#AAD6CD]" /> Reserva: 100 € Stripe
@@ -970,7 +1051,7 @@ function ProveedoresDirectoryContent() {
           selectedSubcategory={selectedSubcategory}
           onSelectSubcategory={handleSubcategorySelect}
           searchQuery={searchQuery}
-          onSearchChange={(q) => { setSearchQuery(q); setCurrentPage(1); }}
+          onSearchChange={handleSearchChange}
           selectedProvince={selectedProvince}
           onProvinceChange={(prov) => { setSelectedProvince(prov); setCurrentPage(1); }}
           provincesList={provincesList}

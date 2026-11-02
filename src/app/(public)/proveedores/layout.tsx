@@ -1,16 +1,16 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Directorio de Proveedores y Fincas Homologadas S-Class | Productora EAR',
+  title: 'Directorio de Proveedores y Fincas | Productora EAR',
   description:
-    'Catálogo oficial y verificado de fincas, música en directo, catering y sonido profesional para bodas. Conexión directa vía n8n Dispatcher y depósito protegido Stripe.',
+    'Directorio de fincas, música en directo, catering y sonido para bodas. El sello S-Class se acredita ficha a ficha con teléfono real verificable y depósito de 100 € en Stripe Price-Lock.',
   alternates: {
     canonical: 'https://www.productoraear.com/proveedores',
   },
   openGraph: {
-    title: 'Directorio de Proveedores y Fincas Homologadas · Productora EAR',
+    title: 'Directorio de Proveedores y Fincas · Productora EAR',
     description:
-      'Catálogo oficial y verificado de fincas, música en directo, catering y sonido profesional para bodas.',
+      'Directorio de fincas, música en directo, catering y sonido para bodas. Sello S-Class acreditado ficha a ficha.',
     url: 'https://www.productoraear.com/proveedores',
     type: 'website',
   },

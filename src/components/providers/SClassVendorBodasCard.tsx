@@ -46,10 +46,19 @@ export default function SClassVendorBodasCard({
   const [imgError, setImgError] = useState<boolean>(false);
 
   const imageSrc = imgError || !vendor.img ? FALLBACK_IMAGE : vendor.img;
+
+  // INV-06: el sello de verificación exige teléfono real de la entidad.
+  // Una ficha sin teléfono verificable no puede lucir "VERIFICADO".
+  const isVerified = vendor.verified === true && vendor.has_real_phone === true;
   const badgeLabel =
-    vendor.badge || (vendor.isPreferred ? 'HOMOLOGADO S-CLASS' : 'DIRECTORIO HOMOLOGADO');
+    vendor.badge || (isVerified ? 'VERIFICADO S-CLASS' : 'FICHA DEL DIRECTORIO');
 
   const location = vendor.province || 'España';
+  const rawPrice =
+    typeof vendor.price === 'number' ? `${vendor.price} €` : (vendor.price || '').trim();
+  const hasPrice = rawPrice.length > 0;
+  const reviewCount = vendor.reviews ?? 0;
+  const hasRating = reviewCount > 0 && typeof vendor.rating === 'number';
 
   return (
     <article className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-[#09090d]/80 backdrop-blur-md transition-all duration-300 ease-out hover:-translate-y-1 hover:border-[#ecb613]/40 hover:shadow-[0_24px_60px_-20px_rgba(236,182,19,0.18)]">
@@ -78,14 +87,16 @@ export default function SClassVendorBodasCard({
           </div>
         )}
 
-        {/* Rating dorado sobre la imagen */}
-        <div className="absolute bottom-3 left-3 flex items-center gap-2 rounded-full border border-white/10 bg-black/60 px-2.5 py-1.5 backdrop-blur-md">
-          <StarRating rating={vendor.rating ?? 0} />
-          <span className="font-mono text-[11px] font-bold text-white">
-            {(vendor.rating ?? 5).toFixed(1)}
-          </span>
-          <span className="font-mono text-[10px] text-neutral-200 font-medium">({vendor.reviews ?? 0})</span>
-        </div>
+        {/* Rating real: sin opiniones verificadas no se inventa una puntuación */}
+        {hasRating && (
+          <div className="absolute bottom-3 left-3 flex items-center gap-2 rounded-full border border-white/10 bg-black/60 px-2.5 py-1.5 backdrop-blur-md">
+            <StarRating rating={Number(vendor.rating)} />
+            <span className="font-mono text-[11px] font-bold text-white">
+              {Number(vendor.rating).toFixed(1)}
+            </span>
+            <span className="font-mono text-[10px] text-neutral-200 font-medium">({reviewCount})</span>
+          </div>
+        )}
       </div>
 
       {/* Contenido */}
@@ -113,9 +124,11 @@ export default function SClassVendorBodasCard({
         {/* Precio SSOT + Split 80/10/10 */}
         <div className="mt-auto flex flex-wrap items-center justify-between gap-2 border-t border-white/10 pt-4">
           <div className="min-w-0">
-            <p className="font-mono text-[10px] uppercase tracking-widest text-neutral-300 font-semibold">Desde</p>
+            <p className="font-mono text-[10px] uppercase tracking-widest text-neutral-300 font-semibold">
+              {hasPrice ? (vendor.priceLabel || 'Desde') : 'Precio'}
+            </p>
             <p className="truncate font-syne text-xl font-black text-[#ecb613]">
-              {vendor.price ?? 'Consultar'}
+              {hasPrice ? rawPrice : 'Consultar'}
             </p>
           </div>
           <span className="shrink-0 rounded-full border border-[#ecb613]/20 bg-[#ecb613]/5 px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-[#ecb613]">

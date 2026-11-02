@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
-import { Music, Sparkles, Volume2 } from 'lucide-react';
+import { Music, ShieldCheck, Sparkles, Volume2 } from 'lucide-react';
 import JardinesLaCartujaGrandSlam from '@/components/fincas/JardinesLaCartujaGrandSlam';
+import jardinesLaCartujaData from '@/data/providers/jardines_la_cartuja_override.json';
 import { BentoGrid, BentoGridItem } from '@/components/harvested/BentoGrid';
 import { GlowButton } from '@/components/harvested/GlowButton';
 import {
@@ -10,7 +11,7 @@ import {
 } from '@/lib/constants/ear-os-ssot';
 
 export const metadata: Metadata = {
-  title: 'Música en Directo y Sonorización para Jardines La Cartuja (Valencia) · Homologación Oficial | Productora EAR',
+  title: 'Música en Directo y Sonorización para Jardines La Cartuja (Valencia) | Productora EAR',
   description: `Coordinación musical, limitadores acústicos Ley 37/2003 y cotizador oficial para bodas en Jardines La Cartuja (El Puig, Valencia). Reserva de depósito de ${DEPOSITO_STRIPE_EUR} € Price-Lock.`,
   alternates: {
     canonical: 'https://www.productoraear.com/fincas/jardines-la-cartuja',
@@ -55,54 +56,84 @@ export default function JardinesLaCartujaPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <section className="w-full px-4 sm:px-6 lg:px-10 pt-10 pb-6">
-        <div className="mx-auto max-w-6xl rounded-3xl bg-[#09090d]/80 border border-white/10 p-6 sm:p-10 transition-all duration-500 hover:border-white/20 hover:shadow-[0_0_60px_-15px_rgba(255,255,255,0.15)]">
-          <p className="text-xs uppercase tracking-[0.3em] text-white/50">
-            Finca S-Class · El Puig, Valencia
-          </p>
-          <h1 className="mt-3 text-3xl sm:text-5xl font-semibold text-white tracking-tight">
+      <section className="relative w-full overflow-hidden px-4 pb-8 pt-10 sm:px-6 lg:px-10">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 top-0 h-[460px]"
+          style={{
+            background:
+              'radial-gradient(ellipse at top, rgba(236,182,19,0.16), transparent 62%)',
+          }}
+        />
+        <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[2rem] border border-white/10 bg-[#09090d]/85 p-6 shadow-[0_40px_120px_-40px_rgba(236,182,19,0.22)] backdrop-blur-md sm:p-10">
+          <div className="flex flex-wrap items-center gap-3">
+            <span className="inline-flex items-center gap-2 rounded-full border border-[#ecb613]/30 bg-[#ecb613]/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.25em] text-[#ecb613]">
+              <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
+              Finca S-Class · El Puig, Valencia
+            </span>
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 font-mono text-[11px] uppercase tracking-widest text-white/60">
+              <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" aria-hidden="true" />
+              Acústica Ley 37/2003
+            </span>
+          </div>
+
+          <h1 className="mt-5 max-w-3xl font-syne text-4xl font-black leading-[1.05] tracking-tight text-white sm:text-6xl">
             Jardines La Cartuja
+            <span className="mt-2 block bg-gradient-to-r from-[#ecb613] via-[#ffe066] to-[#ecb613] bg-clip-text text-2xl font-bold text-transparent sm:text-3xl">
+              Tu boda, cinematográfica de principio a fin
+            </span>
           </h1>
-          <p className="mt-4 max-w-3xl text-sm sm:text-base text-white/70 leading-relaxed">
+
+          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/70 sm:text-base">
             Experiencia inmersiva con cotizador en tiempo real y garantía acústica S-Class.
             Reserva con depósito Price-Lock de {DEPOSITO_STRIPE_EUR} € y asegura tu fecha.
           </p>
 
-          <div className="mt-8 flex flex-col sm:flex-row sm:items-center gap-4">
-            <div className="rounded-2xl bg-white/5 border border-white/10 px-5 py-4">
-              <p className="text-[11px] uppercase tracking-[0.25em] text-white/50">
+          <dl className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
+            <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+              <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/50">
+                Presión homologada
+              </dt>
+              <dd className="mt-1 text-2xl font-black text-white">12 W/pax</dd>
+              <dd className="mt-1 text-xs text-white/50">Bose F1 · Shure Axient</dd>
+            </div>
+            <div className="rounded-2xl border border-[#ecb613]/25 bg-[#ecb613]/5 p-4">
+              <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#ecb613]/80">
+                Depósito Price-Lock
+              </dt>
+              <dd className="mt-1 text-2xl font-black text-[#ecb613]">{DEPOSITO_STRIPE_EUR} €</dd>
+              <dd className="mt-1 text-xs text-white/50">Deducible íntegro del presupuesto</dd>
+            </div>
+            <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+              <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/50">
                 Tarifa Solista
-              </p>
-              <p className="mt-1 text-2xl font-semibold text-white">
-                {TARIFA_BASE_SOLISTA_EUR} €
-              </p>
-              <p className="text-xs text-white/50 mt-1">
-                Depósito Price-Lock: {DEPOSITO_STRIPE_EUR} €
-              </p>
+              </dt>
+              <dd className="mt-1 text-2xl font-black text-white">{TARIFA_BASE_SOLISTA_EUR} €</dd>
+              <dd className="mt-1 text-xs text-white/50">Tarifa base del SSOT</dd>
             </div>
+          </dl>
 
-            <div className="flex flex-wrap gap-3">
-              <GlowButton href="/reservar/solista" variant="gold">
-                Reservar Solista · {TARIFA_BASE_SOLISTA_EUR} €
-              </GlowButton>
-              <GlowButton href="/reservar/test-1eur" variant="cyan">
-                Probar Pasarela · 1,00 €
-              </GlowButton>
-              <a
-                href="#configurador"
-                className="inline-flex items-center justify-center rounded-2xl bg-white/5 text-white border border-white/15 px-6 py-3 text-sm font-semibold transition-all duration-300 hover:bg-white/10 hover:border-white/30"
-              >
-                Rider Técnico & Espacios
-              </a>
-              <a
-                href={WHATSAPP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-300 border border-emerald-400/20 px-6 py-3 text-sm font-semibold transition-all duration-300 hover:bg-emerald-500/20 hover:border-emerald-400/40"
-              >
-                WhatsApp +{CENTRALITA_EAR_OS}
-              </a>
-            </div>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <GlowButton href="/reservar/solista" variant="gold">
+              Reservar Solista · {TARIFA_BASE_SOLISTA_EUR} €
+            </GlowButton>
+            <GlowButton href="/reservar/test-1eur" variant="cyan">
+              Probar Pasarela · 1,00 €
+            </GlowButton>
+            <a
+              href="#configurador"
+              className="inline-flex items-center justify-center rounded-2xl bg-white/5 px-6 py-3 text-sm font-semibold text-white border border-white/15 transition-all duration-300 hover:bg-white/10 hover:border-white/30"
+            >
+              Rider Técnico & Espacios
+            </a>
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center rounded-2xl bg-emerald-500/10 px-6 py-3 text-sm font-semibold text-emerald-300 border border-emerald-400/20 transition-all duration-300 hover:bg-emerald-500/20 hover:border-emerald-400/40"
+            >
+              WhatsApp {CENTRALITA_EAR_OS}
+            </a>
           </div>
         </div>
       </section>
@@ -152,7 +183,7 @@ export default function JardinesLaCartujaPage() {
         </div>
       </section>
 
-      <JardinesLaCartujaGrandSlam initialEditMode={false} />
+      <JardinesLaCartujaGrandSlam initialEditMode={false} initialData={jardinesLaCartujaData} />
     </div>
   );
 }

@@ -81,18 +81,38 @@ export interface BlockItem {
 interface JardinesLaCartujaProps {
   initialEditMode?: boolean;
   allowEditToggle?: boolean;
+  /**
+   * Contenido ya publicado, leído en servidor (SEO + cero CLS).
+   * El fetch de cliente sigue existiendo para refrescar tras una edición.
+   */
+  initialData?: {
+    readonly blocks?: unknown;
+    readonly publishedHash?: unknown;
+    readonly lastPublishedAt?: unknown;
+  };
 }
 
 export default function JardinesLaCartujaGrandSlam({
   initialEditMode = false,
   allowEditToggle = false,
+  initialData,
 }: JardinesLaCartujaProps) {
   const [isEditMode, setIsEditMode] = useState<boolean>(initialEditMode);
-  const [blocks, setBlocks] = useState<BlockItem[]>([]);
-  const [publishedHash, setPublishedHash] = useState<string>("SHA256: 8f9a2e...e530lock");
-  const [lastPublishedAt, setLastPublishedAt] = useState<string>("");
+  const [blocks, setBlocks] = useState<BlockItem[]>(() =>
+    Array.isArray(initialData?.blocks) ? (initialData.blocks as BlockItem[]) : []
+  );
+  const [publishedHash, setPublishedHash] = useState<string>(() =>
+    typeof initialData?.publishedHash === 'string' && initialData.publishedHash
+      ? initialData.publishedHash
+      : 'SIN SELLO PUBLICADO'
+  );
+  const [lastPublishedAt, setLastPublishedAt] = useState<string>(() =>
+    typeof initialData?.lastPublishedAt === 'string' ? initialData.lastPublishedAt : ''
+  );
   const [isDirty, setIsDirty] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(
+    () => !(Array.isArray(initialData?.blocks) && initialData.blocks.length > 0)
+  );
   const [isSaving, setIsSaving] = useState<boolean>(false);
 
   // Carrusel
@@ -114,12 +134,13 @@ export default function JardinesLaCartujaGrandSlam({
   // Cargar base de datos
   const fetchProviderData = async () => {
     try {
-      setIsLoading(true);
       const res = await fetch('/api/providers/jardines-la-cartuja');
       const data = await res.json();
       if (data.success && data.data) {
-        setBlocks(data.data.blocks || []);
-        setPublishedHash(data.data.publishedHash || "SHA256: 8f9a2e...e530lock");
+        if (Array.isArray(data.data.blocks) && data.data.blocks.length > 0) {
+          setBlocks(data.data.blocks);
+        }
+        setPublishedHash(data.data.publishedHash || "SIN SELLO PUBLICADO");
         setLastPublishedAt(data.data.lastPublishedAt || "");
       }
     } catch (err) {
@@ -807,7 +828,7 @@ export default function JardinesLaCartujaGrandSlam({
                         className="w-full py-4 px-4 bg-gradient-to-r from-[#ecb613] via-[#d4af37] to-[#ecb613] hover:brightness-110 text-black font-syne font-black text-sm uppercase tracking-wider rounded-2xl shadow-xl transition-all flex items-center justify-center gap-2"
                       >
                         <Lock size={18} />
-                        Bloquear Tarifa y Fecha con 100,00 €
+                        Bloquear Fecha con 100,00 €
                       </button>
                     </div>
                   </div>
@@ -992,18 +1013,22 @@ export default function JardinesLaCartujaGrandSlam({
                   <span className="text-[#ecb613] font-bold">{totalPrice.toLocaleString('es-ES')} €</span>
                 </div>
                 <div className="text-[10px] text-white/50 pt-2 border-t border-white/10">
-                  🔐 Hash: {publishedHash}
+                  🔐 Sello de publicación: {publishedHash}
                 </div>
               </div>
               <button
                 onClick={() => {
-                  alert('¡Depósito de 100,00 € abonado con éxito!');
-                  setIsDepositModalOpen(false);
+                  window.location.assign('/reservar/solista?origen=jardines-la-cartuja');
                 }}
                 className="w-full py-4 bg-[#ecb613] text-black font-syne font-black rounded-xl uppercase tracking-wider"
               >
-                Abonar 100,00 € en Stripe
+                Continuar al pago seguro · 100 €
               </button>
+              <p className="text-[10px] text-white/50 text-center leading-relaxed">
+                El depósito de 100,00 € se descuenta íntegro del presupuesto final. La fecha
+                queda bloqueada al confirmarse el pago real en Stripe; este botón no simula
+                ningún cobro.
+              </p>
             </div>
           </div>
         </div>

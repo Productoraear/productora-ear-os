@@ -589,6 +589,24 @@ export const UnifiedSearch: React.FC = () => {
                   )}
 
 
+                  {/* Puente al directorio: la paleta global y el filtro del
+                      directorio comparten el mismo parámetro `q` (buscador único). */}
+                  {query.trim().length >= 2 && (
+                    <button
+                      type="button"
+                      onClick={() => navigate(`/proveedores?q=${encodeURIComponent(query.trim())}`)}
+                      className="flex w-full items-center justify-between gap-3 rounded-2xl border border-[#258DCD]/30 bg-[#258DCD]/5 p-3 text-left transition-all duration-300 ease-out hover:border-[#258DCD]/70 hover:bg-[#258DCD]/10"
+                    >
+                      <span className="flex min-w-0 items-center gap-2 text-xs font-semibold text-white">
+                        <Building2 className="h-4 w-4 shrink-0 text-[#258DCD]" aria-hidden="true" />
+                        <span className="truncate">
+                          Ver «{query.trim()}» en el directorio de proveedores
+                        </span>
+                      </span>
+                      <ArrowRight className="h-4 w-4 shrink-0 text-[#258DCD]" aria-hidden="true" />
+                    </button>
+                  )}
+
                   {/* Comandos de sistema agrupados */}
                   {commandGroups.map((entry) => (
                     <div key={entry.group} role="group" aria-label={GROUP_LABEL[entry.group]}>

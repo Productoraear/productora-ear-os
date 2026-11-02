@@ -58,10 +58,13 @@ export const BentoFilterBar: React.FC<BentoFilterBarProps> = React.memo(({
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div>
           <span className="text-[10px] font-mono text-[#258DCD] uppercase tracking-widest block font-semibold">
-            Índice de Proveedores Auditados
+            Índice del directorio
           </span>
           <p className="text-sm font-bold text-white font-syne uppercase mt-0.5">
-            {totalResults.toLocaleString()} Profesionales Homologados
+            {totalResults.toLocaleString()} {totalResults === 1 ? 'ficha indexada' : 'fichas indexadas'}
+          </p>
+          <p className="text-[10px] text-neutral-400 font-mono mt-1">
+            Solo las fichas con teléfono real verificable muestran sello S-Class.
           </p>
         </div>
 
@@ -91,7 +94,7 @@ export const BentoFilterBar: React.FC<BentoFilterBarProps> = React.memo(({
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 w-3.5 h-3.5" />
             <input
               type="text"
-              placeholder="Filtrar por nombre o servicio..."
+              placeholder="Filtrar fichas del directorio..."
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
               className="w-full bg-[#0a0a0f] border border-[#1a1a1a] hover:border-[#258DCD]/50 rounded-xl pl-9 pr-8 py-2.5 text-xs text-white placeholder-neutral-400 focus:outline-none focus:border-[#258DCD] transition-colors font-mono"
