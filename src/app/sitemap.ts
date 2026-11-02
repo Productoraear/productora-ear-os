@@ -5,6 +5,7 @@ import { MARIACHI_LANDINGS } from '@/lib/mariachi/mariachiLandingCatalog';
 import { OTZARRETA_LANDINGS } from '@/lib/seo/otzarreta-dominance-engine';
 import { MARIACHI_LANDINGS as CENTRALITA_LANDINGS } from '@/lib/seo/centralita-mariachis-dominance-engine';
 import { EVENT_LANDINGS } from '@/lib/seo/ear-eventos-dominance-engine';
+import { MUNICIPALITIES_DATASET } from '@/lib/constants/spanish-municipalities';
 
 // Google indexa el host www (ver GSC export 2026-10-24: el 100% de las páginas son www.productoraear.com).
 // El sitemap DEBE declarar el mismo host canónico o Google parte la autoridad entre www y no-www.
@@ -79,6 +80,7 @@ const STATIC_ROUTES: StaticRoute[] = [
     { path: '/dj-para-bodas', priority: 0.9, changeFrequency: 'daily' },
     { path: '/catering-de-brasas', priority: 0.85, changeFrequency: 'weekly' },
     { path: '/arroces', priority: 0.85, changeFrequency: 'weekly' },
+    { path: '/arsenal', priority: 0.95, changeFrequency: 'daily' },
     { path: '/alquiler-equipos-sonido-audiovisuales', priority: 0.85, changeFrequency: 'weekly' },
     { path: '/alquiler-pantallas-led-madrid', priority: 0.8, changeFrequency: 'weekly' },
     { path: '/rider-tecnico', priority: 0.7, changeFrequency: 'monthly' },
@@ -209,6 +211,27 @@ export default function sitemap(): MetadataRoute.Sitemap {
             changeFrequency: route.changeFrequency,
             priority: route.priority,
         });
+    }
+
+    // Matriz municipal hiperlocal defendible (W42_T07): 5 servicios canónicos x municipios de MUNICIPALITIES_DATASET
+    const MUNICIPAL_SITEMAP_SERVICES = ['mariachis', 'dj', 'sonorizacion', 'catering', 'fincas'] as const;
+    const seenUrls = new Set<string>(entries.map(e => e.url));
+
+    for (const [provSlug, towns] of Object.entries(MUNICIPALITIES_DATASET)) {
+        for (const town of towns) {
+            for (const srv of MUNICIPAL_SITEMAP_SERVICES) {
+                const url = `${BASE_URL}/bodas/${provSlug}/${srv}/${town.slug}`;
+                if (!seenUrls.has(url)) {
+                    seenUrls.add(url);
+                    entries.push({
+                        url,
+                        lastModified,
+                        changeFrequency: 'weekly',
+                        priority: 0.8,
+                    });
+                }
+            }
+        }
     }
 
     return entries;

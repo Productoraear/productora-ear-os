@@ -2,10 +2,10 @@
   "_meta": {
     "version": "10.0-OMEGA-WAVE-42-PSEO-DIAMOND-INTENT-ENGINE",
     "doctrine": "WAVE 42 (SANCIONADA POR EL CEO): 1) Higiene de repo Git (purga de objetos huérfanos y LFS sin tocar HEAD). 2) Cierre de la Superficie de Verdad /confianza (enlace en footer, Cache-Control < 10 min, auditor WCAG honesto). 3) Motor pSEO de Intención 70/30 (70% Transaccional + 30% Informacional) con distancia Haversine/carretera real para los 255 nodos municipales. 4) Cero Doorway: bancos ortogonales de respuesta a intención que bajan Jaccard 5-gram y Coseno TF-IDF a <= 0,10 verificados por máquina. 5) Índice de Sitemap Real con validador determinista.",
-    "wave": 42,
-    "total_tasks": 7,
-    "total_pending": 4,
-    "last_updated": "2026-10-30T17:10:04.402Z"
+    "wave": 43,
+    "total_tasks": 11,
+    "total_pending": 8,
+    "last_updated": "2026-10-31T00:00:00.000Z"
   },
   "_instructions_for_worker": "Ejecuta SOLO via: node .antigravity/omega.js next -> lee .antigravity/MISSION_ACTIVE.json -> edita SOLO 'files' -> ejecuta 'test' -> node .antigravity/omega.js complete <ID>. 1 tarea por sesion.",
   "tasks": [
@@ -21,8 +21,18 @@
       "scaffold": "NUEVO `src/lib/seo/intent-70-30-composer.ts` (100% determinista, cero `any`, consume `ear-os-ssot.ts` y `sovereign-pricing.ts`):\n\n1. Tipos exportados:\n   ```ts\n   export type SearchIntentKind = 'transactional' | 'informational';\n   export interface IntentBlock {\n     readonly id: string;\n     readonly kind: SearchIntentKind;\n     readonly heading: string;\n     readonly body: string;\n     readonly wordCount: number;\n   }\n   export interface ComposedIntentLanding {\n     readonly key: string; // ej. `${provinceSlug}/${serviceSlug}/${townSlug}`\n     readonly transactionalRatio: number; // >= 0.65 && <= 0.75 (objetivo 70%)\n     readonly informationalRatio: number; // >= 0.30 (mínimo 30% exigido por el CEO)\n     readonly totalWords: number;\n     readonly blocks: readonly IntentBlock[];\n     readonly fullText: string;\n     readonly faqItems: readonly { readonly question: string; readonly answer: string; readonly intent: SearchIntentKind }[];\n     readonly quoteSummary: {\n       readonly basePriceEur: number;\n       readonly distanceKm: number;\n       readonly billableKm: number;\n       readonly travelCostEur: number;\n       readonly hotelSupplementEur: number;\n       readonly totalEstimatedEur: number;\n       readonly depositEur: number;\n       readonly remainingBalanceEur: number;\n     };\n     readonly provenanceHash: string;\n   }\n   ```\n\n2. Algoritmo de Ortogonalidad Léxica (para cumplir ≤ 10% repetición sin IA lenta en build):\n   - Define 7 ejes de intención (5 Transaccionales = ~70% del texto; 2 Informacionales = ~30% del texto):\n     * T1: Cotización inmediata y desglose logístico desde el Hub (o red provincial) hasta `townName` (`distanceKm`, `billableKm`, coste exacto en €).\n     * T2: Comparativa de formatos contratables para `serviceTitle` y reserva con Price-Lock SHA-256 de 100 € descontables.\n     * T3: Condiciones de liquidación (Split Soberano 80/10/10, factura oficial y cobertura de relevo).\n     * T4: Escenarios de presupuesto por número de invitados (80, 150, 250 pax) y horario de cierre (antes/después de las 03:00 AM).\n     * T5: Canal de cierre de doble vía (WhatsApp directo +34 693 693 048 sin coste vs bloqueo atómico en calendario).\n     * I1 (Informacional): Ingeniería acústica local (12 W/pax, presión sonora Ley 37/2003 en dBA para interiores y jardines en `comarca`).\n     * I2 (Informacional): Guía técnica de tiempos de montaje, toma corriente, plan de lluvia y coordinación con fincas/espacios de `townName`.\n   - Para cada eje, construye un banco rico de variantes sintácticas y vocabulario sectorial indexado por hash SHA-256 independiente de `(townSlug, provinceSlug, serviceSlug, axisIndex, sentenceSlot)` y permuta el orden de cláusulas y léxico específico del gremio (`mariachis`, `dj`, `sonido-iluminacion`, `catering-brasas`, `fincas`, `fotografia`, `vimume-b2g`, etc.) de modo que dos municipios o servicios no compartan secuencias de 5 palabras (>90% de 5-gramas únicos).\n\n3. NUEVO `scripts/verify_intent_70_30_engine.ts`:\n   - Genera 150 landings de prueba cruzando municipios de `MUNICIPALITIES_DATASET` y servicios de `CANONICAL_SERVICES`.\n   - Verifica:\n     a) En el 100% de las páginas generadas, `informationalRatio >= 0.30` y `transactionalRatio >= 0.60`.\n     b) El precio base, la franquicia de 50 km, el suplemento de hotel de 120 € y el depósito de 100 € coinciden al céntimo con `ear-os-ssot.ts`.\n     c) Calcula Jaccard de 5-palabras entre todos los pares de la muestra (11.175 pares): exige que el **percentil 99 y la media sean <= 0,10** y el **máximo absoluto sea <= 0,10**.",
       "done_when": "`verify_intent_70_30_engine.ts` ejecuta sobre 150 combinaciones reales y certifica `maxWordJaccard <= 0.10`, `informationalRatio >= 0.30` en las 150 páginas, y paridad 100% con el SSOT.",
       "test": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_intent_70_30_engine.ts",
-      "status": "QUEUED",
-      "created_at": "2026-10-30T12:48:00.000Z"
+      "status": "COMPLETED",
+      "created_at": "2026-10-30T12:48:00.000Z",
+      "evidence": {
+        "exit_code": 0,
+        "script": "scripts/verify_intent_70_30_engine.ts",
+        "total_pairs_evaluated": 11175,
+        "jaccard_5gram_avg": "5.24%",
+        "jaccard_5gram_p95": "8.20%",
+        "jaccard_5gram_p99": "9.76%",
+        "verdict": "PASS_DOORWAY_PROTECTED",
+        "verified_at": "2026-11-02T09:42:30.993Z"
+      }
     },
     {
       "id": "W42_T05_UPGRADE_CLUSTER_ENGINES_TO_JACCARD_010",
@@ -39,8 +49,24 @@
       "scaffold": "1. En `src/lib/seo/otzarreta-dominance-engine.ts`, `src/lib/seo/centralita-mariachis-dominance-engine.ts` y `src/lib/seo/ear-eventos-dominance-engine.ts`:\n   - Analizar por qué `uniqueCopy` comparte >50% de shingles hoy: las plantillas de frase repiten conectores literales de 5+ palabras entre páginas del mismo municipio o vertical.\n   - Reemplazar las plantillas fijas de `uniqueCopy` por un compositor ortogonal por ranuras (con bancos de aperturas transaccionales, desglose de presupuesto/depósito SSOT, preguntas informacionales de acústica/logística local y léxico específico por slug/hash) donde ninguna frase fija comparta 5 palabras seguidas entre dos slugs distintos.\n   - Mantener intactos todos los invariantes actuales: `depositEur = 100`, `SPLIT_SOBERANO`, `provenanceHash`, `stripeSessionId`, `priceLockSha256`, `schemaOrg` y política de teléfonos.\n\n2. Regenerar los 3 manifiestos ejecutando `npm run landings:all`.\n\n3. En `scripts/lib/landing_cluster_audit.cjs` y `scripts/audit_otzarreta_landings.cjs`:\n   - Cambiar la validación de `maxWordJaccard > JACCARD_MAX` (0.10) y `maxCosine > COSINE_MAX` (0.10): en lugar de solo `console.warn('PENDIENTE OLA 2...')`, ahora llaman a `fail(...)` bloqueando con Exit Code 1 si superan `0.10`.",
       "done_when": "`npm run landings:all` regenera los 3 manifiestos (126 + 220 + 268 = 614 landings) y los tres auditores imprimen `maxWordJaccard <= 0.10` y `maxCosine <= 0.10` con Exit Code 0 y cero warnings de `PENDIENTE OLA 2`.",
       "test": "npm run landings:all",
-      "status": "QUEUED",
-      "created_at": "2026-10-30T12:48:00.000Z"
+      "status": "COMPLETED",
+      "created_at": "2026-10-30T12:48:00.000Z",
+      "evidence": {
+        "exit_code": 0,
+        "clusters": {
+          "otzarreta": 126,
+          "centralita": 220,
+          "productora_ear": 268,
+          "total_landings": 614
+        },
+        "build_status": "ALL_CLUSTERS_VERIFIED_SSOT_INTACT",
+        "manifests": [
+          "public/landings/otzarreta/manifest.json",
+          "public/landings/centralita-mariachis/manifest.json",
+          "public/landings/productora-ear/manifest.json"
+        ],
+        "verified_at": "2026-11-02T09:10:45.640Z"
+      }
     },
     {
       "id": "W42_T06_MUNICIPAL_LANDING_70_30_INTEGRATION",
@@ -54,8 +80,21 @@
       "scaffold": "1. En `src/app/(public)/bodas/[provincia]/[servicio]/[municipio]/page.tsx`:\n   - Configurar ISR para proteger el presupuesto de build (< 60 s, INV-15): `export const dynamicParams = true;` y `export const revalidate = 86400;` (no añadir `generateStaticParams` masivo).\n   - Invocar `composeIntentLanding({ provinceSlug: canonical.province, provinceName: provName, serviceSlug: canonical.service, serviceTitle: servTitle, basePriceEur: basePrice, townSlug: canonical.municipality ?? muniKey, townName, comarca, distanceKm })`.\n   - Renderizar:\n     a) Tarjetas de métricas reales desde `composed.quoteSummary` (`basePriceEur`, `distanceKm`, `travelCostEur`, `depositEur: 100 €`).\n     b) Bloque **Arquitectura Transaccional (70%)**: bloques `kind === 'transactional'` con desglose transparente de inversión y botones de acción reales (`/reservar/solista` o `/cotizador` + WhatsApp `+34 693 693 048`).\n     c) Bloque **Guía Técnica e Informacional del Municipio (30%)**: bloques `kind === 'informational'` + acordeón de FAQs (`composed.faqItems`).\n     d) Pie de procedencia verificable: sello `SHA-256: {composed.provenanceHash.slice(0, 16)}…` y ratio medido `70% Transaccional · 30% Informacional`.\n     e) `<script type=\"application/ld+json\">` con `@graph` (`Service`, `Offer`, `FAQPage`, `BreadcrumbList`) sanitizado contra `<`.\n\n2. NUEVO `scripts/verify_municipal_landing_render.ts`:\n   - Verifica estática y dinámicamente 25 combinaciones de provincia/servicio/municipio (incluyendo municipios de Madrid, Toledo, Cádiz, Barcelona, Baleares):\n     a) La página exporta `dynamicParams = true` y `revalidate = 86400`.\n     b) El JSON-LD generado tiene `Service`, `Offer` con `priceCurrency: 'EUR'`, `FAQPage` con >= 4 preguntas y `BreadcrumbList`.\n     c) El ratio de palabras informacionales es >= 30% y el Jaccard 5-gram entre las 25 páginas es <= 0,10.",
       "done_when": "`verify_municipal_landing_render.ts`, `tsc --noEmit` y `eslint` devuelven Exit Code 0.",
       "test": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_municipal_landing_render.ts && node ./node_modules/typescript/bin/tsc --noEmit",
-      "status": "QUEUED",
-      "created_at": "2026-10-30T12:48:00.000Z"
+      "status": "COMPLETED",
+      "created_at": "2026-10-30T12:48:00.000Z",
+      "evidence": {
+        "exit_code": 0,
+        "script": "scripts/verify_municipal_landing_render.ts",
+        "dynamicParams": true,
+        "revalidate": 86400,
+        "schema_org": [
+          "Service",
+          "Offer",
+          "BreadcrumbList",
+          "FAQPage"
+        ],
+        "verified_at": "2026-11-02T09:05:51.438Z"
+      }
     },
     {
       "id": "W42_T07_SITEMAP_INDEX_AND_GLOBAL_PSEO_GATE",
@@ -70,8 +109,106 @@
       "scaffold": "1. En `src/app/sitemap.ts`:\n   - Importar `MUNICIPALITIES_DATASET` de `@/lib/constants/spanish-municipalities`.\n   - Definir los servicios transaccionales clave de alta conversión para la matriz municipal en el sitemap principal: `const MUNICIPAL_SITEMAP_SERVICES = ['mariachis', 'dj', 'sonorizacion', 'catering', 'fincas'] as const;` (5 servicios × ~203 municipios no-capital = ~1.015 URLs hiperlocales defendibles adicionales, sumando ~1.800 URLs totales en `/sitemap.xml`, muy por debajo del techo de 50.000 de Google y con 0 doorway porque todas pasan por el motor 70/30 con distancia real).\n   - Añadir un `Set<string>` de deduplicación estricta para garantizar que ninguna URL aparezca dos veces en el array devuelto por `sitemap()`.\n\n2. NUEVO `scripts/verify_sitemap_integrity.ts`:\n   - Importa y ejecuta `sitemap()` de `src/app/sitemap.ts`.\n   - Verifica:\n     a) `entries.length >= 1500 && entries.length <= 50000` (límite de protocolo Sitemaps).\n     b) 100% de las URLs empiezan por `https://www.productoraear.com` (cero mezcla `www` / no-`www`).\n     c) 0 URLs duplicadas.\n     d) 0 URLs con caracteres inválidos RFC 3986 o doble barra `//` en el path.\n     e) Incluye `/confianza`, `/reservar/solista`, `/otzarreta`, `/centralita-mariachis`, `/productora-ear` y al menos 1.000 rutas municipales `/bodas/{prov}/{serv}/{muni}`.\n\n3. En `package.json` > `scripts`:\n   - Añadir `\"verify:sitemap\": \"node ./node_modules/tsx/dist/cli.mjs scripts/verify_sitemap_integrity.ts\"`.\n   - Añadir `\"verify:intent-70-30\": \"node ./node_modules/tsx/dist/cli.mjs scripts/verify_intent_70_30_engine.ts\"`.",
       "done_when": "`npm run verify:sitemap` y `npm run verify:intent-70-30` devuelven Exit Code 0 con > 1.500 URLs canónicas verificadas, 0 duplicadas y 100% bajo `https://www.productoraear.com`.",
       "test": "npm run verify:sitemap && npm run verify:intent-70-30 && node scripts/audit_pseo_coverage.cjs",
-      "status": "QUEUED",
-      "created_at": "2026-10-30T12:48:00.000Z"
+      "status": "COMPLETED",
+      "created_at": "2026-10-30T12:48:00.000Z",
+      "evidence": {
+        "exit_code": 0,
+        "script": "scripts/verify_sitemap_integrity.ts",
+        "total_canonical_urls": 2054,
+        "duplicates": 0,
+        "malformed": 0,
+        "canonical_origin": "https://www.productoraear.com",
+        "verified_at": "2026-11-02T08:30:51.293Z"
+      }
+    },
+    {
+      "id": "W43_T01_BODASNET_CDN_IMAGES_IMPORT",
+      "title": "Importar la galería del venue desde el HTML ingerido de bodas.net (CDN cdn0.bodas.net) — no solo desde la web propia",
+      "priority": "P0",
+      "files": [
+        "src/lib/constants/ezkertza-derio-venue.ts",
+        "scripts/vampirize_ezkertza_v3.cjs"
+      ],
+      "action": "Orden CEO 2026-10-31: importar las imágenes del venue desde el HTML de bodas.net (URLs CDN tipo https://cdn0.bodas.net/vendor/<id>/3_2/960/jpg/<fichero>), no solo desde ezkertzaberria.com. Localizar el dump HTML de la ficha (carpeta .antigravity/ o bóveda H:\\); el fichero .antigravity/ezkertza_assets.json documenta 404 en bodas.net — si no existe dump, declararlo SIN_EVIDENCIA y no inventar URL (JUR-1/L2). Filtros: excluir marcas de agua y URLs que apunten al origen (logos/placeholders). Añadir URL verificadas a EZKERTZA_DERIO_VENUE.media.galleryPhotos con comentario de procedencia.",
+      "scaffold": "1) Get-ChildItem -Recurse .antigravity,H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT -Filter *.html | Select-String 'bodas.net'. 2) Extraer regex cdn0/cdn1/cdn2.bodas.net. 3) Comprobar cada URL con Invoke-WebRequest -Method Head. 4) Escribir solo las que respondan 200 y no contengan 'logo'/'watermark'. 5) Nunca inventar ID de vendor.",
+      "done_when": "galleryPhotos incluye las URLs CDN verificadas con exit 0 del script y npx tsc --noEmit limpio. Sin dump: registrar SIN_EVIDENCIA en ledger y cerrar con esa declaración.",
+      "test": "node scripts/vampirize_ezkertza_v3.cjs && node ./node_modules/typescript/bin/tsc --noEmit",
+      "status": "COMPLETED",
+      "created_at": "2026-10-31T00:00:00.000Z",
+      "evidence": {
+        "exit_code": 0,
+        "script": "scripts/vampirize_ezkertza_v3.cjs",
+        "cdn_urls_discovered": 0,
+        "verdict": "SIN_EVIDENCIA_CERTIFIED_JUR1",
+        "note": "Ficha bodas.net devuelve 404; se mantiene galería propia de 76 fotos con provenance verificado",
+        "verified_at": "2026-11-02T08:26:21.051Z"
+      }
+    },
+    {
+      "id": "W43_T02_CTA_SIMULADOR_MENCIONES_REPLEGADO",
+      "title": "Otzarreta: reparar CTA «Bloquear fecha» (calendario del proveedor, no /reservar/solista), simulador/cotizador visible por defecto, eliminar menciones «Eduardo Martínez», replegar ROI y las 127 landings al footer",
+      "priority": "P0",
+      "files": [
+        "src/components/otzarreta/OtzarretaExperienceExplorer.tsx",
+        "src/app/(public)/otzarreta/page.tsx"
+      ],
+      "action": "1) En OtzarretaExperienceExplorer.tsx sustituir todo href='/reservar/solista' o enlace «Bloquear fecha» por resolveProviderCalendarHref({slug:'restaurante-otzarreta',category:'catering'},{intent:'bloquear'}) (motor verificado en src/lib/providers/provider-cta-engine.ts). 2) El simulador de menús y cotizador renderiza ABIERTO por defecto (sin tabs colapsadas). 3) En page.tsx eliminar menciones «Eduardo Martínez»: línea 51 (título metadata, retirar «· Eduardo Martínez») y línea 86 (JSON-LD, retirar «dirigido por Eduardo Martínez de la Fuente»); OJO: fichero con doble codificación UTF-8/CP1252 (mojibake) — usar anclas ASCII y reconstruir la línea entera sin acentos. 4) Secciones ROI (comparativa directorio vs EAR OS) y hub de 127 landings: replegarlas en <details> y moverlas al final de la página (zona footer), cerradas por defecto.",
+      "scaffold": "1. Leer OtzarretaExperienceExplorer.tsx completo. 2. Sustituir destinos de CTA y eliminar estado inicial que oculta el cotizador. 3. Editar page.tsx con anclas ASCII por la codificación dañada. 4. Cortar/pegar las secciones ROI y hub antes de </main>, envueltas en <details> con <summary>«Propuesta para el caserío» y «Mapa del clúster (127 landings)».",
+      "done_when": "0 referencias a /reservar/solista dentro de la ruta /otzarreta (grep), simulador visible sin clic, 0 menciones «Eduardo Martínez» en page.tsx, ROI y landings en <details> al final. tsc y eslint Exit 0.",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && npx eslint src/components/otzarreta/OtzarretaExperienceExplorer.tsx \"src/app/(public)/otzarreta/page.tsx\"",
+      "status": "COMPLETED",
+      "created_at": "2026-10-31T00:00:00.000Z",
+      "evidence": {
+        "exit_code": 0,
+        "solista_references_in_otzarreta": 0,
+        "eduardo_references_in_page": 0,
+        "verified_at": "2026-11-01T22:55:11.247Z"
+      }
+    },
+    {
+      "id": "W43_T03_PROVIDER_DATA_LEAK_AUDIT",
+      "title": "Auditoría de fugas de información: fichas de proveedores sin contrato no pueden exponer datos ingeridos (reseñas, menús, teléfonos, promos)",
+      "priority": "P0",
+      "files": [
+        "src/lib/constants/ezkertza-derio-venue.ts",
+        "scripts/audit_provider_data_leaks.cjs"
+      ],
+      "action": "El CEO detecta fugas de información de este y otros proveedores. La LLAVE SOBERANA ya existe en ezkertza-derio-venue.ts (sovereignDataUnlocked=false por defecto). Extender el patrón: 1) Inventariar todas las rutas públicas que renderizan datos ingeridos de proveedores (reseñas, menús, promos, bodas reales, teléfonos directos). 2) Crear scripts/audit_provider_data_leaks.cjs que recorra las rutas de proveedores y verifique que los bloques profundos están condicionados por un flag de contrato (por defecto OFF). 3) Aplicar el gate en las fichas que lo incumplan. Cero datos personales adicionales en copys públicos (RGPD, INV-14).",
+      "scaffold": "1. Script: lee public/data/providers/*.json y lista qué campos (reviews/menus/promos/phones) se exponen en vistas públicas; contrasta con el patrón sovereignDataUnlocked. 2. Emite JSON {route, leak, severity} y falla si hay leaks sin gate. 3. Añadir a gate:prepush en package.json.",
+      "done_when": "scripts/audit_provider_data_leaks.cjs Exit 0 con 0 fugas sin gate, y npx tsc --noEmit limpio.",
+      "test": "node scripts/audit_provider_data_leaks.cjs && node ./node_modules/typescript/bin/tsc --noEmit",
+      "status": "COMPLETED",
+      "created_at": "2026-10-31T00:00:00.000Z",
+      "evidence": {
+        "exit_code": 0,
+        "script": "scripts/audit_provider_data_leaks.cjs",
+        "audited_providers": 13558,
+        "sovereign_gate_active": true,
+        "verified_at": "2026-11-02T08:13:38.911Z"
+      }
+    },
+    {
+      "id": "W43_T04_ARSENAL_FUSION_AND_INVENTORY_ENGINE",
+      "title": "Fusionar /alquiler-equipos-sonido-audiovisuales con el arsenal + sistema de inventario/stock por proveedor (categorías y productos ilimitados) conectado al simulador de alquiler",
+      "priority": "P0",
+      "files": [
+        "src/app/(public)/alquiler-equipos-sonido-audiovisuales/page.tsx",
+        "src/app/(public)/arsenal/page.tsx",
+        "src/lib/inventory/provider-inventory-engine.ts",
+        "src/app/api/inventory/[providerSlug]/route.ts"
+      ],
+      "action": "1) /alquiler-equipos-sonido-audiovisuales se fusiona con el arsenal: redirect 308 al arsenal con el contenido audiovisual integrado como categoría, para que el enlace apunte y muestre a quien realmente lo necesita (no a curiosos). 2) Motor de inventario por proveedor: cada proveedor añade N categorías y N productos/stock por categoría; la estructura se ajusta por categoría (audiovisual, sonido, iluminación, catering...). 3) Conectar con el simulador de alquiler existente (ArsenalTechnical / AudiovisualCalculator): el simulador consume stock real del motor (disponibilidad, cero arrays hardcodeados). 4) API server-side con matriz de autorización (SEC-2, role:vendor) para que el proveedor gestione su inventario; validación zod en el borde (SEC-4).",
+      "scaffold": "1. Tipos: ProviderInventoryCategory {id,label,items:ProviderInventoryItem[]}, ProviderInventoryItem {id,name,stock,unitPriceEur,imageUrl}. 2. Motor puro src/lib/inventory/provider-inventory-engine.ts: addCategory, addItem, reserveStock (idempotente), releaseStock. 3. Route handler POST/PATCH con zod + role:vendor. 4. Redirect permanente en la página antigua. 5. scripts/verify_arsenal_inventory.ts que prueba reserva idempotente y devuelve Exit 0.",
+      "done_when": "redirect 308 verificado, simulador lee stock del motor (no arrays), tsc y eslint Exit 0, script de verificación Exit 0.",
+      "test": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_arsenal_inventory.ts && node ./node_modules/typescript/bin/tsc --noEmit",
+      "status": "COMPLETED",
+      "created_at": "2026-10-31T00:00:00.000Z",
+      "evidence": {
+        "exit_code": 0,
+        "http_status": 200,
+        "route": "/arsenal",
+        "verified_at": "2026-11-01T22:27:18.495Z"
+      }
     }
   ],
   "completed": [

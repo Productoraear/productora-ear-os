@@ -170,23 +170,18 @@ export function calcularProfitability(finca: FincaHomologada, eventosAnio = 28):
 }
 
 export function buildComparativaBodasNetVsEarOs(): BodasNetVsEarOsRow[] {
-  const cuotaAnualBodasNet = 4200;
-  const cuotaAnualEarOs = 0;
-  const leadsCierreBodasNet = 8;
-  const leadsCierreEarOs = 18;
   const depositoCierreEarOs = 100;
 
   return [
     {
       concepto: 'Cuota anual de alta en directorio',
-      bodasNet: cuotaAnualBodasNet,
-      earOs: cuotaAnualEarOs,
+      bodasNet: 'Cuota del portal',
+      earOs: '0 € de cuota fija',
       ventaja: 'EAR',
-      ahorroAnualEstimado: cuotaAnualBodasNet - cuotaAnualEarOs,
     },
     {
       concepto: 'Comisión por lead / contacto',
-      bodasNet: '12-18% + tarifa fija',
+      bodasNet: 'Tarifa del portal',
       earOs: '10% Split Soberano',
       ventaja: 'EAR',
     },
@@ -197,9 +192,9 @@ export function buildComparativaBodasNetVsEarOs(): BodasNetVsEarOsRow[] {
       ventaja: 'EAR',
     },
     {
-      concepto: 'Cierres reales anuales estimados',
-      bodasNet: leadsCierreBodasNet,
-      earOs: leadsCierreEarOs,
+      concepto: 'Calidad del lead recibido',
+      bodasNet: 'Sin filtro previo',
+      earOs: 'Filtrado por la Conserjería',
       ventaja: 'EAR',
     },
     {

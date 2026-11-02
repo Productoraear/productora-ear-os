@@ -201,3 +201,9 @@ This version has breaking changes — APIs, conventions, and file structure may 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
+
+━━ 16. LA FÓRMULA SAGRADA DEL TOKEN SUPREMO (ARBITRAJE Y MÁXIMO ROI S-CLASS) ━━
+- Todo agente (arquitecto u obrero) tiene PROHIBIDO quemar tokens leyendo volcados masivos en el contexto de chat.
+- Regla ZTLM (Zero-Token Local Mirroring): herramientas, componentes externos y datos pesados se cachean en disco local y se consumen offline.
+- Protocolo ZTM: la memoria es el disco (tasks_queue.json, ledger.jsonl). Al cerrar tarea, purga inmediata (/compact).
+- Generación procedural por hashes SHA-256 en vez de llamadas LLM masivas en build time (29.165 URLs a coste 0).

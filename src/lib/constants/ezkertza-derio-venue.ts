@@ -105,10 +105,83 @@ export const EZKERTZA_DERIO_VENUE = Object.freeze({
     ] as const),
 
     media: Object.freeze({
-        virtualTour360: true,
-        videoCount: 3,
-        photoCount: 69,
+        virtualTour360: false,
+        videoCount: 1,
+        photoCount: 12,
+        /** Vídeo oficial publicado por el propio caserío (iframes de su web). */
+        officialVideo: Object.freeze({
+            provider: 'vimeo',
+            videoId: '606467438',
+        }),
+        /** Fotografías reales de bodas publicadas en dominio propio (ezkertzaberria.com). */
+        galleryPhotos: Object.freeze([
+            'https://www.ezkertzaberria.com/wp-content/uploads/2023/03/2023BODAS-WEB-1-scaled.jpg',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2023/03/2023BODAS-WEB-2-scaled.jpg',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2023/03/2023BODAS-WEB-3-scaled.jpg',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2023/03/2023BODAS-WEB-4-scaled.jpg',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2023/03/2023BODAS-WEB-5-scaled.jpg',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2023/03/2023BODAS-WEB-6-scaled.jpg',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2023/03/2023BODAS-WEB-7-scaled.jpg',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2023/03/2023BODAS-WEB-8-scaled.jpg',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2023/03/2023BODAS-WEB-9-scaled.jpg',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2021/06/24-Bodas-civiles.jpg',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2021/06/novios-1022x1536.jpg',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2021/09/comedor.jpg',
+            // ── Segunda pasada de vampirización (2026-10-31) desde ezkertza_assets.json ──
+            // Doctrina CEO: hasta el último bit EXCEPTO marcas de agua y URL que
+            // apunten al origen (logos). Se excluyen: LOGO-EZKERTZA (×2), cartas
+            // de menú (CARTA-*, NAVIDAD, AÑO NUEVO, REYES, DEGUSTACIÓN, M.F.S.,
+            // grupos-*, menu-día-del-padre, COMUNIONE*) y miniaturas < 600px.
+            'https://www.ezkertzaberria.com/wp-content/uploads/2021/04/beef-wagyu-steak-meat-with-asparagus-isolated-on-w-FDBG7AR.png',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2021/04/2-AZEEWYH.png',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2021/04/1-AZEEWYH.png',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2021/04/6-AZEEWYH-536x1024.png',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2021/05/pescadofresco-683x1024.jpg',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2021/04/3-AZEEWYH.png',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2021/04/5-AZEEWYH.png',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2021/05/carne-1-682x1024.jpg',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2021/04/1-creative-mockup-with-tomato-slices-basil-leaves-an-NVDHDG6.png',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2021/06/004-1024x769.jpg',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2021/05/bread-1024x682.jpg',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2021/05/pouring-red-wine-into-a-wineglass-1024x1024.jpg',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2021/05/MG_0033.jpg',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2021/05/063-scaled.jpg',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2021/05/089.jpg',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2021/05/058.jpg',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2021/05/MG_0012.jpg',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2021/05/018.jpg',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2021/05/920.jpg',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2021/07/ESCALADA-709.jpg',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2021/05/917-768x576.jpg',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2021/06/076-1365x2048.jpg',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2021/06/tarta.jpg',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2021/09/mesa.jpg',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2021/06/2040.jpg',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2021/06/1890-scaled.jpg',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2021/06/novios2.jpg',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2021/06/021-scaled.jpg',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2021/06/1915.jpg',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2021/06/DSC03894-1-scaled.jpg',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2021/07/0184-ESCALADA.jpg',
+            'https://www.ezkertzaberria.com/wp-content/uploads/2021/05/IMG_0034.jpg',
+        ]),
+        /**
+         * La galería del marketplace (cdn0.bodas.net/vendor/<id>/…) queda
+         * pendiente de importación desde el HTML ingerido de bodas.net
+         * (tarea W43_T01): aquí solo se publican URL verificadas en disco.
+         */
+        bodasnetCdnPending: true,
     }),
+
+    /**
+     * LLAVE SOBERANA DE DATOS (orden CEO 2026-10-31 — anti-fugas):
+     * la ficha profunda (reseñas íntegras, bodas reales, promociones y menús
+     * de la ficha ingerida) NO se publica mientras el venue no esté al
+     * corriente de contrato con EAR OS. `false` = solo se renderizan datos
+     * públicos del propio caserío (fotos/vídeo de su web, nombre, dirección,
+     * rating agregado). Cambiar a `true` exige sanción del CEO.
+     */
+    sovereignDataUnlocked: false,
 
     about: Object.freeze({
         onMarketplacesSince: 2019,

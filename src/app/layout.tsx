@@ -41,7 +41,6 @@ import SmoothScrollProvider from '@/app/context/SmoothScrollProvider';
 import { ThemeProvider } from "@/app/context/ThemeContext";
 import { TenantRoleProvider } from "@/contexts/TenantRoleContext";
 import { MobileExperienceProvider } from "@/lib/config/mobile-experience-store";
-import { DynamicMobileExperienceOrchestrator } from "@/components/mobile/DynamicMobileExperienceOrchestrator";
 
 import SovereignNavbar from "@/app/components/layout/SovereignNavbar";
 import HummingbirdFlight from "@/app/components/ambient/HummingbirdFlight";
@@ -51,12 +50,6 @@ import { SpatialIntelligence } from "@/app/components/spatial/SpatialIntelligenc
 import SovereignFooter from "@/app/components/layout/SovereignFooter";
 import { GeoStructuredData } from "@/components/seo/GeoStructuredData";
 import { VimumeThemeInjector } from "@/components/theme/VimumeThemeInjector";
-import { EarConcierge } from "@/components/Astra/EarConcierge";
-import { SovereignFloatingCallBar } from "@/components/layout/SovereignFloatingCallBar";
-import SovereignUrgentFloatBar from "@/components/layout/SovereignUrgentFloatBar";
-import { GlobalLiveVisualEditor } from "@/components/editor/GlobalLiveVisualEditor";
-import { OmniAgentConsoleModal } from "@/components/agents/OmniAgentConsoleModal";
-import { AirbnbThemeToggleFloating } from "@/components/theme/AirbnbThemeToggleFloating";
 import * as React from "react";
 
 export const metadata: Metadata = {
@@ -169,16 +162,7 @@ export default function RootLayout({
                             <HummingbirdFlight />
                             <BespokePricerModal />
                             <UnifiedSearch />
-                            <EarConcierge />
-                            <DynamicMobileExperienceOrchestrator />
-                            <SovereignFloatingCallBar />
-                            <SovereignUrgentFloatBar />
-                            <GlobalLiveVisualEditor />
-                            <AirbnbThemeToggleFloating />
-                            <React.Suspense fallback={null}>
-                              <OmniAgentConsoleModal />
-                            </React.Suspense>
-                          </div>
+                                                                                                                                                                      </div>
                         </SmoothScrollProvider>
                       </EventCartProvider>
                     </AtmosphereProvider>

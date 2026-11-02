@@ -17,6 +17,7 @@ import {
   CalendarCheck
 } from 'lucide-react';
 import { CENTRALITA_EAR_OS, DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
+import { resolveProviderCalendarHref } from '@/lib/providers/provider-cta-engine';
 
 export interface MenuItem {
   name: string;
@@ -854,10 +855,10 @@ export function OtzarretaExperienceExplorer(): React.JSX.Element {
                   className="px-5 py-2.5 rounded-xl bg-[#25D366] text-black font-bold text-xs hover:brightness-110 transition-all flex items-center gap-2 shadow-lg"
                 >
                   <Phone className="w-4 h-4" />
-                  Consultar Fecha con Eduardo Martínez
+                  Consultar Disponibilidad
                 </a>
                 <a
-                  href="/reservar/solista"
+                  href={resolveProviderCalendarHref({ slug: 'restaurante-otzarreta', category: 'catering' }, { intent: 'bloquear' })}
                   className="px-5 py-2.5 rounded-xl bg-[#ecb613] text-black font-extrabold text-xs hover:bg-[#ffe066] transition-all flex items-center gap-2 shadow-lg shadow-[#ecb613]/20"
                 >
                   <CreditCard className="w-4 h-4" />
@@ -1027,7 +1028,7 @@ export function OtzarretaExperienceExplorer(): React.JSX.Element {
 
                 <div className="space-y-2.5">
                   <a
-                    href="/reservar/solista"
+                    href={resolveProviderCalendarHref({ slug: 'restaurante-otzarreta', category: 'catering' }, { intent: 'bloquear' })}
                     className="w-full py-3.5 rounded-xl bg-[#ecb613] text-black font-extrabold text-xs hover:bg-[#ffe066] transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#ecb613]/20"
                   >
                     <CreditCard className="w-4 h-4" />

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { SovereignArsenalCommerceHub } from '@/components/arsenal/SovereignArsenalCommerceHub';
 
 const SITE_URL = 'https://ear-os.com';
 const CANONICAL_PATH = '/arsenal';
@@ -178,7 +179,6 @@ export default function ArsenalPage() {
         color: '#e6e6ea',
         fontFamily:
           'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-        padding: '48px 24px',
       }}
     >
       <script
@@ -187,7 +187,10 @@ export default function ArsenalPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <section style={{ maxWidth: 960, margin: '0 auto' }}>
+      {/* Sovereign Arsenal Commerce Hub: SaaS RAG E-Commerce Directory */}
+      <SovereignArsenalCommerceHub />
+
+      <section style={{ maxWidth: 960, margin: '48px auto', padding: '0 24px' }}>
         <p
           style={{
             margin: 0,

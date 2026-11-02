@@ -33,9 +33,9 @@
     "staging:vampirize": "npx tsx src/scripts/vampire-staging-processor.ts",
     "seed:b2g": "npx tsx src/scripts/seed-national-b2g.ts",
     "simulate:whatsapp": "node scripts/simulate_whatsapp_agent.mjs",
-    "landings:otzarreta": "npx tsx scripts/build_otzarreta_landings.ts && node scripts/audit_otzarreta_landings.cjs",
-    "landings:centralita": "npx tsx scripts/build_centralita_mariachis_landings.ts && node scripts/audit_centralita_mariachis_landings.cjs",
-    "landings:ear-eventos": "npx tsx scripts/build_ear_eventos_landings.ts && node scripts/audit_ear_eventos_landings.cjs",
+    "landings:otzarreta": "node ./node_modules/tsx/dist/cli.mjs scripts/build_otzarreta_landings.ts && node scripts/audit_otzarreta_landings.cjs",
+    "landings:centralita": "node ./node_modules/tsx/dist/cli.mjs scripts/build_centralita_mariachis_landings.ts && node scripts/audit_centralita_mariachis_landings.cjs",
+    "landings:ear-eventos": "node ./node_modules/tsx/dist/cli.mjs scripts/build_ear_eventos_landings.ts && node scripts/audit_ear_eventos_landings.cjs",
     "landings:all": "npm run landings:otzarreta && npm run landings:centralita && npm run landings:ear-eventos",
     "typecheck:landings": "node ./node_modules/typescript/bin/tsc -p tsconfig.landings-dominance.json --noEmit",
     "audit:contrast": "node scripts/audit_wcag_contrast_live.cjs",
@@ -64,7 +64,7 @@
     "audit:admin": "node scripts/audit_admin_control_forensics.cjs --strict --write",
     "audit:ci-gate": "node scripts/audit_ci_gate_wiring.cjs",
     "verify:confianza": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_trust_ledger.ts",
-    "verify:sitemap": "node scripts/verify_sitemap_index_coverage.cjs",
+    "verify:sitemap": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_sitemap_integrity.ts",
     "verify:event-sitemap": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_event_sitemap_coverage.ts",
     "verify:event-sitemap:live": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_event_sitemap_coverage.ts --live",
     "verify:voice": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_voice_watchdog.ts",
@@ -96,7 +96,8 @@
     "verify:provider-ctas": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_provider_ctas.ts",
     "audit:tariff-copy": "node scripts/audit_tariff_copy_drift.cjs",
     "verify:logistics": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_logistics_multi_origin.ts",
-    "prepush": "npm run gate:prepush"
+    "prepush": "npm run gate:prepush",
+    "verify:intent-70-30": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_intent_70_30_engine.ts"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
