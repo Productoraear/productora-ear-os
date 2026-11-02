@@ -28,6 +28,11 @@ import {
 } from '@/lib/providers/sovereign-lead-gate';
 import { EzkertzaVenueLanding as EzkertzaVenueListing } from '@/components/otzarreta/EzkertzaVenueLanding';
 import {
+  AudioReactiveVisualizer,
+  HorizonXGlow,
+  LiquidGlassCard
+} from '@/components/harvested';
+import {
   resolveProviderCalendarHref,
   resolveProviderContractHref,
 } from '@/lib/providers/provider-cta-engine';
@@ -558,25 +563,27 @@ export default async function OtzarretaFlagshipPage({
       {/* â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â” */}
       {/* 5. CARTA & COTIZADOR — fuente única: el hub de experiencia (arriba) */}
       <section className="px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto my-20">
-        <div className="rounded-3xl border border-[#ecb613]/25 bg-[#09090d]/80 p-8 sm:p-10 text-center space-y-4 backdrop-blur-md">
-          <span className="text-xs font-mono text-[#ecb613] uppercase tracking-wider">
-            PROPUESTA GASTRONÓMICA OFICIAL 2026 & HARDWARE S-CLASS
-          </span>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-white">
-            Diseña tu banquete al céntimo
-          </h2>
-          <p className="text-gray-400 text-sm sm:text-base max-w-2xl mx-auto">
-            Los 7 menús oficiales, el simulador de comensales y el blindaje acústico viven en un
-            único módulo, para que no cotices dos veces lo mismo.
-          </p>
-          <a
-            href="#ficha-ezkertza-derio"
-            className="inline-flex items-center gap-2 rounded-xl bg-[#ecb613] px-6 py-3 text-sm font-extrabold text-black transition-all duration-300 ease-out hover:bg-[#ffe066]"
-          >
-            Ir al cotizador único
-            <ArrowRight className="h-4 w-4" aria-hidden="true" />
-          </a>
-        </div>
+        <LiquidGlassCard variant="deep" accent="gold" className="text-center">
+          <div className="space-y-4 text-center">
+            <span className="text-xs font-mono text-[#ecb613] uppercase tracking-wider">
+              PROPUESTA GASTRONÓMICA OFICIAL 2026 & HARDWARE S-CLASS
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-extrabold text-white">
+              Diseña tu banquete al céntimo
+            </h2>
+            <p className="text-gray-400 text-sm sm:text-base max-w-2xl mx-auto">
+              Los 7 menús oficiales, el simulador de comensales y el blindaje acústico viven en un
+              único módulo, para que no cotices dos veces lo mismo.
+            </p>
+            <a
+              href="#ficha-ezkertza-derio"
+              className="inline-flex items-center gap-2 rounded-xl bg-[#ecb613] px-6 py-3 text-sm font-extrabold text-black transition-all duration-300 ease-out hover:bg-[#ffe066]"
+            >
+              Ir al cotizador único
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </a>
+          </div>
+        </LiquidGlassCard>
       </section>
 
       {/* â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â” */}
@@ -660,9 +667,7 @@ export default async function OtzarretaFlagshipPage({
                 <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1">
                   <div className="text-xs font-mono text-[#ecb613] uppercase">La Acústica de Edwin</div>
                   <div className="text-sm font-bold text-white">Hardware Bose S-Class (12 W/pax)</div>
-                  <p className="text-xs text-gray-400">
-                    Sonorización calibrada con limitador telemático y fiesta garantizada.
-                  </p>
+                  <AudioReactiveVisualizer peakDba={85.0} theme="gold" className="mt-2" />
                 </div>
               </div>
             </div>
@@ -776,7 +781,13 @@ export default async function OtzarretaFlagshipPage({
       {/* 9. GARANTÃA MUTUA: EL DEPÃ“SITO STRIPE DE 100 â‚¬         */}
       {/* â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â” */}
       <section className="px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto my-20">
-        <div className="rounded-3xl bg-gradient-to-r from-amber-950/40 via-[#0e0e14] to-[#09090d] border border-amber-500/30 p-8 sm:p-12 text-center space-y-6 shadow-2xl shadow-amber-950/30">
+        <HorizonXGlow
+          glowColor="gold"
+          intensity="high"
+          bordered={false}
+          className="border border-amber-500/30 shadow-2xl shadow-amber-950/30"
+        >
+          <div className="p-8 sm:p-12 text-center space-y-6">
           <div className="w-16 h-16 rounded-2xl bg-[#ecb613]/10 border border-[#ecb613]/30 flex items-center justify-center text-[#ecb613] mx-auto">
             <ShieldCheck className="w-8 h-8" />
           </div>
@@ -811,10 +822,11 @@ export default async function OtzarretaFlagshipPage({
             </a>
           </div>
 
-          <div className="pt-4 text-xs text-gray-500 font-mono">
-            Contrato respaldado por el Art. 1255 del Código Civil · Split Soberano 80/10/10 · Productora EAR
+            <div className="pt-4 text-xs text-gray-500 font-mono">
+              Contrato respaldado por el Art. 1255 del Código Civil · Split Soberano 80/10/10 · Productora EAR
+            </div>
           </div>
-        </div>
+        </HorizonXGlow>
       </section>
 
       {/* â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â” */}

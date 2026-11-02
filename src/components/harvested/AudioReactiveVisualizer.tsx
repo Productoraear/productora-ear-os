@@ -22,8 +22,13 @@ export function AudioReactiveVisualizer({
   theme = 'gold',
   peakDba = 82.4,
 }: AudioReactiveVisualizerProps) {
+  // Deterministic SSR initial state to eradicate any hydration mismatch warnings
   const [heights, setHeights] = useState<number[]>(() =>
-    Array.from({ length: barsCount }, () => Math.floor(Math.random() * 40) + 15)
+    Array.from({ length: barsCount }, (_, i) => {
+      const center = barsCount / 2;
+      const dist = Math.abs(i - center) / center;
+      return Math.floor((1 - dist * 0.4) * 45) + 20;
+    })
   );
 
   useEffect(() => {
@@ -89,3 +94,4 @@ export function AudioReactiveVisualizer({
     </div>
   );
 }
+

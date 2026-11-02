@@ -4,25 +4,11 @@
     "doctrine": "WAVE 44 (SANCIONADA POR EL CEO): 1) Erradicación absoluta de fachadas: cero cobros simulados, cero Math.random en hashes, datos verídicos en directorio. 2) Elevación estética radical a VANGUARDIA DE SILICON VALLEY cosechando los componentes de HorizonX y 21st (HorizonXGlow, LiquidGlassCard, AudioReactiveVisualizer, BentoGrid, GlowButton) sin dependencias ni suscripciones externas de pago. 3) Integración viva de telemetría acústica 12 W/pax Ley 37/2003 en buques insignia comerciales.",
     "wave": 44,
     "total_tasks": 3,
-    "total_pending": 3,
-    "last_updated": "2026-11-02T20:00:00.000Z"
+    "total_pending": 2,
+    "last_updated": "2026-11-02T19:53:20.467Z"
   },
   "_instructions_for_worker": "Ejecuta SOLO via: node .antigravity/omega.js next -> lee .antigravity/MISSION_ACTIVE.json -> edita SOLO 'files' -> ejecuta 'test' -> node .antigravity/omega.js complete <ID>. 1 tarea por sesion.",
   "tasks": [
-    {
-      "id": "W44_T01_HARVESTED_VANGUARD_OTZARRETA",
-      "title": "Vanguardia S-Class · Inyectar HorizonXGlow, LiquidGlassCard y AudioReactiveVisualizer en /otzarreta",
-      "priority": "P0",
-      "files": [
-        "src/app/(public)/otzarreta/page.tsx"
-      ],
-      "action": "Elevar la experiencia de la landing buque insignia /otzarreta al más alto estándar de la industria (Silicon Valley S-Class) importando y desplegando los componentes recién cosechados en `src/components/harvested`: 1) Envolver la tarjeta principal del caserío y reserva de fecha con `HorizonXGlow` (acento gold). 2) Sustituir el bloque estático de sonorización por el nuevo `AudioReactiveVisualizer` (configurado a 85.0 dBA SPL conforme a la Ley 37/2003 para exteriores de bodas y 12 W/pax). 3) Elevar la tarjeta de menús oficiales 2026 con `LiquidGlassCard` (variante 'deep' o 'frosted' con acento gold). 4) Prohibido romper el SSOT: mantener el depósito canónico de 100 €, split 80/10/10, WhatsApp de centralita +34 693 693 048 y cero mojibake.",
-      "scaffold": "1. Importar desde `@/components/harvested`:\n   `import { HorizonXGlow, LiquidGlassCard, AudioReactiveVisualizer, GlowButton } from '@/components/harvested';`\n\n2. En la sección de Sonorización Homologada (líneas ~600-640):\n   - Renderizar `<AudioReactiveVisualizer peakDba={85.0} theme=\"gold\" />` mostrando la telemetría acústica en vivo.\n\n3. En la sección de Menús Oficiales 2026 (líneas ~360-440):\n   - Envolver el desglose de menús dentro de `<LiquidGlassCard variant=\"deep\" accent=\"gold\">`.\n\n4. En la tarjeta de cierre / Bloqueo de Fecha (líneas ~770-815):\n   - Envolver el contenedor CTA en `<HorizonXGlow glowColor=\"gold\" intensity=\"high\">`.\n\n5. Validación obligatoria:\n   - `node ./node_modules/typescript/bin/tsc --noEmit` -> Exit Code 0.",
-      "done_when": "La página /otzarreta renderiza AudioReactiveVisualizer, LiquidGlassCard y HorizonXGlow con fondos OLED profundos, manteniendo el SSOT intacto y tsc devolviendo Exit Code 0.",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "status": "QUEUED",
-      "created_at": "2026-11-02T20:00:00.000Z"
-    },
     {
       "id": "W44_T02_HARVESTED_VANGUARD_FINCAS_TELEMETRY",
       "title": "Vanguardia S-Class · Inyectar AudioReactiveVisualizer y HorizonXGlow en Jardines La Cartuja",
@@ -53,10 +39,18 @@
       "created_at": "2026-11-02T20:00:00.000Z"
     }
   ],
-  "completed": [],
+  "completed": [
+    {
+      "id": "W44_T01_HARVESTED_VANGUARD_OTZARRETA",
+      "title": "Vanguardia S-Class · Inyectar HorizonXGlow, LiquidGlassCard y AudioReactiveVisualizer en /otzarreta",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-11-02T19:53:20.465Z"
+    }
+  ],
   "metadata": {
-    "last_updated": "2026-11-02T20:00:00.000Z",
-    "total_pending": 3,
+    "last_updated": "2026-11-02T19:53:20.467Z",
+    "total_pending": 2,
     "current_sprint": "WAVE_44_VANGUARDIA_HARVESTED_SCLASS",
     "ceo_mandate": "Tolerancia cero a fachadas: cobro real, datos reales, y vanguardia visual de Silicon Valley sin pagar suscripciones recurrentes a terceros."
   }
