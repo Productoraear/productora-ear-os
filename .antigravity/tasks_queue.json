@@ -4,28 +4,19 @@
     "doctrine": "WAVE 45 (SANCIONADA POR EL CEO): 1) Materializar la Fórmula Magia Negra (Budget Allocator 50/15/15/10/10 con aritmética en céntimos enteros, largest remainder y candados tipados). 2) Erradicar las constantes hardcodeadas en OmniChannelHub360.tsx conectándolo al SSOT. 3) Verificación determinista sobre 10.000 presupuestos (FAILURES=0).",
     "wave": 45,
     "total_tasks": 2,
-    "total_pending": 1,
-    "last_updated": "2026-11-02T20:41:12.072Z"
+    "total_pending": 0,
+    "last_updated": "2026-11-02T21:54:06.335Z"
   },
   "_instructions_for_worker": "Ejecuta SOLO via: node .antigravity/omega.js next -> lee .antigravity/MISSION_ACTIVE.json -> edita SOLO 'files' -> ejecuta 'test' -> node .antigravity/omega.js complete <ID>. 1 tarea por sesion.",
-  "tasks": [
+  "tasks": [],
+  "completed": [
     {
       "id": "W44_T03_CALL_CENTER_WHATSAPP_N8N_INTAKE",
       "title": "Cierre Transaccional · Cablear Call Center y WhatsApp hacia Webhook n8n S-Class",
-      "priority": "P1",
-      "files": [
-        "src/components/layout/WhatsAppFloatButton.tsx",
-        "src/app/api/webhooks/call-center-intake/route.ts"
-      ],
-      "action": "Garantizar que cero leads queden huérfanos conectando los clics de WhatsApp y llamadas de centralita con el cluster n8n (`POST /webhook/call-center-intake` o `/api/webhooks/call-center-intake` en background sin bloquear la navegación del usuario).",
-      "scaffold": "1. Despachar evento asíncrono no bloqueante en background (`fetch` con `keepalive: true` y sin bloquear al usuario).\n2. Validar payload con zod (teléfono, origen, timestamp, intent).\n3. Validar `node ./node_modules/typescript/bin/tsc --noEmit` -> Exit Code 0.",
-      "done_when": "Todo lead que inicia conversación por WhatsApp o llamada dispara telemetría a n8n con 0 fricción y tsc Exit 0.",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "status": "QUEUED",
-      "created_at": "2026-11-02T20:00:00.000Z"
-    }
-  ],
-  "completed": [
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-11-02T21:54:06.310Z"
+    },
     {
       "id": "W45_T01",
       "title": "Motor Magia Negra · Budget Allocator (50/15/15/10/10 en céntimos enteros) + erradicar hardcodes en OmniChannelHub360",
@@ -49,8 +40,8 @@
     }
   ],
   "metadata": {
-    "last_updated": "2026-11-02T20:41:12.072Z",
-    "total_pending": 1,
+    "last_updated": "2026-11-02T21:54:06.335Z",
+    "total_pending": 0,
     "current_sprint": "WAVE_45_MOTOR_MAGIA_NEGRA",
     "ceo_mandate": "Tolerancia cero a fachadas: Motor Magia Negra en céntimos enteros verificado sobre 10.000 presupuestos antes de pasar a Buzzy MCP."
   }

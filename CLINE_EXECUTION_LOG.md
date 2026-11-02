@@ -900,6 +900,47 @@ Tarea `W42_OUTREACH_ACK_01` completada y sellada con Exit Code 0 (sello condicio
 
 **SIGUIENTE_PASO**: Misión completada. Queda en cola `W41_T17_GOOGLE_ADS_COCKPIT`. Detención preventiva por Pacto ZTM.
 
+### 2026-11-02 · W44_T03_CALL_CENTER_WHATSAPP_N8N_INTAKE — Captación de leads WhatsApp → n8n
+
+**HECHO_VERIFICADO**
+- El mapa de la misión apuntaba a `src/components/layout/WhatsAppFloatButton.tsx`: **ENOENT** (lectura directa). El CTA real del repositorio es `src/components/ui/FloatingWhatsAppCta.tsx`, y su único importador era `src/components/mobile/DynamicMobileExperienceOrchestrator.tsx`, que **no se monta** en `src/app/layout.tsx` (178 líneas leídas: sin import y sin `<DynamicMobileExperienceOrchestrator />`). Instrumentar el CTA sin montarlo habría sido una fachada: telemetría sobre un botón invisible.
+- `FloatingWhatsAppCta.tsx` (99 líneas): el clic dispara `fetch('/api/webhooks/call-center-intake', { keepalive: true, credentials: 'omit', cache: 'no-store', referrerPolicy: 'no-referrer' })` **sin** `preventDefault()` — el handoff a WhatsApp no espera a la red. Guard anti doble-clic de 800 ms con `useRef`. El número pasa a nacer de `CENTRALITA_EAR_OS` (SSOT) en vez del literal `"34693693048"` que tenía.
+- `src/app/api/webhooks/call-center-intake/route.ts` (344 líneas, NUEVO): zod (`leadId`, `channel`, `intent`, `surface`, `phone` E.164, `origin` pathname sin query, `timestamp` ISO-8601) + reenvío al motor canónico `dispatchToN8n('call-center-intake', …)` de `src/lib/services/n8n-dispatcher.ts` (3 reintentos con backoff + DLQ). No se inventó un cliente HTTP paralelo.
+- Casos negativos (SEC-1): 405 GET explícito, 415 Content-Type, 413 > 4 KB, 400 JSON/esquema, 429 rate-limit 20/60 s por IP, 500 controlado. Idempotencia por `leadId` (ventana 10 min).
+- Verdad de la entrega (AF-1): 202 con `delivered`, `deadLettered`, `attempts`, `status`, `lastError` y `dlqScope:'process-local'`; si el despacho excede 5,5 s se responde `delivered:null, dispatch:'deferred'` — nunca un `ok:true` fabricado.
+- PII (INV-14): el payload no lleva IP, cookies, email ni el teléfono del visitante; sólo pathname, teléfono público de centralita y timestamp. `pii:false`.
+
+**HIPÓTESIS**
+- Que Coolify/Traefik anteponga `x-forwarded-for`; si no llega, el rate-limit cae a la clave `unknown` (best-effort declarado en el propio código).
+- Que el workflow `call-center-intake` de n8n acepte el contrato `event:'lead.intake'` (slug ya registrado en `/api/webhooks/health`, 7/7).
+
+**DECISIÓN**
+- Se instrumenta `FloatingWhatsAppCta.tsx` (ruta real) en lugar de crear `WhatsAppFloatButton.tsx` (ruta inexistente). Alternativa descartada: crear el fichero del mapa y re-exportarlo desde el CTA real — duplicaría el componente y dejaría dos fuentes de verdad. Motivo técnico, no comodidad.
+- Se añade `<FloatingWhatsAppCta />` a `src/app/layout.tsx` (1 import + 1 línea). Alternativa descartada: montar `DynamicMobileExperienceOrchestrator` — arrastra el HUD móvil completo y el modo `CLASSIC_WHATSAPP` es probabilístico (~15 %), así que el CTA habría seguido sin renderizarse.
+
+**RIESGOS (premortem)**
+1. ¿Cumple `done_when`? Sí en código; **no verificado por máquina** (ver VALIDACIONES).
+2. Asunción frágil: la DLQ canónica es memoria de proceso — se declara `dlqScope:'process-local'`, no se vende como durable.
+3. Se rompe si n8n cambia el contrato del webhook: lo detectan `lastError`/`deadLettered` en la respuesta 202 y `dlqCount` de `/api/webhooks/health`.
+4. Duplicado futuro: si alguien vuelve a montar el orquestador en `CLASSIC_WHATSAPP`, habrá dos CTA. Queda escrito en el comentario del layout.
+5. Acepto al firmar: el CTA es sólo escritorio (`hidden lg:flex`); el dock móvil (`SovereignMobileHUD`) sigue sin instrumentar → los leads móviles aún no se capturan.
+
+**CAMBIOS**
+- `src/app/api/webhooks/call-center-intake/route.ts` (NUEVO)
+- `src/components/ui/FloatingWhatsAppCta.tsx`
+- `src/app/layout.tsx`
+- `CLINE_EXECUTION_LOG.md` (append-only)
+
+**VALIDACIONES (Exit Code real)**
+- `node ./node_modules/typescript/bin/tsc --noEmit` → **NO EJECUTADO**: la terminal de esta sesión devolvió `exit 1` sin salida en 4 intentos (incluido `echo PROBE`). Se declara `SIN_EVIDENCIA`; no se finge verde.
+- `npm run lint` → **NO EJECUTADO** por la misma causa.
+- Verificación estática por lectura: estructura de llaves de la ruta revisada (344 líneas), payload del cliente ↔ esquema zod contrastados campo a campo, y `CENTRALITA_EAR_OS` confirmado exportado en `src/lib/constants/ear-os-ssot.ts:58`.
+
+**ESTADO_BLOQUE: SOSPECHOSO** — código completo y verificado por lectura; `tsc`/`eslint` pendientes de máquina.
+
+**SIGUIENTE_PASO**: ejecutar `node ./node_modules/typescript/bin/tsc --noEmit` y sellar con `omega.js complete W44_T03_CALL_CENTER_WHATSAPP_N8N_INTAKE`; después, tarea propia para instrumentar el dock móvil y decidir el montaje del orquestador. Detención preventiva por Pacto ZTM.
+
+
 
 ---
 

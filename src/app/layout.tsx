@@ -48,6 +48,13 @@ import { UnifiedSearch } from '@/components/search/UnifiedSearch';
 import { BespokePricerModal } from "@/features/finance/ui/BespokePricerModal";
 import { SpatialIntelligence } from "@/app/components/spatial/SpatialIntelligence";
 import SovereignFooter from "@/app/components/layout/SovereignFooter";
+// W44_T03 · El CTA flotante de WhatsApp es la superficie que capta el lead.
+// Estaba importado sólo por DynamicMobileExperienceOrchestrator, que hoy no se
+// monta en ningún layout: el botón existía en disco pero no se renderizaba, y
+// una telemetría sobre un botón invisible es una fachada. Se monta aquí (es
+// `hidden lg:flex`: sólo escritorio, no colisiona con el dock móvil) y el
+// propio componente se autoexcluye de /admin y /panel.
+import { FloatingWhatsAppCta } from "@/components/ui/FloatingWhatsAppCta";
 import { GeoStructuredData } from "@/components/seo/GeoStructuredData";
 import { VimumeThemeInjector } from "@/components/theme/VimumeThemeInjector";
 import * as React from "react";
@@ -159,6 +166,7 @@ export default function RootLayout({
                               {children}
                             </main>
                             <SovereignFooter />
+                            <FloatingWhatsAppCta />
                             <HummingbirdFlight />
                             <BespokePricerModal />
                             <UnifiedSearch />
