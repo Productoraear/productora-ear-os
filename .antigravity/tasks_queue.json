@@ -1,11 +1,11 @@
 {
   "_meta": {
-    "version": "11.0-OMEGA-WAVE-44-VANGUARDIA-HARVESTED-SCLASS",
-    "doctrine": "WAVE 44 (SANCIONADA POR EL CEO): 1) Erradicación absoluta de fachadas: cero cobros simulados, cero Math.random en hashes, datos verídicos en directorio. 2) Elevación estética radical a VANGUARDIA DE SILICON VALLEY cosechando los componentes de HorizonX y 21st (HorizonXGlow, LiquidGlassCard, AudioReactiveVisualizer, BentoGrid, GlowButton) sin dependencias ni suscripciones externas de pago. 3) Integración viva de telemetría acústica 12 W/pax Ley 37/2003 en buques insignia comerciales.",
-    "wave": 44,
-    "total_tasks": 3,
+    "version": "12.0-OMEGA-WAVE-45-MOTOR-MAGIA-NEGRA",
+    "doctrine": "WAVE 45 (SANCIONADA POR EL CEO): 1) Materializar la Fórmula Magia Negra (Budget Allocator 50/15/15/10/10 con aritmética en céntimos enteros, largest remainder y candados tipados). 2) Erradicar las constantes hardcodeadas en OmniChannelHub360.tsx conectándolo al SSOT. 3) Verificación determinista sobre 10.000 presupuestos (FAILURES=0).",
+    "wave": 45,
+    "total_tasks": 2,
     "total_pending": 1,
-    "last_updated": "2026-11-02T20:06:47.869Z"
+    "last_updated": "2026-11-02T20:41:12.072Z"
   },
   "_instructions_for_worker": "Ejecuta SOLO via: node .antigravity/omega.js next -> lee .antigravity/MISSION_ACTIVE.json -> edita SOLO 'files' -> ejecuta 'test' -> node .antigravity/omega.js complete <ID>. 1 tarea por sesion.",
   "tasks": [
@@ -27,6 +27,13 @@
   ],
   "completed": [
     {
+      "id": "W45_T01",
+      "title": "Motor Magia Negra · Budget Allocator (50/15/15/10/10 en céntimos enteros) + erradicar hardcodes en OmniChannelHub360",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-11-02T20:41:12.068Z"
+    },
+    {
       "id": "W44_T02_HARVESTED_VANGUARD_FINCAS_TELEMETRY",
       "title": "Vanguardia S-Class · Inyectar AudioReactiveVisualizer y HorizonXGlow en Jardines La Cartuja",
       "status": "COMPLETED",
@@ -42,9 +49,9 @@
     }
   ],
   "metadata": {
-    "last_updated": "2026-11-02T20:06:47.869Z",
+    "last_updated": "2026-11-02T20:41:12.072Z",
     "total_pending": 1,
-    "current_sprint": "WAVE_44_VANGUARDIA_HARVESTED_SCLASS",
-    "ceo_mandate": "Tolerancia cero a fachadas: cobro real, datos reales, y vanguardia visual de Silicon Valley sin pagar suscripciones recurrentes a terceros."
+    "current_sprint": "WAVE_45_MOTOR_MAGIA_NEGRA",
+    "ceo_mandate": "Tolerancia cero a fachadas: Motor Magia Negra en céntimos enteros verificado sobre 10.000 presupuestos antes de pasar a Buzzy MCP."
   }
 }
