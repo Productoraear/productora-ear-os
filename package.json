@@ -63,6 +63,7 @@
     "audit:residues": "node scripts/audit_heavy_residues.cjs",
     "audit:admin": "node scripts/audit_admin_control_forensics.cjs --strict --write",
     "audit:ci-gate": "node scripts/audit_ci_gate_wiring.cjs",
+    "audit:gates": "node scripts/audit_gate_coverage.cjs",
     "verify:confianza": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_trust_ledger.ts",
     "verify:sitemap": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_sitemap_integrity.ts",
     "verify:event-sitemap": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_event_sitemap_coverage.ts",
