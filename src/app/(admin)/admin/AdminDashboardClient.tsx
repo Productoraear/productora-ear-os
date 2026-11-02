@@ -1,3 +1,4 @@
+import { MasterUrlGovernanceMatrix } from '@/components/admin/MasterUrlGovernanceMatrix';
 "use client";
 
 import React, { useState, useMemo } from 'react';
@@ -554,6 +555,13 @@ export default function AdminDashboardClient({ data }: { data: AdminDashboardDat
           </div>
         </div>
       )}
+
+      {/* ===================================================================== */}
+      {/* 🏛️ MATRIZ DE GOBERNANZA & CALIDAD DE URLs (ADMIN CEO)                 */}
+      {/* ===================================================================== */}
+      <div className="mt-8">
+        <MasterUrlGovernanceMatrix />
+      </div>
 
       {/* ===================================================================== */}
       {/* 7. VISTA 5: DIRECTORIO MAESTRO DE TODAS LAS 22 URLS DEL ADMIN         */}
