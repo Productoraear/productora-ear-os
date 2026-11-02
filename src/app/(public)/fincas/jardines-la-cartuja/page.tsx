@@ -4,6 +4,7 @@ import JardinesLaCartujaGrandSlam from '@/components/fincas/JardinesLaCartujaGra
 import jardinesLaCartujaData from '@/data/providers/jardines_la_cartuja_override.json';
 import { BentoGrid, BentoGridItem } from '@/components/harvested/BentoGrid';
 import { GlowButton } from '@/components/harvested/GlowButton';
+import { AudioReactiveVisualizer, HorizonXGlow } from '@/components/harvested';
 import {
   TARIFA_BASE_SOLISTA_EUR,
   DEPOSITO_STRIPE_EUR,
@@ -65,7 +66,11 @@ export default function JardinesLaCartujaPage() {
               'radial-gradient(ellipse at top, rgba(236,182,19,0.16), transparent 62%)',
           }}
         />
-        <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[2rem] border border-white/10 bg-[#09090d]/85 p-6 shadow-[0_40px_120px_-40px_rgba(236,182,19,0.22)] backdrop-blur-md sm:p-10">
+        <HorizonXGlow
+          glowColor="gold"
+          intensity="subtle"
+          className="mx-auto max-w-6xl p-6 shadow-[0_40px_120px_-40px_rgba(236,182,19,0.22)] sm:p-10"
+        >
           <div className="flex flex-wrap items-center gap-3">
             <span className="inline-flex items-center gap-2 rounded-full border border-[#ecb613]/30 bg-[#ecb613]/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.25em] text-[#ecb613]">
               <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
@@ -135,7 +140,7 @@ export default function JardinesLaCartujaPage() {
               WhatsApp {CENTRALITA_EAR_OS}
             </a>
           </div>
-        </div>
+        </HorizonXGlow>
       </section>
 
       <section className="w-full px-4 sm:px-6 lg:px-10 pb-10">
@@ -147,15 +152,14 @@ export default function JardinesLaCartujaPage() {
             Tu boda, cinematográfica de principio a fin
           </h2>
           <div className="mt-8">
-            <BentoGrid>
+            {/* Filas de altura dinámica: el primer Bento aloja la telemetría acústica viva. */}
+            <BentoGrid className="md:!auto-rows-auto">
               <BentoGridItem
                 title="Ceremonia en Césped"
                 description="Acústica de 12 W/pax con sistema Bose F1 sin cables visibles. Sonido envolvente que respeta el protocolo Ley 37/2003."
                 icon={<Volume2 className="h-4 w-4" aria-hidden="true" />}
                 header={
-                  <div className="flex h-28 items-center justify-center rounded-2xl bg-gradient-to-br from-[#ecb613]/20 to-transparent border border-white/5">
-                    <Volume2 className="h-10 w-10 text-[#ecb613]" aria-hidden="true" />
-                  </div>
+                  <AudioReactiveVisualizer peakDba={82.4} theme="gold" className="mt-4" />
                 }
               />
               <BentoGridItem
@@ -183,7 +187,11 @@ export default function JardinesLaCartujaPage() {
         </div>
       </section>
 
-      <JardinesLaCartujaGrandSlam initialEditMode={false} initialData={jardinesLaCartujaData} />
+      <JardinesLaCartujaGrandSlam
+        initialEditMode={false}
+        allowEditToggle={false}
+        initialData={jardinesLaCartujaData}
+      />
     </div>
   );
 }

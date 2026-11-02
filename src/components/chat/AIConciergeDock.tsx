@@ -14,6 +14,7 @@ import {
   Loader2,
   Minimize2,
   Maximize2,
+  RotateCcw,
   Volume2,
   VolumeX,
   Mic,
@@ -122,6 +123,29 @@ export function AIConciergeDock() {
       messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
   }, [messages, isOpen]);
+
+  const handleResetChat = () => {
+    stopSpeaking();
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch {
+      // Ignore
+    }
+    setMessages([
+      {
+        id: `welcome-${Date.now()}`,
+        sender: 'concierge',
+        text: '¡Hola! Soy el **Concierge Ejecutivo de Productora EAR**. Indícame qué tipo de producción o evento estás coordinando (ej. *Gala corporativa con sonorización y música en vivo* o *Espacios para eventos exclusivos*) y te seleccionaré las mejores opciones disponibles con garantía de precio.',
+        suggestedChips: [
+          'Producción & Gala Corporativa',
+          'Fincas y Espacios Exclusivos',
+          'Garantía Price-Lock 100 € Deducible',
+          'Rider Acústico & Sonido Bose',
+        ],
+        timestamp: formatTimestamp(),
+      },
+    ]);
+  };
 
   const handleSendMessage = async (textToSend?: string) => {
     const query = (textToSend || inputMessage).trim();
@@ -235,12 +259,12 @@ export function AIConciergeDock() {
     <>
       {!isOpen && (
         <div
-          className="hidden lg:flex fixed bottom-6 right-6 z-50 items-center gap-3"
+          className="flex fixed bottom-24 right-4 sm:bottom-6 sm:right-6 z-50 items-center gap-2 sm:gap-3"
           role="region"
           aria-label="Acceso rápido al Concierge IA"
         >
           <div
-            className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0c0c14]/90 border border-[#ecb613]/30 text-[11px] font-mono text-[#ecb613] shadow-2xl backdrop-blur-md animate-pulse"
+            className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0c0c14]/90 border border-[#ecb613]/30 text-[11px] font-mono text-[#ecb613] shadow-2xl backdrop-blur-md animate-pulse"
             role="status"
             aria-live="polite"
           >
@@ -251,20 +275,20 @@ export function AIConciergeDock() {
           <button
             type="button"
             onClick={() => setIsOpen(true)}
-            className="w-14 h-14 rounded-full bg-gradient-to-tr from-[#ecb613] via-amber-400 to-amber-200 text-black font-bold flex items-center justify-center shadow-2xl shadow-[#ecb613]/30 hover:scale-105 transition-all group relative border-2 border-black focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
+            className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-tr from-[#ecb613] via-amber-400 to-amber-200 text-black font-bold flex items-center justify-center shadow-2xl shadow-[#ecb613]/30 hover:scale-105 transition-all group relative border-2 border-black focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
             aria-label="Abrir Asistente Conversacional del Concierge IA"
             aria-haspopup="dialog"
             aria-expanded={isOpen}
             aria-controls="ai-concierge-dialog"
           >
             <MessageSquare
-              className="w-6 h-6 text-black group-hover:rotate-12 transition-transform"
+              className="w-5 h-5 sm:w-6 sm:h-6 text-black group-hover:rotate-12 transition-transform"
               aria-hidden="true"
               focusable="false"
             />
             <span
               aria-hidden="true"
-              className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-black"
+              className="absolute -top-1 -right-1 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-emerald-500 border-2 border-black"
             />
             <span className="sr-only">Concierge IA disponible en línea</span>
           </button>
@@ -318,6 +342,15 @@ export function AIConciergeDock() {
             </div>
 
             <div className="flex items-center gap-1" role="group" aria-label="Controles del panel">
+              <button
+                type="button"
+                onClick={handleResetChat}
+                aria-label="Reiniciar conversación y limpiar historial"
+                className="p-2 rounded-xl text-zinc-400 hover:text-[#ecb613] hover:bg-white/5 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613]"
+                title="Reiniciar conversación"
+              >
+                <RotateCcw className="w-4 h-4" aria-hidden="true" focusable="false" />
+              </button>
               <button
                 type="button"
                 onClick={() => setIsExpanded(!isExpanded)}
