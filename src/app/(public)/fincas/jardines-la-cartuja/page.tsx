@@ -1,6 +1,8 @@
-import React from 'react';
 import type { Metadata } from 'next';
+import { Music, Sparkles, Volume2 } from 'lucide-react';
 import JardinesLaCartujaGrandSlam from '@/components/fincas/JardinesLaCartujaGrandSlam';
+import { BentoGrid, BentoGridItem } from '@/components/harvested/BentoGrid';
+import { GlowButton } from '@/components/harvested/GlowButton';
 import {
   TARIFA_BASE_SOLISTA_EUR,
   DEPOSITO_STRIPE_EUR,
@@ -80,17 +82,17 @@ export default function JardinesLaCartujaPage() {
             </div>
 
             <div className="flex flex-wrap gap-3">
+              <GlowButton href="/reservar/solista" variant="gold">
+                Reservar Solista · {TARIFA_BASE_SOLISTA_EUR} €
+              </GlowButton>
+              <GlowButton href="/reservar/test-1eur" variant="cyan">
+                Probar Pasarela · 1,00 €
+              </GlowButton>
               <a
-                href="/reservar/solista"
-                className="inline-flex items-center justify-center rounded-2xl bg-white text-black px-6 py-3 text-sm font-semibold transition-all duration-300 hover:bg-white/90 hover:scale-[1.02]"
-              >
-                Reservar Solista
-              </a>
-              <a
-                href="/alquiler"
+                href="#configurador"
                 className="inline-flex items-center justify-center rounded-2xl bg-white/5 text-white border border-white/15 px-6 py-3 text-sm font-semibold transition-all duration-300 hover:bg-white/10 hover:border-white/30"
               >
-                Ver Alquiler
+                Rider Técnico & Espacios
               </a>
               <a
                 href={WHATSAPP_URL}
@@ -101,6 +103,51 @@ export default function JardinesLaCartujaPage() {
                 WhatsApp +{CENTRALITA_EAR_OS}
               </a>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="w-full px-4 sm:px-6 lg:px-10 pb-10">
+        <div className="mx-auto max-w-6xl">
+          <p className="text-xs uppercase tracking-[0.3em] text-white/50">
+            Experiencia en tres actos
+          </p>
+          <h2 className="mt-2 text-2xl sm:text-3xl font-semibold text-white tracking-tight">
+            Tu boda, cinematográfica de principio a fin
+          </h2>
+          <div className="mt-8">
+            <BentoGrid>
+              <BentoGridItem
+                title="Ceremonia en Césped"
+                description="Acústica de 12 W/pax con sistema Bose F1 sin cables visibles. Sonido envolvente que respeta el protocolo Ley 37/2003."
+                icon={<Volume2 className="h-4 w-4" aria-hidden="true" />}
+                header={
+                  <div className="flex h-28 items-center justify-center rounded-2xl bg-gradient-to-br from-[#ecb613]/20 to-transparent border border-white/5">
+                    <Volume2 className="h-10 w-10 text-[#ecb613]" aria-hidden="true" />
+                  </div>
+                }
+              />
+              <BentoGridItem
+                title="Cóctel & Banquete"
+                description="Iluminación cálida de ambiente y microfonía inalámbrica Shure Axient para discursos y brindis sin interrupciones."
+                icon={<Sparkles className="h-4 w-4" aria-hidden="true" />}
+                header={
+                  <div className="flex h-28 items-center justify-center rounded-2xl bg-gradient-to-br from-[#ecb613]/20 to-transparent border border-white/5">
+                    <Sparkles className="h-10 w-10 text-[#ecb613]" aria-hidden="true" />
+                  </div>
+                }
+              />
+              <BentoGridItem
+                title="Barra Libre & Fiesta"
+                description="Robótica DMX sincronizada y show en directo para una pista de baile que no decae en toda la noche."
+                icon={<Music className="h-4 w-4" aria-hidden="true" />}
+                header={
+                  <div className="flex h-28 items-center justify-center rounded-2xl bg-gradient-to-br from-[#ecb613]/20 to-transparent border border-white/5">
+                    <Music className="h-10 w-10 text-[#ecb613]" aria-hidden="true" />
+                  </div>
+                }
+              />
+            </BentoGrid>
           </div>
         </div>
       </section>

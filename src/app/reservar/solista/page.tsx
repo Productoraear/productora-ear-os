@@ -86,9 +86,9 @@ export default function SolistaReservationPage() {
   const [distance, setDistance] = useState<number>(0);
   const [endTime, setEndTime] = useState<string>('23:00');
 
-  // Advanced Calendar State
-  const [selectedMonth, setSelectedMonth] = useState<number>(9); // 9 = Septiembre 2026
-  const [selectedDate, setSelectedDate] = useState<string>('2026-09-27');
+  // Advanced Calendar State (Noviembre 2026 en adelante)
+  const [selectedMonth, setSelectedMonth] = useState<number>(11); // 11 = Noviembre 2026
+  const [selectedDate, setSelectedDate] = useState<string>('2026-11-28');
   const [dayTypeFilter, setDayTypeFilter] = useState<'all' | 'weekends' | 'high_demand'>('all');
 
   // S-Class Multi-Artist Selection State
@@ -365,7 +365,8 @@ export default function SolistaReservationPage() {
   // Handler for selecting date
   const handleDateSelect = (dayObj: CalendarDay) => {
     if (dayObj.status === 'blocked') {
-      setBlockedAlert(`El día ${dayObj.day} de ${selectedMonth === 9 ? 'Septiembre' : 'este mes'} ya está bloqueado mediante depósito vinculante. Contacta por WhatsApp si deseas entrar en lista de espera prioritaria.`);
+      const monthNames = ['', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+      setBlockedAlert(`El día ${dayObj.day} de ${monthNames[selectedMonth] || 'este mes'} ya está bloqueado mediante depósito vinculante. Contacta por WhatsApp si deseas entrar en lista de espera prioritaria.`);
       return;
     }
     setBlockedAlert(null);
@@ -594,26 +595,6 @@ export default function SolistaReservationPage() {
           <p className="text-zinc-400 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">
             Consulta el calendario en tiempo real, bloquea tu fecha con garantía contractual y asegura rider Bose/Shure sin intermediarios ni cancelaciones.
           </p>
-
-          {/* BANNER RESTRICCIÓN SOLISTA vs CATÁLOGO COMPLETO NACIONAL */}
-          <div className="mt-6 p-4 rounded-2xl bg-gradient-to-r from-[#121008] via-[#08080d] to-[#121008] border border-[#ecb613]/50 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl">
-            <div className="flex items-center gap-3 text-left">
-              <div className="w-10 h-10 rounded-xl bg-[#ecb613]/10 border border-[#ecb613]/30 flex items-center justify-center shrink-0">
-                <Music className="w-5 h-5 text-[#ecb613]" />
-              </div>
-              <div>
-                <h3 className="text-xs sm:text-sm font-bold font-syne text-white uppercase tracking-tight">¿Buscas Flamenco, Pop/Rock, Jazz, DJs, Magia u otros estilos?</h3>
-                <p className="text-[11px] text-slate-300 font-mono">Accede al Catálogo Nacional Auditado con 6.710+ Artistas en las 52 provincias de España.</p>
-              </div>
-            </div>
-            <a
-              href="/artistas"
-              className="bg-[#ecb613] hover:bg-white text-black font-mono font-black text-xs uppercase px-4 py-2.5 rounded-xl transition shrink-0 flex items-center gap-1.5 shadow-md"
-            >
-              <span>Explorar 6.710+ Artistas</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </a>
-          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -637,22 +618,16 @@ export default function SolistaReservationPage() {
                 {/* MONTH SELECTOR */}
                 <div className="flex items-center gap-1 bg-[#111] p-1 rounded-xl border border-white/10 text-xs font-mono">
                   <button
-                    onClick={() => setSelectedMonth(9)}
-                    className={`px-3 py-1.5 rounded-lg transition-all ${selectedMonth === 9 ? 'bg-[#1B76B8] text-white font-bold shadow' : 'text-zinc-400 hover:text-white'}`}
-                  >
-                    Septiembre
-                  </button>
-                  <button
-                    onClick={() => setSelectedMonth(10)}
-                    className={`px-3 py-1.5 rounded-lg transition-all ${selectedMonth === 10 ? 'bg-[#1B76B8] text-white font-bold shadow' : 'text-zinc-400 hover:text-white'}`}
-                  >
-                    Octubre
-                  </button>
-                  <button
                     onClick={() => setSelectedMonth(11)}
                     className={`px-3 py-1.5 rounded-lg transition-all ${selectedMonth === 11 ? 'bg-[#1B76B8] text-white font-bold shadow' : 'text-zinc-400 hover:text-white'}`}
                   >
                     Noviembre
+                  </button>
+                  <button
+                    onClick={() => setSelectedMonth(12)}
+                    className={`px-3 py-1.5 rounded-lg transition-all ${selectedMonth === 12 ? 'bg-[#1B76B8] text-white font-bold shadow' : 'text-zinc-400 hover:text-white'}`}
+                  >
+                    Diciembre
                   </button>
                 </div>
               </div>
@@ -1123,20 +1098,6 @@ export default function SolistaReservationPage() {
                 <p className="text-[11px] text-zinc-400 leading-relaxed">
                   Pago seguro oficial vía Stripe (SHA-256). El abono de este depósito formaliza el bloqueo atómico e inmutable de tu fecha en nuestro calendario oficial. <strong className="text-white">100% deducible del importe total:</strong> los {DEPOSIT.toFixed(0)} € se descuentan íntegros de la liquidación final el día del evento.
                 </p>
-              </div>
-
-              {/* CERO-FACHADAS: GARANTÍA MUTUA DE DOBLE VÍA (Ruta Libre / Blindaje VIP) */}
-              <div className="mb-8">
-                <div className="flex items-center gap-2 mb-3">
-                  <Lock size={16} className="text-[#ecb613]" />
-                  <h3 className="text-sm font-bold text-white uppercase tracking-wider">Garantía Mutua de Doble Vía</h3>
-                </div>
-                <StripeSmartLockCta
-                  vertical="solista"
-                  intentSlug={selectedArtist.id}
-                  priceBase={selectedArtist.baseRate}
-                  depositAmount={10}
-                />
               </div>
 
               {/* HESITATION ENGINE BANNER */}

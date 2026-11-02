@@ -3,12 +3,15 @@ import React from 'react';
 export interface GlowButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   variant?: 'gold' | 'cyan' | 'ruby';
+  /** Cuando se proporciona, el GlowButton renderiza un enlace real a la pasarela. */
+  href?: string;
 }
 
 export function GlowButton({
   children,
   variant = 'gold',
   className = '',
+  href,
   ...props
 }: GlowButtonProps) {
   const colorStyles = {
@@ -17,11 +20,18 @@ export function GlowButton({
     ruby: 'border-[#FF2B44]/40 bg-[#FF2B44]/10 text-[#FF2B44] hover:bg-[#FF2B44] hover:text-white shadow-[0_0_25px_rgba(255,43,68,0.2)]',
   }[variant];
 
+  const baseClassName = `relative inline-flex items-center justify-center px-6 py-3 rounded-2xl font-mono text-xs font-bold uppercase tracking-wider border backdrop-blur-md transition-all duration-300 ease-out hover:scale-[1.02] active:scale-[0.98] ${colorStyles} ${className}`;
+
+  if (href) {
+    return (
+      <a href={href} className={baseClassName}>
+        {children}
+      </a>
+    );
+  }
+
   return (
-    <button
-      className={`relative inline-flex items-center justify-center px-6 py-3 rounded-2xl font-mono text-xs font-bold uppercase tracking-wider border backdrop-blur-md transition-all duration-300 ease-out hover:scale-[1.02] active:scale-[0.98] ${colorStyles} ${className}`}
-      {...props}
-    >
+    <button className={baseClassName} {...props}>
       {children}
     </button>
   );

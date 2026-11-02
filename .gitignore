@@ -10,6 +10,10 @@ pnpm-debug.log*
 *.backup*.json
 src/data/backups/
 .antigravity/safeboot_state_before.txt
+.antigravity/dev_status_live.txt
+.antigravity/dev_out_live.txt
+.antigravity/dev_err_live.txt
+.antigravity/ezkertza_assets.json
 
 # Local environment variables
 .env

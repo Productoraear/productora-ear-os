@@ -80,10 +80,12 @@ export interface BlockItem {
 
 interface JardinesLaCartujaProps {
   initialEditMode?: boolean;
+  allowEditToggle?: boolean;
 }
 
 export default function JardinesLaCartujaGrandSlam({
   initialEditMode = false,
+  allowEditToggle = false,
 }: JardinesLaCartujaProps) {
   const [isEditMode, setIsEditMode] = useState<boolean>(initialEditMode);
   const [blocks, setBlocks] = useState<BlockItem[]>([]);
@@ -336,30 +338,32 @@ export default function JardinesLaCartujaGrandSlam({
             </div>
           </div>
 
-          {/* SIMULADOR DE MODO DE VISTA (VISTA CLIENTE NOVIOS VS EDITOR PROVEEDOR/ADMIN) */}
-          <div className="flex items-center gap-2 bg-[#050508] p-1.5 rounded-xl border border-[#ecb613]/30 text-xs font-mono">
-            <span className="text-[10px] text-white/40 uppercase pl-1">Vista:</span>
-            <button
-              onClick={() => setIsEditMode(false)}
-              aria-pressed={!isEditMode}
-              className={`px-3.5 py-1.5 rounded-lg font-bold transition-all ${!isEditMode
-                ? 'bg-[#ecb613] text-black shadow-md shadow-[#ecb613]/20'
-                : 'text-white/60 hover:text-white'
-                }`}
-            >
-              👁️ Novios (Pública / Solo Lectura)
-            </button>
-            <button
-              onClick={() => setIsEditMode(true)}
-              aria-pressed={isEditMode}
-              className={`px-3.5 py-1.5 rounded-lg font-bold transition-all ${isEditMode
-                ? 'bg-purple-600 text-white shadow-md shadow-purple-600/30'
-                : 'text-white/60 hover:text-white'
-                }`}
-            >
-              ✏️ Editor Proveedor / Admin (100% Control)
-            </button>
-          </div>
+          {/* SIMULADOR DE MODO DE VISTA (SOLO SI SE HABILITA EXPLÍCITAMENTE) */}
+          {allowEditToggle && (
+            <div className="flex items-center gap-2 bg-[#050508] p-1.5 rounded-xl border border-[#ecb613]/30 text-xs font-mono">
+              <span className="text-[10px] text-white/40 uppercase pl-1">Vista:</span>
+              <button
+                onClick={() => setIsEditMode(false)}
+                aria-pressed={!isEditMode}
+                className={`px-3.5 py-1.5 rounded-lg font-bold transition-all ${!isEditMode
+                  ? 'bg-[#ecb613] text-black shadow-md shadow-[#ecb613]/20'
+                  : 'text-white/60 hover:text-white'
+                  }`}
+              >
+                👁️ Novios (Pública / Solo Lectura)
+              </button>
+              <button
+                onClick={() => setIsEditMode(true)}
+                aria-pressed={isEditMode}
+                className={`px-3.5 py-1.5 rounded-lg font-bold transition-all ${isEditMode
+                  ? 'bg-purple-600 text-white shadow-md shadow-purple-600/30'
+                  : 'text-white/60 hover:text-white'
+                  }`}
+              >
+                ✏️ Editor Proveedor / Admin (100% Control)
+              </button>
+            </div>
+          )}
         </header>
       </div>
 
@@ -884,7 +888,7 @@ export default function JardinesLaCartujaGrandSlam({
       )}
 
       {/* 📦 MODAL OMNI-CONTROL DE BLOQUES (HTML, VÍDEO, IFRAME, MULTIMEDIA, TEXTO, CTA, FAQS) */}
-      {isAddBlockModalOpen && (
+      {allowEditToggle && isAddBlockModalOpen && (
         <div role="presentation" className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
           <div role="dialog" aria-modal="true" aria-label="Catálogo de bloques modulares" className="bg-[#0b0b12] border border-purple-500/50 rounded-3xl p-6 max-w-lg w-full space-y-4 max-h-[85vh] overflow-y-auto">
             <div className="flex justify-between items-center pb-2 border-b border-white/10">
