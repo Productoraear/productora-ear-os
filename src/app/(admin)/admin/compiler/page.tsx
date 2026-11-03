@@ -83,7 +83,7 @@ type GpuStatusPayload = {
 export default function VibeCodingCompilerPage() {
   const [prompt, setPrompt] = useState('');
   const [mode, setMode] = useState<CompileMode>('OMEGA_FULLSTACK');
-  const [engine, setEngine] = useState<CompileEngine>('OLLAMA');
+  const [engine, setEngine] = useState<CompileEngine>('CLOUD');
   const [oraclePersona, setOraclePersona] = useState<OraclePersona>('CEO');
   const [oracleResult, setOracleResult] = useState<OracleRefinedResult | null>(null);
   const [isCompiling, setIsCompiling] = useState(false);

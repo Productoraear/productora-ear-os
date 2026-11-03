@@ -25,6 +25,7 @@ import {
     type GpuModelId
 } from './qwen-gpu-inference';
 import { runDeepSeekChat, isDeepSeekConfigured } from './deepseek-inference';
+import { runGeminiForgeChat, isGeminiConfigured } from './gemini-inference';
 import { SSOT_BUSINESS_RULES } from './omega-intent-compiler';
 import {
     TARIFA_BASE_SOLISTA_EUR,
@@ -41,7 +42,7 @@ import {
 } from '@/lib/constants/ear-os-ssot';
 
 export type ForgeMode = 'ARQUITECTO' | 'QUIRURGICO';
-export type ForgeEngine = 'OLLAMA_GPU' | 'DEEPSEEK_CLOUD' | 'DETERMINISTIC_FALLBACK';
+export type ForgeEngine = 'GEMINI_CLOUD' | 'OLLAMA_GPU' | 'DEEPSEEK_CLOUD' | 'DETERMINISTIC_FALLBACK';
 
 export interface ForgeOptions {
     /** Intención cruda del CEO (texto o transcripción de voz). */
@@ -863,6 +864,36 @@ export async function forgeMasterPrompt(options: ForgeOptions): Promise<ForgedMa
     ].join('\n');
 
     // 1) DeepSeek cloud (si hay clave) — primario, máxima resiliencia en demos.
+        // 0) Google Gemini Flash (Cloud Edge Gratuito / Residual con GEMINI_API_KEY) — PRIORIDAD #1
+    if (isGeminiConfigured()) {
+        try {
+            const gem = await runGeminiForgeChat({
+                systemPrompt: FORGE_SYSTEM_PROMPT,
+                userPrompt: userPrompt,
+                modelName: 'gemini-1.5-flash',
+                jsonMode: true,
+                temperature: 0.15
+            });
+            if (gem.available && gem.content) {
+                const parsed = extractJsonObject<ForgeLlmOutput>(gem.content);
+                if (parsed?.masterPrompt) {
+                    return assembleForgedResult(
+                        parsed,
+                        intent,
+                        mode,
+                        'Google Gemini 1.5 Flash (Cloud Edge)',
+                        'GEMINI_CLOUD',
+                        gem.latencyMs,
+                        0,
+                        'GEMINI_CLOUD (gemini-1.5-flash)'
+                    );
+                }
+            }
+        } catch {
+            // Cae con elegancia al siguiente motor
+        }
+    }
+
     if (isDeepSeekConfigured()) {
         try {
             const ds = await runDeepSeekChat({

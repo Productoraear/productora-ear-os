@@ -67,10 +67,10 @@ const ALL_ADMIN_DIRECT_URLS = [
   { category: "Finanzas & Legal B2G", name: "Flota & Logística Méntrida", url: "/admin/flota", badge: "KM 0", desc: "Calculadora de distancias, portes 1,50 €/km y estado de vehículos.", icon: Truck },
 
   // INTELIGENCIA, IA & CONSOLAS DIRECTAS
-  { category: "Inteligencia & GPU", name: "Voice Studio IA", url: "/admin/voice-studio", badge: "GPU 24GB", desc: "Modelos de voz locales operando en la AMD RX 7900 XTX.", icon: Mic },
-  { category: "Inteligencia & GPU", name: "Meta-Compiler (Vibe Coding)", url: "/admin/compiler", badge: "DAG", desc: "Orquestador de micro-servicios y compilación reactiva.", icon: Zap },
+  { category: "Inteligencia & GPU", name: "Estudio de Locución y Voz IA", url: "/admin/voice-studio", badge: "AUDIO", desc: "Generación de voces, cuñas y locuciones profesionales para eventos.", icon: Mic },
+  { category: "Inteligencia & GPU", name: "Afinador de Prompts (Asistente IA)", url: "/admin/compiler", badge: "GEMINI EDGE", desc: "Traduce lenguaje natural a instrucciones técnicas perfectas para el obrero (Cline) con Gemini Flash.", icon: Zap },
   { category: "Inteligencia & GPU", name: "Journey Heatmap UX", url: "/admin/journey-heatmap", badge: "HEATMAP", desc: "Mapas de calor y telemetría de interacción de usuarios.", icon: Activity },
-  { category: "Inteligencia & GPU", name: "Consola Sentinel ZTM", url: "/admin/sentinel", badge: "ZERO-TKN", desc: "Protección contra saturación de memoria de Ollama.", icon: Shield },
+  { category: "Inteligencia & GPU", name: "Guardián de Memoria y Costes (Sentinel)", url: "/admin/sentinel", badge: "0 TOKEN", desc: "Protección contra saturación y control de tokens facturados.", icon: Shield },
   { category: "Inteligencia & GPU", name: "Centro de Mando & Skills", url: "/admin/command-center", badge: "ROOT", desc: "Gobernanza del sistema y catálogo de skills autónomos.", icon: ShieldCheck },
   { category: "Inteligencia & GPU", name: "Radar de Demanda Directo", url: "/radar", badge: "EXP", desc: "Consola de radar de demanda y palabras clave nupciales.", icon: BarChart3 },
   { category: "Inteligencia & GPU", name: "Agent Skills Directo", url: "/agent-skills", badge: "SKILLS", desc: "Directorio de habilidades de los agentes autónomos.", icon: Layers },
