@@ -4,38 +4,11 @@
     "doctrine": "WAVE 47 (ORDEN DIRECTA CEO — DESMANTELAR EL FRANKENSTEIN GLOBAL DE EAR OS): El problema no es una sola barra ni una sola página; es la superposición global de capas heredadas, menús duplicados, héroes dobles, iframes RGPD-hostiles, recorte de fotos (object-cover vs object-contain + filtro de verticales) y la falta del Panel de Métricas para Eduardo (Ezkertza Berria) y del Simulador Universal de Proveedores. Se encolan 4 bloques quirúrgicos de purga y consolidación en tasks_queue.json para el obrero.",
     "wave": 47,
     "total_tasks": 4,
-    "total_pending": 3,
-    "last_updated": "2026-11-02T23:09:48.118Z"
+    "total_pending": 2,
+    "last_updated": "2026-11-03T07:12:20.765Z"
   },
   "_instructions_for_worker": "Ejecuta SOLO via: node .antigravity/omega.js next -> lee .antigravity/MISSION_ACTIVE.json -> edita SOLO 'files' -> ejecuta 'test' -> node .antigravity/omega.js complete <ID>. 1 tarea por sesion.",
   "tasks": [
-    {
-      "id": "W47_T02_PURGE_OTZARRETA_DUPLICATES_AND_GLOBAL_GALLERY",
-      "title": "Cirugía Anti-Frankenstein en /otzarreta y Galerías Globales · 1 Hero, 1 Vídeo sin iframe, 0 Fotos Verticales Cortadas",
-      "status": "QUEUED",
-      "priority": "P0_SHOWCASE_PURITY",
-      "files": [
-        "src/app/(public)/otzarreta/page.tsx",
-        "src/components/otzarreta/EzkertzaVenueLanding.tsx",
-        "src/components/sclass/CinematicVanguardCarousel.tsx",
-        "src/components/providers/ProviderMediaGallery.tsx"
-      ],
-      "action": "Eliminar la esquizofrenia visual de `/otzarreta` (donde se apilaban dos páginas completas: la página antigua y `EzkertzaVenueLanding` dentro) y aplicar la regla global del CEO para TODAS las galerías de EAR OS (nunca cortar horizontales, excluir verticales de la presentación panorámica): 1) En `src/app/(public)/otzarreta/page.tsx`: eliminar la sección 2 antigua ('GALERÍA VISUAL DE ACTIVOS OFICIALES VAMPIRIZADOS', líneas 268-331, que usaba `object-cover` e incluía la foto vertical `novios-1022x1536.jpg` cortada), eliminar la sección 5 redundante ('Diseña tu banquete al céntimo' que mandaba con un ancla arriba, líneas 564-587) y eliminar la sección 6 de reseñas duplicadas (líneas 592-626); corregir además el texto 'la Dirección Gastronómica' por 'Eduardo (Dirección Gastronómica de Ezkertza Berria & Otzarreta)' donde quedaba con minúscula inicial tras un reemplazo automático. 2) En `src/components/otzarreta/EzkertzaVenueLanding.tsx`: eliminar el bloque 4 del `<iframe src=\"https://player.vimeo.com/...\">` (líneas 279-299) que contradecía el blindaje RGPD/CSP de `EzkertzaCinematicJourney` y duplicaba el vídeo oficial. 3) En `src/components/sclass/CinematicVanguardCarousel.tsx` y `src/components/providers/ProviderMediaGallery.tsx`: exportar/aplicar el filtro canónico de geometría apaisada (descartar URLs con sufijo `-WxH` donde `W/H < 1.15` o miniaturas `< 500px` en el carrusel panorámico principal) y cambiar el visor principal de `object-cover` a `object-contain bg-[#030305]` para que NINGUNA foto horizontal de ningún proveedor en EAR OS sufra amputación de encuadre.",
-      "scaffold": {
-        "invariants": [
-          "Cero `object-cover` que recorte fotografías horizontales en `ProviderMediaGallery.tsx` y `CinematicVanguardCarousel.tsx` (usar `object-contain` sobre fondo OLED `#030305`)",
-          "Cero fotografías verticales (ej. `-1022x1536` o `W/H < 1.15`) en los carruseles panorámicos principales",
-          "Cero iframes de Vimeo sin consentimiento en `EzkertzaVenueLanding.tsx` (el enlace externo limpio ya vive en `EzkertzaCinematicJourney.tsx`)",
-          "Cero bloques duplicados de galería/reseñas/cta-ancla en `src/app/(public)/otzarreta/page.tsx`"
-        ],
-        "forbidden": [
-          "Prohibido tocar `ear-os-ssot.ts`",
-          "Prohibido inventar precios o alterar los 7 menús oficiales de Ezkertza Berria"
-        ]
-      },
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node ./node_modules/eslint/bin/eslint.js \"src/app/(public)/otzarreta/page.tsx\" \"src/components/otzarreta/EzkertzaVenueLanding.tsx\" \"src/components/sclass/CinematicVanguardCarousel.tsx\" \"src/components/providers/ProviderMediaGallery.tsx\"",
-      "done_when": "1) `/otzarreta` tiene un flujo lineal limpio sin galerías duplicadas ni iframes de terceros. 2) `CinematicVanguardCarousel` y `ProviderMediaGallery` respetan relación de aspecto nativa (`object-contain`) y filtran verticales en vista panorámica. 3) `tsc --noEmit` y `eslint` devuelven Exit Code 0."
-    },
     {
       "id": "W47_T03_EDUARDO_PARTNER_METRICS_AND_CEO_RADAR",
       "title": "Panel de Métricas de Escaparate para Eduardo (Ezkertza Berria) + Telemetría Global EAR OS en Admin CEO y Área Privada del Restaurante",
@@ -90,6 +63,13 @@
   ],
   "completed": [
     {
+      "id": "W47_T02_PURGE_OTZARRETA_DUPLICATES_AND_GLOBAL_GALLERY",
+      "title": "Cirugía Anti-Frankenstein en /otzarreta y Galerías Globales · 1 Hero, 1 Vídeo sin iframe, 0 Fotos Verticales Cortadas",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-11-03T07:12:20.763Z"
+    },
+    {
       "id": "W47_T01_PURGE_GLOBAL_FRANKENSTEIN_SHELL",
       "title": "Purga Global Anti-Frankenstein · Unificar Shell en layout.tsx, erradicar modales zombis por ratón (SpatialIntelligence) y unificar cabecera de Home",
       "status": "COMPLETED",
@@ -119,8 +99,8 @@
     }
   ],
   "metadata": {
-    "last_updated": "2026-11-02T23:09:48.118Z",
-    "total_pending": 3,
+    "last_updated": "2026-11-03T07:12:20.765Z",
+    "total_pending": 2,
     "current_sprint": "WAVE_47_ANTI_FRANKENSTEIN_GLOBAL",
     "ceo_mandate": "Desmantelar el Frankenstein global de EAR OS: 1 sola cabecera pública, 0 modales zombis, 0 fotos horizontales cortadas ni verticales en carruseles, Panel de Métricas de Eduardo (Ezkertza) + Admin CEO, y Simulador Universal por proveedor."
   }

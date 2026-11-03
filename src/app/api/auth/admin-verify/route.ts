@@ -53,7 +53,7 @@ export async function POST(request: Request) {
       response.cookies.set('ear_session', 'sovereign_admin_bypass', cookieOpts);
       response.cookies.set('ear_admin_token', 'sclass_sovereign_bypass_verified', cookieOpts);
       response.cookies.set('ear_role', 'admin', cookieOpts);
-      response.cookies.set('ear_user_email', 'edwin.agudelo@productoraear.com', cookieOpts);
+      response.cookies.set('ear_user_email', 'productoraear@gmail.com', cookieOpts);
       response.cookies.set('ear_user_name', encodeURIComponent('Edwin Agudelo'), cookieOpts);
 
       return response;

@@ -14,6 +14,14 @@ export interface AuthorizedTeamMember {
 
 export const AUTHORIZED_TEAM_MEMBERS: AuthorizedTeamMember[] = [
   {
+    email: 'productoraear@gmail.com',
+    name: 'Edwin Agudelo',
+    role: 'admin',
+    title: 'CEO & Fundador',
+    department: 'Dirección General & Operaciones',
+    allowedScopes: ['*']
+  },
+  {
     email: 'edwin.agudelo@productoraear.com',
     name: 'Edwin Agudelo',
     role: 'admin',

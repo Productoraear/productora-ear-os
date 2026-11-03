@@ -276,29 +276,9 @@ export function EzkertzaVenueLanding({
                 )}
             </div>
 
-            {/* ━━━ 4. VÍDEO OFICIAL ━━━ */}
-            <div className="grid grid-cols-1 gap-6 mt-16">
-                <div className="rounded-3xl border border-white/10 bg-[#09090d]/80 p-6 space-y-4">
-                    <h3 className="text-lg font-bold text-white">Vídeo oficial del caserío</h3>
-                    <div className="aspect-video rounded-2xl overflow-hidden border border-white/10 bg-black/40">
-                        <iframe
-                            src={`https://player.vimeo.com/video/${EZKERTZA_DERIO_VENUE.media.officialVideo.videoId}?title=0&byline=0&portrait=0&dnt=1`}
-                            title="Vídeo oficial del Restaurante Ezkertza Berria"
-                            className="w-full h-full"
-                            loading="lazy"
-                            allow="autoplay; fullscreen; picture-in-picture"
-                            allowFullScreen
-                        />
-                    </div>
-                    <p className="text-[11px] text-gray-500 leading-relaxed">
-                        Vídeo publicado por el propio caserío (ezkertzaberria.com). En
-                        producción el iframe exigirá consentimiento de cookies (RGPD) y CSP
-                        (SEC-7) — pendiente de G-6.
-                    </p>
-                </div>
-            </div>
-
-            {/* ━━━ 5. ESPACIOS · SERVICIOS · LOCALIZACIÓN ━━━ */}
+            {/* ━━━ 4. ESPACIOS · SERVICIOS · LOCALIZACIÓN ━━━ */}
+            {/* El vídeo oficial ya se sirve como enlace soberano (sin iframe ni cookies de
+                terceros) desde EzkertzaCinematicJourney: RGPD/SEC-7 sin duplicar el player. */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
                 <div className="p-6 rounded-3xl border border-white/10 bg-[#09090d]/80 space-y-4">
                     <h3 className="text-base font-bold text-white">Espacios</h3>

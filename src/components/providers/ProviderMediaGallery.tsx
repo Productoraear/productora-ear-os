@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { ChevronLeft, ChevronRight, Maximize2, X, Play, Image as ImageIcon } from 'lucide-react';
+import { isPanoramicLandscape } from '@/components/sclass/CinematicVanguardCarousel';
 import {
   classifyProviderVideo,
   type ProviderVideoSource,
@@ -22,8 +23,16 @@ export const ProviderMediaGallery: React.FC<MediaGalleryProps> = React.memo(func
   galleryImages = [],
   videoUrls = [],
 }) {
-  // Deduplicar y normalizar lista de imágenes
-  const allImages = Array.from(new Set([featuredImage, ...galleryImages].filter(Boolean)));
+  /**
+   * Regla global del CEO (W47_T02): el visor panorámico 16/9 solo admite
+   * geometría apaisada. Las verticales (`-1022x1536`, ratio < 1.15) quedan
+   * fuera del carrusel principal en lugar de aparecer amputadas.
+   * Último recurso: si el proveedor SOLO tiene material vertical, se conserva
+   * la principal, pero se muestra letterboxed (`object-contain`): nunca cortada.
+   */
+  const panoramicImages = Array.from(new Set([featuredImage, ...galleryImages].filter(Boolean)))
+    .filter((image) => isPanoramicLandscape(image));
+  const allImages = panoramicImages.length > 0 ? panoramicImages : [featuredImage];
   /**
    * Clasificación client-side: la plataforma audiovisual acaba en `iframe`
    * (player oficial ya normalizado por el motor) y el fichero directo
@@ -74,12 +83,12 @@ export const ProviderMediaGallery: React.FC<MediaGalleryProps> = React.memo(func
       {activeTab === 'photos' && (
         <div className="space-y-3">
           {/* Visor Principal */}
-          <div className="relative aspect-[16/9] w-full overflow-hidden rounded-3xl bg-zinc-950 border border-white/10 group shadow-2xl">
+          <div className="relative aspect-[16/9] w-full overflow-hidden rounded-3xl bg-[#030305] border border-white/10 group shadow-2xl">
             {currentImage ? (
               <Image
                 key={selectedIndex + 1}
                 alt={`${providerName} - Imagen ${selectedIndex + 1}`}
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                className="object-contain bg-[#030305]"
                 fill
                 priority
                 sizes="(max-width: 1200px) 100vw, 800px"
@@ -138,7 +147,7 @@ export const ProviderMediaGallery: React.FC<MediaGalleryProps> = React.memo(func
                       : 'border-white/10 opacity-50 hover:opacity-100'
                     }`}
                 >
-                  <Image src={img} alt={`Miniatura ${idx + 1}`} className="object-cover" fill sizes="120px" />
+                  <Image src={img} alt={`Miniatura ${idx + 1}`} className="object-contain bg-[#030305]" fill sizes="120px" />
                 </button>
               ))}
             </div>

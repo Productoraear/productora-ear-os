@@ -44,6 +44,49 @@ const MODE_META: Array<{ id: CarouselMode; label: string; icon: React.ComponentT
 const PLACEHOLDER =
     'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=1200&auto=format&fit=crop';
 
+/* ═══════════════════════════════════════════════════════════════════
+   FILTRO CANÓNICO DE GEOMETRÍA APAI SADA (regla global del CEO · W47_T02)
+   Ningún visor panorámico de EAR OS admite material vertical: una foto
+   `-1022x1536` recortada con `object-cover` amputa el encuadre y rompe la
+   promesa visual. Se descarta en origen, no se "arregla" con CSS.
+   ═══════════════════════════════════════════════════════════════════ */
+
+export const PANORAMIC_MIN_RATIO = 1.15;
+export const PANORAMIC_MIN_WIDTH = 500;
+
+/**
+ * Patrones de geometría declarada en la URL:
+ *  · sufijo de CDN/WordPress → `novios-1022x1536.jpg`
+ *  · query string           → `?w=1200&h=800`
+ */
+const GEOMETRY_PATTERNS: readonly RegExp[] = [
+    /-(\d{2,5})x(\d{2,5})(?=[-._/?&#]|$)/i,
+    /[?&](?:w|width)=(\d{2,5})[^0-9]{1,8}(?:h|height)=(\d{2,5})/i
+];
+
+/**
+ * `true` solo si la URL declara geometría apaisada suficiente (ratio ≥ 1.15 y
+ * ancho ≥ 500 px). Sin metadatos de geometría no se puede demostrar que sea
+ * vertical, por lo que la imagen se conserva.
+ */
+export function isPanoramicLandscape(url: string): boolean {
+    if (typeof url !== 'string' || url.trim().length < 6) return false;
+    for (const pattern of GEOMETRY_PATTERNS) {
+        const match = url.match(pattern);
+        if (!match) continue;
+        const width = Number.parseInt(match[1], 10);
+        const height = Number.parseInt(match[2], 10);
+        if (!Number.isFinite(width) || !Number.isFinite(height) || height <= 0) return true;
+        return width / height >= PANORAMIC_MIN_RATIO && width >= PANORAMIC_MIN_WIDTH;
+    }
+    return true;
+}
+
+/** Filtro canónico reutilizable por cualquier galería panorámica de EAR OS. */
+export function filterPanoramicLandscape(images: readonly string[]): string[] {
+    return (images || []).filter((image) => isPanoramicLandscape(image));
+}
+
 function normalizeImages(images: string[]): string[] {
     const cleaned = (images || [])
         .filter((img) => typeof img === 'string' && img.trim().length > 5 && !img.includes('.svg'))
@@ -51,7 +94,9 @@ function normalizeImages(images: string[]): string[] {
             if (img.startsWith('//')) return `https:${img}`;
             if (img.startsWith('/uploads/')) return `https://www.celebrents.es${img}`;
             return img;
-        });
+        })
+        // Regla global W47_T02: fuera verticales y miniaturas del visor panorámico.
+        .filter(isPanoramicLandscape);
     const unique = Array.from(new Set(cleaned));
     return unique.length > 0 ? unique : [PLACEHOLDER];
 }
@@ -273,7 +318,7 @@ export default function CinematicVanguardCarousel({
                         <div className="flex justify-center gap-2 overflow-x-auto py-3 border-t border-white/10" onClick={(e) => e.stopPropagation()}>
                             {cleanImages.map((img, i) => (
                                 <button key={i} onClick={() => goTo(i)} className={`w-14 h-10 rounded-lg overflow-hidden shrink-0 border transition ${i === index ? 'border-[#ecb613] ring-2 ring-[#ecb613]/50 scale-105' : 'border-zinc-800 opacity-40 hover:opacity-80'}`}>
-                                    <img src={img} alt="" className="w-full h-full object-cover" />
+                                    <img src={img} alt="" className="w-full h-full object-contain bg-[#030305]" />
                                 </button>
                             ))}
                         </div>
@@ -296,14 +341,14 @@ function KenBurnsStage({ images, index, title }: { images: string[]; index: numb
                     alt={`${title} ${i + 1}`}
                     referrerPolicy="no-referrer"
                     onError={(e) => { (e.target as HTMLImageElement).src = PLACEHOLDER; }}
-                    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[1200ms] ease-in-out ${i === index ? 'opacity-100 kenburns' : 'opacity-0'}`}
+                    className={`absolute inset-0 w-full h-full object-contain bg-[#030305] transition-opacity duration-[1200ms] ease-in-out ${i === index ? 'opacity-100 kenburns' : 'opacity-0'}`}
                 />
             ))}
         </div>
     );
 }
 
-function VortexStage({ images, index, offset, title }: { images: string[]; index: number; offset: (i: number) => number; title: string }) {
+function VortexStage({ images, offset, title }: { images: string[]; index?: number; offset: (i: number) => number; title: string }) {
     return (
         <div className="absolute inset-0 [perspective:1200px] flex items-center justify-center">
             {images.map((src, i) => {
@@ -317,7 +362,7 @@ function VortexStage({ images, index, offset, title }: { images: string[]; index
                         alt={`${title} ${i + 1}`}
                         referrerPolicy="no-referrer"
                         onError={(e) => { (e.target as HTMLImageElement).src = PLACEHOLDER; }}
-                        className="absolute w-[85%] h-[85%] object-cover rounded-2xl border border-white/10 transition-all duration-700 ease-out"
+                        className="absolute w-[85%] h-[85%] object-contain bg-[#030305] rounded-2xl border border-white/10 transition-all duration-700 ease-out"
                         style={{
                             transform: `translateX(${depth * 38}%) rotateY(${depth * -28}deg) scale(${isActive ? 1 : 0.8})`,
                             opacity: isActive ? 1 : Math.max(0.2, 0.85 - Math.abs(depth) * 0.2),
@@ -341,14 +386,14 @@ function CrossfadeStage({ images, index, title }: { images: string[]; index: num
                     alt={`${title} ${i + 1}`}
                     referrerPolicy="no-referrer"
                     onError={(e) => { (e.target as HTMLImageElement).src = PLACEHOLDER; }}
-                    className={`absolute inset-0 w-full h-full object-cover transition-all duration-[1000ms] ease-out ${i === index ? 'opacity-100 scale-100 blur-0' : 'opacity-0 scale-110 blur-md'}`}
+                    className={`absolute inset-0 w-full h-full object-contain bg-[#030305] transition-all duration-[1000ms] ease-out ${i === index ? 'opacity-100 scale-100 blur-0' : 'opacity-0 scale-110 blur-md'}`}
                 />
             ))}
         </div>
     );
 }
 
-function StackStage({ images, index, offset, title }: { images: string[]; index: number; offset: (i: number) => number; title: string }) {
+function StackStage({ images, offset, title }: { images: string[]; index?: number; offset: (i: number) => number; title: string }) {
     return (
         <div className="absolute inset-0 flex items-center justify-center">
             {images.map((src, i) => {
@@ -360,7 +405,7 @@ function StackStage({ images, index, offset, title }: { images: string[]; index:
                         alt={`${title} ${i + 1}`}
                         referrerPolicy="no-referrer"
                         onError={(e) => { (e.target as HTMLImageElement).src = PLACEHOLDER; }}
-                        className="absolute w-[80%] h-[80%] object-cover rounded-2xl border border-white/10 transition-all duration-700 ease-out"
+                        className="absolute w-[80%] h-[80%] object-contain bg-[#030305] rounded-2xl border border-white/10 transition-all duration-700 ease-out"
                         style={{
                             transform: `translateX(${o * 10}%) translateY(${o * 3}%) rotate(${o * 2}deg) scale(${1 - Math.abs(o) * 0.05})`,
                             opacity: Math.max(0.1, 1 - Math.abs(o) * 0.18),
@@ -383,7 +428,7 @@ function ParadeStage({ images, index, title }: { images: string[]; index: number
                         alt={`${title} ${i + 1}`}
                         referrerPolicy="no-referrer"
                         onError={(e) => { (e.target as HTMLImageElement).src = PLACEHOLDER; }}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-contain bg-[#030305]"
                     />
                 </div>
             ))}

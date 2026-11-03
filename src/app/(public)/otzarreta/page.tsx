@@ -12,7 +12,6 @@ import {
   CheckCircle2,
   XCircle,
   TrendingUp,
-  Star,
   Users,
   Building2,
   CalendarCheck
@@ -29,8 +28,7 @@ import {
 import { EzkertzaVenueLanding as EzkertzaVenueListing } from '@/components/otzarreta/EzkertzaVenueLanding';
 import {
   AudioReactiveVisualizer,
-  HorizonXGlow,
-  LiquidGlassCard
+  HorizonXGlow
 } from '@/components/harvested';
 import {
   resolveProviderCalendarHref,
@@ -99,7 +97,7 @@ export default async function OtzarretaFlagshipPage({
         // saneador (`sanitizeSchemaContact`) inyecta el punto de contacto de la
         // ConserjerÃ­a EAR OS en el render.
         servesCuisine: ['Basque', 'Parrilla', 'Traditional Spanish', 'Seafood', 'Asador'],
-        priceRange: 'â‚¬â‚¬â‚¬',
+        priceRange: '€€€',
         address: {
           '@type': 'PostalAddress',
           streetAddress: 'Santo Domingo Hiribidea, 13',
@@ -194,7 +192,7 @@ export default async function OtzarretaFlagshipPage({
           <p className="text-gray-300 text-base sm:text-lg lg:text-xl max-w-3xl mx-auto leading-relaxed">
             El caserío definitivo para bodas inolvidables: <strong>350 comensales</strong> en comedores climatizados e insonorizados,
             jardines botánicos con carpa y oficiante civil, parking privado gratuito de <strong>150 plazas</strong> y la auténtica parrilla al
-            carbón de encina de <strong>la Dirección Gastronómica</strong>, con sonorización homologada Bose S-Class de Productora EAR.
+            carbón de encina de <strong>Eduardo (Dirección Gastronómica de Ezkertza Berria & Otzarreta)</strong>, con sonorización homologada Bose S-Class de Productora EAR.
           </p>
 
           {/* CTA Group */}
@@ -263,72 +261,12 @@ export default async function OtzarretaFlagshipPage({
       </section>
 
       {/* â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â” */}
-      {/* 2. GALERÃA VISUAL DE ACTIVOS OFICIALES VAMPIRIZADOS     */}
+      {/* 2. GALERÃA · RETIRADA EN W47_T02     */}
       {/* â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â” */}
-      <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto my-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          {/* Foto Principal: Fachada CaserÃ­o */}
-          <div className="md:col-span-2 relative h-80 md:h-[460px] rounded-3xl overflow-hidden border border-white/10 group">
-            <img
-              src="https://www.ezkertzaberria.com/wp-content/uploads/2021/05/Fachada-Principal-1.jpg"
-              alt="Fachada Principal del Caserío Ezkertza Berria en Derio (Bizkaia)"
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent flex items-end p-6">
-              <div>
-                <span className="text-[11px] font-mono text-[#ecb613] uppercase tracking-wider">
-                  CASERÍO DEL SIGLO XX · DERIO (BIZKAIA)
-                </span>
-                <h3 className="text-xl font-bold text-white">Instalaciones Exclusivas para 350 Personas</h3>
-                <p className="text-xs text-gray-300">A 8 minutos del centro de Bilbao y 5 minutos del aeropuerto con parking para 150 coches</p>
-              </div>
-            </div>
-          </div>
+      {/* W47_T02 · sección 2 eliminada: galería duplicada que amputaba verticales como novios-1022x1536. */}
 
-          {/* Dos fotos columna centro */}
-          <div className="space-y-4 md:col-span-1">
-            <div className="relative h-44 md:h-[218px] rounded-3xl overflow-hidden border border-white/10 group">
-              <img
-                src="https://www.ezkertzaberria.com/wp-content/uploads/2021/05/DSC03860-scaled.jpg"
-                alt="Comedores Climatizados e Insonorizados de Ezkertza Berria"
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-4">
-                <span className="text-xs font-bold text-white">Salones Climatizados Insonorizados</span>
-              </div>
-            </div>
-
-            <div className="relative h-44 md:h-[218px] rounded-3xl overflow-hidden border border-white/10 group">
-              <img
-                src="https://www.ezkertzaberria.com/wp-content/uploads/2021/04/beef-wagyu-steak-meat-with-asparagus-isolated-on-w-FDBG7AR.png"
-                alt="Chuletón y parrilla de carbón de encina de ganado mayor"
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 bg-black/40"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-4">
-                <span className="text-xs font-bold text-white">Carbón de Encina & Ganado Mayor</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Foto Derecha: Novios y JardÃ­n */}
-          <div className="relative h-80 md:h-[460px] rounded-3xl overflow-hidden border border-white/10 group md:col-span-1">
-            <img
-              src="https://www.ezkertzaberria.com/wp-content/uploads/2021/06/novios-1022x1536.jpg"
-              alt="Ceremonia Civil en Jardines al Aire Libre"
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent flex items-end p-6">
-              <div>
-                <span className="text-[11px] font-mono text-[#ecb613] uppercase tracking-wider">
-                  CEREMONIA & CÓCTEL
-                </span>
-                <h3 className="text-base font-bold text-white">Jardines & Carpa Civil</h3>
-                <p className="text-xs text-gray-300">Oficiante, música en vivo y zona Chill Out</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Residuo de encoding no editable (invisible) de la galería eliminada:ÍO
+                */}
 
 
       {/* â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â” */}
@@ -497,7 +435,7 @@ export default async function OtzarretaFlagshipPage({
             DOS ENCLAVES PRIVILEGIADOS EN EL PAÍS VASCO
           </span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
-            Las Sedes de la Dirección Gastronómica
+            Las Sedes de Eduardo (Dirección Gastronómica de Ezkertza Berria & Otzarreta)
           </h2>
           <p className="text-gray-400 text-sm sm:text-base">
             Dos espacios emblemáticos diseñados para celebraciones de ensueño, desde bodas íntimas en la costa hasta banquetes multitudinarios a 5 minutos del aeropuerto.
@@ -561,70 +499,11 @@ export default async function OtzarretaFlagshipPage({
       {/* â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â” */}
       {/* 5. EXPLORADOR INTERACTIVO DE EXPERIENCIAS & MENÃšS      */}
       {/* â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â” */}
-      {/* 5. CARTA & COTIZADOR — fuente única: el hub de experiencia (arriba) */}
-      <section className="px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto my-20">
-        <LiquidGlassCard variant="deep" accent="gold" className="text-center">
-          <div className="space-y-4 text-center">
-            <span className="text-xs font-mono text-[#ecb613] uppercase tracking-wider">
-              PROPUESTA GASTRONÓMICA OFICIAL 2026 & HARDWARE S-CLASS
-            </span>
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-white">
-              Diseña tu banquete al céntimo
-            </h2>
-            <p className="text-gray-400 text-sm sm:text-base max-w-2xl mx-auto">
-              Los 7 menús oficiales, el simulador de comensales y el blindaje acústico viven en un
-              único módulo, para que no cotices dos veces lo mismo.
-            </p>
-            <a
-              href="#ficha-ezkertza-derio"
-              className="inline-flex items-center gap-2 rounded-xl bg-[#ecb613] px-6 py-3 text-sm font-extrabold text-black transition-all duration-300 ease-out hover:bg-[#ffe066]"
-            >
-              Ir al cotizador único
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </a>
-          </div>
-        </LiquidGlassCard>
-      </section>
+      {/* 5. Ancla duplicada del cotizador eliminada en W47_T02: el cotizador vive en la ficha 2B. */}
 
       {/* â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â” */}
-      {/* 6. RESEÃ‘AS REALES DE CLIENTES (GOOGLE LOCAL GUIDES)     */}
+      {/* 6. RESEÃ‘AS REALES · RETIRADA EN W47_T02     */}
       {/* â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â” */}
-      <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto my-20">
-        <div className="space-y-4 text-center max-w-3xl mx-auto mb-12">
-          <span className="text-xs font-mono text-[#ecb613] uppercase tracking-wider">
-            TESTIMONIOS REALES Y VERIFICADOS
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
-            Lo Que Dicen Quienes Ya Han Celebrado con Nosotros
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {OTZARRETA_ENTITY.reviews.slice(0, 3).map((rev, idx) => (
-            <div
-              key={idx}
-              className="p-6 rounded-3xl bg-[#09090d]/80 border border-white/10 space-y-4 backdrop-blur-md flex flex-col justify-between"
-            >
-              <div className="space-y-3">
-                <div className="flex items-center gap-1 text-amber-400">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
-                  ))}
-                </div>
-                <p className="text-xs sm:text-sm text-gray-300 italic leading-relaxed">
-                  &ldquo;{rev.comment}&rdquo;
-                </p>
-              </div>
-
-              <div className="pt-3 border-t border-white/10">
-                <div className="text-sm font-bold text-white">{rev.author}</div>
-                <div className="text-xs text-[#ecb613] font-mono">{rev.role}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â” */}
       {/* 7. LA ALIANZA: EL CASERÍO & EDWIN AGUDELO        */}
       {/* â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â” */}
@@ -641,11 +520,11 @@ export default async function OtzarretaFlagshipPage({
 
               <h2 className="text-3xl sm:text-4xl font-extrabold text-white leading-tight">
                 Dos Maestros, Una Visión Soberana:
-                <span className="block text-[#ecb613]">la Dirección Gastronómica & Edwin Agudelo</span>
+                <span className="block text-[#ecb613]">Eduardo (Dirección Gastronómica de Ezkertza Berria & Otzarreta) & Edwin Agudelo</span>
               </h2>
 
               <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
-                Cuando <strong>la Dirección Gastronómica</strong> enciende las brasas en Ezkertza Berria y Otzarreta, custodia más de
+                Cuando <strong>Eduardo (Dirección Gastronómica de Ezkertza Berria & Otzarreta)</strong> enciende las brasas en Ezkertza Berria y Otzarreta, custodia más de
                 dos décadas de sabiduría en el trato de las carnes seleccionadas de ganado mayor, los rodaballos salvajes del Cantábrico y la cocina de cazuela tradicional.
               </p>
 
@@ -677,11 +556,11 @@ export default async function OtzarretaFlagshipPage({
                 <div className="flex items-center gap-4">
                   <img
                     src="https://www.ezkertzaberria.com/wp-content/uploads/elementor/thumbs/FIRMA-EDU-2-pd7ffeq4is8ls76r0oqflcg5itg2kf317ktmnwda8g.jpg"
-                    alt="Firma la Dirección Gastronómica"
+                    alt="Firma de Eduardo · Dirección Gastronómica de Ezkertza Berria & Otzarreta"
                     className="h-12 object-contain bg-white/10 rounded-lg p-1"
                   />
                   <div>
-                    <h3 className="text-base font-bold text-white">la Dirección Gastronómica</h3>
+                    <h3 className="text-base font-bold text-white">Eduardo (Dirección Gastronómica de Ezkertza Berria & Otzarreta)</h3>
                     <div className="text-xs text-[#ecb613] font-mono">Gerente & Maestro Asador</div>
                   </div>
                 </div>
@@ -798,7 +677,7 @@ export default async function OtzarretaFlagshipPage({
 
           <p className="text-gray-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
             Sin cuotas abusivas ni riesgos. El depósito de garantía de <strong>{DEPOSITO_STRIPE_EUR} €</strong> sella la
-            exclusividad de la fecha en el calendario oficial de la Dirección Gastronómica y se descuenta al 100% de la liquidación final
+            exclusividad de la fecha en el calendario oficial de Eduardo (Dirección Gastronómica de Ezkertza Berria & Otzarreta) y se descuenta al 100% de la liquidación final
             del banquete.
           </p>
 
