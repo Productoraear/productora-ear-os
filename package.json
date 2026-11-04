@@ -46,6 +46,7 @@
     "verify:consultation": "npx tsx scripts/verify_consultation_memory.ts",
     "verify:grounding": "npx tsx scripts/verify_web_grounding.ts",
     "verify:pricing": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_pricing_ssot_unification.ts",
+    "verify:founders": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_founders_parity.ts",
     "verify:context": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_page_context.ts",
     "build:fichas": "node scripts/build_provider_fichas.cjs",
     "audit:fichas": "node scripts/build_provider_fichas.cjs --check && node scripts/audit_ficha_grounding.cjs",

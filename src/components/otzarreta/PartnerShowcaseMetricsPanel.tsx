@@ -27,6 +27,7 @@ import {
 } from '@/lib/analytics/venue-showcase-telemetry';
 import { EZKERTZA_DERIO_VENUE } from '@/lib/constants/ezkertza-derio-venue';
 import { OFFICIAL_OTZARRETA_MENUS } from './OtzarretaExperienceExplorer';
+import { FoundersParityCalculatorCard } from '@/components/founders/FoundersParityCalculatorCard';
 
 interface PartnerShowcaseMetricsPanelProps {
   initialTab?: 'rendimiento' | 'comparativa' | 'gestion';
@@ -583,6 +584,14 @@ export function PartnerShowcaseMetricsPanel({
           </div>
         </div>
       )}
+      <div className="mt-8">
+        <FoundersParityCalculatorCard
+          defaultProviderName="Ezkertza Berria"
+          defaultCategory="Restaurante & Caserío Nupcial"
+          defaultProvince="Bizkaia"
+          defaultTicketEur={13500}
+        />
+      </div>
       {/* Procedencia declarada de cada cifra (AF-2 / AF-4: la telemetría no opina, mide) */}
       <footer className="mt-8 pt-5 border-t border-white/10 flex flex-col lg:flex-row lg:items-start justify-between gap-4 text-[11px] font-mono text-zinc-500">
         <div className="space-y-1.5">

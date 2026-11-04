@@ -47,6 +47,7 @@ import {
 import { collectProviderMedia } from '@/lib/providers/provider-media-engine';
 import { ProviderProfileSections } from '@/components/providers/ProviderProfileSections';
 import { ProviderPaymentRequestPanel } from '@/components/providers/ProviderPaymentRequestPanel';
+import { UniversalProviderSimulatorCard } from '@/components/providers/UniversalProviderSimulatorCard';
 import {
   listPublicPaymentMethodOffers,
   type PublicPaymentMethodOffer,
@@ -1440,7 +1441,7 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
               <div className="p-3.5 bg-black/50 rounded-2xl border border-white/5 text-[10px] font-mono text-zinc-400 space-y-1.5">
                 <div className="flex justify-between">
                   <span>Bloqueo de Fecha:</span>
-                  <span className="text-[#ecb613] font-bold">{DEPOSITO_STRIPE_EUR} € (Reembolsable 72h)</span>
+                  <span className="text-[#ecb613] font-bold">{DEPOSITO_STRIPE_EUR} € (100% Deducible del total)</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Split Soberano:</span>
@@ -1451,6 +1452,18 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
             </div>
           </div>
 
+        </div>
+        <div className="pt-8">
+          <UniversalProviderSimulatorCard
+            provider={{
+              id: String(rawProvider.id || slug),
+              slug,
+              name: displayName,
+              category,
+              province: location.split(',')[0].trim(),
+              basePriceEur: typeof rawProvider.basePrice === 'number' ? rawProvider.basePrice : null,
+            }}
+          />
         </div>
         <section className="pt-12 border-t border-white/10 space-y-6">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-2">
