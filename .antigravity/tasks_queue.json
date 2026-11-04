@@ -1,11 +1,11 @@
 {
   "_meta": {
-    "version": "12.0-OMEGA-WAVE-47-ANTI-FRANKENSTEIN-GLOBAL",
-    "doctrine": "WAVE 47 (ORDEN DIRECTA CEO — DESMANTELAR EL FRANKENSTEIN GLOBAL DE EAR OS): El problema no es una sola barra ni una sola página; es la superposición global de capas heredadas, menús duplicados, héroes dobles, iframes RGPD-hostiles, recorte de fotos (object-cover vs object-contain + filtro de verticales) y la falta del Panel de Métricas para Eduardo (Ezkertza Berria) y del Simulador Universal de Proveedores. Se encolan 4 bloques quirúrgicos de purga y consolidación en tasks_queue.json para el obrero.",
-    "wave": 47,
-    "total_tasks": 4,
-    "total_pending": 2,
-    "last_updated": "2026-11-03T07:12:20.765Z"
+    "version": "13.0-OMEGA-WAVE-48-ADMIN-COHESION",
+    "doctrine": "WAVE 48 (ORDEN DIRECTA CEO — COHESIÓN DEL COCKPIT ADMIN): el admin deja de ser un mosaico de capas. Se prohíben las TRES fuentes de navegación duplicadas, los contadores de vanidad y los breadcrumbs divergentes. Cola: Ω-001 (/confianza con ledger real dentro de la imagen Docker) + SSOT único de navegación + métricas con procedencia (0 · SIN_DATOS) + BFF único del cockpit + kit UI unificado.",
+    "wave": 48,
+    "total_tasks": 9,
+    "total_pending": 7,
+    "last_updated": "2026-11-04T10:46:35.851Z"
   },
   "_instructions_for_worker": "Ejecuta SOLO via: node .antigravity/omega.js next -> lee .antigravity/MISSION_ACTIVE.json -> edita SOLO 'files' -> ejecuta 'test' -> node .antigravity/omega.js complete <ID>. 1 tarea por sesion.",
   "tasks": [
@@ -59,6 +59,152 @@
       },
       "test": "node ./node_modules/typescript/bin/tsc --noEmit && node ./node_modules/eslint/bin/eslint.js \"src/lib/providers/universal-provider-simulator.ts\" \"src/components/providers/UniversalProviderSimulatorCard.tsx\" \"src/app/(public)/proveedores/[slug]/page.tsx\"",
       "done_when": "1) Cualquier ficha en `/proveedores/[slug]` muestra el simulador universal adaptado a su gremio, precio y aforo real. 2) Calcula al céntimo con el Motor Magia Negra y SSOT. 3) `tsc --noEmit` y `eslint` devuelven Exit Code 0."
+    },
+    {
+      "id": "W48_T01_CONFIANZA_LEDGER_DOCKER_LIVE",
+      "title": "P0 · /confianza con datos reales en producción · meter el ledger en la imagen Docker (ORDER Ω-001)",
+      "status": "QUEUED",
+      "priority": "P0_DINERO_Y_CONFIANZA",
+      "files": [
+        ".dockerignore",
+        "scripts/verify_confianza_prod.cjs",
+        "package.json"
+      ],
+      "action": "Cerrar el hallazgo P0 medido: en producción `https://www.productoraear.com/confianza` responde 200 pero con `source=missing`, `probed=false`, `Modo SIMULADO` y `0 fila(s)` porque `.dockerignore` excluye `.antigravity`, el `Dockerfile` (COPY . .) nunca copia `evidence/ledger.jsonl` y `evidence-ledger.ts` cae en ENOENT devolviendo `deployBlocked:true`. Pasos atómicos: 1) `git ls-files --error-unmatch .antigravity/evidence/ledger.jsonl` (si no está versionado, ABORTA y reporta). 2) En `.dockerignore` sustituir la exclusión global `.antigravity` por `.antigravity/*` + `!.antigravity/evidence` + `!.antigravity/evidence/ledger.jsonl` (excepción NOMINAL: nada de bóvedas, MFTs ni blobs > 1 MB). 3) Crear `scripts/verify_confianza_prod.cjs` (fetch a la URL canónica `https://www.productoraear.com/confianza`, imprime sha256 del body y falla con exit 1 si el HTML contiene `source=missing`, `Modo SIMULADO` o `0 fila(s)`; solo pasa con `source=live`, `Modo REAL`, >= 1 fila y SHA256 visible). 4) Añadir script `verify:confianza:prod` en package.json. 5) `docker build` + `docker run --rm <img> ls -la .antigravity` debe listar SOLO `evidence/ledger.jsonl`; medir tamaño de imagen antes/después. 6) push a origin -> Coolify -> `npm run deploy:freshness` = FRESH -> `npm run verify:confianza:prod` EXIT 0. 7) append al ledger con `supersedes` de la fila U13 y nueva entrada en `CLINE_EXECUTION_LOG.md` (jamás editar la anterior).",
+      "scaffold": {
+        "invariants": [
+          "La excepción de `.dockerignore` es nominal (evidence/ledger.jsonl únicamente): prohibido copiar `.antigravity` completo",
+          "`verify:confianza:prod` mide el host final `www.productoraear.com`, nunca el salto 308 del apex",
+          "La fila U13 del ledger se supersede, nunca se reescribe (EP-4 append-only)"
+        ],
+        "forbidden": [
+          "Prohibido tocar `src/app/(public)/confianza/page.tsx` o `evidence-ledger.ts` para simular datos",
+          "Prohibido declarar VERIFICADO sin sha256 del body de producción",
+          "Prohibido commitear `.env`, bóvedas o ficheros > 1 MB"
+        ]
+      },
+      "test": "node scripts/verify_confianza_prod.cjs && node ./node_modules/typescript/bin/tsc --noEmit",
+      "done_when": "1) `docker run <img> ls -la .antigravity` muestra solo evidence/ledger.jsonl. 2) `npm run verify:confianza:prod` Exit Code 0 con `source=live` + `Modo REAL` + >= 1 fila + SHA256 impreso. 3) `deploy:freshness` = FRESH. 4) Ledger con fila nueva (supersedes U13) y log append-only."
+    },
+    {
+      "id": "W48_T02_ADMIN_NAV_SSOT_SINGLE_SOURCE",
+      "title": "P0 · Unificar la navegación del admin en un único SSOT (matar las 3 fuentes duplicadas y el buscador muerto)",
+      "status": "QUEUED",
+      "priority": "P0_COHESION_ADMIN",
+      "files": [
+        "src/lib/config/admin-navigation.ts",
+        "src/app/(admin)/admin/layout.tsx",
+        "src/app/(admin)/admin/AdminDashboardClient.tsx",
+        "scripts/audit_admin_nav.cjs",
+        "package.json"
+      ],
+      "action": "La navegación del cockpit estaba declarada TRES veces y divergía entre sí: (a) `src/app/(admin)/admin/layout.tsx` — ya migrado en esta sesión al SSOT `src/lib/config/admin-navigation.ts` (`ADMIN_MASTER_TABS`, `getAdminTabByPathname`, `searchAdminNav`, buscador real ⌘K/Ctrl+K); (b) `src/app/(admin)/admin/AdminDashboardClient.tsx` con el array `ALL_ADMIN_DIRECT_URLS` (22 entradas duplicadas y badges de vanidad `84K B2B`, `19.6K CDN`, `0 TOKEN`); (c) breadcrumbs escritos a mano en cada subpágina (`Admin / Ventas / Scala`, `Inicio / Telemetría`). Pasos: 1) Auditar el SSOT y completar lo que falte (rutas directas fuera de /admin: `/aura`, `/pro`, `/radar`, `/agent-skills`, `/voice-studio`, `/sourcing`, `/simulador-ear-os.html`). 2) En `AdminDashboardClient.tsx` sustituir `ALL_ADMIN_DIRECT_URLS` por el índice derivado del SSOT (`ADMIN_SEARCH_INDEX` / `flattenAdminNav`) conservando categoría, icono y descripción; eliminar todo badge numérico hardcodeado. 3) Crear `scripts/audit_admin_nav.cjs` que falle si: un `href` del SSOT no tiene `page.tsx` en `src/app/**`, hay `href` duplicado, existe un array de navegación del admin fuera de `src/lib/config/admin-navigation.ts`, o aparece un badge numérico no derivado de `ear-os-ssot`/`providers-manifest`. 4) Script `audit:admin-nav` en package.json encadenado a `gate:prepush`. 5) Sustituir los breadcrumbs manuales por `getAdminBreadcrumb(pathname)`.",
+      "scaffold": {
+        "invariants": [
+          "Cero `any`: los tipos `AdminSubTab` / `AdminMasterTab` / `AdminSearchEntry` son la única firma admitida",
+          "Todo `href` del SSOT debe existir en disco (0 clics muertos, INV-09)",
+          "Los badges se derivan de `EAR_OS_SSOT` y `providers-manifest`; los literales de texto son semánticos, nunca cifras",
+          "El buscador filtra sobre `ADMIN_SEARCH_INDEX` (insensible a acentos) y navega con `next/link`"
+        ],
+        "forbidden": [
+          "Prohibido reintroducir arrays de pestañas en `layout.tsx` o `AdminDashboardClient.tsx`",
+          "Prohibido tocar `src/lib/constants/ear-os-ssot.ts` (ZONA CERO)",
+          "Prohibido inventar módulos sin `page.tsx` real"
+        ]
+      },
+      "test": "node scripts/audit_admin_nav.cjs && node ./node_modules/typescript/bin/tsc --noEmit && node ./node_modules/eslint/bin/eslint.js \"src/lib/config/admin-navigation.ts\" \"src/app/(admin)/admin/layout.tsx\" \"src/app/(admin)/admin/AdminDashboardClient.tsx\"",
+      "done_when": "1) `audit:admin-nav` Exit 0 (0 hrefs muertos, 0 duplicados, 1 sola fuente). 2) `Ctrl+K` abre el buscador y cada resultado navega a una ruta existente. 3) `AdminDashboardClient` no declara ninguna URL de navegación propia. 4) `tsc --noEmit` y `eslint` Exit Code 0."
+    },
+    {
+      "id": "W48_T03_ADMIN_ZERO_VANITY_METRICS",
+      "title": "P0 · Contadores a 0 con procedencia · erradicar las cifras de vanidad del admin (AF-1 / AF-5)",
+      "status": "QUEUED",
+      "priority": "P0_VERDAD_TELEMETRICA",
+      "files": [
+        "src/lib/admin/metrics-provenance.ts",
+        "src/components/admin/MetricProvenanceBadge.tsx",
+        "src/app/(admin)/admin/AdminDashboardClient.tsx",
+        "src/app/(admin)/admin/mailerfind/page.tsx",
+        "src/app/(admin)/admin/sourcing/page.tsx",
+        "src/app/(admin)/admin/directorio/page.tsx",
+        "src/app/(admin)/admin/calibrador-proveedores/page.tsx",
+        "scripts/audit_admin_vanity.cjs",
+        "package.json"
+      ],
+      "action": "El cockpit muestra cifras sin fuente viva (vanity metrics) que violan AF-1/AF-5: `84.774 Proveedores`, `13.094 Nodos Homologados`, `4.340 impresiones`, `223 solicitudes`, `66 impresiones`, `5.0 ★ (4 opiniones)`, `80% homologación`, `19.6K CDN`, `13.1K`, `20.000`, `6 ENTIDADES`. Pasos: 1) Crear `src/lib/admin/metrics-provenance.ts` con el tipo `AdminMetric = { key: string; label: string; value: number; unit: string; source: 'live' | 'empty' | 'static'; probed: boolean; mode: 'REAL' | 'SIMULADO'; checkedAt: string; ref: string }` y helpers `emptyMetric(key,label)` (value 0, source 'empty', probed false) y `liveMetric(...)`; sin `any`. 2) Crear `src/components/admin/MetricProvenanceBadge.tsx` (Server Component, estética OLED `#030305`/`#09090d` + oro `#ecb613`) que pinte el valor y su procedencia (`live` verde, `empty` zinc con rótulo `SIN_DATOS`, `static` ámbar), y que NUNCA muestre verde si `probed=false`. 3) Barrer las 4 vistas listadas y sustituir cada literal numérico por `AdminMetric` (consulta Prisma real o `emptyMetric` -> 0 con `SIN_DATOS`). 4) Crear `scripts/audit_admin_vanity.cjs`: falla si en `src/app/(admin)/**` aparece un número con separador de miles o sufijo K/€ dentro de JSX/texto que no provenga de un import de `metrics-provenance`, `ear-os-ssot` o `providers-manifest`; imprime tabla `archivo:línea:cifra` y exit 1. 5) Script `audit:vanity` encadenado a `gate:prepush`.",
+      "scaffold": {
+        "invariants": [
+          "Regla de oro: si la sonda no se ejecutó, el resultado es `SIN_DATOS` (0), jamás un verde ni una cifra estimada",
+          "Toda cifra mostrada debe poder rastrearse a su fuente en <= 3 clics (AF-4)",
+          "Los contadores de catálogo se leen de `providers-manifest` (manifest real), nunca de constantes",
+          "Cero `any`; el tipo `AdminMetric` es la única firma"
+        ],
+        "forbidden": [
+          "Prohibido sustituir una cifra vanidosa por otra cifra inventada",
+          "Prohibido usar `Math.random()` o mocks para rellenar contadores",
+          "Prohibido tocar ZONA CERO (`ear-os-ssot.ts`, `ssotIntegrityGuard.ts`)"
+        ]
+      },
+      "test": "node scripts/audit_admin_vanity.cjs && node ./node_modules/typescript/bin/tsc --noEmit && node ./node_modules/eslint/bin/eslint.js \"src/lib/admin/metrics-provenance.ts\" \"src/components/admin/MetricProvenanceBadge.tsx\" \"src/app/(admin)/admin/AdminDashboardClient.tsx\"",
+      "done_when": "1) `audit:vanity` Exit 0 (0 cifras sin procedencia en /admin). 2) Las 4 vistas muestran `0 · SIN_DATOS` donde no hay consulta real. 3) Ningún badge verde con `probed=false`. 4) `tsc --noEmit` y `eslint` Exit Code 0."
+    },
+    {
+      "id": "W48_T04_ADMIN_COCKPIT_BFF_REAL",
+      "title": "P1 · Un solo BFF real para el cockpit (`/api/admin/cockpit`) con auth, sonda declarada y estados vacíos honestos",
+      "status": "QUEUED",
+      "priority": "P1_BACKEND_COHESION",
+      "files": [
+        "src/lib/admin/cockpit-aggregator.ts",
+        "src/app/api/admin/cockpit/route.ts",
+        "src/app/(admin)/admin/page.tsx",
+        "src/app/(admin)/admin/AdminDashboardClient.tsx",
+        "scripts/verify_admin_cockpit_api.cjs"
+      ],
+      "action": "Hoy cada vista del admin se autoabastece (algunas con literales, otras con fetch disperso) y no existe una lectura única y verificable del estado del negocio. Pasos: 1) `src/lib/admin/cockpit-aggregator.ts` (puro, tipado, 0 `any`) que consolide con Prisma: ingresos totales en céntimos (enteros, nunca floats), depósitos Stripe 100 € bloqueados, cifra B2G frente a `AJUSTE_PREVENTIVO_B2G_EUR`, proveedores desde `PROVIDERS_GRAND_TOTAL`, y desglose del split 80/10/10 con `SPLIT_SOBERANO`. 2) `src/app/api/admin/cockpit/route.ts` con cabecera de autorización explícita (`role: admin`, `tenant: ear-os`), que devuelva SIEMPRE `{ ok: boolean; error?: string; data?: AdminCockpitSnapshot }` sin lanzar excepciones crudas, con `probed: boolean`, `source: 'live' | 'static'`, `mode: 'REAL' | 'SIMULADO'` y `checkedAt: string` (AF-1). 3) PRIMERO el test negativo: 401 sin sesión admin válida y 503 fail-closed sin `DATABASE_URL`; después el camino feliz. 4) `scripts/verify_admin_cockpit_api.cjs` que sondee el endpoint y verifique el contrato (claves presentes, `probed` coherente, `ok=false` lleva `error`). 5) `src/app/(admin)/admin/page.tsx` y `AdminDashboardClient` consumen ese snapshot; si `probed=false`, pintan `0 · SIN_DATOS` con `MetricProvenanceBadge`.",
+      "scaffold": {
+        "invariants": [
+          "Dinero en céntimos enteros (`amountCents`), 0 aritmética en coma flotante para importes",
+          "La ruta nace cerrada (SEC-1): el caso negativo se escribe antes del camino feliz",
+          "`SPLIT_SOBERANO`, `DEPOSITO_STRIPE_EUR` y `AJUSTE_PREVENTIVO_B2G_EUR` se importan del SSOT, jamás se teclean",
+          "Contrato uniforme `{ ok, error?, data? }` en toda respuesta"
+        ],
+        "forbidden": [
+          "Prohibido exponer `STRIPE_SECRET_KEY` o cualquier secreto en la respuesta",
+          "Prohibido `console.log` con payloads de cliente (INV-14)",
+          "Prohibido devolver `ok:true` sin haber consultado la base de datos"
+        ]
+      },
+      "test": "node scripts/verify_admin_cockpit_api.cjs && node ./node_modules/typescript/bin/tsc --noEmit && node ./node_modules/eslint/bin/eslint.js \"src/lib/admin/cockpit-aggregator.ts\" \"src/app/api/admin/cockpit/route.ts\" \"src/app/(admin)/admin/page.tsx\"",
+      "done_when": "1) `GET /api/admin/cockpit` sin sesión -> 401; sin base de datos -> 503 fail-closed. 2) Con sesión admin devuelve snapshot tipado con `probed/source/mode/checkedAt`. 3) El dashboard pinta 0 honesto cuando no hay datos. 4) `tsc --noEmit` y `eslint` Exit Code 0."
+    },
+    {
+      "id": "W48_T05_ADMIN_UI_KIT_UNIFIED",
+      "title": "P1 · Kit UI único del cockpit (CommandPalette + Breadcrumb + PageHeader + KpiCard) sobre patrones de referencia, 0 marcas de terceros",
+      "status": "QUEUED",
+      "priority": "P1_UX_UNIFICADA",
+      "files": [
+        "src/components/admin/ui/AdminCommandPalette.tsx",
+        "src/components/admin/ui/AdminBreadcrumb.tsx",
+        "src/components/admin/ui/AdminPageHeader.tsx",
+        "src/components/admin/ui/AdminKpiCard.tsx",
+        "src/app/(admin)/admin/layout.tsx"
+      ],
+      "action": "El admin repite cabeceras y breadcrumbs distintos en cada subpágina (una dice `Admin / Ventas / Scala Leads`, otra `Inicio / Telemetría`), y el patrón de tarjeta KPI cambia de una vista a otra. Pasos: 1) Crear `src/components/admin/ui/AdminKpiCard.tsx` (Server Component; recibe `AdminMetric` de `metrics-provenance.ts`; fondo `#09090d`, borde `border-white/10`, `rounded-3xl`, acento oro `#ecb613`, `transition-all duration-300 ease-out`, sin animación de layout). 2) Crear `src/components/admin/ui/AdminPageHeader.tsx` (título, subtítulo, acciones y `<AdminBreadcrumb/>` derivado de `getAdminBreadcrumb(pathname)`). 3) Crear `src/components/admin/ui/AdminBreadcrumb.tsx` (`'use client'` solo si necesita `usePathname`, 0 datos personales, `aria-label` correcto). 4) Extraer el buscador actual del layout a `src/components/admin/ui/AdminCommandPalette.tsx` (`'use client'`), con atajo ⌘K/Ctrl+K, navegación por flechas + Enter, `role="listbox"`/`role="option"` y cierre con Escape; el layout solo lo monta. 5) Adoptar los 4 componentes en el layout y en las 4 vistas P0 del cockpit. Prohibido importar dependencias nuevas: solo React, `next/link`, `next/navigation` y `lucide-react`.",
+      "scaffold": {
+        "invariants": [
+          "Server Components por defecto; `'use client'` solo en la hoja reactiva (paleta y breadcrumb)",
+          "Cero dependencias nuevas (SEC-6) y cero marcas de terceros en código, metadatos o URLs (JUR-4)",
+          "Accesibilidad: foco visible, `aria-expanded`, `aria-controls`, cierre con Escape, navegación completa por teclado",
+          "Estética OLED obligatoria: `#030305` / `#09090d` / oro `#ecb613`; prohibido `w-screen` y gradientes violeta/azul"
+        ],
+        "forbidden": [
+          "Prohibido copiar literalmente componentes de galerías externas con su marca, licencia o nombres propios",
+          "Prohibido duplicar el buscador: una sola paleta en todo el cockpit",
+          "Prohibido introducir animaciones que provoquen CLS (solo `transform`/`opacity`)"
+        ]
+      },
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node ./node_modules/eslint/bin/eslint.js \"src/components/admin/ui/AdminCommandPalette.tsx\" \"src/components/admin/ui/AdminBreadcrumb.tsx\" \"src/components/admin/ui/AdminPageHeader.tsx\" \"src/components/admin/ui/AdminKpiCard.tsx\" \"src/app/(admin)/admin/layout.tsx\"",
+      "done_when": "1) Existe un único breadcrumb, una única paleta y un único KPI card en todo el admin. 2) La paleta se abre con Ctrl+K y navega con teclado a rutas reales. 3) 0 dependencias nuevas en package.json. 4) `tsc --noEmit` y `eslint` Exit Code 0."
     }
   ],
   "completed": [
@@ -99,9 +245,9 @@
     }
   ],
   "metadata": {
-    "last_updated": "2026-11-03T07:12:20.765Z",
-    "total_pending": 2,
-    "current_sprint": "WAVE_47_ANTI_FRANKENSTEIN_GLOBAL",
-    "ceo_mandate": "Desmantelar el Frankenstein global de EAR OS: 1 sola cabecera pública, 0 modales zombis, 0 fotos horizontales cortadas ni verticales en carruseles, Panel de Métricas de Eduardo (Ezkertza) + Admin CEO, y Simulador Universal por proveedor."
+    "last_updated": "2026-11-04T10:46:35.851Z",
+    "total_pending": 7,
+    "current_sprint": "WAVE_48_ADMIN_COHESION_AND_TRUTH",
+    "ceo_mandate": "Convertir /admin en un ecosistema cohesionado: 1 sola navegación (SSOT), 0 cifras de vanidad (contadores a 0 con procedencia), 0 breadcrumbs divergentes, 0 buscador muerto, y /confianza publicando evidencia real en producción."
   }
 }

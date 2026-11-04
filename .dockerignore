@@ -1,7 +1,12 @@
 node_modules
 .next
 .git
-.antigravity
+# El ledger de evidencias ES la prueba pública de /confianza (U13, EP-4).
+# Se excluyen los hijos y se re-incluye SOLO el ledger: nada de bóvedas ni
+# volcados de .antigravity viajan a la imagen.
+.antigravity/*
+!.antigravity/evidence
+!.antigravity/evidence/ledger.jsonl
 .vercel
 *.log
 npm-debug.log*

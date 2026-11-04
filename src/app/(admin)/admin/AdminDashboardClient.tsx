@@ -3,6 +3,8 @@
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { MasterUrlGovernanceMatrix } from '@/components/admin/MasterUrlGovernanceMatrix';
+import { PartnerShowcaseTelemetryCard } from '@/components/admin/PartnerShowcaseTelemetryCard';
+import { PartnerShowcaseMetricsPanel } from '@/components/otzarreta/PartnerShowcaseMetricsPanel';
 import {
   DollarSign,
   Users,
@@ -33,7 +35,13 @@ import {
   ExternalLink,
   Crown
 } from 'lucide-react';
-import { formatProviderCount, formatProviderBadge } from '@/lib/constants/providers-manifest';
+import { formatProviderCount } from '@/lib/constants/providers-manifest';
+import {
+  ADMIN_DIRECTORY_TOTALS,
+  ADMIN_MODULE_DIRECTORY,
+  type AdminDirectoryEntry,
+} from '@/lib/config/admin-navigation';
+import type { DbFailureReport } from '@/lib/db/dbFailureClassifier';
 import ScraperLiveMonitorWidget from '@/components/admin/ScraperLiveMonitorWidget';
 import OpportunityRadarTerminal from '@/components/admin/OpportunityRadarTerminal';
 import VendorManagedCareDesk from '@/components/admin/VendorManagedCareDesk';
@@ -41,41 +49,22 @@ import UberStyleBookingDispatcher from '@/components/admin/UberStyleBookingDispa
 import WhatsAppPriceLockGenerator from '@/components/admin/WhatsAppPriceLockGenerator';
 
 // ============================================================================
-// CATMİN 21ST.DEV // 22 URLS OFICIALES DE EAR OS
+// DIRECTORIO DEL COCKPIT — FUENTE ÚNICA (`@/lib/config/admin-navigation`)
 // ============================================================================
-const ALL_ADMIN_DIRECT_URLS = [
-  // NÚCLEO Y SIMULACIÓN
-  { category: "Núcleo & Simulación", name: "🗺️ Mapa & Simulador S-Class", url: "/admin/simulador", badge: "21ST.DEV", desc: "Simulador de eventos, Split 80/10/10, logística Méntrida y los 5 dominios.", icon: Compass },
-  { category: "Núcleo & Simulación", name: "Omni-Cockpit Central", url: "/admin", badge: "CORE", desc: "Panel de control central, KPIs de negocio y telemetría GPU local.", icon: ShieldCheck },
-  { category: "Núcleo & Simulación", name: "Simulador HTML Standalone", url: "/simulador-ear-os.html", badge: "HTML5", desc: "Vista interactiva de vanguardia inspirada en templates 21st.dev.", icon: ExternalLink },
-  { category: "Núcleo & Simulación", name: "Manual de Operaciones 360", url: "/admin/manual-operaciones", badge: "DOCTRINA", desc: "Protocolos canónicos para ventas, call center, grabación y contingencias.", icon: Award },
-  { category: "Núcleo & Simulación", name: "Aura Cinematic Portfolio", url: "/aura", badge: "AURA S-CLASS", desc: "Showcase cinematográfico con partículas GPU, audio lírico y física interactiva.", icon: Sparkles },
+// PROHIBIDO volver a teclear este listado aquí. Antes vivía en este componente
+// un array paralelo de 28 entradas (`ALL_ADMIN_DIRECT_URLS`) que duplicaba y
+// contradecía el SSOT de navegación, con cifras inventadas que ya fueron erradicadas. Ahora se deriva de `ADMIN_MASTER_TABS`:
+// dar de alta un módulo en el SSOT lo publica en ribbon, sidebar, ⌘K y aquí.
+// Verificado por `scripts/audit_admin_ecosystem.cjs`.
+const ALL_ADMIN_DIRECT_URLS: AdminDirectoryEntry[] = ADMIN_MODULE_DIRECTORY;
 
-  // VENTAS, LEADS & CONVERSIÓN
-  { category: "Ventas & Conversión", name: "Propuestas S-Class & Dictado Voz", url: "/admin/propuestas", badge: "LA MÁQUINA", desc: "Dictado por voz en fincas, propuestas interactivas con firma y telemetría Telegram.", icon: Mic },
-  { category: "Ventas & Conversión", name: "Mailerfind Prospecting IA", url: "/admin/mailerfind", badge: "84K B2B", desc: "Captura masiva de leads B2B, extracción @bodasnet, Google Maps e Instagram.", icon: Search },
-  { category: "Ventas & Conversión", name: "Call Center Outbound", url: "/admin/call-center", badge: "19.6K CDN", desc: "Despacho telefónico con clon soberano sanitizado y 19.608 registros.", icon: Phone },
-  { category: "Ventas & Conversión", name: "Centralita WhatsApp", url: "/admin/whatsapp", badge: "693 048", desc: "Monitor de mensajes directos y cierre de depósitos vía WhatsApp.", icon: Radio },
-  { category: "Ventas & Conversión", name: "Scala Leads & Sourcing", url: "/admin/sourcing", badge: "LEADS", desc: "Prospección automática y absorción de centros senior y fincas.", icon: Flame },
-  { category: "Ventas & Conversión", name: "Directorio Proveedores CDN", url: "/admin/proveedores", badge: "CDN", desc: "Fichas públicas de proveedores y homologación técnica.", icon: Users },
-  { category: "Ventas & Conversión", name: "Omni Training Center", url: "/admin/training", badge: "SALES", desc: "Academia de ventas, scripts comerciales y manejo de objeciones.", icon: Award },
-
-  // FINANZAS, LEGAL & INSTITUCIONAL
-  { category: "Finanzas & Legal B2G", name: "B2G & Licitaciones <14.250€", url: "/admin/licitaciones", badge: "LEGAL", desc: "Contratos menores Art. 118 LCSP y pliegos acústicos <75 dB SPL.", icon: Landmark },
-  { category: "Finanzas & Legal B2G", name: "Tesorería & Stripe Price-Lock", url: "/admin/tesoreria", badge: "100€", desc: "Depósitos inmutables de 100 €, pasarela Stripe y ledger de tesorería.", icon: CreditCard },
-  { category: "Finanzas & Legal B2G", name: "Red de Afiliados y Fincas", url: "/admin/afiliados", badge: "SPLIT 80/10/10", desc: "Gestión de partners nupciales y liquidación de comisiones del 10%.", icon: HeartHandshake },
-  { category: "Finanzas & Legal B2G", name: "Flota & Logística Méntrida", url: "/admin/flota", badge: "KM 0", desc: "Calculadora de distancias, portes 1,50 €/km y estado de vehículos.", icon: Truck },
-
-  // INTELIGENCIA, IA & CONSOLAS DIRECTAS
-  { category: "Inteligencia & GPU", name: "Estudio de Locución y Voz IA", url: "/admin/voice-studio", badge: "AUDIO", desc: "Generación de voces, cuñas y locuciones profesionales para eventos.", icon: Mic },
-  { category: "Inteligencia & GPU", name: "Afinador de Prompts (Asistente IA)", url: "/admin/compiler", badge: "GEMINI EDGE", desc: "Traduce lenguaje natural a instrucciones técnicas perfectas para el obrero (Cline) con Gemini Flash.", icon: Zap },
-  { category: "Inteligencia & GPU", name: "Journey Heatmap UX", url: "/admin/journey-heatmap", badge: "HEATMAP", desc: "Mapas de calor y telemetría de interacción de usuarios.", icon: Activity },
-  { category: "Inteligencia & GPU", name: "Guardián de Memoria y Costes (Sentinel)", url: "/admin/sentinel", badge: "0 TOKEN", desc: "Protección contra saturación y control de tokens facturados.", icon: Shield },
-  { category: "Inteligencia & GPU", name: "Centro de Mando & Skills", url: "/admin/command-center", badge: "ROOT", desc: "Gobernanza del sistema y catálogo de skills autónomos.", icon: ShieldCheck },
-  { category: "Inteligencia & GPU", name: "Radar de Demanda Directo", url: "/radar", badge: "EXP", desc: "Consola de radar de demanda y palabras clave nupciales.", icon: BarChart3 },
-  { category: "Inteligencia & GPU", name: "Agent Skills Directo", url: "/agent-skills", badge: "SKILLS", desc: "Directorio de habilidades de los agentes autónomos.", icon: Layers },
-  { category: "Inteligencia & GPU", name: "Voice Studio Directo", url: "/voice-studio", badge: "DIRECT", desc: "Consola de voz desacoplada para locuciones y grabaciones.", icon: Mic },
-  { category: "Inteligencia & GPU", name: "Sourcing Directo", url: "/sourcing", badge: "DIRECT", desc: "Consola independiente de captura masiva de proveedores.", icon: Flame }
+/** Chips de categoría derivados (sustituyen a «Ventas (5)» tecleado: era 7). */
+const DIRECTORY_CATEGORY_CHIPS: Array<{ id: string; label: string }> = [
+  { id: 'TODOS', label: `Todos (${ADMIN_DIRECTORY_TOTALS.entries})` },
+  ...ADMIN_DIRECTORY_TOTALS.categories.map((category) => {
+    const count = ADMIN_MODULE_DIRECTORY.filter((entry) => entry.category === category).length;
+    return { id: category, label: `${category.split('&')[0].trim()} (${count})` };
+  }),
 ];
 
 export interface AdminDashboardTransaction {
@@ -86,6 +75,19 @@ export interface AdminDashboardTransaction {
 }
 
 export interface AdminDashboardData {
+  /**
+   * 'REAL' = PostgreSQL sondeado en esta petición.
+   * 'DB_OFFLINE' = la DB no respondió: TODAS las cifras van a cero (AF-1/AF-2).
+   */
+  dataMode?: 'REAL' | 'DB_OFFLINE';
+  /** `true` solo si el Promise.all de Prisma se resolvió (sonda real). */
+  dbProbed?: boolean;
+  /**
+   * Causa clasificada del fallo cuando la DB no responde (null si respondió).
+   * Se pinta en el aviso para que el CEO sepa QUÉ está roto y qué comando lo
+   * arregla, en lugar del antiguo `code=UNKNOWN` mudo (AF-1 / INV-16).
+   */
+  dbFailure?: DbFailureReport | null;
   totalRevenue: number;
   totalTransactions: number;
   providerCount: number;
@@ -171,6 +173,30 @@ export default function AdminDashboardClient({ data }: { data: AdminDashboardDat
         </div>
       </div>
 
+      {/* AVISO HONESTO DE TELEMETRÍA (AF-1 / AF-2 / INV-16)                    */}
+      {data.dataMode === 'DB_OFFLINE' && (
+        <div
+          role="status"
+          className="rounded-2xl border border-[#FF2B44]/40 bg-[#FF2B44]/10 px-4 py-3 flex items-start gap-3"
+        >
+          <Shield className="w-4 h-4 text-[#FF2B44] shrink-0 mt-0.5" />
+          <div className="text-xs">
+            <p className="font-bold text-[#FF2B44] uppercase font-mono tracking-wider">
+              Sin datos de tesorería · PostgreSQL no responde
+            </p>
+            <p className="text-zinc-300 mt-1">
+              Los KPIs de esta pantalla están a CERO. No se pintan cifras de demostración:
+              este panel solo enseña dinero que existe en la base de datos.
+            </p>
+            {data.dbFailure && (
+              <p className="mt-1.5 font-mono text-[11px] text-[#FF2B44]/90 break-words">
+                {data.dbFailure.kind} · code={data.dbFailure.code} → {data.dbFailure.action}
+              </p>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* ===================================================================== */}
       {/* 2. CATMÍN ROW 1: 4 TARJETAS KPI DE ALTO IMPACTO                       */}
       {/* ===================================================================== */}
@@ -243,6 +269,10 @@ export default function AdminDashboardClient({ data }: { data: AdminDashboardDat
       </div>
 
       {/* ===================================================================== */}
+      {/* 2.05. RESUMEN EJECUTIVO FLAGSHIP (EZKERTZA BERRIA · ALIADO BIZKAIA)    */}
+      {/* El detalle completo vive en #panel-eduardo (misma fuente de datos).   */}
+      <PartnerShowcaseTelemetryCard detailHref="/otzarreta#panel-eduardo" />
+
       {/* 2.1. WHATSAPP PRICE-LOCK EXPRESS GENERATOR (CIERRE RÁPIDO NOVIAS/B2G) */}
       {/* ===================================================================== */}
       <WhatsAppPriceLockGenerator />
@@ -306,7 +336,7 @@ export default function AdminDashboardClient({ data }: { data: AdminDashboardDat
           }`}
         >
           <Compass className="w-4 h-4" />
-          <span>📁 Catálogo 22 URLs</span>
+          <span>📁 Catálogo {ADMIN_DIRECTORY_TOTALS.entries} Destinos</span>
         </button>
       </div>
 
@@ -557,6 +587,13 @@ export default function AdminDashboardClient({ data }: { data: AdminDashboardDat
       )}
 
       {/* ===================================================================== */}
+      {/* 👑 TELEMETRÍA DE ESCAPARATES FLAGSHIP (EZKERTZA BERRIA & GLOBAL EAR OS)   */}
+      {/* ===================================================================== */}
+      <div className="mt-8">
+        <PartnerShowcaseMetricsPanel standaloneMode={true} initialTab="rendimiento" />
+      </div>
+
+      {/* ===================================================================== */}
       {/* 🏛️ MATRIZ DE GOBERNANZA & CALIDAD DE URLs (ADMIN CEO)                 */}
       {/* ===================================================================== */}
       <div className="mt-8">
@@ -564,7 +601,7 @@ export default function AdminDashboardClient({ data }: { data: AdminDashboardDat
       </div>
 
       {/* ===================================================================== */}
-      {/* 7. VISTA 5: DIRECTORIO MAESTRO DE TODAS LAS 22 URLS DEL ADMIN         */}
+      {/* 7. VISTA 5: DIRECTORIO MAESTRO DE DESTINOS DEL ADMIN (DERIVADO)       */}
       {/* ===================================================================== */}
       {activeCommandTab === 'DIRECTORIO' && (
         <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-6 shadow-sm space-y-5 animate-fadeIn">
@@ -572,7 +609,8 @@ export default function AdminDashboardClient({ data }: { data: AdminDashboardDat
             <div>
               <div className="flex items-center gap-2 text-xs font-mono text-[#ecb613] uppercase tracking-widest">
                 <Compass className="w-4 h-4 text-[#ecb613]" />
-                Catálogo de Módulos // 22 URLs Verificadas
+                Catálogo de Módulos // {ADMIN_DIRECTORY_TOTALS.adminModules} módulos +{' '}
+                {ADMIN_DIRECTORY_TOTALS.publicShortcuts} atajos · auditado
               </div>
               <h2 className="text-xl font-bold font-syne text-white uppercase mt-1">
                 Directorio de Acceso Rápido
@@ -592,13 +630,7 @@ export default function AdminDashboardClient({ data }: { data: AdminDashboardDat
           </div>
 
           <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-zinc-900">
-            {[
-              { id: "TODOS", label: `Todos (${ALL_ADMIN_DIRECT_URLS.length})` },
-              { id: "Núcleo & Simulación", label: "Núcleo (5)" },
-              { id: "Ventas & Conversión", label: "Ventas (5)" },
-              { id: "Finanzas & Legal B2G", label: "Finanzas (4)" },
-              { id: "Inteligencia & GPU", label: "Inteligencia (9)" }
-            ].map((cat) => (
+            {DIRECTORY_CATEGORY_CHIPS.map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.id)}

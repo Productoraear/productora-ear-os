@@ -45,8 +45,14 @@ Productora EAR
 Centralita: +34 693 693 048 | Web: https://productoraear.com`;
 
   const encodedWhatsapp = encodeURIComponent(whatsappMessage);
-  const cleanPhone = lead.whatsapp.replace(/[^0-9]/g, '');
-  const whatsappUrl = isSovereign ? claimUrl : `https://wa.me/${cleanPhone}?text=${encodedWhatsapp}`;
+  const cleanPhone = (lead.whatsapp || '').replace(/[^0-9]/g, '');
+  // INV-06: sin teléfono acreditado NO existe enlace wa.me. Antes se abría un
+  // chat con un número fabricado que pertenece a un tercero (riesgo RGPD/LSSI).
+  const whatsappUrl = isSovereign
+    ? claimUrl
+    : cleanPhone.length >= 9
+      ? `https://wa.me/${cleanPhone}?text=${encodedWhatsapp}`
+      : '';
 
   // 2. Correo Electrónico B2B (Elegante, Institucional)
   const emailSubject = `Invitación Alianza B2B y Ficha Verificada en ${lead.location} · Productora EAR (Split 80/10/10)`;

@@ -29,11 +29,28 @@ interface EnrichedLead extends MailerfindLead {
   outreach: OutreachDispatch;
 }
 
+type SearchPayload = {
+  niche: string;
+  province: string;
+  location: string;
+  query: string;
+  limit: number;
+  offset: number;
+  platform: 'both' | 'google_maps' | 'instagram';
+  targetAccount?: string;
+};
+
+interface GremioTotal {
+  id: string;
+  label: string;
+  total: number;
+}
+
 export default function AdminMailerfindProspectingPage() {
   const [niche, setNiche] = useState<string>('todos');
-  const [location, setLocation] = useState<string>('todas');
+  const location = 'todas';
   const [province, setProvince] = useState<string>('todas');
-  const [platform, setPlatform] = useState<'both' | 'google_maps' | 'instagram'>('both');
+  const platform: SearchPayload['platform'] = 'both';
   const [loading, setLoading] = useState<boolean>(false);
   const [leads, setLeads] = useState<EnrichedLead[]>([]);
   const [selectedLead, setSelectedLead] = useState<EnrichedLead | null>(null);
@@ -41,50 +58,122 @@ export default function AdminMailerfindProspectingPage() {
   const [searchTarget, setSearchTarget] = useState<string>('');
   const [query, setQuery] = useState<string>('');
   const [limit, setLimit] = useState<number>(30);
+  const [offset, setOffset] = useState<number>(0);
+  const [total, setTotal] = useState<number>(0);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [gremios, setGremios] = useState<GremioTotal[]>([]);
+  const [grandTotal, setGrandTotal] = useState<number>(0);
+  const [engine, setEngine] = useState<{ mode: string; source: string; checkedAt: string } | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSearch = async (overrideParams?: any) => {
+  /**
+   * ÚNICA vía de búsqueda del panel.
+   * El estado de los filtros y el payload ejecutado son EL MISMO objeto: al
+   * pulsar "Fincas" el select pasa a "finca" y la petición lleva "finca".
+   * Antes cada botón enviaba un payload distinto al que mostraban los controles
+   * (y conservaba el texto del buscador anterior): el resultado no correspondía.
+   */
+  const runSearch = async (patch: Partial<SearchPayload> = {}) => {
+    const payload: SearchPayload = {
+      niche,
+      province,
+      location,
+      query,
+      limit,
+      offset,
+      platform,
+      ...patch,
+    };
+
+    if (patch.niche !== undefined) setNiche(patch.niche);
+    if (patch.province !== undefined) setProvince(patch.province);
+    if (patch.query !== undefined) setQuery(patch.query);
+    if (patch.limit !== undefined) setLimit(patch.limit);
+    if (patch.targetAccount !== undefined) setSearchTarget(patch.targetAccount);
+    setOffset(payload.offset);
+
     setLoading(true);
+    setError(null);
     try {
-      const payload = overrideParams || {
-        niche,
-        location,
-        province,
-        query,
-        limit,
-        platform
-      };
-
       const res = await fetch('/api/mailerfind/prospect', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
       });
-
-      if (res.ok) {
-        const json = await res.json();
-        setLeads(json.leads || []);
-        if (json.leads && json.leads.length > 0) {
-          setSelectedLead(json.leads[0]);
-        }
-      }
-    } catch (err) {
-      console.warn('Error buscando leads con Mailerfind:', err);
+      if (!res.ok) throw new Error(`El motor de prospección respondió ${res.status}`);
+      const json = await res.json();
+      const nextLeads: EnrichedLead[] = Array.isArray(json.leads) ? json.leads : [];
+      setLeads(nextLeads);
+      setTotal(typeof json.total === 'number' ? json.total : nextLeads.length);
+      setTotalPages(typeof json.totalPages === 'number' ? json.totalPages : 1);
+      if (Array.isArray(json.gremios)) setGremios(json.gremios as GremioTotal[]);
+      if (typeof json.grandTotal === 'number') setGrandTotal(json.grandTotal);
+      setEngine({
+        mode: typeof json.mode === 'string' ? json.mode : 'DESCONOCIDO',
+        source: typeof json.source === 'string' ? json.source : 'n/d',
+        checkedAt: typeof json.checkedAt === 'string' ? json.checkedAt : '',
+      });
+      setSelectedLead(nextLeads.length > 0 ? nextLeads[0] : null);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Error desconocido';
+      setError(message);
+      setLeads([]);
+      setTotal(0);
+      setTotalPages(1);
+      setSelectedLead(null);
     } finally {
       setLoading(false);
     }
   };
 
-  // Carga automática inicial de leads enriquecidos al entrar
+  // Carga automática inicial (idéntica a lo que muestran los controles).
   React.useEffect(() => {
-    handleSearch({ niche: 'todos', province: 'todas', limit: 30 });
+    void runSearch({ niche: 'todos', province: 'todas', query: '', limit: 30, offset: 0 });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const pageIndex = Math.floor(offset / limit) + 1;
+  const rangeStart = total === 0 || leads.length === 0 ? 0 : offset + 1;
+  const rangeEnd = offset + leads.length;
+
+  /** Navegación de páginas: única puerta, con límites duros. */
+  const goToOffset = (nextOffset: number) => {
+    const lastOffset = Math.max(0, (totalPages - 1) * limit);
+    const clamped = Math.max(0, Math.min(nextOffset, lastOffset));
+    if (loading || clamped === offset) return;
+    void runSearch({ offset: clamped });
+  };
+
+  // Atajos reales de navegación: ← / → cambian de página fuera de los inputs.
+  React.useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (target && ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName)) return;
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        goToOffset(offset + limit);
+      }
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        goToOffset(offset - limit);
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [offset, limit, totalPages, loading]);
+
   const auditBodasnetFollowersDirectly = () => {
-    setSearchTarget('https://www.instagram.com/bodasnet/');
-    handleSearch({
-      targetAccount: 'https://www.instagram.com/bodasnet/',
-      limit: 30
-    });
+    void runSearch({ targetAccount: 'https://www.instagram.com/bodasnet/', offset: 0 });
+  };
+
+  /**
+   * Acceso rápido por gremio (chips).
+   * Fuerza `province: 'todas'`, limpia el texto y vuelve a la página 1: lo que
+   * se pulsa es exactamente lo que se consulta y lo que muestran los controles.
+   */
+  const handleSearch = (override?: Partial<SearchPayload>) => {
+    void runSearch({ province: 'todas', query: '', offset: 0, ...(override ?? {}) });
   };
 
   const copyToClipboard = (text: string, id: string) => {
@@ -106,7 +195,7 @@ export default function AdminMailerfindProspectingPage() {
       `"${l.website || ''}"`,
       `"${l.instagramHandle || ''}"`,
       `"${l.phoneVerifiedType === 'DIRECT_VENDOR' ? 'Verificado Directo' : l.phoneVerifiedType === 'SOVEREIGN_CENTRALITA' ? 'Centralita EAR' : 'Identificado Maps/IG'}"`,
-      l.googleRating || 5.0,
+      typeof l.googleRating === 'number' ? l.googleRating : '',
       l.reviewsCount || 0,
       `"https://productoraear.com/proveedores/${l.claimedProfileSlug || l.id}"`
     ]);
@@ -129,22 +218,35 @@ export default function AdminMailerfindProspectingPage() {
             <Compass className="w-4 h-4" /> MAILERFIND MCP · RADAR B2B UNIVERSAL 2050
           </div>
           <h1 className="text-2xl md:text-4xl font-extrabold text-white tracking-tight font-syne">
-            Base Nacional de Proveedores & Fincas (84.774 Indexados)
+            Base Nacional de Proveedores &amp; Fincas ({grandTotal > 0 ? `${grandTotal.toLocaleString('es-ES')} en disco` : 'sin particiones locales'})
           </h1>
           <p className="text-neutral-400 text-sm mt-1">
-            Universo completo de gremios cosechados de Bodas.net, Google Maps e Instagram: WhatsApp directo, verificación SMTP y activación bajo el Split Soberano 80/10/10.
+            Catálogo cosechado de Bodas.net, Google Maps e Instagram. Solo se muestra contacto acreditado en origen: si el registro no trae teléfono, el lead lo declara en vez de inventarlo (INV-06). Activación bajo el Split Soberano 80/10/10.
           </p>
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
           <div className="px-3 py-1.5 bg-neutral-900 border border-neutral-800 rounded-xl text-xs font-mono text-zinc-300 flex items-center gap-2">
             <Users className="w-3.5 h-3.5 text-[#ecb613]" />
-            <span>84.774 Proveedores</span>
+            <span>{grandTotal > 0 ? `${grandTotal.toLocaleString('es-ES')} Proveedores` : 'Proveedores: 0 leídos'}</span>
           </div>
 
-          <div className="px-3 py-1.5 bg-emerald-950/40 border border-emerald-500/50 rounded-xl text-xs font-mono text-emerald-300 flex items-center gap-1.5">
+          <div
+            className="px-3 py-1.5 bg-emerald-950/40 border border-emerald-500/50 rounded-xl text-xs font-mono text-emerald-300 flex items-center gap-1.5"
+            title={engine ? `Sonda: ${engine.source} · ${engine.checkedAt}` : 'Sin sonda ejecutada todavía (SIN_EVIDENCIA)'}
+          >
             <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-            <span>0€ Cuotas (vs 150€/mes)</span>
+            <span>0€ de cuota · Split 80/10/10</span>
+          </div>
+
+          <div
+            className={`px-3 py-1.5 rounded-xl text-xs font-mono flex items-center gap-1.5 border ${engine && engine.mode === 'REAL'
+              ? 'bg-sky-950/40 border-sky-500/50 text-sky-300'
+              : 'bg-amber-950/40 border-amber-500/50 text-amber-300'
+              }`}
+          >
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>{engine ? `MOTOR ${engine.mode} · ${engine.source}` : 'MOTOR SIN_SONDA'}</span>
           </div>
 
           {leads.length > 0 && (
@@ -175,7 +277,7 @@ export default function AdminMailerfindProspectingPage() {
             disabled={loading}
             className="px-3 py-1.5 bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 text-black font-mono font-black text-xs rounded-xl shadow-md flex items-center gap-1.5 transition-all cursor-pointer"
           >
-            <span>🌐 UNIVERSO COMPLETO (84k)</span>
+            <span>🌐 UNIVERSO COMPLETO</span>
           </button>
 
           <button
@@ -187,7 +289,7 @@ export default function AdminMailerfindProspectingPage() {
             disabled={loading}
             className="px-2.5 py-1.5 bg-neutral-800 hover:bg-neutral-700 text-neutral-200 font-mono text-xs rounded-xl border border-neutral-700 flex items-center gap-1 transition-all"
           >
-            <span>🎺 Música & Mariachis (3.8k)</span>
+            <span>🎺 Música &amp; Mariachis</span>
           </button>
 
           <button
@@ -199,7 +301,7 @@ export default function AdminMailerfindProspectingPage() {
             disabled={loading}
             className="px-2.5 py-1.5 bg-neutral-800 hover:bg-neutral-700 text-neutral-200 font-mono text-xs rounded-xl border border-neutral-700 flex items-center gap-1 transition-all"
           >
-            <span>🏰 Fincas (9.5k)</span>
+            <span>🏰 Fincas</span>
           </button>
 
           <button
@@ -211,7 +313,7 @@ export default function AdminMailerfindProspectingPage() {
             disabled={loading}
             className="px-2.5 py-1.5 bg-neutral-800 hover:bg-neutral-700 text-neutral-200 font-mono text-xs rounded-xl border border-neutral-700 flex items-center gap-1 transition-all"
           >
-            <span>🥘 Catering (4.1k)</span>
+            <span>🥘 Catering</span>
           </button>
 
           <button
@@ -223,7 +325,7 @@ export default function AdminMailerfindProspectingPage() {
             disabled={loading}
             className="px-2.5 py-1.5 bg-neutral-800 hover:bg-neutral-700 text-neutral-200 font-mono text-xs rounded-xl border border-neutral-700 flex items-center gap-1 transition-all"
           >
-            <span>⚡ Sonido & Luces (8.9k)</span>
+            <span>⚡ Sonido &amp; Luces</span>
           </button>
 
           <button
@@ -235,7 +337,7 @@ export default function AdminMailerfindProspectingPage() {
             disabled={loading}
             className="px-2.5 py-1.5 bg-neutral-800 hover:bg-neutral-700 text-neutral-200 font-mono text-xs rounded-xl border border-neutral-700 flex items-center gap-1 transition-all"
           >
-            <span>📸 Fotografía (35k)</span>
+            <span>📸 Fotografía</span>
           </button>
 
           <button
@@ -247,7 +349,7 @@ export default function AdminMailerfindProspectingPage() {
             disabled={loading}
             className="px-2.5 py-1.5 bg-neutral-800 hover:bg-neutral-700 text-neutral-200 font-mono text-xs rounded-xl border border-neutral-700 flex items-center gap-1 transition-all"
           >
-            <span>💍 Planners (1.0k)</span>
+            <span>💍 Planners</span>
           </button>
 
           <button
@@ -259,9 +361,29 @@ export default function AdminMailerfindProspectingPage() {
             disabled={loading}
             className="px-2.5 py-1.5 bg-neutral-800 hover:bg-neutral-700 text-neutral-200 font-mono text-xs rounded-xl border border-neutral-700 flex items-center gap-1 transition-all"
           >
-            <span>🚌 Transporte (1.9k)</span>
+            <span>🚌 Transporte</span>
           </button>
         </div>
+      </div>
+
+      {/* 📐 Totales REALES por gremio: leídos de disco, nunca tecleados (AF-4) */}
+      <div className="flex flex-wrap items-center gap-1.5 text-[11px] font-mono text-neutral-400">
+        <span className="text-neutral-500 uppercase">Totales en disco:</span>
+        {gremios.length === 0 && (
+          <span className="text-amber-400">sin sonda todavía (SIN_EVIDENCIA)</span>
+        )}
+        {gremios.map((g) => (
+          <button
+            key={g.id}
+            type="button"
+            onClick={() => handleSearch({ niche: g.id })}
+            disabled={loading}
+            className="px-2 py-0.5 rounded-lg bg-neutral-900 border border-neutral-800 hover:border-[#ecb613]/60 hover:text-white transition-colors disabled:opacity-50"
+            title={`Filtrar por ${g.label}`}
+          >
+            {g.label} · {g.total.toLocaleString('es-ES')}
+          </button>
+        ))}
       </div>
 
       {/* 🎛️ FILTROS DE BÚSQUEDA Y CALIBRACIÓN MULTIDIMENSIONAL */}
@@ -273,18 +395,28 @@ export default function AdminMailerfindProspectingPage() {
             onChange={(e) => setNiche(e.target.value)}
             className="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-3 py-2 text-white outline-none focus:border-[#ecb613]"
           >
-            <option value="todos">🌐 TODOS LOS GREMIOS (84.774)</option>
-            <option value="musica">🎺 Mariachis & Música (3.846)</option>
-            <option value="finca">🏰 Fincas & Espacios (9.559)</option>
-            <option value="catering">🥘 Catering & Asados (4.096)</option>
-            <option value="sonido">⚡ Sonido Bose & Luces (8.963)</option>
-            <option value="foto">📸 Fotografía & Cine (35.153)</option>
-            <option value="wedding">💍 Wedding Planners (1.011)</option>
-            <option value="transporte">🚌 Transporte & Coches (1.961)</option>
-            <option value="decoracion">🌸 Decoración & Carpas (1.650)</option>
-            <option value="moda">👔 Moda Nupcial & Trajes (8.777)</option>
-            <option value="servicios">🎪 Animación & Auxiliares (8.617)</option>
-            <option value="senior_care">🧠 Centros Senior VIMUME (800)</option>
+            <option value="todos">🌐 TODOS LOS GREMIOS ({grandTotal > 0 ? grandTotal.toLocaleString('es-ES') : 'sin sonda'})</option>
+            {(gremios.length > 0
+              ? gremios
+              : [
+                { id: 'musica', label: '🎺 Mariachis & Música', total: 0 },
+                { id: 'finca', label: '🏰 Fincas & Espacios', total: 0 },
+                { id: 'catering', label: '🥘 Catering & Asados', total: 0 },
+                { id: 'sonido', label: '⚡ Sonido & Luces', total: 0 },
+                { id: 'foto', label: '📸 Fotografía & Cine', total: 0 },
+                { id: 'wedding', label: '💍 Wedding Planners', total: 0 },
+                { id: 'transporte', label: '🚌 Transporte & Coches', total: 0 },
+                { id: 'decoracion', label: '🌸 Decoración & Carpas', total: 0 },
+                { id: 'moda', label: '👔 Moda Nupcial & Trajes', total: 0 },
+                { id: 'servicios', label: '🎪 Animación & Auxiliares', total: 0 },
+                { id: 'senior_care', label: '🧠 Centros Senior VIMUME', total: 0 },
+              ]
+            ).map((g) => (
+              <option key={g.id} value={g.id}>
+                {g.label}
+                {g.total > 0 ? ` (${g.total.toLocaleString('es-ES')})` : ''}
+              </option>
+            ))}
           </select>
         </div>
 
@@ -366,19 +498,24 @@ export default function AdminMailerfindProspectingPage() {
           <label className="text-neutral-400 block mb-1.5 font-bold">LÍMITE POR PANTALLA</label>
           <select
             value={limit}
-            onChange={(e) => setLimit(Number(e.target.value))}
+            onChange={(e) => {
+              void runSearch({ limit: Number(e.target.value), offset: 0 });
+            }}
             className="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-3 py-2 text-white outline-none focus:border-[#ecb613]"
           >
             <option value={15}>15 leads</option>
             <option value={30}>30 leads</option>
             <option value={50}>50 leads</option>
             <option value={100}>100 leads</option>
+            <option value={200}>200 leads</option>
           </select>
         </div>
 
         <div className="flex items-end">
           <button
-            onClick={() => handleSearch({ niche, province, query, limit })}
+            onClick={() => {
+              void runSearch({ offset: 0 });
+            }}
             disabled={loading}
             className="w-full py-2.5 px-4 bg-[#ecb613] hover:bg-[#d4a311] disabled:opacity-50 text-black font-bold rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg transition-all cursor-pointer"
           >
@@ -388,14 +525,105 @@ export default function AdminMailerfindProspectingPage() {
         </div>
       </div>
 
+      {/* Estado honesto: si el motor falla se declara y no se pinta nada inventado */}
+      {error && (
+        <div className="p-3 rounded-xl bg-red-950/40 border border-red-500/50 text-red-300 text-xs font-mono">
+          MOTOR CAÍDO · {error} · No se muestran resultados para no inventar datos.
+        </div>
+      )}
+      {!loading && !error && leads.length === 0 && (
+        <div className="p-3 rounded-xl bg-neutral-900/60 border border-neutral-800 text-neutral-400 text-xs font-mono">
+          0 leads para este filtro. Cambia de gremio/provincia o vacía el texto de búsqueda. Total en disco: {grandTotal.toLocaleString('es-ES')}.
+        </div>
+      )}
+
       {/* 📊 RESULTADOS Y PANEL DE DESPACHO ORGÁNICO */}
-      {leads.length > 0 && (
+      {(total > 0 || leads.length > 0) && (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* LISTA DE LEADS (Col 7) */}
           <div className="lg:col-span-7 space-y-3">
-            <div className="flex items-center justify-between text-xs font-mono text-neutral-400 pb-1">
-              <span>{leads.length} LEADS EXTRAÍDOS Y ENRIQUECIDOS</span>
-              <span className="text-[#ecb613]">Emails verificados SMTP & WhatsApp</span>
+            <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-neutral-400 pb-1">
+              <span>
+                LEADS {rangeStart}–{rangeEnd} DE {total.toLocaleString('es-ES')}
+                {totalPages > 1 && <span className="text-neutral-500"> · PÁGINA {pageIndex}/{totalPages}</span>}
+              </span>
+              <span className="text-neutral-500">Contacto solo si consta en el registro de origen</span>
+            </div>
+
+            {/* 🧭 NAVEGACIÓN DE PÁGINAS — escribe de verdad en /api/mailerfind/prospect */}
+            <div className="flex flex-wrap items-center gap-1.5 p-2 rounded-xl bg-neutral-900/70 border border-neutral-800">
+              <button
+                type="button"
+                onClick={() => goToOffset(0)}
+                disabled={loading || offset === 0}
+                className="px-2 py-1 rounded-lg bg-neutral-800 hover:bg-neutral-700 disabled:opacity-40 text-[11px] font-mono text-neutral-200 transition-colors cursor-pointer"
+                title="Primera página"
+              >
+                ⏮ Primera
+              </button>
+              <button
+                type="button"
+                onClick={() => goToOffset(offset - limit)}
+                disabled={loading || offset === 0}
+                className="px-2 py-1 rounded-lg bg-neutral-800 hover:bg-neutral-700 disabled:opacity-40 text-[11px] font-mono text-neutral-200 transition-colors cursor-pointer"
+                title="Página anterior (tecla ←)"
+              >
+                ◀ Anterior
+              </button>
+
+              <span className="px-2 text-[11px] font-mono text-neutral-200 font-bold">
+                {pageIndex} / {totalPages}
+              </span>
+
+              <button
+                type="button"
+                onClick={() => goToOffset(offset + limit)}
+                disabled={loading || offset + limit >= total}
+                className="px-2 py-1 rounded-lg bg-neutral-800 hover:bg-neutral-700 disabled:opacity-40 text-[11px] font-mono text-neutral-200 transition-colors cursor-pointer"
+                title="Página siguiente (tecla →)"
+              >
+                Siguiente ▶
+              </button>
+              <button
+                type="button"
+                onClick={() => goToOffset((totalPages - 1) * limit)}
+                disabled={loading || offset + limit >= total}
+                className="px-2 py-1 rounded-lg bg-neutral-800 hover:bg-neutral-700 disabled:opacity-40 text-[11px] font-mono text-neutral-200 transition-colors cursor-pointer"
+                title="Última página"
+              >
+                Última ⏭
+              </button>
+
+              <input
+                type="number"
+                min={1}
+                max={totalPages}
+                placeholder="Ir a…"
+                onKeyDown={(event) => {
+                  if (event.key !== 'Enter') return;
+                  const requested = Number((event.target as HTMLInputElement).value);
+                  if (!Number.isFinite(requested)) return;
+                  const clampedPage = Math.max(1, Math.min(Math.trunc(requested), totalPages));
+                  goToOffset((clampedPage - 1) * limit);
+                }}
+                className="w-16 bg-black/60 border border-neutral-700 rounded-lg px-2 py-1 text-[11px] font-mono text-white outline-none focus:border-[#ecb613]"
+                title="Escribe el número de página y pulsa Enter"
+              />
+
+              <select
+                value={limit}
+                onChange={(e) => {
+                  void runSearch({ limit: Number(e.target.value), offset: 0 });
+                }}
+                className="ml-auto bg-black/60 border border-neutral-700 rounded-lg px-2 py-1 text-[11px] font-mono text-white outline-none focus:border-[#ecb613]"
+                title="Registros por pantalla"
+              >
+                {[15, 30, 50, 100, 200].map((size) => (
+                  <option key={size} value={size}>
+                    {size} / página
+                  </option>
+                ))}
+              </select>
             </div>
 
             <div className="space-y-2.5 max-h-[620px] overflow-y-auto pr-1">
@@ -423,7 +651,7 @@ export default function AdminMailerfindProspectingPage() {
                       )}
                       {lead.phoneVerifiedType === 'MAPS_IDENTIFIED' && (
                         <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-sky-950/80 text-sky-400 border border-sky-800/70">
-                          📡 Identificado Maps/IG
+                          📡 Ficha localizada · contacto sin acreditar
                         </span>
                       )}
                     </div>
@@ -441,18 +669,21 @@ export default function AdminMailerfindProspectingPage() {
 
                     <span className="flex items-center gap-1.5 text-emerald-400 font-bold truncate">
                       <MessageCircle className="w-3.5 h-3.5 shrink-0" />
-                      <span>{lead.whatsapp}</span>
+                      <span>{lead.whatsapp || 'Sin teléfono verificado'}</span>
                     </span>
 
                     <span className="flex items-center gap-1.5 text-cyan-400 truncate">
                       <Mail className="w-3.5 h-3.5 shrink-0" />
-                      <span>{lead.email}</span>
+                      <span>{lead.email || 'Sin email en origen'}</span>
                     </span>
 
-                    {lead.googleRating && (
+                    {typeof lead.googleRating === 'number' && (
                       <span className="flex items-center gap-1.5 text-amber-400">
                         <Star className="w-3.5 h-3.5 fill-amber-400 shrink-0" />
-                        <span>{lead.googleRating} ({lead.reviewsCount} reseñas)</span>
+                        <span>
+                          {lead.googleRating}
+                          {lead.reviewsCount && lead.reviewsCount > 0 ? ` (${lead.reviewsCount} reseñas)` : ''}
+                        </span>
                       </span>
                     )}
 
@@ -495,7 +726,7 @@ export default function AdminMailerfindProspectingPage() {
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="text-[#ecb613] font-bold flex items-center gap-1.5">
-                    <MessageCircle className="w-3.5 h-3.5 text-emerald-400" /> WhatsApp Directo ({selectedLead.whatsapp})
+                    <MessageCircle className="w-3.5 h-3.5 text-emerald-400" /> WhatsApp Directo ({selectedLead.whatsapp || 'sin número verificado'})
                   </span>
                   <button
                     onClick={() => copyToClipboard(selectedLead.outreach.whatsappMessage, 'wa')}
@@ -507,21 +738,36 @@ export default function AdminMailerfindProspectingPage() {
                 <div className="p-3 bg-neutral-900 border border-neutral-800 rounded-xl text-neutral-300 text-[11px] leading-relaxed max-h-48 overflow-y-auto whitespace-pre-line font-sans">
                   {selectedLead.outreach.whatsappMessage}
                 </div>
-                <a
-                  href={selectedLead.outreach.whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full py-2.5 px-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg"
-                >
-                  <MessageCircle className="w-4 h-4" /> ABRIR EN WHATSAPP WEB & ENVIAR
-                </a>
+                {selectedLead.outreach.whatsappUrl ? (
+                  <a
+                    href={selectedLead.outreach.whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full py-2.5 px-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg"
+                  >
+                    <MessageCircle className="w-4 h-4" /> ABRIR EN WHATSAPP WEB &amp; ENVIAR
+                  </a>
+                ) : (
+                  <div className="w-full py-2.5 px-3 bg-neutral-900 border border-amber-600/50 text-amber-300 rounded-xl text-[10px] leading-relaxed">
+                    Este lead NO tiene teléfono acreditado en el registro de origen. No se genera enlace de WhatsApp
+                    (INV-06): copia el mensaje y localiza su contacto oficial.
+                    <a
+                      href={`https://www.google.com/search?q=${encodeURIComponent(`${selectedLead.name} ${selectedLead.province} telefono contacto`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-1 flex items-center justify-center gap-1 text-[#ecb613] hover:underline font-bold"
+                    >
+                      <Search className="w-3 h-3" /> Buscar teléfono oficial en Google
+                    </a>
+                  </div>
+                )}
               </div>
 
               {/* CORREO B2B INSTITUCIONAL */}
               <div className="space-y-2 pt-2 border-t border-neutral-800">
                 <div className="flex items-center justify-between">
                   <span className="text-cyan-400 font-bold flex items-center gap-1.5">
-                    <Mail className="w-3.5 h-3.5" /> Correo Institucional ({selectedLead.email})
+                    <Mail className="w-3.5 h-3.5" /> Correo Institucional ({selectedLead.email || 'sin email en origen'})
                   </span>
                   <button
                     onClick={() => copyToClipboard(`${selectedLead.outreach.emailSubject}\n\n${selectedLead.outreach.emailBody}`, 'mail')}
@@ -533,12 +779,18 @@ export default function AdminMailerfindProspectingPage() {
                 <div className="p-2.5 bg-neutral-900 border border-neutral-800 rounded-xl text-neutral-300 text-[11px] font-sans truncate">
                   <strong>Asunto:</strong> {selectedLead.outreach.emailSubject}
                 </div>
-                <a
-                  href={`mailto:${selectedLead.email}?subject=${encodeURIComponent(selectedLead.outreach.emailSubject)}&body=${encodeURIComponent(selectedLead.outreach.emailBody)}`}
-                  className="w-full py-2 px-3 bg-cyan-700 hover:bg-cyan-600 text-white font-bold rounded-xl flex items-center justify-center gap-2 transition-all shadow-md text-xs"
-                >
-                  <Mail className="w-3.5 h-3.5" /> ABRIR EN GMAIL / OUTLOOK (MAILTO)
-                </a>
+                {selectedLead.email ? (
+                  <a
+                    href={`mailto:${selectedLead.email}?subject=${encodeURIComponent(selectedLead.outreach.emailSubject)}&body=${encodeURIComponent(selectedLead.outreach.emailBody)}`}
+                    className="w-full py-2 px-3 bg-cyan-700 hover:bg-cyan-600 text-white font-bold rounded-xl flex items-center justify-center gap-2 transition-all shadow-md text-xs"
+                  >
+                    <Mail className="w-3.5 h-3.5" /> ABRIR EN GMAIL / OUTLOOK (MAILTO)
+                  </a>
+                ) : (
+                  <div className="w-full py-2 px-3 bg-neutral-900 border border-neutral-700 text-neutral-400 rounded-xl text-[10px] text-center">
+                    Sin email acreditado: no se abre un mailto a una dirección inventada.
+                  </div>
+                )}
               </div>
 
               {/* ENLACE DE FICHA RECLAMABLE */}

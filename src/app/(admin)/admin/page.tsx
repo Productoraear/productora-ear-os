@@ -3,6 +3,7 @@ import AdminDashboardClient from './AdminDashboardClient';
 import { prisma } from '@/lib/prisma';
 import { PROVIDERS_GRAND_TOTAL } from '@/lib/constants/providers-manifest';
 import { EAR_OS_SSOT } from '@/lib/constants/ear-os-ssot';
+import { classifyDbFailure, type DbFailureReport } from '@/lib/db/dbFailureClassifier';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -18,6 +19,15 @@ export default async function AdminDashboardPage() {
   let dbProvidersCount = 0;
   let shadowProvidersCount = 0;
 
+  // ── SONDEO REAL DE POSTGRESQL (AF-1 / AF-2 / INV-16) ──────────────────────
+  // Si la DB no responde, las cifras de tesorería van a CERO y se declara
+  // `dataMode: 'DB_OFFLINE'`. Antes este catch inyectaba 2 locks de 100 €,
+  // 12.450 € de presupuesto y 14.200 € de propuesta aprobada como si fueran
+  // dinero cobrado: una fachada de telemetría que el CEO leía como real.
+  let dbProbed = false;
+  /** Causa clasificada del fallo (null si la DB respondió). Nunca lleva mensaje crudo. */
+  let dbFailure: DbFailureReport | null = null;
+
   try {
     [locks, budgets, proposals, dbProvidersCount, shadowProvidersCount] = await Promise.all([
       prisma.smartLock.findMany({
@@ -32,27 +42,21 @@ export default async function AdminDashboardPage() {
       prisma.providerProfile.count(),
       prisma.vendorShadowProfile.count(),
     ]);
+    dbProbed = true;
   } catch (err) {
-    console.warn('[AdminDashboardPage] PostgreSQL no accesible en entorno local, cargando telemetría baseline S-Class:', err instanceof Error ? err.message : String(err));
-    // Telemetría canónica de demostración S-Class cuando la DB está offline
-    locks = [
-      {
-        vertical: 'Boda Finca Las Tinajas · Price-Lock 100€',
-        createdAt: new Date(),
-        amountCents: 10000,
-        status: 'ACTIVE_LOCKED',
-      },
-      {
-        vertical: 'Gala Corporativa Madrid · Depósito Lock',
-        createdAt: new Date(Date.now() - 3600000 * 24),
-        amountCents: 10000,
-        status: 'CONVERTED_CONTRACT',
-      },
-    ];
-    budgets = [{ finalCost: 12450.0 }];
-    proposals = [{ totalCents: 1420000, status: 'aprobado', createdAt: new Date() }];
-    dbProvidersCount = 142;
-    shadowProvidersCount = 28;
+    // Se registra SOLO el código CLASIFICADO: nunca el mensaje crudo (puede
+    // arrastrar host, usuario y parámetros de conexión — SEC-3 / INV-14).
+    // Antes se leía `err.code`, que Prisma 6 deja `undefined` en los fallos de
+    // arranque (`errorCode`), y el log colapsaba a un `code=UNKNOWN` inútil.
+    dbFailure = classifyDbFailure(err);
+    console.error(
+      `[AdminDashboardPage][DB_OFFLINE] ${dbFailure.kind} (code=${dbFailure.code}). ${dbFailure.action} KPIs a cero; sin telemetría de demostración.`,
+    );
+    locks = [];
+    budgets = [];
+    proposals = [];
+    dbProvidersCount = 0;
+    shadowProvidersCount = 0;
   }
 
   const stripeCustody = locks.reduce((acc, lock) => acc + ((lock.amountCents || 10000) / 100), 0);
@@ -96,7 +100,12 @@ export default async function AdminDashboardPage() {
     .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
     .slice(0, 10);
 
+  const dataMode: 'REAL' | 'DB_OFFLINE' = dbProbed ? 'REAL' : 'DB_OFFLINE';
+
   const data = {
+    dataMode,
+    dbProbed,
+    dbFailure,
     totalRevenue: baseRevenue,
     totalTransactions,
     providerCount: totalProviders,

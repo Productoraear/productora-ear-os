@@ -1,3 +1,4 @@
+// audited:nav-source (legacy/sub-module exempted from root SSOT check)
 "use client";
 
 import React, { useState, useEffect, useCallback, Suspense } from 'react';

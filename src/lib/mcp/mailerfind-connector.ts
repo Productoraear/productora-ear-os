@@ -46,6 +46,46 @@ export interface MailerfindSearchParams {
   offset?: number;
 }
 
+/** Metadatos de paginación: sin esto la UI no puede navegar (afirmación medible). */
+export interface MailerfindSearchResult {
+  leads: MailerfindLead[];
+  /** Total de registros que cumplen el filtro (no solo la página). */
+  total: number;
+  offset: number;
+  limit: number;
+  hasMore: boolean;
+  /** AF-2: un motor que devuelve datos generados debe declararlo. */
+  mode: 'REAL' | 'SIMULADO';
+  source: string;
+  checkedAt: string;
+}
+
+/** Fila de totales por gremio, leída de las particiones en disco. */
+export interface MailerfindGremioTotal {
+  id: string;
+  label: string;
+  total: number;
+}
+
+/**
+ * Mapa gremio → particiones reales en `public/data/providers/`.
+ * Fuente única de las cifras que muestra el panel: si el archivo no existe, el
+ * total es 0 y el panel lo dice (nunca una cifra tecleada a mano).
+ */
+const GREMIO_PARTITIONS: ReadonlyArray<{ id: string; label: string; files: string[] }> = [
+  { id: 'musica', label: 'Música & Mariachis', files: ['musica.json'] },
+  { id: 'finca', label: 'Fincas & Espacios', files: ['finca.json'] },
+  { id: 'catering', label: 'Catering & Asados', files: ['catering.json'] },
+  { id: 'sonido', label: 'Sonido & Luces', files: ['sonido.json'] },
+  { id: 'foto', label: 'Fotografía & Cine', files: ['foto.json'] },
+  { id: 'wedding', label: 'Wedding Planners', files: ['wedding.json'] },
+  { id: 'transporte', label: 'Transporte & Coches', files: ['transporte.json'] },
+  { id: 'decoracion', label: 'Decoración & Carpas', files: ['decoracion.json'] },
+  { id: 'moda', label: 'Moda Nupcial & Trajes', files: ['moda.json'] },
+  { id: 'servicios', label: 'Animación & Auxiliares', files: ['servicios.json'] },
+  { id: 'senior_care', label: 'Centros Senior VIMUME', files: ['senior_care.json'] },
+];
+
 const MAILERFIND_MCP_URL = process.env.MAILERFIND_MCP_URL || 'https://mcp.mailerfind.com/mcp';
 const MAILERFIND_API_KEY = process.env.MAILERFIND_API_KEY || '';
 
@@ -167,24 +207,12 @@ function generateCleanBusinessSlug(name: string): string {
     .replace(/(^-|-$)/g, '');
 }
 
-function generateRealisticCorporateIdentity(name: string, category: string): { email: string; website: string; handle: string } {
-  const clean = generateCleanBusinessSlug(name).replace(/-/g, '');
-  const domainBase = clean.length >= 3 ? clean.slice(0, 18) : 'empresa';
-  const tld = domainBase.length % 2 === 0 ? 'es' : 'com';
-  const domain = `${domainBase}.${tld}`;
-
-  let prefix = 'info';
-  if (category === 'finca' || category === 'catering') prefix = 'reservas';
-  else if (category === 'mariachi' || category === 'audiovisual') prefix = 'contratacion';
-  else if (category === 'fotografia') prefix = 'hola';
-  else if (category === 'wedding_planner') prefix = 'contacto';
-
-  return {
-    email: `${prefix}@${domain}`,
-    website: `https://www.${domain}`,
-    handle: `@${clean.slice(0, 18)}`
-  };
-}
+// NOTA DE GOBERNANZA (JUR-1 / JUR-4):
+// Aquí vivía `generateRealisticCorporateIdentity()`, que fabricaba dominios,
+// emails (`reservas@dominio-inventado.es`) y handles de Instagram cuando el
+// registro de origen no los traía. El panel los presentaba como "verificados
+// SMTP" y ofrecía un mailto real a una dirección inexistente.
+// Se elimina: sin dato en origen, el campo se devuelve vacío y la UI lo declara.
 
 function resolveLeadPhone(raw: any, cleanSlug: string, isEdwinSovereign: boolean): { phone: string; whatsapp: string; type: MailerfindLead['phoneVerifiedType'] } {
   if (isEdwinSovereign) {
@@ -198,8 +226,12 @@ function resolveLeadPhone(raw: any, cleanSlug: string, isEdwinSovereign: boolean
   const rawPhone = (raw.phone || raw.telephone || '').replace(/[^\d+]/g, '');
   const isCentralita = rawPhone.includes('693693048') || rawPhone.includes('605584338') || rawPhone.includes('703831064');
 
+  // Evidencia de teléfono: el propio registro cosechado lo acredita.
+  const hasEvidencedPhone =
+    raw.hasDirectPhone === true || raw.has_real_phone === true || raw.phone_verified === true;
+
   // Si tiene teléfono directo real auténtico (y no es la centralita)
-  if (Boolean(raw.hasDirectPhone) && !isCentralita && rawPhone.length >= 9) {
+  if (hasEvidencedPhone && !isCentralita && rawPhone.length >= 9) {
     let clean = rawPhone.replace(/\D/g, '');
     if (clean.startsWith('34') && clean.length > 9) clean = clean.slice(2);
     const formatted = `+34 ${clean.slice(0, 3)} ${clean.slice(3, 6)} ${clean.slice(6)}`;
@@ -210,25 +242,49 @@ function resolveLeadPhone(raw: any, cleanSlug: string, isEdwinSovereign: boolean
     };
   }
 
-  // Si no tiene teléfono directo verificado: generar un móvil español determinista y ÚNICO para este proveedor
-  // basado en su slug o nombre (CERO colisiones, NUNCA el número de Edwin Agudelo)
-  let hash = 0;
-  const seed = `${cleanSlug}-${raw.id || 'vendor'}`;
-  for (let i = 0; i < seed.length; i++) {
-    hash = ((hash << 5) - hash) + seed.charCodeAt(i);
-    hash |= 0;
-  }
-  const absHash = Math.abs(hash);
-  const mobilePrefixes = ['618', '627', '636', '649', '654', '662', '678', '684', '695', '722'];
-  const pfx = mobilePrefixes[absHash % mobilePrefixes.length];
-  const middle = String(100 + (absHash % 899)).slice(0, 3);
-  const last = String(100 + ((absHash >> 3) % 899)).slice(0, 3);
-  const formatted = `+34 ${pfx} ${middle} ${last}`;
+  // INV-06 / INV-12 / JUR-1 — PROHIBIDO INVENTAR TELÉFONOS.
+  // Antes esta rama fabricaba un móvil determinista (`+34 6xx xxx xxx`) a partir
+  // del slug y lo etiquetaba como 'MAPS_IDENTIFIED'. Ese número pertenece a una
+  // persona real ajena al proveedor: un clic en WhatsApp escribía a un tercero
+  // (riesgo RGPD/LSSI) y el CSV exportaba contactos falsos como si fueran reales.
+  // Sin evidencia de teléfono en origen => se devuelve VACÍO y la UI lo declara.
+  return {
+    phone: '',
+    whatsapp: '',
+    type: 'MAPS_IDENTIFIED'
+  };
+}
+
+/**
+ * Identidad de contacto 100% trazable al origen.
+ * Sin email en el registro => sin email (nunca un `contacto@dominio-inventado.es`).
+ */
+function resolveRealContactIdentity(raw: any): {
+  email: string;
+  isEmailVerified: boolean;
+  website: string;
+  handle: string;
+} {
+  const email = typeof raw.email === 'string' ? raw.email.trim() : '';
+  const website = typeof raw.website === 'string' ? raw.website.trim() : '';
+  const handleRaw =
+    typeof raw.instagram === 'string'
+      ? raw.instagram
+      : typeof raw.instagramHandle === 'string'
+        ? raw.instagramHandle
+        : '';
+  const handle = handleRaw.trim()
+    ? `@${handleRaw.replace(/^@/, '').replace(/^.*instagram\.com\//, '').replace(/\/$/, '')}`
+    : '';
+  const smtpEvidenced =
+    raw.email_verified === true || raw.smtp_verified === true || raw.has_verified_email === true;
 
   return {
-    phone: formatted,
-    whatsapp: formatted,
-    type: 'MAPS_IDENTIFIED'
+    email,
+    // Solo se declara verificado cuando el origen lo acredita Y existe el email.
+    isEmailVerified: Boolean(email) && smtpEvidenced,
+    website,
+    handle
   };
 }
 
@@ -292,7 +348,7 @@ export class MailerfindConnector {
   /**
    * Extracción masiva sobre las particiones de datos reales de Bodas.net (public/data/providers/)
    */
-  static searchRealHarvestedProviders(params: MailerfindSearchParams): MailerfindLead[] {
+  static searchRealHarvestedProvidersPage(params: MailerfindSearchParams): MailerfindSearchResult {
     const {
       niche = 'todos',
       province,
@@ -389,7 +445,7 @@ export class MailerfindConnector {
     const normQuery = normalizeString(query || '');
     const isSpecificGremioSearch = normalizedNiche.includes('mariachi');
 
-    let filtered = aggregated.filter(item => {
+    const filtered = aggregated.filter(item => {
       const geo = resolveTrueSpanishGeo(item.address, item.name, item.province);
       const itemProvNorm = normalizeString(geo.province);
       const itemCityNorm = normalizeString(geo.city);
@@ -439,10 +495,10 @@ export class MailerfindConnector {
       });
     }
 
-    // Si la búsqueda no arrojó resultados y solo había filtros de ubicación geográfica pero NO de texto
-    if (filtered.length === 0 && aggregated.length > 0 && !normQuery) {
-      filtered = aggregated.slice(0, 100);
-    }
+    // SIN "FALLBACK MÁGICO" (corrección de correspondencia):
+    // aquí se inyectaban 100 registros ajenos al filtro cuando la provincia o el
+    // gremio pedido no tenía coincidencias. El panel mostraba esos leads como si
+    // correspondieran a la función pulsada. Ahora 0 es 0 y la UI lo declara.
 
     // Deduplicación inteligente por slug de negocio
     const seenSlugs = new Set<string>();
@@ -458,22 +514,25 @@ export class MailerfindConnector {
     // Paginación y límite
     const paged = deduplicated.slice(offset, offset + limit);
 
-    // Mapeo enriquecido a MailerfindLead (100% REALISMO)
-    return paged.map((raw, idx) => {
+    // Mapeo enriquecido: solo campos acreditados por el registro de origen.
+    const leads: MailerfindLead[] = paged.map((raw, idx) => {
       const isEdwinSovereign = raw.id === 'prov-ear-sovereign-01' || raw.slug === 'edwin-agudelo';
       const cleanSlug = generateCleanBusinessSlug(raw.name || `lead-${idx}`);
       const geo = resolveTrueSpanishGeo(raw.address, raw.name, raw.province);
       const cat = resolveCategory(raw.name, raw.category);
-      const corpIdentity = generateRealisticCorporateIdentity(raw.name, cat);
       const contactPhone = resolveLeadPhone(raw, cleanSlug, isEdwinSovereign);
 
-      const followersCount = Math.floor(1400 + (raw.reviews || 8) * 160 + (raw.name ? raw.name.length * 37 : 200));
-      const rating = raw.rating || +(4.7 + ((raw.name?.length || 10) % 4) * 0.1).toFixed(1);
+      // AF-4 / JUR-4: métricas SOLO si el origen las trae. Antes se derivaban de la
+      // longitud del nombre (estrellas y reseñas inventadas en el panel).
+      const contactIdentity = resolveRealContactIdentity(raw);
+      const followersCount = typeof raw.followers === 'number' ? raw.followers : undefined;
+      const rating = typeof raw.rating === 'number' ? raw.rating : undefined;
+      const reviewsCount = typeof raw.reviews === 'number' ? raw.reviews : 0;
 
       // Fit score
       let fitScore = 75;
       if (contactPhone.type === 'DIRECT_VENDOR' || isEdwinSovereign) fitScore += 15;
-      if (rating >= 4.8) fitScore += 5;
+      if (typeof rating === 'number' && rating >= 4.8) fitScore += 5;
       if (raw.reviews && raw.reviews > 10) fitScore += 5;
 
       return {
@@ -485,19 +544,119 @@ export class MailerfindConnector {
         province: geo.province || 'Madrid',
         phone: contactPhone.phone,
         whatsapp: contactPhone.whatsapp,
-        email: raw.email || corpIdentity.email,
-        isEmailVerified: true,
-        website: raw.website || corpIdentity.website,
-        instagramHandle: corpIdentity.handle,
+        email: contactIdentity.email,
+        isEmailVerified: contactIdentity.isEmailVerified,
+        website: contactIdentity.website,
+        instagramHandle: contactIdentity.handle,
         followersCount,
         googleRating: rating,
-        reviewsCount: raw.reviews || Math.floor(12 + ((raw.name?.length || 5) * 3)),
+        reviewsCount,
         claimedProfileSlug: cleanSlug,
         fitScore: Math.min(fitScore, 99),
         phoneVerifiedType: contactPhone.type
       };
     });
+
+    return {
+      leads,
+      total: deduplicated.length,
+      offset,
+      limit,
+      hasMore: offset + leads.length < deduplicated.length,
+      mode: 'REAL',
+      source: 'partitions:public/data/providers',
+      checkedAt: new Date().toISOString(),
+    };
   }
+
+  /** Compatibilidad: devuelve solo la página de leads (sin metadatos). */
+  static searchRealHarvestedProviders(params: MailerfindSearchParams): MailerfindLead[] {
+    return this.searchRealHarvestedProvidersPage(params).leads;
+  }
+
+  /**
+   * Paginación real con totales verificables.
+   * La UI necesita `total` + `hasMore` para poder navegar; antes el endpoint
+   * devolvía solo la página y el panel declaraba `totalFound = 30`, de modo que
+   * era imposible saber cuántos proveedores había detrás (navegación inexistente).
+   */
+  static async searchLeadsPage(params: MailerfindSearchParams): Promise<MailerfindSearchResult> {
+    const limit = typeof params.limit === 'number' && params.limit > 0 ? params.limit : 30;
+    const offset = typeof params.offset === 'number' && params.offset > 0 ? params.offset : 0;
+
+    // 1. Auditoría de cuenta objetivo (Instagram / Bodas): mismas particiones reales.
+    if (params.targetAccount) {
+      return this.searchRealHarvestedProvidersPage({ ...params, limit, offset });
+    }
+
+    // 2. Endpoint MCP externo (si existe credencial).
+    if (MAILERFIND_API_KEY) {
+      try {
+        const res = await fetch(`${MAILERFIND_MCP_URL}/leads/search`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${MAILERFIND_API_KEY}`,
+          },
+          body: JSON.stringify({ ...params, limit, offset }),
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data && Array.isArray(data.leads) && data.leads.length > 0) {
+            const total = typeof data.total === 'number' ? data.total : offset + data.leads.length;
+            return {
+              leads: data.leads as MailerfindLead[],
+              total,
+              offset,
+              limit,
+              hasMore: typeof data.hasMore === 'boolean' ? data.hasMore : offset + data.leads.length < total,
+              mode: 'REAL',
+              source: 'mcp:mailerfind',
+              checkedAt: new Date().toISOString(),
+            };
+          }
+        }
+      } catch (err) {
+        console.warn('[Mailerfind MCP] Fallback a particiones locales:', err);
+      }
+    }
+
+    // 3. Motor nativo sobre las particiones cosechadas.
+    return this.searchRealHarvestedProvidersPage({ ...params, limit, offset });
+  }
+
+  /** Carga perezosa y cacheada de una partición de proveedores. */
+  private static loadPartition(fileName: string): any[] {
+    const cached = partitionsCache.get(fileName);
+    if (cached) return cached;
+    try {
+      const filePath = path.join(process.cwd(), 'public', 'data', 'providers', fileName);
+      if (!fs.existsSync(filePath)) return [];
+      const parsed: unknown = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+      if (!Array.isArray(parsed)) return [];
+      partitionsCache.set(fileName, parsed);
+      return parsed;
+    } catch (err) {
+      console.warn(`[Mailerfind] Error leyendo partición ${fileName}:`, err);
+      return [];
+    }
+  }
+
+  /**
+   * Totales REALES por gremio leídos de disco.
+   * Sustituyen a las cifras tecleadas a mano (84.774 / 3.846 / 9.559…) que no
+   * se podían rastrear hasta ninguna fuente (AF-4, INV-10).
+   */
+  static getGremioTotals(): { gremios: MailerfindGremioTotal[]; grandTotal: number; checkedAt: string } {
+    const gremios = GREMIO_PARTITIONS.map((gremio) => ({
+      id: gremio.id,
+      label: gremio.label,
+      total: gremio.files.reduce((sum, file) => sum + this.loadPartition(file).length, 0),
+    }));
+    const grandTotal = gremios.reduce((sum, item) => sum + item.total, 0);
+    return { gremios, grandTotal, checkedAt: new Date().toISOString() };
+  }
+
 
   /**
    * Auditoría de seguidores cualificados de https://www.instagram.com/bodasnet/

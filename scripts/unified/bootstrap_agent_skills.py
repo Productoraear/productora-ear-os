@@ -13,7 +13,11 @@ import zipfile
 import shutil
 from pathlib import Path
 
-WORKSPACE_ROOT = Path(r"H:\EAR_OS_V2\EAR_OS_V2")
+# WORKSPACE_ROOT se resuelve desde la ubicación real de este script
+# (<repo>/scripts/unified/bootstrap_agent_skills.py -> <repo>). Antes estaba fijado
+# a H:\EAR_OS_V2\EAR_OS_V2: en un repo alojado en otra unidad el bootstrap escribía
+# fuera del árbol activo y el enjambre de agentes "desaparecía" sin error visible.
+WORKSPACE_ROOT = Path(os.environ.get("EAR_OS_WORKSPACE", Path(__file__).resolve().parents[2]))
 AGENTS_DIR = WORKSPACE_ROOT / ".agents"
 SKILLS_DIR = AGENTS_DIR / "skills"
 RULES_DIR = AGENTS_DIR / "rules"

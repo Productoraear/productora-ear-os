@@ -1,0 +1,95 @@
+{
+  "schema": "ear-os/sv-protocol/1.0",
+  "task_id": "SV-PROTOCOL-2026-11-04",
+  "generated_at": "2026-11-04",
+  "generated_by": "Cline (obrero) — sesión de auditoría del sistema de verificación",
+  "companion_md": ".antigravity/reports/EAR_OS_SV_PROTOCOL_2026-11-04.md",
+  "source_of_truth": "disco",
+  "executed_commands": 0,
+  "verdict_vocabulary": ["VERIFICADO", "SOSPECHOSO", "FACHADA", "SIN_EVIDENCIA"],
+  "evidence_channel": {
+    "read_files": "OK (todas las lecturas exit 0)",
+    "editor": "OK (7 escrituras confirmadas)",
+    "run_commands": "MUERTO — 5 sondas (Write-Output PROBE_OK, echo PROBE2, node -e JSON.parse, node -e process.stdout.write, node scripts/audit_gate_coverage.cjs --json) devuelven exit 1 sin stdout",
+    "search_codebase": "MUERTO — 1 patrón, timeout 30 s",
+    "http_probe": "NO EJECUTADO",
+    "public_url_label": "SIN_URL_PUBLICA"
+  },
+  "harness": {
+    "file": "VALIDAR_SV_PROTOCOL.bat",
+    "purpose": "15 puertas reales en un clic cuando el terminal del agente no devuelve Exit Code (E-00)",
+    "writes": ".antigravity/reports/gate_output.log",
+    "gates_count": 15,
+    "abort_on_first_failure": false,
+    "includes_omega_complete": false,
+    "state": "SOSPECHOSO hasta que exista gate_output.log en disco con 15 EXIT_CODE",
+    "companion_skill": ".antigravity/skills/verify-ssot-integrity.md"
+  },
+  "evidence": [
+    { "id": "E-00", "cmd": "run_commands x5", "exit": 1, "proves": "canal de ejecución muerto; incidente TOOLING-CLINE-TERMINAL vigente" },
+    { "id": "E-01", "file": "package.json:75", "proves": "gate:prepush encadena 21 puertas" },
+    { "id": "E-02", "file": "package.json:11,12", "proves": "lint y typecheck usan binarios reales de node_modules" },
+    { "id": "E-03", "file": "package.json:66 vs 75", "proves": "audit:gates existe y no está en la cadena" },
+    { "id": "E-04", "file": "package.json:100 vs 75", "proves": "verify:budget fuera de la cadena" },
+    { "id": "E-05", "file": "scripts/verify_sonometro_pwa.cjs:1-30", "proves": "verificador INV-13 existe sin alias npm" },
+    { "id": "E-06", "file": "src/app/(public)/confianza/page.tsx:22,43", "proves": "U13 existe en disco con force-static y readEvidenceLedger" },
+    { "id": "E-07", "file": "src/lib/evidence/evidence-ledger.ts:29,13-45", "proves": "vocabulario cerrado + degradación a SOSPECHOSO sin quíntupla" },
+    { "id": "E-08", "file": ".antigravity/evidence/ledger.jsonl:1-4", "proves": "3 CLAIMs VERIFICADO (2026-10-30) + 1 FACHADA AF-1" },
+    { "id": "E-09", "file": ".github/workflows/deploy-ghcr.yml:14-92", "proves": "contract-gate + typecheck-gate bloquean build-and-push; solo 4 de las 21 puertas pasan por CI" },
+    { "id": "E-10", "file": ".github/workflows/deploy-ghcr.yml:194-234", "proves": "production-smoke con always() + prod_deploy_freshness = G-7 es máquina" },
+    { "id": "E-11", "file": ".github/workflows/deploy-ghcr.yml:228-229", "proves": "el smoke sale hoy con exit 3 por 503 de CRON_SECRET (declarado en comentario)" },
+    { "id": "E-12", "file": ".github/workflows/deploy-ghcr.yml:44-47", "proves": "next.config.ts:37 ignoreBuildErrors true; el CI es la única muralla" },
+    { "id": "E-13", "file": "package.json:108,124", "proves": "@netlify/plugin-nextjs y @vercel/functions siguen en dependencies (CHG-4)" },
+    { "id": "E-14", "file": "package.json:141", "proves": "next ^16.3.5 frente a doctrina que dice Next.js 15" },
+    { "id": "E-15", "file": "src/lib/analytics/venue-showcase-telemetry.ts:219-223", "proves": "126/29165/3832/64618 literales sin provenance (AF-4)" },
+    { "id": "E-16", "file": ".antigravity/tasks_queue.json:7,15", "proves": "W47_T03 QUEUED, total_pending 2" },
+    { "id": "E-17", "file": ".antigravity/MISSION_ACTIVE.json:4-9,23", "proves": "4 ficheros autorizados; VenueExperienceHub.tsx fuera del lint de cierre" },
+    { "id": "E-18", "file": ".antigravity/omega.js:122-154", "proves": "complete ejecuta tsc, eslint solo sobre task.files, y task.test" }
+  ],
+  "findings": [
+    { "id": "F-01", "sev": "P0", "defect": "17 de 21 puertas no corren en CI; verify:pricing y audit:ssot quedan fuera de máquina limpia", "cost": "una imagen con precio o split alterado se publica con el run verde", "evidence": ["E-01", "E-09"], "fix_cmd": "job money-gate en .github/workflows/deploy-ghcr.yml con needs: typecheck-gate" },
+    { "id": "F-02", "sev": "P0", "defect": "production-smoke declarado en rojo por 503 de CRON_SECRET", "cost": "alarma quemada: el equipo ignora el rojo y despliega a ciegas", "evidence": ["E-11"], "fix_cmd": "node scripts/prod_smoke_intake.cjs --wait=1500 --post" },
+    { "id": "F-03", "sev": "P0", "defect": "next.config.ts:37 con ignoreBuildErrors true", "cost": "un push que salte el CI publica TypeScript roto", "evidence": ["E-12"], "fix_cmd": "npm run typecheck (en local) + typecheck-gate bloqueante en CI" },
+    { "id": "F-04", "sev": "P1", "defect": "INV-13 sin puerta: verify_sonometro_pwa.cjs sin alias npm", "cost": "rider acústico sin vigilancia (Ley 37/2003)", "evidence": ["E-05"], "fix_cmd": "node scripts/verify_sonometro_pwa.cjs" },
+    { "id": "F-05", "sev": "P1", "defect": "audit:gates (meta-gate) fuera de la cadena", "cost": "no se sabe cuántas otras puertas son huérfanas", "evidence": ["E-03"], "fix_cmd": "node scripts/audit_gate_coverage.cjs --json" },
+    { "id": "F-06", "sev": "P1", "defect": "cuatro cifras comerciales sin provenance en el panel de Eduardo", "cost": "AF-4/JUR-1: afirmación comercial no acreditable", "evidence": ["E-15"], "fix_cmd": "npm run audit:tariff-copy" },
+    { "id": "F-07", "sev": "P1", "defect": "VenueExperienceHub.tsx editado fuera de task.files y nunca linteado en el cierre", "cost": "cierre de W47_T03 con lint incompleto por diseño", "evidence": ["E-17", "E-18"], "fix_cmd": "node .antigravity/omega.js complete W47_T03_EDUARDO_PARTNER_METRICS_AND_CEO_RADAR" },
+    { "id": "F-08", "sev": "P2", "defect": "SDK Netlify y Vercel en dependencies; doctrina Next 15 frente a next ^16.3.5", "cost": "superficie CVE y doctrina desfasada respecto a disco", "evidence": ["E-13", "E-14"], "fix_cmd": "npm run build + npm run audit:residues" }
+  ],
+  "phases": [
+    { "n": 0, "name": "Devolver el oído al auditor", "blocking": true, "pass": "run_commands devuelve stdout y exit 0", "cmd": "Write-Output PROBE_OK", "why": "sin canal no hay Exit Code y por tanto todo es SIN_EVIDENCIA (EP-2)" },
+    { "n": 1, "name": "Leer el veredicto real del pipeline", "needs_terminal": false, "pass": "estado de los 4 jobs del último run de main", "cmd": "node scripts/prod_smoke_intake.cjs --wait=1500 --post", "why": "confirma o refuta F-02 sin depender de la terminal" },
+    { "n": 2, "name": "Meter el dinero en el tribunal", "pass": "money-gate verde en main con los 10 comandos en el log", "cmd": "npm run lint && npm run verify:pricing && npm run audit:ssot && npm run verify:logistics && npm run verify:budget && npm run verify:confianza && npm run audit:cta-matrix && npm run verify:provider-ctas && npm run audit:phone && npm run audit:gates", "why": "INV-01/02/04/05/09/10 pasan de promesa a hecho mecánico", "preadvice": "leer scripts/audit_ci_gate_wiring.cjs antes de tocar el YAML: es el guardián del cableado" },
+    { "n": 3, "name": "Cerrar los 3 huérfanos", "pass": "audit:gates exit 0 con 0 ORPHAN y 0 MISSING", "cmd": "node scripts/audit_gate_coverage.cjs --json", "why": "INV-13 y el meta-gate dejan de ser fachada de papel" },
+    { "n": 4, "name": "Cerrar W47_T03 sin trampa", "pass": "tsc Exit 0 + eslint Exit 0 + provenance en las 4 cifras", "cmd": "node .antigravity/omega.js complete W47_T03_EDUARDO_PARTNER_METRICS_AND_CEO_RADAR", "why": "cerrar a mano sería la fachada que el sistema persigue (WF-1)" },
+    { "n": 5, "name": "Replay del camino del dinero", "pass": "N retries con igual stripeSessionId producen 1 fila ProductionEvent", "cmd": "npm run sim:event", "needs": "npm run dev en :3007", "why": "INV-08 idempotencia" },
+    { "n": 6, "name": "Publicar la verdad", "pass": "una línea de ledger por CLAIM con quíntupla completa", "cmd": "node scripts/prod_smoke_intake.cjs --wait=1500 --post && node scripts/prod_deploy_freshness.cjs --wait=120", "why": "U13 /confianza se llena sola desde el ledger (E-06, E-07)" },
+    { "n": 7, "name": "Deuda y doctrina", "pass": "npm run build exit 0 + npm run audit:residues exit 0 + AMD-2 fechado", "cmd": "npm run build && npm run audit:residues", "why": "CHG-4 y coherencia doctrina/disco (E-13, E-14)" }
+  ],
+  "decision": {
+    "taken": "no tocar .github/workflows/deploy-ghcr.yml ni package.json sin validación previa",
+    "discarded": "escribir el patch a ciegas y dejar que el primer push rojo haga de informe",
+    "why_technical": "un gate mal cableado bloquea todo el pipeline y, sin terminal, no se puede distinguir de un fallo de código",
+    "needs_ceo": "RESUELTO 2026-11-04: el CEO eligió A+B — arnés .bat entregado y en disco; el estado de los 4 jobs del último run de main sigue pendiente de pegar"
+  },
+  "sigma_close": {
+    "task_id": "SV-PROTOCOL-2026-11-04",
+    "estado_bloque": "SOSPECHOSO",
+    "gates": { "G-0": "PASS", "G-1": "SIN_EVIDENCIA", "G-2": "SIN_EVIDENCIA", "G-3": "SIN_EVIDENCIA", "G-4": "SIN_EVIDENCIA", "G-5": "SIN_EVIDENCIA", "G-6": "SIN_EVIDENCIA", "G-7": "SIN_EVIDENCIA", "G-8": "PASS" },
+    "omega_diamante": { "score": "1/20", "pending_count": 19 },
+    "cambios": [
+      ".antigravity/reports/EAR_OS_SV_PROTOCOL_2026-11-04.md",
+      ".antigravity/reports/EAR_OS_SV_PROTOCOL_2026-11-04.json",
+      ".antigravity/skills/verify-ssot-integrity.md",
+      "VALIDAR_SV_PROTOCOL.bat",
+      "CLINE_EXECUTION_LOG.md (append-only, 1 entrada 2026-11-04T23:59+01:00)"
+    ],
+    "zero_changes_confirmed_in": ["src/", ".github/workflows/", ".antigravity/tasks_queue.json", ".antigravity/evidence/ledger.jsonl", "package.json"]
+  },
+  "reto_espejo": {
+    "criterio_mas_duro": "audit:gates devuelve exit 0 con 0 ORPHAN y 0 MISSING",
+    "comando": "node scripts/audit_gate_coverage.cjs --json"
+  },
+  "next_atomic_action": "doble clic en VALIDAR_SV_PROTOCOL.bat y dictar (o dejar que el agente lea) .antigravity/reports/gate_output.log con sus 15 EXIT_CODE; en paralelo, pegar el estado de los 4 jobs del último run de main",
+  "learning_for_ceo": "una puerta que solo existe en tu portátil no es una puerta, es una costumbre; la que vive en el pipeline es la que te protege de verdad"
+}

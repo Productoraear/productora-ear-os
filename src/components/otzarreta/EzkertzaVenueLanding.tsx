@@ -25,6 +25,7 @@ import CinematicVanguardCarousel from '@/components/sclass/CinematicVanguardCaro
 import VenueReviewsCarousel from './VenueReviewsCarousel';
 import VenueExperienceHub from './VenueExperienceHub';
 import { EzkertzaCinematicJourney } from './EzkertzaCinematicJourney';
+import { PartnerShowcaseMetricsPanel } from './PartnerShowcaseMetricsPanel';
 
 /**
  * ════════════════════════════════════════════════════════════════════════════
@@ -182,6 +183,7 @@ export function EzkertzaVenueLanding({
                         <div className="flex flex-col gap-3 w-full sm:w-auto pointer-events-auto">
                             <a
                                 href={blockHref}
+                                data-ear-track="deposit-lock"
                                 className="px-7 py-4 rounded-2xl bg-gradient-to-r from-[#ecb613] via-[#f7cb45] to-[#ecb613] text-black font-extrabold text-sm hover:brightness-110 transition-all shadow-xl shadow-[#ecb613]/25 flex items-center justify-center gap-2.5 hover:scale-[1.02] active:scale-[0.98]"
                             >
                                 <CalendarCheck className="w-5 h-5" />
@@ -346,6 +348,7 @@ export function EzkertzaVenueLanding({
                         {EZKERTZA_DERIO_VENUE.menus.map((menu) => (
                             <details
                                 key={menu.name}
+                                data-ear-track="menu-simulator"
                                 className="group rounded-2xl border border-white/10 bg-[#09090d]/80 p-5"
                             >
                                 <summary className="cursor-pointer list-none flex items-center justify-between gap-4">
@@ -409,6 +412,7 @@ export function EzkertzaVenueLanding({
                     </p>
                     <a
                         href={MAPS_SEARCH_HREF}
+                        data-ear-track="map-route"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-white/15 text-white text-xs font-semibold hover:border-[#ecb613]/50 hover:bg-white/5 transition-all duration-300 ease-out"
@@ -437,6 +441,9 @@ export function EzkertzaVenueLanding({
                 </div>
             </div>
 
+            {/* ━━━ 8bis. PANEL DE ALIANZA: ESCAPARATE SOBERANO + TELEMETRÍA (Eduardo) ━━━ */}
+            <PartnerShowcaseMetricsPanel />
+
             {/* ━━━ 9. CTA FINAL: VISITA TÉCNICA ━━━ */}
             <div className="mt-16 rounded-3xl border border-[#ecb613]/25 bg-gradient-to-r from-[#141209] via-[#0e0e14] to-[#09090d] p-8 sm:p-12 text-center space-y-6">
                 <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
@@ -450,6 +457,7 @@ export function EzkertzaVenueLanding({
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
                     <a
                         href={visitHref}
+                        data-ear-track="visit-request"
                         className="px-8 py-4 rounded-2xl bg-gradient-to-r from-[#ecb613] via-[#f7cb45] to-[#ecb613] text-black font-extrabold text-sm hover:brightness-110 transition-all shadow-xl shadow-[#ecb613]/25 hover:scale-[1.02] active:scale-[0.98] inline-flex items-center gap-2.5"
                     >
                         <CalendarCheck className="w-5 h-5" />

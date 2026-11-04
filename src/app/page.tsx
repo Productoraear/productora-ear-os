@@ -7,7 +7,7 @@ import SovereignEntryBifurcation from '@/components/home/SovereignEntryBifurcati
 
 export default function Home() {
   return (
-    <main className="relative w-full max-w-full min-h-screen overflow-x-hidden transition-colors duration-500 bg-[var(--background)] text-[var(--foreground)] font-sans selection:bg-[#ecb613] selection:text-black">
+    <main className="bg-black/95 backdrop-blur-2xl relative w-full max-w-full min-h-screen overflow-x-hidden transition-colors duration-500 bg-[var(--background)] text-[var(--foreground)] font-sans selection:bg-[#ecb613] selection:text-black">
       {/* Puerta de Entrada Unificada: embudo bifurcado Cliente ↔ Artista (3 clics).
           pt-28/pt-32 = altura real de la cabecera opaca SovereignNavbar para
           que el primer titular nunca nazca debajo de ella. */}

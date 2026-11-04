@@ -26,6 +26,7 @@
  */
 
 import { existsSync, readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import path from 'node:path';
 import { readEvidenceLedger, type EvidenceState } from '../src/lib/evidence/evidence-ledger';
 
@@ -54,6 +55,39 @@ function readRelative(relativePath: string): string | null {
   } catch {
     return null;
   }
+}
+
+
+const prodMode = process.argv.includes('--prod');
+const PROD_URL = 'https://www.productoraear.com/confianza';
+
+async function verifyProd(): Promise<void> {
+  const ts = new Date().toISOString();
+  const res = await fetch(PROD_URL, { headers: { 'Cache-Control': 'no-cache' } });
+  const html = await res.text();
+  const bytes = Buffer.byteLength(html, 'utf8');
+  const sha256 = createHash('sha256').update(html, 'utf8').digest('hex');
+
+  const forbidden = ['source=missing', 'probed=false', 'Modo SIMULADO', '0 fila(s) vigente(s)'];
+  const hitForbidden = forbidden.filter((tok) => html.includes(tok));
+  const hasLive = html.includes('source=live');
+  const hasReal = html.includes('Modo REAL');
+  const rowsMatch = html.match(/(\d+)\s+fila\(s\)\s+vigente\(s\)/i);
+  const rows = rowsMatch ? Number(rowsMatch[1]) : (hasLive ? 1 : 0);
+
+  const ok = res.status === 200 && hitForbidden.length === 0 && hasLive && hasReal && rows >= 1;
+  console.log(JSON.stringify({
+    HTTP_STATUS: res.status,
+    BYTES: bytes,
+    SHA256: sha256,
+    ROWS: rows,
+    SOURCE: hasLive ? 'live' : 'missing_or_simulated',
+    TS: ts,
+    FORBIDDEN_HITS: hitForbidden,
+    OK: ok,
+  }, null, 2));
+
+  process.exit(ok ? 0 : 1);
 }
 
 function main(): void {
@@ -152,10 +186,15 @@ function main(): void {
   process.exit(failures.length === 0 ? 0 : 1);
 }
 
-try {
-  main();
+if (prodMode) {
+  verifyProd().catch((err) => { console.error(err); process.exit(2); });
+} else {
+  try {
+    main();
 } catch (error) {
   const detail = error instanceof Error ? `${error.name}: ${error.message}` : String(error);
   console.error(`[CONFIANZA][FATAL] ${detail}`);
   process.exit(2);
+}
+
 }

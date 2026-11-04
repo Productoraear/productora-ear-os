@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
@@ -43,140 +43,53 @@ import {
 import OracleAmbientInterface from '@/components/admin/OracleAmbientInterface';
 import { AdminSessionBridge } from '@/components/admin/AdminSessionBridge';
 import { SilentPanicDetector } from '@/components/security/SilentPanicDetector';
-import { PROVIDERS_GRAND_TOTAL, formatProviderBadge } from '@/lib/constants/providers-manifest';
+import {
+  ADMIN_MASTER_TABS,
+  getAdminTabByPathname,
+  searchAdminNav,
+} from '@/lib/config/admin-navigation';
 
-const PROVIDERS_BADGE = formatProviderBadge(PROVIDERS_GRAND_TOTAL);
-
-interface SubTab {
-  id: string;
-  name: string;
-  href: string;
-  icon: React.ComponentType<{ className?: string }>;
-  badge: string;
-  description: string;
-}
-
-interface MasterTab {
-  id: string;
-  title: string;
-  shortTitle: string;
-  icon: React.ComponentType<{ className?: string }>;
-  badge: string;
-  subTabs: SubTab[];
-}
-
-const MASTER_TABS: MasterTab[] = [
-  {
-    id: 'prospeccion',
-    title: '🎯 Prospección & Leads',
-    shortTitle: 'Prospección',
-    icon: Compass,
-    badge: 'LEADS',
-    subTabs: [
-      { id: 'mailerfind', name: '🎯 Mailerfind MCP Leads', href: '/admin/mailerfind', icon: Compass, badge: 'INSTAGRAM + MAPS', description: 'Extracción orgánica de @bodasnet y Google Maps' },
-      { id: 'sclass-pro', name: '👑 Portal S-Class Pro', href: '/pro', icon: Sliders, badge: 'B2B', description: 'Portal directo de proveedores y fincas' },
-      { id: 'sourcing', name: '🔥 Scala Leads & Sourcing', href: '/admin/sourcing', icon: Flame, badge: 'RADAR', description: 'Radar de nuevos negocios y prospección' },
-      { id: 'cult-directory', name: '📁 Directorio & IA', href: '/admin/directorio', icon: Layers, badge: 'CULT UI', description: 'Directorio canónico asistido por IA' },
-      { id: 'calibrador', name: '🎛️ Calibrador Proveedores', href: '/admin/calibrador-proveedores', icon: Sliders, badge: '200D', description: 'Calibración de especificaciones técnicas' }
-    ]
-  },
-  {
-    id: 'arena',
-    title: '⚔️ Arena AI & Optimización',
-    shortTitle: 'Arena AI',
-    icon: Swords,
-    badge: 'ELO K=32',
-    subTabs: [
-      { id: 'arena-main', name: '⚔️ Arena AI Elo Torneo', href: '/admin/arena', icon: Swords, badge: 'BATALLAS', description: 'Torneo Elo de conversión de copy y diseño' },
-      { id: 'compiler', name: '⚡ Meta-Compiler DAG', href: '/admin/compiler', icon: Zap, badge: 'INTENT', description: 'Compilador semántico de intenciones' },
-      { id: 'voice', name: '🎙️ Voice Studio IA', href: '/admin/voice-studio', icon: Mic, badge: '24GB VRAM', description: 'Estudio de síntesis vocal y microfonía' },
-      { id: 'journey', name: '🧭 Journey Heatmap UX', href: '/admin/journey-heatmap', icon: Compass, badge: 'HEATMAP', description: 'Telemetría de navegación y puntos de fricción' },
-      { id: 'aura', name: '✨ Aura Showcase', href: '/aura', icon: Sparkles, badge: 'DISEÑO', description: 'Catálogo de componentes visuales S-Class' }
-    ]
-  },
-  {
-    id: 'crm',
-    title: '📞 Call Center & Red B2B',
-    shortTitle: 'Call Center',
-    icon: PhoneCall,
-    badge: 'CRM',
-    subTabs: [
-      { id: 'call-center', name: '📞 Call Center Outbound', href: '/admin/call-center', icon: PhoneCall, badge: PROVIDERS_BADGE, description: 'Despacho de llamadas y cola de prospección' },
-      { id: 'whatsapp', name: '💬 Centralita WhatsApp', href: '/admin/whatsapp', icon: MessageCircle, badge: '693 048', description: 'Recepción y cierre directo por WhatsApp' },
-      { id: 'affiliates', name: '🏰 Red Afiliados Fincas', href: '/admin/afiliados', icon: Share2, badge: 'SPLIT 80/10', description: 'Gestión de fincas homologadas y comisiones' },
-      { id: 'providers', name: '👥 Proveedores Edge CDN', href: '/admin/proveedores', icon: Users, badge: '75k CDN', description: 'Catálogo indexado de proveedores nacionales' },
-      { id: 'propuestas', name: '📑 Propuestas & Presupuestos', href: '/admin/propuestas', icon: FileText, badge: 'QUOTES', description: 'Generación de propuestas comerciales y presupuestos' },
-      { id: 'simulador', name: '🗺️ Mapa & Simulador', href: '/admin/simulador', icon: Compass, badge: 'SIMULADOR', description: 'Simulación de rutas y logística de bodas' }
-    ]
-  },
-  {
-    id: 'b2g',
-    title: '🏛️ Licitaciones & VIMUME',
-    shortTitle: 'B2G & Social',
-    icon: Landmark,
-    badge: '<14.250€',
-    subTabs: [
-      { id: 'b2g-licitaciones', name: '🏛️ B2G Contratos Menores', href: '/admin/licitaciones', icon: Landmark, badge: 'ART. 118', description: 'Licitaciones menores de festejos y cultura' },
-      { id: 'training', name: '🎓 Omni Training Center', href: '/admin/training', icon: GraduationCap, badge: 'SALES', description: 'Academia y formación de closers' },
-      { id: 'manual', name: '📖 Manual Operaciones 360', href: '/admin/manual-operaciones', icon: BookOpen, badge: 'DOCS', description: 'Documentación viva de la productora' }
-    ]
-  },
-  {
-    id: 'tesoreria',
-    title: '💳 Tesorería & Logística',
-    shortTitle: 'Tesorería',
-    icon: CreditCard,
-    badge: '100€ STRIPE',
-    subTabs: [
-      { id: 'treasury', name: '💳 Tesorería & Stripe 100€', href: '/admin/tesoreria', icon: CreditCard, badge: 'PRICE-LOCK', description: 'Cobro de fianzas y depósitos de garantía' },
-      { id: 'fleet', name: '🚚 Flota & Hub Méntrida', href: '/admin/flota', icon: Truck, badge: 'LOGÍSTICA', description: 'Vehículos y material técnico de Productora EAR' },
-      { id: 'scheduler', name: '🤖 Qronos Scheduler', href: '/admin/scheduler', icon: Calendar, badge: 'CRON', description: 'Automatización de tareas programadas' },
-      { id: 'cockpit', name: '📊 Dashboard Central', href: '/admin', icon: LayoutDashboard, badge: 'CORE', description: 'Panel principal de métricas y ventas' }
-    ]
-  },
-  {
-    id: 'telemetria',
-    title: '🛰️ Telemetría & Sentinel',
-    shortTitle: 'Gobernanza',
-    icon: Satellite,
-    badge: 'BARE-METAL',
-    subTabs: [
-      { id: 'telemetry', name: '📊 Telemetría Bare-Metal', href: '/admin/telemetria', icon: Activity, badge: 'OLLAMA', description: 'Monitorización de GPU y modelos locales' },
-      { id: 'sentinel', name: '🛰️ Consola Sentinel ZTM', href: '/admin/sentinel', icon: Satellite, badge: 'ZERO-TKN', description: 'Vigilancia de memoria y árbol de Git' },
-      { id: 'command', name: '🛡️ Centro de Mando & Skills', href: '/admin/command-center', icon: Shield, badge: 'ROOT', description: 'Auditoría de skills y directivas de gobernanza' }
-    ]
-  },
-  {
-    id: 'control',
-    title: 'Ctrl Soberano',
-    shortTitle: 'Control',
-    icon: Sliders,
-    badge: 'SEGMENTADO',
-    subTabs: [
-      { id: 'control-panel', name: 'Panel Segmentado', href: '/admin/control', icon: LayoutDashboard, badge: '6 ENTIDADES', description: 'Artistas, Proveedores, Terapeutas, Flota, Afiliados y Tesoreria' }
-    ]
-  }
-];
+// Navegación del cockpit: ÚNICA fuente en `@/lib/config/admin-navigation`.
+// Prohibido volver a declarar arrays de pestañas/módulos en este componente.
+const MASTER_TABS = ADMIN_MASTER_TABS;
 
 export default function CatminAdminMasterLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [searchOpen, setSearchOpen] = useState(false);
   const [activeTabId, setActiveTabId] = useState<string>('prospeccion');
   const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
+  const searchInputRef = useRef<HTMLInputElement | null>(null);
+
+  // Resultados del buscador: derivados del SSOT de navegación, nunca de listas paralelas.
+  const searchResults = useMemo(() => searchAdminNav(searchQuery, 8), [searchQuery]);
+
+  // Atajo REAL ⌘K / Ctrl+K (antes el placeholder prometía un atajo inexistente).
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
+        event.preventDefault();
+        searchInputRef.current?.focus();
+        setSearchOpen(true);
+        return;
+      }
+      if (event.key === 'Escape') {
+        setSearchOpen(false);
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, []);
 
   // Sincronizar automáticamente la pestaña activa según la URL actual
   useEffect(() => {
     setMobileOpen(false);
     setOpenDropdownId(null);
-
-    for (const tab of MASTER_TABS) {
-      if (tab.subTabs.some(st => st.href === pathname || (st.href !== '/admin' && pathname.startsWith(st.href)))) {
-        setActiveTabId(tab.id);
-        break;
-      }
-    }
+    setSearchOpen(false);
+    setSearchQuery('');
+    setActiveTabId(getAdminTabByPathname(pathname).id);
   }, [pathname]);
 
   const currentTab = MASTER_TABS.find(t => t.id === activeTabId) || MASTER_TABS[0];
@@ -222,16 +135,76 @@ export default function CatminAdminMasterLayout({ children }: { children: React.
 
             <div className="hidden md:block w-[1px] h-5 bg-zinc-800 mx-1" />
 
-            {/* Buscador Rápido */}
+            {/* Buscador Soberano (⌘K / Ctrl+K) — navegación real, 0 clics muertos */}
             <div className="relative hidden md:block w-56 lg:w-72">
               <Search className="w-3.5 h-3.5 text-zinc-500 absolute left-3 top-1/2 -translate-y-1/2" />
               <input
+                ref={searchInputRef}
                 type="text"
                 placeholder="Buscar herramientas... (Ctrl+K)"
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full h-8 pl-8 pr-3 text-xs font-mono bg-black/60 border border-white/10 rounded-lg text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-[#ecb613] transition-colors"
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  setSearchOpen(true);
+                }}
+                onFocus={() => setSearchOpen(true)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Escape') {
+                    setSearchOpen(false);
+                    e.currentTarget.blur();
+                  }
+                  if (e.key === 'Enter' && searchResults.length > 0) {
+                    window.location.assign(searchResults[0].href);
+                  }
+                }}
+                aria-label="Buscar módulos del cockpit EAR OS"
+                aria-expanded={searchOpen}
+                aria-controls="admin-cockpit-search-results"
+                className="w-full h-8 pl-8 pr-12 text-xs font-mono bg-black/60 border border-white/10 rounded-lg text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-[#ecb613] transition-colors"
               />
+              <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 rounded border border-white/10 px-1 text-[10px] font-mono text-zinc-500">
+                Ctrl K
+              </span>
+
+              {searchOpen && (
+                <div
+                  id="admin-cockpit-search-results"
+                  role="listbox"
+                  aria-label="Resultados del buscador del cockpit"
+                  className="absolute left-0 top-full z-50 mt-2 max-h-80 w-[22rem] overflow-y-auto rounded-xl border border-[#ecb613]/30 bg-[#09090f] p-1.5 shadow-2xl custom-scrollbar"
+                >
+                  {searchResults.length === 0 ? (
+                    <p className="px-3 py-2 text-[11px] font-mono text-zinc-500">
+                      Sin resultados. Prueba «tesorería», «licitaciones» o «proveedores».
+                    </p>
+                  ) : (
+                    searchResults.map((result) => {
+                      const ResultIcon = result.icon;
+                      return (
+                        <Link
+                          key={`${result.tabId}-${result.id}`}
+                          href={result.href}
+                          role="option"
+                          aria-selected={pathname === result.href}
+                          onClick={() => {
+                            setSearchOpen(false);
+                            setSearchQuery('');
+                          }}
+                          className="flex items-start gap-2 rounded-lg px-2 py-1.5 text-xs text-zinc-300 transition-colors hover:bg-zinc-800/80 hover:text-white"
+                        >
+                          <ResultIcon className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#ecb613]" />
+                          <span className="min-w-0 flex-1">
+                            <span className="block truncate">{result.name}</span>
+                            <span className="block truncate text-[10px] font-mono text-zinc-500">
+                              {result.tabTitle} · {result.href}
+                            </span>
+                          </span>
+                        </Link>
+                      );
+                    })
+                  )}
+                </div>
+              )}
             </div>
           </div>
 

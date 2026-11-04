@@ -1,0 +1,211 @@
+{
+  "schema": "ear-os/master-inventory/1.0",
+  "task_id": "AUDIT-EXPORT-2026-11-04",
+  "generated_at": "2026-11-04",
+  "generated_by": "Cline (obrero) — sesión AUDIT-EXPORT-2026-11-04",
+  "companion_md": ".antigravity/reports/EAR_OS_INVENTARIO_MAESTRO_2026-11-04.md",
+  "source_of_truth": "disco",
+  "executed_commands": 0,
+  "verdict_vocabulary": [
+    "VERIFICADO",
+    "SOSPECHOSO",
+    "FACHADA",
+    "SIN_EVIDENCIA"
+  ],
+  "verdict_legend": {
+    "VERIFICADO": "quintupla completa (cmd + exit 0 + url + sha256 + ts) medida en esta sesión",
+    "VERIFICADO_EN_DISCO": "fichero existe y se leyó en esta sesión; NO es EP-2 VERIFICADO porque no hubo ejecución",
+    "SOSPECHOSO": "evidencia parcial o contradictoria",
+    "FACHADA": "interfaz correcta, motor/escritura inexistente o simulado",
+    "SIN_EVIDENCIA": "no existe comando en esta sesión que lo pruebe"
+  },
+  "evidence_channel": {
+    "read_files": "OK (exit 0 en todas las lecturas)",
+    "run_commands": "MUERTO — sonda 'Write-Output PROBE_OK' no devuelve salida ni Exit Code (incidente TOOLING-CLINE-TERMINAL)",
+    "search_codebase": "MUERTO — 3 patrones, 3 timeouts a 30 s",
+    "http_probe": "NO EJECUTADO — sin terminal no hay sondeo",
+    "public_url_label": "SIN_URL_PUBLICA"
+  },
+  "evidence_index": [
+    { "id": "E1", "cmd": "read_files package.json:1-132", "exit": 0, "proves": "cadena gate:prepush con 21 pasos; existe verify:cron-secret y verify:confianza; NO existe verify:sonometro" },
+    { "id": "E2", "cmd": "read_files .antigravity/tasks_queue.json", "exit": 0, "proves": "W47_T03 status=QUEUED; _meta.total_pending=2; 5 bloques en completed[]" },
+    { "id": "E3", "cmd": "read_files .antigravity/tasks_queue.json:23-48", "exit": 0, "proves": "W47_T04 QUEUED, 4 ficheros, P1" },
+    { "id": "E4", "cmd": "read_files .antigravity/MISSION_ACTIVE.json", "exit": 0, "proves": "mision viva = W47_T03 con 4 ficheros autorizados (no incluye VenueExperienceHub.tsx)" },
+    { "id": "E5", "cmd": "read_files .antigravity/evidence/ledger.jsonl", "exit": 0, "proves": "30 CLAIMs con estado; U13 404 + 41 fallos AA; AF-1 superseded; CI-CONTRAST SOSPECHOSO" },
+    { "id": "E6", "cmd": "read_files src/lib/analytics/venue-showcase-telemetry.ts:1-266", "exit": 0, "proves": "serie de 6 semanas (:86-91), semilla SSR (:261-266), literales sin provenance (:219-223)" },
+    { "id": "E7", "cmd": "read_files src/components/otzarreta/PartnerShowcaseMetricsPanel.tsx", "exit": 0, "proves": "semilla en :43, regla wa.me en :80, Serie auditada :230, menus .length :244/:516, cuota fija :464-467" },
+    { "id": "E8", "cmd": "read_files src/components/otzarreta/EzkertzaVenueLanding.tsx", "exit": 0, "proves": "id ficha :140, prueba social :222, montaje unico del panel :445" },
+    { "id": "E9", "cmd": "read_files src/components/otzarreta/VenueExperienceHub.tsx:262-300", "exit": 0, "proves": "data-ear-track=menu-simulator en :278" },
+    { "id": "E10", "cmd": "read_files src/app/(admin)/admin/AdminDashboardClient.tsx:236-262", "exit": 0, "proves": "detailHref corregido en :250" },
+    { "id": "E11", "cmd": "read_files src/app/api/webhooks/health/route.ts:30-120", "exit": 0, "proves": "AF-1 parcheado: probed/source/mode/checkedAt :73-76, dlqScope :83, webhookSource :86" },
+    { "id": "E12", "cmd": "read_files src/app/(public)/confianza/page.tsx:1-80", "exit": 0, "proves": "U13 existe: force-static :22, readEvidenceLedger :43" },
+    { "id": "E13", "cmd": "read_files .antigravity/omega.js:1-160", "exit": 0, "proves": "complete ejecuta tsc :122-128, eslint sobre task.files :134-144, test de mision :146-154" },
+    { "id": "E14", "cmd": "read_files CLINE_EXECUTION_LOG.md (6 ventanas)", "exit": 0, "proves": "el log termina en W45_T01 (:1241-1265); no hay entradas W46 ni W47" },
+    { "id": "E15", "cmd": "read_files src/lib/constants/ear-os-ssot.ts:1-95", "exit": 0, "proves": "350 / 0.8-0.1-0.1 / 100 / 15000 / 14250 / 1.50 / 50 / 200 / 120 / 3:00 / dBA 65-102 / 75 dB / 12 W/pax / +34 693 693 048" },
+    { "id": "E16", "cmd": "read_files de los 5 ficheros ZONA CERO", "exit": 0, "proves": "todos existen; ninguno modificado en esta sesion" },
+    { "id": "E17", "cmd": "run_commands: Write-Output 'PROBE_OK'", "exit": null, "proves": "el terminal no devuelve salida ni Exit Code" },
+    { "id": "E18", "cmd": "search_codebase x3", "exit": null, "proves": "timeout en las 3 busquedas" },
+    { "id": "E19", "cmd": "read_files src/app/confianza/page.tsx", "exit": null, "proves": "ENOENT: la ruta real vive en el grupo (public)" },
+    { "id": "E20", "cmd": "read_files src/lib/constants/ezkertza-derio-venue.ts:1-60", "exit": 0, "proves": "la ficha no duplica precios: el suelo se lee de otzarreta-entity.ts (weddingPriceFromEur), :19-20" }
+  ],
+  "invariants": [
+    { "id": "INV-01", "name": "tarifa_base_solista", "value_read": "350 EUR", "gate": "npm run verify:pricing", "state": "INTACTO_POR_LECTURA", "gate_state": "SIN_EVIDENCIA" },
+    { "id": "INV-02", "name": "split_soberano", "value_read": "0.8 / 0.1 / 0.1", "gate": "npm run verify:pricing && npm run audit:ssot", "state": "INTACTO_POR_LECTURA", "gate_state": "SIN_EVIDENCIA" },
+    { "id": "INV-03", "name": "deposito_deducible", "value_read": "100 EUR", "gate": "npm run sim:event && node scripts/verify_price_lock_flow.cjs", "state": "INTACTO_POR_LECTURA", "gate_state": "SIN_EVIDENCIA" },
+    { "id": "INV-04", "name": "techo_b2g", "value_read": "14250 EUR (limite 15000, Art. 118 LCSP)", "gate": "npm run audit:ssot", "state": "INTACTO_POR_LECTURA", "gate_state": "SIN_EVIDENCIA" },
+    { "id": "INV-05", "name": "zona_cero", "value_read": "5 ficheros existen (E16); 0 modificados", "gate": "npm run audit:ssot (hash == KNOWN_GOOD)", "state": "FICHEROS_PRESENTES", "gate_state": "SIN_EVIDENCIA" },
+    { "id": "INV-10", "name": "logistica", "value_read": "1.50 EUR/km desde km 50; hotel 120 EUR si fin >= 03:00 o > 200 km", "gate": "npm run verify:logistics", "state": "INTACTO_POR_LECTURA", "gate_state": "SIN_EVIDENCIA" },
+    { "id": "INV-12", "name": "telefono_unico", "value_read": "+34 693 693 048", "gate": "npm run audit:phone", "state": "INTACTO_POR_LECTURA", "gate_state": "SIN_EVIDENCIA" },
+    { "id": "INV-13", "name": "rider_acustico", "value_read": "65-75 / 70-80 / 85-90 / 90-102 dBA; limite 75 dB SPL; 12 W/pax", "gate": "node scripts/verify_sonometro_pwa.cjs (no existe script npm)", "state": "INTACTO_POR_LECTURA", "gate_state": "SIN_EVIDENCIA" }
+  ],
+  "milestones": [
+    { "id": "GOB-V10-SIGMA", "date": "2026-10-30", "built": "contrato v10 SIGMA + ledger de evidencias + backups v2.0", "state": "VERIFICADO_EN_DISCO", "evidence": "E5 (ledger con 30 CLAIMs); CLINE_EXECUTION_LOG.md:1141-1160", "note": "los .bak de .antigravity/backups/ no se sondearon" },
+    { "id": "U13-CONFIANZA", "date": "2026-10-30", "built": "/confianza generada del ledger, estatica, sin JS de cliente", "state": "SOSPECHOSO", "evidence": "E12 (force-static :22, readEvidenceLedger :43); E19 (ruta real en grupo (public))", "note": "en produccion devolvio 404 el 2026-10-30; 41 fallos de contraste AA en el ledger" },
+    { "id": "AF-1-HEALTH-HONESTO", "date": "2026-10-30", "built": "/api/webhooks/health ejecuta pingN8nInstance siempre y declara probed/source/mode/checkedAt", "state": "SOSPECHOSO", "evidence": "E11 (:56, :73-76, :83, :86)", "note": "parche en codigo, NO servido en produccion" },
+    { "id": "CI-GATE", "date": "2026-10-30", "built": "contract-gate + typecheck-gate en runner limpio antes de build-and-push", "state": "VERIFICADO", "evidence": "CLINE_EXECUTION_LOG.md:1001-1003 (run 40970254060, commit 5c93eb164)", "note": "no re-medible en esta sesion (sin terminal ni red)" },
+    { "id": "HARVEY-OMEGA-001-002", "date": "2026-10-27", "built": "cerebro deepseek + puente solo-lectura harvey.db -> POST /api/outreach/intake; canal email OFF", "state": "VERIFICADO_EN_DISCO", "evidence": "CLINE_EXECUTION_LOG.md:44-60", "note": "activacion de email bloqueada por P2/P6" },
+    { "id": "W41_T11_T15", "date": "2026-10-29", "built": "pestanas admin: artistas, proveedores con alta homologada, afiliados; isVerified lo decide el servidor", "state": "SIN_EVIDENCIA", "evidence": "CLINE_EXECUTION_LOG.md:600-607, :751-757", "note": "no se releyeron los componentes en esta sesion" },
+    { "id": "W42_T03", "date": "2026-10-30", "built": "pSEO 255 nodos con distancia real + auditor verify_pseo_dataset_integrity 13/13", "state": "VERIFICADO", "evidence": "CLINE_EXECUTION_LOG.md:1223-1239", "note": "local OK, deploy STALE; deuda abierta P1-08 (/bodas/toledo 44 km vs 58 km)" },
+    { "id": "W44_T03", "date": "2026-11-02", "built": "Call Center + WhatsApp intake multi-canal -> webhook n8n call-center-intake", "state": "VERIFICADO_EN_DISCO", "evidence": "E2 (completed[], exit 0)", "note": "P0 abierto: intake devuelve 503 en produccion por CRON_SECRET ausente" },
+    { "id": "W45_T01", "date": "2026-11-02", "built": "budget-allocator-engine (50/15/15/10/10 en centimos) + verify_budget_allocator (10000 casos) + panel /experiencia", "state": "SOSPECHOSO", "evidence": "E16 (motor existe), E1 (verify:budget), ledger W45_T01-BUDGET-ENGINE", "note": "0/4 puertas de comando registradas" },
+    { "id": "W46_T01_T02", "date": "2026-11-02", "built": "navbar sin solapes + EzkertzaCinematicJourney + galeria object-contain sin iframes", "state": "SIN_EVIDENCIA", "evidence": "E2 (completed[]); ledger W46_T01_T02 = SIN_EVIDENCIA", "note": "sin entrada en CLINE_EXECUTION_LOG.md (D-08)" },
+    { "id": "W46_T01_P0_MOBILE_VOICE_UNLOCK", "date": "2026-10-30", "built": "desbloqueo de audio en gesto + watchdog real + verify_voice_watchdog (5 casos hostiles)", "state": "VERIFICADO", "evidence": "CLINE_EXECUTION_LOG.md:1015-1030; E1 (verify:voice dentro de gate:prepush)", "note": "no re-medido en esta sesion" },
+    { "id": "W47_T01", "date": "2026-11-02", "built": "purga del shell global: un solo shell en layout.tsx, fuera modales zombis de raton", "state": "SIN_EVIDENCIA", "evidence": "E2 (completed[], exit 0)", "note": "sin entrada en CLINE_EXECUTION_LOG.md (D-08)" },
+    { "id": "W47_T02", "date": "2026-11-03", "built": "purga de duplicados en /otzarreta: 1 hero, 1 video sin iframe, 0 fotos verticales cortadas", "state": "SIN_EVIDENCIA", "evidence": "E2 (completed[], exit 0)", "note": "sin entrada en CLINE_EXECUTION_LOG.md (D-08)" },
+    { "id": "W47_T03", "date": "2026-11-04", "built": "panel de Eduardo con fuente unica de telemetria, sensor real y cero cifras no acreditables", "state": "SOSPECHOSO", "evidence": "E6-E10 (auditoria A1-A16, ver w47_t03_audit)", "note": "codigo conforme a disco, pero cola sin cerrar y gates sin ejecutar" },
+    { "id": "W47_T04", "date": null, "built": "no iniciado: simulador universal por ficha", "state": "SIN_EVIDENCIA", "evidence": "E3 (QUEUED)", "note": "P1 conversion; despachar tras cerrar W47_T03" }
+  ],
+  "w47_t03_audit": {
+    "block_state": "SOSPECHOSO",
+    "claims": [
+      { "id": "A1", "claim": "nueva getEzkertzaVenueSnapshotSeed() para SSR sin localStorage", "claimed_ref": "telemetry:261-266", "disk_ref": "telemetry:261-266", "verdict": "CONFIRMADO" },
+      { "id": "A2", "claim": "68% / 12 fincas y 14.400-22.000 EUR/ano sustituidos por hechos", "claimed_ref": "telemetry:238-240", "disk_ref": ":238 fuga cualitativa; :240 '0 EUR de cuota fija anual: split 80/10/10'", "verdict": "CONFIRMADO" },
+      { "id": "A3", "claim": "el copy decia 6 semanas y la serie solo tiene 5 puntos; se usa .length", "claimed_ref": "telemetry:242", "disk_ref": ":242 usa .length (correcto) pero la serie tiene 6 puntos: Sem 38-43 (:86-91)", "verdict": "CODIGO_CONFIRMADO_MOTIVO_REFUTADO" },
+      { "id": "A4", "claim": "el panel importa OFFICIAL_OTZARRETA_MENUS y EZKERTZA_DERIO_VENUE", "claimed_ref": "panel:28-29", "disk_ref": "panel:28, :29", "verdict": "CONFIRMADO" },
+      { "id": "A5", "claim": "estado inicializado con la semilla SSR", "claimed_ref": "panel:39-42", "disk_ref": "panel:43 useState(() => getEzkertzaVenueSnapshotSeed())", "verdict": "DESVIO_DE_LINEA" },
+      { "id": "A6", "claim": "eliminado el early return por snapshot nulo", "claimed_ref": "panel:97-100", "disk_ref": ":99-106 calcula serie/deltaSemanal sin corte previo", "verdict": "CONFIRMADO" },
+      { "id": "A7", "claim": "nueva regla de sensor a[href*=wa.me]", "claimed_ref": "panel:78-79", "disk_ref": "panel:80 dentro de TRACK_RULES (:73-81)", "verdict": "DESVIO_DE_LINEA" },
+      { "id": "A8", "claim": "delta semanal etiquetado 'Serie auditada:'", "claimed_ref": "panel:230", "disk_ref": "panel:230", "verdict": "CONFIRMADO" },
+      { "id": "A9", "claim": "'7 menus' derivado de OFFICIAL_OTZARRETA_MENUS.length en dos sitios", "claimed_ref": "panel:244 y :516", "disk_ref": "panel:244, :516", "verdict": "CONFIRMADO" },
+      { "id": "A10", "claim": "'Ahorro Estimado' -> 'Cuota Fija Anual para el Caserio' con valor del SSOT", "claimed_ref": "panel:463-464", "disk_ref": "rotulo :464; valor snapshot.ahorroComisionesCompetenciaAnual :467", "verdict": "CONFIRMADO" },
+      { "id": "A11", "claim": "126 a mano -> snapshot.landingsPropietariasCount", "claimed_ref": "panel:488, :553, :569", "disk_ref": "usado en :489 y :570; :553-554 es el texto de los 11 km", "verdict": "CONFIRMADO_2_DE_3_DESVIO_EN_LA_TERCERA" },
+      { "id": "A12", "claim": "tarjeta de menus con suelo real y sello VERIFICADOS EN SSOT", "claimed_ref": "panel:512, :515-521", "disk_ref": "panel:511-519 (sello + menusFromEur + guestRange)", "verdict": "CONFIRMADO" },
+      { "id": "A13", "claim": "eliminado el montaje duplicado del panel en la landing; queda uno solo", "claimed_ref": "landing:222 y :448", "disk_ref": ":222 ya es PRUEBA SOCIAL; montaje unico en :445", "verdict": "CONFIRMADO_CON_DESVIO_DE_LINEA" },
+      { "id": "A14", "claim": "id=ficha-ezkertza-derio presente como gate del sensor", "claimed_ref": "landing:140", "disk_ref": "landing:140", "verdict": "CONFIRMADO" },
+      { "id": "A15", "claim": "simulador envuelto en data-ear-track=menu-simulator", "claimed_ref": "hub:275-280", "disk_ref": "hub:278 (+ comentario :275-277)", "verdict": "CONFIRMADO" },
+      { "id": "A16", "claim": "detailHref apunta a /otzarreta#panel-eduardo", "claimed_ref": "admin:250", "disk_ref": "admin:250", "verdict": "CONFIRMADO" }
+    ],
+    "arithmetic_checks": [
+      { "check": "views", "sum": "412+530+620+745+890+1042", "result": 4239, "target": "BASE_LIVE_METRICS.views (telemetry:106)", "verdict": "CUADRA" },
+      { "check": "simulator_interactions", "sum": "88+114+139+172+205+248", "result": 966, "target": "telemetry:107", "verdict": "CUADRA" },
+      { "check": "map_route_clicks", "sum": "34+49+61+78+92+116", "result": 430, "target": "telemetry:108", "verdict": "CUADRA" },
+      { "check": "deposit_lock_clicks", "sum": "2+3+5+6+8+11", "result": 35, "target": "telemetry:110", "verdict": "CUADRA" },
+      { "check": "sesiones totales", "sum": "1610+805+613+460+344", "result": 3832, "target": "EAR_OS_SESIONES_AUDITADAS_TOTAL (telemetry:222)", "verdict": "CUADRA" },
+      { "check": "porcentajes ORIGENES_TOP", "sum": "42+21+16+12+9", "result": 100, "target": "telemetry:95-99", "verdict": "CUADRA" }
+    ],
+    "verdict_reason": "16 de 16 afirmaciones se sostienen en contenido; la semilla es la suma exacta de la serie auditada. Falta el cierre (cola + gates), no el codigo."
+  },
+  "discrepancies": [
+    { "id": "D-01", "severity": "P0", "what": "W47_T03 sigue en QUEUED y MISSION_ACTIVE.json la mantiene como mision viva: omega.js complete nunca se ejecuto", "proof": "E2 (status QUEUED, total_pending 2), E4, OMEGA_STATE_JOURNAL 2026-11-03T22:26:51Z (QUEUED 2 / COMPLETED 0)", "close": "node .antigravity/omega.js complete W47_T03_EDUARDO_PARTNER_METRICS_AND_CEO_RADAR" },
+    { "id": "D-02", "severity": "P0", "what": "se editaron 5 ficheros y la mision autoriza 4: VenueExperienceHub.tsx queda fuera de task.files, y omega.js:134 solo lintea task.files", "proof": "E4 (4 rutas) vs informe del obrero (5a ruta); E13 (:134)", "close": "anadir la ruta a files antes de cerrar, o lintear el fichero a mano (C-3)" },
+    { "id": "D-03", "severity": "P1", "what": "el informe afirma que la serie tiene 5 semanas: son 6 (Sem 38-43)", "proof": "E6 (:86-91)", "close": "corregir la cita en el ledger; el codigo no se toca" },
+    { "id": "D-04", "severity": "P2", "what": "src/app/confianza/page.tsx no existe; U13 vive en src/app/(public)/confianza/page.tsx", "proof": "E19 (ENOENT) vs E12", "close": "usar siempre la ruta con grupo (public) en informes y Test-Path" },
+    { "id": "D-05", "severity": "P1", "what": "EZKERTZA_LANDINGS_TOTAL=126, 29165, 3832 y 64618 son literales sin provenance en el motor (AF-4)", "proof": "E6 (:219-223)", "close": "anadir fuente+fecha a cada constante o retirar la cifra del copy" },
+    { "id": "D-06", "severity": "P3", "what": "4 referencias ruta:linea del informe no coinciden (A5, A7, A11, A13): contenido correcto, cita desplazada", "proof": "w47_t03_audit.claims", "close": "citar por ancla (id=panel-eduardo) en lugar de por numero de linea" },
+    { "id": "D-07", "severity": "INFO", "what": "menusFromEur no se leyo en esta sesion; la ficha del venue declara que el suelo 'desde 100 EUR' se lee de otzarreta-entity.ts (weddingPriceFromEur)", "proof": "E20 (:19-20)", "close": "leer otzarreta-entity.ts antes de publicar el precio en un dossier" },
+    { "id": "D-08", "severity": "P1", "what": "5 bloques sin entrada en CLINE_EXECUTION_LOG.md (W46_T01/T02, W47_T01, W47_T02, W47_T03): el log termina en W45_T01", "proof": "E14 (log ~1265 lineas; ultima entrada :1241-1265)", "close": "append de las 5 entradas antes de la siguiente wave" }
+  ],
+  "debts": [
+    { "id": "P0-01", "severity": "P0", "title": "W47_T03 sin cerrar en la cola", "loss": "trabajo duplicado y riesgo de regresion en la landing que vende", "proof": "D-01", "close": "node .antigravity/omega.js complete W47_T03_EDUARDO_PARTNER_METRICS_AND_CEO_RADAR", "ceo_decision": false },
+    { "id": "P0-02", "severity": "P0", "title": "CRON_SECRET ausente en produccion: las rutas fail-closed devuelven 503", "loss": "leads de Call Center y WhatsApp no entran; el motor comercial mas rentable esta ciego", "proof": "CLINE_EXECUTION_LOG.md:1005, :1131; E11", "close": "definir CRON_SECRET en Coolify + POST de intake con token + npm run verify:cron-secret", "ceo_decision": true },
+    { "id": "P0-03", "severity": "P0", "title": "TOOLING-CLINE-TERMINAL: el terminal no devuelve Exit Code", "loss": "5 bloques entregados sin tsc ni eslint medidos (W45_T01, W46_T01/T02, W47_T01, W47_T02, W47_T03)", "proof": "E17; ledger TOOLING-CLINE-TERMINAL", "close": "ejecutar C-1..C-12 en terminal limpia y anotar Exit Codes en el ledger", "ceo_decision": false },
+    { "id": "P0-04", "severity": "P0", "title": "produccion sirve un build anterior al HEAD (VERDICT=STALE)", "loss": "lo auditado en local no es lo que ve el cliente; G-6 no se puede firmar", "proof": "CLINE_EXECUTION_LOG.md:1180-1191 (buildSha 3ebf5e04...); NO re-medido hoy", "close": "npm run deploy:freshness y exigir FRESH", "ceo_decision": true },
+    { "id": "P0-05", "severity": "P0", "title": "/api/omega/heartbeat declara SIN_CONFIRMAR para Ollama 127.0.0.1:11434", "loss": "AF-3 lo tipifica P0: un motor de IA sin confirmar presentado en el cuadro de mando", "proof": "ledger OMEGA-HEARTBEAT; .clinerules AF-3", "close": "sonda real a Ollama con estado OPERATIVO/CAIDO y checkedAt", "ceo_decision": false },
+    { "id": "P1-01", "severity": "P1", "title": "el parche AF-1 esta en codigo pero no en produccion", "loss": "la telemetria de n8n sigue mintiendo hasta el proximo deploy", "proof": "E11 (:73-76); ledger AF-1 superseded", "close": "deploy + GET /api/webhooks/health sin ?ping=true y comprobar source=live", "ceo_decision": true },
+    { "id": "P1-02", "severity": "P1", "title": "U13 /confianza devolvio 404 en produccion y acumula 41 fallos de contraste AA (token #71717a)", "loss": "sin pagina de pruebas todo informe al CEO lleva SIN_URL_PUBLICA (EP-3)", "proof": "E12; ledger U13", "close": "deploy + sonda 200 + npm run verify:confianza + corregir el token de contraste", "ceo_decision": true },
+    { "id": "P1-03", "severity": "P1", "title": "5 bloques sin entrada en CLINE_EXECUTION_LOG.md", "loss": "la memoria en disco tiene un agujero de 3 dias (WF-3)", "proof": "D-08", "close": "append de las 5 entradas", "ceo_decision": false },
+    { "id": "P1-04", "severity": "P1", "title": "VenueExperienceHub.tsx editado fuera de task.files", "loss": "ese fichero nunca pasa eslint en el gate de cierre", "proof": "D-02", "close": "C-3 (eslint dirigido a los 5 ficheros)", "ceo_decision": false },
+    { "id": "P1-05", "severity": "P1", "title": "cifras canonicas como literales sin provenance", "loss": "AF-4/JUR-1: una cifra que no se puede rastrear se retira del copy", "proof": "D-05", "close": "anadir fuente+fecha a cada constante", "ceo_decision": false },
+    { "id": "P1-06", "severity": "P1", "title": "W47_T04 (simulador universal por ficha) sin empezar", "loss": "el panel solo sirve para Ezkertza; el resto de fincas no convierte", "proof": "E3 (QUEUED)", "close": "despachar tras cerrar W47_T03", "ceo_decision": false },
+    { "id": "P1-07", "severity": "P1", "title": "el auditor de contraste da verde mientras el ledger registra 41 fallos reales (CI-CONTRAST)", "loss": "AF-5 verde por defecto: un gate que aprueba sin ejecutar es peor que no tenerlo", "proof": "ledger CI-CONTRAST = SOSPECHOSO", "close": "alinear el umbral del script con WCAG y volver a medir", "ceo_decision": false },
+    { "id": "P1-08", "severity": "P1", "title": "/bodas/toledo usa 44 km donde la distancia real es 58 km (afecta deliveryCostBase)", "loss": "se subestima el desplazamiento: es dinero, no copy", "proof": "CLINE_EXECUTION_LOG.md:1233-1235", "close": "sancion del CEO + npm run audit:pseo", "ceo_decision": true },
+    { "id": "P1-09", "severity": "P1", "title": "el panel arrastra EZKERTZA_DERIO_VENUE y OFFICIAL_OTZARRETA_MENUS a un chunk de cliente; tamano de bundle no medido", "loss": "INV-15 (edge < 1 MB); un import pesado en cliente castiga LCP y CLS en movil", "proof": "E7 (:28-29)", "close": "npm run build (leer first-load JS de /otzarreta) + npm run audit:residues; audit:edge NO sirve (mide particiones de proveedores, package.json:24)", "ceo_decision": false },
+    { "id": "P2-01", "severity": "P2", "title": "sitemap: apex vs www (canonical inconsistente con el 308)", "loss": "SEO partido en dos hosts", "proof": "ledger U6", "close": "fijar host canonico en una constante", "ceo_decision": false },
+    { "id": "P2-02", "severity": "P2", "title": "fallbacks inventados en landings ('Comarca Historica', '?? 35')", "loss": "AF-5: dato falso pintado como real", "proof": "CLINE_EXECUTION_LOG.md:1236-1238", "close": "degradar a null y no pintar la fila", "ceo_decision": false },
+    { "id": "P2-03", "severity": "P2", "title": "auditor de similitud acotado a 10 landings (objetivo 1000 URLs)", "loss": "riesgo de canibalizacion SEO no medido", "proof": ".clinerules seccion 13", "close": "ampliar el muestreo", "ceo_decision": false },
+    { "id": "P2-04", "severity": "P2", "title": "dlqScope=process-local en health", "loss": "la DLQ de telemetria no es global en multi-instancia", "proof": "E11 (:83)", "close": "declarar DLQ global o exponer el scope en el panel", "ceo_decision": false },
+    { "id": "P2-05", "severity": "P2", "title": "verify_budget_allocator (10000 casos) nunca ejecutado: 0/4 puertas", "loss": "el motor de presupuesto no tiene prueba de ejecucion", "proof": "ledger W45_T01-BUDGET-ENGINE", "close": "npm run verify:budget", "ceo_decision": false },
+    { "id": "P3-01", "severity": "P3", "title": "citas por numero de linea en los informes", "loss": "el revisor no encuentra el codigo citado", "proof": "D-06", "close": "citar por ancla", "ceo_decision": false }
+  ],
+  "worker_checklist": [
+    { "step": "C-1", "cmd": "npm run typecheck", "pass": "exit 0, 0 any en el diff", "closes": "G-1" },
+    { "step": "C-2", "cmd": "npm run lint", "pass": "exit 0 (lint sobre src/)", "closes": "G-2" },
+    { "step": "C-3", "cmd": "node ./node_modules/eslint/bin/eslint.js src/components/otzarreta/VenueExperienceHub.tsx src/components/otzarreta/PartnerShowcaseMetricsPanel.tsx src/components/otzarreta/EzkertzaVenueLanding.tsx \"src/app/(admin)/admin/AdminDashboardClient.tsx\" src/lib/analytics/venue-showcase-telemetry.ts", "pass": "exit 0 en los 5 ficheros", "closes": "D-02" },
+    { "step": "C-4", "cmd": "npm run audit:ssot", "pass": "exit 0 y hash == KNOWN_GOOD", "closes": "G-4 / INV-05" },
+    { "step": "C-5", "cmd": "npm run verify:pricing", "pass": "exit 0", "closes": "INV-01 / INV-02 / INV-10" },
+    { "step": "C-6", "cmd": "npm run verify:confianza", "pass": "exit 0 (ledger <-> pagina)", "closes": "U13 / EP-3" },
+    { "step": "C-7", "cmd": "npm run verify:cron-secret", "pass": "exit 0", "closes": "P0-02 (medicion)" },
+    { "step": "C-8", "cmd": "npm run sim:event", "pass": "exit 0 y 1 fila por stripeSessionId", "closes": "G-5 / INV-08" },
+    { "step": "C-9", "cmd": "npm run gate:prepush", "pass": "exit 0 (21 pasos encadenados)", "closes": "G-3" },
+    { "step": "C-10", "cmd": "npm run build", "pass": "exit 0, build < 60 s, apuntar first-load JS de /otzarreta", "closes": "P1-09 / INV-15" },
+    { "step": "C-11", "cmd": "node .antigravity/omega.js complete W47_T03_EDUARDO_PARTNER_METRICS_AND_CEO_RADAR", "pass": "exit 0 y la tarea sale de pending", "closes": "D-01 / P0-01" },
+    { "step": "C-12", "cmd": "append de 5 entradas en CLINE_EXECUTION_LOG.md", "pass": "el fichero crece, nunca se sobrescribe", "closes": "D-08 / P1-03" }
+  ],
+  "worker_order_rules": [
+    "C-12 despues de C-11: el log anota el hito verificado, no la intencion",
+    "C-10 antes de C-11 para no cerrar con un bundle roto",
+    "si cualquier comando devuelve exit != 0, se para y se reporta: no se cierra tarea"
+  ],
+  "ceo_only_decisions": [
+    { "id": "CEO-1", "decision": "distancia /bodas/toledo 44 km -> 58 km", "why": "cambia deliveryCostBase: es precio (P1-08)" },
+    { "id": "CEO-2", "decision": "definir o rotar CRON_SECRET en Coolify", "why": "secreto de produccion (SEC-3, P0-02)" },
+    { "id": "CEO-3", "decision": "autorizar la ventana de deploy", "why": "CHG-5: nada que toque dinero se despliega sin acceso al telefono del CEO (P0-04)" }
+  ],
+  "forbidden": [
+    "re-implementar W47_T03: ya esta hecho; solo falta cerrarlo (reintroduce el duplicado que W47_T02 elimino)",
+    "editar tasks_queue.json a mano (WF-1): el cierre es omega.js complete",
+    "tocar ZONA CERO o regenerar KNOWN_GOOD_SSOT_HASH sin sancion del CEO",
+    "git add -A (CHG-6)",
+    "desplegar a produccion sin C-9 y C-10 en verde si el diff toca dinero"
+  ],
+  "premortem_g8": {
+    "done_when": "cumplido en forma (2 artefactos con estado y evidencia ruta:linea); NO firmable como VERIFICADO: exige Exit Code y no hay canal (E17)",
+    "fragile_assumptions": [
+      "read_files refleja el disco en el instante de la lectura",
+      "tasks_queue.json es la unica fuente de verdad de lo pendiente",
+      "CLINE_EXECUTION_LOG.md esta completo hasta la linea 1265 y no truncado"
+    ],
+    "alternative_discarded": "editar tasks_queue.json para marcar W47_T03 cerrada: habria falsificado el registro y habria cerrado sin tsc ni eslint (los ejecuta omega.js complete). Descartado por integridad",
+    "what_breaks": "el panel importa la ficha del venue y los menus en un chunk de cliente; si engorda el bundle, el movil lo paga en LCP y CLS. Deteccion: C-10 + npm run audit:residues. NO medido hoy (P1-09)",
+    "what_i_sign": "que he auditado sin ejecutar: afirmo lo escrito en disco y NO afirmo que compile, pase lint ni este desplegado"
+  },
+  "omega_diamante": {
+    "score": "1/20",
+    "passed": [
+      "diamante-6: 0 precios hardcodeados (por lectura: los precios del panel salen de SSOT/constantes, panel:464-467 y :511-519)"
+    ],
+    "pending": [
+      "nucleo-1 tsc exit 0", "nucleo-2 eslint exit 0", "nucleo-3 0 any (sin comando)", "nucleo-4 0 verified:true falso (sin auditoria)", "nucleo-5 0 handlers huerfanos", "nucleo-6 TODOs",
+      "nucleo-8 0 secrets expuestos", "diamante-9 ISO 25010", "diamante-10 CISQ", "diamante-11 OWASP ASVS L3", "diamante-12 Lighthouse 100x4",
+      "diamante-13 CWV p75", "diamante-14 WCAG 2.2", "diamante-15 Rich Results", "diamante-16 Jaccard/TF-IDF", "diamante-17 provenance (D-05 abierto)",
+      "diamante-18 presupuesto (P1-09)", "diamante-19 idempotencia (C-8 sin ejecutar)", "diamante-20 n8n/DLQ"
+    ],
+    "note": "el score mide comandos ejecutados en disco, no calidad del codigo; si C-1, C-2, C-3 y C-10 vuelven 0, sube mecanicamente"
+  },
+  "sigma_close": {
+    "task_id": "AUDIT-EXPORT-2026-11-04",
+    "estado_bloque": "SOSPECHOSO",
+    "gates": { "G-0": "PASS", "G-1": "SIN_EVIDENCIA", "G-2": "SIN_EVIDENCIA", "G-3": "SIN_EVIDENCIA", "G-4": "SIN_EVIDENCIA", "G-5": "SIN_EVIDENCIA", "G-6": "SIN_EVIDENCIA", "G-7": "SIN_EVIDENCIA", "G-8": "PASS" },
+    "cambios": [
+      ".antigravity/reports/EAR_OS_INVENTARIO_MAESTRO_2026-11-04.md",
+      ".antigravity/reports/EAR_OS_INVENTARIO_MAESTRO_2026-11-04.json"
+    ],
+    "zero_changes_confirmed_in": ["src/", ".antigravity/tasks_queue.json", ".antigravity/evidence/ledger.jsonl", "CLINE_EXECUTION_LOG.md"]
+  },
+  "reto_espejo": {
+    "criterio_mas_duro": "si alguien sostiene que W47_T03 esta cerrada, el comando que lo refuta es: Get-Content .antigravity/tasks_queue.json | Select-String W47_T03",
+    "resultado_esperado": "\"status\": \"QUEUED\""
+  },
+  "next_atomic_action": "ejecutar C-1 (`npm run typecheck`) en una terminal limpia y pegar el Exit Code; si es 0, seguir con C-2 y C-3",
+  "learning_for_ceo": "una tarea no esta hecha cuando el codigo esta escrito, sino cuando un comando devuelve 0 y lo deja anotado; cuando U13 este desplegada se lee en https://productoraear.com/confianza"
+}

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from 'react';
+import Link from 'next/link';
 import { Sparkles, Radio, ChevronUp, ChevronDown, Send, Trash2, Bot, User, Loader2 } from 'lucide-react';
 
 interface ChatMessage {
@@ -173,6 +174,14 @@ export default function OracleAmbientInterface() {
             </div>
 
             <div className="flex items-center gap-1">
+              <Link
+                href="/admin/agentes"
+                title="Abrir el roster real de agentes de respaldo (.agents/skills)"
+                aria-label="Abrir el roster real de agentes de respaldo"
+                className="p-1.5 rounded-md hover:bg-white/5 text-zinc-400 hover:text-[#ecb613] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613]/60"
+              >
+                <Bot className="w-3.5 h-3.5" aria-hidden="true" />
+              </Link>
               {expanded && (
                 <button
                   type="button"

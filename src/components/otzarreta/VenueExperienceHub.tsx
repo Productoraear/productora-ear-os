@@ -272,8 +272,12 @@ export default function VenueExperienceHub({
                 </div>
             </div>
 
-            {/* Simulador oficial: menús + cotizador + blindaje acústico */}
-            <OtzarretaExperienceExplorer />
+            {/* Simulador oficial: menús + cotizador + blindaje acústico.
+                `data-ear-track` es el sensor del panel de telemetría del venue
+                (W47_T03): cada interacción con el simulador cuenta como menú. */}
+            <div data-ear-track="menu-simulator">
+                <OtzarretaExperienceExplorer />
+            </div>
 
             <p className="text-center text-[10px] font-mono text-gray-600">
                 TEMPERATURA DE LEAD · {audiencia.toUpperCase()} · {evento.toUpperCase()} · {menuCount} MENÚS EN SIMULADOR · FUENTE ÚNICA: FICHA DEL PROVEEDOR
