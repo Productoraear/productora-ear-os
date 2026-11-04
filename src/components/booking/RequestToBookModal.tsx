@@ -36,6 +36,11 @@ export interface RequestToBookModalProps {
 interface FormState {
   eventDate: string;
   eventLocation: string;
+  eventStartTime: string;
+  eventDuration: string;
+  eventType: string;
+  venueAddress: string;
+  venueCity: string;
   guests: string;
   budgetEur: string;
   clientName: string;
@@ -49,6 +54,11 @@ interface BookingRequestPayload {
   category: string;
   eventDate: string;
   eventLocation: string;
+  startTime: string;
+  durationHours: number;
+  eventType: string;
+  venueAddress: string;
+  city: string;
   guests: number;
   budgetEur: number;
   clientName: string;
@@ -81,6 +91,11 @@ const WHATSAPP_E164 = CENTRALITA_EAR_OS.replace(/\D/g, '');
 const FORM_FIELDS: readonly (keyof FormState)[] = [
   'eventDate',
   'eventLocation',
+  'eventStartTime',
+  'eventDuration',
+  'eventType',
+  'venueAddress',
+  'venueCity',
   'guests',
   'budgetEur',
   'clientName',
@@ -94,12 +109,29 @@ const FIELD_ERROR_MESSAGES: Record<string, string> = {
   category: 'La categoría del servicio no es válida.',
   eventDate: 'La fecha del evento no es válida o no es futura.',
   eventLocation: 'La ubicación del evento es obligatoria.',
+  eventStartTime: 'Indica la hora de inicio del servicio.',
+  eventDuration: 'Indica una duración entre 1 y 12 horas.',
+  eventType: 'Selecciona el tipo de evento.',
+  venueAddress: 'Indica la dirección exacta (calle y número).',
+  venueCity: 'Indica el municipio del evento.',
   guests: `El aforo debe estar entre ${MIN_GUESTS} y ${MAX_GUESTS} invitados.`,
   budgetEur: 'El presupuesto debe ser un importe mayor que 0.',
   clientName: 'El nombre del cliente es obligatorio.',
   clientPhone: 'El teléfono debe tener entre 9 y 15 dígitos (opcional +).',
   notes: 'Las notas contienen caracteres no permitidos.',
 };
+
+/** Tipos de evento que el proveedor necesita conocer antes de aceptar. */
+const EVENT_TYPES: readonly string[] = [
+  'Boda',
+  'Cumpleaños',
+  'Aniversario',
+  'Bautizo / Comunión',
+  'Evento de empresa',
+  'Homenaje',
+  'Fiesta popular',
+  'Otro',
+] as const;
 
 // ─── Utilidades puras ─────────────────────────────────────────────────────────
 
@@ -120,6 +152,11 @@ function buildInitialForm(defaultBudget?: number, location?: string): FormState 
   return {
     eventDate: '',
     eventLocation: location ?? '',
+    eventStartTime: '',
+    eventDuration: '',
+    eventType: '',
+    venueAddress: '',
+    venueCity: '',
     guests: '',
     budgetEur: defaultBudget !== undefined ? String(defaultBudget) : '',
     clientName: '',
@@ -148,6 +185,31 @@ function validateForm(form: FormState): FieldErrors {
 
   if (!form.eventLocation.trim()) {
     errors.eventLocation = 'Indica la ubicación del evento.';
+  }
+
+  if (!form.eventStartTime) {
+    errors.eventStartTime = 'Indica la hora de inicio del servicio.';
+  }
+
+  const duration = Number(form.eventDuration);
+  if (!Number.isFinite(duration) || duration < 1 || duration > 12) {
+    errors.eventDuration = 'Indica una duración entre 1 y 12 horas.';
+  }
+
+  if (!form.eventType.trim()) {
+    errors.eventType = 'Selecciona el tipo de evento.';
+  }
+
+  if (!form.venueAddress.trim()) {
+    errors.venueAddress = 'Indica la dirección exacta (calle y número).';
+  } else if (hasAngleBrackets(form.venueAddress)) {
+    errors.venueAddress = 'La dirección contiene caracteres no permitidos.';
+  }
+
+  if (!form.venueCity.trim()) {
+    errors.venueCity = 'Indica el municipio del evento.';
+  } else if (hasAngleBrackets(form.venueCity)) {
+    errors.venueCity = 'El municipio contiene caracteres no permitidos.';
   }
 
   const guests = Number(form.guests);
@@ -327,6 +389,11 @@ export function RequestToBookModal({
       category,
       eventDate: new Date(`${form.eventDate}T12:00:00`).toISOString(),
       eventLocation: form.eventLocation.trim(),
+      startTime: form.eventStartTime,
+      durationHours: Number(form.eventDuration),
+      eventType: form.eventType.trim(),
+      venueAddress: form.venueAddress.trim(),
+      city: form.venueCity.trim(),
       guests: Number(form.guests),
       budgetEur: Number(form.budgetEur),
       clientName: form.clientName.trim(),
@@ -585,6 +652,115 @@ export function RequestToBookModal({
                 />
                 {fieldErrors.eventLocation && (
                   <p id="booking-event-location-error" className="mt-1.5 text-[11px] text-[#FF6B7D]">{fieldErrors.eventLocation}</p>
+                )}
+              </div>
+
+              <div>
+                <label htmlFor="booking-start-time" className="flex items-center gap-2 text-xs font-mono uppercase text-white/60 mb-1.5">
+                  <Clock size={13} className="text-[#ecb613]" aria-hidden="true" /> Hora de Inicio
+                </label>
+                <input
+                  id="booking-start-time"
+                  type="time"
+                  value={form.eventStartTime}
+                  onChange={(e) => updateField('eventStartTime', e.target.value)}
+                  aria-label="Hora de inicio del servicio"
+                  aria-invalid={Boolean(fieldErrors.eventStartTime)}
+                  aria-describedby={fieldErrors.eventStartTime ? 'booking-start-time-error' : undefined}
+                  className={inputClass(Boolean(fieldErrors.eventStartTime))}
+                />
+                {fieldErrors.eventStartTime && (
+                  <p id="booking-start-time-error" className="mt-1.5 text-[11px] text-[#FF6B7D]">{fieldErrors.eventStartTime}</p>
+                )}
+              </div>
+
+              <div>
+                <label htmlFor="booking-duration" className="flex items-center gap-2 text-xs font-mono uppercase text-white/60 mb-1.5">
+                  <Clock size={13} className="text-[#ecb613]" aria-hidden="true" /> Duración (Horas)
+                </label>
+                <input
+                  id="booking-duration"
+                  type="number"
+                  inputMode="decimal"
+                  min={1}
+                  max={12}
+                  step={0.5}
+                  value={form.eventDuration}
+                  onChange={(e) => updateField('eventDuration', e.target.value)}
+                  placeholder="Ej. 3"
+                  aria-label="Duración del servicio en horas"
+                  aria-invalid={Boolean(fieldErrors.eventDuration)}
+                  aria-describedby={fieldErrors.eventDuration ? 'booking-duration-error' : undefined}
+                  className={inputClass(Boolean(fieldErrors.eventDuration))}
+                />
+                {fieldErrors.eventDuration && (
+                  <p id="booking-duration-error" className="mt-1.5 text-[11px] text-[#FF6B7D]">{fieldErrors.eventDuration}</p>
+                )}
+              </div>
+
+              <div>
+                <label htmlFor="booking-event-type" className="flex items-center gap-2 text-xs font-mono uppercase text-white/60 mb-1.5">
+                  <Calendar size={13} className="text-[#ecb613]" aria-hidden="true" /> Tipo de Evento
+                </label>
+                <select
+                  id="booking-event-type"
+                  value={form.eventType}
+                  onChange={(e) => updateField('eventType', e.target.value)}
+                  aria-label="Tipo de evento"
+                  aria-invalid={Boolean(fieldErrors.eventType)}
+                  aria-describedby={fieldErrors.eventType ? 'booking-event-type-error' : undefined}
+                  className={inputClass(Boolean(fieldErrors.eventType))}
+                >
+                  <option value="">Selecciona…</option>
+                  {EVENT_TYPES.map((type) => (
+                    <option key={type} value={type}>
+                      {type}
+                    </option>
+                  ))}
+                </select>
+                {fieldErrors.eventType && (
+                  <p id="booking-event-type-error" className="mt-1.5 text-[11px] text-[#FF6B7D]">{fieldErrors.eventType}</p>
+                )}
+              </div>
+
+              <div>
+                <label htmlFor="booking-venue-city" className="flex items-center gap-2 text-xs font-mono uppercase text-white/60 mb-1.5">
+                  <MapPin size={13} className="text-[#ecb613]" aria-hidden="true" /> Municipio
+                </label>
+                <input
+                  id="booking-venue-city"
+                  type="text"
+                  value={form.venueCity}
+                  onChange={(e) => updateField('venueCity', e.target.value)}
+                  placeholder="Ej. Navalcarnero"
+                  aria-label="Municipio del evento"
+                  aria-invalid={Boolean(fieldErrors.venueCity)}
+                  aria-describedby={fieldErrors.venueCity ? 'booking-venue-city-error' : undefined}
+                  className={inputClass(Boolean(fieldErrors.venueCity))}
+                />
+                {fieldErrors.venueCity && (
+                  <p id="booking-venue-city-error" className="mt-1.5 text-[11px] text-[#FF6B7D]">{fieldErrors.venueCity}</p>
+                )}
+              </div>
+
+              <div className="sm:col-span-2">
+                <label htmlFor="booking-venue-address" className="flex items-center gap-2 text-xs font-mono uppercase text-white/60 mb-1.5">
+                  <MapPin size={13} className="text-[#ecb613]" aria-hidden="true" /> Dirección Exacta
+                </label>
+                <input
+                  id="booking-venue-address"
+                  type="text"
+                  autoComplete="street-address"
+                  value={form.venueAddress}
+                  onChange={(e) => updateField('venueAddress', e.target.value)}
+                  placeholder="Calle, número, código postal, punto de acceso"
+                  aria-label="Dirección exacta del evento"
+                  aria-invalid={Boolean(fieldErrors.venueAddress)}
+                  aria-describedby={fieldErrors.venueAddress ? 'booking-venue-address-error' : undefined}
+                  className={inputClass(Boolean(fieldErrors.venueAddress))}
+                />
+                {fieldErrors.venueAddress && (
+                  <p id="booking-venue-address-error" className="mt-1.5 text-[11px] text-[#FF6B7D]">{fieldErrors.venueAddress}</p>
                 )}
               </div>
 

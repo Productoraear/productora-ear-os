@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
 import path from 'path';
 import { fireAndForgetN8n } from '@/lib/services/n8n-dispatcher';
+import { buildProviderPing, buildProviderWhatsappUrl } from '@/lib/booking/provider-service-brief';
 
 /**
  * POST /api/booking/notify-provider
@@ -13,7 +14,6 @@ export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 const CENTRALITA_EAR_OS = '+34693693048';
-const CENTRALITA_DIGITS = '34693693048';
 const PROVIDERS_DIR = path.join(process.cwd(), 'public', 'data', 'providers');
 const MAX_FIELD_LENGTH = 200;
 
@@ -26,6 +26,22 @@ interface NotifyProviderBody {
     eventDate: string;
     budget: number;
     location: string;
+    /* ── Datos operativos opcionales (los que trae la ficha del cliente) ── */
+    reference?: string;
+    startTime?: string;
+    durationHours?: number;
+    eventType?: string;
+    eventPurpose?: string;
+    venueName?: string;
+    venueAddress?: string;
+    city?: string;
+    province?: string;
+    guests?: number;
+    childrenCount?: number;
+    serviceFormat?: string;
+    riderNotes?: string;
+    parkingNotes?: string;
+    setupMinutes?: number;
 }
 
 interface ProviderPhoneLookup {
@@ -67,12 +83,6 @@ function isRealPhone(raw: string): boolean {
     const digits = digitsOnly(raw);
     if (digits.length < 9 || digits.length > 15) return false;
     return !digits.endsWith('693693048');
-}
-
-function toWhatsappDigits(raw: string): string {
-    const digits = digitsOnly(raw);
-    if (digits.length === 9) return `34${digits}`;
-    return digits;
 }
 
 function extractPhone(record: JsonRecord): string | null {
@@ -151,6 +161,21 @@ function validateBody(input: unknown): { ok: true; body: NotifyProviderBody } | 
     if (digitsOnly(cleaned.clientPhone).length < 9) {
         return { ok: false, status: 422, error: 'El campo clientPhone no es un teléfono válido.' };
     }
+    const optText = (field: string): string | undefined => {
+        const value = input[field];
+        if (typeof value !== 'string') return undefined;
+        const sanitized = sanitizeText(value);
+        return sanitized.length > 0 ? sanitized : undefined;
+    };
+    const optNumber = (field: string): number | undefined => {
+        const value = input[field];
+        if (typeof value === 'number' && Number.isFinite(value)) return value;
+        if (typeof value === 'string' && /^\d{1,6}(?:[.,]\d{1,2})?$/.test(value)) {
+            return Number(value.replace(',', '.'));
+        }
+        return undefined;
+    };
+
     return {
         ok: true,
         body: {
@@ -161,18 +186,72 @@ function validateBody(input: unknown): { ok: true; body: NotifyProviderBody } | 
             clientPhone: cleaned.clientPhone,
             eventDate: cleaned.eventDate,
             budget,
-            location: cleaned.location
+            location: cleaned.location,
+            reference: optText('reference'),
+            startTime: optText('startTime'),
+            durationHours: optNumber('durationHours'),
+            eventType: optText('eventType'),
+            eventPurpose: optText('eventPurpose'),
+            venueName: optText('venueName'),
+            venueAddress: optText('venueAddress'),
+            city: optText('city'),
+            province: optText('province'),
+            guests: optNumber('guests'),
+            childrenCount: optNumber('childrenCount'),
+            serviceFormat: optText('serviceFormat'),
+            riderNotes: optText('riderNotes'),
+            parkingNotes: optText('parkingNotes'),
+            setupMinutes: optNumber('setupMinutes'),
         }
     };
 }
 
-function buildWhatsappUrl(phone: string, body: NotifyProviderBody): string {
-    const text =
-        `¡Hola ${body.providerName}! Tienes una solicitud de reserva prioritaria en Productora EAR ` +
-        `para el ${body.eventDate} en ${body.location}. Presupuesto: ${body.budget}€. ` +
-        `Responde para aceptar el bolo y recibir el depósito de fianza garantizado.`;
-    const target = toWhatsappDigits(phone) || CENTRALITA_DIGITS;
-    return `https://wa.me/${target}?text=${encodeURIComponent(text)}`;
+/**
+ * El aviso al proveedor deja de ser un anuncio y pasa a ser la ficha operativa
+ * mínima (cuándo · dónde · qué · quién · invitados · dinero · su único paso)
+ * con los huecos declarados como huecos. Cero bonos, cero garantías, cero
+ * promesas que no estén cobradas (§EP-3 · JUR-1 · AF-2).
+ */
+function buildPing(phone: string, body: NotifyProviderBody): {
+    whatsappUrl: string;
+    text: string;
+    missing: readonly string[];
+    respondBefore: string;
+} {
+    const ping = buildProviderPing({
+        ficha: {
+            requestId: body.requestId,
+            reference: body.reference,
+            provider: { id: body.providerId, name: body.providerName, phone },
+            clientName: body.clientName,
+            clientPhone: body.clientPhone,
+            eventType: body.eventType,
+            eventPurpose: body.eventPurpose,
+            eventDate: body.eventDate,
+            startTime: body.startTime,
+            durationHours: body.durationHours,
+            venueName: body.venueName,
+            venueAddress: body.venueAddress,
+            city: body.city ?? body.location,
+            province: body.province,
+            guests: body.guests,
+            childrenCount: body.childrenCount,
+            serviceFormat: body.serviceFormat,
+            riderNotes: body.riderNotes,
+            parkingNotes: body.parkingNotes,
+        },
+        requestedAt: new Date().toISOString(),
+        totalEur: body.budget,
+        setupMinutes: body.setupMinutes,
+        respondWithinMinutes: 120,
+    });
+
+    return {
+        whatsappUrl: buildProviderWhatsappUrl(phone, ping.text),
+        text: ping.text,
+        missing: ping.missing,
+        respondBefore: ping.respondBefore,
+    };
 }
 
 export async function POST(request: Request): Promise<NextResponse> {
@@ -189,11 +268,12 @@ export async function POST(request: Request): Promise<NextResponse> {
         }
         const body = validation.body;
         const lookup = await lookupProviderPhone(body.providerId);
-        const whatsappUrl = buildWhatsappUrl(lookup.phone, body);
+        const ping = buildPing(lookup.phone, body);
         const dispatchedAt = new Date().toISOString();
 
         fireAndForgetN8n('call-center-intake', {
             source: 'notify-provider',
+            kind: 'provider_ping',
             requestId: body.requestId,
             providerId: body.providerId,
             providerName: body.providerName,
@@ -203,11 +283,25 @@ export async function POST(request: Request): Promise<NextResponse> {
             eventDate: body.eventDate,
             budget: body.budget,
             location: body.location,
-            whatsappUrl,
+            pingChars: ping.text.length,
+            missingCount: ping.missing.length,
+            respondBefore: ping.respondBefore,
+            whatsappUrl: ping.whatsappUrl,
             dispatchedAt
         });
 
-        return NextResponse.json({ success: true, requestId: body.requestId, whatsappUrl, dispatchedAt }, { status: 200 });
+        return NextResponse.json(
+            {
+                success: true,
+                requestId: body.requestId,
+                whatsappUrl: ping.whatsappUrl,
+                briefText: ping.text,
+                missing: ping.missing,
+                respondBefore: ping.respondBefore,
+                dispatchedAt
+            },
+            { status: 200 }
+        );
     } catch (reason) {
         console.error('[notify-provider] Error interno:', reason instanceof Error ? reason.message : String(reason));
         return NextResponse.json({ success: false, error: 'Error interno al notificar al proveedor.' }, { status: 500 });

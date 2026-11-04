@@ -73,7 +73,7 @@
     "verify:cron-secret": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_cron_secret_guard.ts",
     "probe:cron": "node scripts/cron_secret_probe.cjs",
     "deploy:freshness": "node scripts/prod_deploy_freshness.cjs",
-    "gate:prepush": "node scripts/audit_orphan_imports.cjs && npm run audit:http && npm run audit:routes && npm run audit:cta-matrix && npm run verify:provider-ctas && npm run audit:phone && npm run audit:edge && npm run verify:pricing && npm run verify:logistics && npm run verify:context && npm run verify:leadgate && npm run audit:ssot && npm run lint && npm run audit:contrast:core && npm run typecheck:landings && node ./node_modules/typescript/bin/tsc --noEmit && npm run audit:admin && npm run audit:ci-gate && npm run verify:voice && npm run verify:cron-secret && npm run verify:confianza && npm run audit:tariff-copy && npm run audit:residues && node scripts/verify_sonometro_pwa.cjs && node scripts/verify_price_lock_flow.cjs && npm run audit:admin-ecosystem",
+    "gate:prepush": "node scripts/audit_orphan_imports.cjs && npm run audit:http && npm run audit:routes && npm run audit:cta-matrix && npm run verify:provider-ctas && npm run audit:phone && npm run audit:edge && npm run verify:pricing && npm run verify:logistics && npm run verify:context && npm run verify:leadgate && npm run audit:ssot && npm run lint && npm run audit:contrast:core && npm run typecheck:landings && node ./node_modules/typescript/bin/tsc --noEmit && npm run audit:admin && npm run audit:ci-gate && npm run verify:voice && npm run verify:cron-secret && npm run verify:confianza && npm run audit:tariff-copy && npm run audit:residues && node scripts/verify_sonometro_pwa.cjs && node scripts/verify_price_lock_flow.cjs && npm run verify:master-guide && npm run audit:admin-ecosystem",
     "sim:event": "node scripts/simulate_100_services_event.mjs",
     "audit:webgl": "node scripts/audit_webgl_friction.cjs",
     "audit:webgl:strict": "node scripts/audit_webgl_friction.cjs --strict",
@@ -102,8 +102,10 @@
     "prepush": "npm run gate:prepush",
     "verify:intent-70-30": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_intent_70_30_engine.ts",
     "verify:db-failure": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_db_failure_classifier.ts",
+    "verify:master-guide": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_master_guide.ts",
     "verify:sonometro": "node scripts/verify_sonometro_pwa.cjs",
     "verify:price-lock-flow": "node scripts/verify_price_lock_flow.cjs",
+    "verify:provider-brief": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_provider_service_brief.ts",
     "verify:confianza:prod": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_trust_ledger.ts --prod"
   },
   "dependencies": {

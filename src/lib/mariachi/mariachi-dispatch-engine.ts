@@ -1,11 +1,11 @@
 /**
- * EAR OS V2 — Motor Centralita "Uber del Mariachi 24/7" (Edwin Agudelo & Productora EAR)
+ * EAR OS V2 — Motor de Despacho Directo 24/7 (Edwin Agudelo & Productora EAR)
  * -----------------------------------------------------------------------------------
  * Sistema de despacho instantáneo y cotización dinámica para Mariachis en toda España:
  * - Formatos: Solista (Edwin Agudelo 350€), Dúo, Trío, Cuarteto, Quinteto, Mariachi Imperial.
- * - Centralita 24/7: Serenatas express de última hora, bodas y eventos corporativos.
+ * - Conserjería 24/7: Serenatas express, bodas y eventos corporativos.
  * - Split Soberano: 80% Artistas / 10% Productora EAR / 10% Fondo VIMUME.
- * - Blindaje Criptográfico: Price-Lock SHA-256 y depósito Stripe de 100 €.
+ * - Blindaje Criptográfico: Price-Lock SHA-256 y depósito Stripe de 100 € (100% deducible).
  */
 
 import { createHash } from 'crypto';
@@ -33,12 +33,12 @@ export const RECARGO_URGENCIA_24_7 = 120; // Serenatas con aviso < 3 horas o noc
 /* Tipos e Interfaces                                                 */
 /* ------------------------------------------------------------------ */
 
-export type MariachiFormat = 
-  | 'solista_edwin' 
-  | 'duo_acustico' 
-  | 'trio_clasico' 
-  | 'cuarteto_tradicional' 
-  | 'quinteto_gala' 
+export type MariachiFormat =
+  | 'solista_edwin'
+  | 'duo_acustico'
+  | 'trio_clasico'
+  | 'cuarteto_tradicional'
+  | 'quinteto_gala'
   | 'mariachi_imperial';
 
 export type ServiceUrgency = 'estandar' | 'express_hoy' | 'urgencia_nocturna_24_7';
@@ -51,6 +51,12 @@ export interface MariachiOrderInput {
   distanceKm: number;
   clientPhone: string;
   specialSongRequest?: string;
+  eventDate?: string;
+  startTime?: string;
+  durationHours?: number;
+  venueName?: string;
+  pax?: number;
+  clientName?: string;
 }
 
 export interface MariachiDispatchResult {
@@ -79,8 +85,8 @@ export function calculateMariachiDispatch(input: MariachiOrderInput): MariachiDi
   // Logística canónica SSOT: franquicia de 50 km desde Méntrida + hotel si procede.
   const logistics = computeSovereignLogistics(input.distanceKm);
   const travelCost = logistics.totalLogistics;
-  const urgencyFee = (input.urgency === 'express_hoy' || input.urgency === 'urgencia_nocturna_24_7') 
-    ? RECARGO_URGENCIA_24_7 
+  const urgencyFee = (input.urgency === 'express_hoy' || input.urgency === 'urgencia_nocturna_24_7')
+    ? RECARGO_URGENCIA_24_7
     : 0;
 
   const totalPriceEur = basePrice + travelCost + urgencyFee;
@@ -91,13 +97,12 @@ export function calculateMariachiDispatch(input: MariachiOrderInput): MariachiDi
   const earOs10 = Math.round(totalPriceEur * 0.1);
   const vimume10 = totalPriceEur - musicians80 - earOs10;
 
-  // Generación de Hash Price-Lock SHA-256
-  const payloadToHash = `MARIACHI_UBER|${input.format}|${logistics.distanceKm}|${totalPriceEur}|${depositAmountEur}|${input.urgency}`;
+  // Generación de Hash Price-Lock SHA-256 (0 marcas de terceros)
+  const payloadToHash = `MARIACHI_DISPATCH|${input.format}|${logistics.distanceKm}|${totalPriceEur}|${depositAmountEur}|${input.urgency}`;
   const priceLockHash = createHash('sha256').update(payloadToHash).digest('hex');
 
   const orderId = `EAR-MCH-${Date.now().toString(36).toUpperCase()}-${priceLockHash.substring(0, 6).toUpperCase()}`;
 
-  // Estimación de llegada para el "Uber del Mariachi"
   let estimatedArrivalMinutes = 45;
   if (input.distanceKm > 30) estimatedArrivalMinutes = 60 + Math.round(input.distanceKm * 0.8);
 
@@ -110,32 +115,60 @@ export function calculateMariachiDispatch(input: MariachiOrderInput): MariachiDi
     mariachi_imperial: 'Gran Mariachi Imperial (Orquesta Completa)',
   };
 
-  const formatName = formatLabels[input.format];
+  const serviceLabels: Record<MariachiOrderInput['serviceType'], string> = {
+    serenata_domicilio: 'Serenata a domicilio',
+    boda_nupcial: 'Boda · Ceremonia / Cóctel',
+    cumpleanos_sorpresa: 'Aniversario / Celebración privada',
+    fiesta_patronal: 'Evento / Festejo popular',
+  };
 
-  // Redacción del WhatsApp de Cierre Inmediato 24/7
+  const formatName = formatLabels[input.format];
+  const serviceLabel = serviceLabels[input.serviceType];
+  const paxCount = input.pax && input.pax > 0 ? input.pax : 80;
+  const wattsRequired = paxCount * 12;
+  const dateLabel = input.eventDate ? input.eventDate : 'Pendiente de confirmar fecha exacta';
+  const timeLabel = input.startTime ? `Inicio ${input.startTime}` : 'Horario a concretar en ficha';
+  const venueLabel = input.venueName ? `${input.venueName} · ${input.locationCity}` : input.locationCity;
+  const clientLabel = input.clientName ? `${input.clientName} · ${input.clientPhone}` : input.clientPhone;
+  const riderNote = input.specialSongRequest ? input.specialSongRequest : 'Repertorio de gala según ficha del evento';
+
+  // Ficha Operativa de 8 Bloques (Cero paja comercial, precisión milimétrica, ventana de 2h)
   const whatsappConfirmationCopy = [
-    '🎺 *CENTRALITA UBER DEL MARIACHI 24/7 — PRODUCTORA EAR*',
-    `*Referencia:* \`${orderId}\``,
+    `📋 *FICHA DE SERVICIO · ${orderId}*`,
+    `⏳ *ESTADO:* Pendiente de depósito (${depositAmountEur},00 € deducibles · ventana máxima 2 h para firma de contrato)`,
     '',
-    `¡Hola! Hemos recibido tu solicitud para *${formatName}* en *${input.locationCity}*.`,
+    '*1 · CUÁNDO*',
+    `${dateLabel} · ${timeLabel}`,
+    'Montaje: 60 min antes del inicio',
     '',
-    '💰 *Cotización Oficial y Transparente (Price-Lock Certificado):*',
-    `• Formato seleccionado: ${basePrice} €`,
-    `• Desplazamiento (${input.distanceKm} km): ${travelCost} €`,
-    urgencyFee > 0 ? `• Suplemento Despacho Express 24/7: ${urgencyFee} €` : '',
-    '──────────────────────────────',
-    `*TOTAL SERVICIO: ${totalPriceEur} €*`,
-    `• *Depósito de Bloqueo Inmediato (Stripe):* ${depositAmountEur} € (Reembolsable)`,
-    `• *Restante a abonar a la llegada del Mariachi:* ${remainingOnArrivalEur} €`,
+    '*2 · DÓNDE*',
+    `${venueLabel} (${input.distanceKm} km desde base)`,
     '',
-    '⏱️ *Tiempo estimado de llegada del equipo:* ' + estimatedArrivalMinutes + ' minutos.',
-    '🛡️ *Garantía de Puntualidad y Ropa de Gala Homologada 0 Fallos.*',
-    '🎁 *Bono Activado:* Bono EDWIN150-COMPLEMENTOS aplicable suscribiéndote a nuestro canal de YouTube.',
+    '*3 · QUÉ Y PARA QUÉ*',
+    `${serviceLabel}`,
+    `Formato contratado: ${formatName}`,
     '',
-    '📲 *Para confirmar el despacho y bloquear la agenda, realiza el depósito de 100 € aquí:*',
-    `https://productoraear.com/api/payments/checkout?ref=${orderId}&hash=${priceLockHash}`,
+    '*4 · QUIÉN SOLICITA*',
+    `${clientLabel}`,
     '',
-    'Centralita 24h: +34 693 693 048 | Edwin Agudelo'
+    '*5 · INVITADOS Y PRESIÓN SONORA*',
+    `${paxCount} invitados estimados · ${wattsRequired} W (12 W/pax) · límite < 75 dB SPL (Ley 37/2003)`,
+    '',
+    '*6 · RIDER Y NECESIDADES*',
+    `${riderNote}`,
+    '',
+    '*7 · DESGLOSE ECONÓMICO (SSOT)*',
+    `• Tarifa base formato: ${basePrice},00 €`,
+    `• Logística (${input.distanceKm} km): ${travelCost},00 €`,
+    urgencyFee > 0 ? `• Suplemento nocturnidad/urgencia: ${urgencyFee},00 €` : '',
+    `• *TOTAL SERVICIO: ${totalPriceEur},00 €*`,
+    `• Depósito Stripe Price-Lock (100% deducible): ${depositAmountEur},00 €`,
+    `• Liquidación restante en el evento: ${remainingOnArrivalEur},00 €`,
+    '',
+    '*8 · PASO ÚNICO DE BLOQUEO Y CONTRATO*',
+    'El contrato firmado del proveedor se emite automáticamente al validar el depósito dentro de las próximas 2 h:',
+    `https://www.productoraear.com/reservar/solista?ref=${orderId}&hash=${priceLockHash.substring(0, 16)}`,
+    'Conserjería Oficial 24/7: +34 693 693 048'
   ].filter(Boolean).join('\n');
 
   return {
@@ -161,9 +194,6 @@ export function calculateMariachiDispatch(input: MariachiOrderInput): MariachiDi
 /* ------------------------------------------------------------------ */
 
 export function runMariachiDispatchDiagnostics(): boolean {
-  console.log('[MARIACHI-DISPATCH] Iniciando diagnóstico de la Centralita 24/7...');
-
-  // Caso 1: Serenata Express de madrugada en Madrid (Dúo a 15 km con urgencia nocturna)
   const case1 = calculateMariachiDispatch({
     format: 'duo_acustico',
     serviceType: 'serenata_domicilio',
@@ -173,11 +203,9 @@ export function runMariachiDispatchDiagnostics(): boolean {
     clientPhone: '+34600000000',
   });
 
-  const expectedTotalCase1 = 480 + computeSovereignLogistics(15).totalLogistics + 120; // 480 + franquicia + 120
+  const expectedTotalCase1 = 480 + computeSovereignLogistics(15).totalLogistics + 120;
   const case1Valid = case1.totalPriceEur === expectedTotalCase1 && case1.isImmediateDispatch;
-  console.log(`[MARIACHI-DISPATCH] Caso 1 (Serenata Express 24/7): ${case1Valid ? 'PASS ✔' : 'FAIL ✘'} (Total: ${case1.totalPriceEur}€)`);
 
-  // Caso 2: Boda Mariachi Imperial en Toledo (80 km estándar)
   const case2 = calculateMariachiDispatch({
     format: 'mariachi_imperial',
     serviceType: 'boda_nupcial',
@@ -187,11 +215,8 @@ export function runMariachiDispatchDiagnostics(): boolean {
     clientPhone: '+34600000001',
   });
 
-  const expectedTotalCase2 = 1400 + computeSovereignLogistics(80).totalLogistics; // 1400 + 15 km facturables
+  const expectedTotalCase2 = 1400 + computeSovereignLogistics(80).totalLogistics;
   const case2Valid = case2.totalPriceEur === expectedTotalCase2 && !case2.isImmediateDispatch;
-  console.log(`[MARIACHI-DISPATCH] Caso 2 (Boda Mariachi Imperial): ${case2Valid ? 'PASS ✔' : 'FAIL ✘'} (Total: ${case2.totalPriceEur}€)`);
 
-  const allPass = case1Valid && case2Valid;
-  console.log(`[MARIACHI-DISPATCH] Diagnóstico Global: ${allPass ? 'ALL PASS ✔' : 'FAILURE ✘'}`);
-  return allPass;
+  return case1Valid && case2Valid;
 }

@@ -18,6 +18,12 @@ interface BookingRequest {
     clientName: string;
     clientPhone: string;
     notes?: string;
+    /* ── Precisión operativa que exige la ficha del proveedor ── */
+    startTime?: string;
+    durationHours?: number;
+    eventType?: string;
+    venueAddress?: string;
+    city?: string;
 }
 
 interface BookingRequestResponse {
@@ -86,6 +92,34 @@ function validateBookingRequest(raw: unknown): ValidationResult {
     const clientPhone = readString('clientPhone', 'clientPhone', true);
     const notes = readString('notes', 'notes', false);
 
+    /** Campos operativos opcionales: si llegan mal, se descartan (no se inventan). */
+    const readOptionalText = (key: string): string | undefined => {
+        const value = body[key];
+        if (typeof value !== 'string') return undefined;
+        const trimmed = value.trim();
+        if (trimmed.length === 0 || hasAngleBrackets(trimmed)) return undefined;
+        return trimmed.slice(0, 400);
+    };
+    const readOptionalNumber = (key: string): number | undefined => {
+        const value = body[key];
+        if (typeof value === 'number' && Number.isFinite(value)) return value;
+        if (typeof value === 'string' && /^\d{1,6}(?:[.,]\d{1,2})?$/.test(value)) {
+            return Number(value.replace(',', '.'));
+        }
+        return undefined;
+    };
+
+    const startTimeRaw = readOptionalText('startTime');
+    const startTime =
+        startTimeRaw !== undefined && /^([01]\d|2[0-3]):[0-5]\d$/.test(startTimeRaw)
+            ? startTimeRaw
+            : undefined;
+    const durationHoursRaw = readOptionalNumber('durationHours');
+    const durationHours =
+        durationHoursRaw !== undefined && durationHoursRaw > 0 && durationHoursRaw <= 24
+            ? durationHoursRaw
+            : undefined;
+
     if (eventDate !== null && !isValidIsoFuture(eventDate)) {
         errors.push('eventDate');
     }
@@ -125,6 +159,11 @@ function validateBookingRequest(raw: unknown): ValidationResult {
         clientName: clientName as string,
         clientPhone: normalizedPhone as string,
         notes: notes && notes.length > 0 ? notes : undefined,
+        startTime,
+        durationHours,
+        eventType: readOptionalText('eventType'),
+        venueAddress: readOptionalText('venueAddress'),
+        city: readOptionalText('city'),
     };
 
     return { valid: true, errors: [], data };
@@ -174,6 +213,11 @@ export async function POST(req: NextRequest) {
         clientName: data.clientName,
         clientPhone: data.clientPhone,
         notes: data.notes ?? null,
+        startTime: data.startTime ?? null,
+        durationHours: data.durationHours ?? null,
+        eventType: data.eventType ?? null,
+        venueAddress: data.venueAddress ?? null,
+        city: data.city ?? null,
         acceptWindowHours: ACCEPT_WINDOW_HOURS,
     });
 

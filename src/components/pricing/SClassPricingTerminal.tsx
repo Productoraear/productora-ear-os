@@ -39,7 +39,7 @@ export function SClassPricingTerminal() {
       urgency,
       locationCity: city,
       distanceKm,
-      clientPhone: '+34693693048',
+      clientPhone: '+34693693048', eventDate,
     });
 
     const soundSupplement = soundRider === 'bose_f1_elite' ? 150 : 0;
@@ -61,7 +61,7 @@ export function SClassPricingTerminal() {
         vimume10,
       }
     };
-  }, [selectedFormat, distanceKm, urgency, soundRider, city]);
+  }, [selectedFormat, distanceKm, urgency, soundRider, city, eventDate]);
 
   const notifyN8nLead = (channel: 'whatsapp' | 'stripe') => {
     try {
@@ -88,7 +88,7 @@ export function SClassPricingTerminal() {
 
   const handleWhatsAppCheckout = () => {
     notifyN8nLead('whatsapp');
-    const customCopy = `${quote.whatsappConfirmationCopy}\n📅 Fecha Prevista: ${eventDate}`;
+    const customCopy = quote.whatsappConfirmationCopy;
     const encodedMessage = encodeURIComponent(customCopy);
     window.open(`https://wa.me/34693693048?text=${encodedMessage}`, '_blank');
   };
