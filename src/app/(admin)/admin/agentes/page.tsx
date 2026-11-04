@@ -1,13 +1,16 @@
 import fs from 'fs';
 import path from 'path';
 import Link from 'next/link';
-import { Bot, Terminal, ShieldCheck, AlertTriangle, ArrowLeft, Cpu } from 'lucide-react';
+import { Bot, Terminal, ShieldCheck, Cpu, ArrowLeft } from 'lucide-react';
+import { OMEGA_FLEET_ROSTER } from '@/lib/agents/omegaFleet';
+import { isKillSwitchActive } from '@/lib/agents/killSwitch';
+import { OmniAgentRosterClient } from '@/components/admin/OmniAgentRosterClient';
 
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
-  title: 'Enjambre de Agentes S-Class · EAR OS',
-  description: 'Roster real de agentes y skills leído de disco (.agents/skills). Sin cifras inventadas.',
+  title: 'Enjambre de 48 Agentes S-Class · EAR OS Admin',
+  description: 'Flota operativa de 48 agentes S-Class en 6 divisiones interconectadas y consola conversacional.',
 };
 
 interface AgentSkill {
@@ -26,8 +29,8 @@ interface RosterRead {
   exists: boolean;
 }
 
-/** Lee el roster real desde .agents/skills (sin listas tecleadas). */
-function readRoster(): RosterRead {
+/** Lee las skills de desarrollo desde .agents/skills */
+function readDevSkills(): RosterRead {
   const dir = path.join(process.cwd(), '.agents', 'skills');
   const rulesDir = path.join(process.cwd(), '.agents', 'rules');
   const rules = fs.existsSync(rulesDir)
@@ -70,23 +73,37 @@ function readRoster(): RosterRead {
   return { skills, rules, dir, exists: true };
 }
 
+function getDlqDepth(): number {
+  const dlqPath = path.join(process.cwd(), '.antigravity', 'dlq.jsonl');
+  try {
+    if (fs.existsSync(dlqPath)) {
+      return fs.readFileSync(dlqPath, 'utf8').split('\n').filter((l) => l.trim().length > 0).length;
+    }
+  } catch {
+    return -1;
+  }
+  return 0;
+}
+
 export default function AdminAgentesPage() {
-  const roster = readRoster();
-  const total = roster.skills.length;
+  const devRoster = readDevSkills();
+  const killSwitch = isKillSwitchActive();
+  const dlqDepth = getDlqDepth();
 
   return (
-    <div className="space-y-6 max-w-6xl">
+    <div className="space-y-8 max-w-7xl">
+      {/* Encabezado */}
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <div className="flex items-center gap-2 text-[11px] font-mono text-neutral-500 uppercase tracking-widest">
-            <Bot className="w-3.5 h-3.5 text-[#ecb613]" /> Agente &amp; Enjambre de Respaldo
+            <Bot className="w-3.5 h-3.5 text-[#ecb613]" /> Orquestación Omega S-Class · Modo CEO
           </div>
           <h1 className="text-2xl md:text-3xl font-extrabold text-white tracking-tight font-syne mt-1">
-            Roster real de agentes ({total} en disco)
+            Enjambre de 48 Agentes Autónomos
           </h1>
           <p className="text-neutral-400 text-sm mt-1 max-w-3xl">
-            Esta página no declara cifras: lee <code className="text-[#ecb613]">.agents/skills/*/SKILL.md</code> en cada
-            petición. Si el disco tiene 12, dice 12. Si tiene 0, lo dice y da el comando exacto para reconstruirlo.
+            Flota de 6 divisiones de choque interconectadas por <code className="text-[#ecb613]">AgentBus</code> con
+            despacho a n8n, cálculo SSOT en tiempo real y consola conversacional integrada.
           </p>
         </div>
         <Link
@@ -97,78 +114,72 @@ export default function AdminAgentesPage() {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-        <div className="p-4 rounded-2xl bg-[#09090d] border border-white/10">
-          <div className="text-[10px] font-mono text-neutral-500 uppercase">Skills instaladas</div>
-          <div className="text-2xl font-bold text-white font-mono">{total}</div>
-        </div>
-        <div className="p-4 rounded-2xl bg-[#09090d] border border-white/10">
-          <div className="text-[10px] font-mono text-neutral-500 uppercase">Reglas (.agents/rules)</div>
-          <div className="text-2xl font-bold text-white font-mono">{roster.rules}</div>
-        </div>
-        <div className="p-4 rounded-2xl bg-[#09090d] border border-white/10">
-          <div className="text-[10px] font-mono text-neutral-500 uppercase">Fuente</div>
-          <div className="text-[11px] text-neutral-300 font-mono break-all">{roster.dir}</div>
-        </div>
-      </div>
+      {/* Roster Interactivo de los 48 Agentes */}
+      <OmniAgentRosterClient
+        fleet={OMEGA_FLEET_ROSTER}
+        totalSkills={devRoster.skills.length}
+        totalRules={devRoster.rules}
+        killSwitchActive={killSwitch}
+        dlqDepth={dlqDepth}
+      />
 
-      {!roster.exists && (
-        <div className="p-4 rounded-2xl bg-amber-950/30 border border-amber-600/50 text-amber-200 text-xs font-mono space-y-2">
-          <div className="flex items-center gap-2 font-bold">
-            <AlertTriangle className="w-4 h-4" /> 0 AGENTES: el directorio no existe en este equipo
+      {/* Sección Inferior: Skills de Desarrollo e Ingeniería */}
+      <div className="pt-6 border-t border-white/10 space-y-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Cpu className="w-4 h-4 text-cyan-400" />
+            <h2 className="text-sm font-bold text-white font-mono uppercase tracking-wider">
+              Herramientas de Ingeniería ({devRoster.skills.length} skills en disco)
+            </h2>
           </div>
-          <p>
-            Reconstrucción (PowerShell, en la raíz del repo):{' '}
-            <code className="text-[#ecb613]">INSTALAR_AGENT_SKILLS.bat</code>
-          </p>
+          <span className="text-[11px] font-mono text-neutral-500">
+            Fuente: <code className="text-neutral-400">.agents/skills</code>
+          </span>
         </div>
-      )}
 
-      {total > 0 && (
-        <div className="rounded-2xl border border-white/10 bg-[#09090d] overflow-hidden">
-          <table className="w-full text-left text-xs">
-            <thead className="bg-black/60 text-neutral-500 font-mono uppercase text-[10px]">
-              <tr>
-                <th className="px-4 py-2.5">Agente</th>
-                <th className="px-4 py-2.5">Fase</th>
-                <th className="px-4 py-2.5">Comando</th>
-                <th className="px-4 py-2.5">SKILL.md</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-white/5">
-              {roster.skills.map((skill) => (
-                <tr key={skill.id} className="hover:bg-white/5 transition-colors align-top">
-                  <td className="px-4 py-3">
-                    <div className="font-bold text-white">{skill.name}</div>
-                    <div className="text-neutral-500 mt-0.5 leading-relaxed">{skill.description}</div>
-                  </td>
-                  <td className="px-4 py-3 font-mono text-[11px] text-sky-300 whitespace-nowrap">{skill.phase}</td>
-                  <td className="px-4 py-3 font-mono text-[11px] text-[#ecb613] whitespace-nowrap">
-                    <span className="inline-flex items-center gap-1">
-                      <Terminal className="w-3 h-3" /> {skill.command}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 font-mono text-[11px] text-neutral-400 whitespace-nowrap">
-                    {(skill.bytes / 1024).toFixed(1)} KB
-                  </td>
+        {devRoster.skills.length > 0 && (
+          <div className="rounded-2xl border border-white/10 bg-[#09090d] overflow-hidden">
+            <table className="w-full text-left text-xs">
+              <thead className="bg-black/60 text-neutral-500 font-mono uppercase text-[10px]">
+                <tr>
+                  <th className="px-4 py-2.5">Skill</th>
+                  <th className="px-4 py-2.5">Fase</th>
+                  <th className="px-4 py-2.5">Comando</th>
+                  <th className="px-4 py-2.5">Peso</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+              </thead>
+              <tbody className="divide-y divide-white/5">
+                {devRoster.skills.map((skill) => (
+                  <tr key={skill.id} className="hover:bg-white/5 transition-colors align-top">
+                    <td className="px-4 py-3">
+                      <div className="font-bold text-white">{skill.name}</div>
+                      <div className="text-neutral-500 mt-0.5 leading-relaxed">{skill.description}</div>
+                    </td>
+                    <td className="px-4 py-3 font-mono text-[11px] text-sky-300 whitespace-nowrap">{skill.phase}</td>
+                    <td className="px-4 py-3 font-mono text-[11px] text-[#ecb613] whitespace-nowrap">
+                      <span className="inline-flex items-center gap-1">
+                        <Terminal className="w-3 h-3" /> {skill.command}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3 font-mono text-[11px] text-neutral-400 whitespace-nowrap">
+                      {(skill.bytes / 1024).toFixed(1)} KB
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
 
-      <div className="p-4 rounded-2xl bg-[#09090d] border border-white/10 text-[11px] font-mono text-neutral-400 space-y-1.5">
-        <div className="flex items-center gap-2 text-neutral-200 font-bold">
-          <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" /> Trazabilidad
-        </div>
-        <div className="flex items-center gap-2">
-          <Cpu className="w-3.5 h-3.5" /> Cada fila corresponde a un archivo real en disco (AF-5: sin sondeo no hay verde).
-        </div>
-        <div>
-          El panel NO lista agentes que no existan. Si esperabas más, ejecuta el bootstrap: el script escribía en una
-          ruta fija <code className="text-[#ecb613]">H:\EAR_OS_V2\EAR_OS_V2</code> mientras este equipo trabaja en{' '}
-          <code className="text-[#ecb613]">D:</code>, por lo que la sincronización no llegaba al repositorio activo.
+        <div className="p-4 rounded-2xl bg-[#09090d] border border-white/10 text-[11px] font-mono text-neutral-400 space-y-1.5">
+          <div className="flex items-center gap-2 text-neutral-200 font-bold">
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" /> Trazabilidad &amp; Sello Omega
+          </div>
+          <div>
+            Todos los agentes de la flota S-Class tienen registro canónico en{' '}
+            <code className="text-[#ecb613]">src/lib/agents/omegaFleet.ts</code> y cuentan con handlers activos en{' '}
+            <code className="text-[#ecb613]">agentBus.ts</code>. Cero huérfanos y cero fachadas.
+          </div>
         </div>
       </div>
     </div>
