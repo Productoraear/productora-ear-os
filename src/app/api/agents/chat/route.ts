@@ -286,17 +286,34 @@ export async function POST(req: Request): Promise<NextResponse> {
       }
     }
 
-    // 4. Cotización SSOT Logística y Tarifas
+    // 4. Cotización SSOT Logística y Tarifas (SOLO para música/solista, jamás cuando
+    //    el cliente pregunta por fincas, restaurantes, menús o rechaza al solista).
     let calculatedQuote: QuoteBreakdown | null = null;
     let calculatedSplit: SplitBreakdown | null = null;
+    const rejectsSoloist: boolean =
+      lower.includes('no quiero el solista') ||
+      lower.includes('no quiero solista') ||
+      lower.includes('sin solista') ||
+      lower.includes('no mencionas a ese artista') ||
+      lower.includes('en cada ocasion mencionas');
+    const asksExplicitlyForMusic: boolean =
+      !rejectsSoloist &&
+      /\b(solista|mariachi|serenata|edwin|cantante|tenor|musica en vivo|música en vivo|musica en directo|música en directo)\b/i.test(message);
+    const isVenueOrProviderQuery: boolean =
+      pageContext.kind === 'venue' ||
+      pageContext.kind === 'provider' ||
+      isFincaContext ||
+      /\b(finca|fincas|restaurante|restaurantes|resturante|menu|menú|menus|menús|banquete|catering|comensales|alquilar)\b/i.test(message);
+
     const quoteKeywords: readonly string[] = ['km', 'distancia', 'toledo', 'precio', 'cotiz', 'tarifa', 'cuanto', 'cuánto', 'cuesta', 'costar', 'coste', 'presupuesto', 'serenata', 'solista', 'bolo', 'actuaci', 'sonido', 'equipo'];
-    // Se cotiza si el cliente pregunta por dinero O si el hilo ya acumuló datos
-    // suficientes (memoria multi-turno) para dar una cifra exacta y no genérica.
-    const shouldQuote: boolean =
-      quoteKeywords.some((k: string) => lower.includes(k)) ||
-      consultation.phase === 'COTIZACION' ||
-      consultation.phase === 'CIERRE_STRIPE';
-    if (shouldQuote && distanceKm !== null) {
+    const shouldQuoteSoloist: boolean =
+      !rejectsSoloist &&
+      (asksExplicitlyForMusic ||
+        (!isVenueOrProviderQuery &&
+          (quoteKeywords.some((k: string) => lower.includes(k)) ||
+            consultation.phase === 'COTIZACION' ||
+            consultation.phase === 'CIERRE_STRIPE')));
+    if (shouldQuoteSoloist && distanceKm !== null) {
       calculatedQuote = computeSoloQuote(distanceKm, endHour);
       calculatedSplit = computeSplit(calculatedQuote.total);
 
@@ -484,14 +501,15 @@ export async function POST(req: Request): Promise<NextResponse> {
       if (pageContext.kind === 'venue') {
         // Respuesta determinista con la ficha verificada: funciona incluso sin LLM
         // y erradica el "no tengo datos de ese recinto".
-        const highlights: string = pageContext.facts.slice(0, 2).join('\n\n');
+        const highlights: string = pageContext.facts.slice(0, 4).join('\n\n');
         const pending: string = pageContext.missing.slice(0, 3).join(', ');
         aiReply =
-          `Sí, tengo ficha verificada de **${pageContext.name}**:\n\n${highlights}\n\n` +
-          `Lo que la casa no publica (${pending}) lo cerramos en visita técnica con su dirección; Productora EAR aporta la música, la producción y el rider acústico. ` +
-          (explicitDate ? `Para el **${explicitDate.formattedSpanish}** verifico disponibilidad con el recinto antes de asegurarte nada. ` : '') +
-          `¿Para qué fecha y cuántos invitados sería?\n\n` +
-          `[💬 Coordinar visita y fecha por WhatsApp ➔](${actionWaUrl})`;
+          `Ficha verificada de **${pageContext.name}**:\n\n${highlights}\n\n` +
+          `Lo que la casa cierra a medida (${pending}) lo confirmamos en visita técnica y degustación con la dirección a través de la Conserjería EAR OS (${CENTRALITA_EAR_OS}). ` +
+          (explicitDate ? `Para el **${explicitDate.formattedSpanish}** verificamos disponibilidad real antes de bloquear la fecha con el depósito de **${DEPOSITO_STRIPE_EUR} €** (100% deducible). ` : '') +
+          `¿Quieres que agendemos la visita técnica o te preparemos la propuesta para tu número de comensales?\n\n` +
+          `[🔒 Solicitar presupuesto para ${pageContext.name} ➔](${actionBookingUrl})\n\n` +
+          `[💬 Coordinar visita y reserva por WhatsApp (${CENTRALITA_EAR_OS}) ➔](${actionWaUrl})`;
       } else if (pageContext.kind === 'provider') {
         // GROUNDING EXTREMO SIN LLM: la ficha real basta para vender con verdad.
         // Cero invención (sólo hechos de `public/data/fichas/*.json`) y CERO sesgo

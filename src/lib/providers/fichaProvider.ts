@@ -200,3 +200,71 @@ export function getFichaStoreStats(): {
   return { entries: store.indexByKey.size, gold: store.goldByKey.size, verified, loaded: store.loaded };
 }
 
+const STOPWORDS: ReadonlySet<string> = new Set([
+  'el', 'la', 'los', 'las', 'un', 'una', 'unos', 'unas', 'de', 'del', 'en', 'con', 'por', 'para',
+  'algun', 'alguna', 'algunos', 'algunas', 'hay', 'tienes', 'teneis', 'busco', 'quiero', 'necesito',
+  'cuanto', 'cuesta', 'precio', 'presupuesto', 'menu', 'menus', 'invitados', 'personas', 'pax',
+  'boda', 'bodas', 'evento', 'eventos', 'cena', 'comida', 'empresa', 'alquilar', 'contratar',
+  'cerca', 'menos', 'minutos', 'kms', 'km', 'kilometros', 'dia', 'dic', 'diciembre', 'hola',
+  'como', 'que', 'cual', 'donde', 'estoy', 'viendo', 'url', 'navegador', 'base', 'datos',
+]);
+
+/**
+ * Búsqueda ultrarrápida en memoria (< 1 ms, cero I/O por petición) sobre las
+ * fichas indexadas por municipio, provincia, gremio o nombre comercial.
+ */
+export function searchFichasInMemory(rawQuery: unknown, limit = 4): readonly ProviderFicha[] {
+  if (rawQuery === null || rawQuery === undefined) return [];
+  const normalizedQuery: string = normalizeFichaSlug(rawQuery).replace(/-/g, ' ').trim();
+  if (normalizedQuery.length < 3) return [];
+
+  const rawTokens: string[] = normalizedQuery
+    .split(/\s+/)
+    .filter((token: string) => token.length >= 3 && !STOPWORDS.has(token));
+  if (rawTokens.length === 0) return [];
+
+  const store: FichaStore = loadStore();
+  const scored: Array<{ readonly entry: ProviderFichaIndexEntry; readonly score: number }> = [];
+
+  for (const entry of store.indexByKey.values()) {
+    const muniNorm: string = normalizeFichaSlug(entry.municipality).replace(/-/g, ' ');
+    const provNorm: string = normalizeFichaSlug(entry.province).replace(/-/g, ' ');
+    const nameNorm: string = normalizeFichaSlug(entry.name).replace(/-/g, ' ');
+    const catNorm: string = normalizeFichaSlug(entry.category).replace(/-/g, ' ');
+
+    let score = 0;
+    for (const token of rawTokens) {
+      if (muniNorm === token) {
+        score += 12;
+      } else if (muniNorm.includes(token)) {
+        score += 8;
+      }
+      if (provNorm === token || (token === 'guipuzcoa' && provNorm === 'gipuzkoa') || (token === 'vizcaya' && provNorm === 'bizkaia')) {
+        score += 7;
+      } else if (provNorm.includes(token)) {
+        score += 4;
+      }
+      if (nameNorm.includes(token)) {
+        score += 9;
+      }
+      if (catNorm.includes(token)) {
+        score += 5;
+      }
+    }
+
+    if (score >= 7) {
+      const bonus: number = (entry.verified ? 3 : 0) + (entry.priceEur !== null ? 2 : 0) + entry.completeness / 100;
+      scored.push({ entry, score: score + bonus });
+    }
+  }
+
+  scored.sort((a, b) => b.score - a.score);
+  const results: ProviderFicha[] = [];
+  for (const item of scored.slice(0, Math.max(1, Math.min(limit, 8)))) {
+    const ficha: ProviderFicha | null = toFicha(item.entry);
+    if (ficha !== null) results.push(ficha);
+  }
+  return results;
+}
+
+

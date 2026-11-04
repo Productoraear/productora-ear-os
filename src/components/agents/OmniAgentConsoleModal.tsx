@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
+import { DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
 import {
   REGISTERED_VOICES,
   getVoiceForAgent,
@@ -189,20 +190,44 @@ export function OmniAgentConsoleModal(): React.JSX.Element | null {
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const [inputMessage, setInputMessage] = React.useState<string>('');
   const [isSending, setIsSending] = React.useState<boolean>(false);
-  const [messages, setMessages] = React.useState<ChatMessage[]>([
-    {
-      id: 'welcome-0',
-      sender: 'agent',
-      text: 'Hola, soy el asistente de producción de Productora EAR para Edwin Agudelo. ¿En qué te puedo ayudar hoy?',
-      agentUsed: 'omni-supervisor-daemon',
-      time: '08:00',
-    },
-  ]);
 
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
   const chatEndRef = React.useRef<HTMLDivElement>(null);
+
+  const isVenueOrProviderRoute: boolean = Boolean(
+    pathname &&
+      (pathname.includes('/otzarreta') ||
+        pathname.includes('/ezkertza') ||
+        pathname.startsWith('/fincas') ||
+        pathname.startsWith('/proveedores') ||
+        pathname.startsWith('/directorio')),
+  );
+
+  const welcomeText: string = isVenueOrProviderRoute
+    ? 'Hola, soy la Conserjería de Espacios, Fincas y Proveedores de Productora EAR. Puedo confirmarte menús verificados, aforos, presupuestos por comensal y agendar tu visita técnica. ¿En qué te puedo ayudar hoy?'
+    : 'Hola, soy la Conserjería de Espacios, Fincas y Producción de Productora EAR. Puedo ayudarte con fincas y restaurantes para eventos, proveedores verificados o producción musical. ¿Qué estás organizando?';
+
+  const [messages, setMessages] = React.useState<ChatMessage[]>([
+    {
+      id: 'welcome-0',
+      sender: 'agent',
+      text: welcomeText,
+      agentUsed: 'omni-supervisor-daemon',
+      time: '08:00',
+    },
+  ]);
+
+  // Actualizar saludo inicial si el usuario navega antes de enviar su primer mensaje
+  React.useEffect(() => {
+    setMessages((prev) => {
+      if (prev.length === 1 && prev[0].id === 'welcome-0') {
+        return [{ ...prev[0], text: welcomeText }];
+      }
+      return prev;
+    });
+  }, [welcomeText]);
 
   // Estado para la pulsación larga secreta de 10 segundos (ratón o pantalla táctil)
   const [longPressProgress, setLongPressProgress] = React.useState<number | null>(null);
@@ -239,7 +264,7 @@ export function OmniAgentConsoleModal(): React.JSX.Element | null {
     };
   }, []);
 
-  // 1. Escuchar parámetro secreto en URL (?agent=true o ?nexus=1)
+  // 1. Escuchar parámetro secreto en URL (?agent=true o ?nexus=1) y evento custom 'ear:open-agent'
   React.useEffect(() => {
     if (searchParams) {
       const hasAgentParam = searchParams.get('agent') === 'true' || searchParams.get('nexus') === '1' || searchParams.get('agente') === 'true';
@@ -248,6 +273,38 @@ export function OmniAgentConsoleModal(): React.JSX.Element | null {
       }
     }
   }, [searchParams]);
+
+  React.useEffect(() => {
+    const handleOpenEvent = (): void => {
+      setIsOpen(true);
+    };
+    window.addEventListener('ear:open-agent', handleOpenEvent);
+    return () => window.removeEventListener('ear:open-agent', handleOpenEvent);
+  }, []);
+
+  // 1b. Auto-apertura inteligente tras 10 segundos en dispositivos móviles (1 vez por sesión)
+  React.useEffect(() => {
+    if (typeof window === 'undefined' || isOpen) return;
+    if (pathname?.startsWith('/admin') || pathname?.startsWith('/panel')) return;
+    const isMobileViewport = window.matchMedia('(max-width: 1023px)').matches;
+    if (!isMobileViewport) return;
+    try {
+      if (window.sessionStorage.getItem('ear_agent_mobile_10s_shown') === '1') return;
+    } catch {
+      return;
+    }
+
+    const timer = window.setTimeout(() => {
+      try {
+        window.sessionStorage.setItem('ear_agent_mobile_10s_shown', '1');
+      } catch {
+        // Ignorar en modo privado estricto
+      }
+      setIsOpen(true);
+    }, 10000);
+
+    return () => window.clearTimeout(timer);
+  }, [isOpen, pathname]);
 
   // 2. Escuchar atajo de teclado global (Ctrl + Shift + A o Cmd + Shift + A)
   React.useEffect(() => {
@@ -879,7 +936,11 @@ function detectActiveDOMContext(): { name?: string; type?: string } | undefined 
                 )}
               </div>
               <div className="mt-0.5 flex gap-2 font-mono text-[11px] text-white/40">
-                <span>Edwin Agudelo Solista & Flota de Producción</span>
+                <span>
+                  {isVenueOrProviderRoute
+                    ? 'Conserjería de Fincas, Restaurantes & Proveedores Verificados'
+                    : 'Conserjería de Espacios, Fincas & Flota de Producción'}
+                </span>
                 <span>•</span>
                 <span className="text-[#ecb613]">Reglas SSOT Activas</span>
               </div>
@@ -981,10 +1042,10 @@ function detectActiveDOMContext(): { name?: string; type?: string } | undefined 
         {/* CHIPS DE ACCIÓN RÁPIDA (ASISTENCIA CORPORATIVA S-CLASS) */}
         <div className="flex flex-wrap gap-2 border-t border-white/10 bg-[#09090d] px-6 py-2.5">
           <button
-            onClick={() => sendMessage('¿Cómo funciona el depósito de 100 € de Stripe Price-Lock y por qué es 100% deducible?')}
+            onClick={() => sendMessage(`¿Cómo funciona el depósito de ${DEPOSITO_STRIPE_EUR} € de Stripe Price-Lock y por qué es 100% deducible?`)}
             className="rounded-full border border-[#ecb613]/40 bg-[#ecb613]/10 px-3 py-1 font-mono text-[11px] font-semibold text-[#ecb613] hover:bg-[#ecb613] hover:text-black transition-colors"
           >
-            🔒 Garantía Price-Lock 100 € Deducible
+            🔒 Garantía Price-Lock {DEPOSITO_STRIPE_EUR} € Deducible
           </button>
           <button
             onClick={() => sendMessage('Presupuesto y disponibilidad para evento corporativo de gala con sonorización y música en vivo')}

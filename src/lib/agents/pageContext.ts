@@ -24,7 +24,7 @@
 
 import { OTZARRETA_ENTITY } from '@/lib/constants/otzarreta-entity';
 import { KNOWN_FINCAS } from '@/lib/agents/geo';
-import { resolveFichaFromUrlOrText } from '@/lib/providers/fichaProvider';
+import { resolveFichaFromUrlOrText, searchFichasInMemory } from '@/lib/providers/fichaProvider';
 import { buildFichaFacts, buildFichaMissing, type ProviderFicha } from '@/lib/providers/providerFichaTypes';
 import {
   CENTRALITA_EAR_OS,
@@ -160,19 +160,19 @@ function buildOtzarretaContext(pathname: string): PageContext {
   const facts: string[] = [];
   if (ezkertza) {
     facts.push(
-      `Sede Ezkertza Berria (${ezkertza.municipality}, ${ezkertza.province}) · ${ezkertza.address}: ${ezkertza.capacityPax} comensales, ${ezkertza.parkingSpaces} plazas de parking. ${ezkertza.features.join(' · ')}.`,
+      `Sede Ezkertza Berria (${ezkertza.municipality}, ${ezkertza.province} · a 11 km / 12 min de Bilbao por el corredor del Txorierri) · ${ezkertza.address}: hasta ${ezkertza.capacityPax} comensales, ${ezkertza.parkingSpaces} plazas de parking propio. ${ezkertza.features.join(' · ')}.`,
     );
   }
   if (otzarreta) {
     facts.push(
-      `Sede Otzarreta (${otzarreta.municipality}, ${otzarreta.province}) · ${otzarreta.address}: ${otzarreta.capacityPax} comensales, ${otzarreta.parkingSpaces} plazas de parking. ${otzarreta.features.join(' · ')}.`,
+      `Sede Otzarreta (${otzarreta.municipality}, ${otzarreta.province}) · ${otzarreta.address}: hasta ${otzarreta.capacityPax} comensales, ${otzarreta.parkingSpaces} plazas de parking propio. ${otzarreta.features.join(' · ')}.`,
     );
   }
   facts.push(
     `Historia: ${OTZARRETA_ENTITY.heritage}`,
-    `Menús oficiales 2026: boda desde ${OTZARRETA_ENTITY.weddingPriceFromEur} € + IVA; menú de grupos desde ${OTZARRETA_ENTITY.menuPriceFromEur} €.`,
+    `Menús oficiales 2026: menú de grupos y cenas de empresa desde ${OTZARRETA_ENTITY.menuPriceFromEur} € (menús gastronómicos de grupo entre 65 € y 95 €); menú oficial de boda desde ${OTZARRETA_ENTITY.weddingPriceFromEur} € + IVA (110 € IVA incl., con opciones de 115 € a 145 € + IVA que encajan dentro de presupuestos de hasta 154 €/comensal).`,
     `Servicios publicados por la casa: ${OTZARRETA_ENTITY.services.join(', ')}.`,
-    'Productora EAR NO alquila el recinto: coordina con su dirección y aporta la música, la producción y el rider acústico homologado.',
+    `Cómo se contrata con ellos: a través de la Conserjería EAR OS (${CENTRALITA_EAR_OS}) o del simulador de la ficha oficial (/otzarreta). Validamos disponibilidad para la fecha elegida, agendamos la visita técnica y degustación con la gerencia de Eduardo Martínez y formalizamos el bloqueo de fecha con depósito de ${DEPOSITO_STRIPE_EUR} € (100% deducible de la liquidación final del banquete).`,
   );
 
   return {
@@ -194,7 +194,7 @@ function buildOtzarretaContext(pathname: string): PageContext {
       'disponibilidad real de la fecha',
     ],
     guidance:
-      'Estás en la ficha de un recinto colaborador homologado. SÍ tienes datos verificados: úsalos y PROHIBIDO decir que no tienes información del recinto. No alquilas el recinto: coordinas con su dirección y aportas música/producción. Cuando pregunten por aforo por espacio, hora límite de música, potencia, exclusividad o fecha, di que se confirma en visita técnica. No publiques teléfonos del recinto en el chat.',
+      'Estás en la ficha de un recinto colaborador homologado. SÍ tienes datos verificados: úsalos y PROHIBIDO decir que no tienes información del recinto. Si el cliente pregunta cómo contratar, cuánto cuesta el menú o qué sede le queda más cerca de Bilbao o en Gipuzkoa, responde directamente con las cifras de Ezkertza Berria (Derio, a 11 km / 12 min de Bilbao) y Otzarreta (Zarautz, Gipuzkoa), confirmando que sus menús (desde 40 € grupos y 100 € + IVA bodas/galas) encajan en su presupuesto por comensal. Cuando pregunten por aforo por espacio, hora límite de música, potencia, exclusividad o disponibilidad exacta de fecha, di que se confirma en visita técnica. No publiques teléfonos del recinto en el chat.',
     pathname,
     source: 'pathname',
   };
@@ -246,35 +246,7 @@ function buildProviderContext(ficha: ProviderFicha, pathname: string, source: Pa
   };
 }
 
-/**
- * Resuelve la entidad en pantalla a partir del `pathname` del cliente o, si no
- * llega, de la ruta de una URL pegada en el mensaje (nunca se abre la URL).
- */
-export function resolvePageContext(input: { pathname?: unknown; message?: unknown }): PageContext {
-  const fromBody: string | null = normalizePathname(input.pathname);
-  const fromMessage: string | null = fromBody === null ? extractPathFromMessage(input.message) : null;
-  const pathname: string | null = fromBody ?? fromMessage;
-  const source: PageContextSource =
-    fromBody !== null ? 'pathname' : fromMessage !== null ? 'message-url' : 'none';
-
-  const empty: PageContext = {
-    kind: 'none',
-    id: null,
-    name: '',
-    municipality: null,
-    province: null,
-    category: null,
-    distanceKmFromHub: null,
-    facts: [],
-    missing: [],
-    guidance:
-      'No hay ficha verificada de la página activa. No inventes datos del recinto: pide la localidad y ofrece visita técnica y coordinación con la dirección.',
-    pathname,
-    source,
-  };
-
-  if (pathname === null) return empty;
-
+function resolveByPathname(pathname: string, source: PageContextSource): PageContext | null {
   // 1. Grupo hostelero Otzarreta / Ezkertza Berria (ficha curada con provenance).
   if (pathname.includes('otzarreta') || pathname.includes('ezkertza')) {
     return { ...buildOtzarretaContext(pathname), source };
@@ -342,7 +314,95 @@ export function resolvePageContext(input: { pathname?: unknown; message?: unknow
     if (ficha !== null) return buildProviderContext(ficha, pathname, source);
   }
 
-  return empty;
+  return null;
+}
+
+/**
+ * Resuelve la entidad en pantalla a partir del `pathname` del cliente, de una
+ * URL pegada en el mensaje (`fromMessage`) o de la búsqueda semántica en memoria
+ * cuando el usuario pregunta por un recinto/municipio desde una ruta genérica.
+ */
+export function resolvePageContext(input: { pathname?: unknown; message?: unknown }): PageContext {
+  const fromBody: string | null = normalizePathname(input.pathname);
+  const fromMessage: string | null = extractPathFromMessage(input.message);
+
+  // Si el usuario pegó explícitamente una URL en el chat, esa URL tiene prioridad.
+  if (fromMessage !== null && fromMessage !== '/') {
+    const resolvedFromMsg: PageContext | null = resolveByPathname(fromMessage, 'message-url');
+    if (resolvedFromMsg !== null) return resolvedFromMsg;
+  }
+
+  if (fromBody !== null) {
+    const resolvedFromBody: PageContext | null = resolveByPathname(fromBody, 'pathname');
+    if (resolvedFromBody !== null) return resolvedFromBody;
+  }
+
+  const pathname: string | null = fromBody ?? fromMessage;
+  const source: PageContextSource =
+    fromBody !== null ? 'pathname' : fromMessage !== null ? 'message-url' : 'none';
+
+  // Búsqueda inteligente en memoria cuando no estamos en una ficha fija pero el
+  // cliente pregunta por un restaurante, finca o proveedor concreto o por zona.
+  const rawMessage: string = typeof input.message === 'string' ? input.message.trim() : '';
+  if (rawMessage.length >= 3) {
+    const lowerMsg: string = rawMessage
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
+
+    // 1. Mención directa a Otzarreta / Ezkertza / Derio / Zarautz o consulta de
+    //    restaurante/finca en Bizkaia / Bilbao / Gipuzkoa.
+    const mentionsFlagshipBasque: boolean =
+      /\b(otzarreta|ezkertza|derio|zarautz|zarauz|txorierri)\b/.test(lowerMsg) ||
+      (/\b(gipuzkoa|guipuzcoa|bizkaia|vizcaya|bilbao)\b/.test(lowerMsg) &&
+        /\b(finca|fincas|restaurante|restaurantes|resturante|banquete|cena|menu|menus|boda|invitados|comensales|alquilar|contratar)\b/.test(lowerMsg));
+
+    if (mentionsFlagshipBasque) {
+      return {
+        ...buildOtzarretaContext(pathname ?? '/otzarreta'),
+        source: fromMessage !== null ? 'message-url' : source,
+      };
+    }
+
+    // 2. Búsqueda de fichas verificadas en memoria por municipio, provincia o nombre.
+    const asksForProviderOrVenue: boolean =
+      /\b(restaurante|restaurantes|resturante|finca|fincas|catering|fotografo|fotografia|musica|mariachi|proveedor|proveedores|salon|salones|bodega|hotel|masia|casona|pazo|castillo)\b/.test(
+        lowerMsg,
+      );
+    if (asksForProviderOrVenue) {
+      const matches: readonly ProviderFicha[] = searchFichasInMemory(rawMessage, 3);
+      if (matches.length > 0) {
+        const primary: ProviderFicha = matches[0];
+        const baseCtx: PageContext = buildProviderContext(primary, pathname ?? `/proveedores/${primary.slug}`, source);
+        if (matches.length === 1) return baseCtx;
+        const extraFacts: string[] = matches.slice(1).map((item: ProviderFicha) => {
+          const loc: string = [item.municipality, item.province].filter(Boolean).join(', ');
+          const price: string = item.priceEur !== null ? ` · desde ${item.priceEur} €` : item.priceRange ? ` · ${item.priceRange}` : '';
+          return `Alternativa verificada en la zona: ${item.name} (${item.category || 'eventos'}${loc ? ` · ${loc}` : ''}${price}).`;
+        });
+        return {
+          ...baseCtx,
+          facts: [...baseCtx.facts, ...extraFacts],
+        };
+      }
+    }
+  }
+
+  return {
+    kind: 'none',
+    id: null,
+    name: '',
+    municipality: null,
+    province: null,
+    category: null,
+    distanceKmFromHub: null,
+    facts: [],
+    missing: [],
+    guidance:
+      'No hay ficha verificada de la página activa. No inventes datos del recinto: pide la localidad y ofrece visita técnica y coordinación con la dirección.',
+    pathname,
+    source,
+  };
 }
 
 /**

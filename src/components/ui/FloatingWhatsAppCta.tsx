@@ -66,11 +66,14 @@ export const FloatingWhatsAppCta: React.FC = React.memo(function FloatingWhatsAp
   // `useRef` (no `useState`): un guard anti doble-clic no debe re-renderizar.
   const lastDispatchRef = useRef(0);
 
-  const handleClick = useCallback(() => {
+  const handleClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
     const now = Date.now();
-    if (now - lastDispatchRef.current < DOUBLE_CLICK_GUARD_MS) return;
-    lastDispatchRef.current = now;
-    dispatchLeadIntake(window.location.pathname || '/');
+    if (now - lastDispatchRef.current >= DOUBLE_CLICK_GUARD_MS) {
+      lastDispatchRef.current = now;
+      dispatchLeadIntake(window.location.pathname || '/');
+    }
+    window.dispatchEvent(new CustomEvent('ear:open-agent'));
   }, []);
 
   // Las zonas privadas no muestran superficie comercial (misma regla que
@@ -86,13 +89,13 @@ export const FloatingWhatsAppCta: React.FC = React.memo(function FloatingWhatsAp
       rel="noopener noreferrer"
       onClick={handleClick}
       data-lead-intake="whatsapp_click"
-      className="hidden lg:flex fixed bottom-[5.75rem] left-6 z-[45] bg-[#25D366] text-black p-3.5 rounded-full shadow-2xl hover:scale-110 hover:shadow-[#25D366]/50 transition-all duration-300 items-center justify-center group"
-      aria-label="Contactar por WhatsApp"
-      title="Contactar con Soporte Directo WhatsApp"
+      className="hidden lg:flex fixed bottom-[5.75rem] left-6 z-[45] bg-[#09090d]/95 border border-[#ecb613]/60 text-[#ecb613] p-3.5 rounded-full shadow-[0_0_25px_rgba(236,182,19,0.3)] hover:scale-110 hover:bg-[#ecb613] hover:text-black transition-all duration-300 items-center justify-center group"
+      aria-label="Abrir Conserjería IA y Soporte Directo"
+      title="Conserjería IA en Vivo · Clic para abrir o mantén 10s pulsado"
     >
       <MessageCircle size={24} className="group-hover:animate-pulse" fill="currentColor" />
-      <span className="max-w-0 overflow-hidden group-hover:max-w-xs group-hover:ml-2 transition-all duration-300 text-xs font-mono font-bold whitespace-nowrap text-black">
-        {CENTRALITA_EAR_OS}
+      <span className="max-w-0 overflow-hidden group-hover:max-w-xs group-hover:ml-2 transition-all duration-300 text-xs font-mono font-bold whitespace-nowrap">
+        CONSERJERÍA IA · {CENTRALITA_EAR_OS}
       </span>
     </a>
   );

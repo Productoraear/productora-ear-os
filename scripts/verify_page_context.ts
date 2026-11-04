@@ -175,6 +175,39 @@ check(
   `${desconocida.kind}`,
 );
 
+/* ── 7. Regresión en vivo: URL pegada desde "/" + consulta Derio / Gipuzkoa ─ */
+const fromRootWithUrl = resolvePageContext({
+  pathname: '/',
+  message: 'otzarreta en tu base de datos estoy viendo su url en mi navegador, http://localhost:3007/otzarreta#panel-eduardo',
+});
+check(
+  'Regresión CEO: URL pegada estando en "/" prioriza la URL del mensaje',
+  fromRootWithUrl.kind === 'venue' && fromRootWithUrl.source === 'message-url' && fromRootWithUrl.name.includes('Otzarreta'),
+  `${fromRootWithUrl.kind} · ${fromRootWithUrl.source} · ${fromRootWithUrl.name}`,
+);
+
+const derioQuery = resolvePageContext({
+  pathname: '/',
+  message: 'algun resturante en derio?',
+});
+check(
+  'Regresión CEO: "algun resturante en derio?" resuelve Ezkertza Berria & Otzarreta',
+  derioQuery.kind === 'venue' && derioQuery.facts.some((fact: string) => fact.includes('Ezkertza Berria') && fact.includes('Derio')),
+  `${derioQuery.kind} · ${derioQuery.name}`,
+);
+
+const gipuzkoaBilbaoQuery = resolvePageContext({
+  pathname: '/',
+  message: 'hola cuanto cuesta alquilar una finca para una boda o un restaurante en Gipuzkoa? dia 31 dic, 100 invitados cena de empresa. menu maximo 154 € por persona de presupuesto. el lugar mas cerca de bilbao a menos de 15 minutos o 30kms',
+});
+check(
+  'Regresión CEO: consulta Gipuzkoa / cerca de Bilbao (154 €/pax) resuelve sedes y menús',
+  gipuzkoaBilbaoQuery.kind === 'venue' &&
+    gipuzkoaBilbaoQuery.facts.some((fact: string) => fact.includes('11 km / 12 min de Bilbao')) &&
+    gipuzkoaBilbaoQuery.facts.some((fact: string) => fact.includes('154 €')),
+  `${gipuzkoaBilbaoQuery.kind} · hechos=${gipuzkoaBilbaoQuery.facts.length}`,
+);
+
 /* ── Informe ─────────────────────────────────────────────────────────────── */
 const passed: number = cases.filter((c: CaseResult) => c.ok).length;
 for (const c of cases) {

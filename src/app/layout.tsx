@@ -53,6 +53,7 @@ import SovereignFooter from "@/app/components/layout/SovereignFooter";
 // `hidden lg:flex`: sólo escritorio, no colisiona con el dock móvil) y el
 // propio componente se autoexcluye de /admin y /panel.
 import { FloatingWhatsAppCta } from "@/components/ui/FloatingWhatsAppCta";
+import { OmniAgentConsoleModal } from "@/components/agents/OmniAgentConsoleModal";
 import { GeoStructuredData } from "@/components/seo/GeoStructuredData";
 import { VimumeThemeInjector } from "@/components/theme/VimumeThemeInjector";
 import * as React from "react";
@@ -164,6 +165,9 @@ export default function RootLayout({
                             </main>
                             <SovereignFooter />
                             <FloatingWhatsAppCta />
+                            <React.Suspense fallback={null}>
+                              <OmniAgentConsoleModal />
+                            </React.Suspense>
                             <BespokePricerModal />
                             <UnifiedSearch />
                                                                                                                                                                       </div>
