@@ -6,6 +6,14 @@ import {
   type GpuModelId
 } from './qwen-gpu-inference';
 import {
+  renderGuideDirectives,
+  resolveMasterGuide,
+  type GuideSource,
+  type MasterObjectiveId,
+  type MasterTacticId,
+  type MasterTargetAgentId,
+} from './master-guide';
+import {
   TARIFA_BASE_SOLISTA_EUR,
   LOGISTICA_EUR_PER_KM,
   LOGISTICA_KM_EXENTOS,
@@ -21,6 +29,26 @@ import {
 
 export type CompileMode = 'QUIRURGICO' | 'OMEGA_FULLSTACK';
 export type CompileEngine = 'OLLAMA' | 'CLOUD';
+
+/** Marcador explícito de recorte: un texto acotado nunca debe parecer completo. */
+const CLAMP_MARKER = ' …[recortado]';
+
+/** Recorta conservando el marcador: el resultado nunca excede `max`. */
+function truncateWithMarker(value: string, max: number): string {
+  if (value.length <= max) return value;
+  const room = Math.max(0, max - CLAMP_MARKER.length);
+  return value.slice(0, room) + CLAMP_MARKER;
+}
+
+/** Texto de una sola línea (título, acción, criterio de cierre). */
+function clampSingleLine(value: string, max: number): string {
+  return truncateWithMarker(value.replace(/\s+/g, ' ').trim(), max);
+}
+
+/** Texto multilínea (macro-script): no aplasta la estructura del andamio. */
+function clampMultiline(value: string, max: number): string {
+  return truncateWithMarker(value.trim(), max);
+}
 
 /**
  * Reglas de negocio derivadas ÚNICAMENTE del SSOT canónico (Zona Cero).
@@ -41,6 +69,22 @@ export interface CompileOptions {
   engine?: CompileEngine;
   targetEngine?: 'LOCAL_OLLAMA' | 'CLOUD_EDGE';
   autoInjectQueue?: boolean;
+  /** Eje 1 de la Guía Maestra (`master-guide.ts`). Si falta, se deduce del texto. */
+  objective?: string | null;
+  /** Eje 2: táctica comercial. Gobierna las directivas inyectadas en el grafo. */
+  tactic?: string | null;
+  /** Eje 3: destinatario del grafo (agente local, automatización o conserjería). */
+  targetAgent?: string | null;
+  /** Eje 4: dominio / vertical aislada del ecosistema. */
+  domain?: string | null;
+  /** Eje 5: perfil de stakeholder objetivo. */
+  stakeholder?: string | null;
+  /**
+   * Orden humana original. Viaja a `action`/`description` de la tarea en lugar
+   * del prompt forjado, que puede tener miles de caracteres y desbordar el
+   * contrato de la cola (`MAX_ACTION_LEN`).
+   */
+  sourceIntent?: string;
   /** Modelo GPU a usar para el razonamiento profundo. */
   model?: GpuModelId | string;
   /** Si es true, salta la consulta GPU del arquitecto (el DAG se deriva del discriminador). */
@@ -71,6 +115,21 @@ export interface CompiledDAGResult {
     priceMatches: string[];
     governanceChecks: string[];
     reasoningEngineUsed?: string;
+  };
+  /**
+   * Guía Maestra realmente aplicada al grafo. Antes de este contrato la táctica
+   * elegida en `/admin/compiler` no dejaba rastro en el resultado: era decoración.
+   */
+  guide: {
+    objective: MasterObjectiveId;
+    tactic: MasterTacticId;
+    targetAgent: MasterTargetAgentId;
+    directiveCount: number;
+    source: {
+      objective: GuideSource;
+      tactic: GuideSource;
+      targetAgent: GuideSource;
+    };
   };
 }
 
@@ -468,20 +527,52 @@ export async function compileIntentToDAG(
     }
   }
 
+  // ── GUÍA MAESTRA (obligatoria y trazable, no decorativa) ───────────────────
+  // Prioridad: eje declarado por el cliente → deducido del texto → defecto.
+  // Se resuelve AQUÍ para que el grafo dependa de la táctica incluso cuando el
+  // cliente solo envíe `intent` con las etiquetas `[OBJETIVO]` / `[TÁCTICA
+  // VELOCITY]` / `[DESTINATARIO]` (payload antiguo de la pantalla).
+  const guide = resolveMasterGuide(
+    {
+      objective: options.objective ?? null,
+      tactic: options.tactic ?? null,
+      targetAgent: options.targetAgent ?? null,
+      domain: options.domain ?? null,
+      stakeholder: options.stakeholder ?? null,
+    },
+    options.sourceIntent ?? cleanInput,
+  );
+  /** Orden humana original, en una línea: es la que se publica en la cola. */
+  const sourceIntent = (options.sourceIntent ?? cleanInput).replace(/\s+/g, ' ').trim();
+
   const suggestedFiles = resolved.files;
-  const macroScript =
+  const baseMacro =
     options.masterPromptOverride && options.masterPromptOverride.trim()
       ? options.masterPromptOverride.trim()
       : targetMode === 'SURGICAL'
         ? `Edición atómica en ${suggestedFiles[0]}: ${resolved.macro} Validar con ${resolved.validation}.`
         : resolved.macro;
 
+  // La táctica deja de ser decorativa: sus directivas entran en el macro-script.
+  // Se acota al tamaño que acepta el contrato de la cola (`MAX_SCAFFOLD_LEN`).
+  const macroScript = clampMultiline(
+    `${baseMacro}
+
+GUÍA MAESTRA S-CLASS — DIRECTIVAS NO NEGOCIABLES (${guide.objective.id} · ${guide.tactic.id} · ${guide.targetAgent.id})
+${renderGuideDirectives(guide)}`,
+    7800,
+  );
+
   const governanceChecks: string[] = [
-    'Split 80/10/10 Inmutable',
-    'Deposito 100 EUR Stripe Price-Lock',
-    'Mentrida Km 0 (1.50 EUR/km tras 50km)',
-    'Next.js Server Components por defecto',
-    'Build Netlify ultra-ligero menor a 80 MB'
+    `Split Soberano ${Math.round(SPLIT_SOBERANO.artista * 100)}/${Math.round(SPLIT_SOBERANO.earOs * 100)}/${Math.round(SPLIT_SOBERANO.vimume * 100)} inmutable (SSOT + SHA-256)`,
+    `Depósito ${DEPOSITO_STRIPE_EUR.toFixed(2)} EUR Stripe Price-Lock, 100% deducible del total`,
+    `Logística ${LOGISTICA_EUR_PER_KM.toFixed(2)} EUR/km desde el km ${LOGISTICA_KM_EXENTOS} + hotel ${SUPLEMENTO_HOTEL_EUR.toFixed(0)} EUR si hora fin >= ${HORA_FIN_HOTEL}:00 o distancia > ${LOGISTICA_KM_HOTEL} km`,
+    `Techo B2G ${SAFE_LCSP_CEILING_EUR.toFixed(2)} EUR (art. 118 LCSP, ajuste preventivo)`,
+    `Rider acústico ${WATTS_PER_PAX} W/pax y límite ${LIMITE_SPL_DB} dB SPL (Ley 37/2003)`,
+    'Next.js App Router: Server Components por defecto',
+    'Build < 60 s · repo < 50 MB · partición edge < 1 MB',
+    'Despliegue exclusivo Coolify en servidor propio: Vercel y Netlify erradicados (CHG-4)',
+    'typecheck y lint con Exit Code 0 · 0 any implícito · 0 clics muertos'
   ];
 
   const priceMatches: string[] = [];
@@ -492,37 +583,54 @@ export async function compileIntentToDAG(
     priceMatches.push('350,00 EUR (Base Solista)');
   }
 
-  const title =
-    'B0.Omega: ' + cleanInput.slice(0, 55) + (cleanInput.length > 55 ? '...' : '');
+  const intentHead = clampSingleLine(sourceIntent, 55);
+  const title = `B0.Omega: ${intentHead}${sourceIntent.length > 55 ? '...' : ''}`;
 
+  // `description`, `action`, `scaffold` y `done_when` viajan a
+  // `/api/admin/tasks/inject`, que valida con Zod contra `MAX_ACTION_LEN = 2000`,
+  // `MAX_SCAFFOLD_LEN = 8000`, `MAX_VALIDATION_LEN = 500` y `MAX_DONE_WHEN_LEN = 500`
+  // (`src/app/api/admin/tasks/inject/route.ts:83-91`). Con el forjador activo la
+  // entrada es el prompt maestro completo (miles de caracteres): sin acotar, el
+  // inyector rechaza la tarea y la cola del orquestador nunca la ve.
   const jsonTask: CompiledDAGResult['jsonTask'] = {
     id: taskId,
     title,
     status: 'QUEUED',
-    description: cleanInput,
+    description: clampSingleLine(sourceIntent, 1900),
     files: suggestedFiles,
-    action: cleanInput,
+    action: clampSingleLine(sourceIntent, 1800),
     scaffold: macroScript,
-    done_when: resolved.validation,
-    validation: resolved.validation
+    done_when: clampSingleLine(resolved.validation, 480),
+    validation: clampSingleLine(resolved.validation, 480)
   };
 
   const filesYaml = suggestedFiles.map((f) => '    - "' + f + '"').join('\n');
   const govYaml = governanceChecks.map((g) => '    - "' + g + '"').join('\n');
   const ssotYaml = SSOT_BUSINESS_RULES.map((r) => '    - "' + r + '"').join('\n');
 
+  const guideYaml = guide.directives
+    .map((directive) => '    - "' + directive.replace(/"/g, '\\"') + '"')
+    .join('\n');
+
   const yaml = [
     '# ==============================================================================#',
-    '# PROTOCOL: SCLASS_SOVEREIGN_INGEST_v7.0 [META-COMPILADOR DAG VIBE-CODING]',
-    '# ORIGEN: ANTIGRAVITY OMEGA v7.0',
-    '# INTENT_ORIGIN: "' + cleanInput.replace(/"/g, '\\"') + '"',
+    '# PROTOCOLO: SCLASS_SOVEREIGN_INGEST_v10.0 [COMPILADOR MAESTRO DE INTENCIÓN]',
+    '# ORIGEN: ANTIGRAVITY OMEGA v10.0',
+    '# INTENT_ORIGIN: "' + clampSingleLine(sourceIntent, 400).replace(/"/g, '\\"') + '"',
     '# TIMESTAMP_UTC: "' + new Date().toISOString() + '"',
     '# EXECUTION_ENGINE: ' + engine + ' (' + reasoningEngineUsed + ')',
     '# ==============================================================================#',
     '',
     'TASK_ID: "' + taskId + '"',
     'TARGET_MODE: ' + options.mode,
-    'PASS_CRITERIA: "' + resolved.validation + '"',
+    'GUIA_OBJETIVO: "' + guide.objective.id + '"',
+    'GUIA_TACTICA: "' + guide.tactic.id + '"',
+    'GUIA_DESTINATARIO: "' + guide.targetAgent.id + '"',
+    'GUIA_ORIGEN: "' + guide.sources.objective + '/' + guide.sources.tactic + '/' + guide.sources.targetAgent + '"',
+    'GUIA_DIRECTIVAS:',
+    guideYaml,
+    '',
+    'PASS_CRITERIA: "' + clampSingleLine(resolved.validation, 480).replace(/"/g, '\\"') + '"',
     '',
     'DIRECTIVES:',
     '  FILES_TO_TOUCH:',
@@ -549,7 +657,7 @@ export async function compileIntentToDAG(
   return {
     yaml,
     engine,
-    protocol: 'SCLASS_SOVEREIGN_INGEST_v7.0',
+    protocol: 'SCLASS_SOVEREIGN_INGEST_v10.0',
     jsonTask,
     estimatedTokens,
     extractedEntities: {
@@ -557,6 +665,13 @@ export async function compileIntentToDAG(
       priceMatches,
       governanceChecks,
       reasoningEngineUsed
+    },
+    guide: {
+      objective: guide.objective.id,
+      tactic: guide.tactic.id,
+      targetAgent: guide.targetAgent.id,
+      directiveCount: guide.directives.length,
+      source: guide.sources
     }
   };
 }

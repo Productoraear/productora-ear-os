@@ -2,39 +2,13 @@
   "_meta": {
     "version": "13.0-OMEGA-WAVE-48-ADMIN-COHESION",
     "doctrine": "WAVE 48 (ORDEN DIRECTA CEO — COHESIÓN DEL COCKPIT ADMIN): el admin deja de ser un mosaico de capas. Se prohíben las TRES fuentes de navegación duplicadas, los contadores de vanidad y los breadcrumbs divergentes. Cola: Ω-001 (/confianza con ledger real dentro de la imagen Docker) + SSOT único de navegación + métricas con procedencia (0 · SIN_DATOS) + BFF único del cockpit + kit UI unificado.",
-    "wave": 48,
-    "total_tasks": 9,
+    "wave": 49,
+    "total_tasks": 16,
     "total_pending": 7,
-    "last_updated": "2026-11-04T10:46:35.851Z"
+    "last_updated": "2026-11-04T15:25:45.888Z"
   },
   "_instructions_for_worker": "Ejecuta SOLO via: node .antigravity/omega.js next -> lee .antigravity/MISSION_ACTIVE.json -> edita SOLO 'files' -> ejecuta 'test' -> node .antigravity/omega.js complete <ID>. 1 tarea por sesion.",
   "tasks": [
-    {
-      "id": "W47_T03_EDUARDO_PARTNER_METRICS_AND_CEO_RADAR",
-      "title": "Panel de Métricas de Escaparate para Eduardo (Ezkertza Berria) + Telemetría Global EAR OS en Admin CEO y Área Privada del Restaurante",
-      "status": "QUEUED",
-      "priority": "P0_COMMERCIAL_CLOSING",
-      "files": [
-        "src/lib/analytics/venue-showcase-telemetry.ts",
-        "src/components/otzarreta/PartnerShowcaseMetricsPanel.tsx",
-        "src/components/otzarreta/EzkertzaVenueLanding.tsx",
-        "src/app/(admin)/admin/AdminDashboardClient.tsx"
-      ],
-      "action": "Construir el sistema de métricas reales y trazables que pidió el CEO para motivar a Eduardo (dueño de Restaurante Ezkertza Berria) a firmar el contrato, visible tanto en el Área Privada de Gestión de Escaparate del Restaurante como en el Panel Admin CEO (`/admin`): 1) Crear `src/lib/analytics/venue-showcase-telemetry.ts` (tipado estricto, 0 `any`) que consolide las métricas verificables del activo en EAR OS: a) Superficie indexada real de Ezkertza/Otzarreta (`126 landings propietarias`: 72 geográficas en 18 municipios + 54 de intención, más la flagship `/otzarreta`), b) Tráfico global medido de EAR OS (sesiones auditadas Microsoft Clarity `3.832 sesiones`, `29.165 URLs pSEO`, `64.618 proveedores`), c) Contador en vivo persistido en `localStorage` + eventos de sesión (`views`, `simulator_interactions`, `map_route_clicks`, `visit_requests`, `deposit_lock_clicks`, `whatsapp_concierge_clicks`) con desglose semanal de las últimas 6 semanas de campaña en EAR OS y atribución por origen (Bilbao, Derio, Getxo, Donostia, Zarautz, Búsqueda IA). 2) Crear `src/components/otzarreta/PartnerShowcaseMetricsPanel.tsx` (`'use client'`, estética OLED `#030305`/`#09090d` y oro `#ecb613`) que muestre a Eduardo: - Pestaña 1: 'Rendimiento de Tu Escaparate (Ezkertza Berria)' (visitas acumuladas en estas semanas de EAR OS, evolución semanal, clics en 'Cómo llegar desde Bilbao', simulaciones de menús 2026 y solicitudes de bloqueo 100 €). - Pestaña 2: 'Comparativa con Tráfico Total EAR OS' (cuota de visibilidad del caserío frente al ecosistema global de Productora EAR y ventaja de 0% fuga frente a directorios pasivos). - Pestaña 3: 'Área Privada de Gestión de Ficha (Eduardo)' (estado de los 7 menús oficiales 2026, estado de la Llave Soberana, galería panorámica homologada sin recortes y botón directo para activar la Alianza / solicitar informe ejecutivo por WhatsApp). 3) Montar `PartnerShowcaseMetricsPanel` en `src/components/otzarreta/EzkertzaVenueLanding.tsx` justo debajo del bloque de Llave Soberana / Recorrido Cinemático (accesible directamente y mediante `?panel=eduardo` o acordeón ejecutivo abierto para demostración). 4) Montar un bloque resumen de 'Telemetría de Escaparates Flagship (Ezkertza Berria & Global EAR OS)' en `src/app/(admin)/admin/AdminDashboardClient.tsx` para que el CEO vea en `/admin` exactamente los mismos números que ve Eduardo.",
-      "scaffold": {
-        "invariants": [
-          "Toda cifra de infraestructura nace de constantes reales del repo (`OTZARRETA_HUB.total = 126`, `DEPOSITO_STRIPE_EUR = 100`, `SPLIT_SOBERANO 80/10/10`, sesiones auditadas de campo `3832`)",
-          "Los contadores interactivos registran e incrementan en tiempo real cuando el usuario abre el simulador, pulsa Google Maps o solicita reserva en `/otzarreta`",
-          "Sincronización visual entre el Panel de Admin CEO (`/admin`) y el Área Privada del Restaurante en `/otzarreta`"
-        ],
-        "forbidden": [
-          "Prohibido usar `any`",
-          "Prohibido tocar ZONA CERO (`ear-os-ssot.ts`)"
-        ]
-      },
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node ./node_modules/eslint/bin/eslint.js \"src/lib/analytics/venue-showcase-telemetry.ts\" \"src/components/otzarreta/PartnerShowcaseMetricsPanel.tsx\" \"src/components/otzarreta/EzkertzaVenueLanding.tsx\" \"src/app/(admin)/admin/AdminDashboardClient.tsx\"",
-      "done_when": "1) Eduardo puede ver en su panel de escaparate las visitas semanales/totales de Ezkertza Berria, las interacciones de menús/mapa y el volumen global de EAR OS. 2) El CEO ve la misma telemetría en `/admin`. 3) `tsc --noEmit` y `eslint` devuelven Exit Code 0."
-    },
     {
       "id": "W47_T04_UNIVERSAL_PROVIDER_SIMULATOR_ADAPTER",
       "title": "Simulador Universal de Proveedores · Adaptar el Cotizador Dinámico y Motor Magia Negra a los Datos Reales de Cada Ficha",
@@ -61,59 +35,30 @@
       "done_when": "1) Cualquier ficha en `/proveedores/[slug]` muestra el simulador universal adaptado a su gremio, precio y aforo real. 2) Calcula al céntimo con el Motor Magia Negra y SSOT. 3) `tsc --noEmit` y `eslint` devuelven Exit Code 0."
     },
     {
-      "id": "W48_T01_CONFIANZA_LEDGER_DOCKER_LIVE",
-      "title": "P0 · /confianza con datos reales en producción · meter el ledger en la imagen Docker (ORDER Ω-001)",
+      "id": "W49_T02_MULTI_DOMAIN_VERTICAL_ISOLATION_ROUTER",
+      "title": "P0 · Enrutamiento y Aislamiento Multi-Dominio (fincasparaboda.com · viajemusicalporlamemoria.com · artistaseuropa.com · productoraear.com)",
       "status": "QUEUED",
-      "priority": "P0_DINERO_Y_CONFIANZA",
+      "priority": "P0_ECOSYSTEM_ISOLATION",
       "files": [
-        ".dockerignore",
-        "scripts/verify_confianza_prod.cjs",
+        "src/lib/domains/sovereign-domain-registry.ts",
+        "src/middleware.ts",
+        "scripts/verify_domain_isolation.ts",
         "package.json"
       ],
-      "action": "Cerrar el hallazgo P0 medido: en producción `https://www.productoraear.com/confianza` responde 200 pero con `source=missing`, `probed=false`, `Modo SIMULADO` y `0 fila(s)` porque `.dockerignore` excluye `.antigravity`, el `Dockerfile` (COPY . .) nunca copia `evidence/ledger.jsonl` y `evidence-ledger.ts` cae en ENOENT devolviendo `deployBlocked:true`. Pasos atómicos: 1) `git ls-files --error-unmatch .antigravity/evidence/ledger.jsonl` (si no está versionado, ABORTA y reporta). 2) En `.dockerignore` sustituir la exclusión global `.antigravity` por `.antigravity/*` + `!.antigravity/evidence` + `!.antigravity/evidence/ledger.jsonl` (excepción NOMINAL: nada de bóvedas, MFTs ni blobs > 1 MB). 3) Crear `scripts/verify_confianza_prod.cjs` (fetch a la URL canónica `https://www.productoraear.com/confianza`, imprime sha256 del body y falla con exit 1 si el HTML contiene `source=missing`, `Modo SIMULADO` o `0 fila(s)`; solo pasa con `source=live`, `Modo REAL`, >= 1 fila y SHA256 visible). 4) Añadir script `verify:confianza:prod` en package.json. 5) `docker build` + `docker run --rm <img> ls -la .antigravity` debe listar SOLO `evidence/ledger.jsonl`; medir tamaño de imagen antes/después. 6) push a origin -> Coolify -> `npm run deploy:freshness` = FRESH -> `npm run verify:confianza:prod` EXIT 0. 7) append al ledger con `supersedes` de la fila U13 y nueva entrada en `CLINE_EXECUTION_LOG.md` (jamás editar la anterior).",
+      "action": "Construir la arquitectura de aislamiento por unidad de negocio para que un mismo motor SSOT alimente los 4 dominios sin mezclar audiencias ni caer en bloque: 1) Crear `src/lib/domains/sovereign-domain-registry.ts` (0 `any`) que defina la configuración soberana de cada dominio (`fincasparaboda.com`, `viajemusicalporlamemoria.com`, `artistaseuropa.com`, `productoraear.com`): identidad visual, categorías permitidas, rutas públicas habilitadas, teléfono/WhatsApp de conserjería y circuit-breaker independiente por vertical (si una vertical entra en mantenimiento, las otras 3 siguen facturando). 2) Integrar la resolución de `Host` en `src/middleware.ts` inyectando la cabecera `x-ear-vertical` y aislando las rutas para que un visitante de `viajemusicalporlamemoria.com` solo vea salud senior/B2G y uno de `fincasparaboda.com` vea el directorio nupcial y simulador de banquetes. 3) Crear `scripts/verify_domain_isolation.ts` y registrar `verify:domains` en `package.json`.",
       "scaffold": {
         "invariants": [
-          "La excepción de `.dockerignore` es nominal (evidence/ledger.jsonl únicamente): prohibido copiar `.antigravity` completo",
-          "`verify:confianza:prod` mide el host final `www.productoraear.com`, nunca el salto 308 del apex",
-          "La fila U13 del ledger se supersede, nunca se reescribe (EP-4 append-only)"
+          "Cero menciones a marcas registradas de terceros en código, URLs o metadatos (JUR-4)",
+          "Aislamiento de fallo: cada vertical tiene su propio estado de salud y fallback sin tumbar el resto",
+          "Tipado estricto TypeScript 5.8 (0 `any`)"
         ],
         "forbidden": [
-          "Prohibido tocar `src/app/(public)/confianza/page.tsx` o `evidence-ledger.ts` para simular datos",
-          "Prohibido declarar VERIFICADO sin sha256 del body de producción",
-          "Prohibido commitear `.env`, bóvedas o ficheros > 1 MB"
+          "Prohibido tocar Zona Cero (`ear-os-ssot.ts`)",
+          "Prohibido bloquear rutas `/api/webhooks/*` o `/api/health`"
         ]
       },
-      "test": "node scripts/verify_confianza_prod.cjs && node ./node_modules/typescript/bin/tsc --noEmit",
-      "done_when": "1) `docker run <img> ls -la .antigravity` muestra solo evidence/ledger.jsonl. 2) `npm run verify:confianza:prod` Exit Code 0 con `source=live` + `Modo REAL` + >= 1 fila + SHA256 impreso. 3) `deploy:freshness` = FRESH. 4) Ledger con fila nueva (supersedes U13) y log append-only."
-    },
-    {
-      "id": "W48_T02_ADMIN_NAV_SSOT_SINGLE_SOURCE",
-      "title": "P0 · Unificar la navegación del admin en un único SSOT (matar las 3 fuentes duplicadas y el buscador muerto)",
-      "status": "QUEUED",
-      "priority": "P0_COHESION_ADMIN",
-      "files": [
-        "src/lib/config/admin-navigation.ts",
-        "src/app/(admin)/admin/layout.tsx",
-        "src/app/(admin)/admin/AdminDashboardClient.tsx",
-        "scripts/audit_admin_nav.cjs",
-        "package.json"
-      ],
-      "action": "La navegación del cockpit estaba declarada TRES veces y divergía entre sí: (a) `src/app/(admin)/admin/layout.tsx` — ya migrado en esta sesión al SSOT `src/lib/config/admin-navigation.ts` (`ADMIN_MASTER_TABS`, `getAdminTabByPathname`, `searchAdminNav`, buscador real ⌘K/Ctrl+K); (b) `src/app/(admin)/admin/AdminDashboardClient.tsx` con el array `ALL_ADMIN_DIRECT_URLS` (22 entradas duplicadas y badges de vanidad `84K B2B`, `19.6K CDN`, `0 TOKEN`); (c) breadcrumbs escritos a mano en cada subpágina (`Admin / Ventas / Scala`, `Inicio / Telemetría`). Pasos: 1) Auditar el SSOT y completar lo que falte (rutas directas fuera de /admin: `/aura`, `/pro`, `/radar`, `/agent-skills`, `/voice-studio`, `/sourcing`, `/simulador-ear-os.html`). 2) En `AdminDashboardClient.tsx` sustituir `ALL_ADMIN_DIRECT_URLS` por el índice derivado del SSOT (`ADMIN_SEARCH_INDEX` / `flattenAdminNav`) conservando categoría, icono y descripción; eliminar todo badge numérico hardcodeado. 3) Crear `scripts/audit_admin_nav.cjs` que falle si: un `href` del SSOT no tiene `page.tsx` en `src/app/**`, hay `href` duplicado, existe un array de navegación del admin fuera de `src/lib/config/admin-navigation.ts`, o aparece un badge numérico no derivado de `ear-os-ssot`/`providers-manifest`. 4) Script `audit:admin-nav` en package.json encadenado a `gate:prepush`. 5) Sustituir los breadcrumbs manuales por `getAdminBreadcrumb(pathname)`.",
-      "scaffold": {
-        "invariants": [
-          "Cero `any`: los tipos `AdminSubTab` / `AdminMasterTab` / `AdminSearchEntry` son la única firma admitida",
-          "Todo `href` del SSOT debe existir en disco (0 clics muertos, INV-09)",
-          "Los badges se derivan de `EAR_OS_SSOT` y `providers-manifest`; los literales de texto son semánticos, nunca cifras",
-          "El buscador filtra sobre `ADMIN_SEARCH_INDEX` (insensible a acentos) y navega con `next/link`"
-        ],
-        "forbidden": [
-          "Prohibido reintroducir arrays de pestañas en `layout.tsx` o `AdminDashboardClient.tsx`",
-          "Prohibido tocar `src/lib/constants/ear-os-ssot.ts` (ZONA CERO)",
-          "Prohibido inventar módulos sin `page.tsx` real"
-        ]
-      },
-      "test": "node scripts/audit_admin_nav.cjs && node ./node_modules/typescript/bin/tsc --noEmit && node ./node_modules/eslint/bin/eslint.js \"src/lib/config/admin-navigation.ts\" \"src/app/(admin)/admin/layout.tsx\" \"src/app/(admin)/admin/AdminDashboardClient.tsx\"",
-      "done_when": "1) `audit:admin-nav` Exit 0 (0 hrefs muertos, 0 duplicados, 1 sola fuente). 2) `Ctrl+K` abre el buscador y cada resultado navega a una ruta existente. 3) `AdminDashboardClient` no declara ninguna URL de navegación propia. 4) `tsc --noEmit` y `eslint` Exit Code 0."
+      "test": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_domain_isolation.ts && node ./node_modules/typescript/bin/tsc --noEmit",
+      "done_when": "1) Los 4 dominios tienen su registro canónico y aislamiento por Host. 2) `verify_domain_isolation.ts` y `tsc --noEmit` devuelven Exit Code 0."
     },
     {
       "id": "W48_T03_ADMIN_ZERO_VANITY_METRICS",
@@ -189,7 +134,7 @@
         "src/components/admin/ui/AdminKpiCard.tsx",
         "src/app/(admin)/admin/layout.tsx"
       ],
-      "action": "El admin repite cabeceras y breadcrumbs distintos en cada subpágina (una dice `Admin / Ventas / Scala Leads`, otra `Inicio / Telemetría`), y el patrón de tarjeta KPI cambia de una vista a otra. Pasos: 1) Crear `src/components/admin/ui/AdminKpiCard.tsx` (Server Component; recibe `AdminMetric` de `metrics-provenance.ts`; fondo `#09090d`, borde `border-white/10`, `rounded-3xl`, acento oro `#ecb613`, `transition-all duration-300 ease-out`, sin animación de layout). 2) Crear `src/components/admin/ui/AdminPageHeader.tsx` (título, subtítulo, acciones y `<AdminBreadcrumb/>` derivado de `getAdminBreadcrumb(pathname)`). 3) Crear `src/components/admin/ui/AdminBreadcrumb.tsx` (`'use client'` solo si necesita `usePathname`, 0 datos personales, `aria-label` correcto). 4) Extraer el buscador actual del layout a `src/components/admin/ui/AdminCommandPalette.tsx` (`'use client'`), con atajo ⌘K/Ctrl+K, navegación por flechas + Enter, `role="listbox"`/`role="option"` y cierre con Escape; el layout solo lo monta. 5) Adoptar los 4 componentes en el layout y en las 4 vistas P0 del cockpit. Prohibido importar dependencias nuevas: solo React, `next/link`, `next/navigation` y `lucide-react`.",
+      "action": "El admin repite cabeceras y breadcrumbs distintos en cada subpágina (una dice `Admin / Ventas / Scala Leads`, otra `Inicio / Telemetría`), y el patrón de tarjeta KPI cambia de una vista a otra. Pasos: 1) Crear `src/components/admin/ui/AdminKpiCard.tsx` (Server Component; recibe `AdminMetric` de `metrics-provenance.ts`; fondo `#09090d`, borde `border-white/10`, `rounded-3xl`, acento oro `#ecb613`, `transition-all duration-300 ease-out`, sin animación de layout). 2) Crear `src/components/admin/ui/AdminPageHeader.tsx` (título, subtítulo, acciones y `<AdminBreadcrumb/>` derivado de `getAdminBreadcrumb(pathname)`). 3) Crear `src/components/admin/ui/AdminBreadcrumb.tsx` (`'use client'` solo si necesita `usePathname`, 0 datos personales, `aria-label` correcto). 4) Extraer el buscador actual del layout a `src/components/admin/ui/AdminCommandPalette.tsx` (`'use client'`), con atajo ⌘K/Ctrl+K, navegación por flechas + Enter, `role='listbox'`/`role='option'` y cierre con Escape; el layout solo lo monta. 5) Adoptar los 4 componentes en el layout y en las 4 vistas P0 del cockpit. Prohibido importar dependencias nuevas: solo React, `next/link`, `next/navigation` y `lucide-react`.",
       "scaffold": {
         "invariants": [
           "Server Components por defecto; `'use client'` solo en la hoja reactiva (paleta y breadcrumb)",
@@ -205,9 +150,90 @@
       },
       "test": "node ./node_modules/typescript/bin/tsc --noEmit && node ./node_modules/eslint/bin/eslint.js \"src/components/admin/ui/AdminCommandPalette.tsx\" \"src/components/admin/ui/AdminBreadcrumb.tsx\" \"src/components/admin/ui/AdminPageHeader.tsx\" \"src/components/admin/ui/AdminKpiCard.tsx\" \"src/app/(admin)/admin/layout.tsx\"",
       "done_when": "1) Existe un único breadcrumb, una única paleta y un único KPI card en todo el admin. 2) La paleta se abre con Ctrl+K y navega con teclado a rutas reales. 3) 0 dependencias nuevas en package.json. 4) `tsc --noEmit` y `eslint` Exit Code 0."
+    },
+    {
+      "id": "W49_T03_FOUNDERS_100_CONTRACT_PARITY_ENGINE",
+      "title": "P0 · Validador de Paridad de Contrato & Pacto de los 100 Fundadores Vitalicios (fincasparaboda.com)",
+      "status": "QUEUED",
+      "priority": "P0_MARKET_DOMINANCE",
+      "files": [
+        "src/lib/founders/founders-parity-engine.ts",
+        "src/components/founders/FoundersParityCalculatorCard.tsx",
+        "src/components/otzarreta/PartnerShowcaseMetricsPanel.tsx",
+        "scripts/verify_founders_parity.ts",
+        "package.json"
+      ],
+      "action": "Implementar la estrategia aprobada por el CEO para dominar el mercado frente a los directorios clásicos: 1) Crear `src/lib/founders/founders-parity-engine.ts` (0 `any`, puro y determinista) que reciba la cuota anual que el proveedor pagaba en su portal anterior, el número de competidores que aparecían en su ficha antigua y su aforo/ticket medio, y devuelva: a) su Cuota Fundador Congelada de por vida (igualada al céntimo, 0% subida IPC vitalicia, contador de plazas disponibles sobre 100 Fundadores), b) el ahorro neto anual por 0% fuga de leads y 0% comisiones ocultas, y c) el certificado SHA-256 de Reserva de Plaza de Fundador. 2) Crear `src/components/founders/FoundersParityCalculatorCard.tsx` (`\"use client\"`, estética OLED `#030305`/`#ecb613`) donde el dueño de finca o proveedor introduce lo que pagaba antes, adjunta/declara su referencia de contrato previo y bloquea su plaza de Fundador Vitalicio vía Conserjería WhatsApp (`+34 693 693 048`) o depósito deducible de `100 €`. 3) Integrar `FoundersParityCalculatorCard` dentro de `PartnerShowcaseMetricsPanel.tsx` para que Eduardo y cualquier dueño de finca lo tenga operativo hoy mismo. 4) Crear `scripts/verify_founders_parity.ts` y registrar `verify:founders` en `package.json`.",
+      "scaffold": {
+        "invariants": [
+          "Tope estricto de `MAX_FOUNDERS_SLOTS = 100` con tarifa congelada vitalicia",
+          "Todo importe base o depósito proviene de `ear-os-ssot.ts` (`DEPOSITO_STRIPE_EUR = 100`, `SPLIT_SOBERANO 80/10/10`)",
+          "Cero menciones a marcas registradas de portales competidores en la interfaz pública (JUR-4)"
+        ],
+        "forbidden": [
+          "Prohibido usar `any`",
+          "Prohibido inventar plazas ocupadas sin declarar su fuente"
+        ]
+      },
+      "test": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_founders_parity.ts && node ./node_modules/typescript/bin/tsc --noEmit && node ./node_modules/eslint/bin/eslint.js \"src/lib/founders/founders-parity-engine.ts\" \"src/components/founders/FoundersParityCalculatorCard.tsx\" \"src/components/otzarreta/PartnerShowcaseMetricsPanel.tsx\"",
+      "done_when": "1) El dueño de finca puede calcular su Paridad de Contrato y bloquear su plaza entre los 100 Fundadores Vitalicios. 2) `verify_founders_parity.ts`, `tsc` y `eslint` devuelven Exit Code 0."
+    },
+    {
+      "id": "W49_T04_ARTIST_360_MULTINATIONAL_HUB",
+      "title": "P1 · Panel 360 de Artista (Caché Individual + Distribución ISRC + Telemetría Social + Liquidación 80/10/10 para artistaseuropa.com)",
+      "status": "QUEUED",
+      "priority": "P1_ARTIST_ECOSYSTEM",
+      "files": [
+        "src/lib/artists/artist-360-contract.ts",
+        "src/components/artists/Artist360ControlHub.tsx",
+        "scripts/verify_artist_360.ts",
+        "package.json"
+      ],
+      "action": "Construir el estándar obligatorio de 3 capas aprobado por el CEO para todas las fichas de `artistaseuropa.com`: 1) Crear `src/lib/artists/artist-360-contract.ts` (0 `any`) que modele: Capa A (Configurador de Caché Individual por formato Solista/Dúo/Banda, km exentos y rider acústico Ley 37/2003), Capa B (Distribución Digital 360 con generador/validador de código ISRC `ES-EAR-YY-NNNNN`, enlaces a perfiles oficiales de streaming/redes y reproductor de alta fidelidad sin recortes), y Capa C (Liquidación automática 80% Artista / 10% EAR OS / 10% VIMUME sobre cada reserva bloqueada con `100 €`). 2) Crear `src/components/artists/Artist360ControlHub.tsx` (`\"use client\"`, estética OLED) con las 3 pestañas interactivas listas para montar en las fichas de artistas y en el portal pro. 3) Crear `scripts/verify_artist_360.ts` y añadir `verify:artist-360` en `package.json`.",
+      "scaffold": {
+        "invariants": [
+          "Tarifa suelo solista Edwin Agudelo = `350,00 €` (`TARIFA_BASE_SOLISTA_EUR`) y Split `80/10/10` inmutable",
+          "Validación estricta de formato ISRC (`ES-EAR-\\d{2}-\\d{5}`)",
+          "Cero menciones a marcas registradas de transporte o terceros (JUR-4)"
+        ],
+        "forbidden": [
+          "Prohibido usar `any`",
+          "Prohibido alterar `ear-os-ssot.ts`"
+        ]
+      },
+      "test": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_artist_360.ts && node ./node_modules/typescript/bin/tsc --noEmit",
+      "done_when": "1) El módulo de Artista 360 calcula caché propio, valida códigos ISRC y desglosa el Split 80/10/10 al céntimo. 2) `verify_artist_360.ts` y `tsc --noEmit` devuelven Exit Code 0."
     }
   ],
   "completed": [
+    {
+      "id": "W49_T01_COMPILER_100_AUTONOMOUS_CONTROLS",
+      "title": "P0 · Compilador Maestro 100% Autónomo para el CEO (Selector de Dominio/Vertical, Stakeholders, Plantillas 1-Clic y Auditor Pre-Vuelo)",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-11-04T15:25:45.888Z"
+    },
+    {
+      "id": "W48_T02_ADMIN_NAV_SSOT_SINGLE_SOURCE",
+      "title": "P0 · Unificar la navegación del admin en un único SSOT (matar las 3 fuentes duplicadas y el buscador muerto)",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-11-04T14:46:37.824Z"
+    },
+    {
+      "id": "W48_T01_CONFIANZA_LEDGER_DOCKER_LIVE",
+      "title": "P0 · /confianza con datos reales en producción · meter el ledger en la imagen Docker (ORDER Ω-001)",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-11-04T14:46:37.824Z"
+    },
+    {
+      "id": "W47_T03_EDUARDO_PARTNER_METRICS_AND_CEO_RADAR",
+      "title": "Panel de Métricas de Escaparate para Eduardo (Ezkertza Berria) + Telemetría Global EAR OS en Admin CEO y Área Privada del Restaurante",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-11-04T14:46:37.824Z"
+    },
     {
       "id": "W47_T02_PURGE_OTZARRETA_DUPLICATES_AND_GLOBAL_GALLERY",
       "title": "Cirugía Anti-Frankenstein en /otzarreta y Galerías Globales · 1 Hero, 1 Vídeo sin iframe, 0 Fotos Verticales Cortadas",
@@ -245,9 +271,9 @@
     }
   ],
   "metadata": {
-    "last_updated": "2026-11-04T10:46:35.851Z",
+    "last_updated": "2026-11-04T15:25:45.888Z",
     "total_pending": 7,
-    "current_sprint": "WAVE_48_ADMIN_COHESION_AND_TRUTH",
+    "current_sprint": "WAVE_49_COMPILER_100_AND_MULTI_DOMAIN_ISOLATION",
     "ceo_mandate": "Convertir /admin en un ecosistema cohesionado: 1 sola navegación (SSOT), 0 cifras de vanidad (contadores a 0 con procedencia), 0 breadcrumbs divergentes, 0 buscador muerto, y /confianza publicando evidencia real en producción."
   }
 }

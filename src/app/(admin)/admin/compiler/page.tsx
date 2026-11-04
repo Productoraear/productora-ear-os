@@ -32,6 +32,16 @@ import {
   type OracleRefinedResult
 } from '@/lib/oracle/quantum-oracle-engine';
 import type { CompiledDAGResult } from '@/lib/compiler/omega-intent-compiler';
+import {
+  MASTER_OBJECTIVES,
+  MASTER_TACTICS,
+  MASTER_TARGETS,
+  MASTER_DOMAINS,
+  MASTER_STAKEHOLDERS,
+  MASTER_EXECUTIVE_TEMPLATES,
+  evaluatePromptReadiness,
+  type MasterExecutiveTemplate
+} from '@/lib/compiler/master-guide';
 
 type CompileMode = 'QUIRURGICO' | 'OMEGA_FULLSTACK';
 type CompileEngine = 'OLLAMA' | 'CLOUD';
@@ -80,7 +90,7 @@ type GpuStatusPayload = {
   loadedModels: Array<{ name: string; vramMB: number; contextSize: number }>;
 };
 
-export default function VibeCodingCompilerPage() {
+export default function MasterCompilerPage() {
   const [prompt, setPrompt] = useState('');
   const [mode, setMode] = useState<CompileMode>('OMEGA_FULLSTACK');
   const [engine, setEngine] = useState<CompileEngine>('CLOUD');
@@ -88,6 +98,8 @@ export default function VibeCodingCompilerPage() {
   const [selectedObjective, setSelectedObjective] = useState<string>('VENTAS');
   const [selectedTactic, setSelectedTactic] = useState<string>('SOBREDEMANDA');
   const [selectedTargetAgent, setSelectedTargetAgent] = useState<string>('CLINE');
+  const [selectedDomain, setSelectedDomain] = useState<string>('PRODUCTORA_EAR');
+  const [selectedStakeholder, setSelectedStakeholder] = useState<string>('CEO_INTERNO');
   const [oracleResult, setOracleResult] = useState<OracleRefinedResult | null>(null);
   const [isCompiling, setIsCompiling] = useState(false);
   const [compiledData, setCompiledData] = useState<CompiledDAGResult | null>(null);
@@ -107,6 +119,16 @@ export default function VibeCodingCompilerPage() {
   const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
 
   const activeDoctrine = oraclePersona === 'CEO' ? DOCTRINA_CEO_EMPRESARIO : DOCTRINA_ARTISTA_SOBERANO;
+  const readiness = useMemo(() => evaluatePromptReadiness(prompt), [prompt]);
+
+  const handleApplyTemplate = (tpl: MasterExecutiveTemplate) => {
+    setSelectedDomain(tpl.domain);
+    setSelectedStakeholder(tpl.stakeholder);
+    setSelectedObjective(tpl.objective);
+    setSelectedTactic(tpl.tactic);
+    setSelectedTargetAgent(tpl.targetAgent);
+    setPrompt(tpl.promptTemplate);
+  };
 
   const refreshGpuStatus = useCallback(async () => {
     setIsRefreshingGpu(true);
@@ -167,12 +189,15 @@ export default function VibeCodingCompilerPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          intent: [
-          `[OBJETIVO]: ${selectedObjective}`,
-          `[TÁCTICA VELOCITY]: ${selectedTactic}`,
-          `[DESTINATARIO]: ${selectedTargetAgent}`,
-          `[ORDEN DEL CEO]: ${prompt}`
-        ].join('\n'),
+          // La orden viaja limpia y los tres ejes de la Guía Maestra se envían
+          // como campos cerrados que el servidor valida (antes iban pegados al
+          // texto con etiquetas y cualquier valor pasaba sin validar).
+          intent: prompt,
+          objective: selectedObjective,
+          tactic: selectedTactic,
+          targetAgent: selectedTargetAgent,
+          domain: selectedDomain,
+          stakeholder: selectedStakeholder,
           mode,
           engine,
           oraclePersona,
@@ -291,14 +316,14 @@ export default function VibeCodingCompilerPage() {
         <span>/</span>
         <span>IA &amp; GPU</span>
         <span>/</span>
-        <span className="text-[#ecb613]">Oráculo &amp; Meta-Compilador</span>
+        <span className="text-[#ecb613]">Oráculo &amp; Compilador Maestro</span>
       </div>
 
       {/* Header S-Class */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold font-syne tracking-tight text-white uppercase">
-            META-COMPILADOR &amp; ORÁCULO CUÁNTICO S-CLASS
+            COMPILADOR MAESTRO &amp; ORÁCULO CUÁNTICO S-CLASS
           </h1>
           <p className="text-xs font-mono text-zinc-400 mt-1">
             Bóveda de Crecimiento &bull; <span className="text-[#ecb613]">tasks_queue.json</span> &bull; Doctrina Inmutable Exit Code 0
@@ -482,7 +507,7 @@ export default function VibeCodingCompilerPage() {
                 <div className="flex items-center justify-between gap-2 pt-1 border-t border-zinc-800">
                   <div className="flex items-center gap-2">
                     <BrainCircuit className="w-3.5 h-3.5 text-[#ecb613]" />
-                    <span className="text-[10px] font-mono text-zinc-400">Forja Prompt Maestro (nivel Claude Opus High)</span>
+                    <span className="text-[10px] font-mono text-zinc-400">Forja el Prompt Maestro (nivel frontera)</span>
                   </div>
                   <button
                     onClick={() => setForgeEnabled(v => !v)}
@@ -505,25 +530,74 @@ export default function VibeCodingCompilerPage() {
             )}
 
             
-            {/* 🧭 SELECTORES DE LA GUÍA MAESTRA (DOCTRINA DAVID HURTADO & VELOCITY MEDIA) */}
-            <div className="p-4 rounded-2xl bg-zinc-950/80 border border-[#ecb613]/25 space-y-3">
+            {/* 🧭 SELECTORES DE LA GUÍA MAESTRA · SSOT: src/lib/compiler/master-guide.ts */}
+            <div className="p-4 rounded-2xl bg-zinc-950/80 border border-[#ecb613]/25 space-y-3.5">
               <div className="flex items-center justify-between text-xs font-mono">
                 <span className="text-[#ecb613] font-bold flex items-center gap-1.5">
-                  <Crown className="w-3.5 h-3.5 text-[#ecb613]" /> Guía Maestra S-Class
+                  <Crown className="w-3.5 h-3.5 text-[#ecb613]" /> Guía Maestra S-Class (Control 100% Autónomo CEO)
                 </span>
                 <span className="text-[10px] text-zinc-500 font-mono">Doctrina Exit Code 0</span>
+              </div>
+
+              {/* Galería de Plantillas Ejecutivas 1-Clic */}
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-mono uppercase tracking-wider text-[#ecb613]">⚡ Plantillas Ejecutivas de 1 Clic (Carga Automática)</label>
+                <div className="grid grid-cols-2 gap-1.5 max-h-40 overflow-y-auto pr-1">
+                  {MASTER_EXECUTIVE_TEMPLATES.map(tpl => (
+                    <button
+                      key={tpl.id}
+                      type="button"
+                      onClick={() => handleApplyTemplate(tpl)}
+                      className="p-2 rounded-xl text-left border bg-black/50 border-zinc-800 hover:border-[#ecb613]/60 text-zinc-300 hover:text-white text-[11px] font-mono transition"
+                    >
+                      <div className="font-bold truncate text-white">{tpl.title}</div>
+                      <div className="text-[9px] text-[#ecb613] truncate">{tpl.badge}</div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Selector 0A: Dominio / Unidad de Negocio Aislada */}
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-mono uppercase tracking-wider text-zinc-400">0A. Unidad de Negocio / Dominio Aislado</label>
+                <div className="grid grid-cols-2 gap-1.5">
+                  {MASTER_DOMAINS.map(item => (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={() => setSelectedDomain(item.id)}
+                      className={'p-2 rounded-xl text-left border text-xs font-mono transition ' + (selectedDomain === item.id ? 'bg-[#ecb613]/15 border-[#ecb613] text-[#ecb613] font-bold' : 'bg-black/40 border-zinc-800/80 text-zinc-400 hover:text-white')}
+                    >
+                      <div className="truncate">{item.label}</div>
+                      <div className="text-[9px] text-zinc-500 truncate">{item.hint}</div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Selector 0B: Perfil de Cliente / Interlocutor */}
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-mono uppercase tracking-wider text-zinc-400">0B. Perfil de Interlocutor / Cliente</label>
+                <div className="grid grid-cols-2 gap-1.5">
+                  {MASTER_STAKEHOLDERS.map(item => (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={() => setSelectedStakeholder(item.id)}
+                      className={'p-2 rounded-xl text-left border text-xs font-mono transition ' + (selectedStakeholder === item.id ? 'bg-emerald-500/15 border-emerald-400 text-emerald-300 font-bold' : 'bg-black/40 border-zinc-800/80 text-zinc-400 hover:text-white')}
+                    >
+                      <div className="truncate">{item.label}</div>
+                      <div className="text-[9px] text-zinc-500 truncate">{item.hint}</div>
+                    </button>
+                  ))}
+                </div>
               </div>
 
               {/* Selector 1: Objetivo de Negocio */}
               <div className="space-y-1.5">
                 <label className="text-[10px] font-mono uppercase tracking-wider text-zinc-400">1. Objetivo de Negocio</label>
                 <div className="grid grid-cols-2 gap-1.5">
-                  {[
-                    { id: 'VENTAS', label: '💰 Ventas (Depósito 100€)', hint: 'Stripe Price-Lock deducible' },
-                    { id: 'FINCAS', label: '🏰 Alianzas Fincas & Venues', hint: 'Modelo Eduardo / Otzarreta' },
-                    { id: 'B2G', label: '🏛️ B2G (<14.250€ LCSP)', hint: 'Contratos menores sin concurso' },
-                    { id: 'ARQUITECTURA', label: '⚡ Código & Backend', hint: '0 fachadas, tsc Exit Code 0' }
-                  ].map(item => (
+                  {MASTER_OBJECTIVES.map(item => (
                     <button
                       key={item.id}
                       type="button"
@@ -537,16 +611,11 @@ export default function VibeCodingCompilerPage() {
                 </div>
               </div>
 
-              {/* Selector 2: Táctica de la Bóveda Velocity Media */}
+              {/* Selector 2: Táctica de la Bóveda de Crecimiento */}
               <div className="space-y-1.5">
-                <label className="text-[10px] font-mono uppercase tracking-wider text-zinc-400">2. Táctica Velocity Media</label>
+                <label className="text-[10px] font-mono uppercase tracking-wider text-zinc-400">2. Táctica de la Bóveda de Crecimiento</label>
                 <div className="grid grid-cols-2 gap-1.5">
-                  {[
-                    { id: 'SOBREDEMANDA', label: '🔥 Sobredemanda', hint: 'Exclusividad & Escasez' },
-                    { id: 'VENTA_ELEGANTE', label: '✨ Venta Elegante', hint: 'Alivio & Transparencia' },
-                    { id: 'MIDAS_SPLIT', label: '🛡️ Midas (Split 80/10/10)', hint: 'Dividendo social VIMUME' },
-                    { id: 'CAMALEON_GEO', label: '🎯 Camaleón Neural', hint: 'Pre-landings por intención' }
-                  ].map(item => (
+                  {MASTER_TACTICS.map(item => (
                     <button
                       key={item.id}
                       type="button"
@@ -564,11 +633,7 @@ export default function VibeCodingCompilerPage() {
               <div className="space-y-1.5">
                 <label className="text-[10px] font-mono uppercase tracking-wider text-zinc-400">3. ¿A qué IA o Agente se lo entregarás?</label>
                 <div className="grid grid-cols-3 gap-1.5">
-                  {[
-                    { id: 'CLINE', label: '🤖 Obrero Cline', hint: 'Para picar código' },
-                    { id: 'N8N', label: '⚡ Flujo n8n', hint: 'Automatización' },
-                    { id: 'WHATSAPP', label: '💬 WhatsApp', hint: 'Cierre directo' }
-                  ].map(item => (
+                  {MASTER_TARGETS.map(item => (
                     <button
                       key={item.id}
                       type="button"
@@ -578,6 +643,28 @@ export default function VibeCodingCompilerPage() {
                       <div className="truncate">{item.label}</div>
                       <div className="text-[9px] text-zinc-500 truncate">{item.hint}</div>
                     </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Auditor Pre-Vuelo en Vivo */}
+              <div className="p-3 rounded-xl bg-black/60 border border-zinc-800 space-y-2">
+                <div className="flex items-center justify-between text-[10px] font-mono">
+                  <span className="text-zinc-300 uppercase">Auditor Pre-Vuelo de Claridad</span>
+                  <span className={readiness.score >= 75 ? 'text-emerald-400 font-bold' : 'text-amber-400 font-bold'}>
+                    Precisión: {readiness.score}%
+                  </span>
+                </div>
+                <div className="grid grid-cols-2 gap-1.5">
+                  {readiness.checks.map(chk => (
+                    <div
+                      key={chk.id}
+                      title={chk.tip}
+                      className={'px-2 py-1 rounded text-[10px] font-mono flex items-center gap-1.5 ' + (chk.passed ? 'bg-emerald-950/30 text-emerald-300 border border-emerald-500/20' : 'bg-zinc-900/60 text-zinc-500 border border-zinc-800')}
+                    >
+                      <CheckCircle2 className={'w-3 h-3 shrink-0 ' + (chk.passed ? 'text-emerald-400' : 'text-zinc-600')} />
+                      <span className="truncate">{chk.label}</span>
+                    </div>
                   ))}
                 </div>
               </div>
@@ -668,7 +755,7 @@ export default function VibeCodingCompilerPage() {
             <div className="flex items-center justify-between pb-3 border-b border-zinc-800 mb-4">
               <div className="flex items-center gap-2">
                 <Code2 className="w-4 h-4 text-[#ecb613]" />
-                <span className="text-xs font-mono uppercase text-zinc-300">Manifiesto DAG para Bare-Metal</span>
+                <span className="text-xs font-mono uppercase text-zinc-300">Manifiesto DAG · servidor propio</span>
               </div>
               {compiledData && (
                 <div className="flex items-center gap-2">
@@ -730,13 +817,13 @@ export default function VibeCodingCompilerPage() {
             </div>
           )}
 
-          {/* Forged Master Prompt (nivel Claude Opus High) */}
+          {/* Forged Master Prompt (nivel Frontera S-Class) */}
           {masterPrompt && (
             <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-[#ecb613]/30 backdrop-blur-md space-y-3">
               <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-800 pb-2">
                 <div className="flex items-center gap-2">
                   <BrainCircuit className="w-4 h-4 text-[#ecb613]" />
-                  <span className="text-xs font-mono uppercase text-[#ecb613] font-bold">Prompt Maestro Forjado (Claude Opus High)</span>
+                  <span className="text-xs font-mono uppercase text-[#ecb613] font-bold">Prompt Maestro Forjado (nivel frontera)</span>
                 </div>
                 <button
                   onClick={handleCopyMasterPrompt}

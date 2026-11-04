@@ -5,6 +5,15 @@ import { compileIntentToDAG } from '@/lib/compiler/omega-intent-compiler';
 import type { CompileEngine, CompileMode } from '@/lib/compiler/omega-intent-compiler';
 import { refineQueryWithOracle, type OraclePersona } from '@/lib/oracle/quantum-oracle-engine';
 import { forgeMasterPrompt, type ForgeMode, type ForgedMasterPrompt } from '@/lib/compiler/prompt-maestro-forge';
+import {
+  MASTER_OBJECTIVE_IDS,
+  MASTER_TACTIC_IDS,
+  MASTER_TARGET_IDS,
+  MASTER_DOMAIN_IDS,
+  MASTER_STAKEHOLDER_IDS,
+  buildGuideBrief,
+  resolveMasterGuide,
+} from '@/lib/compiler/master-guide';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -31,6 +40,14 @@ const CompileIntentSchema = z
     engine: z.enum(COMPILE_ENGINES).optional(),
     oraclePersona: z.enum(ORACLE_PERSONAS).optional(),
     model: z.string().trim().min(1).max(MAX_MODEL_LENGTH).optional(),
+    // Guía Maestra: identificadores CERRADOS del SSOT `master-guide.ts`.
+    // Antes estos ejes viajaban pegados al texto libre y cualquier valor pasaba
+    // sin validar; ahora un eje desconocido se rechaza con 400.
+    objective: z.enum(MASTER_OBJECTIVE_IDS).optional(),
+    tactic: z.enum(MASTER_TACTIC_IDS).optional(),
+    targetAgent: z.enum(MASTER_TARGET_IDS).optional(),
+    domain: z.enum(MASTER_DOMAIN_IDS).optional(),
+    stakeholder: z.enum(MASTER_STAKEHOLDER_IDS).optional(),
     forge: z.boolean().optional()
   })
   .strict()
@@ -117,12 +134,36 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     const persona: OraclePersona = resolveOraclePersona(body.oraclePersona);
     const oracleResult = refineQueryWithOracle(rawIntent, persona);
 
+    // La Guía Maestra se resuelve SIEMPRE en el servidor: ejes declarados por el
+    // cliente (validados por Zod), deducidos del texto de la orden, o defecto.
+    // Consecuencia medida: el grafo depende de la táctica incluso cuando el
+    // cliente solo envía `intent` con las etiquetas `[TÁCTICA VELOCITY]`.
+    const guide = resolveMasterGuide(
+      {
+        objective: body.objective ?? null,
+        tactic: body.tactic ?? null,
+        targetAgent: body.targetAgent ?? null,
+        domain: body.domain ?? null,
+        stakeholder: body.stakeholder ?? null,
+      },
+      rawIntent,
+    );
+
     const mode = resolveMode(body.mode);
     const engine = resolveEngine(body.engine);
     const options = {
       mode,
       engine,
-      model: body.model && body.model.trim() ? body.model : undefined
+      model: body.model && body.model.trim() ? body.model : undefined,
+      // Ejes de la Guía Maestra + orden humana original. `sourceIntent` evita que
+      // el prompt forjado (miles de caracteres) desborde el campo `action` de la
+      // cola del orquestador.
+      objective: guide.objective.id,
+      tactic: guide.tactic.id,
+      targetAgent: guide.targetAgent.id,
+      domain: guide.domain.id,
+      stakeholder: guide.stakeholder.id,
+      sourceIntent: rawIntent
     };
 
     const startedAt = performance.now();
@@ -132,7 +173,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     if (forgeEnabled) {
       try {
         masterPrompt = await forgeMasterPrompt({
-          intent: rawIntent,
+          // El modelo recibe la guía DELANTE de la orden: así no puede ignorarla.
+          intent: `${buildGuideBrief(guide)}\n\n[ORDEN DEL CEO]\n${rawIntent}`,
           mode: resolveForgeMode(mode),
           model: options.model
         });
@@ -155,6 +197,13 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       modo: options.mode,
       motor: options.engine,
       protocolo: compiled.protocol,
+      guia: {
+        objetivo: guide.objective.id,
+        tactica: guide.tactic.id,
+        destinatario: guide.targetAgent.id,
+        directivas: guide.directives.length,
+        procedencia: guide.sources
+      },
       oracle: oracleResult,
       forge: masterPrompt,
       masterPrompt: masterPrompt?.masterPrompt ?? null,
