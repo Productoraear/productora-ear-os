@@ -4,37 +4,11 @@
     "doctrine": "WAVE 50 (DOMINANCIA DE MERCADO Y ESCALA MULTIDOMINIO): 1) El Agente Concierge IA y el Simulador Universal (W47_T04) y la Calculadora de los 100 Fundadores Vitalicios (W49_T03) ya están sellados y desplegados en producción. 2) La cola queda blindada con las 6 misiones estratégicas restantes para que el Obrero Local ejecute con precisión quirúrgica, cero fachadas, cero menciones de marcas de terceros (JUR-4) y detección activa de ventanas de oportunidad.",
     "wave": 50,
     "total_tasks": 18,
-    "total_pending": 6,
-    "last_updated": "2026-11-04T18:16:00.000Z"
+    "total_pending": 5,
+    "last_updated": "2026-11-04T18:47:26.175Z"
   },
   "_instructions_for_worker": "Ejecuta SOLO via: node .antigravity/omega.js next -> lee .antigravity/MISSION_ACTIVE.json -> edita SOLO 'files' -> ejecuta 'test' -> node .antigravity/omega.js complete <ID>. 1 tarea por sesion.",
   "tasks": [
-    {
-      "id": "W49_T02_MULTI_DOMAIN_VERTICAL_ISOLATION_ROUTER",
-      "title": "P0 · Enrutamiento y Aislamiento Multi-Dominio (fincasparaboda.com · viajemusicalporlamemoria.com · artistaseuropa.com · productoraear.com)",
-      "status": "QUEUED",
-      "priority": "P0_ECOSYSTEM_ISOLATION",
-      "files": [
-        "src/lib/domains/sovereign-domain-registry.ts",
-        "src/middleware.ts",
-        "scripts/verify_domain_isolation.ts",
-        "package.json"
-      ],
-      "action": "VENTANA DE OPORTUNIDAD COMERCIAL: Aislar las 4 unidades de negocio bajo un solo cerebro SSOT para capturar tráfico hiper-específico sin contaminar audiencias (un concejal de Servicios Sociales en `viajemusicalporlamemoria.com` jamás debe ver bodas ni mariachis; una pareja en `fincasparaboda.com` ve solo fincas, banquetes y proveedores nupciales; un promotor en `artistaseuropa.com` ve contratación artística inmediata). CUELLO DE BOTELLA A ELIMINAR: Evitar que una caída o mantenimiento en una vertical tumbe el resto del ecosistema. PASOS DICTADOS: 1) Crear `src/lib/domains/sovereign-domain-registry.ts` (0 `any`) que defina la configuración soberana de los 4 dominios (`fincasparaboda.com`, `viajemusicalporlamemoria.com`, `artistaseuropa.com`, `productoraear.com`): identidad visual, categorías permitidas, rutas públicas habilitadas, teléfono/WhatsApp de conserjería (`CENTRALITA_EAR_OS`) y circuit-breaker independiente por vertical. 2) Integrar la resolución de `Host` en `src/middleware.ts` inyectando la cabecera `x-ear-vertical` y aislando las rutas sin bloquear `/api/*`, `/_next/*` ni webhooks. 3) Crear `scripts/verify_domain_isolation.ts` que verifique los 4 dominios, sus rutas permitidas y el circuit-breaker, y registrar `verify:domains` en `package.json`.",
-      "scaffold": {
-        "invariants": [
-          "Cero menciones a marcas registradas de terceros en código, URLs o metadatos (JUR-4)",
-          "Aislamiento de fallo: cada vertical tiene su propio estado de salud y fallback sin tumbar el resto",
-          "Tipado estricto TypeScript 5.8 (0 `any`)"
-        ],
-        "forbidden": [
-          "Prohibido tocar Zona Cero (`ear-os-ssot.ts`)",
-          "Prohibido bloquear rutas `/api/webhooks/*`, `/api/agents/*` o `/api/health`"
-        ]
-      },
-      "test": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_domain_isolation.ts && node ./node_modules/typescript/bin/tsc --noEmit",
-      "done_when": "1) Los 4 dominios tienen su registro canónico y aislamiento por Host. 2) `verify_domain_isolation.ts` y `tsc --noEmit` devuelven Exit Code 0."
-    },
     {
       "id": "W48_T03_ADMIN_ZERO_VANITY_METRICS",
       "title": "P0 · Contadores a 0 con procedencia · erradicar las cifras de vanidad del admin (AF-1 / AF-5)",
@@ -181,6 +155,13 @@
   ],
   "completed": [
     {
+      "id": "W49_T02_MULTI_DOMAIN_VERTICAL_ISOLATION_ROUTER",
+      "title": "P0 · Enrutamiento y Aislamiento Multi-Dominio (fincasparaboda.com · viajemusicalporlamemoria.com · artistaseuropa.com · productoraear.com)",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-11-04T18:47:26.172Z"
+    },
+    {
       "id": "W49_T03_FOUNDERS_100_CONTRACT_PARITY_ENGINE",
       "title": "P0 · Validador de Paridad de Contrato & Pacto de los 100 Fundadores Vitalicios (fincasparaboda.com)",
       "status": "COMPLETED",
@@ -259,8 +240,8 @@
     }
   ],
   "metadata": {
-    "last_updated": "2026-11-04T18:16:00.000Z",
-    "total_pending": 6,
+    "last_updated": "2026-11-04T18:47:26.175Z",
+    "total_pending": 5,
     "current_sprint": "WAVE_50_MARKET_DOMINANCE_AND_REVENUE_SCALE",
     "ceo_mandate": "1) Agente Concierge IA 100% conectado a las fichas verificadas (Ezkertza/Derio, Otzarreta/Zarautz y 2.150 fichas en memoria) sin sesgo de solista. 2) 6 misiones atómicas encoladas para el obrero local con tácticas de dominancia y eliminación de cuellos de botella."
   }
