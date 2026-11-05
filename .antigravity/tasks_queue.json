@@ -1,159 +1,72 @@
 {
   "_meta": {
-    "version": "14.0-OMEGA-WAVE-50-MARKET-DOMINANCE",
+    "version": "15.0-OMEGA-ROJO-FASE-1-NODOS-A-B",
+    "doctrine_v51": "WAVE 51 · FASE 1 DE LA DIRECTIVA DAVID HURTADO (4 D + PREMORTEM) CON EL ORDEN CORREGIDO POR EVIDENCIA: 1) omega.js tiene UN SOLO SLOT (MISSION_ACTIVE.json): los Nodos A y B no pueden correr en paralelo, corren en serie por mandato del arnés. Se descarta el paralelismo declarado y se documenta por qué. 2) El Reto 29 YA TIENE ARNÉS en disco (scripts/verify_budget_allocator.ts, W45_T01): se ENDURECE, no se duplica. 3) El Reto 31 NO tiene instrumento: scripts/audit_cls_budget.cjs devuelve ENOENT hoy (sonda read_files 2026-11-05). Por la Ley del Auditor Real se construye primero el instrumento y después se corrige la ruta; arreglar a ciegas un CLS sin medidor es una fachada. 4) El Reto 35 (cero clics muertos) ya está instrumentado (audit:cta-matrix) y en verde: no es tarea, es puerta. 5) El 15º ítem del scorecard se activa con scripts/audit_omega_rojo_scorecard.cjs (npm run audit:omega-rojo) para que nunca vuelva a firmarse un 20/20 sin comando (SIG-2).",
     "doctrine": "WAVE 50 (DOMINANCIA DE MERCADO Y ESCALA MULTIDOMINIO): 1) El Agente Concierge IA y el Simulador Universal (W47_T04) y la Calculadora de los 100 Fundadores Vitalicios (W49_T03) ya están sellados y desplegados en producción. 2) La cola queda blindada con las 6 misiones estratégicas restantes para que el Obrero Local ejecute con precisión quirúrgica, cero fachadas, cero menciones de marcas de terceros (JUR-4) y detección activa de ventanas de oportunidad.",
-    "wave": 50,
-    "total_tasks": 18,
-    "total_pending": 5,
-    "last_updated": "2026-11-04T18:47:26.175Z"
+    "wave": 51,
+    "total_tasks": 3,
+    "total_pending": 0,
+    "last_updated": "2026-11-05T09:17:24.022Z"
   },
   "_instructions_for_worker": "Ejecuta SOLO via: node .antigravity/omega.js next -> lee .antigravity/MISSION_ACTIVE.json -> edita SOLO 'files' -> ejecuta 'test' -> node .antigravity/omega.js complete <ID>. 1 tarea por sesion.",
-  "tasks": [
+  "tasks": [],
+  "completed": [
     {
-      "id": "W48_T03_ADMIN_ZERO_VANITY_METRICS",
-      "title": "P0 · Contadores a 0 con procedencia · erradicar las cifras de vanidad del admin (AF-1 / AF-5)",
-      "status": "QUEUED",
-      "priority": "P0_VERDAD_TELEMETRICA",
-      "files": [
-        "src/lib/admin/metrics-provenance.ts",
-        "src/components/admin/MetricProvenanceBadge.tsx",
-        "src/app/(admin)/admin/AdminDashboardClient.tsx",
-        "src/app/(admin)/admin/mailerfind/page.tsx",
-        "src/app/(admin)/admin/sourcing/page.tsx",
-        "src/app/(admin)/admin/directorio/page.tsx",
-        "src/app/(admin)/admin/calibrador-proveedores/page.tsx",
-        "scripts/audit_admin_vanity.cjs",
-        "package.json"
-      ],
-      "action": "CUELLO DE BOTELLA A ELIMINAR: Las métricas infladas o estáticas en el panel interno engañan en la toma de decisiones del CEO y destruyen la credibilidad ante una Due Diligence de inversión. VENTANA DE OPORTUNIDAD: Convertir el cockpit en un terminal financiero auditable donde cada euro, lead o proveedor muestra su fuente exacta (`live`, `static` de manifiesto verificado, o `empty` = `0 · SIN_DATOS`). PASOS: 1) Crear `src/lib/admin/metrics-provenance.ts` con el tipo `AdminMetric = { key: string; label: string; value: number; unit: string; source: 'live' | 'empty' | 'static'; probed: boolean; mode: 'REAL' | 'SIMULADO'; checkedAt: string; ref: string }` y helpers `emptyMetric(key,label)` y `liveMetric(...)`; sin `any`. 2) Crear `src/components/admin/MetricProvenanceBadge.tsx` (Server Component, estética OLED `#030305`/`#09090d` + oro `#ecb613`) que pinte el valor y su procedencia y NUNCA muestre verde si `probed=false`. 3) Barrer las vistas indicadas y sustituir cada literal numérico de vanidad por `AdminMetric`. 4) Crear `scripts/audit_admin_vanity.cjs` y encadenar `audit:vanity` en `package.json`.",
-      "scaffold": {
-        "invariants": [
-          "Regla de oro: si la sonda no se ejecutó, el resultado es `SIN_DATOS` (0), jamás un verde ni una cifra estimada",
-          "Toda cifra mostrada debe poder rastrearse a su fuente en <= 3 clics (AF-4)",
-          "Los contadores de catálogo se leen de `providers-manifest` (manifest real), nunca de constantes sueltas",
-          "Cero `any`; el tipo `AdminMetric` es la única firma"
-        ],
-        "forbidden": [
-          "Prohibido sustituir una cifra vanidosa por otra cifra inventada",
-          "Prohibido usar `Math.random()` o mocks para rellenar contadores",
-          "Prohibido tocar ZONA CERO (`ear-os-ssot.ts`, `ssotIntegrityGuard.ts`)"
-        ]
-      },
-      "test": "node scripts/audit_admin_vanity.cjs && node ./node_modules/typescript/bin/tsc --noEmit && node ./node_modules/eslint/bin/eslint.js \"src/lib/admin/metrics-provenance.ts\" \"src/components/admin/MetricProvenanceBadge.tsx\" \"src/app/(admin)/admin/AdminDashboardClient.tsx\"",
-      "done_when": "1) `audit:vanity` Exit 0 (0 cifras sin procedencia en /admin). 2) Las vistas muestran `0 · SIN_DATOS` donde no hay consulta real. 3) Ningún badge verde con `probed=false`. 4) `tsc --noEmit` y `eslint` Exit Code 0."
+      "id": "W51_T03_BUDGET_ALLOCATOR_TEST_HARDENING",
+      "title": "P0 · Nodo B · Endurecer scripts/verify_budget_allocator.ts: céntimos exactos, determinismo del resto, entradas hostiles e idempotencia, con contadores honestos (assertions ≠ iterations)",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-11-05T09:17:24.016Z"
     },
     {
-      "id": "W48_T04_ADMIN_COCKPIT_BFF_REAL",
-      "title": "P1 · Un solo BFF real para el cockpit (`/api/admin/cockpit`) con auth, sonda declarada y estados vacíos honestos",
-      "status": "QUEUED",
-      "priority": "P1_BACKEND_COHESION",
-      "files": [
-        "src/lib/admin/cockpit-aggregator.ts",
-        "src/app/api/admin/cockpit/route.ts",
-        "src/app/(admin)/admin/page.tsx",
-        "src/app/(admin)/admin/AdminDashboardClient.tsx",
-        "scripts/verify_admin_cockpit_api.cjs"
-      ],
-      "action": "VENTANA DE OPORTUNIDAD: Centralizar en un único endpoint blindado (`/api/admin/cockpit`) la lectura en tiempo real de facturación en céntimos enteros, depósitos Stripe de 100 € bloqueados, pipeline de licitaciones B2G Art. 118 LCSP (< 14.250 €) y comisiones Split 80/10/10. PASOS: 1) `src/lib/admin/cockpit-aggregator.ts` (puro, tipado, 0 `any`) que consolide con Prisma: ingresos totales en céntimos (enteros, nunca floats), depósitos Stripe 100 € bloqueados, cifra B2G frente a `AJUSTE_PREVENTIVO_B2G_EUR`, proveedores desde `PROVIDERS_GRAND_TOTAL`, y desglose del split 80/10/10 con `SPLIT_SOBERANO`. 2) `src/app/api/admin/cockpit/route.ts` con cabecera de autorización explícita (`role: admin`, `tenant: ear-os`), que devuelva SIEMPRE `{ ok: boolean; error?: string; data?: AdminCockpitSnapshot }` sin lanzar excepciones crudas, con `probed: boolean`, `source: 'live' | 'static'`, `mode: 'REAL' | 'SIMULADO'` y `checkedAt: string` (AF-1). 3) PRIMERO el test negativo: 401 sin sesión admin válida y 503 fail-closed sin `DATABASE_URL`; después el camino feliz. 4) `scripts/verify_admin_cockpit_api.cjs` que verifique el contrato. 5) `src/app/(admin)/admin/page.tsx` y `AdminDashboardClient` consumen ese snapshot.",
-      "scaffold": {
-        "invariants": [
-          "Dinero en céntimos enteros (`amountCents`), 0 aritmética en coma flotante para importes",
-          "La ruta nace cerrada (SEC-1): el caso negativo se escribe antes del camino feliz",
-          "`SPLIT_SOBERANO`, `DEPOSITO_STRIPE_EUR` y `AJUSTE_PREVENTIVO_B2G_EUR` se importan del SSOT, jamás se teclean",
-          "Contrato uniforme `{ ok, error?, data? }` en toda respuesta"
-        ],
-        "forbidden": [
-          "Prohibido exponer `STRIPE_SECRET_KEY` o cualquier secreto en la respuesta",
-          "Prohibido `console.log` con payloads de cliente (INV-14)",
-          "Prohibido devolver `ok:true` sin haber consultado la base de datos"
-        ]
-      },
-      "test": "node scripts/verify_admin_cockpit_api.cjs && node ./node_modules/typescript/bin/tsc --noEmit && node ./node_modules/eslint/bin/eslint.js \"src/lib/admin/cockpit-aggregator.ts\" \"src/app/api/admin/cockpit/route.ts\" \"src/app/(admin)/admin/page.tsx\"",
-      "done_when": "1) `GET /api/admin/cockpit` sin sesión -> 401; sin base de datos -> 503 fail-closed. 2) Con sesión admin devuelve snapshot tipado con `probed/source/mode/checkedAt`. 3) El dashboard pinta 0 honesto cuando no hay datos. 4) `tsc --noEmit` y `eslint` Exit Code 0."
+      "id": "W51_T02_EXPERIENCIA_ZERO_CLS",
+      "title": "P0 · Nodo A · /experiencia con presupuesto de layout-shift: crear el instrumento que hoy no existe (ítem Ω-13) y dejar la ruta en 0 violaciones",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-11-05T09:10:09.634Z"
     },
     {
-      "id": "W48_T05_ADMIN_UI_KIT_UNIFIED",
-      "title": "P1 · Kit UI único del cockpit (CommandPalette + Breadcrumb + PageHeader + KpiCard) sobre patrones de referencia, 0 marcas de terceros",
-      "status": "QUEUED",
-      "priority": "P1_UX_UNIFICADA",
-      "files": [
-        "src/components/admin/ui/AdminCommandPalette.tsx",
-        "src/components/admin/ui/AdminBreadcrumb.tsx",
-        "src/components/admin/ui/AdminPageHeader.tsx",
-        "src/components/admin/ui/AdminKpiCard.tsx",
-        "src/app/(admin)/admin/layout.tsx"
-      ],
-      "action": "CUELLO DE BOTELLA OPERATIVO: El CEO pierde tiempo navegando entre 32 pantallas con cabeceras distintas. VENTANA DE OPORTUNIDAD: Dar al CEO una paleta de comandos instantánea (`Ctrl+K`) y tarjetas KPI uniformes que permitan saltar en < 1 segundo a cualquier proveedor, licitación B2G, agente de los 48 o contrato fundador. PASOS: 1) Crear `src/components/admin/ui/AdminKpiCard.tsx` (Server Component; recibe `AdminMetric` de `metrics-provenance.ts`; fondo `#09090d`, borde `border-white/10`, `rounded-3xl`, acento oro `#ecb613`, sin animación de layout). 2) Crear `src/components/admin/ui/AdminPageHeader.tsx` (título, subtítulo, acciones y `<AdminBreadcrumb/>` derivado de `getAdminBreadcrumb(pathname)`). 3) Crear `src/components/admin/ui/AdminBreadcrumb.tsx` (`'use client'` solo si necesita `usePathname`, 0 datos personales, `aria-label` correcto). 4) Extraer el buscador actual del layout a `src/components/admin/ui/AdminCommandPalette.tsx` (`'use client'`), con atajo ⌘K/Ctrl+K, navegación por flechas + Enter, `role='listbox'`/`role='option'` y cierre con Escape. 5) Adoptar los 4 componentes en `src/app/(admin)/admin/layout.tsx`. Prohibido importar dependencias nuevas.",
-      "scaffold": {
-        "invariants": [
-          "Server Components por defecto; `'use client'` solo en la hoja reactiva (paleta y breadcrumb)",
-          "Cero dependencias nuevas (SEC-6) y cero marcas de terceros en código, metadatos o URLs (JUR-4)",
-          "Accesibilidad: foco visible, `aria-expanded`, `aria-controls`, cierre con Escape, navegación completa por teclado",
-          "Estética OLED obligatoria: `#030305` / `#09090d` / oro `#ecb613`; prohibido `w-screen` y gradientes violeta/azul"
-        ],
-        "forbidden": [
-          "Prohibido copiar literalmente componentes de galerías externas con su marca, licencia o nombres propios",
-          "Prohibido duplicar el buscador: una sola paleta en todo el cockpit",
-          "Prohibido introducir animaciones que provoquen CLS (solo `transform`/`opacity`)"
-        ]
-      },
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node ./node_modules/eslint/bin/eslint.js \"src/components/admin/ui/AdminCommandPalette.tsx\" \"src/components/admin/ui/AdminBreadcrumb.tsx\" \"src/components/admin/ui/AdminPageHeader.tsx\" \"src/components/admin/ui/AdminKpiCard.tsx\" \"src/app/(admin)/admin/layout.tsx\"",
-      "done_when": "1) Existe un único breadcrumb, una única paleta y un único KPI card en todo el admin. 2) La paleta se abre con Ctrl+K y navega con teclado a rutas reales. 3) 0 dependencias nuevas en package.json. 4) `tsc --noEmit` y `eslint` Exit Code 0."
-    },
-    {
-      "id": "W49_T04_ARTIST_360_MULTINATIONAL_HUB",
-      "title": "P1 · Panel 360 de Artista (Caché Individual + Distribución ISRC + Telemetría Social + Liquidación 80/10/10 para artistaseuropa.com)",
-      "status": "QUEUED",
-      "priority": "P1_ARTIST_ECOSYSTEM",
-      "files": [
-        "src/lib/artists/artist-360-contract.ts",
-        "src/components/artists/Artist360ControlHub.tsx",
-        "scripts/verify_artist_360.ts",
-        "package.json"
-      ],
-      "action": "VENTANA DE OPORTUNIDAD COMERCIAL: Eliminar las agencias intermediarias tradicionales que se quedan entre el 30% y el 50% del caché del músico. En `artistaseuropa.com`, cada artista (solista, mariachi, dúo, orquesta o DJ) configura su caché propio, distribuye su catálogo con código ISRC verificable y cobra el 80% limpio de cada evento bloqueado con el depósito de 100 € (`SPLIT_SOBERANO 80/10/10`). PASOS: 1) Crear `src/lib/artists/artist-360-contract.ts` (0 `any`) que modele: Capa A (Configurador de Caché Individual por formato Solista/Dúo/Mariachi/Orquesta, km exentos desde el municipio fiscal del artista y rider acústico Ley 37/2003), Capa B (Distribución Digital 360 con generador/validador de código ISRC `ES-EAR-YY-NNNNN`, enlaces a perfiles oficiales de streaming/redes y reproductor de alta fidelidad sin recortes), y Capa C (Liquidación automática 80% Artista / 10% EAR OS / 10% VIMUME sobre cada reserva bloqueada con `100 €`). 2) Crear `src/components/artists/Artist360ControlHub.tsx` (`\"use client\"`, estética OLED) con las 3 pestañas interactivas listas para montar en las fichas de artistas y en el portal pro. 3) Crear `scripts/verify_artist_360.ts` y añadir `verify:artist-360` en `package.json`.",
-      "scaffold": {
-        "invariants": [
-          "Tarifa suelo solista Edwin Agudelo = `350,00 €` (`TARIFA_BASE_SOLISTA_EUR`) y Split `80/10/10` inmutable",
-          "Validación estricta de formato ISRC (`ES-EAR-\\d{2}-\\d{5}`)",
-          "Cero menciones a marcas registradas de transporte o terceros (JUR-4)"
-        ],
-        "forbidden": [
-          "Prohibido usar `any`",
-          "Prohibido alterar `ear-os-ssot.ts`"
-        ]
-      },
-      "test": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_artist_360.ts && node ./node_modules/typescript/bin/tsc --noEmit",
-      "done_when": "1) El módulo de Artista 360 calcula caché propio, valida códigos ISRC y desglosa el Split 80/10/10 al céntimo. 2) `verify_artist_360.ts` y `tsc --noEmit` devuelven Exit Code 0."
+      "id": "W51_T01_OMEGA_ROJO_SCORECARD_INSTRUMENT",
+      "title": "P0 · Convertir el scorecard Ω-DIAMANTE en comando medible: 20 ítems con estado VERIFICADO/PARCIAL/SIN_EVIDENCIA y exit code honesto",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-11-05T08:50:48.188Z"
     },
     {
       "id": "W50_T01_B2G_MUNICIPAL_TENDER_RADAR_AND_MARIACHI_SLA_ENGINE",
       "title": "P0 · Motor de Adjudicación Rápida B2G Ayuntamientos (Art. 118 LCSP < 14.250 €) + Despachador de Relevo Automático 15-Min para la Centralita de Mariachis",
-      "status": "QUEUED",
-      "priority": "P0_REVENUE_ACCELERATOR",
-      "files": [
-        "src/lib/b2g/municipal-fast-track-engine.ts",
-        "src/components/b2g/MunicipalFastTrackDrawer.tsx",
-        "scripts/verify_municipal_fast_track.ts",
-        "package.json"
-      ],
-      "action": "VENTANA DE OPORTUNIDAD DE CAJA RÁPIDA: Los ayuntamientos españoles (8.131 municipios) necesitan adjudicar festejos populares y programas de envejecimiento activo (VIMUME 40 Hz) mediante Contrato Menor (Art. 118 LCSP, techo legal 15.000 € IVA excl., ajuste preventivo SSOT `14.250 €`) sin atascarse 6 meses en pliegos abiertos; y en paralelo, la Centralita de Mariachis debe garantizar que si la Agrupación #1 no acepta en 15 minutos el ping de servicio (`PROVIDER-SERVICE-BRIEF-2H`), salte automáticamente a la Agrupación #2 de la misma provincia sin perder jamás los 100 € del cliente. PASOS: 1) Crear `src/lib/b2g/municipal-fast-track-engine.ts` (0 `any`, puro y determinista) que genere el expediente técnico de Contrato Menor listo para Intervención Municipal (objeto contractual CPV, justificación de no fraccionamiento Art. 118 LCSP, cumplimiento acústico Ley 37/2003 con limitador telemático 90-102 dBA para festejos o 65-75 dBA para centros senior, impacto SROI 4.85x y techo estricto <= `AJUSTE_PREVENTIVO_B2G_EUR`) junto con la cola de relevo SLA de 15 minutos por provincia para espectáculos y mariachis. 2) Crear `src/components/b2g/MunicipalFastTrackDrawer.tsx` (`\"use client\"`, estética OLED, `min-h-[380px]` CLS 0.00) para que un técnico de Cultura o Servicios Sociales descargue/solicite el expediente en 1 clic vía Conserjería (`CENTRALITA_EAR_OS`). 3) Crear `scripts/verify_municipal_fast_track.ts` y registrar `verify:b2g-fast-track` en `package.json`.",
-      "scaffold": {
-        "invariants": [
-          "Importar `AJUSTE_PREVENTIVO_B2G_EUR`, `LIMITE_B2G_LCSP_EUR`, `DEPOSITO_STRIPE_EUR`, `SPLIT_SOBERANO`, `CENTRALITA_EAR_OS` desde `@/lib/constants/ear-os-ssot`",
-          "Rechazar cualquier expediente B2G que supere `AJUSTE_PREVENTIVO_B2G_EUR` (14.250 €)",
-          "Cero menciones a marcas registradas de terceros (JUR-4) y cero `any`"
-        ],
-        "forbidden": [
-          "Prohibido tocar Zona Cero (`ear-os-ssot.ts`, `b2g-tender-engine.ts`)",
-          "Prohibido hardcodear importes o teléfonos fuera del SSOT"
-        ]
-      },
-      "test": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_municipal_fast_track.ts && node ./node_modules/typescript/bin/tsc --noEmit && node ./node_modules/eslint/bin/eslint.js \"src/lib/b2g/municipal-fast-track-engine.ts\" \"src/components/b2g/MunicipalFastTrackDrawer.tsx\"",
-      "done_when": "1) El motor genera expedientes Art. 118 LCSP blindados <= 14.250 € y calcula la cascada de relevo de 15 minutos. 2) `verify_municipal_fast_track.ts`, `tsc` y `eslint` devuelven Exit Code 0."
-    }
-  ],
-  "completed": [
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-11-05T07:43:34.040Z"
+    },
+    {
+      "id": "W49_T04_ARTIST_360_MULTINATIONAL_HUB",
+      "title": "P1 · Panel 360 de Artista (Caché Individual + Distribución ISRC + Telemetría Social + Liquidación 80/10/10 para artistaseuropa.com)",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-11-05T07:35:22.453Z"
+    },
+    {
+      "id": "W48_T05_ADMIN_UI_KIT_UNIFIED",
+      "title": "P1 · Kit UI único del cockpit (CommandPalette + Breadcrumb + PageHeader + KpiCard) sobre patrones de referencia, 0 marcas de terceros",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-11-05T07:32:09.050Z"
+    },
+    {
+      "id": "W48_T04_ADMIN_COCKPIT_BFF_REAL",
+      "title": "P1 · Un solo BFF real para el cockpit (`/api/admin/cockpit`) con auth, sonda declarada y estados vacíos honestos",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-11-04T20:43:29.308Z"
+    },
+    {
+      "id": "W48_T03_ADMIN_ZERO_VANITY_METRICS",
+      "title": "P0 · Contadores a 0 con procedencia · erradicar las cifras de vanidad del admin (AF-1 / AF-5)",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-11-04T20:05:26.340Z"
+    },
     {
       "id": "W49_T02_MULTI_DOMAIN_VERTICAL_ISOLATION_ROUTER",
       "title": "P0 · Enrutamiento y Aislamiento Multi-Dominio (fincasparaboda.com · viajemusicalporlamemoria.com · artistaseuropa.com · productoraear.com)",
@@ -240,9 +153,11 @@
     }
   ],
   "metadata": {
-    "last_updated": "2026-11-04T18:47:26.175Z",
-    "total_pending": 5,
-    "current_sprint": "WAVE_50_MARKET_DOMINANCE_AND_REVENUE_SCALE",
+    "last_updated": "2026-11-05T09:17:24.022Z",
+    "total_pending": 0,
+    "current_sprint": "WAVE_51_FASE_1_OMEGA_ROJO_NODO_A_Y_B",
+    "orden_ejecutivo": ".antigravity/ORDEN_EJECUTIVO_OMEGA_ROJO_FASE_1.md",
+    "regla_de_serie": "UN SOLO SLOT: omega.js next escribe MISSION_ACTIVE.json y solo admite una mision viva. Los Nodos A y B se ejecutan en sesiones de Cline SEPARADAS y en el orden de la cola (T01 -> T02 -> T03). Prohibido abrir dos sesiones en paralelo sobre el mismo repo: se pisarian MISSION_ACTIVE.json y el cierre de una purgaria la tarea de la otra.",
     "ceo_mandate": "1) Agente Concierge IA 100% conectado a las fichas verificadas (Ezkertza/Derio, Otzarreta/Zarautz y 2.150 fichas en memoria) sin sesgo de solista. 2) 6 misiones atómicas encoladas para el obrero local con tácticas de dominancia y eliminación de cuellos de botella."
   }
 }

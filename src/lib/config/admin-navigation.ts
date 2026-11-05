@@ -72,6 +72,14 @@ const B2G_BADGE: string = `<${AJUSTE_PREVENTIVO_B2G_EUR.toLocaleString('es-ES')}
 /** Tarifa base del solista formateada desde el SSOT. */
 const TARIFA_BADGE: string = `${TARIFA_BASE_SOLISTA_EUR.toFixed(0)} €`;
 
+/**
+ * PROCEDENCIA DE LOS RÓTULOS DE LA GUÍA MAESTRA: el compilador de intención NO
+ * declara sus ejes aquí. Su SSOT ejecutable es `src/lib/compiler/master-guide.ts`
+ * (objetivo de negocio, táctica comercial y destinatario, con sus directivas).
+ * Esta estructura gobierna EXCLUSIVAMENTE la navegación del cockpit: una fila por
+ * ruta real, para que no vuelvan a existir tres fuentes de verdad (W48_T02).
+ */
+
 export interface AdminSubTab {
   /** Identificador estable y único dentro de todo el cockpit. */
   id: string;
@@ -152,14 +160,14 @@ export const ADMIN_MASTER_TABS: AdminMasterTab[] = [
   },
   {
     id: 'arena',
-    title: '⚔️ Arena AI & Optimización',
-    shortTitle: 'Arena AI',
+    title: '⚔️ Arena IA & Optimización',
+    shortTitle: 'Arena IA',
     icon: Swords,
     badge: 'ELO K=32',
     subTabs: [
       {
         id: 'arena-main',
-        name: '⚔️ Arena AI Elo Torneo',
+        name: '⚔️ Torneo Elo de Conversión',
         href: '/admin/arena',
         icon: Swords,
         badge: 'BATALLAS',
@@ -167,15 +175,15 @@ export const ADMIN_MASTER_TABS: AdminMasterTab[] = [
       },
       {
         id: 'compiler',
-        name: '⚡ Meta-Compiler DAG',
+        name: '⚡ Compilador Maestro',
         href: '/admin/compiler',
         icon: Zap,
-        badge: 'INTENT',
-        description: 'Compilador semántico de intenciones a órdenes ejecutables',
+        badge: 'INTENCIÓN',
+        description: 'Convierte tu orden en un grafo de ejecución con la Guía Maestra aplicada',
       },
       {
         id: 'voice',
-        name: '🎙️ Voice Studio IA',
+        name: '🎙️ Estudio de Voz IA',
         href: '/admin/voice-studio',
         icon: Mic,
         badge: 'GPU LOCAL',
@@ -183,10 +191,10 @@ export const ADMIN_MASTER_TABS: AdminMasterTab[] = [
       },
       {
         id: 'video-factory',
-        name: '🎬 Video Factory S-Class',
+        name: '🎬 Fábrica de Vídeo S-Class',
         href: '/admin/video-factory',
         icon: Film,
-        badge: 'RENDER',
+        badge: 'MONTAJE',
         description: 'Piezas de vídeo y reels de conversión generados desde el SSOT',
       },
       {

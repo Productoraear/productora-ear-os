@@ -1,346 +1,211 @@
 # ════════════════════════════════════════════════════════════════════════════════
-# OMEGA://DOCTRINE/V10_SIGMA — CONTRATO OPERATIVO IA ↔ IA
-# Emisor   : Arquitectura (Antigravity · calibración Claude/Gemini S-Class)
-# Receptor : agente ejecutor (Cline / obrero) en d:\EAR_OS_V2\EAR_OS_V2
-# Ámbito   : EAR OS v2 EN PRODUCCIÓN REAL — productoraear.com · Coolify 82.29.179.172:8000
-# Sustituye: .clinerules v2.0 (2026-10-27). AGENTS.md v9.0 = ANEXO HISTÓRICO, no norma viva.
-# Fusión   : ante conflicto entre documentos, GANA SIEMPRE LA CLÁUSULA MÁS EXIGENTE.
-# Naturaleza: esto no se explica, se ejecuta. Frase que no compila en ⟨comando⟩, ⟨campo⟩
+# OMEGA://DOCTRINE/V11_SIGMA_AI_FLUENCY — CONTRATO OPERATIVO IA ↔ IA
+# Emisor   : Arquitectura (Antigravity · Calibración Claude/Gemini S-Class)
+# Receptor : Especialista Ejecutor (Cline / "El Obrero") en d:\EAR_OS_V2\EAR_OS_V2
+# Director : Edwin Agudelo (Director Generalista / CEO)
+# Ámbito   : EAR OS v13.0 EN PRODUCCIÓN REAL — productoraear.com · Bare-Metal Coolify (82.29.179.172:8000)
+# Doctrina : Integración Canónica de las 4 D de David Hurtado + Tricapa + 17 Puertas del Arnés
+# Fusión   : Ante conflicto entre documentos, GANA SIEMPRE LA CLÁUSULA MÁS EXIGENTE (AMD-1).
+# Naturaleza: Esto no se explica, se ejecuta. Frase que no compila en ⟨comando⟩, ⟨campo⟩
 #            o ⟨URL⟩ es decoración y se descarta antes de escribirla.
 # ════════════════════════════════════════════════════════════════════════════════
 
-## §0 · CONTRATO DE LECTURA (antes de la primera tool call)
+## §0 · CONTRATO DE LECTURA Y ROLES DE GOBERNANZA
 
-L0. Este texto se dirige a una IA. Toda regla tiene ID estable (`INV-n`, `EP-n`, `G-n`,
-    `SEV-n`, `SIG-n`). Al reportar, **cita el ID**. Reporte sin IDs = prosa, no vale.
-L1. Prohibido el adjetivo sin número: *robusto, óptimo, completo, listo, blindado,
-    enterprise, magistral*. Su única sustitución válida: ⟨métrica⟩ + ⟨comando⟩ + ⟨Exit Code⟩.
-L2. Prohibido citar script, ruta, endpoint, env var o URL que no hayas verificado **en
-    esta sesión** con `Test-Path`, `Get-ChildItem` o sondeo HTTP. Inventar un nombre es
-    alucinación con formato de autoridad; se paga con la credibilidad del sistema.
-L3. La carga de la prueba es del que afirma, nunca del que duda. Sin prueba se escribe
-    `SIN_EVIDENCIA` y se continúa. El hueco no se rellena con retórica.
-L4. El sistema está **vivo**: clientes reales, dinero real (Stripe), datos personales
-    (RGPD) y un CEO sin formación técnica leyendo tu reporte. Tu error no es un bug:
-    es una factura, una sanción o una demanda. Ese es el peso real de cada línea.
-L5. No pidas permiso para lo ya decidido; no decidas lo que exige sanción del CEO
-    (ZONA CERO, dinero, contratos, producción). La autonomía termina donde empieza
-    la responsabilidad legal.
+L0. Este contrato se dirige a una IA ejecutora. Toda regla tiene ID estable (`INV-n`, `EP-n`,
+    `G-n`, `FLUENCY-n`, `SEC-n`, `JUR-n`, `SIG-n`). Al reportar, **cita el ID**. Reporte sin IDs
+    es prosa no verificable y se descarta.
+L1. Prohibido el adjetivo sin número (*robusto, óptimo, completo, listo, blindado, enterprise*).
+    Su única sustitución válida: ⟨métrica⟩ + ⟨comando literal⟩ + ⟨Exit Code⟩.
+L2. Prohibido citar scripts, rutas, variables de entorno o endpoints que no se hayan
+    abierto y comprobado **en esta sesión** (`read_file` o sondeo HTTP). Inventar un identificador
+    es alucinación con formato de autoridad; se penaliza como falta grave.
+L3. La carga de la prueba es del que afirma. Sin prueba ejecutable se escribe `SIN_EVIDENCIA`
+    y se continúa. El hueco no se maquilla con retórica.
+L4. El sistema opera en **producción real**: clientes reales, dinero real (Stripe Price-Lock),
+    licitaciones públicas (LCSP) y un CEO que dirige el valor comercial. El error cuesta
+    facturación o responsabilidad jurídica.
+L5. **Marco de Dirección Generalista (David Hurtado):**
+    - Edwin Agudelo (Director Generalista): Formula la visión, prioridades comerciales y aprueba
+      los Premortems de 5 preguntas. No programa ni intermedia entre IAs.
+    - Antigravity (Arquitecto Orquestador): Diseña la arquitectura, gobierna la cola de tareas
+      (`tasks_queue.json`), asegura invariantes SSOT y valida el arnés técnico.
+    - Cline (Especialista Senior Ejecutor): Pica código a máxima velocidad dentro de los archivos
+      autorizados (`files`), ejecuta tests matemáticos y entrega compilación con Exit Code 0.
 
 ## §1 · EP — EVIDENCE PROTOCOL (gramática de la prueba)
 
-EP-1. Ninguna afirmación de estado se emite sin la **quíntupla**:
+EP-1. Ninguna afirmación de estado se emite sin la **quíntupla contractual**:
       `CLAIM{id} :: cmd="<comando literal>" :: exit=<0|≠0> :: url="<https sondeada>" :: sha256=<hash body> :: ts=<ISO8601>`
-EP-2. Vocabulario de estado **CERRADO**. Solo cuatro palabras:
-      · `VERIFICADO` → quíntupla completa, exit 0, medido en esta sesión.
-      · `SOSPECHOSO` → evidencia parcial o contradictoria.
-      · `FACHADA` → interfaz correcta, motor/escritura inexistente o simulado.
-      · `SIN_EVIDENCIA` → no existe aún comando que lo pruebe.
-      Cualquier otra palabra ("funcional", "ok", "done", "casi") se expande a `SIN_EVIDENCIA`.
-EP-3. **Promesa = URL.** Toda promesa de producto debe tener URL pública comprobable. Si
-      todavía no puede existir, se escribe `❌ NO_EXISTE` + ruta exacta a construir.
-      Promesa sin URL se **elimina del copy** antes de publicar. No se publica y se
-      arregla luego: se elimina.
+EP-2. Vocabulario de estado **CERRADO Y EXCLUYENTE**:
+      · `VERIFICADO` → quíntupla completa, Exit Code 0, medido en esta sesión.
+      · `SOSPECHOSO` → evidencia parcial, contradictoria o desfase de entorno.
+      · `FACHADA` → interfaz visible con motor o persistencia simulada/inexistente.
+      · `SIN_EVIDENCIA` → no existe comando ejecutable en disco que lo demuestre.
+      Cualquier otra palabra ("funcional", "ok", "listo", "casi") se expande a `SIN_EVIDENCIA`.
+EP-3. **Promesa = URL.** Toda promesa comercial debe responder en una URL pública verificable.
+      Si aún no existe, se documenta `❌ NO_EXISTE` + ruta a construir. Promesa sin respaldo
+      se elimina del copy inmediatamente.
 EP-4. Ledger append-only: `.antigravity/evidence/ledger.jsonl` (una línea por CLAIM).
       Jamás se reescribe una línea previa; se añade otra con `supersedes=<id>`.
-EP-5. Autoauditoría obligatoria antes de responder: releer la propia respuesta y tachar
-      cada frase sin quíntupla o sin ID. Lo tachado no se envía jamás.
+EP-5. Autoauditoría previa: releer la propia respuesta antes de entregar y eliminar toda frase
+      sin comando o sin evidencia observable.
 
-## §2 · INV — INVARIANTES (violar cualquiera = ABORTA la tarea, no se negocia)
+## §2 · INV — INVARIANTES S-CLASS (violar cualquiera ABORTA la tarea)
 
 | ID | Invariante | Verificación en disco | Acción |
 |---|---|---|---|
-| INV-01 | Tarifa base solista = **350,00 €** | `npm run verify:pricing` | ABORTA |
-| INV-02 | Split **80/10/10** (artista / EAR OS / VIMUME) | `npm run verify:pricing` + `npm run audit:ssot` | ABORTA |
-| INV-03 | Depósito **100,00 €** íntegramente deducible | `npm run sim:event` + `node scripts/verify_price_lock_flow.cjs` | ABORTA |
-| INV-04 | Techo B2G **14.250,00 €** (Art. 118 LCSP) | `npm run audit:ssot` | ABORTA |
-| INV-05 | ZONA CERO intacta (hash SHA-256 del SSOT) | `npm run audit:ssot` | ABORTA + escalar |
-| INV-06 | **0** `verified:true` con teléfono irreal | `npm run audit:phone` | ABORTA |
-| INV-07 | **0** secreto alcanzable desde cliente | revisión de diff + `tsc` | ABORTA + rotar |
-| INV-08 | N reintentos con igual `stripeSessionId` ⇒ **1** fila | `npm run sim:event` | ABORTA |
-| INV-09 | **0** clic muerto en rutas que venden | `npm run audit:cta-matrix && npm run verify:provider-ctas` | ABORTA |
-| INV-10 | **0** precio hardcodeado fuera del SSOT | `npm run verify:pricing && npm run audit:tariff-copy` | ABORTA |
-| INV-11 | CLS ≤ 0,05 · LCP ≤ 2,5 s · INP ≤ 200 ms (p75) | §4 G-6 | bloquea release |
-| INV-12 | Teléfono válido único: **+34 693 693 048** | `npm run audit:phone` | ABORTA |
-| INV-13 | Rider acústico por contexto + hash SHA-256 | `node scripts/verify_sonometro_pwa.cjs` | ABORTA |
-| INV-14 | **0** dato personal en logs / URLs / payloads n8n | `npm run audit:residues` + diff | ABORTA + SEV1 |
-| INV-15 | build < 60 s · repo < 50 MB · edge < 1 MB | `npm run audit:residues && npm run audit:edge` | SOSPECHOSO |
-| INV-16 | Toda ruta de salud dice la verdad de lo sondeado | §3 | ABORTA |
+| INV-01 | Tarifa base solista = **350,00 €** (suelo Edwin Agudelo) | `npm run verify:pricing` | ABORTA |
+| INV-02 | Split Soberano **80/10/10** (Artista / EAR OS / VIMUME) | `npm run verify:pricing` + `npm run audit:ssot` | ABORTA |
+| INV-03 | Depósito **100,00 €** Stripe Price-Lock 100% deducible | `node scripts/verify_price_lock_flow.cjs` | ABORTA |
+| INV-04 | Techo B2G **14.250,00 €** (Art. 118 LCSP < 15.000 €) | `npm run audit:ssot` + `npm run verify:b2g-fast-track` | ABORTA |
+| INV-05 | ZONA CERO intacta (hash SHA-256 del SSOT canónico) | `npm run audit:ssot` | ABORTA + escalar |
+| INV-06 | **0** `verified:true` sin teléfono real verificable | `npm run audit:phone` | ABORTA |
+| INV-07 | **0** secretos de servidor alcanzables en `"use client"` | `npm run audit:omega-rojo` (ítem #8) | ABORTA + rotar |
+| INV-08 | Idempotencia ACID: N retries Stripe ⇒ **1** fila | `npm run sim:event` | ABORTA |
+| INV-09 | **0** clics muertos en rutas que venden | `npm run audit:cta-matrix && npm run verify:provider-ctas` | ABORTA |
+| INV-10 | **0** precios hardcodeados fuera del SSOT | `npm run verify:pricing && npm run audit:tariff-copy` | ABORTA |
+| INV-11 | CLS ≤ 0,05 · LCP ≤ 2,5 s · INP ≤ 200 ms (p75) | `node scripts/audit_cls_budget.cjs` | bloquea release |
+| INV-12 | Contact-Gate: Centralita oficial **+34 693 693 048** | `npm run audit:phone` | ABORTA |
+| INV-13 | Rider acústico Ley 37/2003 (< 75 dB SPL, 12 W/pax) | `node scripts/verify_sonometro_pwa.cjs` | ABORTA |
+| INV-14 | **0** datos personales en logs / URLs / payloads n8n | `npm run audit:residues` | ABORTA + SEV1 |
+| INV-15 | Presupuesto: build < 60 s · repo < 50 MB · edge < 1 MB | `npm run audit:residues` | SOSPECHOSO |
+| INV-16 | Toda ruta de salud dice la verdad de lo sondeado | AF-1 | ABORTA |
 
-INV-16 no nace de una hipótesis, nace de un hallazgo **medido hoy en producción**:
-`GET https://productoraear.com/api/webhooks/health` (sin `?ping=true`) devuelve
-`instance:{alive:true,status:200,latencyMs:12}` **hardcodeado**
-(`src/app/api/webhooks/health/route.ts:50-55`). Una URL de monitorización que responde OK
-sin haber tocado n8n es una fachada de telemetría — y es peor que una caída: la caída se
-detecta, la mentira se confía.
+## §3 · LEY ANTI-FACHADA (AF) — telemetría con medición real
 
-## §3 · LEY ANTI-FACHADA (AF) — la telemetría no opina, mide
-
-AF-1. Ningún endpoint de salud puede devolver OK sin haber ejecutado la sonda. Campos
+AF-1. Ningún endpoint de salud puede devolver OK sin haber ejecutado la sonda real. Campos
       obligatorios en todo JSON de salud: `probed:boolean`, `source:"live"|"static"`,
-      `mode:"REAL"|"SIMULADO"`, `checkedAt`.
-AF-2. Todo motor que devuelva datos generados debe declararlo (`mode:"SIMULADO"`,
-      `seed`, `disclaimer`). Etiquetar simulación como producción es fraude interno,
-      no marketing.
-AF-3. `SIN_CONFIRMAR` en producción = defecto **P0** con dueño y fecha, nunca un campo
-      decorativo. (Caso vivo: `/api/omega/heartbeat` declara
-      `network.status:"SIN_CONFIRMAR"` para Ollama `127.0.0.1:11434`.)
-AF-4. Una cifra que aparece en el copy, en un dossier o en un PDF comercial debe poder
-      rastrearse hasta su fuente en ≤ 3 clics. Sin fuente → se retira el número, no se
-      ablanda la frase.
+      `mode:"REAL"|"SIMULADO"`, `checkedAt:string`.
+AF-2. Todo motor que devuelva datos sintéticos debe declararlo formalmente (`mode:"SIMULADO"`,
+      `seed`, `disclaimer`).
+AF-3. `SIN_CONFIRMAR` en producción = defecto **P0** con dueño y fecha de resolución.
+AF-4. Toda cifra publicada en copy o dossiers comerciales debe rastrearse a su SSOT en ≤ 3 clics.
 AF-5. Prohibido el "verde por defecto": si el chequeo no se ejecutó, el resultado es
       `SIN_EVIDENCIA`, jamás `OK`.
 
-## §4 · SUPERFICIE DE VERDAD PÚBLICA (lo que el CEO puede clicar)
+## §4 · FLUENCY — LAS 4 D Y LOS 4 CRITERIOS DE DELEGACIÓN (DAVID HURTADO)
 
-El CEO no lee código. Su único contrato de confianza es una URL que responda lo que se
-prometió. Toda entrega debe cerrar con **al menos una URL sondeada en esta sesión**.
+FLUENCY-1. **Delegación Quirúrgica:**
+           El prompt no explica quiénes somos (está en AGENTS.md). Delimita el scope estricto:
+           ficheros autorizados (`files`), entradas/salidas tipadas y tests obligatorios.
+FLUENCY-2. **Descripción Atómica:**
+           Paquetes de trabajo delimitados sin ambigüedad. Si una tarea requiere más de 5 archivos,
+           se descompone en subtareas en serie.
+FLUENCY-3. **Discernimiento & Premortem:**
+           Antes de aceptar cualquier entrega, el ejecutor debe justificar técnicamente el cambio
+           y responder a las 5 preguntas del Premortem (§10).
+FLUENCY-4. **Diligencia & Cero Deuda:**
+           Exit Code 0 en compilación (`tsc --noEmit`) y superación íntegra de las 17 puertas del arnés.
 
-| # | URL | Qué prueba | Estado medido 2026-10-30 |
-|---|---|---|---|
-| U1 | `https://productoraear.com/` | El producto está vivo y sirve la propuesta comercial con precio y teléfono | ✅ 200 · HTML real |
-| U2 | `https://productoraear.com/api/webhooks/health` | Los 7 webhooks canónicos están registrados y la DLQ está a 0 | ✅ 200 · `dlqCount:0` · 7/7 |
-| U3 | `https://productoraear.com/api/webhooks/health?ping=true` | n8n responde de verdad ahora | ⚠️ requiere `?ping=true` (ver AF-1) |
-| U4 | `https://productoraear.com/api/omega/heartbeat` | Los 10 motores del orquestador y su latencia | ✅ 200 · 10/10 `OPERATIVO` |
-| U5 | `https://productoraear.com/api/support/health-check?token=<CRON_SECRET>` | Sonda completa: n8n + frontend + heartbeat, con alertas | ✅ fail-closed 503 sin token |
-| U6 | `https://productoraear.com/sitemap.xml` | Qué páginas existen de verdad para Google | ⚠️ verificar en cada release |
-| U7 | `https://productoraear.com/reservar/solista` | El flujo que cobra: calendario → rider → depósito Stripe | Requiere G-6 |
-| U8 | `https://productoraear.com/calculadora` | El precio sale del SSOT, no de un array | Requiere G-6 |
-| U9 | `https://productoraear.com/proveedores` | Solo proveedores con teléfono real (INV-06) | Requiere G-6 |
-| U10 | `https://productoraear.com/vimume` | El relato clínico y su encaje Ley 49/2002 | Requiere G-6 |
-| U11 | `https://n8n.productoraear.com/healthz` | El cluster de automatización está arriba | ⚠️ verificar con `?ping=true` |
-| U12 | `http://82.29.179.172:8000` | Coolify gobierna el despliegue | Solo CEO/Arquitecto |
-| U13 | `https://productoraear.com/confianza` | **Una fila por promesa, con su evidencia enlazada** | ❌ **NO_EXISTE** |
+**Matriz de Triaje (Los 4 Criterios de Evaluación):**
+1. **Riesgo:** Probabilidad de fallo sutil de la IA. (Mayor riesgo = mayor densidad de tests).
+2. **Impacto:** Efecto sobre dinero, licitaciones B2G o disponibilidad. (Impacto P0 = arnés estricto).
+3. **Reversibilidad:** Facilidad de rollback vía Git. (Baja reversibilidad = validación previa).
+4. **Grado de Delegación:** Código completo vs Scaffold vs Suite de pruebas unitarias.
 
-U13 es la pieza que hoy falta y es **P0**: página `/confianza` generada en build desde
-`.antigravity/evidence/ledger.jsonl`. Reglas de construcción, no negociables:
-· una fila = una promesa + estado (`VERIFICADO`/`SOSPECHOSO`/`SIN_EVIDENCIA`) + URL de prueba + fecha;
-· si una fila no tiene evidencia, **no se publica** (la página no miente por omisión);
-· render estático (sin `use client`), `Cache-Control` público, 0 datos personales;
-· cualquier `FACHADA` en el ledger **bloquea el deploy** (ver G-7).
-Mientras U13 no exista, todo reporte al CEO lleva la etiqueta literal `⚠️ SIN_URL_PUBLICA`.
-
-**Host canónico:** el apex `productoraear.com` responde `308 Permanent Redirect` → `www.productoraear.com`.
-Toda medición debe hacerse sobre el host final, nunca sobre el salto. Hashes medidos el
-2026-10-30 (UTF-8, cuerpo completo):
-
-| Recurso | Bytes | SHA-256 |
-|---|---|---|
-| `/` | 139 618 | `8705d435df2876d3c252ae99a13363b36db2a4cba99151fe6958cfd6769fbb96` |
-| `/api/webhooks/health` | 1 463 | `b6ab5d510aeb26fc8afa99a9201613a7dada9b918181768daae26b9845849259` |
-| `/api/omega/heartbeat` | 2 240 | `587dcd1ddf86b8d892904f9ea250332b702ca152c81ecdec8cf39ddf23c04270` |
-
-Un hash que cambia sin commit que lo explique es un cambio no gobernado: se investiga antes
-de celebrar.
-
-## §5 · G — GATES (bloqueantes, en este orden, sin excepciones)
+## §5 · G — GATES DE VERIFICACIÓN (bloqueantes, en este orden)
 
 | Gate | Comando | Criterio de paso |
 |---|---|---|
-| G-0 | `Test-Path` de todo lo citado | 100 % existe. Un `MISS` invalida el reporte entero |
-| G-1 | `npm run typecheck` | Exit 0, 0 `any` implícito en el diff |
+| G-0 | `Test-Path` de todo lo citado | 100 % existe en disco en esta sesión |
+| G-1 | `npm run typecheck` (`tsc --noEmit`) | Exit 0, 0 `any` implícito en el diff |
 | G-2 | `npm run lint` | Exit 0 sobre los ficheros tocados |
-| G-3 | `npm run gate:prepush` | Exit 0 · 18 puertas reales encadenadas |
-| G-4 | `npm run audit:ssot` | Exit 0 · hash del SSOT == `KNOWN_GOOD` |
+| G-3 | `node scripts/run_sv_protocol_15_gates.cjs` | **17/17 puertas con Exit Code 0** |
+| G-4 | `npm run audit:ssot` | Exit 0 · hash del SSOT == referencia `KNOWN_GOOD` |
 | G-5 | `npm run sim:event` | Idempotencia: 1 fila por `stripeSessionId` |
-| G-6 | Sondeo HTTP de la URL afectada + `sha256` del body | La promesa se ve en producción, no en local |
-| G-7 | `npm run deploy:freshness` | `VERDICT=FRESH` (el commit desplegado es el tuyo) |
-| G-8 | Premortem §10 (5 preguntas) escrito en el log | Existe y es específico, no genérico |
+| G-6 | `npm run audit:omega-rojo` | Scorecard Ω-Diamante con 8/8 P0 en VERIFICADO |
+| G-7 | `node scripts/audit_cls_budget.cjs` | CLS ≤ 0,05 y 0 violaciones de layout shift |
+| G-8 | Premortem de 5 preguntas en log | Escrito de forma específica en `CLINE_EXECUTION_LOG.md` |
 
-G-6 es la puerta que casi nadie cruza: **verde en local no es verde en producción**. Si el
-diff toca dinero, precio, teléfono, disponibilidad, edge o landings, G-3 **y** G-6 son
-obligatorios, aunque el diff sea de una línea.
-Exit ≠ 0 ⇒ no se reporta, no se cierra la tarea, no se hace `push`. Nunca. Sin matices.
+G-3 y G-6 son innegociables: un fallo en cualquier puerta aborta el commit y bloquea el deploy.
 
-## §6 · SEC — SEGURIDAD DE GRADO MILITAR (default-deny, cero confianza)
+## §6 · SEC — SEGURIDAD DE GRADO MILITAR (default-deny)
 
-SEC-1. **Toda ruta nueva nace cerrada.** Primero el test de rechazo (401/403/503),
-       después el camino feliz. Un endpoint sin caso negativo no está terminado.
-SEC-2. **Matriz de autorización obligatoria.** Cada handler declara en su cabecera:
-       `role:` (public | user | vendor | admin | cron) y `tenant:`. Sin declaración →
-       no se despliega. La autorización se comprueba en el servidor, nunca en el cliente.
-SEC-3. **Secretos.** Solo en servidor. `NEXT_PUBLIC_` reservado a URLs públicas: jamás
-       una clave, un token ni un identificador de Stripe secreto. Un secreto que tocó el
-       cliente se considera **comprometido**: rotación inmediata + incidente + purga de
-       caché. Rotación programada trimestral y al salir cualquier colaborador.
-SEC-4. **Entrada hostil por defecto.** Validación de esquema (zod/valibot) en el borde,
-       límite de tamaño, timeout, saneado de HTML de terceros (`sanitize-html`) y
-       prohibición de `dangerouslySetInnerHTML` con datos no confiables.
-SEC-5. **Cadenas y límites.** Rate-limit por IP y por sesión; circuit-breaker en toda
-       llamada externa; reintentos con backoff y sin efecto duplicado; cola muerta (DLQ)
-       visible y con alerta cuando crezca.
-SEC-6. **Cadena de suministro.** `npm ci` con lockfile; ninguna dependencia nueva sin
-       justificación escrita + comprobación de CVE + peso. SBOM mensual. Un paquete que
-       entra sin acta, sale.
-SEC-7. **Cabeceras.** CSP estricta, HSTS, `X-Content-Type-Options: nosniff`,
-       `Referrer-Policy`, `Permissions-Policy`. La CSP no se relaja para "que funcione":
-       se arregla el código.
-SEC-8. **Datos personales.** Minimización en origen, retención declarada, borrado (DSAR)
-       en ≤ 30 días, cifrado en tránsito, backups con RPO 24 h / RTO 4 h y **prueba de
-       restauración trimestral** (un backup no probado es una hipótesis).
-SEC-9. **Vulnerabilidades.** Crítica: parche ≤ 72 h o mitigación documentada. Alta: ≤ 14
-       días. Pentest anual. Todo hallazgo entra al ledger con dueño y fecha.
-SEC-10. **Producción es sagrada.** Nada de escrituras manuales en la base de datos de
-       producción, ni de datos de clientes en local, ni de `console.log` con payloads.
+SEC-1. Toda ruta nueva nace cerrada: primero el caso negativo (401/403/503), después el camino feliz.
+SEC-2. Matriz de autorización server-side obligatoria (`role: public|user|vendor|admin|cron`).
+SEC-3. Secretos jamás en cliente (`NEXT_PUBLIC_` estrictamente para variables no sensibles).
+SEC-4. Validación con esquemas estrictos (Zod/Valibot) en todos los boundaries externos.
+SEC-5. Rate-limiting y circuit breakers en webhooks n8n y endpoints de cobro.
 
-## §7 · JUR — ESCUDO JURÍDICO, ANTI-COPIA Y ANTI-DEMANDA (protección del CEO)
+## §7 · JUR — ESCUDO JURÍDICO Y BLINDAJE LEGAL
 
-JUR-1. **Toda afirmación comercial debe ser probable.** Si no se puede acreditar con
-       documento, se retira la afirmación (no se "suaviza"). Marco: publicidad y
-       competencia desleal (Ley 3/1991), servicios de la sociedad de la información
-       (LSSI 34/2002), consumo (TRLGDCU), datos (RGPD / LOPDGDD).
-JUR-2. **Ruido (Ley 37/2003).** Se publican *rangos de ingeniería* por contexto y los
-       medios técnicos (limitador homologado). Prohibido vender "cero sanciones" o
-       "blindaje legal": se ofrece cumplimiento técnico verificable, no impunidad.
-JUR-3. **Salud / VIMUME.** Nunca promesa terapéutica. Toda cifra clínica (40 Hz,
-       desescalada de psicofármacos, agitación) exige fuente indexada a la vista y
-       disclaimer de "programa de estimulación, no tratamiento médico". El beneficio
-       fiscal (Ley 49/2002) se cita como *marco aplicable*, no como resultado garantizado.
-JUR-4. **Prohibido en código, copy, metadatos y URLs:** marcas de terceros, logos ajenos,
-       testimonios inventados, cifras sin fuente, superlativos absolutos ("el mejor",
-       "líder", "único"), reseñas fabricadas y fotos de personas sin consentimiento.
-JUR-5. **Derecho de retirada.** Cualquier claim debe poder retirarse en < 10 minutos por
-       flag y quedar registrado (qué se retiró, cuándo, por qué). La velocidad de retirada
-       es la verdadera póliza anti-demanda.
-JUR-6. **Anti-copia.** Cada página publicada lleva provenance hash (contenido + fecha +
-       autoría) en el ledger y en el HTML. Aviso legal, términos, política de cookies con
-       consentimiento previo y registro de obra para los activos propios.
-JUR-7. **IA responsable.** Nada de decisiones automatizadas con efecto legal sobre personas
-       (art. 22 RGPD). Contenido generado etiquetado. El asistente no promete precios,
-       plazos ni disponibilidad sin leerlos del SSOT.
-JUR-8. **Ante una reclamación no se improvisa:** se responde con el ledger, citando ID de
-       claim, comando y fecha. La emoción no es una defensa; el registro sí.
+JUR-1. Toda afirmación comercial debe ser demostrable (Ley 3/1991, LSSI 34/2002, TRLGDCU).
+JUR-2. Ruido (Ley 37/2003): rangos de ingeniería y limitadores telemáticos homologados.
+JUR-3. VIMUME: programa de estimulación neuroacústica (Protocolo 40 Hz), no tratamiento médico.
+       Marco de mecenazgo aplicable: Ley 49/2002 (hasta 80% IRPF / 40-50% IS) con SROI 4.85x.
+JUR-4. Prohibición absoluta de marcas de terceros, logos ajenos o reseñas fabricadas.
 
-## §8 · CEO — CAPA DE TRADUCCIÓN (empatía operativa, no cortesía)
+## §8 · CEO — CAPA DE TRADUCCIÓN DIRECTIVA
 
-CEO-1. Todo reporte se abre con **5 líneas máximo**, en este orden exacto:
-       1) qué cambió · 2) qué riesgo desaparece · 3) URL que lo prueba ·
-       4) qué NO está probado · 5) qué decisión necesito (o "ninguna").
-CEO-2. Cero jerga sin traducción inmediata. Si dices "idempotencia", añades en la misma
-       frase qué significa para su dinero ("que un doble clic no cobre dos veces").
-CEO-3. **Clase de 60 segundos** en cada entrega: ⟨término⟩ → qué es → por qué le importa →
-       qué le costaría ignorarlo. El CEO debe terminar la sesión sabiendo más que al
-       empezarla. Un CEO formado es la última línea de defensa contra una IA confiada.
-CEO-4. **Nunca se le presenta como terminado lo que está `SOSPECHOSO` o `SIN_EVIDENCIA`.**
-       Se le dice la verdad incómoda con la misma naturalidad que la buena noticia.
-CEO-5. Anticipación activa: si detectas una promesa del copy sin respaldo, un cobro
-       duplicado posible, una fuga de datos, un precio fuera del SSOT o un competidor
-       copiando, **lo dices antes de que lo pregunte** y propones la acción.
-CEO-6. Prohibido el "todo listo" sin URL. Prohibido el silencio ante un riesgo. El
-       silencio cómplice es la única falta que no se puede reparar después.
+CEO-1. Todo reporte abre con **5 líneas máximo**:
+       1) Qué cambió · 2) Qué riesgo desaparece · 3) URL o comando que lo prueba ·
+       4) Qué NO está probado · 5) Qué decisión necesito (o "ninguna").
+CEO-2. Cero jerga sin traducción inmediata a impacto financiero o de cliente.
+CEO-3. Clase de 60 segundos por entrega: concepto → utilidad → coste de ignorarlo.
+CEO-4. Verdad cruda primero: declarar lo `SOSPECHOSO` o `SIN_EVIDENCIA` con total naturalidad.
+CEO-5. Anticipación activa ante cualquier fuga potencial de negocio.
 
-## §9 · CHG — CAMBIO EN PRODUCCIÓN (cero big-bang, rollback ensayado)
+## §9 · CHG — CAMBIO Y DESPLIEGUE EN PRODUCCIÓN
 
-CHG-1. Todo cambio con impacto comercial nace detrás de un flag (OFF por defecto) y se
-       enciende por porcentaje. Un flag por funcionalidad **y** un kill switch global.
-CHG-2. Migraciones *forward-only* con backup verificado **antes**. `DROP`/`TRUNCATE` exige
-       doble revisión humana y ventana anunciada. Nunca migración y feature en el mismo
-       deploy.
-CHG-3. Rollback < 5 minutos **ensayado**, no teórico. Si no se ha probado el rollback, la
-       release no está lista.
-CHG-4. Deploy exclusivamente a `origin` → Coolify (`82.29.179.172:8000`). Vercel y Netlify
-       están erradicados: prohibido reintroducirlos por la puerta de atrás.
-CHG-5. Nada que toque dinero, depósito, disponibilidad o datos personales se despliega en
-       viernes, víspera de festivo o con el CEO sin acceso a su teléfono.
-CHG-6. `git status` y tamaño del diff antes de cada commit. Prohibido `git add -A` a ciegas
-       y prohibido commitear secretos, `.env`, pesados > 1 MB o bóvedas.
+CHG-1. Deploy exclusivamente a `origin` (`main`) → Coolify VPS Bare-Metal (`82.29.179.172:8000`).
+CHG-2. Rollback ensayado < 5 minutos.
+CHG-3. Prohibido commitear archivos > 1 MB, bases monolíticas, bóvedas pesadas o secretos.
+CHG-4. Inspección obligatoria de `git status` y tamaño de diff antes de cualquier commit.
 
-## §10 · INC — INCIDENTES Y PREMORTEM
+## §10 · INC — INCIDENTES Y PREMORTEM (G-8)
 
-| Sev | Definición | Detección | Mitigación | Comunicación al CEO |
-|---|---|---|---|---|
-| SEV-1 | Dinero, datos personales o disponibilidad caídos | ≤ 15 min | ≤ 1 h | ≤ 30 min, 3 líneas + 1 URL |
-| SEV-2 | Función comercial degradada (cobro/lead/reserva) | ≤ 1 h | ≤ 4 h | ≤ 2 h |
-| SEV-3 | Defecto visible sin impacto económico | ≤ 1 día | ≤ 72 h | En el reporte diario |
-| SEV-4 | Cosmético / deuda | backlog | planificada | No aplica |
+INC-1. Post-mortem en ≤ 72 h en `.antigravity/reports/` con causa raíz, mitigación y dueño.
+INC-2. **Las 5 Preguntas del Premortem Obligatorio:**
+       1) ¿Cumple la solución el objetivo exacto o he entregado un primo hermano cosmético?
+       2) ¿Qué asunciones frágiles sostienen este bloque (datos INE, terceros, red)?
+       3) ¿Qué alternativa arquitectónica descarté y por qué razón técnica objetiva?
+       4) ¿Qué se rompería en producción bajo carga y cómo lo detectamos antes que el cliente?
+       5) ¿Qué consecuencia técnica, jurídica o financiera acepto al firmar este commit?
 
-INC-1. Post-mortem **sin culpables** en ≤ 72 h: causa raíz, detección, mitigación y una
-       acción con dueño y fecha. Se guarda en `.antigravity/reports/`.
-INC-2. Prohibido ocultar, minimizar o retrasar un incidente para "cerrar bonito" la tarea.
-       Ocultar un SEV-1 es la única falta imperdonable de este contrato.
-INC-3. **Premortem obligatorio antes de cada cierre (G-8)**, cinco respuestas concretas:
-       1) ¿Cumple el `done_when` o he entregado un primo hermano de lo pedido?
-       2) ¿Qué asunciones frágiles sostienen esto (estado, terceros, datos)?
-       3) ¿Qué alternativa descarté y por qué técnico (no por comodidad)?
-       4) ¿Qué se rompe en el navegador del cliente o en PostgreSQL, y cómo lo detectamos
-          **antes** que el cliente?
-       5) ¿Qué acepto al firmar esto como propio (dinero, RGPD, fecha bloqueada, reputación)?
+## §11 · WF — WORKFLOW ZTM (ZERO-TOKEN MEMORY)
 
-## §11 · WF — WORKFLOW (idéntico al motor vigente, endurecido)
+WF-1. `node .antigravity/omega.js next` → lee `.antigravity/MISSION_ACTIVE.json`.
+WF-2. Implementa en los ficheros autorizados (`files`), ejecuta el test asignado y valida G-0 a G-8.
+WF-3. Cierre: `node .antigravity/omega.js complete <ID>`.
+WF-4. **Pacto ZTM (1 Tarea por Sesión):** Al completar con Exit Code 0, se anexa el hito en
+      `CLINE_EXECUTION_LOG.md` y se **DETIENE** la sesión para abrir una nueva (+) en Cline.
+WF-5. Regla de Serie: `MISSION_ACTIVE.json` gobierna un único slot activo para evitar colisiones.
 
-WF-1. `node .antigravity/omega.js next` → lees objetivo y ficheros. Prohibido editar
-      `tasks_queue.json` a mano.
-WF-2. Implementas, validas G-0…G-8, y cierras con `node .antigravity/omega.js complete <ID>`.
-WF-3. **Pacto ZTM:** al cerrar con Exit 0 se anota el hito en `CLINE_EXECUTION_LOG.md`
-      (append, jamás sobrescribir) y se **DETIENE** la sesión para abrir una nueva (+).
-      Umbral de parada por contexto acumulado: 90.000–95.000 tokens.
-WF-4. Prohibido leer bóvedas, MFTs, CSVs masivos o `CLINE_EXECUTION_LOG.md` completo en
-      contexto: se consulta por streaming y se devuelve un resumen < 300 tokens.
-WF-5. `AGENTS.md` v9.0 y este contrato coexisten; si discrepan, gana la cláusula más
-      exigente. Nunca se "simplifica" una regla para que pase un test.
-
-## §12 · SIG — PROTOCOLO DE CIERRE (sin este bloque la tarea no existe)
+## §12 · SIG — PROTOCOLO DE CIERRE CONTRACTUAL
 
 ```
 SIGMA://CLOSE/v1
 task_id        : <ID>
 estado_bloque  : VERIFICADO | SOSPECHOSO | FACHADA | SIN_EVIDENCIA
-hecho          : <qué escribe de verdad, con ruta:línea>
+hecho          : <resumen exacto de qué escribe con ruta:línea>
 evidence[]     : { id, cmd, exit, url, sha256, ts }
-cambios[]      : <rutas exactas>
-gates          : { G0..G8: PASS|FAIL }
-omega_diamante : { score: n/20, pendientes[] }
-hipotesis[]    : <asunciones frágiles>
-decision       : <y alternativa descartada + motivo técnico>
+cambios[]      : <rutas exactas tocadas>
+gates          : { G0..G8: PASS | FAIL | SIN_EVIDENCIA }
+omega_diamante : { score: "n/20", verdict: "VERDE"|"ROJO", pendientes[] }
+hipotesis[]    : <asunciones frágiles declaradas>
+decision       : <alternativa descartada y motivo>
 riesgos        : <premortem en una línea>
-reto_espejo    : <si aplica: criterio más duro + comando que lo verifica>
-aprendizaje_ceo: <1 frase educativa + URL>
-siguiente_paso : <una sola acción atómica>
+reto_espejo    : <criterio más exigente aplicado o justificación>
+aprendizaje_ceo: <lección de 60 segundos>
+siguiente_paso : <siguiente tarea atómica en la cola>
 ```
 
-SIG-1. `estado_bloque` no se elige por optimismo: se deriva de las evidencias. Un solo
-       `FAIL` en `gates` obliga a `SOSPECHOSO` como máximo.
-SIG-2. Si falta evidencia máquina, el sello se firma `n/20` **con la lista de huecos a la
-       vista**. Declarar 20/20 sin comando es el fraude máximo del sistema.
-SIG-3. Cierre literal: *"Tarea `<ID>` completada y sellada con Exit Code 0. Detención
-       preventiva por Pacto ZTM."* — y solo si el Exit Code se ha visto de verdad.
+SIG-1. `estado_bloque` se deriva de las pruebas de arnés: 1 fallo obliga a `SOSPECHOSO`.
+SIG-2. Declarar 20/20 sin comando es el fraude máximo del sistema. Se firma `n/20` con huecos a la vista.
 
-## §13 · GAP — LO QUE HOY NO ESTÁ PROBADO (honestidad estructural)
+## §13 · SCORECARD Ω-DIAMANTE ROJO (LEY DEL AUDITOR REAL)
 
-Ninguna IA puede llamar "verde" a esto hasta que exista comando en disco:
+El script `scripts/audit_omega_rojo_scorecard.cjs` (`npm run audit:omega-rojo`) es el juez técnico:
+- 8 ítems P0 obligatorios (1-8): Exit 0 solo si los 8 están VERIFICADO.
+- 12 ítems avanzados (9-20): Se audita existencia de comando o se marca honestamente `SIN_EVIDENCIA`.
 
-| Ítem Ω | Estado | Qué falta para cerrarlo |
-|---|---|---|
-| ISO/IEC 25010 documentada | ❌ SIN_EVIDENCIA | Mapa de calidad con métricas por atributo |
-| ISO/IEC 5055 (CISQ) | ❌ SIN_EVIDENCIA | Analizador estructural + umbral |
-| OWASP ASVS L3 automatizado | ⚠️ parcial | Suite de payloads XSS/SSRF en CI |
-| Lighthouse 100×4 | ❌ SIN_EVIDENCIA | Medición reproducible por ruta comercial |
-| Core Web Vitals de campo p75 | ❌ SIN_EVIDENCIA | CrUX / RUM propio con datos reales |
-| Rich Results schema.org | ❌ SIN_EVIDENCIA | Validador en CI sobre las landings |
-| Jaccard/TF-IDF sobre 1.000 URLs | ⚠️ parcial | Auditor actual acotado a 10 landings |
-| DLQ n8n con alerta | ⚠️ parcial | U2 ya expone `dlqCount`; falta alerta automática |
-| `/confianza` (U13) | ❌ NO_EXISTE | Página generada desde el ledger |
+## §14 · AMD — AUTOENMIENDA Y FUSIÓN
 
-Etiqueta obligatoria al hablar de estos ítems: `⚠️ SIN_EVIDENCIA_MÁQUINA`. Prohibido
-convertirlos en "pendientes menores": un ítem sin comando vale **0 puntos**, no "casi".
-
-## §14 · AMD — AUTOENMIENDA
-
-AMD-1. Ninguna IA puede **relajar** este contrato. Endurecerlo exige: evidencia, comando
-       que lo verifique y sanción explícita del CEO.
-AMD-2. Toda enmienda se registra con fecha, hash del fichero y motivo. La doctrina es
-       versionada como el código: si no está en git, no existe.
-AMD-3. Si una cláusula resulta inaplicable en la práctica, no se ignora en silencio: se
-       abre un `reto_espejo` con el criterio alternativo y su comando.
+AMD-1. Ningún agente puede relajar este contrato.
+AMD-2. Ante discrepancia entre documentos o directivas, **gana siempre la cláusula más exigente**.
+AMD-3. Todo cambio en doctrina se versiona en Git con hash y justificación.
 
 # ════════════════════════════════════════════════════════════════════════════════
-# FIN OMEGA://DOCTRINE/V10_SIGMA · v10.0 · 2026-10-30
-# Evidencia de origen: productoraear.com sondeado 2026-10-30T09:45Z (U1, U2, U4 = 200);
-# 27/27 comandos citados verificados con Test-Path; hallazgo AF-1 reproducido en
-# src/app/api/webhooks/health/route.ts:50-55. Respaldo v2.0 en
-# .antigravity/backups/.clinerules.v2.0_2026-10-30.bak (y en git).
+# FIN OMEGA://DOCTRINE/V11_SIGMA_AI_FLUENCY · v11.0 · 2026-11-05
 # ════════════════════════════════════════════════════════════════════════════════
-
-
-
-

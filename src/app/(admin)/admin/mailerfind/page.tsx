@@ -24,6 +24,8 @@ import {
 } from 'lucide-react';
 import { MailerfindLead } from '@/lib/mcp/mailerfind-connector';
 import { OutreachDispatch } from '@/lib/outreach/organic-outreach-engine';
+import { MetricProvenanceBadge } from '@/components/admin/MetricProvenanceBadge';
+import { staticMetric, liveMetric, type AdminMetricMode } from '@/lib/admin/metrics-provenance';
 
 interface EnrichedLead extends MailerfindLead {
   outreach: OutreachDispatch;
@@ -231,23 +233,32 @@ export default function AdminMailerfindProspectingPage() {
             <span>{grandTotal > 0 ? `${grandTotal.toLocaleString('es-ES')} Proveedores` : 'Proveedores: 0 leídos'}</span>
           </div>
 
-          <div
-            className="px-3 py-1.5 bg-emerald-950/40 border border-emerald-500/50 rounded-xl text-xs font-mono text-emerald-300 flex items-center gap-1.5"
-            title={engine ? `Sonda: ${engine.source} · ${engine.checkedAt}` : 'Sin sonda ejecutada todavía (SIN_EVIDENCIA)'}
-          >
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-            <span>0€ de cuota · Split 80/10/10</span>
-          </div>
+          <MetricProvenanceBadge
+            metric={staticMetric(
+              'mailerfind_providers',
+              'Proveedores en disco',
+              grandTotal,
+              'providers-manifest.ts',
+              'prov',
+              undefined,
+              grandTotal > 0 ? `${grandTotal.toLocaleString('es-ES')}` : '0'
+            )}
+            size="sm"
+          />
 
-          <div
-            className={`px-3 py-1.5 rounded-xl text-xs font-mono flex items-center gap-1.5 border ${engine && engine.mode === 'REAL'
-              ? 'bg-sky-950/40 border-sky-500/50 text-sky-300'
-              : 'bg-amber-950/40 border-amber-500/50 text-amber-300'
-              }`}
-          >
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>{engine ? `MOTOR ${engine.mode} · ${engine.source}` : 'MOTOR SIN_SONDA'}</span>
-          </div>
+          <MetricProvenanceBadge
+            metric={liveMetric(
+              'mailerfind_sourcing_engine',
+              'Motor Sourcing',
+              engine?.mode === 'REAL' ? 1 : 0,
+              Boolean(engine && engine.mode === 'REAL'),
+              engine?.source ?? 'sin_sonda',
+              '',
+              engine?.checkedAt,
+              (engine?.mode as AdminMetricMode) ?? 'SIMULADO'
+            )}
+            size="sm"
+          />
 
           {leads.length > 0 && (
             <button

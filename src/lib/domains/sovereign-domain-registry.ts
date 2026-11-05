@@ -294,3 +294,4 @@ export function checkVerticalCircuitBreaker(config: SovereignDomainConfig): {
     notice: config.maintenanceNotice,
   };
 }
+

@@ -44,7 +44,7 @@ if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
     except Exception:
         pass
 
-PROJECT_ROOT = Path(r"H:\EAR_OS_V2\EAR_OS_V2")
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
 SCRIPTS_DIR = PROJECT_ROOT / "scripts"
 REPORTS_DIR = SCRIPTS_DIR / "reports"
 SWARM_LOGS_DIR = REPORTS_DIR / "swarm"

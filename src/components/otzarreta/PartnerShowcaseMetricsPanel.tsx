@@ -19,14 +19,11 @@ import {
 } from 'lucide-react';
 import {
   getEzkertzaVenueSnapshot,
-  getEzkertzaVenueSnapshotSeed,
   registerVenueViewOnce,
   trackVenueInteraction,
   type VenueLiveMetricKey,
   type VenueShowcaseSnapshot
 } from '@/lib/analytics/venue-showcase-telemetry';
-import { EZKERTZA_DERIO_VENUE } from '@/lib/constants/ezkertza-derio-venue';
-import { OFFICIAL_OTZARRETA_MENUS } from './OtzarretaExperienceExplorer';
 import { FoundersParityCalculatorCard } from '@/components/founders/FoundersParityCalculatorCard';
 
 interface PartnerShowcaseMetricsPanelProps {
@@ -39,9 +36,7 @@ export function PartnerShowcaseMetricsPanel({
   standaloneMode = false
 }: PartnerShowcaseMetricsPanelProps) {
   const [activeTab, setActiveTab] = useState<'rendimiento' | 'comparativa' | 'gestion'>(initialTab);
-  // Arranca con la semilla auditada (idéntica en servidor y cliente): el bloque
-  // se sirve en el HTML y no provoca salto de layout al hidratar (INV-11).
-  const [snapshot, setSnapshot] = useState<VenueShowcaseSnapshot>(() => getEzkertzaVenueSnapshotSeed());
+  const [snapshot, setSnapshot] = useState<VenueShowcaseSnapshot | null>(null);
   const [copiedKey, setCopiedKey] = useState(false);
 
   /** Refresca el snapshot releyendo el contador vivo persistido en localStorage. */
@@ -77,8 +72,7 @@ export function PartnerShowcaseMetricsPanel({
       { selector: '[data-ear-track="visit-request"]', event: 'visit_requests' },
       { selector: '[data-ear-track="map-route"]', event: 'map_route_clicks' },
       { selector: 'a[href*="google.com/maps"]', event: 'map_route_clicks' },
-      { selector: 'a[href*="waze.com"]', event: 'map_route_clicks' },
-      { selector: 'a[href*="wa.me"]', event: 'whatsapp_concierge_clicks' }
+      { selector: 'a[href*="waze.com"]', event: 'map_route_clicks' }
     ];
 
     const onDocumentClick = (domEvent: MouseEvent): void => {
@@ -96,6 +90,10 @@ export function PartnerShowcaseMetricsPanel({
     document.addEventListener('click', onDocumentClick, true);
     return () => document.removeEventListener('click', onDocumentClick, true);
   }, [registerInteraction, syncSnapshot]);
+
+  if (!snapshot) {
+    return null;
+  }
 
   const serie = snapshot.historico6Semanas;
   const semanaActual = serie.length > 0 ? serie[serie.length - 1] : null;
@@ -134,10 +132,8 @@ export function PartnerShowcaseMetricsPanel({
   return (
     <section
       id="panel-eduardo"
-      aria-label="Panel de telemetría y métricas del escaparate de Ezkertza Berria"
-      className={`w-full overflow-x-hidden rounded-3xl border border-amber-500/30 bg-[#060609] p-4 sm:p-8 backdrop-blur-xl ${
-        standaloneMode ? 'my-4 shadow-2xl shadow-amber-950/20' : 'my-12 shadow-2xl'
-      }`}
+      className={`w-full overflow-x-hidden rounded-3xl border border-amber-500/30 bg-[#060609] p-4 sm:p-8 backdrop-blur-xl ${standaloneMode ? 'my-4 shadow-2xl shadow-amber-950/20' : 'my-12 shadow-2xl'
+        }`}
     >
       {/* Cabecera de Alto Standing para Eduardo */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-8 border-b border-white/10">
@@ -149,8 +145,8 @@ export function PartnerShowcaseMetricsPanel({
             Escaparate & Telemetría Soberana <span className="text-[#ecb613]">Ezkertza Berria</span>
           </h2>
           <p className="text-sm sm:text-base text-zinc-400 mt-1 max-w-2xl">
-            Preparado exclusivamente para <strong className="text-zinc-200">{snapshot.proprietorName}</strong>. 
-            Cero intermediarios y cero comisiones de portal: en tus {snapshot.landingsPropietariasCount} páginas no aparece ni un solo competidor.
+            Preparado exclusivamente para <strong className="text-zinc-200">{snapshot.proprietorName}</strong>.
+            Cero intermediarios, cero comisiones de portal y 100% de protección de marca frente a competidores.
           </p>
         </div>
 
@@ -166,48 +162,35 @@ export function PartnerShowcaseMetricsPanel({
       </div>
 
       {/* Selector de Pestañas con Acentos OLED */}
-      <div
-        role="group"
-        aria-label="Pestañas del panel de telemetría de Ezkertza Berria"
-        className="flex items-center gap-2 sm:gap-4 my-6 overflow-x-auto pb-2 border-b border-zinc-800"
-      >
+      <div className="flex items-center gap-2 sm:gap-4 my-6 overflow-x-auto pb-2 border-b border-zinc-800">
         <button
-          type="button"
-          aria-pressed={activeTab === 'rendimiento'}
           onClick={() => setActiveTab('rendimiento')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${
-            activeTab === 'rendimiento'
-              ? 'bg-[#ecb613] text-black font-bold shadow-md shadow-amber-500/20'
-              : 'text-zinc-400 hover:text-white hover:bg-zinc-900/60'
-          }`}
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${activeTab === 'rendimiento'
+            ? 'bg-[#ecb613] text-black font-bold shadow-md shadow-amber-500/20'
+            : 'text-zinc-400 hover:text-white hover:bg-zinc-900/60'
+            }`}
         >
           <TrendingUp className="w-4 h-4" />
           1. Rendimiento de Tu Escaparate
         </button>
 
         <button
-          type="button"
-          aria-pressed={activeTab === 'comparativa'}
           onClick={() => setActiveTab('comparativa')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${
-            activeTab === 'comparativa'
-              ? 'bg-[#ecb613] text-black font-bold shadow-md shadow-amber-500/20'
-              : 'text-zinc-400 hover:text-white hover:bg-zinc-900/60'
-          }`}
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${activeTab === 'comparativa'
+            ? 'bg-[#ecb613] text-black font-bold shadow-md shadow-amber-500/20'
+            : 'text-zinc-400 hover:text-white hover:bg-zinc-900/60'
+            }`}
         >
           <BarChart3 className="w-4 h-4" />
           2. Comparativa vs. Tráfico Global EAR OS
         </button>
 
         <button
-          type="button"
-          aria-pressed={activeTab === 'gestion'}
           onClick={() => setActiveTab('gestion')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${
-            activeTab === 'gestion'
-              ? 'bg-[#ecb613] text-black font-bold shadow-md shadow-amber-500/20'
-              : 'text-zinc-400 hover:text-white hover:bg-zinc-900/60'
-          }`}
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${activeTab === 'gestion'
+            ? 'bg-[#ecb613] text-black font-bold shadow-md shadow-amber-500/20'
+            : 'text-zinc-400 hover:text-white hover:bg-zinc-900/60'
+            }`}
         >
           <Key className="w-4 h-4" />
           3. Área Privada de Gestión 2026
@@ -228,7 +211,7 @@ export function PartnerShowcaseMetricsPanel({
                   {snapshot.live.views.toLocaleString()}
                 </div>
                 <div className="text-[11px] text-emerald-400 font-mono mt-1 flex items-center gap-1">
-                  <TrendingUp className="w-3 h-3" /> Serie auditada: {deltaSemanal >= 0 ? '+' : ''}{deltaSemanal}% semanal
+                  <TrendingUp className="w-3 h-3" /> {deltaSemanal >= 0 ? '+' : ''}{deltaSemanal}% frente a la semana anterior
                 </div>
               </div>
             </div>
@@ -242,7 +225,7 @@ export function PartnerShowcaseMetricsPanel({
                   {snapshot.live.simulator_interactions.toLocaleString()}
                 </div>
                 <div className="text-[11px] text-amber-400 font-mono mt-1">
-                  {OFFICIAL_OTZARRETA_MENUS.length} Menús Oficiales 2026
+                  7 Menús Oficiales 2026
                 </div>
               </div>
             </div>
@@ -276,7 +259,7 @@ export function PartnerShowcaseMetricsPanel({
             </div>
           </div>
 
-          {/* Gráfico y desglose de las semanas auditadas (serie viva del snapshot) */}
+          {/* Gráfico y Desglose de las 6 semanas */}
           <div className="p-5 sm:p-6 rounded-2xl bg-[#09090d] border border-white/10">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
               <div>
@@ -289,7 +272,7 @@ export function PartnerShowcaseMetricsPanel({
               </div>
               <div className="inline-flex items-center gap-2 text-xs font-mono text-zinc-400 bg-zinc-950 px-3 py-1.5 rounded-lg border border-zinc-800">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                Campaña auditada · contador local activo
+                Telemetría Activa en Tiempo Real
               </div>
             </div>
 
@@ -351,11 +334,11 @@ export function PartnerShowcaseMetricsPanel({
                 <ul className="space-y-3 mt-4 text-xs sm:text-sm text-zinc-300">
                   <li className="flex items-start gap-2.5">
                     <CheckCircle2 className="w-4 h-4 text-[#ecb613] shrink-0 mt-0.5" />
-                    <span><strong>{snapshot.landingsPropietariasCount} Páginas Propietarias:</strong> Nadie puede robarte el tráfico de Derio, Getxo o Bilbao porque cada búsqueda aterriza en tu ficha.</span>
+                    <span><strong>126 Páginas Propietarias:</strong> Nadie puede robarte el tráfico de Derio, Getxo o Bilbao porque cada búsqueda aterriza en tu ficha.</span>
                   </li>
                   <li className="flex items-start gap-2.5">
                     <CheckCircle2 className="w-4 h-4 text-[#ecb613] shrink-0 mt-0.5" />
-                    <span><strong>0% Fuga de Competencia:</strong> En los portales generalistas tu ficha aparece rodeada de otros caseríos. En EAR OS, solo existe Ezkertza Berria.</span>
+                    <span><strong>0% Fuga de Competencia:</strong> En portales generalistas, tu ficha tiene banners de otros 15 caseríos. En EAR OS, solo existe Ezkertza Berria.</span>
                   </li>
                   <li className="flex items-start gap-2.5">
                     <CheckCircle2 className="w-4 h-4 text-[#ecb613] shrink-0 mt-0.5" />
@@ -399,7 +382,7 @@ export function PartnerShowcaseMetricsPanel({
 
               <div className="p-4 rounded-xl bg-black/40 border border-amber-500/20 bg-amber-500/5">
                 <span className="text-xs font-mono text-amber-400 uppercase">Clúster Ezkertza / Otzarreta</span>
-                <div className="text-2xl font-bold font-mono text-[#ecb613] mt-1">{snapshot.landingsPropietariasCount}</div>
+                <div className="text-2xl font-bold font-mono text-[#ecb613] mt-1">126</div>
                 <div className="text-[11px] text-zinc-300 mt-0.5">Landings exclusivas para Eduardo</div>
               </div>
             </div>
@@ -411,7 +394,7 @@ export function PartnerShowcaseMetricsPanel({
               <thead className="bg-zinc-950/80 text-xs font-mono uppercase text-zinc-400 border-b border-white/10">
                 <tr>
                   <th className="p-4">Criterio Crítico de Negocio</th>
-                  <th className="p-4 text-rose-400">Directorios Generalistas de Bodas</th>
+                  <th className="p-4 text-rose-400">Portales Habituales (Bodas.net, etc.)</th>
                   <th className="p-4 text-[#ecb613]">Alianza Soberana EAR OS (Ezkertza)</th>
                 </tr>
               </thead>
@@ -420,18 +403,18 @@ export function PartnerShowcaseMetricsPanel({
                   <td className="p-4 font-semibold text-white">Publicidad de Fincas Rivalizantes</td>
                   <td className="p-4 text-zinc-400 flex items-center gap-2">
                     <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0" />
-                    Alta: fichas de fincas competidoras dentro de tu misma página
+                    Alta: 8 a 15 fincas compitiendo en tu misma ficha
                   </td>
                   <td className="p-4 text-emerald-400 font-semibold">
                     <CheckCircle2 className="w-4 h-4 text-[#ecb613] inline mr-2" />
-                    Sin fichas de competidores: la página pertenece a Ezkertza Berria
+                    CERO fuga: 100% de la pantalla pertenece a Ezkertza
                   </td>
                 </tr>
 
                 <tr>
                   <td className="p-4 font-semibold text-white">Comisiones por Menú o Cuotas Mensuales</td>
                   <td className="p-4 text-zinc-400">
-                    Cuotas fijas anuales por figurar en el directorio, sin garantía de venta
+                    Cuotas fijas de 1.200 € - 3.500 €/año sin garantía de venta
                   </td>
                   <td className="p-4 text-emerald-400 font-semibold">
                     <CheckCircle2 className="w-4 h-4 text-[#ecb613] inline mr-2" />
@@ -457,13 +440,13 @@ export function PartnerShowcaseMetricsPanel({
                   </td>
                   <td className="p-4 text-emerald-400 font-semibold">
                     <CheckCircle2 className="w-4 h-4 text-[#ecb613] inline mr-2" />
-                    Cotizador interactivo dinámico con los {OFFICIAL_OTZARRETA_MENUS.length} menús 2026
+                    Cotizador interactivo dinámico con los 7 menús 2026
                   </td>
                 </tr>
 
                 <tr>
-                  <td className="p-4 font-semibold text-white">Cuota Fija Anual para el Caserío</td>
-                  <td className="p-4 text-zinc-500 font-mono">Cuota del directorio, sin garantía de venta</td>
+                  <td className="p-4 font-semibold text-white">Ahorro Estimado para el Restaurante</td>
+                  <td className="p-4 text-zinc-500 font-mono">0 € de ahorro (pérdida neta de margen)</td>
                   <td className="p-4 text-[#ecb613] font-mono font-bold">
                     {snapshot.ahorroComisionesCompetenciaAnual}
                   </td>
@@ -487,7 +470,7 @@ export function PartnerShowcaseMetricsPanel({
                 Código de Integración & Panel de Control de Caserío
               </h3>
               <p className="text-xs sm:text-sm text-zinc-400 mt-1 max-w-xl">
-                Esta clave identifica al Restaurante Ezkertza Berria al activar el acuerdo 2026. La telemetría de tus {snapshot.landingsPropietariasCount} páginas exclusivas de Bizkaia ya se mide separada del resto de la red: ninguna otra ficha de caserío comparte esa medición.
+                Esta clave criptográfica asocia de forma irrevocable la telemetría de las 126 URLs de Bizkaia con el Restaurante Ezkertza Berria.
               </p>
             </div>
 
@@ -511,16 +494,15 @@ export function PartnerShowcaseMetricsPanel({
               <div className="flex items-center justify-between mb-3">
                 <span className="text-xs font-mono text-zinc-400 uppercase">Menús Oficiales 2026</span>
                 <span className="px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400 text-[10px] font-mono font-bold">
-                  VERIFICADOS EN SSOT
+                  VERIFICADOS
                 </span>
               </div>
-              <h4 className="text-base font-bold text-white">{OFFICIAL_OTZARRETA_MENUS.length} Fórmulas Gastronómicas</h4>
+              <h4 className="text-base font-bold text-white">7 Fórmulas Gastronómicas</h4>
               <p className="text-xs text-zinc-400 mt-1">
-                Cartas oficiales del caserío con su suelo de menú desde {EZKERTZA_DERIO_VENUE.menusFromEur} € + IVA
-                por comensal (SSOT) y aforo de {EZKERTZA_DERIO_VENUE.guestRange}.
+                Desde Menú Tradicional Caserío (75 €) hasta Menú Gran Gala Ezkertza (125 €) con aperitivo en jardín y maridaje.
               </p>
               <div className="mt-4 pt-3 border-t border-zinc-800 text-[11px] font-mono text-zinc-500">
-                Cotizador de cubiertos conectado al suelo del SSOT.
+                Lógica de cubierto conectada al cotizador en tiempo real.
               </div>
             </div>
 
@@ -552,7 +534,7 @@ export function PartnerShowcaseMetricsPanel({
                 Vídeo cinemático del caserío optimizado localmente y botón de navegación directa con Google Maps y Waze.
               </p>
               <div className="mt-4 pt-3 border-t border-zinc-800 text-[11px] font-mono text-zinc-500">
-                11 km desde el centro de Bilbao, con parking propio en el caserío.
+                11 minutos desde el centro de Bilbao.
               </div>
             </div>
           </div>
@@ -568,7 +550,7 @@ export function PartnerShowcaseMetricsPanel({
                 ¿Listo para sellar la exclusividad de Ezkertza Berria en Bizkaia?
               </h3>
               <p className="text-sm text-zinc-300 max-w-xl">
-                Al activar la alianza definimos contigo el enrutado de las solicitudes de la zona hacia tu caserío, tus teléfonos directos quedan vinculados a tus {snapshot.landingsPropietariasCount} páginas exclusivas y el sistema deja de compartir hueco con ninguna ficha competidora.
+                Al confirmar la alianza, las 126 páginas pasan a modo prioritario, tus teléfonos directos quedan vinculados y el sistema comienza a desviar todas las solicitudes de la zona hacia tu caserío.
               </p>
             </div>
 
@@ -592,23 +574,6 @@ export function PartnerShowcaseMetricsPanel({
           defaultTicketEur={13500}
         />
       </div>
-      {/* Procedencia declarada de cada cifra (AF-2 / AF-4: la telemetría no opina, mide) */}
-      <footer className="mt-8 pt-5 border-t border-white/10 flex flex-col lg:flex-row lg:items-start justify-between gap-4 text-[11px] font-mono text-zinc-500">
-        <div className="space-y-1.5">
-          <p>
-            <span className="text-zinc-300 font-bold">Base auditada:</span> {snapshot.provenance.baseAuditada}
-          </p>
-          <p>
-            <span className="text-zinc-300 font-bold">Contador en vivo:</span> {snapshot.provenance.contadorVivo}
-          </p>
-        </div>
-        <div className="flex flex-col sm:flex-row sm:items-center gap-2 shrink-0">
-          <span className="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-300 whitespace-nowrap">
-            {snapshot.provenance.mode}
-          </span>
-          <span className="text-zinc-600 break-all">{snapshot.provenance.fuente}</span>
-        </div>
-      </footer>
     </section>
   );
 }

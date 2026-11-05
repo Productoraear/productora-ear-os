@@ -1,0 +1,23 @@
+{
+  "probed": false,
+  "source": "static",
+  "mode": "SIMULADO",
+  "estimatedCls": null,
+  "disclaimer": "Presupuesto estático de layout-shift; el CLS p75 real exige RUM/CrUX con datos de campo.",
+  "rulesCount": 8,
+  "totalViolations": 0,
+  "checkedAt": "2026-11-05T09:10:09.593Z",
+  "routes": [
+    {
+      "route": "/experiencia",
+      "filesChecked": [
+        "src/app/experiencia/page.tsx",
+        "src/components/portal/OmniChannelHub360.tsx"
+      ],
+      "violationsCount": 0,
+      "violations": [],
+      "budget": 0.05,
+      "verdict": "PASS"
+    }
+  ]
+}

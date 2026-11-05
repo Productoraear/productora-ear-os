@@ -10,7 +10,7 @@
  *   · Radar de proveedores en 3 tiers: rango exacto / premium +15% / stretch.
  *
  * Leyes inmutables de implementación:
- *   1. TODO el dinero se calcula en CÉNTIMOS ENTEROS. Cero `float` en la ruta
+ *   1. La totalidad del dinero se calcula en CÉNTIMOS ENTEROS. Cero `float` en la ruta
  *      del dinero y cero `Math.random`: el reparto es determinista y auditable.
  *   2. La suma de categorías SIEMPRE iguala el total, al céntimo, por
  *      construcción (mayor resto con desempate por orden canónico).

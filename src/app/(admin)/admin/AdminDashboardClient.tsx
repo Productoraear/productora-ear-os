@@ -9,30 +9,17 @@ import {
   DollarSign,
   Users,
   CreditCard,
-  TrendingUp,
-  Activity,
   Wallet,
   QrCode,
   ArrowUpRight,
   RefreshCcw,
-  Sparkles,
   Search,
   Landmark,
   Truck,
   Compass,
-  Mic,
-  Phone,
   Radio,
-  Flame,
-  Zap,
   Shield,
-  ShieldCheck,
   ChevronRight,
-  Award,
-  Layers,
-  HeartHandshake,
-  BarChart3,
-  ExternalLink,
   Crown
 } from 'lucide-react';
 import { formatProviderCount } from '@/lib/constants/providers-manifest';
@@ -47,6 +34,8 @@ import OpportunityRadarTerminal from '@/components/admin/OpportunityRadarTermina
 import VendorManagedCareDesk from '@/components/admin/VendorManagedCareDesk';
 import UberStyleBookingDispatcher from '@/components/admin/UberStyleBookingDispatcher';
 import WhatsAppPriceLockGenerator from '@/components/admin/WhatsAppPriceLockGenerator';
+import { MetricProvenanceBadge } from '@/components/admin/MetricProvenanceBadge';
+import { liveMetric, staticMetric } from '@/lib/admin/metrics-provenance';
 
 // ============================================================================
 // DIRECTORIO DEL COCKPIT — FUENTE ÚNICA (`@/lib/config/admin-navigation`)
@@ -135,6 +124,59 @@ export default function AdminDashboardClient({ data }: { data: AdminDashboardDat
   const GRAND_TOTAL_FORMATTED = formatProviderCount(data.providerCount);
   const totalVolumeExecuted = data.totalRevenue;
   const splitPercent = totalVolumeExecuted > 0 ? 100 : 0;
+  const isDbLive = data.dbProbed ?? (data.dataMode !== 'DB_OFFLINE');
+
+  const revenueMetric = liveMetric(
+    'admin_total_revenue',
+    'Facturación Bruta',
+    data.totalRevenue,
+    isDbLive,
+    'Postgres.ProductionEvent.amount',
+    '€',
+    undefined,
+    'REAL',
+    formatCurrency(data.totalRevenue)
+  );
+
+  const txMetric = liveMetric(
+    'admin_total_tx',
+    'Operaciones Liquidadas',
+    data.totalTransactions,
+    isDbLive,
+    'Postgres.ProductionEvent.count',
+    'ops'
+  );
+
+  const providersMetric = staticMetric(
+    'admin_providers_ssot',
+    'Bóveda SSOT Proveedores',
+    data.providerCount,
+    'providers-manifest.ts',
+    '',
+    undefined,
+    GRAND_TOTAL_FORMATTED
+  );
+
+  const stripeLocksMetric = liveMetric(
+    'admin_stripe_locks',
+    'Price-Lock Inmutable',
+    data.activeStripeLocksCount,
+    isDbLive,
+    'Stripe.DepositHold',
+    'Locks'
+  );
+
+  const b2gMetric = liveMetric(
+    'admin_b2g_total',
+    'Licitaciones Menores B2G',
+    data.b2gTotal,
+    isDbLive,
+    'Postgres.B2GTender',
+    '€',
+    undefined,
+    'REAL',
+    formatCurrency(data.b2gTotal)
+  );
 
   return (
     <div className="min-h-screen bg-[#030305] space-y-6 max-w-7xl mx-auto pb-16 font-sans">
@@ -203,66 +245,80 @@ export default function AdminDashboardClient({ data }: { data: AdminDashboardDat
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
 
         {/* Card 1: Total Revenue (Facturación Bruta) */}
-        <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
-          <div className="flex items-center justify-between pb-2">
-            <span className="text-xs font-medium text-zinc-400">Facturación Bruta (Split)</span>
-            <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center">
-              <DollarSign className="w-4 h-4 text-emerald-400" />
+        <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 shadow-sm hover:border-[#ecb613]/50 transition-all flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between pb-2">
+              <span className="text-xs font-medium text-zinc-400">Facturación Bruta (Split)</span>
+              <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center">
+                <DollarSign className="w-4 h-4 text-emerald-400" />
+              </div>
             </div>
+            <div className="text-2xl font-bold font-mono text-white">
+              {revenueMetric.probed ? formatCurrency(revenueMetric.value) : '0,00 €'}
+            </div>
+            <p className="text-[11px] text-zinc-400 mt-1">
+              {txMetric.probed ? `${txMetric.value} operaciones liquidadas` : '0 operaciones (DB Offline)'}
+            </p>
           </div>
-          <div className="text-2xl font-bold font-mono text-white">{formatCurrency(data.totalRevenue)}</div>
-          <p className="text-[11px] text-zinc-400 mt-1">{data.totalTransactions} operaciones liquidadas</p>
-          <div className="mt-2 flex items-center text-xs font-mono text-emerald-400 font-medium">
-            <TrendingUp className="mr-1 h-3.5 w-3.5" />
-            Base Real S-Class (0 Vanidad)
+          <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between">
+            <MetricProvenanceBadge metric={revenueMetric} size="sm" />
           </div>
         </div>
 
         {/* Card 2: Bóveda SSOT Proveedores (New Customers) */}
-        <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
-          <div className="flex items-center justify-between pb-2">
-            <span className="text-xs font-medium text-zinc-400">Bóveda SSOT Proveedores</span>
-            <div className="w-8 h-8 rounded-lg bg-[#ecb613]/10 flex items-center justify-center">
-              <Users className="w-4 h-4 text-[#ecb613]" />
+        <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 shadow-sm hover:border-[#ecb613]/50 transition-all flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between pb-2">
+              <span className="text-xs font-medium text-zinc-400">Bóveda SSOT Proveedores</span>
+              <div className="w-8 h-8 rounded-lg bg-[#ecb613]/10 flex items-center justify-center">
+                <Users className="w-4 h-4 text-[#ecb613]" />
+              </div>
             </div>
+            <div className="text-2xl font-bold font-mono text-white">{GRAND_TOTAL_FORMATTED}</div>
+            <p className="text-[11px] text-zinc-400 mt-1">Registros en DB + Scraped</p>
           </div>
-          <div className="text-2xl font-bold font-mono text-white">{GRAND_TOTAL_FORMATTED}</div>
-          <p className="text-[11px] text-zinc-400 mt-1">Registros en DB + Scraped</p>
-          <div className="mt-2 flex items-center text-xs font-mono text-emerald-400 font-medium">
-            <TrendingUp className="mr-1 h-3.5 w-3.5" />
-            100% Homologado & Fotos HD
+          <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between">
+            <MetricProvenanceBadge metric={providersMetric} size="sm" />
           </div>
         </div>
 
         {/* Card 3: Depósitos Stripe Price-Lock (Active Accounts) */}
-        <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
-          <div className="flex items-center justify-between pb-2">
-            <span className="text-xs font-medium text-zinc-400">Price-Lock Inmutable</span>
-            <div className="w-8 h-8 rounded-lg bg-cyan-500/10 flex items-center justify-center">
-              <CreditCard className="w-4 h-4 text-cyan-400" />
+        <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 shadow-sm hover:border-[#ecb613]/50 transition-all flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between pb-2">
+              <span className="text-xs font-medium text-zinc-400">Price-Lock Inmutable</span>
+              <div className="w-8 h-8 rounded-lg bg-cyan-500/10 flex items-center justify-center">
+                <CreditCard className="w-4 h-4 text-cyan-400" />
+              </div>
             </div>
+            <div className="text-2xl font-bold font-mono text-white">
+              {stripeLocksMetric.probed ? `${stripeLocksMetric.value} Locks` : '0 Locks'}
+            </div>
+            <p className="text-[11px] text-zinc-400 mt-1">
+              {isDbLive ? `${formatCurrency(data.stripeCustody)} en custodia` : '0,00 € en custodia'}
+            </p>
           </div>
-          <div className="text-2xl font-bold font-mono text-white">{data.activeStripeLocksCount} Locks</div>
-          <p className="text-[11px] text-zinc-400 mt-1">{formatCurrency(data.stripeCustody)} en custodia</p>
-          <div className="mt-2 flex items-center text-xs font-mono text-cyan-400 font-medium">
-            <TrendingUp className="mr-1 h-3.5 w-3.5" />
-            Tarifa Canónica por Reserva
+          <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between">
+            <MetricProvenanceBadge metric={stripeLocksMetric} size="sm" />
           </div>
         </div>
 
         {/* Card 4: Licitaciones Menores B2G (Growth Rate) */}
-        <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
-          <div className="flex items-center justify-between pb-2">
-            <span className="text-xs font-medium text-zinc-400">Licitaciones Menores B2G</span>
-            <div className="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center">
-              <Landmark className="w-4 h-4 text-purple-400" />
+        <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 shadow-sm hover:border-[#ecb613]/50 transition-all flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between pb-2">
+              <span className="text-xs font-medium text-zinc-400">Licitaciones Menores B2G</span>
+              <div className="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center">
+                <Landmark className="w-4 h-4 text-purple-400" />
+              </div>
             </div>
+            <div className="text-2xl font-bold font-mono text-white">
+              {b2gMetric.probed ? formatCurrency(b2gMetric.value) : '0,00 €'}
+            </div>
+            <p className="text-[11px] text-zinc-400 mt-1">Art. 118 LCSP (&lt;75 dB SPL)</p>
           </div>
-          <div className="text-2xl font-bold font-mono text-white">{formatCurrency(data.b2gTotal)}</div>
-          <p className="text-[11px] text-zinc-400 mt-1">Art. 118 LCSP (&lt;75 dB SPL)</p>
-          <div className="mt-2 flex items-center text-xs font-mono text-purple-400 font-medium">
-            <TrendingUp className="mr-1 h-3.5 w-3.5" />
-            Límite Legal por Expediente
+          <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between">
+            <MetricProvenanceBadge metric={b2gMetric} size="sm" />
           </div>
         </div>
 
@@ -384,7 +440,11 @@ export default function AdminDashboardClient({ data }: { data: AdminDashboardDat
                 </div>
                 <div className="h-32 w-full mt-4 flex items-end justify-between border-b border-zinc-900 pb-2">
                   {[25, 45, 30, 65, 50, 85, 95].map((val, i) => (
-                    <div key={i} className="w-1/12 bg-[#ecb613]/20 hover:bg-[#ecb613]/60 transition-all rounded-t-sm" style={{ height: `${val}%` }} />
+                    <div
+                      key={i}
+                      className="w-1/12 bg-[#ecb613]/20 hover:bg-[#ecb613]/60 transition-all rounded-t-sm"
+                      style={{ height: `${data.totalTransactions > 0 && isDbLive ? val : 2}%` }}
+                    />
                   ))}
                 </div>
               </div>
@@ -397,7 +457,11 @@ export default function AdminDashboardClient({ data }: { data: AdminDashboardDat
                 </div>
                 <div className="h-32 w-full mt-4 flex items-end justify-between border-b border-zinc-900 pb-2">
                   {[15, 35, 20, 55, 40, 75, 90].map((val, i) => (
-                    <div key={i} className="w-1/12 bg-emerald-500/20 hover:bg-emerald-500/60 transition-all rounded-t-sm" style={{ height: `${val}%` }} />
+                    <div
+                      key={i}
+                      className="w-1/12 bg-emerald-500/20 hover:bg-emerald-500/60 transition-all rounded-t-sm"
+                      style={{ height: `${data.totalRevenue > 0 && isDbLive ? val : 2}%` }}
+                    />
                   ))}
                 </div>
               </div>

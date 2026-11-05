@@ -9,6 +9,8 @@ import {
     HISTORIC_PRICE_ANNUAL_INCREASE_PCT,
     CDN_VENDOR_PARTITION_COUNT,
 } from '@/lib/constants/macro-ecosystem-manifest';
+import { MetricProvenanceBadge } from '@/components/admin/MetricProvenanceBadge';
+import { staticMetric } from '@/lib/admin/metrics-provenance';
 
 export const metadata: Metadata = {
     title: 'Calibrador de Proveedores | EAR OS Admin',
@@ -37,9 +39,15 @@ export default function AdminCalibratorProxyPage(): React.ReactElement {
             <section className="space-y-6">
                 <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 backdrop-blur-md p-6 sm:p-8 space-y-6">
                     <div className="space-y-2">
-                        <span className="text-[10px] font-mono text-[#ecb613] uppercase tracking-[0.3em] font-bold">
-                            TELEMETRÍA INDIVIDUAL POR ROL // {CDN_VENDOR_PARTITION_COUNT.toLocaleString('es-ES')} PROVEEDORES CDN
-                        </span>
+                        <div className="flex flex-wrap items-center justify-between gap-2">
+                            <span className="text-[10px] font-mono text-[#ecb613] uppercase tracking-[0.3em] font-bold">
+                                TELEMETRÍA INDIVIDUAL POR ROL // {CDN_VENDOR_PARTITION_COUNT.toLocaleString('es-ES')} PROVEEDORES CDN
+                            </span>
+                            <MetricProvenanceBadge
+                                metric={staticMetric('calibrador_cdn_partition', 'Particiones CDN', CDN_VENDOR_PARTITION_COUNT, 'macro-ecosystem-manifest.ts', 'proveedores')}
+                                size="sm"
+                            />
+                        </div>
                         <h2 className="text-2xl sm:text-3xl font-black font-syne text-white uppercase">
                             Matriz de Métricas del Ecosistema
                         </h2>

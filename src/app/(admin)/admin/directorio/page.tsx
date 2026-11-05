@@ -25,6 +25,8 @@ import {
   PROVIDERS_MANIFEST_TOTALS,
   PROVIDERS_GRAND_TOTAL,
 } from '@/lib/constants/providers-manifest';
+import { MetricProvenanceBadge } from '@/components/admin/MetricProvenanceBadge';
+import { staticMetric } from '@/lib/admin/metrics-provenance';
 
 /* -------------------------------------------------------------------------- */
 /*  ERROR BOUNDARY — S-Class sealed                                            */
@@ -177,44 +179,76 @@ export default function AdminCultDirectoryPage(): ReactNode {
       {/* KPI Stats Strip */}
       <SectionErrorBoundary label="kpi-strip">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 font-mono">
-          <div className="p-4 rounded-3xl bg-[#09090d]/80 border border-white/10 space-y-1">
-            <span className="text-xs text-zinc-500 uppercase tracking-wider block">
-              Nodos Homologados
-            </span>
-            <div className="text-2xl font-bold text-white">
-              {PROVIDERS_GRAND_TOTAL.toLocaleString('es-ES')}
+          <div className="p-4 rounded-3xl bg-[#09090d]/80 border border-white/10 space-y-2 flex flex-col justify-between">
+            <div>
+              <span className="text-xs text-zinc-500 uppercase tracking-wider block">
+                Nodos Homologados
+              </span>
+              <div className="text-2xl font-bold text-white mt-1">
+                {PROVIDERS_GRAND_TOTAL.toLocaleString('es-ES')}
+              </div>
+              <span className="text-[10px] text-zinc-400">100% Sincronizados Edge CDN</span>
             </div>
-            <span className="text-[10px] text-zinc-400">100% Sincronizados Edge CDN</span>
+            <div className="pt-2 border-t border-white/5">
+              <MetricProvenanceBadge
+                metric={staticMetric('directorio_nodos', 'Nodos Homologados', PROVIDERS_GRAND_TOTAL, 'providers-manifest.ts', 'nodos')}
+                size="sm"
+              />
+            </div>
           </div>
 
-          <div className="p-4 rounded-3xl bg-[#09090d]/80 border border-white/10 space-y-1">
-            <span className="text-xs text-zinc-500 uppercase tracking-wider block">
-              Red Fincas S-Class
-            </span>
-            <div className="text-2xl font-bold text-[#ecb613]">
-              {SCLASS_12_FINCAS_HOMOLOGADAS.length} Fincas
+          <div className="p-4 rounded-3xl bg-[#09090d]/80 border border-white/10 space-y-2 flex flex-col justify-between">
+            <div>
+              <span className="text-xs text-zinc-500 uppercase tracking-wider block">
+                Red Fincas S-Class
+              </span>
+              <div className="text-2xl font-bold text-[#ecb613] mt-1">
+                {SCLASS_12_FINCAS_HOMOLOGADAS.length} Fincas
+              </div>
+              <span className="text-[10px] text-zinc-400">CETAC 32A / 16A Auditado</span>
             </div>
-            <span className="text-[10px] text-zinc-400">CETAC 32A / 16A Auditado</span>
+            <div className="pt-2 border-t border-white/5">
+              <MetricProvenanceBadge
+                metric={staticMetric('directorio_fincas', 'Fincas S-Class', SCLASS_12_FINCAS_HOMOLOGADAS.length, 'fincas-catalog.ts', 'fincas')}
+                size="sm"
+              />
+            </div>
           </div>
 
-          <div className="p-4 rounded-3xl bg-[#09090d]/80 border border-white/10 space-y-1">
-            <span className="text-xs text-zinc-500 uppercase tracking-wider block">
-              Rider Bose 12W/pax
-            </span>
-            <div className="text-2xl font-bold text-emerald-400">
-              &lt; 75 dB SPL
+          <div className="p-4 rounded-3xl bg-[#09090d]/80 border border-white/10 space-y-2 flex flex-col justify-between">
+            <div>
+              <span className="text-xs text-zinc-500 uppercase tracking-wider block">
+                Rider Bose 12W/pax
+              </span>
+              <div className="text-2xl font-bold text-emerald-400 mt-1">
+                &lt; 75 dB SPL
+              </div>
+              <span className="text-[10px] text-zinc-400">Certificación acústica SSOT</span>
             </div>
-            <span className="text-[10px] text-zinc-400">Certificación acústica SSOT</span>
+            <div className="pt-2 border-t border-white/5">
+              <MetricProvenanceBadge
+                metric={staticMetric('directorio_rider_db', 'Límite Acústico', 75, 'ear-os-ssot.ts', 'dB SPL')}
+                size="sm"
+              />
+            </div>
           </div>
 
-          <div className="p-4 rounded-3xl bg-[#09090d]/80 border border-white/10 space-y-1">
-            <span className="text-xs text-zinc-500 uppercase tracking-wider block">
-              Split Soberano
-            </span>
-            <div className="text-2xl font-bold text-cyan-400">
-              80 / 10 / 10
+          <div className="p-4 rounded-3xl bg-[#09090d]/80 border border-white/10 space-y-2 flex flex-col justify-between">
+            <div>
+              <span className="text-xs text-zinc-500 uppercase tracking-wider block">
+                Split Soberano
+              </span>
+              <div className="text-2xl font-bold text-cyan-400 mt-1">
+                80 / 10 / 10
+              </div>
+              <span className="text-[10px] text-zinc-400">80% IRPF Deducible VIMUME</span>
             </div>
-            <span className="text-[10px] text-zinc-400">80% IRPF Deducible VIMUME</span>
+            <div className="pt-2 border-t border-white/5">
+              <MetricProvenanceBadge
+                metric={staticMetric('directorio_split', 'Split Soberano', 80, 'ear-os-ssot.ts', '%')}
+                size="sm"
+              />
+            </div>
           </div>
         </div>
       </SectionErrorBoundary>

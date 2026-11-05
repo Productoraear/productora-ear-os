@@ -207,3 +207,4 @@ if (passed === cases.length) {
   console.error('❌ DISCREPANCIAS DETECTADAS EN EL AISLAMIENTO MULTI-DOMINIO.\n');
   process.exit(1);
 }
+

@@ -252,3 +252,4 @@ export function calculateFoundersParity(input: FoundersParityInput): FoundersPar
     whatsappActivationUrl,
   };
 }
+

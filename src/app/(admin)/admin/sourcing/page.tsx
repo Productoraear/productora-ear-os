@@ -17,6 +17,8 @@ import {
 } from 'lucide-react';
 import initialLeads from '@/data/sourcing/vimume_senior_leads.json';
 import { BudgetMatrix } from './components/BudgetMatrix';
+import { MetricProvenanceBadge } from '@/components/admin/MetricProvenanceBadge';
+import { staticMetric } from '@/lib/admin/metrics-provenance';
 
 interface Lead {
   id: string;
@@ -37,19 +39,19 @@ interface Lead {
 export default function SourcingHubPage() {
   const [activeTab, setActiveTab] = useState<'LEADS' | 'MATRIX'>('LEADS');
   const [leads, setLeads] = useState<Lead[]>(() => {
-    return (initialLeads as any[]).map((item, idx) => ({
-      id: item.id || `senior-lead-${idx + 1}`,
-      nombre: item.nombre || 'Centro Sin Nombre',
-      tipo: item.tipo || 'Residencia de Mayores',
-      municipio: item.municipio || item.provincia || 'España',
-      direccion: item.direccion || 'Consultar registro municipal',
-      telefono: item.telefono || '',
+    return (initialLeads as unknown as Array<Record<string, unknown>>).map((item, idx) => ({
+      id: (item.id as string) || `senior-lead-${idx + 1}`,
+      nombre: (item.nombre as string) || 'Centro Sin Nombre',
+      tipo: (item.tipo as string) || 'Residencia de Mayores',
+      municipio: (item.municipio as string) || (item.provincia as string) || 'España',
+      direccion: (item.direccion as string) || 'Consultar registro municipal',
+      telefono: (item.telefono as string) || '',
       distancia_km: Number(item.distancia_km ?? item.distancia_mentrida_km ?? 0),
-      coordenadas: item.coordenadas || 'N/D',
-      estado: (item.estado || item.estado_prospeccion || 'nuevo') as Lead['estado'],
-      pitch_recomendado: item.pitch_recomendado || 'VIMUME Neuroacústica & Directo de Gala Edwin Agudelo (350 €)',
-      condiciones: item.condiciones || 'Sonido Bose < 75 dB SPL, Contrato Menor Art. 118 LCSP',
-      web: item.web || ''
+      coordenadas: (item.coordenadas as string) || 'N/D',
+      estado: ((item.estado as string) || (item.estado_prospeccion as string) || 'nuevo') as Lead['estado'],
+      pitch_recomendado: (item.pitch_recomendado as string) || 'VIMUME Neuroacústica & Directo de Gala Edwin Agudelo (350 €)',
+      condiciones: (item.condiciones as string) || 'Sonido Bose < 75 dB SPL, Contrato Menor Art. 118 LCSP',
+      web: (item.web as string) || ''
     }));
   });
   const [activeFilter, setActiveFilter] = useState<string>('TODOS');
@@ -172,63 +174,95 @@ export default function SourcingHubPage() {
 
           {/* KPI Cards CATMÍN S-Class */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 hover:border-[#ecb613]/30 transition-all group">
-              <div className="flex items-center justify-between">
-                <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Total Centros Senior</span>
-                <div className="w-8 h-8 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-105 transition-transform">
-                  <Building2 className="w-4 h-4" />
+            <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 hover:border-[#ecb613]/30 transition-all group flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Total Centros Senior</span>
+                  <div className="w-8 h-8 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-105 transition-transform">
+                    <Building2 className="w-4 h-4" />
+                  </div>
+                </div>
+                <div className="text-2xl sm:text-3xl font-bold font-mono text-white mt-3">
+                  {stats.total}
+                </div>
+                <div className="text-[10px] font-mono text-zinc-500 mt-1 flex items-center gap-1">
+                  <span className="text-blue-400">Radio</span> Madrid • Toledo
                 </div>
               </div>
-              <div className="text-2xl sm:text-3xl font-bold font-mono text-white mt-3">
-                {stats.total}
-              </div>
-              <div className="text-[10px] font-mono text-zinc-500 mt-1 flex items-center gap-1">
-                <span className="text-blue-400">Radio</span> Madrid • Toledo
+              <div className="mt-4 pt-3 border-t border-white/5">
+                <MetricProvenanceBadge
+                  metric={staticMetric('sourcing_total_senior', 'Total Centros', stats.total, 'vimume_senior_leads.json', 'centros')}
+                  size="sm"
+                />
               </div>
             </div>
 
-            <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 hover:border-[#ecb613]/30 transition-all group">
-              <div className="flex items-center justify-between">
-                <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Líneas Verificadas</span>
-                <div className="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform">
-                  <PhoneCall className="w-4 h-4" />
+            <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 hover:border-[#ecb613]/30 transition-all group flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Líneas Verificadas</span>
+                  <div className="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform">
+                    <PhoneCall className="w-4 h-4" />
+                  </div>
+                </div>
+                <div className="text-2xl sm:text-3xl font-bold font-mono text-emerald-400 mt-3">
+                  {stats.verificados}
+                </div>
+                <div className="text-[10px] font-mono text-zinc-500 mt-1 flex items-center gap-1">
+                  <span className="text-emerald-400">Sanitizadas</span> 0 rebotes
                 </div>
               </div>
-              <div className="text-2xl sm:text-3xl font-bold font-mono text-emerald-400 mt-3">
-                {stats.verificados}
-              </div>
-              <div className="text-[10px] font-mono text-zinc-500 mt-1 flex items-center gap-1">
-                <span className="text-emerald-400">Sanitizadas</span> 0 rebotes
+              <div className="mt-4 pt-3 border-t border-white/5">
+                <MetricProvenanceBadge
+                  metric={staticMetric('sourcing_verificados', 'Líneas Verificadas', stats.verificados, 'vimume_senior_leads.json', 'líneas')}
+                  size="sm"
+                />
               </div>
             </div>
 
-            <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 hover:border-[#ecb613]/30 transition-all group">
-              <div className="flex items-center justify-between">
-                <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Radio Km 0 (&lt;50 km)</span>
-                <div className="w-8 h-8 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-[#ecb613] group-hover:scale-105 transition-transform">
-                  <MapPin className="w-4 h-4" />
+            <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 hover:border-[#ecb613]/30 transition-all group flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Radio Km 0 (&lt;50 km)</span>
+                  <div className="w-8 h-8 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-[#ecb613] group-hover:scale-105 transition-transform">
+                    <MapPin className="w-4 h-4" />
+                  </div>
+                </div>
+                <div className="text-2xl sm:text-3xl font-bold font-mono text-[#ecb613] mt-3">
+                  {stats.ceroKm}
+                </div>
+                <div className="text-[10px] font-mono text-zinc-500 mt-1 flex items-center gap-1">
+                  <span className="text-[#ecb613]">Desplazamiento</span> 0,00 €
                 </div>
               </div>
-              <div className="text-2xl sm:text-3xl font-bold font-mono text-[#ecb613] mt-3">
-                {stats.ceroKm}
-              </div>
-              <div className="text-[10px] font-mono text-zinc-500 mt-1 flex items-center gap-1">
-                <span className="text-[#ecb613]">Desplazamiento</span> 0,00 €
+              <div className="mt-4 pt-3 border-t border-white/5">
+                <MetricProvenanceBadge
+                  metric={staticMetric('sourcing_cero_km', 'Radio Km 0', stats.ceroKm, 'vimume_senior_leads.json', 'centros')}
+                  size="sm"
+                />
               </div>
             </div>
 
-            <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 hover:border-[#ecb613]/30 transition-all group">
-              <div className="flex items-center justify-between">
-                <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Pipeline Cualificado</span>
-                <div className="w-8 h-8 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 group-hover:scale-105 transition-transform">
-                  <Flame className="w-4 h-4" />
+            <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 hover:border-[#ecb613]/30 transition-all group flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Pipeline Cualificado</span>
+                  <div className="w-8 h-8 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 group-hover:scale-105 transition-transform">
+                    <Flame className="w-4 h-4" />
+                  </div>
+                </div>
+                <div className="text-2xl sm:text-3xl font-bold font-mono text-purple-400 mt-3">
+                  {stats.interesados + stats.citas}
+                </div>
+                <div className="text-[10px] font-mono text-zinc-500 mt-1 flex items-center gap-1">
+                  <span className="text-purple-400">{stats.citas} citas</span> agendadas
                 </div>
               </div>
-              <div className="text-2xl sm:text-3xl font-bold font-mono text-purple-400 mt-3">
-                {stats.interesados + stats.citas}
-              </div>
-              <div className="text-[10px] font-mono text-zinc-500 mt-1 flex items-center gap-1">
-                <span className="text-purple-400">{stats.citas} citas</span> agendadas
+              <div className="mt-4 pt-3 border-t border-white/5">
+                <MetricProvenanceBadge
+                  metric={staticMetric('sourcing_pipeline', 'Pipeline Cualificado', stats.interesados + stats.citas, 'vimume_senior_leads.json', 'leads')}
+                  size="sm"
+                />
               </div>
             </div>
           </div>

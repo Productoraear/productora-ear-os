@@ -1,98 +1,71 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
-  LayoutDashboard,
-  Flame,
-  Users,
-  Truck,
-  Share2,
-  Landmark,
-  CreditCard,
-  Mic,
-  Activity,
-  Shield,
-  PhoneCall,
-  Compass,
-  GraduationCap,
-  Zap,
-  MessageCircle,
-  Satellite,
-  Sparkles,
   PanelLeft,
-  Search,
-  Globe,
-  Bell,
-  User,
   LogOut,
   ChevronDown,
-  ChevronsUpDown,
   X,
-  Cpu,
-  Radio,
-  ExternalLink,
-  Calendar,
-  BookOpen,
-  Layers,
-  Sliders,
-  Swords,
-  FileText
+  Cpu
 } from 'lucide-react';
 import OracleAmbientInterface from '@/components/admin/OracleAmbientInterface';
 import { AdminSessionBridge } from '@/components/admin/AdminSessionBridge';
 import { SilentPanicDetector } from '@/components/security/SilentPanicDetector';
+import AdminCommandPalette from '@/components/admin/ui/AdminCommandPalette';
+import AdminPageHeader from '@/components/admin/ui/AdminPageHeader';
+import AdminKpiCard from '@/components/admin/ui/AdminKpiCard';
+import { staticMetric } from '@/lib/admin/metrics-provenance';
+import type { AdminMetric } from '@/lib/admin/metrics-provenance';
+import {
+  AJUSTE_PREVENTIVO_B2G_EUR,
+  DEPOSITO_STRIPE_EUR,
+  SPLIT_SOBERANO,
+  TARIFA_BASE_SOLISTA_EUR,
+} from '@/lib/constants/ear-os-ssot';
 import {
   ADMIN_MASTER_TABS,
+  getAdminBreadcrumb,
   getAdminTabByPathname,
-  searchAdminNav,
 } from '@/lib/config/admin-navigation';
 
 // Navegación del cockpit: ÚNICA fuente en `@/lib/config/admin-navigation`.
 // Prohibido volver a declarar arrays de pestañas/módulos en este componente.
 const MASTER_TABS = ADMIN_MASTER_TABS;
 
+// KPIs del cockpit: derivados del SSOT inmutable (nunca tecleados a mano).
+const SPLIT_LABEL = [
+  Math.round(SPLIT_SOBERANO.artista * 100),
+  Math.round(SPLIT_SOBERANO.earOs * 100),
+  Math.round(SPLIT_SOBERANO.vimume * 100),
+].join('/');
+
+const KPI_METRICS: AdminMetric[] = [
+  staticMetric('tarifa-solista', 'Tarifa Base Solista', TARIFA_BASE_SOLISTA_EUR, 'SSOT · ear-os-ssot.ts', '€'),
+  staticMetric('deposito-price-lock', 'Depósito Price-Lock', DEPOSITO_STRIPE_EUR, 'SSOT · ear-os-ssot.ts', '€'),
+  staticMetric('techo-b2g', 'Techo B2G · Art. 118 LCSP', AJUSTE_PREVENTIVO_B2G_EUR, 'SSOT · ear-os-ssot.ts', '€'),
+  staticMetric('split-soberano', 'Split Soberano', 100, 'SSOT · ear-os-ssot.ts', '', undefined, SPLIT_LABEL),
+];
+
 export default function CatminAdminMasterLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchOpen, setSearchOpen] = useState(false);
   const [activeTabId, setActiveTabId] = useState<string>('prospeccion');
   const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
-  const searchInputRef = useRef<HTMLInputElement | null>(null);
-
-  // Resultados del buscador: derivados del SSOT de navegación, nunca de listas paralelas.
-  const searchResults = useMemo(() => searchAdminNav(searchQuery, 8), [searchQuery]);
-
-  // Atajo REAL ⌘K / Ctrl+K (antes el placeholder prometía un atajo inexistente).
-  useEffect(() => {
-    const onKeyDown = (event: KeyboardEvent) => {
-      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
-        event.preventDefault();
-        searchInputRef.current?.focus();
-        setSearchOpen(true);
-        return;
-      }
-      if (event.key === 'Escape') {
-        setSearchOpen(false);
-      }
-    };
-    window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
-  }, []);
 
   // Sincronizar automáticamente la pestaña activa según la URL actual
   useEffect(() => {
     setMobileOpen(false);
     setOpenDropdownId(null);
-    setSearchOpen(false);
-    setSearchQuery('');
     setActiveTabId(getAdminTabByPathname(pathname).id);
   }, [pathname]);
 
   const currentTab = MASTER_TABS.find(t => t.id === activeTabId) || MASTER_TABS[0];
+  const breadcrumb = getAdminBreadcrumb(pathname);
+  const pageTitle = breadcrumb?.sub.name ?? currentTab.title;
+  const pageSubtitle = breadcrumb?.sub.description ?? `${currentTab.subTabs.length} módulos en ${currentTab.shortTitle}`;
 
   return (
     <div className="min-h-screen bg-[#030305] text-zinc-100 flex flex-col font-sans antialiased overflow-x-hidden" suppressHydrationWarning>
@@ -135,77 +108,8 @@ export default function CatminAdminMasterLayout({ children }: { children: React.
 
             <div className="hidden md:block w-[1px] h-5 bg-zinc-800 mx-1" />
 
-            {/* Buscador Soberano (⌘K / Ctrl+K) — navegación real, 0 clics muertos */}
-            <div className="relative hidden md:block w-56 lg:w-72">
-              <Search className="w-3.5 h-3.5 text-zinc-500 absolute left-3 top-1/2 -translate-y-1/2" />
-              <input
-                ref={searchInputRef}
-                type="text"
-                placeholder="Buscar herramientas... (Ctrl+K)"
-                value={searchQuery}
-                onChange={(e) => {
-                  setSearchQuery(e.target.value);
-                  setSearchOpen(true);
-                }}
-                onFocus={() => setSearchOpen(true)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Escape') {
-                    setSearchOpen(false);
-                    e.currentTarget.blur();
-                  }
-                  if (e.key === 'Enter' && searchResults.length > 0) {
-                    window.location.assign(searchResults[0].href);
-                  }
-                }}
-                aria-label="Buscar módulos del cockpit EAR OS"
-                aria-expanded={searchOpen}
-                aria-controls="admin-cockpit-search-results"
-                className="w-full h-8 pl-8 pr-12 text-xs font-mono bg-black/60 border border-white/10 rounded-lg text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-[#ecb613] transition-colors"
-              />
-              <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 rounded border border-white/10 px-1 text-[10px] font-mono text-zinc-500">
-                Ctrl K
-              </span>
-
-              {searchOpen && (
-                <div
-                  id="admin-cockpit-search-results"
-                  role="listbox"
-                  aria-label="Resultados del buscador del cockpit"
-                  className="absolute left-0 top-full z-50 mt-2 max-h-80 w-[22rem] overflow-y-auto rounded-xl border border-[#ecb613]/30 bg-[#09090f] p-1.5 shadow-2xl custom-scrollbar"
-                >
-                  {searchResults.length === 0 ? (
-                    <p className="px-3 py-2 text-[11px] font-mono text-zinc-500">
-                      Sin resultados. Prueba «tesorería», «licitaciones» o «proveedores».
-                    </p>
-                  ) : (
-                    searchResults.map((result) => {
-                      const ResultIcon = result.icon;
-                      return (
-                        <Link
-                          key={`${result.tabId}-${result.id}`}
-                          href={result.href}
-                          role="option"
-                          aria-selected={pathname === result.href}
-                          onClick={() => {
-                            setSearchOpen(false);
-                            setSearchQuery('');
-                          }}
-                          className="flex items-start gap-2 rounded-lg px-2 py-1.5 text-xs text-zinc-300 transition-colors hover:bg-zinc-800/80 hover:text-white"
-                        >
-                          <ResultIcon className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#ecb613]" />
-                          <span className="min-w-0 flex-1">
-                            <span className="block truncate">{result.name}</span>
-                            <span className="block truncate text-[10px] font-mono text-zinc-500">
-                              {result.tabTitle} · {result.href}
-                            </span>
-                          </span>
-                        </Link>
-                      );
-                    })
-                  )}
-                </div>
-              )}
-            </div>
+            {/* Buscador Soberano (⌘K / Ctrl+K) — paleta de comandos única del cockpit */}
+            <AdminCommandPalette />
           </div>
 
           {/* DERECHA: TELEMETRÍA Y PERFIL */}
@@ -490,6 +394,15 @@ export default function CatminAdminMasterLayout({ children }: { children: React.
         <main className="flex-1 min-w-0 bg-[#030305] p-4 sm:p-6 lg:p-8 relative overflow-y-auto">
           {/* Puente de sesión: mantiene __session/ear_role sincronizadas con Firebase */}
           <AdminSessionBridge />
+
+          {/* Cabecera única + tarjetas KPI uniformes (un solo breadcrumb, una sola paleta) */}
+          <AdminPageHeader title={pageTitle} subtitle={pageSubtitle} />
+          <div className="mb-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            {KPI_METRICS.map((metric) => (
+              <AdminKpiCard key={metric.key} metric={metric} />
+            ))}
+          </div>
+
           {children}
         </main>
       </div>
