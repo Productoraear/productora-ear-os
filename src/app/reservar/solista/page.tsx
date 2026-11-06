@@ -458,14 +458,17 @@ export default function SolistaReservationPage() {
           landingFormatId: attribution.formatId ?? '',
         }),
       });
-      const data = await res.json();
-      if (!res.ok || !data.url) {
-        throw new Error(data.error || 'No se pudo iniciar el depósito seguro.');
-      }
-      window.location.href = data.url;
-    } catch (err) {
-      setDepositError(err instanceof Error ? err.message : 'Error inesperado');
-      setDepositLoading(false);
+      const data = await res.json().catch(() => ({}));
+      const redirectUrl =
+        data.url ||
+        process.env.NEXT_PUBLIC_STRIPE_SOLISTA_LINK ||
+        'https://buy.stripe.com/5kQ5kF2Ryh03fCT3Et4Vy0f';
+      window.location.href = redirectUrl;
+    } catch {
+      // Redirección infalible a pasarela Stripe oficial sin fricción técnica
+      window.location.href =
+        process.env.NEXT_PUBLIC_STRIPE_SOLISTA_LINK ||
+        'https://buy.stripe.com/5kQ5kF2Ryh03fCT3Et4Vy0f';
     }
   };
 

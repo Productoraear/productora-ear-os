@@ -728,14 +728,16 @@ export default function SovereignBudgetPlanner() {
           totalEstimado: totalAllocated > 0 ? totalAllocated : 1000
         })
       });
-      const data = await res.json();
-      if (!res.ok || !data.url) {
-        throw new Error(data.error || 'No se pudo generar la sesión de pago.');
-      }
-      window.location.href = data.url;
-    } catch (err: any) {
-      setDepositError(err.message || 'Error al conectar con Stripe.');
-      setDepositLoading(false);
+      const data = await res.json().catch(() => ({}));
+      const redirectUrl =
+        data.url ||
+        process.env.NEXT_PUBLIC_STRIPE_SOLISTA_LINK ||
+        'https://buy.stripe.com/5kQ5kF2Ryh03fCT3Et4Vy0f';
+      window.location.href = redirectUrl;
+    } catch {
+      window.location.href =
+        process.env.NEXT_PUBLIC_STRIPE_SOLISTA_LINK ||
+        'https://buy.stripe.com/5kQ5kF2Ryh03fCT3Et4Vy0f';
     }
   };
 

@@ -157,10 +157,16 @@ export async function POST(req: NextRequest) {
   try {
     const stripeSecret = process.env.STRIPE_SECRET_KEY;
     if (!stripeSecret) {
-      return NextResponse.json(
-        { error: 'pagos_no_configurados' },
-        { status: 503 }
-      );
+      // Resiliencia S-Class: si el servidor no tiene inyectada la clave secreta de API,
+      // nunca bloqueamos el cobro. Redirigimos al Stripe Payment Link oficial configurado.
+      const fallbackUrl =
+        process.env.NEXT_PUBLIC_STRIPE_SOLISTA_LINK ||
+        'https://buy.stripe.com/5kQ5kF2Ryh03fCT3Et4Vy0f';
+      return NextResponse.json({
+        url: fallbackUrl,
+        mode: 'payment_link_fallback',
+        warning: 'stripe_secret_missing_fallback_to_payment_link',
+      });
     }
 
     const stripe = new Stripe(stripeSecret, {

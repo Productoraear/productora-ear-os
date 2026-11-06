@@ -114,14 +114,16 @@ export function SClassPricingTerminal() {
         })
       });
 
-      const data = await res.json();
-      if (res.ok && data.url) {
-        window.location.href = data.url;
-      } else {
-        setBookingError(data.error || 'No se pudo iniciar el checkout de Stripe. Por favor contacta por WhatsApp.');
-      }
+      const data = await res.json().catch(() => ({}));
+      const redirectUrl =
+        data.url ||
+        process.env.NEXT_PUBLIC_STRIPE_SOLISTA_LINK ||
+        'https://buy.stripe.com/5kQ5kF2Ryh03fCT3Et4Vy0f';
+      window.location.href = redirectUrl;
     } catch {
-      setBookingError('Error de conexión al procesar el depósito. Por favor contacta por WhatsApp.');
+      window.location.href =
+        process.env.NEXT_PUBLIC_STRIPE_SOLISTA_LINK ||
+        'https://buy.stripe.com/5kQ5kF2Ryh03fCT3Et4Vy0f';
     } finally {
       setIsProcessingStripe(false);
     }
