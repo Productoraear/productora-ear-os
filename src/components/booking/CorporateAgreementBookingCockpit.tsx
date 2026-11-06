@@ -618,3 +618,4 @@ export function CorporateAgreementBookingCockpit() {
     </div>
   );
 }
+
