@@ -276,6 +276,64 @@
     text-wrap: balance;
   }
 
+  /* 🏛️ ESTÁNDAR TIPOGRÁFICO HORIZONX S-CLASS (SSOT ESTRICTO)
+   * Títulos máximos: 20px
+   * Subtítulos: 16px
+   * Textos / Cuerpos: mínimo 13px en Montserrat
+   */
+  h1 {
+    font-size: clamp(1.125rem, 2.2vw, 1.25rem) !important; /* 20px max */
+    line-height: 1.35;
+    font-weight: 700;
+  }
+
+  h2 {
+    font-size: clamp(1rem, 1.8vw, 1.125rem) !important; /* 18px max */
+    line-height: 1.4;
+    font-weight: 700;
+  }
+
+  h3 {
+    font-size: clamp(0.9375rem, 1.5vw, 1rem) !important; /* 16px subtítulos */
+    line-height: 1.4;
+    font-weight: 600;
+  }
+
+  h4, h5, h6 {
+    font-size: 0.9375rem !important; /* 15px */
+    line-height: 1.4;
+  }
+
+  /* 🛡️ CERROJO HORIZONX ANTI-LETRAS GIGANTES (Clamping de utilidades Tailwind) */
+  .text-4xl,
+  .text-5xl,
+  .text-6xl,
+  .text-7xl,
+  .text-8xl,
+  .text-9xl {
+    font-size: clamp(1.125rem, 2.2vw, 1.25rem) !important; /* 20px max */
+    line-height: 1.35 !important;
+  }
+
+  .text-3xl {
+    font-size: clamp(1.0625rem, 2vw, 1.1875rem) !important; /* 19px max */
+    line-height: 1.35 !important;
+  }
+
+  .text-2xl {
+    font-size: clamp(1rem, 1.8vw, 1.125rem) !important; /* 18px max */
+    line-height: 1.38 !important;
+  }
+
+  .text-xl {
+    font-size: 1rem !important; /* 16px subtítulos */
+    line-height: 1.4 !important;
+  }
+
+  p, span, div, a, li, label {
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+  }
+
   p {
     text-wrap: pretty;
   }

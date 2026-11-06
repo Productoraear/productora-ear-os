@@ -2,14 +2,34 @@
 
 import React, { useEffect, useRef } from 'react';
 
+interface VigilCinematicProps {
+  activeVertical?: string;
+  verticalColor?: string;
+}
+
+function hexToRgb(hex: string = '#ecb613'): [number, number, number] {
+  const clean = hex.replace('#', '');
+  const bigint = parseInt(clean.length === 3 ? clean.split('').map(c => c + c).join('') : clean, 16);
+  if (isNaN(bigint)) return [0.925, 0.714, 0.075];
+  const r = ((bigint >> 16) & 255) / 255;
+  const g = ((bigint >> 8) & 255) / 255;
+  const b = (bigint & 255) / 255;
+  return [r, g, b];
+}
+
 /**
  * VigilCinematicWebGLLogoPortal
  * Inspirado en HorizonX Vigil: escena viva en WebGL con atmósfera de pasaje medieval,
- * piedra procedural iluminada por luna fría y brasa dorada, conectando al Logo central de EAR OS.
+ * piedra procedural iluminada por luna fría y brasa cromática según el Viaje del Cliente.
  * Desacoplado del hilo principal, sin bloqueo, acelerado por hardware con degradación elegante.
  */
-export function VigilCinematicWebGLLogoPortal() {
+export function VigilCinematicWebGLLogoPortal({ activeVertical = 'default', verticalColor = '#ecb613' }: VigilCinematicProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const colorRef = useRef<[number, number, number]>(hexToRgb(verticalColor));
+
+  useEffect(() => {
+    colorRef.current = hexToRgb(verticalColor);
+  }, [verticalColor]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -30,6 +50,7 @@ export function VigilCinematicWebGLLogoPortal() {
       uniform vec2 u_resolution;
       uniform float u_time;
       uniform vec2 u_mouse;
+      uniform vec3 u_vertical_color;
 
       // Generador de sillería y relieve de piedra procedural estilo Vigil (siglo XIV)
       float stonePattern(vec2 p) {
@@ -46,19 +67,19 @@ export function VigilCinematicWebGLLogoPortal() {
 
         float t = u_time * 0.2;
 
-        // Atmósfera nocturna de páramo Vigil: luna fría pálida cenital + brasa dorada (#ecb613) central
+        // Atmósfera nocturna de páramo Vigil: luna fría pálida cenital + brasa del viaje del cliente
         vec3 colNightVoid = vec3(0.012, 0.012, 0.02); // #030305 base
         vec3 colPaleMoon  = vec3(0.65, 0.75, 0.9);   // Luz de luna fría
-        vec3 colGoldEmber = vec3(0.925, 0.714, 0.075); // Brasa dorada soberana EAR OS
+        vec3 colVertical  = u_vertical_color;        // Brasa viva de la vertical activa
 
-        // Portal circular de entrada (el arco del castillo donde vive el logo)
+        // Portal circular de entrada (el arco del castillo donde vive la vertical)
         float r = length(p);
         float arch = smoothstep(0.75, 0.2, r);
 
         // Textura sutil de piedra en los márgenes
         float stone = stonePattern(p + vec2(0.0, t * 0.05));
 
-        // Pulsación de la brasa dorada central
+        // Pulsación de la brasa central en la vertical
         float emberPulse = sin(t * 3.0) * 0.1 + 0.9;
         float emberGlow = smoothstep(0.45, 0.0, r) * emberPulse;
 
@@ -66,8 +87,8 @@ export function VigilCinematicWebGLLogoPortal() {
         float moonRay = smoothstep(1.2, -0.2, p.y + sin(p.x * 2.0 + t) * 0.15) * 0.15;
 
         vec3 color = colNightVoid;
-        color += colPaleMoon * moonRay * stone * 0.4;
-        color += colGoldEmber * emberGlow * 0.6;
+        color += colPaleMoon * moonRay * stone * 0.35;
+        color += colVertical * emberGlow * 0.65;
 
         // Viñeteado exterior profundo
         color *= (1.0 - smoothstep(0.5, 1.4, r));
@@ -116,6 +137,7 @@ export function VigilCinematicWebGLLogoPortal() {
     const uResLoc = gl.getUniformLocation(program, 'u_resolution');
     const uTimeLoc = gl.getUniformLocation(program, 'u_time');
     const uMouseLoc = gl.getUniformLocation(program, 'u_mouse');
+    const uVerticalColorLoc = gl.getUniformLocation(program, 'u_vertical_color');
 
     let animId: number;
     let startTime = performance.now();
@@ -147,6 +169,9 @@ export function VigilCinematicWebGLLogoPortal() {
       gl.uniform2f(uResLoc, canvas.width, canvas.height);
       gl.uniform1f(uTimeLoc, elapsed);
       gl.uniform2f(uMouseLoc, 0.5, 0.5);
+      if (uVerticalColorLoc) {
+        gl.uniform3f(uVerticalColorLoc, colorRef.current[0], colorRef.current[1], colorRef.current[2]);
+      }
 
       gl.drawArrays(gl.TRIANGLES, 0, 6);
       animId = requestAnimationFrame(render);

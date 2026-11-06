@@ -261,77 +261,32 @@ export function SovereignHomeHeroNodes() {
 
   return (
     <section className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-24 overflow-hidden">
-      {/* BREADCRUMB CINÉTICO CON RETORNO SUAVE AL LOGO (Preguntas 39 & 49) */}
-      <div className="flex items-center justify-between pb-6 mb-6 border-b border-white/5 text-xs font-mono">
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={scrollToLogo}
-            className="inline-flex items-center gap-1.5 text-zinc-400 hover:text-amber-400 transition-colors cursor-pointer"
-          >
-            <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Inicio</span>
-          </button>
-          <span className="text-zinc-600">/</span>
-          <span
-            className="px-2 py-0.5 rounded font-bold uppercase tracking-wider"
-            style={{
-              backgroundColor: activeNode.accentBg,
-              color: activeNode.color,
-              border: `1px solid ${activeNode.borderColor}`,
-            }}
-          >
-            {activeNode.name}
+      {/* 1. VIAJE DEL CLIENTE VIGIL: ATMÓSFERA CINEMÁTICA HORIZONX Y PUERTA SOBERANA */}
+      <div id="sovereign-logo-anchor" className="relative flex flex-col items-center text-center mb-10 pt-4 min-h-[160px] justify-center">
+        {/* Portal WebGL Cinemático reactivo al Viaje del Cliente (HorizonX Vigil Style) */}
+        <VigilCinematicWebGLLogoPortal activeVertical={activeNode.id} verticalColor={activeNode.color} />
+
+        <div className="inline-flex items-center gap-2 mb-3 px-3 py-1 rounded-full border border-white/10 bg-black/40 backdrop-blur-md z-10">
+          <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: activeNode.color }} />
+          <span className="text-[11px] font-mono tracking-widest uppercase text-zinc-300">
+            Viaje del Cliente · {activeNode.name}
           </span>
         </div>
 
-        <button
-          type="button"
-          onClick={scrollToLogo}
-          className="text-zinc-500 hover:text-zinc-300 transition-colors hidden sm:inline"
-        >
-          ← Volver al Logo Central
-        </button>
-      </div>
-
-      {/* 1. NÚCLEO CENTRAL RECEPTOR: LOGO DE EAR OS + PORTAL CINEMÁTICO VIGIL (Preguntas 1 & 2) */}
-      <div id="sovereign-logo-anchor" className="relative flex flex-col items-center text-center mb-12 min-h-[220px] justify-center">
-        {/* Portal WebGL Cinemático de fondo (HorizonX Vigil Style) */}
-        <VigilCinematicWebGLLogoPortal />
-
-        <div className="relative group cursor-pointer mb-6 z-10" onClick={scrollToLogo}>
-          {/* Ambient Glow Aura */}
-          <div
-            className="absolute -inset-4 rounded-3xl blur-2xl opacity-60 transition-all duration-700 group-hover:opacity-100"
-            style={{ backgroundColor: activeNode.glowColor }}
-          />
-
-          {/* Central Shield Logo */}
-          <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-zinc-950 border-2 border-amber-500/60 p-4 flex flex-col items-center justify-center shadow-[0_0_35px_rgba(236,182,19,0.3)] transition-all duration-500 group-hover:scale-105 group-hover:border-amber-400">
-            <div className="text-2xl sm:text-3xl font-black font-display tracking-widest text-amber-400">
-              EAR
-            </div>
-            <div className="text-[9px] font-mono tracking-widest uppercase text-zinc-400 mt-0.5">
-              OS v13.0
-            </div>
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping absolute top-2 right-2" />
-          </div>
-        </div>
-
-        <h1 className="text-3xl sm:text-5xl md:text-6xl font-black font-display text-white tracking-tight max-w-4xl mb-4 leading-tight z-10">
+        <h1 className="text-[20px] font-bold font-syne text-white tracking-tight max-w-2xl mb-2 leading-snug z-10">
           El Núcleo Soberano de{' '}
-          <span className="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-600 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-500 bg-clip-text text-transparent">
             Producción, Artistas & Espacios
           </span>
         </h1>
 
-        <p className="text-sm sm:text-base text-zinc-400 max-w-2xl mx-auto font-sans z-10">
-          Cada nodo es una puerta de entrada independiente hacia una vertical soberana, auditada en céntimos enteros y sin intermediarios.
+        <p className="text-[13px] text-zinc-400 max-w-xl mx-auto font-montserrat z-10 leading-relaxed">
+          Cada vertical es una puerta de entrada directa, auditada en céntimos enteros y sin intermediarios.
         </p>
       </div>
 
-      {/* 2. SELECTOR FRACTAL DE LOS 4 NODOS SOBERANOS */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-10">
+      {/* 2. SELECTOR SOBERANO DE VERTICALES (HorizonX Minimal, sin chips invasivos) */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3 mb-8">
         {SOVEREIGN_NODES.map((node) => {
           const isSelected = node.id === activeNodeId;
           return (
@@ -339,38 +294,28 @@ export function SovereignHomeHeroNodes() {
               key={node.id}
               type="button"
               onClick={() => setActiveNodeId(node.id)}
-              className={`p-4 sm:p-5 rounded-2xl border text-left transition-all duration-300 relative overflow-hidden cursor-pointer ${
+              className={`p-3.5 sm:p-4 rounded-xl border text-left transition-all duration-300 relative overflow-hidden cursor-pointer ${
                 isSelected
-                  ? 'bg-zinc-900/90 shadow-2xl scale-[1.02]'
-                  : 'bg-zinc-950/60 hover:bg-zinc-900/50 hover:border-white/20'
+                  ? 'bg-zinc-900/90 shadow-xl border-amber-400/60'
+                  : 'bg-zinc-950/60 hover:bg-zinc-900/50 border-white/10'
               }`}
               style={{
                 borderColor: isSelected ? node.color : 'rgba(255, 255, 255, 0.08)',
-                boxShadow: isSelected ? `0 0 25px ${node.glowColor}` : 'none',
+                boxShadow: isSelected ? `0 0 20px ${node.glowColor}` : 'none',
               }}
             >
-              <div className="flex items-center justify-between mb-2">
-                <span
-                  className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full"
-                  style={{
-                    backgroundColor: node.accentBg,
-                    color: node.color,
-                    border: `1px solid ${node.borderColor}`,
-                  }}
-                >
-                  {node.badge.split('·')[0]}
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-[11px] font-mono font-bold tracking-wider uppercase text-zinc-300">
+                  {node.name}
                 </span>
                 <span
-                  className="w-2 h-2 rounded-full"
+                  className="w-1.5 h-1.5 rounded-full"
                   style={{ backgroundColor: isSelected ? node.color : '#52525b' }}
                 />
               </div>
 
-              <div className="text-sm sm:text-base font-bold text-white mb-1 truncate">
-                {node.name}
-              </div>
-              <div className="text-[11px] text-zinc-400 line-clamp-1 font-sans">
-                {node.badge}
+              <div className="text-[12px] text-zinc-400 font-montserrat line-clamp-1">
+                {node.badge.split('·')[1]?.trim() || node.badge}
               </div>
             </button>
           );
@@ -781,8 +726,8 @@ export function SovereignHomeHeroNodes() {
         </div>
       </div>
 
-      {/* 4. DOCK VIP FIJO DE CIERRE: DOS BOTONES DE VENTA INMUTABLES (Preguntas 40 & 47) */}
-      <div className="fixed bottom-0 inset-x-0 z-40 p-4 bg-zinc-950/90 backdrop-blur-xl border-t border-white/10 shadow-[0_-10px_30px_rgba(0,0,0,0.8)]">
+      {/* 4. DOCK VIP DE CIERRE (Solo Escritorio para evitar solapes con el HUD móvil) */}
+      <div className="hidden lg:block fixed bottom-0 inset-x-0 z-40 p-4 bg-zinc-950/90 backdrop-blur-xl border-t border-white/10 shadow-[0_-10px_30px_rgba(0,0,0,0.8)]">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3 text-xs font-mono">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />

@@ -163,8 +163,13 @@ const dockItemClass = (active: boolean) =>
  * GESTO OCULTO DE DISEÑO — pulsación sostenida exacta sobre la portada del dock.
  * No existe botón visible de tema: el operador mantiene 5 s y el HUD alterna
  * entre el tema canónico OLED S-Class y el tema experimental Airbnb.
+ *
+ * ASTRA COCKPIT — 10 segundos de pulsación obligatoria para activar/desactivar.
+ * Un tap simple en Astra abre WhatsApp directo (acción comercial real).
+ * Previene activación involuntaria por gestos de pellizco o scroll accidental.
  */
 const LONG_PRESS_MS = 5000;
+const ASTRA_LONG_PRESS_MS = 10000;
 
 const sheetVariants: Variants = {
   hidden: { y: '110%', opacity: 0 },
@@ -199,6 +204,10 @@ export const SovereignMobileHUD: React.FC = React.memo(function SovereignMobileH
   // El temporizador vive en un ref: cero re-renders por tick y cancelación limpia.
   const longPressTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const longPressFired = useRef(false);
+
+  // ─── ASTRA 10 s — protección antigestos ────────────────────────────────────
+  const astraLongPressTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const astraLongPressFired = useRef(false);
 
   const clearLongPress = useCallback(() => {
     if (longPressTimer.current !== null) {
@@ -359,6 +368,47 @@ export const SovereignMobileHUD: React.FC = React.memo(function SovereignMobileH
       window.dispatchEvent(new CustomEvent('open-ai-concierge'));
     }
   }, []);
+
+  // ─── ASTRA long-press handlers (10 s) ──────────────────────────────────────
+  const clearAstraLongPress = useCallback(() => {
+    if (astraLongPressTimer.current !== null) {
+      clearTimeout(astraLongPressTimer.current);
+      astraLongPressTimer.current = null;
+    }
+  }, []);
+
+  const startAstraLongPress = useCallback(() => {
+    clearAstraLongPress();
+    astraLongPressFired.current = false;
+    astraLongPressTimer.current = setTimeout(() => {
+      astraLongPressTimer.current = null;
+      astraLongPressFired.current = true;
+      playHapticClick(900, 0.05);
+      if (typeof navigator !== 'undefined' && typeof navigator.vibrate === 'function') {
+        navigator.vibrate([120, 60, 120]);
+      }
+      setSheet((prev) => (prev === 'cockpit' ? null : 'cockpit'));
+    }, ASTRA_LONG_PRESS_MS);
+  }, [clearAstraLongPress]);
+
+  const handleAstraTap = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      // Si los 10 s ya se consumieron el toggle ya fue ejecutado por el timer
+      if (astraLongPressFired.current) {
+        event.preventDefault();
+        astraLongPressFired.current = false;
+        return;
+      }
+      clearAstraLongPress();
+      // Tap simple → WhatsApp directo (acción comercial real, no Astra)
+      const waUrl = waLink('Hola, necesito información sobre un evento.');
+      window.open(waUrl, '_blank', 'noopener,noreferrer');
+    },
+    [clearAstraLongPress]
+  );
+
+  // Ningún temporizador Astra sobrevive al desmontaje
+  useEffect(() => clearAstraLongPress, [clearAstraLongPress]);
 
   const openSearch = useCallback(() => {
     playHapticClick(800, 0.02);
@@ -795,34 +845,13 @@ export const SovereignMobileHUD: React.FC = React.memo(function SovereignMobileH
         )}
       </AnimatePresence>
 
-      {/* ─── DOCK ÚNICO (z-80) · lg:hidden ─── */}
+      {/* ─── DOCK Único (z-80) · 3 items: Menú · Astra (10s) · Contacto ─── */}
       <nav
         aria-label="Navegación móvil unificada"
         className="fixed inset-x-0 bottom-0 z-[80] px-3 pb-[calc(0.5rem+env(safe-area-inset-bottom))] pt-2 lg:hidden"
       >
-        <div className="mx-auto flex max-w-md items-stretch gap-0.5 rounded-[26px] border border-white/10 bg-[#09090d]/95 px-1.5 py-1.5 shadow-[0_-14px_40px_rgba(0,0,0,0.85)] backdrop-blur-2xl">
-          {/* 1 · PORTADA CONTEXTUAL — gesto oculto: 5 s alterna tema de diseño */}
-          <Link
-            href={home.href}
-            onClick={handleHomeClick}
-            onMouseDown={startLongPress}
-            onMouseUp={clearLongPress}
-            onMouseLeave={clearLongPress}
-            onTouchStart={startLongPress}
-            onTouchEnd={clearLongPress}
-            onTouchCancel={clearLongPress}
-            onTouchMove={clearLongPress}
-            onContextMenu={(event) => {
-              if (longPressFired.current) event.preventDefault();
-            }}
-            aria-current={isHomeCurrent ? 'page' : undefined}
-            className={dockItemClass(isHomeCurrent)}
-          >
-            <Home size={18} strokeWidth={2.2} />
-            <span className="truncate">{home.label}</span>
-          </Link>
-
-          {/* 2 · MENÚ — abre el panel exclusivo `ear-mobile-menu-sheet` */}
+        <div className="mx-auto flex max-w-sm items-stretch gap-0.5 rounded-[26px] border border-white/10 bg-[#09090d]/95 px-1.5 py-1.5 shadow-[0_-14px_40px_rgba(0,0,0,0.85)] backdrop-blur-2xl">
+          {/* 1 · MENÚ — abre el panel exclusivo ear-mobile-menu-sheet */}
           <button
             type="button"
             onClick={() => toggleSheet('menu')}
@@ -838,19 +867,26 @@ export const SovereignMobileHUD: React.FC = React.memo(function SovereignMobileH
             <span>Menú</span>
           </button>
 
-          {/* 3 · ORÁCULO ASTRA (único acento de la vista) */}
+          {/* 2 · ASTRA — 10 s long-press activa cockpit · tap simple → WhatsApp */}
           <button
             type="button"
-            onClick={() => toggleSheet('cockpit')}
-            aria-expanded={sheet === 'cockpit'}
-            aria-label="Oráculo Astra"
-            className="flex min-h-[56px] w-[62px] shrink-0 flex-col items-center justify-center gap-0.5 rounded-2xl transition-all duration-300 ease-out active:scale-95"
+            onPointerDown={startAstraLongPress}
+            onPointerUp={handleAstraTap}
+            onPointerLeave={clearAstraLongPress}
+            onPointerCancel={clearAstraLongPress}
+            onContextMenu={(e) => { if (astraLongPressFired.current) e.preventDefault(); }}
+            aria-label="Astra — mantén 10 s para abrir el Oráculo"
+            className="flex min-h-[56px] w-[70px] shrink-0 flex-col items-center justify-center gap-0.5 rounded-2xl transition-all duration-300 ease-out active:scale-95 touch-manipulation select-none"
           >
             <span
-              className="flex h-10 w-10 items-center justify-center rounded-2xl text-black transition-all duration-300 ease-out"
-              style={{ backgroundColor: accentColor, boxShadow: `0 0 22px ${accentColor}66` }}
+              className="flex h-10 w-10 items-center justify-center rounded-2xl transition-all duration-300 ease-out"
+              style={{
+                backgroundColor: sheet === 'cockpit' ? accentColor : '#1a1a22',
+                boxShadow: sheet === 'cockpit' ? `0 0 22px ${accentColor}66` : 'none',
+                border: `1px solid ${accentColor}44`,
+              }}
             >
-              <Sparkles size={19} strokeWidth={2.4} />
+              <Sparkles size={19} strokeWidth={2.4} style={{ color: sheet === 'cockpit' ? '#030305' : accentColor }} />
             </span>
             <span
               className="font-mono text-[8px] font-bold uppercase tracking-wider"
@@ -860,7 +896,7 @@ export const SovereignMobileHUD: React.FC = React.memo(function SovereignMobileH
             </span>
           </button>
 
-          {/* 4 · CONTACTO DIRECTO */}
+          {/* 3 · CONTACTO DIRECTO */}
           <button
             type="button"
             onClick={() => toggleSheet('contact')}
@@ -870,17 +906,6 @@ export const SovereignMobileHUD: React.FC = React.memo(function SovereignMobileH
           >
             <Phone size={18} strokeWidth={2.2} />
             <span>Contacto</span>
-          </button>
-
-          {/* 5 · CONCIERGE IA (evento `open-ai-concierge`) */}
-          <button
-            type="button"
-            onClick={openConcierge}
-            aria-label="Abrir asesor IA"
-            className={dockItemClass(false)}
-          >
-            <MessageCircle size={18} strokeWidth={2.2} />
-            <span>Asesor</span>
           </button>
         </div>
       </nav>
