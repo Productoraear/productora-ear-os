@@ -28,11 +28,11 @@ import {
 export function LumenBentoGrid() {
   return (
     <section className="relative z-10 py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      <div className="text-center mb-16">
-        <h2 className="text-2xl sm:text-4xl font-extrabold font-display text-white tracking-tight mb-4">
+      <div className="text-center mb-10">
+        <h2 className="text-[20px] font-bold font-syne text-white tracking-tight mb-2">
           Arquitectura Operativa de Alta Fidelidad
         </h2>
-        <p className="text-sm sm:text-base text-zinc-400 max-w-2xl mx-auto font-sans">
+        <p className="text-[13px] text-zinc-400 max-w-2xl mx-auto font-montserrat leading-relaxed">
           Cuatro pilares de conversión y ejecución técnica auditados sin fachadas en céntimos enteros.
         </p>
       </div>

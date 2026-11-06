@@ -359,15 +359,15 @@ export default function NeuralGraph({
     if (!selectedRole) {
       cameraRef.current.targetX = 0;
       cameraRef.current.targetY = 0;
-      cameraRef.current.targetZoom = isMobile ? 0.52 : 0.85;
+      cameraRef.current.targetZoom = isMobile ? 0.52 : 0.76;
       return;
     }
 
     const primaryNode = nodesMapRef.current.get(selectedRole);
     if (primaryNode) {
-      cameraRef.current.targetX = -primaryNode.x * (isMobile ? 0.85 : 1.35);
-      cameraRef.current.targetY = -primaryNode.y * (isMobile ? 0.85 : 1.35);
-      cameraRef.current.targetZoom = isMobile ? 0.82 : 1.25;
+      cameraRef.current.targetX = -primaryNode.x * (isMobile ? 0.85 : 1.15);
+      cameraRef.current.targetY = -primaryNode.y * (isMobile ? 0.85 : 1.15);
+      cameraRef.current.targetZoom = isMobile ? 0.82 : 1.15;
     }
   }, [selectedRole]);
 
