@@ -1,125 +1,84 @@
 const fs = require('fs');
+const readline = require('readline');
 
-// We need a robust parser for MySQL dump values: (val1, val2, ...), (val1, val2, ...)
-// wp_posts schema columns:
-// 0: ID
-// 1: post_author
-// 2: post_date
-// 3: post_date_gmt
-// 4: post_content
-// 5: post_title
-// 6: post_excerpt
-// 7: post_status
-// 8: comment_status
-// 9: ping_status
-// 10: post_password
-// 11: post_name
-// 12: to_ping
-// 13: pinged
-// 14: post_modified
-// 15: post_modified_gmt
-// 16: post_content_filtered
-// 17: post_parent
-// 18: guid
-// 19: menu_order
-// 20: post_type
-// 21: post_mime_type
-// 22: comment_count
+async function run() {
+  const fileStream = fs.createReadStream('c:/Users/Productora Ear/Downloads/u330468433_3EHTs.sql', { encoding: 'utf8' });
+  const rl = readline.createInterface({
+    input: fileStream,
+    crlfDelay: Infinity
+  });
 
-const content = fs.readFileSync('public/data/wp_posts_all.sql', 'utf8');
+  const posts = [];
 
-function parseSqlValues(sqlText) {
-  const records = [];
-  let inString = false;
-  let escape = false;
-  let quoteChar = '';
-  let currentVal = '';
-  let currentRow = [];
-  let inRow = false;
+  for await (const line of rl) {
+    if (line.startsWith('INSERT INTO `wp_posts` VALUES')) {
+      // Each tuple is like: (ID, post_author, post_date, post_date_gmt, post_content, post_title, post_excerpt, post_status, comment_status, ping_status, post_password, post_name, to_ping, pinged, post_modified, post_modified_gmt, post_content_filtered, post_parent, guid, menu_order, post_type, post_mime_type, comment_count)
+      // We can use a tokenizer or regex for entries
+      const regex = /\((\d+),\s*(\d+),\s*'([^']*)',\s*'([^']*)',\s*'(.*?)',\s*'([^']*)',\s*'(.*?)',\s*'([^']*)',\s*'([^']*)',\s*'([^']*)',\s*'([^']*)',\s*'([^']*)',\s*'([^']*)',\s*'([^']*)',\s*'([^']*)',\s*'([^']*)',\s*'(.*?)',\s*(\d+),\s*'([^']*)',\s*(\d+),\s*'([^']*)'/g;
+      // Because post_content has escaped quotes \' we need a parser that respects \'
+      let idx = 0;
+      while (idx < line.length) {
+        const startParen = line.indexOf('(', idx);
+        if (startParen === -1) break;
+        
+        // Let's parse tokens within parentheses
+        let pos = startParen + 1;
+        let inQuote = false;
+        let escaped = false;
+        const tokens = [];
+        let curToken = '';
 
-  for (let i = 0; i < sqlText.length; i++) {
-    const ch = sqlText[i];
+        while (pos < line.length) {
+          const char = line[pos];
+          if (escaped) {
+            curToken += char;
+            escaped = false;
+          } else if (char === '\\') {
+            escaped = true;
+          } else if (char === "'") {
+            inQuote = !inQuote;
+          } else if (char === ',' && !inQuote) {
+            tokens.push(curToken.trim());
+            curToken = '';
+          } else if (char === ')' && !inQuote) {
+            tokens.push(curToken.trim());
+            pos++;
+            break;
+          } else {
+            curToken += char;
+          }
+          pos++;
+        }
 
-    if (inString) {
-      if (escape) {
-        currentVal += ch;
-        escape = false;
-      } else if (ch === '\\') {
-        escape = true;
-      } else if (ch === quoteChar) {
-        inString = false;
-      } else {
-        currentVal += ch;
-      }
-    } else {
-      if (ch === "'" || ch === '"') {
-        inString = true;
-        quoteChar = ch;
-      } else if (ch === '(' && !inRow) {
-        inRow = true;
-        currentRow = [];
-        currentVal = '';
-      } else if (ch === ',' && inRow) {
-        currentRow.push(currentVal.trim());
-        currentVal = '';
-      } else if (ch === ')' && inRow) {
-        currentRow.push(currentVal.trim());
-        records.push(currentRow);
-        currentRow = [];
-        inRow = false;
-      } else if (inRow) {
-        currentVal += ch;
+        idx = pos;
+
+        if (tokens.length >= 21) {
+          const id = tokens[0];
+          const postDate = tokens[2].replace(/^'|'$/g, '');
+          const postContent = tokens[4].replace(/^'|'$/g, '');
+          const postTitle = tokens[5].replace(/^'|'$/g, '');
+          const postStatus = tokens[7].replace(/^'|'$/g, '');
+          const postType = tokens[20].replace(/^'|'$/g, '');
+
+          if (postStatus === 'publish' || postType === 'topics' || postType === 'sfwd-lessons' || postTitle.toLowerCase().includes('día') || postTitle.toLowerCase().includes('dia')) {
+            posts.push({
+              id,
+              date: postDate,
+              title: postTitle,
+              type: postType,
+              status: postStatus,
+              contentLength: postContent.length,
+              contentSnippet: postContent.slice(0, 300)
+            });
+          }
+        }
       }
     }
   }
-  return records;
+
+  console.log(`Parsed total posts of interest: ${posts.length}`);
+  fs.writeFileSync('src/data/extracted_wp_posts_manifest.json', JSON.stringify(posts, null, 2));
+  console.log('Saved manifest to src/data/extracted_wp_posts_manifest.json');
 }
 
-console.log('Starting parse of SQL values...');
-const rows = parseSqlValues(content);
-console.log('Parsed total rows:', rows.length);
-
-const types = {};
-const publishedDays = [];
-const allLessons = [];
-
-rows.forEach(r => {
-  if (r.length < 21) return;
-  const id = r[0];
-  const post_content = r[4];
-  const post_title = r[5];
-  const post_status = r[7];
-  const post_name = r[11];
-  const post_type = r[20];
-
-  types[post_type] = (types[post_type] || 0) + 1;
-
-  if (post_title.toLowerCase().includes('d') || post_name.includes('dia-')) {
-    publishedDays.push({ id, title: post_title, slug: post_name, type: post_type, status: post_status, len: post_content.length });
-  }
-
-  if (['lesson', 'courses', 'tutor_quiz', 'page', 'post'].includes(post_type) && post_status === 'publish') {
-    allLessons.push({
-      id,
-      title: post_title,
-      slug: post_name,
-      type: post_type,
-      contentLength: post_content.length,
-      sample: post_content.substring(0, 120).replace(/\s+/g, ' ')
-    });
-  }
-});
-
-console.log('Post Types distribution:', types);
-console.log('Sample matching days:', publishedDays.slice(0, 25));
-console.log('Total published lessons/pages found:', allLessons.length);
-
-fs.writeFileSync('public/data/extracted_lessons_summary.json', JSON.stringify({
-  totalRows: rows.length,
-  types,
-  publishedLessonsCount: allLessons.length,
-  lessons: allLessons
-}, null, 2));
-
-console.log('Saved public/data/extracted_lessons_summary.json');
-
+run().catch(console.error);
