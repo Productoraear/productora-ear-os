@@ -1,0 +1,15 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "name": "productora-ear-os",
+  "instructions": [
+    "AGENTS.md",
+    ".clinerules"
+  ],
+  "rules": [
+    "ZONA CERO INVIOLABLE: Prohibido modificar src/lib/constants/ear-os-ssot.ts sin orden explícita del CEO Edwin Agudelo.",
+    "TARIFAS INMUTABLES: Tarifa base solista Edwin Agudelo = 350.00 €, Fianza Stripe Price-Lock = 100.00 €, Techo B2G Art. 118 = 14.250.00 €, Split = 80% Artista / 10% EAR OS / 10% VIMUME.",
+    "CENTRALITA OFICIAL: Teléfono canónico = +34 693 693 048.",
+    "TIPOGRAFÍA OLED HORIZONX: Títulos max 20px Syne (text-[20px]), subtítulos 16px, textos 13px Montserrat sobre fondos OLED #030305.",
+    "VERIFICACIÓN OBLIGATORIA: Todo cambio debe compilar con Exit Code 0 en 'npm run typecheck' antes de reportar."
+  ]
+}
