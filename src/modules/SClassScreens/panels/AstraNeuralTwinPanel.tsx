@@ -183,7 +183,7 @@ export function AstraNeuralTwinPanel() {
                 </div>
             </div>
 
-            <style p-jsx>{`
+            <style>{`
                 .custom-scrollbar::-webkit-scrollbar { width: 4px; }
                 .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
                 .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(212, 175, 55, 0.2); border-radius: 10px; }
