@@ -318,11 +318,11 @@ export function FreeViabilityScanner() {
           {/* Botones de Acción Inmediata */}
           <div className="pt-5 space-y-2.5">
             <Link
-              href="/reservar/solista"
+              href={`/reservar/acuerdo?tipo=${eventConfig.id}&provincia=${provinceConfig.id}&distancia=${provinceConfig.distanceKm}&aforo=${aforo}&total=${totalEstimatedEur.toFixed(2)}&watts=${totalWatts}&dba=${encodeURIComponent(eventConfig.splLimitDba)}`}
               className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-semibold text-[13px] font-montserrat transition-all shadow-[0_0_20px_rgba(236,182,19,0.25)] flex items-center justify-center gap-2 cursor-pointer"
             >
               <Lock className="w-4 h-4" />
-              <span>Bloquear Fecha con Fianza {DEPOSITO_STRIPE_EUR} €</span>
+              <span>Aprobar Acuerdo & Bloquear Fecha ({DEPOSITO_STRIPE_EUR} €)</span>
             </Link>
 
             <a
@@ -340,3 +340,4 @@ export function FreeViabilityScanner() {
     </div>
   );
 }
+
