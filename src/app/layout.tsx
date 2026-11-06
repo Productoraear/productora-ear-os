@@ -59,6 +59,7 @@ import { GeoStructuredData } from "@/components/seo/GeoStructuredData";
 import { VimumeThemeInjector } from "@/components/theme/VimumeThemeInjector";
 import { CartProvider } from "@/components/checkout/CartContext";
 import { SovereignCartDrawer } from "@/components/checkout/SovereignCartDrawer";
+import { GlobalLiveVisualEditor } from "@/components/editor/GlobalLiveVisualEditor";
 import * as React from "react";
 
 export const metadata: Metadata = {
@@ -176,6 +177,7 @@ export default function RootLayout({
                               <BespokePricerModal />
                               <UnifiedSearch />
                               <SovereignCartDrawer />
+                              <GlobalLiveVisualEditor />
                             </div>
                           </SmoothScrollProvider>
                         </CartProvider>

@@ -105,14 +105,15 @@ export function GlobalLiveVisualEditor() {
     setSelectedElement(null);
     setToolbarPos(null);
 
-    // El constructor S-Class solo estará disponible en rutas admin (/admin, /command-center), o si se activa ?admin=true / ear_admin_mode
+    // El constructor S-Class estará disponible en localhost (desarrollo activo), rutas admin (/admin, /command-center), o con ?admin=true / ?edit=1 / ear_admin_mode
+    const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
     const isAdminRoute = Boolean(
       path.startsWith('/admin') ||
       path.startsWith('/command-center')
     );
-    const hasAdminParam = window.location.search.includes('admin=true');
+    const hasAdminParam = window.location.search.includes('admin=true') || window.location.search.includes('edit=1');
     const hasAdminStorage = localStorage.getItem('ear_admin_mode') === 'true';
-    setIsAdminMode(isAdminRoute || hasAdminParam || hasAdminStorage);
+    setIsAdminMode(isLocalhost || isAdminRoute || hasAdminParam || hasAdminStorage);
 
     const loadMutations = async () => {
       let localMutations: Record<string, BlockMutation> = {};
@@ -313,6 +314,18 @@ export function GlobalLiveVisualEditor() {
       observer.disconnect();
     };
   }, [isEditMode, applySavedMutations]);
+
+  // Atajo de teclado: Ctrl+E o Cmd+E para alternar el Modo Edición Visual
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && (e.key === 'e' || e.key === 'E')) {
+        e.preventDefault();
+        setIsEditMode((prev) => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   // Guardar en LocalStorage y en Servidor (/api/editor/save)
   const handleSaveAll = async () => {
