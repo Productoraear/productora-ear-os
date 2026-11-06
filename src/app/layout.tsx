@@ -56,6 +56,8 @@ import { FloatingWhatsAppCta } from "@/components/ui/FloatingWhatsAppCta";
 import { OmniAgentConsoleModal } from "@/components/agents/OmniAgentConsoleModal";
 import { GeoStructuredData } from "@/components/seo/GeoStructuredData";
 import { VimumeThemeInjector } from "@/components/theme/VimumeThemeInjector";
+import { CartProvider } from "@/components/checkout/CartContext";
+import { SovereignCartDrawer } from "@/components/checkout/SovereignCartDrawer";
 import * as React from "react";
 
 export const metadata: Metadata = {
@@ -156,22 +158,25 @@ export default function RootLayout({
                   <SovereignProvider>
                     <AtmosphereProvider>
                       <EventCartProvider>
-                        <SmoothScrollProvider>
-                          <div className="min-h-screen relative flex flex-col">
-                            <GeoStructuredData />
-                            <SovereignNavbar />
-                            <main className="flex-grow">
-                              {children}
-                            </main>
-                            <SovereignFooter />
-                            <FloatingWhatsAppCta />
-                            <React.Suspense fallback={null}>
-                              <OmniAgentConsoleModal />
-                            </React.Suspense>
-                            <BespokePricerModal />
-                            <UnifiedSearch />
-                                                                                                                                                                      </div>
-                        </SmoothScrollProvider>
+                        <CartProvider>
+                          <SmoothScrollProvider>
+                            <div className="min-h-screen relative flex flex-col">
+                              <GeoStructuredData />
+                              <SovereignNavbar />
+                              <main className="flex-grow">
+                                {children}
+                              </main>
+                              <SovereignFooter />
+                              <FloatingWhatsAppCta />
+                              <React.Suspense fallback={null}>
+                                <OmniAgentConsoleModal />
+                              </React.Suspense>
+                              <BespokePricerModal />
+                              <UnifiedSearch />
+                              <SovereignCartDrawer />
+                            </div>
+                          </SmoothScrollProvider>
+                        </CartProvider>
                       </EventCartProvider>
                     </AtmosphereProvider>
                   </SovereignProvider>

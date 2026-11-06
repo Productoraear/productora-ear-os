@@ -3,14 +3,112 @@
     "version": "15.0-OMEGA-ROJO-FASE-1-NODOS-A-B",
     "doctrine_v51": "WAVE 51 · FASE 1 DE LA DIRECTIVA DAVID HURTADO (4 D + PREMORTEM) CON EL ORDEN CORREGIDO POR EVIDENCIA: 1) omega.js tiene UN SOLO SLOT (MISSION_ACTIVE.json): los Nodos A y B no pueden correr en paralelo, corren en serie por mandato del arnés. Se descarta el paralelismo declarado y se documenta por qué. 2) El Reto 29 YA TIENE ARNÉS en disco (scripts/verify_budget_allocator.ts, W45_T01): se ENDURECE, no se duplica. 3) El Reto 31 NO tiene instrumento: scripts/audit_cls_budget.cjs devuelve ENOENT hoy (sonda read_files 2026-11-05). Por la Ley del Auditor Real se construye primero el instrumento y después se corrige la ruta; arreglar a ciegas un CLS sin medidor es una fachada. 4) El Reto 35 (cero clics muertos) ya está instrumentado (audit:cta-matrix) y en verde: no es tarea, es puerta. 5) El 15º ítem del scorecard se activa con scripts/audit_omega_rojo_scorecard.cjs (npm run audit:omega-rojo) para que nunca vuelva a firmarse un 20/20 sin comando (SIG-2).",
     "doctrine": "WAVE 50 (DOMINANCIA DE MERCADO Y ESCALA MULTIDOMINIO): 1) El Agente Concierge IA y el Simulador Universal (W47_T04) y la Calculadora de los 100 Fundadores Vitalicios (W49_T03) ya están sellados y desplegados en producción. 2) La cola queda blindada con las 6 misiones estratégicas restantes para que el Obrero Local ejecute con precisión quirúrgica, cero fachadas, cero menciones de marcas de terceros (JUR-4) y detección activa de ventanas de oportunidad.",
-    "wave": 51,
-    "total_tasks": 3,
-    "total_pending": 0,
-    "last_updated": "2026-11-05T09:17:24.022Z"
+    "wave": 52,
+    "total_tasks": 6,
+    "total_pending": 3,
+    "last_updated": "2026-11-06T12:26:31.733Z",
+    "doctrine_v52": "WAVE 52 · ARTISTA SOBERANO: formación desbloqueada solo por mérito verificable (66/99 días), logros sincronizados con la ficha, banco Diamante Rojo con procedencia y cockpit honesto sobre qué plataformas tienen API pública. RETO_ESPEJO: el compilador propuso tocar SovereignNavbar, admin/layout y FincasB2BPortal; se descarta porque no corresponden a la intención (artistas) y romperían el aislamiento entre verticales."
   },
   "_instructions_for_worker": "Ejecuta SOLO via: node .antigravity/omega.js next -> lee .antigravity/MISSION_ACTIVE.json -> edita SOLO 'files' -> ejecuta 'test' -> node .antigravity/omega.js complete <ID>. 1 tarea por sesion.",
-  "tasks": [],
+  "tasks": [
+    {
+      "id": "W52_T02_ARTIST_ACHIEVEMENT_LEDGER",
+      "title": "P0 · Logros del programa sincronizados con la ficha del artista (append-only, auth obligatoria, caso negativo 401 probado)",
+      "status": "QUEUED",
+      "priority": "P0",
+      "files": [
+        "src/lib/academy/achievement-ledger.ts",
+        "src/app/api/artist/achievements/route.ts",
+        "scripts/verify_achievement_ledger.ts"
+      ],
+      "action": "Ledger append-only de evidencias por artistSlug; GET/POST cerrados con requireAdmin o sesión de artista; sin sesión -> 401. La ficha pública solo muestra logros VERIFICADOS. Si PostgreSQL no responde: estado real y causa, nunca cifras inventadas.",
+      "scaffold": null,
+      "done_when": "Script verifica 401 sin sesión, rechazo de evidencia sin verificador y lectura determinista; tsc Exit 0.",
+      "test": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_achievement_ledger.ts && node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-06T12:26:31.733Z"
+    },
+    {
+      "id": "W52_T04_ARTIST_COCKPIT_NOTIFICATIONS_AND_PLATFORMS",
+      "title": "P1 · Cockpit del artista: preferencias de notificación on/off y estado honesto de cada plataforma (conectada / solo lectura / sin API pública)",
+      "status": "QUEUED",
+      "priority": "P1",
+      "files": [
+        "src/lib/artists/platform-capabilities.ts",
+        "src/components/artists/ArtistNotificationPreferences.tsx",
+        "src/app/(public)/artistas/dashboard/page.tsx"
+      ],
+      "action": "Matriz de capacidades reales por plataforma (Spotify for Artists: subida y métricas privadas SIN API pública -> vía distribuidor; YouTube Data API: lectura/subida con OAuth; Instagram Graph API: métricas con cuenta profesional). La UI nunca muestra un botón de \"publicar\" donde no hay API.",
+      "scaffold": null,
+      "done_when": "0 clics muertos en el panel (audit:cta-matrix verde) y tsc Exit 0.",
+      "test": "node ./node_modules/tsx/dist/cli.mjs scripts/audit_cta_trace_matrix.ts && node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-06T12:26:31.733Z"
+    },
+    {
+      "id": "W52_T05_ASTRA_IKIGAI_PORT",
+      "title": "P1 · Portar el taller Ikigai de Astra al programa (módulo de mérito del Día 1), sin claves de IA en el cliente",
+      "status": "QUEUED",
+      "priority": "P1",
+      "files": [
+        "src/components/academy/IkigaiWorkshop.tsx",
+        "src/lib/academy/merit-program-ssot.ts"
+      ],
+      "action": "Extraer components/tools/IkigaiWorkshop.tsx de src/data/staging/APPS CREADAS CON AI STUDIO/astra-os_-neural-strategic-engine.zip, adaptarlo a Next.js (use client solo en la hoja), estética OLED, y que guardar el ejercicio genere una MeritEvidence kind=exercise pendiente de verificador.",
+      "scaffold": null,
+      "done_when": "Componente compila, no importa geminiService en cliente y tsc Exit 0.",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-06T12:26:31.733Z"
+    },
+    {
+      "id": "W52_T06_RECOVER_99_DIAS_CONTENT",
+      "title": "BLOQUEADA · Recuperar los días 1-40 del programa \"99 días haciendo clic\" (WordPress de Hostinger devuelve error crítico en cada página de día)",
+      "status": "BLOCKED_CEO",
+      "priority": "P0",
+      "files": [
+        "src/data/academy/programa_99_dias.json"
+      ],
+      "action": "Requiere del CEO: exportación de WordPress (Herramientas > Exportar, XML) o copia de seguridad de la base de datos desde hPanel. Solo la portada (Día 39) es accesible públicamente; el resto devuelve \"Ha habido un error crítico en esta web\".",
+      "scaffold": null,
+      "done_when": "JSON con los días recuperados y su procedencia; ningún día inventado.",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-06T12:26:31.733Z"
+    }
+  ],
   "completed": [
+    {
+      "id": "W52_T01_MERIT_PROGRAM_SSOT",
+      "title": "P0 · SSOT puro del programa por mérito: pista 66 días (emergentes) y 99 días (niveles superiores), desbloqueo solo por evidencia, precio SIN_EVIDENCIA hasta firma del CEO",
+      "status": "COMPLETED",
+      "priority": "P0",
+      "files": [
+        "src/lib/academy/merit-program-ssot.ts",
+        "scripts/verify_merit_program.ts",
+        "package.json"
+      ],
+      "action": "Crear módulo puro (sin fs/next/prisma) con las 2 pistas, módulos con prerequisitos de mérito y función evaluateUnlock(progress) determinista. Prohibido desbloquear por pago o por fecha. Precios del programa = null con estado SIN_EVIDENCIA. Añadir script npm verify:merit-program.",
+      "scaffold": "export type MeritTrackId = \"track66\" | \"track99\"; export interface MeritEvidence { moduleId: string; kind: \"exercise\" | \"metric\" | \"mentor_review\"; verifiedAt: string; verifier: string } export function evaluateUnlock(trackId: MeritTrackId, evidence: readonly MeritEvidence[]): { unlocked: string[]; locked: { id: string; missing: string[] }[] }",
+      "done_when": "verify:merit-program imprime MERIT_RESULT=PASS, incluye caso negativo (evidencia sin verificador NO desbloquea) y tsc Exit 0.",
+      "test": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_merit_program.ts && node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-06T12:26:31.733Z",
+      "exit_code": 0,
+      "completed_at": "2026-11-06T12:32:58.736Z"
+    },
+    {
+      "id": "W52_T03_DIAMANTE_ROJO_MUSICIAN_BANK",
+      "title": "P1 · Banco de músicos Diamante Rojo: registro con procedencia (Edwin Agudelo = primer certificado, origen DECLARADO_CEO)",
+      "status": "COMPLETED",
+      "priority": "P1",
+      "files": [
+        "src/lib/academy/diamante-rojo-registry.ts",
+        "scripts/verify_diamante_rojo.ts"
+      ],
+      "action": "Registro tipado de artistas certificados con campo provenance (DECLARADO_CEO | EVIDENCIA_LEDGER). Nadie entra con provenance vacía. Exponer listCertified() para la ficha y el matcher.",
+      "scaffold": null,
+      "done_when": "Script rechaza entradas sin procedencia y lista a Edwin Agudelo como DECLARADO_CEO; tsc Exit 0.",
+      "test": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_diamante_rojo.ts && node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-06T12:26:31.733Z",
+      "exit_code": 0,
+      "completed_at": "2026-11-06T12:32:58.745Z"
+    },
     {
       "id": "W51_T03_BUDGET_ALLOCATOR_TEST_HARDENING",
       "title": "P0 · Nodo B · Endurecer scripts/verify_budget_allocator.ts: céntimos exactos, determinismo del resto, entradas hostiles e idempotencia, con contadores honestos (assertions ≠ iterations)",
@@ -153,9 +251,9 @@
     }
   ],
   "metadata": {
-    "last_updated": "2026-11-05T09:17:24.022Z",
-    "total_pending": 0,
-    "current_sprint": "WAVE_51_FASE_1_OMEGA_ROJO_NODO_A_Y_B",
+    "last_updated": "2026-11-06T12:26:31.733Z",
+    "total_pending": 3,
+    "current_sprint": "WAVE_52_ARTISTA_SOBERANO_MERITO",
     "orden_ejecutivo": ".antigravity/ORDEN_EJECUTIVO_OMEGA_ROJO_FASE_1.md",
     "regla_de_serie": "UN SOLO SLOT: omega.js next escribe MISSION_ACTIVE.json y solo admite una mision viva. Los Nodos A y B se ejecutan en sesiones de Cline SEPARADAS y en el orden de la cola (T01 -> T02 -> T03). Prohibido abrir dos sesiones en paralelo sobre el mismo repo: se pisarian MISSION_ACTIVE.json y el cierre de una purgaria la tarea de la otra.",
     "ceo_mandate": "1) Agente Concierge IA 100% conectado a las fichas verificadas (Ezkertza/Derio, Otzarreta/Zarautz y 2.150 fichas en memoria) sin sesgo de solista. 2) 6 misiones atómicas encoladas para el obrero local con tácticas de dominancia y eliminación de cuellos de botella."

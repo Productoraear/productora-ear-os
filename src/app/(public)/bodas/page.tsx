@@ -28,6 +28,7 @@ import { motion } from 'framer-motion';
 import VanguardFluidBackground from '@/components/sclass/VanguardFluidBackground';
 import HolographicTiltCard from '@/components/sclass/HolographicTiltCard';
 import { WeddingTaxonomyExplorer } from '@/features/wedding/ui/WeddingTaxonomyExplorer';
+import { HanakuraZenWeddingLogin } from '@/components/wedding/HanakuraZenWeddingLogin';
 
 // Marco cinematográfico del hero: imagen auténtica y emocional (Edwin Agudelo cantando a los novios en directo).
 const HERO_WEDDING_IMAGE =
@@ -301,6 +302,9 @@ export default function BodasPage() {
           </motion.div>
 
         </section>
+
+        {/* 1.5. EXPERIENCIA HANAKURA ZEN: PORTAL NUPCIAL Y ACCESO DE PAREJAS */}
+        <HanakuraZenWeddingLogin />
 
         {/* 2. BUSCADOR INTELIGENTE NUPCIAL DUAL & NAVEGACIÓN S-CLASS */}
         <section className="pt-2">

@@ -104,6 +104,7 @@
     "audit:tariff-copy": "node scripts/audit_tariff_copy_drift.cjs",
     "verify:logistics": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_logistics_multi_origin.ts",
     "verify:budget": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_budget_allocator.ts",
+    "verify:merit-program": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_merit_program.ts",
     "prepush": "npm run gate:prepush",
     "verify:intent-70-30": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_intent_70_30_engine.ts",
     "verify:db-failure": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_db_failure_classifier.ts",

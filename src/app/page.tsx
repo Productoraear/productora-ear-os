@@ -4,23 +4,37 @@ import { HeroWeddingCinematic } from '@/components/home/HeroWeddingCinematic';
 import QuantumRoleCockpit from '@/components/home/QuantumRoleCockpit';
 import { CENTRALITA_EAR_OS, TARIFA_BASE_SOLISTA_EUR, DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
 import SovereignEntryBifurcation from '@/components/home/SovereignEntryBifurcation';
+import { HomeNeuralConstellationSection } from '@/components/home/HomeNeuralConstellationSection';
+import { SovereignHomeHeroNodes } from '@/components/home/SovereignHomeHeroNodes';
+import { LumenNoiseGrain } from '@/components/lumen/LumenNoiseGrain';
 
 export default function Home() {
   return (
-    <main className="bg-black/95 backdrop-blur-2xl relative w-full max-w-full min-h-screen overflow-x-hidden transition-colors duration-500 bg-[var(--background)] text-[var(--foreground)] font-sans selection:bg-[#ecb613] selection:text-black">
-      {/* Puerta de Entrada Unificada: embudo bifurcado Cliente ↔ Artista (3 clics).
-          pt-28/pt-32 = altura real de la cabecera opaca SovereignNavbar para
-          que el primer titular nunca nazca debajo de ella. */}
-      <div className="relative pt-28 sm:pt-32">
+    <main className="bg-[#030305] relative w-full max-w-full min-h-screen overflow-x-hidden text-zinc-100 font-sans selection:bg-[#ecb613] selection:text-black">
+      {/* Textura de Grano de Ruido SVG Acelerada por GPU */}
+      <LumenNoiseGrain />
+
+      {/* 1. NÚCLEO SUPREMO: Logo EAR OS Receptor + Nodos de Viaje del Cliente */}
+      <div className="relative pt-24 sm:pt-28">
+        <SovereignHomeHeroNodes />
+      </div>
+
+      {/* 2. Constelación de Nodos Interactiva 3D */}
+      <div className="relative">
+        <HomeNeuralConstellationSection />
+      </div>
+
+      {/* 3. Embudo Bifurcado Cliente ↔ Artista */}
+      <div className="relative pt-10">
         <SovereignEntryBifurcation />
       </div>
 
-      {/* Selector Multirol Quantum: cabecera inmersiva de arquetipos EAR OS */}
-      <div className="relative pt-10 sm:pt-14">
+      {/* 4. Selector Multirol Quantum */}
+      <div className="relative pt-10">
         <QuantumRoleCockpit />
       </div>
 
-      {/* Hero de Alta Conversión: voz de Edwin + precio 350 € + bloqueo de fecha sin riesgo */}
+      {/* 5. Hero de Alta Conversión */}
       <div className="relative">
         <HeroWeddingCinematic />
       </div>

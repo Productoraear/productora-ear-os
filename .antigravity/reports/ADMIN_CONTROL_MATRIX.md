@@ -25,6 +25,7 @@
 | --- | --- | --- | --- | --- |
 | affiliates/route.ts | GET+PATCH+POST+DELETE | requireAdmin | sí | sí |
 | artists/route.ts | GET+PATCH+POST | requireAdmin | sí | sí |
+| cockpit/route.ts | GET | SIN GUARD | no | no |
 | compile-intent/route.ts | POST+GET | requireAdmin | sí | no |
 | demand-map/route.ts | GET | requireAdmin | sí | no |
 | dispatch/lock/route.ts | POST | SIN GUARD | no | no |
@@ -70,4 +71,4 @@
 | stripeConnectActions.ts | SIN GUARD | sí |
 | vendorAuthActions.ts | SIN GUARD | sí |
 
-**RESUMEN**: 12 enlaces UI→API en /admin/control · 0 fachadas/401 · 30 endpoints mapeados.
+**RESUMEN**: 12 enlaces UI→API en /admin/control · 0 fachadas/401 · 31 endpoints mapeados.

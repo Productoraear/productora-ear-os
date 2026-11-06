@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import FincasB2BPortal from '@/components/fincas/FincasB2BPortal';
 import { FincasParabodaBridgeCta } from '@/components/fincas/FincasParabodaBridgeModal';
+import { SovereignCollectiveEventBuilder } from '@/components/checkout/SovereignCollectiveEventBuilder';
 import {
     TARIFA_BASE_SOLISTA_EUR,
     DEPOSITO_STRIPE_EUR,
@@ -104,6 +105,14 @@ export default function FincasB2BPage() {
                     </div>
                 </div>
             </section>
+
+            <section className="w-full px-4 sm:px-6 lg:px-8 py-4 max-w-6xl mx-auto">
+                <SovereignCollectiveEventBuilder
+                    title="Constructor de Evento Colectivo · Suma de Proveedores"
+                    subtitle="Elige tu finca y complementa con música en directo, sonorización Bose, transporte o animación sin pagar fianzas fragmentadas."
+                />
+            </section>
+
             <FincasB2BPortal />
         </div>
     );

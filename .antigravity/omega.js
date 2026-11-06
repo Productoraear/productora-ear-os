@@ -108,10 +108,10 @@ if (command === 'next') {
     }
 
     const task = data.tasks[idx];
+    const root = path.join(__dirname, '..');
     const hasTypeScript = task.files && task.files.some(f => f.endsWith('.ts') || f.endsWith('.tsx'));
 
     if (hasTypeScript) {
-        const root = path.join(__dirname, '..');
         // BLINDAJE ZTM: los shims de node_modules/.bin pueden no existir (npm --ignore-scripts).
         // 'npx tsc' descargaría el paquete impostor 'tsc' -> se invoca el binario real de TypeScript.
         const tscBin = path.join(root, 'node_modules', 'typescript', 'bin', 'tsc');
@@ -142,18 +142,25 @@ if (command === 'next') {
                 process.exit(1);
             }
         }
-        // Script de prueba obligatorio declarado en la tarea
-        if (task.test) {
-            console.log(`[OMEGA] Ejecutando prueba: ${task.test}`);
-            try {
-                execSync(task.test, { stdio: 'inherit', shell: true, cwd: root });
-            } catch {
-                console.error('PRUEBA FALLIDA. Corrige y repite complete.');
-                process.exit(1);
-            }
+    } else {
+        console.log('[OMEGA] Tarea sin archivos TypeScript directos: se omite tsc/eslint.');
+    }
+
+    // ─── PRUEBA OBLIGATORIA (SIEMPRE, tenga o no archivos TS) ────────────────────
+    // DEFECTO CORREGIDO EN WAVE 50: `task.test` vivía DENTRO de la rama hasTypeScript,
+    // así que una tarea de scripts .cjs/.md/.json cerraba con Exit 0 sin ejecutar su
+    // verificador (fachada de papel). El antifachada es la prueba, no la extensión.
+    if (task.test) {
+        console.log(`[OMEGA] Ejecutando prueba: ${task.test}`);
+        try {
+            execSync(task.test, { stdio: 'inherit', shell: true, cwd: root });
+            console.log('prueba = Exit Code 0.');
+        } catch {
+            console.error('PRUEBA FALLIDA. Corrige y repite complete.');
+            process.exit(1);
         }
     } else {
-        console.log('[OMEGA] Tarea sin archivos TypeScript directos (validación de schema/JSON superada).');
+        console.error('[OMEGA] SIN_EVIDENCIA: la tarea no declara "test". Cierre sin prueba ejecutable.');
     }
 
     // Eliminar misión activa

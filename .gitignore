@@ -91,6 +91,9 @@ scripts/reports/*.json
 *.bak
 *.bak.*
 *.jsonl
+*.sql
+public/data/*.sql
+public/data/yellowgreen_root_index.html
 # [V10_SIGMA · EP-4] Excepción quirúrgica: el ledger de evidencias ES la prueba del
 # contrato. Se versiona siempre; el resto de .jsonl sigue ignorado.
 !.antigravity/evidence/ledger.jsonl

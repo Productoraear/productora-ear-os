@@ -9,6 +9,8 @@ import {
 import { ROUTES } from '@/lib/routes';
 import { ArtistPricingMatrix } from '@/app/components/artists/ArtistPricingMatrix';
 import { ArtistTestimonials } from '@/app/components/artists/ArtistTestimonials';
+import { FounderNoteCard } from '@/components/founder/FounderNoteCard';
+import { SovereignBookingTimeline } from '@/components/founder/SovereignBookingTimeline';
 
 export const metadata: Metadata = {
   title: 'Contratar Cantantes Solistas S-Class | Productora EAR',
@@ -215,6 +217,10 @@ export default function SolistasPage() {
           </div>
 
           <ArtistPricingMatrix />
+
+          {/* CARTA PERSONAL DEL FUNDADOR (EDWIN AGUDELO) & CRONOGRAMA DE RESERVA */}
+          <FounderNoteCard />
+          <SovereignBookingTimeline />
         </section>
 
         {/* EVIDENCIA Y TESTIMONIOS */}
