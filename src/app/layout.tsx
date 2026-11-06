@@ -46,6 +46,7 @@ import SovereignNavbar from "@/app/components/layout/SovereignNavbar";
 import { UnifiedSearch } from '@/components/search/UnifiedSearch';
 import { BespokePricerModal } from "@/features/finance/ui/BespokePricerModal";
 import SovereignFooter from "@/app/components/layout/SovereignFooter";
+import { SovereignMobileHUD } from "@/components/sclass/SovereignMobileHUD";
 // W44_T03 · El CTA flotante de WhatsApp es la superficie que capta el lead.
 // Estaba importado sólo por DynamicMobileExperienceOrchestrator, que hoy no se
 // monta en ningún layout: el botón existía en disco pero no se renderizaba, y
@@ -167,6 +168,7 @@ export default function RootLayout({
                                 {children}
                               </main>
                               <SovereignFooter />
+                              <SovereignMobileHUD />
                               <FloatingWhatsAppCta />
                               <React.Suspense fallback={null}>
                                 <OmniAgentConsoleModal />
