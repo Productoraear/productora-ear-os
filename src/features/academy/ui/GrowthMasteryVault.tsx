@@ -5,7 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Play, Pause, SkipForward, SkipBack, Volume2, VolumeX, 
   Sparkles, Radio, FileText, CheckCircle2, AlertTriangle, 
-  GraduationCap, BookOpen, Clock, ListMusic, Filter, Search
+  GraduationCap, BookOpen, Clock, ListMusic, Filter, Search,
+  Lock, ShieldCheck, X, ArrowRight
 } from 'lucide-react';
 import TRACKS_DATA from '@/data/dani-aragon-tracks.json';
 
@@ -31,6 +32,37 @@ export const GrowthMasteryVault: React.FC = () => {
   const [audioError, setAudioError] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('TODAS');
   const [searchQuery, setSearchQuery] = useState('');
+  const [isUnlocked, setIsUnlocked] = useState<boolean>(false);
+  const [showPaywall, setShowPaywall] = useState<boolean>(false);
+  const [accessCode, setAccessCode] = useState<string>('');
+  const [codeSuccess, setCodeSuccess] = useState<boolean>(false);
+  const [codeError, setCodeError] = useState<string | null>(null);
+
+  // Leer estado de membresía en disco/navegador
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('ear_academy_vip_pass');
+      if (saved === 'active') {
+        setIsUnlocked(true);
+      }
+    }
+  }, []);
+
+  const handleUnlockWithCode = (e: React.FormEvent) => {
+    e.preventDefault();
+    const clean = accessCode.trim().toUpperCase();
+    if (clean === 'SOBERANO2026' || clean === 'DIAMANTE_ROJO' || clean === 'EDWIN_ALUMNO') {
+      setIsUnlocked(true);
+      setCodeSuccess(true);
+      setCodeError(null);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('ear_academy_vip_pass', 'active');
+      }
+      setTimeout(() => setShowPaywall(false), 1200);
+    } else {
+      setCodeError('Código de alumno no reconocido. Contacta con tu Mentor.');
+    }
+  };
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const currentTrack = tracks[currentTrackIndex] || tracks[0];
@@ -71,6 +103,11 @@ export const GrowthMasteryVault: React.FC = () => {
   const togglePlay = () => {
     if (!audioRef.current) return;
     
+    if (currentTrack.trackNumber > 1 && !isUnlocked) {
+      setShowPaywall(true);
+      return;
+    }
+
     if (isPlaying) {
       audioRef.current.pause();
       setIsPlaying(false);
@@ -87,7 +124,13 @@ export const GrowthMasteryVault: React.FC = () => {
   };
 
   const handleNextTrack = () => {
-    setCurrentTrackIndex((prev) => (prev + 1) % tracks.length);
+    const nextIdx = (currentTrackIndex + 1) % tracks.length;
+    if (tracks[nextIdx].trackNumber > 1 && !isUnlocked) {
+      setIsPlaying(false);
+      setShowPaywall(true);
+      return;
+    }
+    setCurrentTrackIndex(nextIdx);
   };
 
   const handlePrevTrack = () => {
@@ -339,12 +382,18 @@ export const GrowthMasteryVault: React.FC = () => {
       <div className="relative z-10 max-h-[380px] overflow-y-auto pr-2 space-y-2.5">
         {filteredTracks.map((track) => {
           const isSelected = track.id === currentTrack.id;
+          const isLocked = track.trackNumber > 1 && !isUnlocked;
+
           return (
             <div
               key={track.id}
               onClick={() => {
-                const globalIdx = tracks.findIndex(t => t.id === track.id);
+                const globalIdx = tracks.findIndex((t) => t.id === track.id);
                 if (globalIdx !== -1) {
+                  if (isLocked) {
+                    setShowPaywall(true);
+                    return;
+                  }
                   setCurrentTrackIndex(globalIdx);
                   setIsPlaying(true);
                 }
@@ -356,17 +405,37 @@ export const GrowthMasteryVault: React.FC = () => {
               }`}
             >
               <div className="flex items-center gap-3 truncate">
-                <div className={`w-8 h-8 rounded-xl flex items-center justify-center text-xs font-mono font-bold shrink-0 ${
-                  isSelected ? 'bg-purple-500 text-white' : 'bg-white/10 text-white/60'
-                }`}>
+                <div
+                  className={`w-8 h-8 rounded-xl flex items-center justify-center text-xs font-mono font-bold shrink-0 ${
+                    isSelected
+                      ? 'bg-purple-500 text-white'
+                      : isLocked
+                      ? 'bg-amber-500/10 text-amber-400 border border-amber-500/30'
+                      : 'bg-white/10 text-white/60'
+                  }`}
+                >
                   {isSelected && isPlaying ? (
                     <Radio size={14} className="animate-pulse" />
+                  ) : isLocked ? (
+                    <Lock size={13} />
                   ) : (
                     track.trackNumber.toString().padStart(2, '0')
                   )}
                 </div>
                 <div className="truncate">
-                  <span className="text-xs font-bold block truncate">{track.title}</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-bold block truncate">{track.title}</span>
+                    {track.trackNumber === 1 && (
+                      <span className="text-[9px] font-bold font-mono uppercase bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 px-1.5 py-0.5 rounded">
+                        PREVIEW LIBRE
+                      </span>
+                    )}
+                    {isLocked && (
+                      <span className="text-[9px] font-bold font-mono uppercase bg-amber-500/10 border border-amber-500/30 text-amber-400 px-1.5 py-0.5 rounded flex items-center gap-1">
+                        <Lock size={9} /> ACCESO VIP
+                      </span>
+                    )}
+                  </div>
                   <span className="text-[10px] text-white/40 block truncate">{track.description}</span>
                 </div>
               </div>
@@ -381,6 +450,178 @@ export const GrowthMasteryVault: React.FC = () => {
           );
         })}
       </div>
+
+      {/* MODAL DE PROTECCIÓN Y PAYWALL S-CLASS */}
+      <AnimatePresence>
+        {showPaywall && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md"
+            onClick={() => setShowPaywall(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-2xl bg-[#07070a] border border-[#ecb613]/40 rounded-3xl p-6 md:p-8 text-white shadow-[0_0_80px_rgba(236,182,19,0.15)] overflow-hidden"
+            >
+              <button
+                onClick={() => setShowPaywall(false)}
+                className="absolute top-5 right-5 p-2 rounded-full bg-white/5 hover:bg-white/10 text-white/60 hover:text-white transition-all"
+                aria-label="Cerrar"
+              >
+                <X size={18} />
+              </button>
+
+              <div className="flex items-center gap-2 mb-2">
+                <div className="px-3 py-1 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-[10px] font-mono font-bold tracking-widest uppercase flex items-center gap-1.5">
+                  <Lock size={12} /> BÓVEDA EXCLUSIVA DE FORMACIÓN
+                </div>
+              </div>
+
+              <h2 className="text-xl md:text-2xl font-black tracking-tight mt-1">
+                Desbloquea el Acceso Completo a la Academia S-Class
+              </h2>
+              <p className="text-xs text-slate-300 mt-1.5 leading-relaxed">
+                El contenido táctico que separa al músico que sobrevive del artista que vive dignamente de su pasión.
+                Elige tu nivel de acceso o activa tu membresía de alumno.
+              </p>
+
+              {/* TIER MATRIX */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 my-6">
+                {/* TRACK 66 DÍAS */}
+                <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-white/20 transition-all flex flex-col justify-between">
+                  <div>
+                    <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider">
+                      Fase Emergentes
+                    </span>
+                    <h3 className="text-sm font-bold mt-0.5">Track 66 Días Haciendo Clic</h3>
+                    <div className="text-xl font-extrabold font-mono text-[#ecb613] mt-2">
+                      197,00 € <span className="text-[11px] text-slate-400 font-sans font-normal">pago único</span>
+                    </div>
+                    <ul className="text-[11px] text-slate-300 space-y-1.5 mt-3">
+                      <li className="flex items-center gap-1.5">
+                        <CheckCircle2 size={12} className="text-emerald-400 shrink-0" />
+                        Auditoría Ikigai & Rueda de la Vida
+                      </li>
+                      <li className="flex items-center gap-1.5">
+                        <CheckCircle2 size={12} className="text-emerald-400 shrink-0" />
+                        Primeros bolos de 350 € a 1.200 €
+                      </li>
+                      <li className="flex items-center gap-1.5">
+                        <CheckCircle2 size={12} className="text-emerald-400 shrink-0" />
+                        Primeras 20 Masterclasses de Dani Aragón
+                      </li>
+                    </ul>
+                  </div>
+                  <a
+                    href="https://buy.stripe.com/5kQ5kF2Ryh03fCT3Et4Vy0f"
+                    className="mt-4 w-full py-2.5 px-3 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs font-bold text-center block transition-all border border-white/10"
+                  >
+                    Matrícula Track 66
+                  </a>
+                </div>
+
+                {/* TRACK 99 DÍAS */}
+                <div className="p-4 rounded-2xl bg-[#ecb613]/5 border border-[#ecb613]/40 shadow-[0_0_30px_rgba(236,182,19,0.08)] flex flex-col justify-between relative">
+                  <div className="absolute -top-2.5 right-4 bg-[#ecb613] text-black text-[9px] font-mono font-extrabold uppercase px-2 py-0.5 rounded-full">
+                    RECOMENDADO
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-mono text-[#ecb613] uppercase tracking-wider">
+                      Nivel Superior
+                    </span>
+                    <h3 className="text-sm font-bold mt-0.5">Track 99 Días · Élite Artística</h3>
+                    <div className="text-xl font-extrabold font-mono text-white mt-2">
+                      497,00 € <span className="text-[11px] text-slate-400 font-sans font-normal">vitalicio</span>
+                    </div>
+                    <ul className="text-[11px] text-slate-200 space-y-1.5 mt-3">
+                      <li className="flex items-center gap-1.5">
+                        <CheckCircle2 size={12} className="text-[#ecb613] shrink-0" />
+                        Los 99 módulos íntegros recuperados
+                      </li>
+                      <li className="flex items-center gap-1.5">
+                        <CheckCircle2 size={12} className="text-[#ecb613] shrink-0" />
+                        Las 56 Masterclasses Dani Aragón
+                      </li>
+                      <li className="flex items-center gap-1.5">
+                        <CheckCircle2 size={12} className="text-[#ecb613] shrink-0" />
+                        Licitaciones B2G (LCSP &lt; 14.250 €)
+                      </li>
+                      <li className="flex items-center gap-1.5">
+                        <CheckCircle2 size={12} className="text-[#ecb613] shrink-0" />
+                        Inclusión en Catálogo Oficial EAR OS
+                      </li>
+                    </ul>
+                  </div>
+                  <a
+                    href="https://buy.stripe.com/5kQ5kF2Ryh03fCT3Et4Vy0f"
+                    className="mt-4 w-full py-2.5 px-3 rounded-xl bg-[#ecb613] hover:bg-[#d4a210] text-black text-xs font-extrabold text-center block transition-all shadow-lg"
+                  >
+                    Acceso Total Vitalicio
+                  </a>
+                </div>
+              </div>
+
+              {/* RUTA BLINDAJE VIP CON DEPÓSITO DEDUCIBLE */}
+              <div className="p-3.5 rounded-2xl bg-white/[0.02] border border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4">
+                <div>
+                  <span className="text-[10px] font-mono text-cyan-400 uppercase tracking-widest font-bold">
+                    Ruta Blindaje VIP · Doble Vía
+                  </span>
+                  <div className="text-xs text-slate-300 mt-0.5">
+                    Depósito vinculante de <strong>100,00 €</strong> (100% deducible de tu primera contratación).
+                  </div>
+                </div>
+                <a
+                  href="https://buy.stripe.com/5kQ5kF2Ryh03fCT3Et4Vy0f"
+                  className="whitespace-nowrap px-4 py-2 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/20 text-xs font-bold transition-all"
+                >
+                  Bloqueo 100 € Stripe
+                </a>
+              </div>
+
+              {/* CANJEAR CÓDIGO DE ALUMNO O HABLAR CON MENTOR */}
+              <div className="border-t border-white/10 pt-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+                <form onSubmit={handleUnlockWithCode} className="flex items-center gap-2 flex-1">
+                  <input
+                    type="text"
+                    placeholder="Código de Alumno..."
+                    value={accessCode}
+                    onChange={(e) => setAccessCode(e.target.value)}
+                    className="bg-white/5 border border-white/15 rounded-xl px-3 py-1.5 text-xs text-white placeholder:text-white/30 focus:outline-none focus:border-[#ecb613] flex-1 font-mono uppercase"
+                  />
+                  <button
+                    type="submit"
+                    className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs font-bold transition-all border border-white/10"
+                  >
+                    Activar
+                  </button>
+                </form>
+
+                <a
+                  href="https://wa.me/34693693048?text=Hola%20Edwin,%20estoy%20en%20el%20Campus%20de%20la%20Academia%20y%20quiero%20revisar%20mi%20plan%20formativo"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-1.5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 text-xs font-bold flex items-center justify-center gap-1.5 transition-all"
+                >
+                  Consultar con Mentor
+                </a>
+              </div>
+
+              {codeError && <p className="text-[11px] text-red-400 font-mono mt-2">{codeError}</p>}
+              {codeSuccess && (
+                <p className="text-[11px] text-emerald-400 font-mono mt-2">
+                  ✓ Acceso VIP activado con éxito. Desbloqueando todas las masterclasses...
+                </p>
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
