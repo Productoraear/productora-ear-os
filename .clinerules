@@ -71,6 +71,11 @@ EP-5. Autoauditoría previa: releer la propia respuesta antes de entregar y elim
 | INV-14 | **0** datos personales en logs / URLs / payloads n8n | `npm run audit:residues` | ABORTA + SEV1 |
 | INV-15 | Presupuesto: build < 60 s · repo < 50 MB · edge < 1 MB | `npm run audit:residues` | SOSPECHOSO |
 | INV-16 | Toda ruta de salud dice la verdad de lo sondeado | AF-1 | ABORTA |
+| INV-17 | Timeouts obligatorios (`AbortController` <= 8s en APIs externas) | Auditoría de código | ABORTA |
+| INV-18 | Skeletons de geometría fija (CLS < 0.02, 0 spinners huérfanos) | Auditoría UI / Lighthouse | ABORTA |
+| INV-19 | Debounce reactivo (200-300 ms en sliders de filtrado continuo) | Auditoría UI | ABORTA |
+| INV-20 | Consultas Prisma con `select` quirúrgico (0 payload bloat) | Auditoría ORM | ABORTA |
+| INV-21 | Protocolo UNSLOP Global (9 Pases, 0 emojis en UI, 0 gradientes purple) | Auditoría UI (`.agents/skills/unslop/`) | ABORTA |
 
 ## §3 · LEY ANTI-FACHADA (AF) — telemetría con medición real
 

@@ -89,12 +89,22 @@ SISTEMA EN PRODUCCIÓN REAL: productoraear.com · Bare-Metal Coolify (82.29.179.
   * `"use client"` estrictamente reservado a interactividad DOM / eventos cliente.
   * Rutas dinámicas: resolución obligatoria `const resolvedParams = await params;`.
   * TypeScript 6.0.3 (Strict): Cero `any` implícitos. `npm run typecheck` Exit Code 0 innegociable.
+  * Ley del AbortController: Todo `fetch` a APIs externas o pasarelas debe usar timeout estricto <= 8.000 ms (`AbortController.timeout(8000)`). Prohibidas llamadas colgadas indefinidas.
+  * Ley de Consulta Quirúrgica (Prisma): Todo query a base de datos debe solicitar exclusivamente las columnas renderizadas (`select: { id: true, ... }`), erradicando payload bloat.
 
-━━ 6. TASTE ENGINE & ANTI-SLOP (ESTÁNDAR VISUAL DESIGN.MD) ━━━━━━━━━━━━━━━━━━━━━━━━━
+━━ 6. TASTE ENGINE & ANTI-SLOP (ESTÁNDAR VISUAL DESIGN.MD & PROTOCOLO UNSLOP) ━━━━━
 - Estética OLED Pura: Fondos `#030305` y `#050507`. Prohibidos degradados pastel o grises lavados (AI Slop). Prohibido `w-screen` (usar `w-full overflow-x-hidden`).
+- Protocolo UNSLOP Global (9 Pases Obligatorios — .agents/skills/unslop/):
+  * Erradicación de Vicios de IA: Prohibido el uso de emojis (🚀, 🔥, 💎, etc.) como iconografía en UI de producción (usar exclusivamente `lucide-react` con `strokeWidth={1.5}` o `1.75`).
+  * Cero Gradientes Púrpura/Azul y Cero Halos Difusos: Prohibidos degradados `from-purple-600 to-indigo-600` y efectos `blur-3xl` abstractos.
+  * Cero Slop Copy: Textos orientados a sustancia técnica y financiera verificable (datos, céntimos, plazos reales), eliminando hiperboles publicitarias genéricas.
+  * Secuencia de Redlining: Todo obrero o agente debe auditar sus pantallas pasando por: 1) Espaciado modular, 2) Color soberano, 3) Iconografía limpia, 4) Copy técnico, 5) Jerarquía tipográfica, 6) Topología y geometría fija, 7) Bordes tenues `border-white/10`, 8) Visuales tangibles, 9) Movimiento funcional (150-300ms).
 - Acentos Soberanos: Oro `#ecb613` (dinero/CTA), Rubí `#FF2B44` (alerta/urgencia), Cyan `#00E5FF` (telemetría/fisiología). Un solo color de acento por vista.
 - Tipografía `next/font`: `Syne` (Display/Títulos), `Inter` (Cuerpos py-16+), `JetBrains Mono` (Datos/Precios/Céntimos). Cero CLS por carga de fuentes.
 - Rendimiento Gráfico WebGPU: Componentes 3D en Three.js 0.186 con fallback WebGL2, ejecutados en Worker OffscreenCanvas (`transferControlToOffscreen`) para liberar el hilo principal y garantizar INP < 50 ms (target < 20 ms).
+- Ley del Skeleton Anti-CLS: Todo card, catálogo o lista asíncrona debe reservar geometría exacta (ancho/alto) con skeletons pulsantes durante la carga. Prohibidos spinners vacíos que provoquen salto de layout (CLS < 0.02 obligatorio).
+- Ley del Debounce Reactivo: Inputs de búsqueda, autocompletado y sliders continuos (pax, km, precio) deben filtrar con debounce de 200-300 ms para garantizar 120 FPS fluidos en móviles.
+- Optimización de Medios: Imágenes servidas en WebP/AVIF con `loading="lazy"` por defecto; `priority` estrictamente restringido al elemento LCP del Hero.
 
 ━━ 7. PROTOCOLO ZERO-TOKEN MEMORY (ZTM) Y DISCIPLINA OPERATIVA ━━━━━━━━━━━━━━━━━━━━
 - Memoria en Disco: El estado y la verdad del sistema residen en disco (`tasks_queue.json`, `ledger.jsonl`, `CLINE_EXECUTION_LOG.md`).

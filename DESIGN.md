@@ -25,8 +25,13 @@ Fondos ultra-profundos optimizados para displays OLED y contraste absoluto:
 
 **Reglas Inmutables de Color:**
 1. Prohibidos terminantemente los grises lavados y degradados pastel violeta/azul (AI Slop).
-2. Un solo color de acento por vista o sección: la dispersión cromática destruye la jerarquía visual.
-3. Prohibido el uso de `w-screen` (genera scrollbar horizontal parásito); usar siempre `w-full overflow-x-hidden`.
+2. Protocolo UNSLOP (9 Pases de Redlining):
+   - Prohibido el uso de emojis (🚀, 🔥, etc.) como iconografía de interfaz. Uso exclusivo de `lucide-react`.
+   - Cero gradientes genéricos morado/azul (`from-purple-600 to-indigo-600`) ni halos borrosos `blur-3xl`.
+   - Cero Slop Copy: sustituir adjetivos hinchados por datos de ingeniería, céntimos y plazos reales.
+   - Secuencia de entrega obligatoria: Espaciado -> Color -> Iconos -> Copy -> Tipografía -> Topología fija -> Micro-bordes -> Visuales de producto -> Movimiento sutil.
+3. Un solo color de acento por vista o sección: la dispersión cromática destruye la jerarquía visual.
+4. Prohibido el uso de `w-screen` (genera scrollbar horizontal parásito); usar siempre `w-full overflow-x-hidden`.
 
 ---
 

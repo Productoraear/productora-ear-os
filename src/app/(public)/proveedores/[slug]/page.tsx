@@ -858,11 +858,21 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
   const catKey = rawCatStr.includes('finca') ? 'finca' : rawCatStr.includes('cater') ? 'catering' : rawCatStr.includes('foto') ? 'foto' : 'musica';
   const slugPool = SLUG_VISUAL_POOLS[catKey] || SLUG_VISUAL_POOLS.finca;
 
-  const gallery: string[] = rawGallery.map((g: string) => getProxiedImage(g));
+  const totalPrivatePhotosCount = rawGallery.length;
+  // Blindaje Legal (JUR-4): En web pública mostramos portada + hasta 3 vistas previas.
+  // El resto del dossier gráfico se entrega bajo solicitud directa a la Centralita (+34 693 693 048).
+  const PUBLIC_GALLERY_PREVIEW_LIMIT = 3;
+  const gallery: string[] = rawGallery
+    .slice(0, PUBLIC_GALLERY_PREVIEW_LIMIT)
+    .map((g: string) => getProxiedImage(g));
+  const vaultedPhotosCount = Math.max(0, totalPrivatePhotosCount - PUBLIC_GALLERY_PREVIEW_LIMIT);
+
   // `galleryReal`: únicamente tomas atribuibles al proveedor. Se calcula sobre
   // `rawGallery` (URLs absolutas) ANTES del proxy `/api/media`, para que JSON-LD
   // / Rich Results nunca declare stock como fotografía propia del negocio.
-  const galleryReal = rawGallery.filter((g: string) => /^https?:\/\//.test(g) && !slugPool.includes(g));
+  const galleryReal = rawGallery
+    .slice(0, PUBLIC_GALLERY_PREVIEW_LIMIT)
+    .filter((g: string) => /^https?:\/\//.test(g) && !slugPool.includes(g));
 
   // FAQs
   const faqs = getCategoryFAQs(rawProvider, category, location);
@@ -1011,6 +1021,31 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
               galleryImages={gallery}
               videoUrls={[...providerMedia.videos]}
             />
+
+            {/* BLINDAJE GRÁFICO Y DOSSIER BAJO DEMANDA (+34 693 693 048) */}
+            <div className="p-4 rounded-2xl bg-[#09090d]/90 border border-[#ecb613]/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="space-y-1">
+                <div className="text-xs font-mono uppercase tracking-wider text-[#ecb613] font-bold">
+                  Dossier Gráfico Protegido · Anti-Picaresca
+                </div>
+                <p className="text-xs text-zinc-300 leading-relaxed">
+                  Por protección de derechos de imagen y privacidad del proveedor, se muestran hasta 3 vistas previas públicas
+                  {vaultedPhotosCount > 0 ? ` (${vaultedPhotosCount} fotografías adicionales en bóveda privada)` : ''}.
+                  Solicita el reportaje gráfico completo y tarifas verificadas por WhatsApp oficial.
+                </p>
+              </div>
+              <a
+                href={`${CENTRALITA.whatsapp}?text=${encodeURIComponent(
+                  `Hola, solicito el dossier fotográfico completo (${totalPrivatePhotosCount} imágenes) y disponibilidad de ${displayName} (${category}) en ${location.split(',')[0]}.`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="shrink-0 px-4 py-2.5 rounded-xl bg-[#ecb613] hover:bg-[#d9a40e] text-black font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-colors"
+              >
+                <MessageCircle size={14} />
+                <span>Pedir Dossier por WhatsApp ({CENTRALITA.display})</span>
+              </a>
+            </div>
 
             {/* BARRA DE TABS DE NAVEGACIÓN */}
             <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-white/10 text-xs font-mono uppercase tracking-wider text-zinc-400 scrollbar-none">

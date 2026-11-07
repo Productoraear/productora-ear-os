@@ -69,6 +69,12 @@ export default function ArtistStudioLayout({ children }: { children: React.React
               active={pathname === '/studio/artist/bookings'} 
             />
             <SidebarLink 
+              href="/studio/artist/carrera" 
+              icon={<Signal size={18} />} 
+              label="Mi Carrera (en vivo)" 
+              active={pathname === '/studio/artist/carrera'} 
+            />
+            <SidebarLink 
               href="/studio/artist/finance" 
               icon={<CreditCard size={18} />} 
               label="Liquidaciones (80%)" 

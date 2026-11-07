@@ -7,15 +7,15 @@
 | UI | Endpoint | Verbo | Guard | Bearer cliente | Veredicto |
 | --- | --- | --- | --- | --- | --- |
 | src/app/(admin)/admin/control/ControlDashboard.tsx | /api/admin/affiliates | GET+PATCH+POST+DELETE | requireAdmin | SÍ | ✅ VERIFICADO |
-| src/app/(admin)/admin/control/ControlDashboard.tsx | /api/admin/artists | GET+PATCH+POST | requireAdmin | SÍ | ✅ VERIFICADO |
+| src/app/(admin)/admin/control/ControlDashboard.tsx | /api/admin/artists | GET | requireAdmin | SÍ | ✅ VERIFICADO |
 | src/app/(admin)/admin/control/ControlDashboard.tsx | /api/admin/fleet | GET+PATCH+POST | requireAdmin | SÍ | ✅ VERIFICADO |
-| src/app/(admin)/admin/control/ControlDashboard.tsx | /api/admin/providers | GET+PATCH+POST | requireAdmin | SÍ | ✅ VERIFICADO |
+| src/app/(admin)/admin/control/ControlDashboard.tsx | /api/admin/providers | GET | requireAdmin | SÍ | ✅ VERIFICADO |
 | src/app/(admin)/admin/control/ControlDashboard.tsx | /api/admin/therapists | GET+PATCH+POST | requireAdmin | SÍ | ✅ VERIFICADO |
 | src/app/(admin)/admin/control/ControlDashboard.tsx | /api/admin/treasury | GET+POST | requireAdmin | SÍ | ✅ VERIFICADO |
 | src/app/(admin)/admin/control/tabs/AfiliadosTab.tsx | /api/admin/affiliates | GET+PATCH+POST+DELETE | requireAdmin | SÍ | ✅ VERIFICADO |
-| src/app/(admin)/admin/control/tabs/ArtistasTab.tsx | /api/admin/artists | GET+PATCH+POST | requireAdmin | SÍ | ✅ VERIFICADO |
+| src/app/(admin)/admin/control/tabs/ArtistasTab.tsx | /api/admin/artists | GET | requireAdmin | SÍ | ✅ VERIFICADO |
 | src/app/(admin)/admin/control/tabs/FlotaTab.tsx | /api/admin/fleet | GET+PATCH+POST | requireAdmin | SÍ | ✅ VERIFICADO |
-| src/app/(admin)/admin/control/tabs/ProveedoresTab.tsx | /api/admin/providers | GET+PATCH+POST | requireAdmin | SÍ | ✅ VERIFICADO |
+| src/app/(admin)/admin/control/tabs/ProveedoresTab.tsx | /api/admin/providers | GET | requireAdmin | SÍ | ✅ VERIFICADO |
 | src/app/(admin)/admin/control/tabs/TerapeutasTab.tsx | /api/admin/therapists | GET+PATCH+POST | requireAdmin | SÍ | ✅ VERIFICADO |
 | src/app/(admin)/admin/control/tabs/TesoreriaTab.tsx | /api/admin/treasury | GET+POST | requireAdmin | SÍ | ✅ VERIFICADO |
 
@@ -24,7 +24,7 @@
 | Ruta | Verbos | Guard | Zod | Escribe |
 | --- | --- | --- | --- | --- |
 | affiliates/route.ts | GET+PATCH+POST+DELETE | requireAdmin | sí | sí |
-| artists/route.ts | GET+PATCH+POST | requireAdmin | sí | sí |
+| artists/route.ts | GET | requireAdmin | sí | no |
 | cockpit/route.ts | GET | SIN GUARD | no | no |
 | compile-intent/route.ts | POST+GET | requireAdmin | sí | no |
 | demand-map/route.ts | GET | requireAdmin | sí | no |
@@ -37,7 +37,7 @@
 | mobile-studio/config/route.ts | GET+POST | requireAdmin | sí | no |
 | ollama-shield/route.ts | GET+POST | requireAdmin | sí | no |
 | oraculo/approve/route.ts | POST | requireAdmin | sí | no |
-| providers/route.ts | GET+PATCH+POST | requireAdmin | sí | sí |
+| providers/route.ts | GET | requireAdmin | sí | no |
 | providers/toggle-visibility/route.ts | GET+POST | requireAdmin | sí | no |
 | route-governance/route.ts | GET+POST | requireAdmin | sí | no |
 | sentinel/route.ts | GET+POST | requireAdmin | sí | no |

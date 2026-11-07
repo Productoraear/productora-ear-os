@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import { CENTRALITA } from '@/lib/phone-constants';
 import ArtistBookingSpecSheet from '@/components/artists/ArtistBookingSpecSheet';
+import ArtistPanel360 from '@/components/artists/ArtistPanel360';
 
 export const dynamic = 'force-dynamic';
 
@@ -223,6 +224,25 @@ export default async function ArtistDetailPage({ params }: PageProps) {
 
           </section>
 
+          {/* PANEL 360 INTERACTIVO */}
+          <section className="pt-8 border-t border-white/10 space-y-4">
+            <div className="text-center space-y-1">
+              <span className="text-[10px] font-mono text-[#ecb613] uppercase tracking-[0.25em] font-bold">
+                PANEL 360° S-CLASS · CONFIGURACIÓN Y RESERVA
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-black uppercase text-white font-syne">
+                Panel Transaccional <span className="text-[#ecb613]">360°</span>
+              </h2>
+            </div>
+            <ArtistPanel360
+              artistId={slug}
+              artistName={variant.title}
+              artistProvince={variant.city}
+              basePrice={basePrice}
+              slug={slug}
+            />
+          </section>
+
         </div>
       </main>
     );
@@ -275,6 +295,16 @@ export default async function ArtistDetailPage({ params }: PageProps) {
             >
               Pedir Presupuesto
             </Link>
+          </div>
+
+          <div className="pt-8">
+            <ArtistPanel360
+              artistId={artist.id}
+              artistName={artistName}
+              artistProvince="España"
+              basePrice={350}
+              slug={slug}
+            />
           </div>
         </div>
       </main>
@@ -422,6 +452,17 @@ export default async function ArtistDetailPage({ params }: PageProps) {
                     </div>
                   </div>
                 </div>
+              </div>
+
+              {/* PANEL 360 INTERACTIVO S-CLASS */}
+              <div className="pt-8">
+                <ArtistPanel360
+                  artistId={matched.id || slug}
+                  artistName={title}
+                  artistProvince={province}
+                  basePrice={basePrice}
+                  slug={slug}
+                />
               </div>
 
               {/* FICHA TÉCNICA EXHAUSTIVA DE CONTRATACIÓN (CALENDARIO EN TIEMPO REAL + FILTROS DE CONTRATACIÓN) */}

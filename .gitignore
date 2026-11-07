@@ -210,3 +210,31 @@ gate_codes.txt
 # Misión activa emitida por `omega.js next`: efímera por diseño (`complete` la unlinkea,
 # omega.js:160). Trackearla ensuciaba el árbol en CADA sesión. Destrackeada en W41_T18.
 .antigravity/MISSION_ACTIVE.json
+
+# Ficheros pesados y ruido interno (CHG-3: >1MB fuera de git)
+public/media/dani-aragon-vault/
+src/data/programa-99-dias-curriculum.json
+src/data/raw_wp_lessons_all.json
+.antigravity/*.err
+.antigravity/w4*_*.cjs
+.antigravity/w4*_*.ps1
+.antigravity/w4*_*.bat
+.antigravity/w42_towns.json
+
+# Ficheros de trabajo de agentes (no producci�n)
+.agents/teamwork/
+reports/prototype_audit/
+TEST_INFRA.md
+TEST_READY.md
+PROJECT.md
+
+# Scripts internos de auditoria/scratch y bats locales
+/*.bat
+.antigravity/audit/
+.antigravity/queues/
+.antigravity/*.cjs
+.antigravity/*.ps1
+.antigravity/harvest_21st_log.json
+.antigravity/ORDEN_EJECUTIVO_OMEGA_ROJO_FASE_1.md
+.agents/mcp_config.json
+src/data/*_raw.txt

@@ -71,6 +71,502 @@
       "done_when": "JSON con los días recuperados y su procedencia; ningún día inventado.",
       "test": "node ./node_modules/typescript/bin/tsc --noEmit",
       "created_at": "2026-11-06T12:26:31.733Z"
+    },
+    {
+      "id": "W53_T01",
+      "title": "Modelo de datos Career (Prisma) + migración",
+      "status": "PENDING",
+      "priority": "P0",
+      "files": [
+        "prisma/schema.prisma",
+        "src/lib/career/db.ts"
+      ],
+      "action": "Añadir modelos: ArtistProfile, PlatformConnection(artistId,platformId,status,encryptedToken,lastSyncAt,error), MetricSnapshot(MetricPoint del registro, índice artistId+platformId+metric+capturedAt), Release(title,upc,type,releaseDate,coverUrl), Track(isrc,iswc,releaseId,durationSec,splitsJson), MediaAsset(kind,url,sha256,bytes), TeamMember(role: ARTIST|MANAGER|LABEL|BOOKER|PR|LEGAL|ACCOUNTANT), Gig, Contract, RoyaltyStatement, Campaign, FanContact, ContentPost. Ejecutar prisma generate. db.ts exporta helpers tipados. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "prisma validate Exit 0 y tsc Exit 0",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-07T18:37:51.075Z"
+    },
+    {
+      "id": "W53_T02",
+      "title": "Cifrado de tokens OAuth (AES-256-GCM) + vault de conexiones",
+      "status": "PENDING",
+      "priority": "P0",
+      "files": [
+        "src/lib/career/token-vault.ts",
+        "scripts/verify_token_vault.ts"
+      ],
+      "action": "encrypt/decrypt con clave CAREER_TOKEN_KEY (32 bytes base64) desde env, IV aleatorio, authTag. Test: roundtrip, manipulación del ciphertext lanza error, clave ausente lanza error claro. Nunca loguear tokens. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "npx tsx scripts/verify_token_vault.ts Exit 0",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-07T18:37:51.077Z"
+    },
+    {
+      "id": "W53_T03",
+      "title": "Contrato de conector + orquestador de sincronización",
+      "status": "PENDING",
+      "priority": "P0",
+      "files": [
+        "src/lib/career/connectors/types.ts",
+        "src/lib/career/sync-orchestrator.ts"
+      ],
+      "action": "Interface Connector{platformId, authUrl(state), exchangeCode(code), refresh(conn), fetchMetrics(conn,since):Promise<MetricPoint[]>}. Orquestador: por cada conexión live ejecuta fetchMetrics con timeout 8s, reintentos exponenciales (3), upsert idempotente de MetricSnapshot (clave única), marca error en PlatformConnection y escribe a DLQ (tabla o .data/dlq.jsonl). Registro de conectores por id. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0 + test unitario de idempotencia (2 ejecuciones = mismas filas)",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-07T18:37:51.077Z"
+    },
+    {
+      "id": "W53_T04",
+      "title": "Rutas OAuth genéricas (connect/callback) con state anti-CSRF",
+      "status": "PENDING",
+      "priority": "P0",
+      "files": [
+        "src/app/api/career/connect/[platform]/route.ts",
+        "src/app/api/career/callback/[platform]/route.ts"
+      ],
+      "action": "GET connect: genera state firmado HMAC con expiración 10min y redirige a authUrl. callback: valida state, exchangeCode, cifra token con token-vault, guarda PlatformConnection live. Plataformas sin conector registrado devuelven 501 con JSON {status:\"not_implemented\"}. params con await. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0; state manipulado => 400",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-07T18:37:51.077Z"
+    },
+    {
+      "id": "W53_T05",
+      "title": "Cron de sincronización automática",
+      "status": "PENDING",
+      "priority": "P0",
+      "files": [
+        "src/app/api/cron/career-sync/route.ts",
+        "src/lib/career/schedule.ts"
+      ],
+      "action": "Ruta protegida por header Authorization Bearer CRON_SECRET. Sincroniza conexiones live cuyo lastSyncAt supere el intervalo (api: 15min; csv/manual: ignorar). Devuelve resumen {ok,failed,skipped}. Documentar el cron de Coolify en docs/CAREER_CRON.md. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0; sin header => 401",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-07T18:37:51.077Z"
+    },
+    {
+      "id": "W53_T06",
+      "title": "Endpoint SSE real de métricas (sustituye demo cuando hay datos)",
+      "status": "PENDING",
+      "priority": "P0",
+      "files": [
+        "src/app/api/artist/career/metrics/route.ts"
+      ],
+      "action": "Si existen MetricSnapshot del artista, emitir deltas reales leyendo BD cada 5s; si no, mantener el flujo demo actual pero con source:\"demo\". Cerrar al abort. Incluir heartbeat cada 15s. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-07T18:37:51.077Z"
+    },
+    {
+      "id": "W53_T07",
+      "title": "Conector Spotify (OAuth PKCE + Web API)",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/lib/career/connectors/spotify.ts"
+      ],
+      "action": "Implementar Connector con scopes user-read-private, user-follow-read; fetchMetrics: followers, popularidad de top tracks. Env SPOTIFY_CLIENT_ID/SECRET. Registrar en el orquestador. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0 + test con fetch mockeado",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-07T18:37:51.077Z"
+    },
+    {
+      "id": "W53_T08",
+      "title": "Conector YouTube (Data + Analytics API)",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/lib/career/connectors/youtube.ts"
+      ],
+      "action": "OAuth Google scopes yt-analytics.readonly + youtube.readonly. Métricas: views, watch_minutes, subscribers->followers, estimatedRevenue->revenue_cents. Env GOOGLE_CLIENT_ID/SECRET. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0 + test mockeado",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-07T18:37:51.077Z"
+    },
+    {
+      "id": "W53_T09",
+      "title": "Conectores Meta: Instagram + Facebook + Threads",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/lib/career/connectors/meta.ts"
+      ],
+      "action": "Graph API v21+: followers, reach/views, likes, comments, saves, shares. Un OAuth, tres platformId. Env META_APP_ID/SECRET. Refrescar long-lived token. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0 + test mockeado",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-07T18:37:51.077Z"
+    },
+    {
+      "id": "W53_T10",
+      "title": "Conector TikTok",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/lib/career/connectors/tiktok.ts"
+      ],
+      "action": "Login Kit v2 + user.info.stats y video.list. Env TIKTOK_CLIENT_KEY/SECRET. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0 + test mockeado",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-07T18:37:51.077Z"
+    },
+    {
+      "id": "W53_T11",
+      "title": "Conectores X, Twitch, Reddit, Discord, Pinterest, LinkedIn, Telegram, SoundCloud, Deezer, Patreon, Shopify",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/lib/career/connectors/others.ts"
+      ],
+      "action": "Un conector por id del registro con sus endpoints oficiales de docs. Los que exigen aprobación de app (LinkedIn, TikTok) deben devolver error tipado {needs_app_review:true}. Telegram usa bot token por canal. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0 + un test mockeado por conector",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-07T18:37:51.077Z"
+    },
+    {
+      "id": "W53_T12",
+      "title": "Importador CSV universal (Apple Music, Amazon, TIDAL, Bandcamp, DistroKid, SGAE, Ticketmaster)",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/lib/career/importers/csv-importer.ts",
+        "src/app/api/career/import/route.ts"
+      ],
+      "action": "Mapeo columnas->MetricKey por platformId en un objeto declarativo; parser tolerante a separador ; o , y decimales con coma; dinero a céntimos; validación y reporte de filas rechazadas; idempotente por hash de fila. Límite 10MB. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0 + fixtures en scripts/fixtures/career/*.csv y test",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-07T18:37:51.077Z"
+    },
+    {
+      "id": "W53_T13",
+      "title": "Importador manual y webhook genérico",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/app/api/career/webhook/[platform]/route.ts",
+        "src/lib/career/importers/manual.ts"
+      ],
+      "action": "Webhook con firma HMAC (CAREER_WEBHOOK_SECRET) que acepta MetricPoint[] validados con zod. Entrada manual desde UI usa la misma validación. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0; firma inválida => 401",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-07T18:37:51.077Z"
+    },
+    {
+      "id": "W53_T14",
+      "title": "Shell Career OS: layout con 12 departamentos y selector de artista (manager multi-artista)",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/app/studio/artist/layout.tsx",
+        "src/app/studio/artist/components/CareerNav.tsx",
+        "src/lib/career/departments.ts"
+      ],
+      "action": "Departamentos: Resumen, Catálogo, Distribución, Analítica, Social Hub, Giras y Bookings, Finanzas y Royalties, Legal y Contratos, Marketing y Prensa, Fans CRM, Merch, Equipo. departments.ts como SSOT de rutas/iconos. Selector de artista persistido en cookie. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0; todas las rutas del nav resuelven (sin 404)",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-07T18:37:51.077Z"
+    },
+    {
+      "id": "W53_T15",
+      "title": "Dashboard Resumen unificado",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/app/studio/artist/page.tsx"
+      ],
+      "action": "KPIs globales por MetricKey agregados entre plataformas, sparkline 30d, próximas fechas, ingresos mes, alertas de conexiones caídas. Server Component con skeletons. Etiqueta DEMO visible si source=demo. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-07T18:37:51.077Z"
+    },
+    {
+      "id": "W53_T16",
+      "title": "Hub de Conexiones (centro de integraciones)",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/app/studio/artist/conexiones/page.tsx",
+        "src/app/studio/artist/conexiones/ConnectionCard.tsx"
+      ],
+      "action": "Grid por categoría desde PLATFORMS: estado, última sync, botón Conectar (OAuth), Importar CSV, Entrada manual, Desconectar, Sincronizar ahora. Cola de errores visible. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0; cada botón con handler real",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-07T18:37:51.077Z"
+    },
+    {
+      "id": "W53_T17",
+      "title": "Departamento Catálogo: releases, tracks, ISRC/UPC",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/app/studio/artist/catalogo/page.tsx",
+        "src/app/api/career/releases/route.ts"
+      ],
+      "action": "CRUD de Release/Track con validación de formato ISRC (CC-XXX-YY-NNNNN) y UPC-12/EAN-13 con dígito de control. Portada y metadatos. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0 + test de validadores",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-07T18:37:51.077Z"
+    },
+    {
+      "id": "W53_T18",
+      "title": "Subida de media a almacenamiento S3/R2 con URL prefirmada",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/lib/career/storage.ts",
+        "src/app/api/artist/career/upload/route.ts"
+      ],
+      "action": "Sustituir disco local por S3 compatible (env S3_*). Subida directa con presigned PUT, registrar MediaAsset con sha256 y bytes. Mantener fallback local sólo en desarrollo. Límite por tipo. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-07T18:37:51.077Z"
+    },
+    {
+      "id": "W53_T19",
+      "title": "Departamento Distribución: pipeline de lanzamiento",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/app/studio/artist/distribucion/page.tsx",
+        "src/lib/career/release-pipeline.ts"
+      ],
+      "action": "Máquina de estados: borrador→metadatos→QC→enviado→en tiendas, checklist (portada 3000px, WAV, ISRC, splits suman 10000 bps). Envío al distribuidor por adaptador; sin credenciales => estado pending_credentials. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0 + test de la máquina de estados",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-07T18:37:51.077Z"
+    },
+    {
+      "id": "W53_T20",
+      "title": "Departamento Analítica: comparador y exportes",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/app/studio/artist/analitica/page.tsx"
+      ],
+      "action": "Filtros plataforma/métrica/rango, series temporales, top países si disponible, exportar CSV. Gráficos SVG ligeros sin librerías pesadas. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-07T18:37:51.077Z"
+    },
+    {
+      "id": "W53_T21",
+      "title": "Social Hub: calendario de contenido y programación",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/app/studio/artist/social/page.tsx",
+        "src/app/api/career/posts/route.ts"
+      ],
+      "action": "ContentPost con plataforma, copy, media, fecha, estado (borrador/aprobado/publicado). Vista calendario mensual. Publicación real sólo si el conector la soporta; si no, estado manual_publish. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-07T18:37:51.077Z"
+    },
+    {
+      "id": "W53_T22",
+      "title": "Giras y Bookings integrados con EAR OS",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/app/studio/artist/giras/page.tsx"
+      ],
+      "action": "Gig con venue, cachet, logística 1,50 €/km desde km 50 (importar del SSOT, no duplicar), rider, hoja de ruta, estado. Reusar motores existentes sin modificar Zona Cero. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-07T18:37:51.077Z"
+    },
+    {
+      "id": "W53_T23",
+      "title": "Finanzas y Royalties",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/app/studio/artist/finanzas/page.tsx",
+        "src/lib/career/royalty-splitter.ts"
+      ],
+      "action": "Ingesta de RoyaltyStatement, reparto por splits en bps con redondeo que conserve el total exacto (céntimos), P&L mensual, previsión. Test: suma de partes == total siempre. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0 + scripts/verify_royalty_splitter.ts Exit 0",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-07T18:37:51.077Z"
+    },
+    {
+      "id": "W53_T24",
+      "title": "Legal y Contratos",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/app/studio/artist/legal/page.tsx"
+      ],
+      "action": "Repositorio de contratos con vencimientos y alertas, plantillas (split sheet, management, licencia de sincronización), estado de firma. Adjuntos vía storage. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-07T18:37:51.077Z"
+    },
+    {
+      "id": "W53_T25",
+      "title": "Marketing, prensa y EPK",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/app/studio/artist/marketing/page.tsx"
+      ],
+      "action": "Campañas con presupuesto y KPIs, generador de press kit a partir del perfil, base de contactos de prensa. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-07T18:37:51.077Z"
+    },
+    {
+      "id": "W53_T26",
+      "title": "Fans CRM",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/app/studio/artist/fans/page.tsx"
+      ],
+      "action": "FanContact con consentimiento RGPD explícito, segmentos, import CSV, exportar, baja. Sin envío masivo sin opt-in. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-07T18:37:51.077Z"
+    },
+    {
+      "id": "W53_T27",
+      "title": "Merch y ventas directas",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/app/studio/artist/merch/page.tsx"
+      ],
+      "action": "Panel de ventas desde Shopify/Bandcamp, stock manual, margen por producto en céntimos. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-07T18:37:51.077Z"
+    },
+    {
+      "id": "W53_T28",
+      "title": "Equipo y permisos por rol",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/app/studio/artist/equipo/page.tsx",
+        "src/lib/career/rbac.ts"
+      ],
+      "action": "Matriz de permisos por rol y departamento; invitaciones; guard server-side en cada API career. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0 + test de matriz",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-07T18:37:51.077Z"
+    },
+    {
+      "id": "W53_T29",
+      "title": "Asistente IA del manager (con datos reales del artista)",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/app/studio/artist/asistente/page.tsx",
+        "src/app/api/career/assistant/route.ts"
+      ],
+      "action": "Chat que responde sólo con datos de BD del artista, cita la fuente de cada cifra, rechaza inventar. Timeout 8s. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-07T18:37:51.077Z"
+    },
+    {
+      "id": "W53_T30",
+      "title": "Alertas y notificaciones (conexión caída, vencimiento, pico de métrica)",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/lib/career/alerts.ts"
+      ],
+      "action": "Reglas declarativas y envío a n8n webhook existente de forma no bloqueante. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-07T18:37:51.077Z"
+    },
+    {
+      "id": "W53_T31",
+      "title": "Seed de demostración etiquetado",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "scripts/seed_career_demo.ts"
+      ],
+      "action": "Crear un artista demo con 90 días de MetricSnapshot source:\"demo\", releases, gigs, contratos. Idempotente. NUNCA mezclar con datos reales. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "npx tsx scripts/seed_career_demo.ts Exit 0 dos veces",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-07T18:37:51.077Z"
+    },
+    {
+      "id": "W53_T32",
+      "title": "Viaje inmersivo: Descubrir → Reservar → Studio",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/app/neural-journey/page.tsx",
+        "src/app/studio/artist/onboarding/page.tsx"
+      ],
+      "action": "Onboarding del artista en 5 pasos (perfil, conectar redes, importar catálogo, equipo, primera analítica) con progreso persistido y transiciones continuas. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-07T18:37:51.077Z"
+    },
+    {
+      "id": "W53_T33",
+      "title": "Seguridad y cumplimiento",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/lib/career/audit-log.ts",
+        "docs/CAREER_SECURITY.md"
+      ],
+      "action": "Audit log append-only de accesos a datos y tokens, rate limit por IP en rutas career, headers, borrado de cuenta y exportación de datos (RGPD). REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-07T18:37:51.077Z"
+    },
+    {
+      "id": "W53_T34",
+      "title": "Puerta final Career OS",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "scripts/audit_career_os.cjs",
+        "package.json"
+      ],
+      "action": "Script que verifica: 0 páginas placeholder bajo studio/artist, 0 any, cada platformId del registro tiene conector o importador, rutas del nav resuelven. Añadir npm run audit:career. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "npm run audit:career Exit 0",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-07T18:37:51.077Z"
     }
   ],
   "completed": [

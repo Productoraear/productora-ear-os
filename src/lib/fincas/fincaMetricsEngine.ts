@@ -18,7 +18,23 @@ import {
 import {
   LIMITE_B2G_LCSP_EUR,
   SAFE_LCSP_CEILING_EUR,
+  DEPOSITO_STRIPE_EUR,
+  SPLIT_SOBERANO,
 } from '@/lib/constants/ear-os-ssot';
+import { eurToCents, centsToEur } from '@/lib/budget/budget-allocator-engine';
+
+export const PACTO_100_FUNDADORES_SSOT = {
+  MAX_FUNDADORES_CUPO: 100,
+  CUOTA_MENSUAL_MINIMA_MATCH_EUR: 50,
+  CUOTA_MENSUAL_DEFECTO_PORTAL_EUR: 250,
+  INFLACION_ANUAL_PORTALES_TRADICIONALES_PCT: 0.06,
+  INFLACION_ANUAL_EAR_OS_FUNDADOR_PCT: 0.00,
+  TASA_FUGA_LEADS_PORTAL_TRADICIONAL_PCT: 0.18,
+  VALOR_LEAD_PERDIDO_ESTIMADO_EUR: 3800,
+  COMISION_AFILIACION_BASE_PCT: 0.10,
+  COMISION_AFILIACION_MAX_PCT: 0.15,
+  DIAS_LIQUIDACION_SLA: 7,
+} as const;
 
 export const SSOT = {
   TARIFA_BASE_SOLISTA_EUR: 350,
@@ -98,7 +114,7 @@ export function costeLogisticaMentrida(distanciaKm: number, horaFin = 23): numbe
   if (distanciaKm > SSOT.UMBRAL_KM_GRATIS) {
     total += (distanciaKm - SSOT.UMBRAL_KM_GRATIS) * SSOT.LOGISTICA_EUR_KM;
   }
-  if (horaFin >= SSOT.HORA_FIN_HOTEL || distanciaKm > SSOT.DISTANCIA_HOTEL_KM) {
+  if ((horaFin >= SSOT.HORA_FIN_HOTEL && horaFin < 12) || distanciaKm > SSOT.DISTANCIA_HOTEL_KM) {
     total += SSOT.HOTEL_EUR;
   }
   return Math.round(total);
@@ -180,6 +196,13 @@ export function buildComparativaBodasNetVsEarOs(): BodasNetVsEarOsRow[] {
       ventaja: 'EAR',
     },
     {
+      concepto: '0% Fuga publicitaria a competidores',
+      bodasNet: 'Alta fuga: banners y recomendados rivales en tu ficha',
+      earOs: '0% Fuga: escaparate 100% blindado y exclusivo',
+      ventaja: 'EAR',
+      ahorroAnualEstimado: PACTO_100_FUNDADORES_SSOT.VALOR_LEAD_PERDIDO_ESTIMADO_EUR,
+    },
+    {
       concepto: 'Comisión por lead / contacto',
       bodasNet: 'Tarifa del portal',
       earOs: '10% Split Soberano',
@@ -247,3 +270,218 @@ export function buildExecutiveDashboard(): ExecutiveDashboard {
     comparativa: buildComparativaBodasNetVsEarOs(),
   };
 }
+
+// ── PACTO 100 FUNDADORES: CONTRATOS Y MOTORES DE SIMULACIÓN ──────────────────
+
+export interface FounderFeeMatchOptions {
+  currentFoundersEnrolled?: number;
+  projectedAnnualWeddings?: number;
+  averageWeddingTicketEur?: number;
+  horizonYears?: number;
+}
+
+export interface YearProjectionBreakdown {
+  year: number;
+  competitorFeeEur: number;
+  earOsFounderFeeEur: number;
+  inflationSavingsEur: number;
+  fugaRetentionSavingsEur: number;
+  acousticFinesSavingsEur: number;
+  affiliateCommissionIncomeEur: number;
+  netAnnualBenefitEur: number;
+  cumulativeBenefitEur: number;
+}
+
+export interface FounderFeeMatchResult {
+  eligibleForFounderPact: boolean;
+  founderSlotNumber: number | null;
+  remainingSlots: number;
+  previousMonthlyFeeEur: number;
+  previousAnnualFeeEur: number;
+  matchedMonthlyFeeEur: number;
+  matchedAnnualFeeEur: number;
+  matchedMonthlyFeeCents: number;
+  matchedAnnualFeeCents: number;
+  lifetimePriceLock: boolean;
+  guarantees: {
+    zeroAdLeakage: boolean;
+    exclusiveShowcase: boolean;
+    acousticCertificationDbSpl: number;
+    affiliateCommissionRangePct: readonly [number, number];
+    settlementSlaDays: number;
+    depositDeductibleEur: number;
+  };
+  breakdownByYear: YearProjectionBreakdown[];
+  summaryLifetimeSavingsEur: {
+    horizonYears: number;
+    totalFeeInflationSavingsEur: number;
+    totalFugaRetentionSavingsEur: number;
+    totalAcousticFinesSavingsEur: number;
+    totalAffiliateEarningsEur: number;
+    totalNetLifetimeAdvantageEur: number;
+  };
+}
+
+export interface LifetimeSavingsInput {
+  previousFeeMonthlyEur: number;
+  horizonYears?: number;
+  annualWeddings?: number;
+  averageWeddingTicketEur?: number;
+  hasAcousticRisk?: boolean;
+  logisticsAdoptionPct?: number;
+}
+
+export interface LifetimeSavingsResult {
+  horizonYears: number;
+  breakdownByYear: YearProjectionBreakdown[];
+  totalCompetitorSpendEur: number;
+  totalEarOsSpendEur: number;
+  totalFeeSavingsEur: number;
+  totalFugaRetentionSavingsEur: number;
+  totalAcousticSavingsEur: number;
+  totalAffiliateEarningsEur: number;
+  netLifetimeAdvantageEur: number;
+  roiMultiplier: number;
+}
+
+export function calculateLifetimePortalSavings(
+  input: LifetimeSavingsInput,
+): LifetimeSavingsResult {
+  const horizonYears = Math.max(1, Math.min(10, Math.round(input.horizonYears ?? 5)));
+  const baseMonthlyEur = Math.max(0, input.previousFeeMonthlyEur);
+  const baseAnnualEur = baseMonthlyEur * 12;
+  const annualWeddings = Math.max(1, Math.round(input.annualWeddings ?? 20));
+  const avgTicketEur = Math.max(500, Math.round(input.averageWeddingTicketEur ?? 3800));
+  const hasAcousticRisk = Boolean(input.hasAcousticRisk);
+  const logisticsAdoptionPct = Math.max(0, Math.min(1, input.logisticsAdoptionPct ?? 0.5));
+
+  const inflationRate = PACTO_100_FUNDADORES_SSOT.INFLACION_ANUAL_PORTALES_TRADICIONALES_PCT;
+  const breakdownByYear: YearProjectionBreakdown[] = [];
+
+  let totalCompetitorSpendEur = 0;
+  let totalEarOsSpendEur = 0;
+  let totalFeeSavingsEur = 0;
+  let totalFugaRetentionSavingsEur = 0;
+  let totalAcousticSavingsEur = 0;
+  let totalAffiliateEarningsEur = 0;
+  let runningCumulative = 0;
+
+  for (let year = 1; year <= horizonYears; year++) {
+    const competitorFeeEur = Math.round(baseAnnualEur * Math.pow(1 + inflationRate, year - 1) * 100) / 100;
+    const earOsFounderFeeEur = baseAnnualEur;
+    const inflationSavingsEur = Math.round((competitorFeeEur - earOsFounderFeeEur) * 100) / 100;
+    const fugaRetentionSavingsEur = PACTO_100_FUNDADORES_SSOT.VALOR_LEAD_PERDIDO_ESTIMADO_EUR;
+    const acousticFinesSavingsEur = hasAcousticRisk ? Math.round(annualWeddings * 0.12 * 600) : 0;
+    const affiliateEvents = Math.round(annualWeddings * logisticsAdoptionPct);
+    const affiliateCommissionIncomeEur = Math.round(
+      affiliateEvents * avgTicketEur * PACTO_100_FUNDADORES_SSOT.COMISION_AFILIACION_BASE_PCT,
+    );
+
+    const netAnnualBenefitEur = Math.round(
+      (inflationSavingsEur + fugaRetentionSavingsEur + acousticFinesSavingsEur + affiliateCommissionIncomeEur) * 100,
+    ) / 100;
+
+    runningCumulative = Math.round((runningCumulative + netAnnualBenefitEur) * 100) / 100;
+
+    breakdownByYear.push({
+      year,
+      competitorFeeEur,
+      earOsFounderFeeEur,
+      inflationSavingsEur,
+      fugaRetentionSavingsEur,
+      acousticFinesSavingsEur,
+      affiliateCommissionIncomeEur,
+      netAnnualBenefitEur,
+      cumulativeBenefitEur: runningCumulative,
+    });
+
+    totalCompetitorSpendEur += competitorFeeEur;
+    totalEarOsSpendEur += earOsFounderFeeEur;
+    totalFeeSavingsEur += inflationSavingsEur;
+    totalFugaRetentionSavingsEur += fugaRetentionSavingsEur;
+    totalAcousticSavingsEur += acousticFinesSavingsEur;
+    totalAffiliateEarningsEur += affiliateCommissionIncomeEur;
+  }
+
+  return {
+    horizonYears,
+    breakdownByYear,
+    totalCompetitorSpendEur: Math.round(totalCompetitorSpendEur * 100) / 100,
+    totalEarOsSpendEur: Math.round(totalEarOsSpendEur * 100) / 100,
+    totalFeeSavingsEur: Math.round(totalFeeSavingsEur * 100) / 100,
+    totalFugaRetentionSavingsEur: Math.round(totalFugaRetentionSavingsEur * 100) / 100,
+    totalAcousticSavingsEur: Math.round(totalAcousticSavingsEur * 100) / 100,
+    totalAffiliateEarningsEur: Math.round(totalAffiliateEarningsEur * 100) / 100,
+    netLifetimeAdvantageEur: runningCumulative,
+    roiMultiplier: totalEarOsSpendEur > 0 ? Math.round((runningCumulative / totalEarOsSpendEur) * 100) / 100 : 0,
+  };
+}
+
+export function calculateFounderFeeMatch(
+  previousFeeMonthlyEur: number,
+  options?: FounderFeeMatchOptions,
+): FounderFeeMatchResult {
+  const currentFounders = Math.max(0, Math.min(100, Math.round(options?.currentFoundersEnrolled ?? 42)));
+  const eligibleForFounderPact = currentFounders < PACTO_100_FUNDADORES_SSOT.MAX_FUNDADORES_CUPO;
+  const founderSlotNumber = eligibleForFounderPact ? currentFounders + 1 : null;
+  const remainingSlots = Math.max(0, PACTO_100_FUNDADORES_SSOT.MAX_FUNDADORES_CUPO - currentFounders);
+
+  const normalizedMonthlyEur =
+    !Number.isFinite(previousFeeMonthlyEur) || previousFeeMonthlyEur <= 0
+      ? PACTO_100_FUNDADORES_SSOT.CUOTA_MENSUAL_DEFECTO_PORTAL_EUR
+      : Math.max(
+          PACTO_100_FUNDADORES_SSOT.CUOTA_MENSUAL_MINIMA_MATCH_EUR,
+          Math.round(previousFeeMonthlyEur * 100) / 100,
+        );
+
+  const previousMonthlyFeeEur = normalizedMonthlyEur;
+  const previousAnnualFeeEur = Math.round(previousMonthlyFeeEur * 12 * 100) / 100;
+
+  const matchedMonthlyFeeEur = previousMonthlyFeeEur;
+  const matchedAnnualFeeEur = previousAnnualFeeEur;
+  const matchedMonthlyFeeCents = eurToCents(matchedMonthlyFeeEur);
+  const matchedAnnualFeeCents = eurToCents(matchedAnnualFeeEur);
+
+  const horizonYears = options?.horizonYears ?? 5;
+  const lifetimeSavings = calculateLifetimePortalSavings({
+    previousFeeMonthlyEur: matchedMonthlyFeeEur,
+    horizonYears,
+    annualWeddings: options?.projectedAnnualWeddings ?? 20,
+    averageWeddingTicketEur: options?.averageWeddingTicketEur ?? 3800,
+    hasAcousticRisk: false,
+    logisticsAdoptionPct: 0.5,
+  });
+
+  return {
+    eligibleForFounderPact,
+    founderSlotNumber,
+    remainingSlots,
+    previousMonthlyFeeEur,
+    previousAnnualFeeEur,
+    matchedMonthlyFeeEur,
+    matchedAnnualFeeEur,
+    matchedMonthlyFeeCents,
+    matchedAnnualFeeCents,
+    lifetimePriceLock: eligibleForFounderPact,
+    guarantees: {
+      zeroAdLeakage: true,
+      exclusiveShowcase: true,
+      acousticCertificationDbSpl: SSOT.LIMITE_SPL_DB,
+      affiliateCommissionRangePct: [
+        PACTO_100_FUNDADORES_SSOT.COMISION_AFILIACION_BASE_PCT,
+        PACTO_100_FUNDADORES_SSOT.COMISION_AFILIACION_MAX_PCT,
+      ] as const,
+      settlementSlaDays: PACTO_100_FUNDADORES_SSOT.DIAS_LIQUIDACION_SLA,
+      depositDeductibleEur: SSOT.DEPOSITO_STRIPE_EUR,
+    },
+    breakdownByYear: lifetimeSavings.breakdownByYear,
+    summaryLifetimeSavingsEur: {
+      horizonYears,
+      totalFeeInflationSavingsEur: lifetimeSavings.totalFeeSavingsEur,
+      totalFugaRetentionSavingsEur: lifetimeSavings.totalFugaRetentionSavingsEur,
+      totalAcousticFinesSavingsEur: lifetimeSavings.totalAcousticSavingsEur,
+      totalAffiliateEarningsEur: lifetimeSavings.totalAffiliateEarningsEur,
+      totalNetLifetimeAdvantageEur: lifetimeSavings.netLifetimeAdvantageEur,
+    },
+  };
+}

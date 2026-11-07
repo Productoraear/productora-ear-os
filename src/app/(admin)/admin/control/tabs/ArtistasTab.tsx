@@ -20,7 +20,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { FormEvent, ReactElement } from 'react';
 import Link from 'next/link';
-import { AlertTriangle, CheckCircle2, Loader2, RefreshCw, UserPlus, X } from 'lucide-react';
+import { AlertTriangle, CheckCircle2, Loader2, RefreshCw, UserPlus, X, ExternalLink } from 'lucide-react';
 import type { AdminApiError } from '@/lib/admin/adminTypes';
 import { useAdminResource } from '../useAdminResource';
 
@@ -437,7 +437,20 @@ export function ArtistasTab({ query = '' }: { query?: string }): ReactElement {
                                             {row.user?.email ?? '—'}
                                         </td>
                                         <td className="px-3 py-2 font-mono text-xs text-white/50">
-                                            {row.slug ?? '—'}
+                                            {row.slug ? (
+                                                <Link
+                                                    href={`/artistas/${encodeURIComponent(row.slug)}`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="inline-flex items-center gap-1 text-white/70 hover:text-[#ecb613] transition-colors underline decoration-white/20 hover:decoration-[#ecb613]"
+                                                    title={`Ver Panel 360 de ${name}`}
+                                                >
+                                                    <span>{row.slug}</span>
+                                                    <ExternalLink className="w-3 h-3 text-[#ecb613]" />
+                                                </Link>
+                                            ) : (
+                                                '—'
+                                            )}
                                         </td>
                                         <td className="px-3 py-2">
                                             <StatusPill value={row.status} />

@@ -1,0 +1,67 @@
+{
+  "https://www.beedigital.es/contacto/": {
+    "status": 200,
+    "htmlLength": 234678,
+    "h1s": [
+      "Contacta con nosotros"
+    ],
+    "h2s": [
+      "¿Sabías que tu negocio no aparece en las principales plataformas de internet?"
+    ],
+    "formsCount": 4,
+    "formSnippets": [
+      "<form role=\"search\" method=\"get\" class=\"search-form\" action=\"https://www.beedigital.es/\">\n\t\t\t\t<label>\n\t\t\t\t\t<span class=\"screen-reader-text\">Buscar:</span>\n\t\t\t\t\t<input type=\"search\" class=\"search-field\" placeholder=\"Buscar &hellip;\" value=\"\" name=\"s\" />\n\t\t\t\t</label>\n\t\t\t\t<input type=\"submit\" class=\"search-submit\" value=\"Buscar\" />\n\t\t\t</form>",
+      "<form role=\"search\" method=\"get\" class=\"search-form\" action=\"https://www.beedigital.es/\">\n\t\t\t\t<label>\n\t\t\t\t\t<span class=\"screen-reader-text\">Buscar:</span>\n\t\t\t\t\t<input type=\"search\" class=\"search-field\" placeholder=\"Buscar &hellip;\" value=\"\" name=\"s\" />\n\t\t\t\t</label>\n\t\t\t\t<input type=\"submit\" class=\"search-submit\" value=\"Buscar\" />\n\t\t\t</form>",
+      "<form method='post' enctype='multipart/form-data'  id='gform_9'  action='/contacto/' data-formid='9' novalidate><div class='gf_invisible ginput_recaptchav3' data-sitekey='6LckqL8qAAAAAImvN3IWFJQf0Jv-iG3uSYPFHwow' data-tabindex='0'><input id=\"input_69b374760d22d2cdc899d6ca8e89b6f8\" class=\"gfield_recaptcha_response\" type=\"hidden\" name=\"input_69b374760d22d2cdc899d6ca8e89b6f8\" value=\"\"/></div>\n                        <div class='gform-body gform_body'><div id='gform_fields_9' class='gform_fields top",
+      "<form method='post' enctype='multipart/form-data' target='gform_ajax_frame_2' id='gform_2'  action='/contacto/' data-formid='2' novalidate><div class='gf_invisible ginput_recaptchav3' data-sitekey='6LckqL8qAAAAAImvN3IWFJQf0Jv-iG3uSYPFHwow' data-tabindex='0'><input id=\"input_e2b319fd2e41264554e8d155ce5222e0\" class=\"gfield_recaptcha_response\" type=\"hidden\" name=\"input_e2b319fd2e41264554e8d155ce5222e0\" value=\"\"/></div>\n                        <div class='gform-body gform_body'><div id='gform_fields"
+    ],
+    "jsonLdCount": 1
+  },
+  "https://www.beedigital.es/planes/plan-lidera-digital/": {
+    "status": 200,
+    "htmlLength": 405282,
+    "h1s": [
+      "Plan Lidera Digital"
+    ],
+    "h2s": [
+      "¿Por qué elegir el Plan Lidera Digital?",
+      "Todo lo que incluye Plan Lidera Digital",
+      "Consigue tu Plan Lidera Digital",
+      "Cuando contrate mi plan, ¿cuáles son los siguientes pasos?",
+      "Escala tu negocio con nuestros planes",
+      "Lo que dicen nuestros clientes",
+      "Algunas preguntas clave",
+      "Déjanos tus datos y lleva tu negocio al siguiente nivel",
+      "¿Tu web no aparece en Google?"
+    ],
+    "formsCount": 4,
+    "formSnippets": [
+      "<form role=\"search\" method=\"get\" class=\"search-form\" action=\"https://www.beedigital.es/\">\n\t\t\t\t<label>\n\t\t\t\t\t<span class=\"screen-reader-text\">Buscar:</span>\n\t\t\t\t\t<input type=\"search\" class=\"search-field\" placeholder=\"Buscar &hellip;\" value=\"\" name=\"s\" />\n\t\t\t\t</label>\n\t\t\t\t<input type=\"submit\" class=\"search-submit\" value=\"Buscar\" />\n\t\t\t</form>",
+      "<form role=\"search\" method=\"get\" class=\"search-form\" action=\"https://www.beedigital.es/\">\n\t\t\t\t<label>\n\t\t\t\t\t<span class=\"screen-reader-text\">Buscar:</span>\n\t\t\t\t\t<input type=\"search\" class=\"search-field\" placeholder=\"Buscar &hellip;\" value=\"\" name=\"s\" />\n\t\t\t\t</label>\n\t\t\t\t<input type=\"submit\" class=\"search-submit\" value=\"Buscar\" />\n\t\t\t</form>",
+      "<form method='post' enctype='multipart/form-data' target='gform_ajax_frame_1' id='gform_1'  action='/planes/plan-lidera-digital/' data-formid='1' novalidate><div class='gf_invisible ginput_recaptchav3' data-sitekey='6LckqL8qAAAAAImvN3IWFJQf0Jv-iG3uSYPFHwow' data-tabindex='0'><input id=\"input_9e4ac593f2b5cde8e633ad1c4ff5c880\" class=\"gfield_recaptcha_response\" type=\"hidden\" name=\"input_9e4ac593f2b5cde8e633ad1c4ff5c880\" value=\"\"/></div>\n                        <div class='gform-body gform_body'><di",
+      "<form method='post' enctype='multipart/form-data' target='gform_ajax_frame_2' id='gform_2'  action='/planes/plan-lidera-digital/' data-formid='2' novalidate><div class='gf_invisible ginput_recaptchav3' data-sitekey='6LckqL8qAAAAAImvN3IWFJQf0Jv-iG3uSYPFHwow' data-tabindex='0'><input id=\"input_e2b319fd2e41264554e8d155ce5222e0\" class=\"gfield_recaptcha_response\" type=\"hidden\" name=\"input_e2b319fd2e41264554e8d155ce5222e0\" value=\"\"/></div>\n                        <div class='gform-body gform_body'><di"
+    ],
+    "jsonLdCount": 2
+  },
+  "https://www.beedigital.es/empieza-gratis/": {
+    "status": 200,
+    "htmlLength": 279369,
+    "h1s": [
+      "¿Te encuentran tus clientes cuando te buscan online?"
+    ],
+    "h2s": [
+      "Analiza gratis la presencia digital de tu negocio",
+      "¿Por qué analizar tu presencia online?",
+      "Cómo funciona",
+      "¿Sabías que tu negocio no aparece en las principales plataformas de internet?"
+    ],
+    "formsCount": 4,
+    "formSnippets": [
+      "<form role=\"search\" method=\"get\" class=\"search-form\" action=\"https://www.beedigital.es/\">\n\t\t\t\t<label>\n\t\t\t\t\t<span class=\"screen-reader-text\">Buscar:</span>\n\t\t\t\t\t<input type=\"search\" class=\"search-field\" placeholder=\"Buscar &hellip;\" value=\"\" name=\"s\" />\n\t\t\t\t</label>\n\t\t\t\t<input type=\"submit\" class=\"search-submit\" value=\"Buscar\" />\n\t\t\t</form>",
+      "<form role=\"search\" method=\"get\" class=\"search-form\" action=\"https://www.beedigital.es/\">\n\t\t\t\t<label>\n\t\t\t\t\t<span class=\"screen-reader-text\">Buscar:</span>\n\t\t\t\t\t<input type=\"search\" class=\"search-field\" placeholder=\"Buscar &hellip;\" value=\"\" name=\"s\" />\n\t\t\t\t</label>\n\t\t\t\t<input type=\"submit\" class=\"search-submit\" value=\"Buscar\" />\n\t\t\t</form>",
+      "<form method='post' enctype='multipart/form-data'  id='gform_3'  action='/empieza-gratis/' data-formid='3' novalidate><div class='gf_invisible ginput_recaptchav3' data-sitekey='6LckqL8qAAAAAImvN3IWFJQf0Jv-iG3uSYPFHwow' data-tabindex='0'><input id=\"input_bfdac43ce5b88fb280a46e2b292cbf67\" class=\"gfield_recaptcha_response\" type=\"hidden\" name=\"input_bfdac43ce5b88fb280a46e2b292cbf67\" value=\"\"/></div>\n                        <div class='gform-body gform_body'><div id='gform_fields_3' class='gform_fiel",
+      "<form method='post' enctype='multipart/form-data' target='gform_ajax_frame_2' id='gform_2'  action='/empieza-gratis/' data-formid='2' novalidate><div class='gf_invisible ginput_recaptchav3' data-sitekey='6LckqL8qAAAAAImvN3IWFJQf0Jv-iG3uSYPFHwow' data-tabindex='0'><input id=\"input_e2b319fd2e41264554e8d155ce5222e0\" class=\"gfield_recaptcha_response\" type=\"hidden\" name=\"input_e2b319fd2e41264554e8d155ce5222e0\" value=\"\"/></div>\n                        <div class='gform-body gform_body'><div id='gform_"
+    ],
+    "jsonLdCount": 2
+  }
+}

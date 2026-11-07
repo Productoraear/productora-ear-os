@@ -3,6 +3,7 @@ import { Metadata } from 'next';
 import { SClassPricingTerminal } from '@/components/pricing/SClassPricingTerminal';
 import { EdwinLegacyPlayer } from '@/features/artists/ui/EdwinLegacyPlayer';
 import { EdwinEscaparateSClass } from '@/features/artists/ui/EdwinEscaparateSClass';
+import ArtistPanel360 from '@/components/artists/ArtistPanel360';
 import { EDWIN_SHOWCASE_VERTICALS } from '@/lib/artists/edwin-showcase-catalog';
 import { Mic2, Star, Sparkles, ArrowRight, MessageCircle, ShieldCheck, Clock, Music2 } from 'lucide-react';
 import Link from 'next/link';
@@ -281,6 +282,29 @@ export default function EdwinAgudeloPage(): React.JSX.Element {
 
           {/* 🏛️ ESCAPARATE S-CLASS · 9 verticales absorbidas del legado, precios SSOT */}
           <EdwinEscaparateSClass />
+
+          {/* 🎛️ PANEL 360 S-CLASS: CONFIGURADOR DE FORMATO, AUDIO HI-FI, REGISTRO ISRC Y SPLIT 80/10/10 */}
+          <section className="space-y-6 pt-8 border-t border-white/10">
+            <div className="text-center space-y-2 max-w-2xl mx-auto">
+              <span className="text-[10px] font-mono text-[#ecb613] uppercase tracking-[0.3em] font-bold">
+                PANEL SOBERANO 360° · CONTRATACIÓN Y AUDITORÍA
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-black uppercase text-white font-syne">
+                Panel 360° <span className="text-[#ecb613]">Edwin Agudelo</span>
+              </h2>
+              <p className="text-xs sm:text-sm text-zinc-400 font-light">
+                Caché oficial multiformato, cálculo automático de desplazamiento (1,50 €/km desde km 50), reproductor multimedia de alta fidelidad, registro ISRC y Split Soberano 80/10/10 con fianza deducible.
+              </p>
+            </div>
+
+            <ArtistPanel360
+              artistId="edwin-agudelo-solista-360"
+              artistName="Edwin Agudelo"
+              artistProvince="Toledo"
+              basePrice={TARIFA_BASE_SOLISTA_EUR}
+              slug="edwin-agudelo"
+            />
+          </section>
 
           {/* 🎵 Jukebox Multimedia S-Class de Edwin Agudelo */}
           <section className="space-y-6 pt-8 border-t border-white/10">

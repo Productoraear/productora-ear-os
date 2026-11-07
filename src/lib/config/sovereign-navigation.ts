@@ -1,4 +1,4 @@
-import { Building2, Music, Radio, Sliders, Sparkles, Users } from 'lucide-react';
+import { Award, Building2, Music, Radio, Sliders, Sparkles, Users } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
 /**
@@ -39,6 +39,20 @@ export const MENU_FOLDERS: MenuFolder[] = [
         href: '/fincas',
         badge: '9.559 Espacios',
         icon: Building2,
+      },
+      {
+        title: 'Escaparate B2B & Pacto 100 Fundadores (Price-Match)',
+        desc: 'Igualación de cuota anterior, 0% fuga publicitaria a competidores y comisiones hasta 15%',
+        href: '/fincas#portal-b2b',
+        badge: 'Top 100',
+        icon: Award,
+      },
+      {
+        title: 'Simulador Menús 2026 & Logística 1-Clic',
+        desc: 'Cálculo reactivo en céntimos: menús oficiales, complementos, portes y afiliación SEPA ≤ 7d',
+        href: '/fincas#simulador-2026',
+        badge: 'Menús 2026',
+        icon: Sparkles,
       },
     ],
   },

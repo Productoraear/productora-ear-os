@@ -460,6 +460,15 @@ export const ADMIN_PUBLIC_SHORTCUTS: AdminDirectoryEntry[] = [
     icon: ExternalLink,
     publicShortcut: true,
   },
+  {
+    category: 'Atajos Públicos',
+    name: '🏰 Escaparate Fincas B2B & 100 Fundadores',
+    url: '/fincas',
+    badge: '100 FUNDADORES',
+    desc: 'Portal B2B de fincas, simulador de menús 2026 y pacto de 100 fundadores con Price-Match',
+    icon: ExternalLink,
+    publicShortcut: true,
+  },
 ];
 
 /** Directorio plano del cockpit: 1 fila por destino real, derivada del SSOT. */
