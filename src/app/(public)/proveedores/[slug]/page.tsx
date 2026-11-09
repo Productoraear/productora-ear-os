@@ -1509,7 +1509,10 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
               name: displayName,
               category,
               province: location.split(',')[0].trim(),
+              headquartersAddress: rawProvider.address_exact || rawProvider.address || location,
               basePriceEur: typeof rawProvider.basePrice === 'number' ? rawProvider.basePrice : null,
+              freeKm: typeof rawProvider.freeKm === 'number' ? rawProvider.freeKm : null,
+              kmRateEur: typeof rawProvider.kmRateEur === 'number' ? rawProvider.kmRateEur : null,
             }}
           />
         </div>

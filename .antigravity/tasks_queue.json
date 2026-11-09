@@ -12,6 +12,37 @@
   "_instructions_for_worker": "Ejecuta SOLO via: node .antigravity/omega.js next -> lee .antigravity/MISSION_ACTIVE.json -> edita SOLO 'files' -> ejecuta 'test' -> node .antigravity/omega.js complete <ID>. 1 tarea por sesion.",
   "tasks": [
     {
+      "id": "W54_T01_PROVIDER_ORIGIN_AND_BILATERAL_MATCH_AUDIT",
+      "title": "P0 · Auditoría y Sincronización de Sede Propia por Proveedor (Hub Méntrida exclusivo Edwin Agudelo + Match Bilateral de Expectativas)",
+      "status": "QUEUED",
+      "priority": "P0",
+      "files": [
+        "src/lib/providers/universal-provider-simulator.ts",
+        "src/components/hubs/SovereignIntentHubView.tsx",
+        "scripts/verify_provider_origin_separation.ts"
+      ],
+      "action": "Verificar con script automatizado que 1) Hub Méntrida (350 € base + 1,50 €/km > 50 km) solo se aplica cuando el proveedor es Edwin Agudelo / Productora EAR; 2) Cualquier otro proveedor del directorio calcula kilometraje, tarifas y FAQs desde su propia sede registrada; 3) Cero promesas de 'cero multas garantizadas' (sustituidas por Garantía de Match Bilateral de Expectativas).",
+      "scaffold": null,
+      "done_when": "Script verifica separación estricta Edwin vs Proveedor Externo y tsc Exit 0.",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-09T12:24:00.000Z"
+    },
+    {
+      "id": "W54_T02_CAMPUS_61_PDFS_LEAD_MAGNET_EXTRACTOR",
+      "title": "P1 · Conversión de los 61 PDFs de Campus y 496 Artículos en Lead Magnets Soberanos para Parejas y Proveedores",
+      "status": "QUEUED",
+      "priority": "P1",
+      "files": [
+        "src/data/catalogo_61_campus.json",
+        "src/components/fincas/sclass-pro/ProCampusTab.tsx"
+      ],
+      "action": "Enriquecer cada uno de los 61 activos de catalogo_61_campus.json con resumen ejecutivo accionable, checklist descargable y enlace directo de entrega por Conserjería WhatsApp (+34 693 693 048) sin meter binarios pesados (>1 MB) en Git.",
+      "scaffold": null,
+      "done_when": "61 activos con resumen y CTA funcional; tsc Exit 0.",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-09T12:24:00.000Z"
+    },
+    {
       "id": "W52_T02_ARTIST_ACHIEVEMENT_LEDGER",
       "title": "P0 · Logros del programa sincronizados con la ficha del artista (append-only, auth obligatoria, caso negativo 401 probado)",
       "status": "QUEUED",

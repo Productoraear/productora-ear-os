@@ -74,7 +74,11 @@ export interface UniversalProviderMetadata {
   readonly name: string;
   readonly category: string;
   readonly province: string;
+  readonly headquartersAddress?: string | null;
   readonly basePriceEur?: number | null;
+  readonly freeKm?: number | null;
+  readonly kmRateEur?: number | null;
+  readonly hotelSupplementEur?: number | null;
   readonly minPax?: number | null;
   readonly maxPax?: number | null;
   readonly menus?: readonly ProviderMenuOption[];
@@ -103,6 +107,9 @@ export interface SovereignSplitBreakdown {
 
 export interface AcousticAndLogisticsReport {
   readonly appliesLogistics: boolean;
+  readonly originLabel: string;
+  readonly freeKmIncluded: number;
+  readonly kmRateEur: number;
   readonly distanceKm: number;
   readonly billableKm: number;
   readonly travelCostEur: number;
@@ -365,14 +372,40 @@ export function simulateUniversalProviderQuote(
     subtotalServiceEur = Math.round(unitBasePriceEur);
   }
 
-  // Logística S-Class (aplica a proveedores desplazables como Música/Foto/Catering móvil)
+  // Regla de Origen S-Class (AGENTS.md §4):
+  // Hub Méntrida (50 km exentos + 1,50 €/km) aplica EXCLUSIVAMENTE a Edwin Agudelo / Productora EAR.
+  // Para cualquier otro proveedor, la logística se calcula desde la sede registrada en su ficha.
+  const isEdwinOrProductoraEar = /edwin|agudelo|productora\s*ear/i.test(
+    `${provider.id || ''} ${provider.slug || ''} ${provider.name || ''}`,
+  );
+  const originLabel = isEdwinOrProductoraEar
+    ? 'Hub Méntrida (Exclusivo Edwin Agudelo)'
+    : provider.headquartersAddress && provider.headquartersAddress.trim().length > 0
+      ? `Sede en ${provider.headquartersAddress.trim()}`
+      : `Sede Registrada en ${provider.province || 'Origen'}`;
+
+  const freeKmIncluded = isEdwinOrProductoraEar
+    ? LOGISTICA_KM_EXENTOS
+    : typeof provider.freeKm === 'number' && provider.freeKm >= 0
+      ? provider.freeKm
+      : 30;
+  const kmRateEur = isEdwinOrProductoraEar
+    ? LOGISTICA_EUR_PER_KM
+    : typeof provider.kmRateEur === 'number' && provider.kmRateEur >= 0
+      ? provider.kmRateEur
+      : 1.2;
+  const customHotelSupplement =
+    typeof provider.hotelSupplementEur === 'number' && provider.hotelSupplementEur >= 0
+      ? provider.hotelSupplementEur
+      : SUPLEMENTO_HOTEL_EUR;
+
   const appliesLogistics = meta.archetype === 'musica_produccion';
-  const billableKm = appliesLogistics ? Math.max(0, distanceKm - LOGISTICA_KM_EXENTOS) : 0;
-  const travelCostEur = appliesLogistics ? Math.round(billableKm * LOGISTICA_EUR_PER_KM) : 0;
+  const billableKm = appliesLogistics ? Math.max(0, distanceKm - freeKmIncluded) : 0;
+  const travelCostEur = appliesLogistics ? Math.round(billableKm * kmRateEur) : 0;
   const hotelRequired =
     appliesLogistics &&
     (distanceKm > LOGISTICA_KM_HOTEL || (endHour24 >= HORA_FIN_HOTEL && endHour24 <= 7));
-  const hotelSupplementEur = hotelRequired ? SUPLEMENTO_HOTEL_EUR : 0;
+  const hotelSupplementEur = hotelRequired ? customHotelSupplement : 0;
   const wattsRequired = guestsPax * WATTS_PER_PAX;
 
   const totalEstimatedEur = subtotalServiceEur + travelCostEur + hotelSupplementEur;
@@ -432,15 +465,15 @@ export function simulateUniversalProviderQuote(
     `📋 *SIMULACIÓN OFICIAL EAR OS · ${signatureHash}*`,
     `⏳ *Condición de Firma:* Bloqueo de agenda y contrato tras validar depósito (${depositLockEur},00 € deducibles) en ventana máxima de 2 h.`,
     '',
-    `*1 · PROVEEDOR Y UBICACIÓN*`,
-    `${provider.name} (${provider.category}) · ${provider.province}`,
+    `*1 · PROVEEDOR Y SEDE DE ORIGEN*`,
+    `${provider.name} (${provider.category}) · ${originLabel}`,
     '',
     `*2 · FECHA E INVITADOS*`,
     `${dateLine} · ${guestsPax} invitados (${wattsRequired} W / < ${LIMITE_SPL_DB} dB SPL Ley 37/2003)`,
     '',
     `*3 · DESGLOSE ECONÓMICO (${priceProvenance})*`,
     `• ${unitLabel}: ${unitBasePriceEur} €`,
-    appliesLogistics ? `• Logística (${distanceKm} km, ${billableKm} km facturables): ${travelCostEur} €` : '',
+    appliesLogistics ? `• Logística desde ${originLabel} (${distanceKm} km, ${billableKm} km facturables a ${kmRateEur.toFixed(2).replace('.', ',')} €/km): ${travelCostEur} €` : '',
     hotelRequired ? `• Suplemento pernocta S-Class: ${hotelSupplementEur} €` : '',
     `• *TOTAL ESTIMADO: ${totalEstimatedEur} €*`,
     `• Depósito Price-Lock (100% deducible): ${depositLockEur} €`,
@@ -469,6 +502,9 @@ export function simulateUniversalProviderQuote(
     split,
     acousticLogistics: {
       appliesLogistics,
+      originLabel,
+      freeKmIncluded,
+      kmRateEur,
       distanceKm,
       billableKm,
       travelCostEur,

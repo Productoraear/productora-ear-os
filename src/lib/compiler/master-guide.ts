@@ -60,6 +60,10 @@ export const MASTER_STAKEHOLDER_IDS = [
   'AYUNTAMIENTO_B2G',
   'DIRECCION_SENIOR',
   'CEO_INTERNO',
+  'NOVIOS_PRESUPUESTO_AJUSTADO',
+  'WEDDING_PLANNER_AGENCIA',
+  'DIRECTOR_RRHH_CORPORATIVO',
+  'COMISION_FIESTAS_PATRONALES',
 ] as const;
 export type MasterStakeholderId = (typeof MASTER_STAKEHOLDER_IDS)[number];
 
@@ -346,6 +350,46 @@ export const MASTER_STAKEHOLDERS: readonly MasterStakeholderOption[] = [
       'Cero métricas de vanidad: si la base de datos no responde, mostrar estado real y causa.',
     ],
     aliases: ['ceo', 'edwin', 'director', 'administrador', 'interno'],
+  },
+  {
+    id: 'NOVIOS_PRESUPUESTO_AJUSTADO',
+    label: '💍 Novios · Presupuesto Inteligente',
+    hint: 'Match bilateral exacto sin sorpresas ni sobrecostes',
+    directives: [
+      'Aplicar el Motor Magia Negra (50/15/15/10/10) con tolerancia elástica ±10% para mostrar solo proveedores que encajan en su presupuesto real.',
+      'Garantizar el Match Bilateral: nunca enseñar opciones inalcanzables ni generar frustración comercial.',
+    ],
+    aliases: ['presupuesto ajustado', 'economico', 'barato', 'ahorro', 'jovenes'],
+  },
+  {
+    id: 'WEDDING_PLANNER_AGENCIA',
+    label: '📋 Wedding Planner / Coordinadora',
+    hint: 'Puntualidad suiza, rider cerrado y 0 incendios',
+    directives: [
+      'Entregar dossier técnico completo, seguros de RC y teléfonos de guardia 24/7 en un solo enlace.',
+      'Respetar la autoría de la organizadora garantizando coordinación silenciosa con el espacio.',
+    ],
+    aliases: ['wedding planner', 'organizadora', 'coordinadora', 'agencia', 'planner'],
+  },
+  {
+    id: 'DIRECTOR_RRHH_CORPORATIVO',
+    label: '🏢 Director RRHH / Evento Corporativo',
+    hint: 'Factura limpia, impacto RSC deducible (Ley 49/2002)',
+    directives: [
+      'Destacar la factura llave en mano y el certificado de mecenazgo social VIMUME (10% del Split) para la memoria ESG de la empresa.',
+      'Asegurar montaje audiovisual impecable (pantallas LED, microfonía Shure y sonido Bose).',
+    ],
+    aliases: ['corporativo', 'empresa', 'rrhh', 'cena de gala', 'congreso', 'incentivo'],
+  },
+  {
+    id: 'COMISION_FIESTAS_PATRONALES',
+    label: '🎺 Comisión de Fiestas / Peñas',
+    hint: 'Espectáculo de alto impacto sin superar 14.250 €',
+    directives: [
+      `Estructurar la propuesta de festejos populares por debajo de ${formatEur(SAFE_LCSP_CEILING_EUR)} para adjudicación ágil.`,
+      'Garantizar presión sonora de fiesta (90-102 dBA) con limitador homologado según normativa municipal.',
+    ],
+    aliases: ['comision de fiestas', 'fiestas patronales', 'verbena', 'plaza', 'festejos'],
   },
 ];
 

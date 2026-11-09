@@ -8,7 +8,10 @@ import {
   LogOut,
   ChevronDown,
   X,
-  Cpu
+  Cpu,
+  HelpCircle,
+  Sparkles,
+  CheckCircle2,
 } from 'lucide-react';
 import OracleAmbientInterface from '@/components/admin/OracleAmbientInterface';
 import { AdminSessionBridge } from '@/components/admin/AdminSessionBridge';
@@ -50,10 +53,13 @@ const KPI_METRICS: AdminMetric[] = [
 
 export default function CatminAdminMasterLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const [collapsed, setCollapsed] = useState(false);
+  // Colapsado por defecto en escritorio para erradicar la doble navegación redundante
+  // (la Barra Superior de Pestañas Maestras + Sub-Pestañas ya gobierna toda la vista).
+  const [collapsed, setCollapsed] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeTabId, setActiveTabId] = useState<string>('prospeccion');
   const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
+  const [showDecisionHelp, setShowDecisionHelp] = useState<boolean>(false);
 
   // Sincronizar automáticamente la pestaña activa según la URL actual
   useEffect(() => {
@@ -395,13 +401,65 @@ export default function CatminAdminMasterLayout({ children }: { children: React.
           {/* Puente de sesión: mantiene __session/ear_role sincronizadas con Firebase */}
           <AdminSessionBridge />
 
-          {/* Cabecera única + tarjetas KPI uniformes (un solo breadcrumb, una sola paleta) */}
-          <AdminPageHeader title={pageTitle} subtitle={pageSubtitle} />
-          <div className="mb-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-            {KPI_METRICS.map((metric) => (
-              <AdminKpiCard key={metric.key} metric={metric} />
-            ))}
+          {/* Cabecera única + Botón de Ayuda Contextual (?) en Lenguaje Natural */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+            <AdminPageHeader title={pageTitle} subtitle={pageSubtitle} />
+            <button
+              type="button"
+              onClick={() => setShowDecisionHelp(!showDecisionHelp)}
+              className="self-start sm:self-auto px-3.5 py-2 rounded-xl bg-[#ecb613]/15 hover:bg-[#ecb613]/25 border border-[#ecb613]/40 text-[#ecb613] font-mono text-xs font-bold flex items-center gap-2 transition-colors cursor-pointer shrink-0"
+              title="Explicación en lenguaje natural y decisión recomendada en 1 clic"
+            >
+              <HelpCircle className="w-4 h-4" />
+              <span>¿Para qué sirve esta pantalla y qué me recomiendas? (?)</span>
+            </button>
           </div>
+
+          {showDecisionHelp && (
+            <div className="mb-6 p-5 rounded-2xl bg-[#090910] border border-[#ecb613]/40 space-y-3 shadow-2xl">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-[#ecb613] font-mono text-xs font-bold uppercase">
+                  <Sparkles className="w-4 h-4" />
+                  <span>Asistente de Decisión Ejecutiva · {pageTitle}</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowDecisionHelp(false)}
+                  className="text-xs font-mono text-zinc-400 hover:text-white"
+                >
+                  Cerrar ✕
+                </button>
+              </div>
+              <p className="text-xs sm:text-sm text-zinc-200 leading-relaxed">
+                <strong>En lenguaje claro:</strong> Estás en <strong>{pageTitle}</strong> ({pageSubtitle}). Aquí controlas la operación sin depender de programadores. Recuerda la regla de oro del sistema: el <strong>Hub Méntrida (350 € base + 1,50 €/km &gt; 50 km)</strong> aplica exclusivamente a <strong>Edwin Agudelo</strong>; todos los demás proveedores calculan tarifas y distancias desde su propia sede registrada con <strong>Match Bilateral de Expectativas</strong>.
+              </p>
+              <div className="flex flex-wrap items-center gap-2 pt-1">
+                <Link
+                  href="/admin/compiler"
+                  onClick={() => setShowDecisionHelp(false)}
+                  className="px-3.5 py-2 rounded-xl bg-[#ecb613] text-black font-mono text-xs font-bold flex items-center gap-1.5"
+                >
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  <span>Ir al Estudio de Prompts (Editable Palabra por Palabra)</span>
+                </Link>
+                <Link
+                  href="/artistas/edwin-agudelo"
+                  onClick={() => setShowDecisionHelp(false)}
+                  className="px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-mono text-xs"
+                >
+                  Ver Escaparate 13 Pestañas (e78903)
+                </Link>
+              </div>
+            </div>
+          )}
+
+          {pathname === '/admin' && (
+            <div className="mb-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+              {KPI_METRICS.map((metric) => (
+                <AdminKpiCard key={metric.key} metric={metric} />
+              ))}
+            </div>
+          )}
 
           {children}
         </main>

@@ -254,7 +254,7 @@ export function UniversalProviderSimulatorCard({
               <div className="space-y-1.5">
                 <div className="flex justify-between text-[11px] font-mono text-zinc-300">
                   <span className="flex items-center gap-1">
-                    <MapPin className="w-3 h-3 text-[#ecb613]" /> Distancia (km)
+                    <MapPin className="w-3 h-3 text-[#ecb613]" /> Distancia desde {simulation.acousticLogistics.originLabel}
                   </span>
                   <span className="font-bold text-white">{distanceKm} km</span>
                 </div>
@@ -269,7 +269,7 @@ export function UniversalProviderSimulatorCard({
                   className="w-full accent-[#ecb613] cursor-pointer"
                 />
                 <span className="text-[10px] font-mono text-zinc-500 block">
-                  50 km exentos · 1,50 €/km adicional
+                  {simulation.acousticLogistics.freeKmIncluded} km exentos · {simulation.acousticLogistics.kmRateEur.toFixed(2).replace('.', ',')} €/km adicional
                 </span>
               </div>
 

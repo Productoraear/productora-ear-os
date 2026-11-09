@@ -179,27 +179,31 @@ export function ProCampusTab() {
           </div>
         </div>
 
-        {/* Telemetry Band */}
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 pt-4 border-t border-zinc-800/80">
+        {/* Telemetry Band (Espejo Bodas.net Campus: 496 Artículos + 61 PDFs Descargados + 389 Bóveda) */}
+        <div className="grid grid-cols-2 sm:grid-cols-6 gap-3 pt-4 border-t border-zinc-800/80">
           <div className="p-3 rounded-xl bg-zinc-950/60 border border-zinc-800/60 text-center">
-            <div className="text-base font-bold font-mono text-[#ecb613]">61 Docs</div>
-            <div className="text-[10px] font-mono text-zinc-500 uppercase">Activos Canónicos</div>
+            <div className="text-base font-bold font-mono text-[#ecb613]">496</div>
+            <div className="text-[10px] font-mono text-zinc-500 uppercase">Campus Total</div>
           </div>
           <div className="p-3 rounded-xl bg-zinc-950/60 border border-zinc-800/60 text-center">
-            <div className="text-base font-bold font-mono text-cyan-400">389 PDFs</div>
-            <div className="text-[10px] font-mono text-zinc-500 uppercase">Bóveda Nupcial</div>
+            <div className="text-base font-bold font-mono text-emerald-400">191</div>
+            <div className="text-[10px] font-mono text-zinc-500 uppercase">Ventas & Cierre</div>
           </div>
           <div className="p-3 rounded-xl bg-zinc-950/60 border border-zinc-800/60 text-center">
-            <div className="text-base font-bold font-mono text-rose-400">56 Audios</div>
-            <div className="text-[10px] font-mono text-zinc-500 uppercase">Mentoría Artística</div>
+            <div className="text-base font-bold font-mono text-cyan-400">143</div>
+            <div className="text-[10px] font-mono text-zinc-500 uppercase">Marketing</div>
           </div>
           <div className="p-3 rounded-xl bg-zinc-950/60 border border-zinc-800/60 text-center">
-            <div className="text-base font-bold font-mono text-purple-400">778 Whisper</div>
-            <div className="text-[10px] font-mono text-zinc-500 uppercase">Transcripciones</div>
+            <div className="text-base font-bold font-mono text-amber-400">127</div>
+            <div className="text-[10px] font-mono text-zinc-500 uppercase">Noticias Sector</div>
           </div>
-          <div className="p-3 rounded-xl bg-zinc-950/60 border border-zinc-800/60 text-center col-span-2 sm:col-span-1">
-            <div className="text-base font-bold font-mono text-emerald-400">52 Provincias</div>
-            <div className="text-[10px] font-mono text-zinc-500 uppercase">pSEO Toda España</div>
+          <div className="p-3 rounded-xl bg-zinc-950/60 border border-zinc-800/60 text-center">
+            <div className="text-base font-bold font-mono text-rose-400">35</div>
+            <div className="text-[10px] font-mono text-zinc-500 uppercase">Guías Escaparate</div>
+          </div>
+          <div className="p-3 rounded-xl bg-zinc-950/60 border border-zinc-800/60 text-center">
+            <div className="text-base font-bold font-mono text-white">61 PDFs</div>
+            <div className="text-[10px] font-mono text-zinc-500 uppercase">Lead Magnets</div>
           </div>
         </div>
       </div>
@@ -297,16 +301,21 @@ export function ProCampusTab() {
                         <Mic className="w-3 h-3" /> EAR
                       </button>
 
-                      <button
+                      <a
+                        href={`https://wa.me/34693693048?text=${encodeURIComponent(
+                          `Hola Edwin, quiero solicitar o despachar el Lead Magnet descargable "${doc.nombre.replace('.pdf', '').replace('.docx', '')}" (${doc.seoAngle}).`
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         onClick={() => handleDecision(doc.id, "LEAD_MAGNET")}
                         className={`px-2 py-1.5 rounded-lg text-[10px] font-mono flex items-center justify-center gap-1 transition ${decision === "LEAD_MAGNET"
                           ? "bg-emerald-500 text-black font-bold"
                           : "bg-zinc-950 text-zinc-400 hover:text-white border border-zinc-800"
                           }`}
-                        title="Convertir en Lead Magnet Descargable"
+                        title="Despachar como Lead Magnet Descargable por WhatsApp"
                       >
                         <Download className="w-3 h-3" /> Magnet
-                      </button>
+                      </a>
                     </div>
                   </div>
                 </div>

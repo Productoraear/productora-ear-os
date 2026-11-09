@@ -32,6 +32,7 @@ import {
   ProfileInteractiveHelpModal,
   CertifiedSClassProfileData,
 } from "../../help/ProfileInteractiveHelpModal";
+import { PRODUCTORA_EAR_E78903_PROFILE } from "@/data/artists/productora-ear-e78903-full";
 
 interface SectionStatus {
   id: string;
@@ -91,21 +92,21 @@ export function ProEscaparateTab() {
     ],
   });
 
-  // Initial 13 sections with exact 80% baseline (100 - 12 - 8 = 80%)
+  // Initial 13 sections mirroring Bodas.net emp-Modif.php 13 sub-tabs (100% Unlocked, Zero Paywall)
   const [sections, setSections] = useState<SectionStatus[]>([
-    { id: "general", name: "1. Datos de Contacto y Teléfono Directo 24/7", category: "Contacto", completed: true, weight: 10 },
-    { id: "bio", name: "2. Filosofía Artística & Biografía Soberana", category: "Contenido", completed: true, weight: 10 },
-    { id: "pricing", name: "3. Tarifas Oficiales y Depósito Stripe 100 €", category: "Comercial", completed: true, weight: 10 },
-    { id: "acoustic", name: "4. Rider Acústico Bose & Límite < 75 dB SPL", category: "Técnico", completed: true, weight: 10 },
-    { id: "power", name: "5. Acometida Eléctrica & Suministro Cetac 32A", category: "Técnico", completed: true, weight: 5 },
-    { id: "coverage", name: "6. Zonas de Cobertura y Desplazamiento", category: "Logística", completed: true, weight: 5 },
-    { id: "services", name: "7. Momentos de Boda (Ceremonia, Cóctel, Banquete)", category: "Servicios", completed: true, weight: 10 },
-    { id: "gallery", name: "8. Galería Fotográfica 4K en Fincas de Élite", category: "Multimedia", completed: false, weight: 12 },
-    { id: "videos", name: "9. Vídeos de Directo Acústico Sin Autotune", category: "Multimedia", completed: true, weight: 5 },
-    { id: "reviews", name: "10. Opiniones 5.0 y Testimonios Auditados", category: "Reputación", completed: true, weight: 5 },
-    { id: "faqs", name: "11. Preguntas Frecuentes (FAQs Parejas)", category: "Atención", completed: false, weight: 8 },
-    { id: "insurance", name: "12. Seguro de RC 300.000 € & Factura Oficial", category: "Legal", completed: true, weight: 5 },
-    { id: "split", name: "13. Blindaje Split 80/10/10 y Certificado VIMUME", category: "Impacto", completed: true, weight: 5 },
+    { id: "general", name: "1. Datos empresa y Pack de Boda (5 Formatos)", category: "Empresa", completed: true, weight: 10 },
+    { id: "coverage", name: "2. Localización y mapa (Alcorcón / Hub Méntrida)", category: "Localización", completed: true, weight: 8 },
+    { id: "faqs", name: "3. Preguntas frecuentes (23 FAQs Sectoriales)", category: "FAQs", completed: true, weight: 10 },
+    { id: "pricing", name: "4. Promociones (12 Ofertas, Descuentos y Regalos)", category: "Promociones", completed: true, weight: 10 },
+    { id: "gallery", name: "5. Fotos (35+ Galería 4K con Escudo Legal)", category: "Multimedia", completed: true, weight: 10 },
+    { id: "videos", name: "6. Vídeos (38 Vídeos en Directo Desbloqueados)", category: "Multimedia", completed: true, weight: 10 },
+    { id: "reviews", name: "7. Bodas reales y Crónicas (4 Opiniones 5.0 ★)", category: "Reputación", completed: true, weight: 8 },
+    { id: "services", name: "8. Disponibilidad (Calendario 2025 / 2026 / 2027)", category: "Agenda", completed: true, weight: 8 },
+    { id: "acoustic", name: "9. Eventos & Rider Acústico Bose 2.000W", category: "Técnico", completed: true, weight: 8 },
+    { id: "power", name: "10. Empresas colaboradoras (Jose Toro & Jaime Ortiz)", category: "Red B2B", completed: true, weight: 5 },
+    { id: "bio", name: "11. Equipo (Edwin Agudelo & Adriana Lenis)", category: "Equipo", completed: true, weight: 5 },
+    { id: "insurance", name: "12. Redes sociales y Repertorio (Algún día mamá...)", category: "Digital", completed: true, weight: 4 },
+    { id: "split", name: "13. Sello colaborador & Match Bilateral 80/10/10", category: "Sello", completed: true, weight: 4 },
   ]);
 
   // Check localStorage for persisted completion on mount
@@ -671,8 +672,8 @@ export function ProEscaparateTab() {
                 </span>
               </div>
 
-              <div className="space-y-3">
-                {formData.faqs.map((faq, idx) => (
+              <div className="space-y-3 max-h-[520px] overflow-y-auto pr-1">
+                {PRODUCTORA_EAR_E78903_PROFILE.faqs23.map((faq, idx) => (
                   <div
                     key={idx}
                     className="p-4 rounded-xl border border-zinc-800 bg-zinc-950/60 space-y-1.5"
@@ -690,7 +691,7 @@ export function ProEscaparateTab() {
             </div>
           )}
 
-          {/* Section: Split 80/10/10 & Legal Impact */}
+          {/* Section: Split 80/10/10, 5 Formatos, 12 Promociones, 38 Vídeos, Colaboradores & Equipo */}
           {(activeSection === "split" ||
             activeSection === "insurance" ||
             activeSection === "power" ||
@@ -702,30 +703,89 @@ export function ProEscaparateTab() {
               <div className="border-b border-zinc-800 pb-4">
                 <h3 className="text-lg font-bold font-['Syne'] text-white flex items-center gap-2">
                   <ShieldCheck className="w-5 h-5 text-[#ecb613]" />
-                  Blindaje Jurídico & Garantía de Calidad S-Class
+                  Escaparate Integral Desbloqueado (ID Bodas.net: e78903 · Cero Paywalls)
                 </h3>
                 <p className="text-xs text-zinc-400 mt-1">
-                  Protección fiscal europea, Seguro de RC y acreditación de impacto social VIMUME.
+                  En Bodas.net te bloqueaban Vídeos (38), Promociones (12), Eventos y Equipo tras dejar de pagar el Pack Premium, e inyectaban 5 competidores dentro de tu ficha. En EAR OS todo tu patrimonio es 100% público y exclusivo.
                 </p>
               </div>
 
-              <div className="space-y-4">
+              {/* 5 Formatos Oficiales */}
+              <div className="space-y-2">
+                <div className="text-xs font-mono uppercase text-[#ecb613] font-bold">
+                  5 Formatos Oficiales de Actuación (Desde 350 € hasta 2.500 €)
+                </div>
+                <div className="grid grid-cols-1 gap-2.5">
+                  {PRODUCTORA_EAR_E78903_PROFILE.formats.map((fmt) => (
+                    <div key={fmt.id} className="p-3.5 rounded-xl border border-zinc-800 bg-zinc-950/70 space-y-1.5">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-white">{fmt.name}</span>
+                        <span className="text-xs font-mono font-bold text-[#ecb613]">Desde {fmt.basePriceEur} €</span>
+                      </div>
+                      <p className="text-[11px] text-zinc-400">{fmt.description}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* 12 Promociones Activas */}
+              <div className="space-y-2">
+                <div className="text-xs font-mono uppercase text-emerald-400 font-bold">
+                  12 Promociones Activas Desbloqueadas (Ofertas, Descuentos y Regalos)
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-60 overflow-y-auto pr-1">
+                  {PRODUCTORA_EAR_E78903_PROFILE.promotions12.map((pr) => (
+                    <div key={pr.id} className="p-3 rounded-xl border border-zinc-800 bg-zinc-950/60 space-y-1">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#ecb613]/15 text-[#ecb613]">
+                          {pr.type}
+                        </span>
+                        <span className="text-[11px] font-mono text-emerald-400 font-bold">{pr.valueLabel}</span>
+                      </div>
+                      <div className="text-xs font-bold text-white">{pr.title}</div>
+                      <p className="text-[11px] text-zinc-400">{pr.description}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* 38 Vídeos Subidos */}
+              <div className="space-y-2">
+                <div className="text-xs font-mono uppercase text-cyan-400 font-bold">
+                  38 Vídeos Reales en Directo (100% Visibles sin "Hazte Premium")
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-48 overflow-y-auto pr-1 text-[11px] font-mono text-zinc-300">
+                  {PRODUCTORA_EAR_E78903_PROFILE.videos38.map((vid, idx) => (
+                    <div key={idx} className="p-2 rounded-lg bg-zinc-950/80 border border-zinc-800/80 truncate">
+                      {vid}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Empresas Colaboradoras y Equipo */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="p-4 rounded-xl border border-zinc-800 bg-zinc-950/60 space-y-2">
                   <div className="text-xs font-mono uppercase text-[#ecb613]">
-                    Justificación Canónica del Split 80/10/10
+                    10. Empresas Colaboradoras (Endorsements)
                   </div>
-                  <p className="text-xs text-zinc-300 leading-relaxed">
-                    {formData.splitExplanation}
-                  </p>
+                  {PRODUCTORA_EAR_E78903_PROFILE.collaborators.map((c, idx) => (
+                    <div key={idx} className="text-xs text-zinc-300 flex items-center justify-between">
+                      <span>{c.name} ({c.category})</span>
+                      <span className="text-[10px] font-mono text-zinc-500">{c.city}</span>
+                    </div>
+                  ))}
                 </div>
 
                 <div className="p-4 rounded-xl border border-zinc-800 bg-zinc-950/60 space-y-2">
                   <div className="text-xs font-mono uppercase text-emerald-400">
-                    Seguro de Responsabilidad Civil & Cumplimiento
+                    11. Equipo Oficial Productora EAR
                   </div>
-                  <p className="text-xs text-zinc-300 leading-relaxed">
-                    {formData.rcInsurance} Facturación oficial emitida en cada actuación con desglose de IVA y retención IRPF aplicable.
-                  </p>
+                  {PRODUCTORA_EAR_E78903_PROFILE.team.map((m, idx) => (
+                    <div key={idx} className="text-xs text-zinc-300">
+                      <strong className="text-white">{m.name}:</strong> {m.role}
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>

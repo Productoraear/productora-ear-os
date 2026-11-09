@@ -8,18 +8,20 @@ import {
   ShieldCheck,
   Layers,
   MapPin,
-  Phone,
   MessageCircle,
   ArrowRight,
-  CheckCircle2,
   Volume2,
   Building2,
   Music,
   Sliders,
+  CheckCircle2,
+  UserCheck,
 } from 'lucide-react';
 import { TWELVE_CANONICAL_HUBS } from '@/lib/config/twelve-canonical-hubs';
 
 export type IntentVertical = 'ARTISTAS' | 'FINCAS' | 'PROVEEDORES' | 'B2G';
+
+export type PricingScopeMode = 'EDWIN_AGUDELO_HUB_MENTRIDA' | 'PROVEEDOR_SEDE_PROPIA';
 
 export interface SovereignIntentHubViewProps {
   readonly title?: string;
@@ -28,16 +30,20 @@ export interface SovereignIntentHubViewProps {
   readonly province?: string;
   readonly serviceId?: string;
   readonly category?: string;
+  readonly providerName?: string;
+  readonly providerHeadquarters?: string;
+  readonly providerBasePriceEur?: number;
+  readonly providerFreeKm?: number;
+  readonly providerKmRateEur?: number;
 }
 
 const OFFICIAL_WHATSAPP = 'https://wa.me/34693693048';
 const OFFICIAL_PHONE_DISPLAY = '+34 693 693 048';
-const OFFICIAL_PHONE_TEL = 'tel:+34693693048';
 
-// SSOT Inmutable (AGENTS.md §4)
+// SSOT Inmutable (AGENTS.md §4) — Aplica EXCLUSIVAMENTE a Edwin Agudelo / Productora EAR (Hub Méntrida)
 const SOLOIST_BASE_CENTS = 35000; // 350,00 €
-const FREE_KM = 50;
-const KM_RATE_CENTS = 150; // 1,50 €/km
+const EDWIN_FREE_KM = 50;
+const EDWIN_KM_RATE_CENTS = 150; // 1,50 €/km
 const HOTEL_SUPPLEMENT_CENTS = 12000; // 120,00 €
 const DEPOSIT_CENTS = 10000; // 100,00 €
 const B2G_MAX_CENTS = 1425000; // 14.250,00 €
@@ -56,20 +62,45 @@ function detectVertical(serviceId?: string, category?: string, title?: string): 
   return 'ARTISTAS';
 }
 
+function detectInitialScope(
+  serviceId?: string,
+  title?: string,
+  providerName?: string,
+): PricingScopeMode {
+  const combined = `${serviceId || ''} ${title || ''} ${providerName || ''}`.toLowerCase();
+  if (
+    /edwin|agudelo|solista|tenor|productora ear|mariachi/.test(combined) &&
+    !providerName
+  ) {
+    return 'EDWIN_AGUDELO_HUB_MENTRIDA';
+  }
+  if (providerName && !/edwin|productora ear/i.test(providerName)) {
+    return 'PROVEEDOR_SEDE_PROPIA';
+  }
+  return 'EDWIN_AGUDELO_HUB_MENTRIDA';
+}
+
 function formatEurFromCents(cents: number): string {
-  return (cents / 100).toLocaleString('es-ES', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }) + ' €';
+  return (
+    (cents / 100).toLocaleString('es-ES', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }) + ' €'
+  );
 }
 
 export function SovereignIntentHubView({
   title = 'Productora EAR · Soluciones S-Class',
-  description = 'Cotización inmediata en céntimos enteros (SSOT), garantía acústica Ley 37/2003 y bloqueo de fecha con depósito deducible.',
+  description = 'Cotización inmediata en céntimos enteros, Match Bilateral de Expectativas y bloqueo de fecha con depósito deducible.',
   location,
   province,
   serviceId,
   category,
+  providerName,
+  providerHeadquarters,
+  providerBasePriceEur,
+  providerFreeKm = 30,
+  providerKmRateEur = 1.2,
 }: SovereignIntentHubViewProps): React.ReactElement {
   const detectedVertical = useMemo(
     () => detectVertical(serviceId, category, title),
@@ -78,21 +109,40 @@ export function SovereignIntentHubView({
 
   const [activeTab, setActiveTab] = useState<'calculator' | 'catalog' | 'acoustics' | 'hubs'>('calculator');
   const [selectedVertical, setSelectedVertical] = useState<IntentVertical>(detectedVertical);
+  const [pricingScope, setPricingScope] = useState<PricingScopeMode>(() =>
+    detectInitialScope(serviceId, title, providerName)
+  );
   const [distanceKm, setDistanceKm] = useState<number>(35);
   const [lateNight, setLateNight] = useState<boolean>(false);
   const [guestsPax, setGuestsPax] = useState<number>(120);
-  const [formatMultiplier, setFormatMultiplier] = useState<number>(1); // 1=Solista (350€), 2=Dúo/Trío, 3=Mariachi/Banda
+  const [formatMultiplier, setFormatMultiplier] = useState<number>(1);
+  const [customProviderBaseEur, setCustomProviderBaseEur] = useState<number>(
+    providerBasePriceEur || 600
+  );
+
+  const isEdwinScope = pricingScope === 'EDWIN_AGUDELO_HUB_MENTRIDA';
+  const registeredOriginLabel = isEdwinScope
+    ? 'Hub Méntrida / Alcorcón (Exclusivo Edwin Agudelo)'
+    : providerHeadquarters || `Sede Registrada del Proveedor en ${province || location}`;
 
   const calculation = useMemo(() => {
-    const billableKm = Math.max(0, distanceKm - FREE_KM);
-    const logisticsCents = billableKm * KM_RATE_CENTS;
+    const activeFreeKm = isEdwinScope ? EDWIN_FREE_KM : providerFreeKm;
+    const activeKmRateCents = isEdwinScope
+      ? EDWIN_KM_RATE_CENTS
+      : Math.round(providerKmRateEur * 100);
+
+    const billableKm = Math.max(0, distanceKm - activeFreeKm);
+    const logisticsCents = billableKm * activeKmRateCents;
     const hotelCents = lateNight || distanceKm > 200 ? HOTEL_SUPPLEMENT_CENTS : 0;
 
-    let baseServiceCents = SOLOIST_BASE_CENTS * formatMultiplier;
+    let baseServiceCents = isEdwinScope
+      ? SOLOIST_BASE_CENTS * formatMultiplier
+      : Math.round(customProviderBaseEur * 100) * formatMultiplier;
+
     if (selectedVertical === 'FINCAS') {
-      baseServiceCents = guestsPax * 11500; // 115,00 € / pax menú base 2026
+      baseServiceCents = guestsPax * (isEdwinScope ? 11500 : Math.round((providerBasePriceEur || 95) * 100));
     } else if (selectedVertical === 'PROVEEDORES') {
-      baseServiceCents = 42000 * formatMultiplier; // Pack Gala 420,00 €
+      baseServiceCents = (isEdwinScope ? 42000 : Math.round(customProviderBaseEur * 100)) * formatMultiplier;
     } else if (selectedVertical === 'B2G') {
       baseServiceCents = Math.min(B2G_MAX_CENTS, 280000 * formatMultiplier);
     }
@@ -105,6 +155,8 @@ export function SovereignIntentHubView({
     const maxRecommendedWatts = guestsPax * 12;
 
     return {
+      activeFreeKm,
+      activeKmRateCents,
       baseServiceCents,
       billableKm,
       logisticsCents,
@@ -116,7 +168,18 @@ export function SovereignIntentHubView({
       remainingAfterDepositCents,
       maxRecommendedWatts,
     };
-  }, [selectedVertical, distanceKm, lateNight, guestsPax, formatMultiplier]);
+  }, [
+    isEdwinScope,
+    providerFreeKm,
+    providerKmRateEur,
+    customProviderBaseEur,
+    providerBasePriceEur,
+    selectedVertical,
+    distanceKm,
+    lateNight,
+    guestsPax,
+    formatMultiplier,
+  ]);
 
   const canonicalDestination = useMemo(() => {
     switch (selectedVertical) {
@@ -132,7 +195,9 @@ export function SovereignIntentHubView({
   }, [selectedVertical]);
 
   const whatsappText = encodeURIComponent(
-    `Hola, consulto desde ${location} por "${title}". Presupuesto calculado: ${formatEurFromCents(calculation.totalCents)} (${guestsPax} pax, ${distanceKm} km). Quiero confirmar disponibilidad.`
+    isEdwinScope
+      ? `Hola Edwin, consulto desde ${location} por "${title}" (Origen: Hub Méntrida). Presupuesto calculado: ${formatEurFromCents(calculation.totalCents)} (${guestsPax} pax, ${distanceKm} km). Quiero confirmar disponibilidad.`
+      : `Hola, consulto en ${location} por "${providerName || title}" (Origen: ${registeredOriginLabel}). Presupuesto estimado según ficha del proveedor: ${formatEurFromCents(calculation.totalCents)} (${guestsPax} pax, ${distanceKm} km desde sede del proveedor).`
   );
 
   return (
@@ -146,7 +211,7 @@ export function SovereignIntentHubView({
               <span>Cobertura Verificada · {location}{province && province !== location ? ` (${province})` : ''}</span>
             </div>
             <div className="font-mono text-xs text-white/60">
-              Split Soberano 80/10/10 · Fianza Deducible 100,00 € · Centralita {OFFICIAL_PHONE_DISPLAY}
+              Match Bilateral de Expectativas · Fianza Deducible 100,00 € · Centralita {OFFICIAL_PHONE_DISPLAY}
             </div>
           </div>
 
@@ -156,6 +221,46 @@ export function SovereignIntentHubView({
           <p className="text-sm sm:text-base text-white/70 max-w-3xl leading-relaxed">
             {description}
           </p>
+
+          {/* REGLA DE ORIGEN LOGÍSTICO DIFERENCIADA (EDWIN VS RESTO DE PROVEEDORES) */}
+          <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="space-y-1">
+              <div className="text-xs font-mono uppercase tracking-wider text-[#ecb613] font-bold flex items-center gap-1.5">
+                <UserCheck size={14} />
+                <span>Regla de Origen Logístico y Tarifario:</span>
+              </div>
+              <p className="text-xs text-white/70">
+                {isEdwinScope
+                  ? 'Modo Roster Propio (Edwin Agudelo): Aplica suelo canónico de 350,00 € y logística desde Hub Méntrida (50 km exentos + 1,50 €/km).'
+                  : `Modo Red Nacional de Proveedores: El kilometraje, tarifas, FAQs y disponibilidad se calculan desde la sede registrada en la ficha de cada proveedor (${registeredOriginLabel}).`}
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                type="button"
+                onClick={() => setPricingScope('EDWIN_AGUDELO_HUB_MENTRIDA')}
+                className={`px-3 py-2 rounded-xl font-mono text-[11px] font-bold border transition-all ${
+                  isEdwinScope
+                    ? 'bg-[#ecb613] text-black border-[#ecb613]'
+                    : 'bg-black/40 text-white/60 border-white/10 hover:text-white'
+                }`}
+              >
+                Edwin Agudelo (Hub Méntrida)
+              </button>
+              <button
+                type="button"
+                onClick={() => setPricingScope('PROVEEDOR_SEDE_PROPIA')}
+                className={`px-3 py-2 rounded-xl font-mono text-[11px] font-bold border transition-all ${
+                  !isEdwinScope
+                    ? 'bg-[#ecb613] text-black border-[#ecb613]'
+                    : 'bg-black/40 text-white/60 border-white/10 hover:text-white'
+                }`}
+              >
+                Otro Proveedor (Sede Propia)
+              </button>
+            </div>
+          </div>
 
           {/* BARRA DE PESTAÑAS SINGLE-PAGE (ZERO-RELOAD) */}
           <div className="pt-4 border-t border-white/10 flex flex-wrap gap-2" role="tablist" aria-label="Secciones de la solución">
@@ -171,7 +276,7 @@ export function SovereignIntentHubView({
               }`}
             >
               <Calculator size={15} strokeWidth={1.75} />
-              <span>1. Calculadora & Precio Real</span>
+              <span>1. Calculadora & Origen Real</span>
             </button>
 
             <button
@@ -201,7 +306,7 @@ export function SovereignIntentHubView({
               }`}
             >
               <ShieldCheck size={15} strokeWidth={1.75} />
-              <span>3. Garantía Acústica Ley 37/2003</span>
+              <span>3. Garantía de Match Bilateral & Acústica</span>
             </button>
 
             <button
@@ -221,15 +326,21 @@ export function SovereignIntentHubView({
           </div>
         </header>
 
-        {/* PESTAÑA 1: CALCULADORA TRANSACCIONAL SSOT */}
+        {/* PESTAÑA 1: CALCULADORA TRANSACCIONAL DIFERENCIADA POR ORIGEN */}
         {activeTab === 'calculator' && (
           <section className="grid grid-cols-1 lg:grid-cols-12 gap-6">
             <div className="lg:col-span-7 p-6 sm:p-8 rounded-3xl bg-[#050507] border border-white/10 space-y-6">
               <div className="flex items-center justify-between border-b border-white/10 pb-4">
                 <div>
-                  <h2 className="text-xl font-bold text-white">Configurador Inmediato por Intención</h2>
+                  <h2 className="text-xl font-bold text-white">
+                    {isEdwinScope
+                      ? 'Configurador Oficial · Edwin Agudelo (Hub Méntrida)'
+                      : `Simulador según Ficha del Proveedor (${registeredOriginLabel})`}
+                  </h2>
                   <p className="text-xs text-white/60 mt-1">
-                    Ajusta los parámetros reales de tu evento en {location} sin intermediarios.
+                    {isEdwinScope
+                      ? `Tarifa base 350,00 € + 1,50 €/km desde km 50 hacia ${location}.`
+                      : `Calcula sobre las condiciones declaradas por el proveedor desde su propia sede registrada hasta ${location}.`}
                   </p>
                 </div>
                 <Sliders size={18} className="text-[#ecb613]" />
@@ -265,16 +376,47 @@ export function SovereignIntentHubView({
                 </div>
               </div>
 
+              {/* Si es Proveedor Externo, permitir ajustar la tarifa base declarada en su ficha */}
+              {!isEdwinScope && (
+                <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/10 space-y-2">
+                  <div className="flex justify-between text-xs font-mono">
+                    <span className="text-[#ecb613]">TARIFA BASE DECLARADA EN LA FICHA DEL PROVEEDOR</span>
+                    <span className="text-white font-bold">{customProviderBaseEur} €</span>
+                  </div>
+                  <input
+                    type="range"
+                    min={150}
+                    max={3500}
+                    step={50}
+                    value={customProviderBaseEur}
+                    onChange={(e) => setCustomProviderBaseEur(Number(e.target.value))}
+                    className="w-full accent-[#ecb613]"
+                  />
+                  <p className="text-[11px] text-white/50">
+                    Cada proveedor del directorio define su propio caché mínimo, suplementos, calendario y preguntas frecuentes.
+                  </p>
+                </div>
+              )}
+
               {/* Formato / Escala */}
               <div className="space-y-2">
                 <label className="block text-xs font-mono uppercase tracking-wider text-white/60">
-                  Formato / Nivel de Dotación
+                  {isEdwinScope ? 'Formato Oficial Edwin Agudelo (5 Formatos Bodas.net)' : 'Escala / Pack del Proveedor'}
                 </label>
                 <div className="grid grid-cols-3 gap-2">
                   {[
-                    { mult: 1, label: 'Formato Base / Solista' },
-                    { mult: 2, label: 'Formato Dúo / Media Gala' },
-                    { mult: 3, label: 'Formato Completo / Gran Gala' },
+                    {
+                      mult: 1,
+                      label: isEdwinScope ? 'Solista (350 € · 2x30m Bose)' : 'Pack Base Ficha',
+                    },
+                    {
+                      mult: 2,
+                      label: isEdwinScope ? 'Agrupación 6 Músicos' : 'Pack Intermedio',
+                    },
+                    {
+                      mult: 3,
+                      label: isEdwinScope ? 'Mariachi 9-13 Músicos Premium' : 'Pack Completo / Gala',
+                    },
                   ].map((f) => (
                     <button
                       key={f.mult}
@@ -312,7 +454,11 @@ export function SovereignIntentHubView({
 
                 <div className="space-y-2">
                   <div className="flex justify-between text-xs font-mono">
-                    <span className="text-white/60">DISTANCIA DESDE HUB (50 KM EXENTOS)</span>
+                    <span className="text-white/60">
+                      {isEdwinScope
+                        ? 'DISTANCIA DESDE HUB MÉNTRIDA (50 KM EXENTOS)'
+                        : `DISTANCIA DESDE SEDE DEL PROVEEDOR (${calculation.activeFreeKm} KM EXENTOS)`}
+                    </span>
                     <span className="text-white font-bold">{distanceKm} km</span>
                   </div>
                   <input
@@ -347,9 +493,9 @@ export function SovereignIntentHubView({
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-mono uppercase tracking-wider text-[#ecb613]">
-                    Liquidación Oficial S-Class
+                    {isEdwinScope ? 'Liquidación Oficial Edwin Agudelo' : 'Estimación según Ficha del Proveedor'}
                   </span>
-                  <span className="text-xs font-mono text-white/50">IVA / Impuestos según régimen</span>
+                  <span className="text-xs font-mono text-white/50">Origen: {isEdwinScope ? 'Hub Méntrida' : 'Sede Propia'}</span>
                 </div>
 
                 <div className="font-mono text-4xl sm:text-5xl font-bold text-white">
@@ -358,11 +504,13 @@ export function SovereignIntentHubView({
 
                 <div className="space-y-2 pt-4 border-t border-white/10 text-xs font-mono">
                   <div className="flex justify-between text-white/70">
-                    <span>Tarifa Base del Formato</span>
+                    <span>{isEdwinScope ? 'Tarifa Base Edwin Agudelo' : 'Tarifa Base en Ficha del Proveedor'}</span>
                     <span>{formatEurFromCents(calculation.baseServiceCents)}</span>
                   </div>
                   <div className="flex justify-between text-white/70">
-                    <span>Logística ({calculation.billableKm} km facturables × 1,50 €/km)</span>
+                    <span>
+                      Logística ({calculation.billableKm} km facturables × {(calculation.activeKmRateCents / 100).toFixed(2).replace('.', ',')} €/km)
+                    </span>
                     <span>{formatEurFromCents(calculation.logisticsCents)}</span>
                   </div>
                   <div className="flex justify-between text-white/70">
@@ -379,7 +527,7 @@ export function SovereignIntentHubView({
                     <span>{formatEurFromCents(calculation.artist80Cents)}</span>
                   </div>
                   <div className="flex justify-between text-white/70">
-                    <span>10% Infraestructura & Garantía EAR OS</span>
+                    <span>10% Infraestructura & Match EAR OS</span>
                     <span>{formatEurFromCents(calculation.earOs10Cents)}</span>
                   </div>
                   <div className="flex justify-between text-white/70">
@@ -433,7 +581,7 @@ export function SovereignIntentHubView({
               >
                 <Music size={20} className="text-[#ecb613]" />
                 <div className="font-bold text-white">Catálogo de Artistas</div>
-                <p className="text-xs text-white/60">Solistas, mariachis, DJs y bandas con Panel 360 y audio Hi-Fi.</p>
+                <p className="text-xs text-white/60">Solistas, mariachis, DJs y bandas con Panel 360 y condiciones propias.</p>
               </Link>
 
               <Link
@@ -442,7 +590,7 @@ export function SovereignIntentHubView({
               >
                 <Building2 size={20} className="text-[#ecb613]" />
                 <div className="font-bold text-white">Explorador de Fincas</div>
-                <p className="text-xs text-white/60">Espacios homologados con simulador de menús 2026.</p>
+                <p className="text-xs text-white/60">Espacios homologados con simulador de menús 2026 desde su sede.</p>
               </Link>
 
               <Link
@@ -466,23 +614,33 @@ export function SovereignIntentHubView({
           </section>
         )}
 
-        {/* PESTAÑA 3: GARANTÍA ACÚSTICA LEY 37/2003 */}
+        {/* PESTAÑA 3: GARANTÍA DE MATCH BILATERAL DE EXPECTATIVAS & ACÚSTICA */}
         {activeTab === 'acoustics' && (
           <section className="p-6 sm:p-8 rounded-3xl bg-[#050507] border border-white/10 space-y-6">
-            <div className="flex items-center gap-3">
+            <div className="p-5 rounded-2xl bg-[#ecb613]/10 border border-[#ecb613]/30 space-y-2">
+              <div className="flex items-center gap-2 text-[#ecb613] font-mono text-xs font-bold uppercase">
+                <CheckCircle2 size={16} />
+                <span>Garantía Soberana de Match Bilateral Perfecto (Cero Fricción)</span>
+              </div>
+              <p className="text-sm text-white/90 leading-relaxed">
+                En EAR OS protegemos a ambas partes con filtrado determinista: <strong>a un proveedor jamás le llegan solicitudes de clientes que no cumplen su presupuesto mínimo, radio logístico y condiciones</strong>, y <strong>a un cliente jamás se le muestran proveedores que no encajan exactamente con sus expectativas, aforo y requisitos técnicos</strong>.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-3 pt-2">
               <Volume2 size={22} className="text-[#ecb613]" />
-              <h2 className="text-2xl font-bold text-white">Ingeniería Acústica Homologada (Ley 37/2003 del Ruido)</h2>
+              <h2 className="text-2xl font-bold text-white">Planificación Acústica Preventiva (Ley 37/2003 del Ruido)</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono text-xs">
               <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-2">
                 <div className="text-[#ecb613] font-bold">CÓCTEL / GALA SOLISTA</div>
                 <div className="text-2xl font-bold text-white">70 – 80 dBA</div>
-                <p className="text-white/60 font-sans">Cobertura direccional cilindrica Bose F1 sin contaminación vecinal.</p>
+                <p className="text-white/60 font-sans">Cobertura direccional cilíndrica Bose F1 calibrada para conversación cómoda de los invitados.</p>
               </div>
               <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-2">
                 <div className="text-[#ecb613] font-bold">BODAS & FINCAS</div>
                 <div className="text-2xl font-bold text-white">80 – 90 dBA</div>
-                <p className="text-white/60 font-sans">12 W/pax calibrados y limitador telemático con acta SHA-256.</p>
+                <p className="text-white/60 font-sans">Dimensionamiento previo de 12 W/pax adaptado a las condiciones acústicas declaradas por cada espacio.</p>
               </div>
               <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-2">
                 <div className="text-[#ecb613] font-bold">RESIDENCIAS VIMUME 40 HZ</div>
@@ -532,4 +690,3 @@ export function SovereignIntentHubView({
     </main>
   );
 }
-

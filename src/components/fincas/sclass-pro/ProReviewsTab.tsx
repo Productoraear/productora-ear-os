@@ -65,7 +65,7 @@ const initialReviews: Review[] = [
   {
     id: "rev-03",
     author: "Yanet Cecilia",
-    eventDate: "12/05/2023",
+    eventDate: "03/04/2023",
     venue: "Cigarral de las Mercedes",
     location: "Toledo",
     rating: 5,
@@ -73,6 +73,19 @@ const initialReviews: Review[] = [
     verified: true,
     replied: false,
     service: "Cóctel de Bienvenida",
+  },
+  {
+    id: "rev-04",
+    author: "Alexandra",
+    eventDate: "12/10/2019",
+    venue: "Finca de Boda",
+    location: "Madrid",
+    rating: 5,
+    text: "Puntual, atento, flexible con las canciones que le pedimos y con una voz espectacular. Todos nuestros invitados quedaron encantados con la actuación.",
+    verified: true,
+    replied: true,
+    replyText: "Muchísimas gracias Alexandra por vuestro cariño y confianza en Productora EAR.",
+    service: "Show en Directo + Animación",
   },
 ];
 

@@ -23,6 +23,7 @@ import {
 import { CENTRALITA } from '@/lib/phone-constants';
 import ArtistBookingSpecSheet from '@/components/artists/ArtistBookingSpecSheet';
 import ArtistPanel360 from '@/components/artists/ArtistPanel360';
+import { PRODUCTORA_EAR_E78903_PROFILE } from '@/data/artists/productora-ear-e78903-full';
 
 export const dynamic = 'force-dynamic';
 
@@ -77,6 +78,228 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function ArtistDetailPage({ params }: PageProps) {
   const { slug } = await params;
+  const slugLower = slug.toLowerCase().trim();
+
+  // 0. ESCAPARATE SOBERANO 13 SECCIONES — EDWIN AGUDELO / PRODUCTORA EAR (ID BODAS.NET: e78903)
+  if (slugLower === 'edwin-agudelo' || slugLower === 'productora-ear' || slugLower === 'e78903') {
+    const p = PRODUCTORA_EAR_E78903_PROFILE;
+    return (
+      <main className="min-h-screen bg-[#030305] text-white pt-28 pb-24 font-sans selection:bg-[#ecb613]/30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-12">
+          {/* CABECERA OFICIAL E78903 (100% DESBLOQUEADA · CERO COMPETIDORES INYECTADOS) */}
+          <header className="p-6 sm:p-8 rounded-3xl bg-[#050507] border border-[#ecb613]/40 space-y-4">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="flex flex-wrap items-center gap-2 font-mono text-xs">
+                <span className="px-3 py-1 rounded-full bg-[#ecb613]/15 border border-[#ecb613]/40 text-[#ecb613] font-bold">
+                  ID Oficial: {p.id} · En Red desde {p.inBodasNetSince}
+                </span>
+                <span className="px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 font-bold">
+                  ★ {p.rating.toFixed(1)} Fantástico ({p.reviewsCount} opiniones 5.0)
+                </span>
+                <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-zinc-300">
+                  {p.headquarters.street}, {p.headquarters.postalCode} {p.headquarters.city} ({p.headquarters.province})
+                </span>
+              </div>
+              <span className="font-mono text-xs text-[#ecb613]">
+                {p.headquarters.logisticsHub}
+              </span>
+            </div>
+
+            <h1 className="text-3xl sm:text-5xl font-black uppercase tracking-tight text-white font-syne">
+              {p.name}
+            </h1>
+            <p className="text-sm sm:text-base text-zinc-300 max-w-4xl leading-relaxed">
+              {p.weddingPackSummary}
+            </p>
+
+            {/* Navegación rápida de las 13 secciones */}
+            <div className="pt-3 border-t border-white/10 flex flex-wrap gap-2 text-xs font-mono">
+              <a href="#formatos" className="px-3 py-1.5 rounded-xl bg-[#ecb613] text-black font-bold">1. 5 Formatos & Pack Boda</a>
+              <a href="#promociones" className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white">2. 12 Promociones</a>
+              <a href="#repertorio" className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white">3. Repertorio & Estilos</a>
+              <a href="#videos" className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white">4. 38 Vídeos en Vivo</a>
+              <a href="#faqs" className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white">5. 23 Preguntas Frecuentes</a>
+              <a href="#opiniones" className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white">6. 4 Opiniones Verificadas</a>
+              <a href="#panel-360" className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-[#ecb613]">7. Calendario & Reserva 100 €</a>
+            </div>
+          </header>
+
+          {/* SECCIÓN 1: LOS 5 FORMATOS OFICIALES DE SHOW */}
+          <section id="formatos" className="space-y-4">
+            <h2 className="text-2xl font-black uppercase text-white font-syne">
+              5 Formatos Oficiales de Actuación (Desde {p.priceRange.minEur} € hasta {p.priceRange.maxEur} €)
+            </h2>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              {p.formats.map((fmt) => (
+                <div key={fmt.id} className="p-6 rounded-3xl bg-[#050507] border border-white/10 hover:border-[#ecb613]/40 transition-colors space-y-3 flex flex-col justify-between">
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between gap-2">
+                      <h3 className="text-lg font-bold text-white font-syne">{fmt.name}</h3>
+                      <span className="px-3 py-1 rounded-xl bg-[#ecb613]/15 border border-[#ecb613]/40 text-[#ecb613] font-mono text-sm font-bold shrink-0">
+                        Desde {fmt.basePriceEur} €
+                      </span>
+                    </div>
+                    <div className="text-xs font-mono text-zinc-400">
+                      Duración: {fmt.duration} · Integrantes: {fmt.musiciansCount}
+                    </div>
+                    <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">{fmt.description}</p>
+                    <ul className="space-y-1 pt-2">
+                      {fmt.includes.map((inc, idx) => (
+                        <li key={idx} className="text-xs text-zinc-300 flex items-start gap-2">
+                          <CheckCircle2 size={14} className="text-[#ecb613] shrink-0 mt-0.5" />
+                          <span>{inc}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* SECCIÓN 2: 12 PROMOCIONES DESBLOQUEADAS */}
+          <section id="promociones" className="space-y-4">
+            <h2 className="text-2xl font-black uppercase text-white font-syne">
+              12 Promociones Activas (Ofertas, Descuentos y Regalos Incluidos)
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {p.promotions12.map((promo) => (
+                <div key={promo.id} className="p-5 rounded-2xl bg-[#050507] border border-white/10 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-mono px-2.5 py-0.5 rounded bg-[#ecb613]/15 text-[#ecb613] font-bold">
+                      {promo.type}
+                    </span>
+                    <span className="text-xs font-mono font-bold text-emerald-400">{promo.valueLabel}</span>
+                  </div>
+                  <h3 className="text-sm font-bold text-white font-syne">{promo.title}</h3>
+                  <p className="text-xs text-zinc-400 leading-relaxed">{promo.description}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* SECCIÓN 3: REPERTORIO DESTACADO Y ESTILOS */}
+          <section id="repertorio" className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div className="lg:col-span-7 p-6 rounded-3xl bg-[#050507] border border-white/10 space-y-4">
+              <h2 className="text-xl font-black uppercase text-white font-syne flex items-center gap-2">
+                <Music size={20} className="text-[#ecb613]" />
+                <span>Repertorio Emblemático (Incluye "Algún día mamá" inédita)</span>
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                {p.repertoireHighlights.map((song, idx) => (
+                  <div key={idx} className="p-3 rounded-xl bg-white/[0.02] border border-white/5 flex items-center gap-2.5 text-xs text-zinc-200">
+                    <CheckCircle2 size={14} className="text-[#ecb613] shrink-0" />
+                    <span>{song}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="lg:col-span-5 p-6 rounded-3xl bg-[#050507] border border-white/10 space-y-4">
+              <h2 className="text-xl font-black uppercase text-white font-syne">
+                Estilos Musicales, Equipo & Colaboradores
+              </h2>
+              <div className="flex flex-wrap gap-1.5">
+                {p.musicalStyles.map((st, idx) => (
+                  <span key={idx} className="px-2.5 py-1 rounded-lg bg-white/[0.04] border border-white/10 text-xs font-mono text-zinc-300">
+                    {st}
+                  </span>
+                ))}
+              </div>
+              <div className="pt-3 border-t border-white/10 space-y-2 text-xs">
+                <div className="font-mono text-[#ecb613] uppercase font-bold">Equipo Directivo</div>
+                {p.team.map((member, idx) => (
+                  <div key={idx} className="text-zinc-300">
+                    <strong className="text-white">{member.name}:</strong> {member.role}
+                  </div>
+                ))}
+              </div>
+              <div className="pt-3 border-t border-white/10 space-y-2 text-xs">
+                <div className="font-mono text-emerald-400 uppercase font-bold">Empresas Colaboradoras</div>
+                {p.collaborators.map((col, idx) => (
+                  <div key={idx} className="text-zinc-300 flex justify-between">
+                    <span>{col.name} ({col.category})</span>
+                    <span className="font-mono text-zinc-500">{col.city}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* SECCIÓN 4: 38 VÍDEOS REALES SUBIDOS */}
+          <section id="videos" className="p-6 sm:p-8 rounded-3xl bg-[#050507] border border-white/10 space-y-4">
+            <h2 className="text-2xl font-black uppercase text-white font-syne">
+              38 Vídeos de Actuaciones Reales en Directo (100% Desbloqueados)
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+              {p.videos38.map((vid, idx) => (
+                <div key={idx} className="p-3 rounded-xl bg-white/[0.02] border border-white/10 text-xs font-mono text-zinc-300">
+                  {vid}
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* SECCIÓN 5: LAS 23 PREGUNTAS FRECUENTES OFICIALES */}
+          <section id="faqs" className="p-6 sm:p-8 rounded-3xl bg-[#050507] border border-white/10 space-y-4">
+            <h2 className="text-2xl font-black uppercase text-white font-syne">
+              23 Preguntas Frecuentes Respondidas al Detalle (FAQ Oficial)
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {p.faqs23.map((faq, idx) => (
+                <div key={idx} className="p-4 rounded-2xl bg-white/[0.02] border border-white/10 space-y-1.5">
+                  <h3 className="text-xs sm:text-sm font-bold text-[#ecb613] font-syne">{faq.q}</h3>
+                  <p className="text-xs text-zinc-300 leading-relaxed">{faq.a}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* SECCIÓN 6: 4 OPINIONES VERIFICADAS 5.0 */}
+          <section id="opiniones" className="p-6 sm:p-8 rounded-3xl bg-[#050507] border border-white/10 space-y-4">
+            <h2 className="text-2xl font-black uppercase text-white font-syne">
+              4 Opiniones Verificadas de Parejas Reales (5.0 / 5.0 Fantástico)
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {p.reviews4.map((rev) => (
+                <div key={rev.id} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-white text-sm">{rev.author}</span>
+                    <span className="text-xs font-mono text-[#ecb613]">★ {rev.rating.toFixed(1)} · Enviada el {rev.sentDate}</span>
+                  </div>
+                  <div className="text-xs font-bold text-zinc-200">{rev.title}</div>
+                  <p className="text-xs text-zinc-400 leading-relaxed">{rev.comment}</p>
+                  {rev.reply && (
+                    <div className="p-3 rounded-xl bg-black/50 border border-white/5 text-[11px] text-zinc-300">
+                      <strong className="text-[#ecb613]">Respuesta de Edwin Agudelo:</strong> {rev.reply}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* SECCIÓN 7: PANEL 360 Y CALENDARIO DE RESERVA */}
+          <section id="panel-360" className="space-y-8">
+            <ArtistPanel360
+              artistId={p.id}
+              artistName={p.name}
+              artistProvince={p.headquarters.province}
+              basePrice={p.priceRange.minEur}
+              slug={p.slug}
+            />
+            <ArtistBookingSpecSheet
+              artistId={p.id}
+              artistName={p.name}
+              artistProvince={p.headquarters.province}
+              basePrice={p.priceRange.minEur}
+              slug={p.slug}
+            />
+          </section>
+        </div>
+      </main>
+    );
+  }
 
   // 1. COMPROBACIÓN EN MATRIZ DE ALTO VALOR (HIGH_VALUE_VARIANTS)
   const variant = HIGH_VALUE_VARIANTS.find(v => v.slug === slug);
