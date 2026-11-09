@@ -118,8 +118,12 @@ export function CorporateAgreementBookingCockpit() {
     setIsCheckingDate(true);
 
     try {
-      // Sonda defensiva
-      const res = await fetch(`/api/availability?eventDate=${fecha}&entityKind=artista&entitySlug=edwin-agudelo`);
+      // Sonda defensiva — contrato verificado contra src/app/api/availability/check/route.ts
+      // (query `date`, no `eventDate`; ruta `/check`). Un path/param incorrecto
+      // degradaba a "fecha disponible" sin consultar el motor atómico (AF-1).
+      const res = await fetch(
+        `/api/availability/check?date=${encodeURIComponent(fecha)}&entityKind=artista&entitySlug=edwin-agudelo`,
+      );
       if (res.ok) {
         const data = await res.json();
         setDateAvailability({

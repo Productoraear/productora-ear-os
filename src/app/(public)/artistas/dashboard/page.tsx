@@ -30,6 +30,8 @@ import {
   CENTRALITA_EAR_OS,
   SPLIT_SOBERANO
 } from '@/lib/constants/ear-os-ssot';
+import ArtistNotificationPreferences from "@/components/artists/ArtistNotificationPreferences";
+import ArtistPlatformCockpit from "@/components/artists/ArtistPlatformCockpit";
 
 export default function ArtistDashboardPage() {
   const [activeTier, setActiveTier] = useState<"freemium" | "pro">("freemium");
@@ -508,6 +510,16 @@ export default function ArtistDashboardPage() {
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+              COCKPIT OPERATIVO: plataformas honestas + preferencias de aviso
+              Sin handlers inyectados => el panel NO pinta botones de publicar
+              ni conectores OAuth ficticios (AF-1/AF-5, INV-09).
+              ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+            <ArtistPlatformCockpit />
+            <ArtistNotificationPreferences />
           </div>
         </section>
       )}

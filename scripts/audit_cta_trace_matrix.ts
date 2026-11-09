@@ -882,16 +882,29 @@ function buildGates(routes: RouteIndex): GateCheck[] {
     evidence: `${bifurcation.evidence} · ctaHref literales: ${hrefs.length}, roto(s): ${brokenHrefs.length}`,
   });
 
+  // G04: la cabecera real es global (layout.tsx monta SovereignNavbar), no un
+  // wrapper duplicado en page.tsx. Exigir las clases también en page.tsx
+  // obligaba a repetir CSS sin efecto: se mide el header que se pinta.
   const pageHeader = fileContains('page.tsx', ['bg-black/95', 'backdrop-blur-2xl']);
-  const navbar = fileContains('SovereignNavbar.tsx', ['bg-black/95', 'backdrop-blur-2xl', 'border-b']);
+  const navbar = fileContains('SovereignNavbar.tsx', ['bg-black/95', 'backdrop-blur-2xl', 'border-b', 'fixed']);
   gates.push({
     id: 'G04_HEADER_OPAQUE',
     title: 'Cabecera opaca con blur (sin sangrado del hero al hacer scroll)',
-    ok: pageHeader.ok && navbar.ok,
+    ok: navbar.ok,
     evidence: `${pageHeader.evidence} · ${navbar.evidence}`,
   });
 
-  const padding = fileContains('page.tsx', ['pt-28', 'pt-32']);
+  // G05: el hero debe despejar la cabecera fija. La navbar mide ~64-72 px
+  // (py-3 + py-2.5 + contenido), así que cualquier pt entre 24 y 40 cumple;
+  // exigir sólo pt-28/pt-32 marcaba en rojo un layout que sí despeja.
+  // `fileContains` exige TODOS los needles, así que se evalúa con some().
+  const pageSource = readSource(findByName('page.tsx') ?? '');
+  const padding = {
+    ok: ['pt-24', 'pt-28', 'pt-32'].some((needle) => pageSource.includes(needle)),
+    evidence: `src/app/page.tsx despeje de cabecera: ${
+      ['pt-24', 'pt-28', 'pt-32'].filter((needle) => pageSource.includes(needle)).join(', ') || 'ninguno'
+    }`,
+  };
   gates.push({
     id: 'G05_HERO_TOP_PADDING',
     title: 'Padding superior del hero alineado con la cabecera fija',

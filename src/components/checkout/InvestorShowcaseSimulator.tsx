@@ -268,6 +268,25 @@ export const INVESTOR_SCENARIOS: readonly InvestorSimulationScenario[] = Object.
 /* SIMULADOR ORÁCULO DE PAGO Y DISPERSIÓN SEPA                                */
 /* ========================================================================== */
 
+/**
+ * Contador monótono de proceso para las referencias de transferencia.
+ *
+ * El referenciado SEPA debe ser único por dispersión: dos cobros emitidos en el
+ * mismo milisegundo NO pueden compartir referencia o el banco los rechaza como
+ * duplicado. `Date.now()` a secas colisionaba (defecto medido en la puerta
+ * T2/F9 del arnés de inversores), así que la referencia se compone de:
+ *   timestamp base36 (orden cronológico) + contador monótono + entropía.
+ */
+let transferRefSequence = 0;
+
+function nextTransferReference(scenarioId: InvestorScenarioId): string {
+  transferRefSequence += 1;
+  const stamp = Date.now().toString(36).toUpperCase();
+  const seq = transferRefSequence.toString(36).toUpperCase().padStart(2, '0');
+  const entropy = Math.random().toString(36).slice(2, 6).toUpperCase();
+  return `TX-INVESTOR-${scenarioId}-${stamp}-${seq}${entropy}`;
+}
+
 export function simulateInvestorCheckout(scenarioId: InvestorScenarioId): InvestorSimulationResult {
   const start = Date.now();
   const scenario = INVESTOR_SCENARIOS.find((s) => s.id === scenarioId) ?? INVESTOR_SCENARIOS[0];
@@ -284,7 +303,7 @@ export function simulateInvestorCheckout(scenarioId: InvestorScenarioId): Invest
 
   const split = calculateHareNiemeyerSplit(totalCents, depositCents, providerBreakdownInput);
 
-  const transferRef = `TX-INVESTOR-${scenarioId}-${Date.now().toString(36).toUpperCase()}`;
+  const transferRef = nextTransferReference(scenarioId);
 
   const sepaDispersions: SepaDispersionAccount[] = [
     {

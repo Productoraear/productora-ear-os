@@ -233,10 +233,13 @@ export function HomeNeuralConstellationSection() {
             const Icon = card.icon;
 
             return (
-              <div
+              <button
                 key={card.role}
+                type="button"
                 onClick={() => handleRoleSelect(card.role)}
-                className={`p-3.5 sm:p-4 rounded-2xl border transition-all duration-300 cursor-pointer relative overflow-hidden group ${
+                aria-pressed={isSelected}
+                aria-label={`Seleccionar vertical ${card.label}: ${card.headline}`}
+                className={`text-left w-full p-3.5 sm:p-4 rounded-2xl border transition-all duration-300 cursor-pointer relative overflow-hidden group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305] ${
                   isSelected
                     ? 'bg-zinc-900/90 border-white/30 shadow-xl'
                     : 'bg-zinc-950/60 hover:bg-zinc-900/50 border-white/10'
@@ -286,7 +289,7 @@ export function HomeNeuralConstellationSection() {
                     <ArrowRight className="w-3 h-3" />
                   </Link>
                 </div>
-              </div>
+              </button>
             );
           })}
         </div>
