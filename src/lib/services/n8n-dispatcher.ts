@@ -28,7 +28,34 @@ export type N8nWebhookSlug =
     | 'executive-kpi-radar'
     | 'opportunity-radar'
     | 'support-health'
-    | 'dlq-retry';
+    | 'dlq-retry'
+    | 'campus-lead-magnet'
+    | 'concierge-whatsapp-dispatch';
+
+export interface CampusLeadMagnetPayload {
+    assetId: string;
+    assetTitle: string;
+    targetAudience: 'parejas' | 'proveedores';
+    contactPhone?: string;
+    contactEmail?: string;
+    sourceUrl?: string;
+    utm?: Record<string, string | undefined>;
+    leadId?: string;
+    timestamp?: string;
+    categoria?: string;
+    sizeMB?: string;
+    seoAngle?: string;
+}
+
+export interface ConciergeWhatsAppDispatchPayload {
+    assetId: string;
+    assetTitle: string;
+    targetAudience: 'parejas' | 'proveedores';
+    whatsappUrl: string;
+    channel: 'whatsapp';
+    leadIntent?: string;
+    timestamp?: string;
+}
 
 const N8N_BASE_URL = process.env.N8N_BASE_URL || 'https://n8n.productoraear.com';
 const N8N_DISPATCH_TIMEOUT_MS = 4000;

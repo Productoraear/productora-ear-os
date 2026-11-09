@@ -144,7 +144,7 @@ export function calcularAcousticShield(finca: FincaHomologada): AcousticShieldMe
     margenSeguridadDb,
     estado: cumple75Db ? 'BLINDADA_GOLD_MASTER' : 'REQUIERE_ATENUACION',
     estrategia: cumple75Db
-      ? 'Matriz Bose F1 de dispersión controlada + DSP autorregulado. Cero multas y cero quejas vecinales.'
+      ? 'Matriz Bose F1 de dispersión controlada + DSP autorregulado. Calibración acústica según Ley 37/2003 y Garantía de Match Bilateral de Expectativas.'
       : 'Atenuación vegetal, DSP con recorte de graves y limitador telemático homologado para bajar a <75 dB.',
   };
 }

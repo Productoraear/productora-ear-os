@@ -24,7 +24,7 @@ const FincaAcousticShieldCard: React.FC<FincaAcousticShieldCardProps> = ({
     ? `+${shield.margenSeguridadDb} dB`
     : `${shield.exteriorDBA - 75} dB exceso`;
   const selloLabel = blindada
-    ? 'Cero multas garantizadas'
+    ? 'Garantía de Match Bilateral de Expectativas'
     : 'Plan de atenuación incluido';
 
   const wattsFormateados = rider.wattsTotales.toLocaleString('es-ES');
@@ -53,6 +53,7 @@ const FincaAcousticShieldCard: React.FC<FincaAcousticShieldCardProps> = ({
             {blindada ? (
               <ShieldCheck
                 size={20}
+                strokeWidth={1.75}
                 className="text-[#ecb613]"
                 aria-hidden="true"
                 focusable="false"
@@ -60,6 +61,7 @@ const FincaAcousticShieldCard: React.FC<FincaAcousticShieldCardProps> = ({
             ) : (
               <ShieldAlert
                 size={20}
+                strokeWidth={1.75}
                 className="text-white/40"
                 aria-hidden="true"
                 focusable="false"
@@ -102,7 +104,7 @@ const FincaAcousticShieldCard: React.FC<FincaAcousticShieldCardProps> = ({
           aria-label={`Rider acústico: ${wattsFormateados} vatios totales`}
         >
           <div className="flex items-center gap-1.5 text-white/40 font-mono text-[9px] uppercase tracking-widest mb-1">
-            <Volume2 size={12} aria-hidden="true" focusable="false" />
+            <Volume2 size={12} strokeWidth={1.75} aria-hidden="true" focusable="false" />
             <span>Rider 12 W/pax</span>
           </div>
           <p className="font-mono text-sm text-white font-bold">
@@ -115,7 +117,7 @@ const FincaAcousticShieldCard: React.FC<FincaAcousticShieldCardProps> = ({
           aria-label={`Margen SPL: ${margenLabel}`}
         >
           <div className="flex items-center gap-1.5 text-white/40 font-mono text-[9px] uppercase tracking-widest mb-1">
-            <Zap size={12} aria-hidden="true" focusable="false" />
+            <Zap size={12} strokeWidth={1.75} aria-hidden="true" focusable="false" />
             <span>Margen SPL</span>
           </div>
           <p className="font-mono text-sm text-white font-bold">

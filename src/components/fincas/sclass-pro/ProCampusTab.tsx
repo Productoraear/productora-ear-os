@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import {
   GraduationCap,
   BookOpen,
@@ -26,10 +26,32 @@ import {
   Download,
   Flame,
   Crown,
-  Music2
+  Music2,
+  ExternalLink,
 } from "lucide-react";
 import campusData from "@/data/catalogo_61_campus.json";
-import { refineQueryWithOracle, type OraclePersona } from "@/lib/oracle/quantum-oracle-engine";
+import {
+  refineQueryWithOracle,
+  type OraclePersona,
+  type OracleRefinedResult,
+} from "@/lib/oracle/quantum-oracle-engine";
+import { CENTRALITA } from "@/lib/phone-constants";
+
+interface CampusDoc {
+  id: string;
+  nombre: string;
+  titulo?: string;
+  sizeMB: string;
+  categoria: string;
+  destinoSugerido?: string;
+  seoAngle: string;
+  targetAudience?: "parejas" | "proveedores";
+  resumenEjecutivo?: string;
+  checklist?: string[];
+  estimatedMinutes?: number;
+  slug?: string;
+  deliveryMode?: string;
+}
 
 interface PlaybookModule {
   id: string;
@@ -48,54 +70,140 @@ const modules: PlaybookModule[] = [
     title: "Protocolo del Primer Contacto en < 5 Minutos (WhatsApp Concierge)",
     duration: "4 min lectura",
     category: "Ventas",
-    summary: "Los novios solicitan información simultáneamente a 3-5 proveedores en directorios. La tasa de conversión se multiplica por 4 si el primer contacto se produce antes de 15 minutos mediante mensaje directo y personalizado.",
-    keyTakeaway: "Nunca envíes un PDF frío de tarifas como primer paso. Inicia una conversación empática interesándote por la fecha, el lugar y su visión musical.",
-    scriptSnippet: "«¡Hola [Nombre]! Enhorabuena por el paso que vais a dar. Veo que tenéis fecha el [Fecha] en [Finca]. Para esa época la luz del atardecer allí es mágica. Tengo disponibilidad para esa fecha con mi formato solista en directo. ¿Qué ambiente soñáis para el cóctel?»",
-    actionItem: "Usar el botón 'WhatsApp Inmediato' de la pestaña de Solicitudes en cuanto entre un lead.",
+    summary:
+      "Los novios solicitan información simultáneamente a 3-5 proveedores en directorios. La tasa de conversión se multiplica por 4 si el primer contacto se produce antes de 15 minutos mediante mensaje directo y personalizado.",
+    keyTakeaway:
+      "Nunca envíes un PDF frío de tarifas como primer paso. Inicia una conversación empática interesándote por la fecha, el lugar y su visión musical.",
+    scriptSnippet:
+      "«¡Hola [Nombre]! Enhorabuena por el paso que vais a dar. Veo que tenéis fecha el [Fecha] en [Finca]. Para esa época la luz del atardecer allí es mágica. Tengo disponibilidad para esa fecha con mi formato solista en directo. ¿Qué ambiente soñáis para el cóctel?»",
+    actionItem:
+      "Usar el botón 'WhatsApp Inmediato' de la pestaña de Solicitudes en cuanto entre un lead.",
   },
   {
     id: "mod-02",
     title: "Defensa Inquebrantable de la Tarifa de 350,00 € Sin Descuentos",
     duration: "6 min lectura",
     category: "Psicología",
-    summary: "El descuento es el suicidio de la percepción de lujo. Cuando una pareja pide una rebaja, no están cuestionando el dinero sino la certeza de que el servicio sea extraordinario.",
-    keyTakeaway: "Anclar el precio en la solvencia técnica: equipo Bose de 1000W que no distorsiona, cumplimiento estricto de los 75 dB SPL exigidos por las fincas y repertorio 100% en vivo.",
-    scriptSnippet: "«Comprendo vuestro presupuesto. Mi tarifa de 350 € está blindada porque incluye no solo la voz en directo, sino el sistema Bose F1 de alta fidelidad, seguro de RC de 300.000 € y la garantía de que la finca no tendrá ningún problema con el volumen o la policía medioambiental. No puedo bajar el precio sin rebajar ese estándar.»",
-    actionItem: "Si insisten en descuento, añadir un extra de valor (ej: tema especial fuera de repertorio para la entrada) en lugar de reducir el precio.",
+    summary:
+      "El descuento es el suicidio de la percepción de lujo. Cuando una pareja pide una rebaja, no están cuestionando el dinero sino la certeza de que el servicio sea extraordinario.",
+    keyTakeaway:
+      "Anclar el precio en la solvencia técnica: equipo Bose de 1000W que no distorsiona, cumplimiento estricto de los 75 dB SPL exigidos por las fincas y repertorio 100% en vivo.",
+    scriptSnippet:
+      "«Comprendo vuestro presupuesto. Mi tarifa de 350 € está blindada porque incluye no solo la voz en directo, sino el sistema Bose F1 de alta fidelidad, seguro de RC de 300.000 € y la garantía de que la finca no tendrá ningún problema con el volumen o la policía medioambiental. No puedo bajar el precio sin rebajar ese estándar.»",
+    actionItem:
+      "Si insisten en descuento, añadir un extra de valor (ej: tema especial fuera de repertorio para la entrada) en lugar de reducir el precio.",
   },
   {
     id: "mod-03",
     title: "El Filtro del Depósito de 100,00 € Stripe Price-Lock",
     duration: "5 min lectura",
     category: "Ventas",
-    summary: "El 80% del tiempo de los músicos se pierde con parejas que no tienen intención real de compra o comparan a ciegas. El depósito de 100 € separa a los novios comprometidos de los indecisos.",
-    keyTakeaway: "El depósito no es un pago final: es un candado de exclusividad que bloquea tu fecha en el calendario oficial de EAR OS.",
-    scriptSnippet: "«Para garantizaros que ningún otro evento pueda ocupar vuestro [Fecha], generamos un enlace seguro de Stripe con el depósito oficial de 100 €. Una vez confirmado, la fecha queda bloqueada para vosotros en exclusiva.»",
-    actionItem: "Generar el link de Stripe SHA-256 desde el panel de Facturación en cuanto muestren interés.",
+    summary:
+      "El 80% del tiempo de los músicos se pierde con parejas que no tienen intención real de compra o comparan a ciegas. El depósito de 100 € separa a los novios comprometidos de los indecisos.",
+    keyTakeaway:
+      "El depósito no es un pago final: es un candado de exclusividad que bloquea tu fecha en el calendario oficial de EAR OS.",
+    scriptSnippet:
+      "«Para garantizaros que ningún otro evento pueda ocupar vuestro [Fecha], generamos un enlace seguro de Stripe con el depósito oficial de 100 €. Una vez confirmado, la fecha queda bloqueada para vosotros en exclusiva.»",
+    actionItem:
+      "Generar el link de Stripe SHA-256 desde el panel de Facturación en cuanto muestren interés.",
   },
   {
     id: "mod-04",
     title: "Conquista de Fincas y Wedding Planners: El Certificado < 75 dB SPL",
     duration: "7 min lectura",
     category: "Técnico",
-    summary: "Los directores de fincas temen a los músicos ruidosos que provocan quejas de vecinos o multas municipales. Presentarte como un músico calibrado acústicamente te convierte en su proveedor recomendado.",
-    keyTakeaway: "Entrega a la finca la ficha técnica Bose con el cálculo de 12 W/pax y limitador < 75 dB antes de que lo pidan.",
-    scriptSnippet: "«Estimada dirección de [Finca], adjunto el Rider Acústico de Edwin Agudelo para el enlace del [Fecha]. Nuestro equipamiento Bose opera con limitación estricta por debajo de 75 dB SPL y conexión Cetac protegida, garantizando cero molestias.»",
-    actionItem: "Descargar y enviar la Ficha Técnica Acústica a los coordinadores de la finca 2 semanas antes.",
+    summary:
+      "Los directores de fincas temen a los músicos ruidosos que provocan quejas de vecinos o multas municipales. Presentarte como un músico calibrado acústicamente te convierte en su proveedor recomendado.",
+    keyTakeaway:
+      "Entrega a la finca la ficha técnica Bose con el cálculo de 12 W/pax y limitador < 75 dB antes de que lo pidan.",
+    scriptSnippet:
+      "«Estimada dirección de [Finca], adjunto el Rider Acústico de Edwin Agudelo para el enlace del [Fecha]. Nuestro equipamiento Bose opera con limitación estricta por debajo de 75 dB SPL y conexión Cetac protegida, garantizando cero molestias.»",
+    actionItem:
+      "Descargar y enviar la Ficha Técnica Acústica a los coordinadores de la finca 2 semanas antes.",
   },
   {
     id: "mod-05",
     title: "El Argumentario del Split 80/10/10 y la Deducción Fiscal Ley 49/2002",
     duration: "5 min lectura",
     category: "Legal",
-    summary: "Explicar a novios y empresas que su contratación financia programas de neuro-musicoterapia en residencias de mayores a través de la Fundación VIMUME.",
-    keyTakeaway: "El 10% de la contratación cuenta con certificado oficial deducible en IRPF / Impuesto de Sociedades (Modelo 182 AEAT).",
-    scriptSnippet: "«En Productora EAR no trabajamos con intermediarios comerciales abusivos. El 80% va directo al artista, el 10% a soporte y el 10% restante a la Fundación VIMUME para terapia sonora en residencias senior, generando un dividendo social real y desgravable.»",
-    actionItem: "Emitir el Certificado de Aportación VIMUME tras la celebración del evento.",
+    summary:
+      "Explicar a novios y empresas que su contratación financia programas de neuro-musicoterapia en residencias de mayores a través de la Fundación VIMUME.",
+    keyTakeaway:
+      "El 10% de la contratación cuenta con certificado oficial deducible en IRPF / Impuesto de Sociedades (Modelo 182 AEAT).",
+    scriptSnippet:
+      "«En Productora EAR no trabajamos con intermediarios comerciales abusivos. El 80% va directo al artista, el 10% a soporte y el 10% restante a la Fundación VIMUME para terapia sonora en residencias senior, generando un dividendo social real y desgravable.»",
+    actionItem:
+      "Emitir el Certificado de Aportación VIMUME tras la celebración del evento.",
   },
 ];
 
 type CampusSubTab = "PLAYBOOKS" | "BOVEDA_ACTIVOS";
+
+const DECISIONS_STORAGE_KEY = "ear_campus_doc_decisions_v1";
+
+function buildCampusWhatsAppUrl(doc: CampusDoc): string {
+  const cleanTitle = doc.titulo || doc.nombre.replace(/\.(pdf|docx)$/i, "").trim();
+  const audience = doc.targetAudience === "parejas" ? "Pareja" : "Profesional / Proveedor";
+  const text = `Hola Edwin, solicito la guía oficial de Campus EAR OS: "${cleanTitle}" (Ref: ${doc.id}, Categoría: ${doc.categoria}, Perfil: ${audience}). ¿Podéis enviármela por WhatsApp o email?`;
+  return `https://wa.me/${CENTRALITA.raw}?text=${encodeURIComponent(text)}`;
+}
+
+function dispatchLeadMagnetTelemetry(doc: CampusDoc) {
+  const payload = {
+    assetId: doc.id,
+    assetTitle: doc.titulo || doc.nombre.replace(/\.(pdf|docx)$/i, "").trim(),
+    targetAudience: (doc.targetAudience || "proveedores") as "parejas" | "proveedores",
+    sourceUrl: typeof window !== "undefined" ? window.location.href : "https://productoraear.com/fincas",
+    utm: {
+      source: "sclass-pro-campus",
+      medium: "lead-magnet-button",
+      campaign: "campus-61-vault",
+      category: doc.categoria,
+    },
+  };
+
+  if (typeof window !== "undefined") {
+    fetch("/api/campus/lead-magnet", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+      keepalive: true,
+    }).catch((err: unknown) => {
+      console.warn("[CampusLeadMagnet] Telemetría background:", err);
+    });
+  }
+}
+
+function buildPlaybookWhatsAppUrl(mod: PlaybookModule): string {
+  const text = `Hola Edwin, solicito el playbook formativo oficial de Campus EAR OS: "${mod.title}" (Ref: ${mod.id}, Categoría: ${mod.category}). ¿Podéis enviármelo por WhatsApp o email?`;
+  return `https://wa.me/${CENTRALITA.raw}?text=${encodeURIComponent(text)}`;
+}
+
+function dispatchPlaybookTelemetry(mod: PlaybookModule) {
+  const payload = {
+    assetId: mod.id,
+    assetTitle: mod.title,
+    targetAudience: "proveedores" as const,
+    sourceUrl: typeof window !== "undefined" ? window.location.href : "https://productoraear.com/fincas",
+    utm: {
+      source: "sclass-pro-campus",
+      medium: "playbook-button",
+      campaign: "playbooks-conversion",
+      category: mod.category,
+    },
+  };
+
+  if (typeof window !== "undefined") {
+    fetch("/api/campus/lead-magnet", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+      keepalive: true,
+    }).catch((err: unknown) => {
+      console.warn("[CampusPlaybook] Telemetría background:", err);
+    });
+  }
+}
 
 export function ProCampusTab() {
   const [activeSubTab, setActiveSubTab] = useState<CampusSubTab>("BOVEDA_ACTIVOS");
@@ -105,24 +213,59 @@ export function ProCampusTab() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("TODAS");
   const [docDecisions, setDocDecisions] = useState<Record<string, string>>({});
+  const [requestedDocs, setRequestedDocs] = useState<Record<string, boolean>>({});
+  const [requestedPlaybooks, setRequestedPlaybooks] = useState<Record<string, boolean>>({});
+
+  // Cargar decisiones persistidas en cliente
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem(DECISIONS_STORAGE_KEY);
+      if (stored) {
+        setDocDecisions(JSON.parse(stored));
+      }
+    } catch {
+      // Ignore storage errors on restricted environments
+    }
+  }, []);
 
   // Mini Oráculo Tester
   const [oracleQuery, setOracleQuery] = useState("");
   const [oraclePersona, setOraclePersona] = useState<OraclePersona>("CEO");
-  const [oracleResult, setOracleResult] = useState<any>(null);
+  const [oracleResult, setOracleResult] = useState<OracleRefinedResult | null>(null);
 
-  const categories = ["TODAS", "Legal & Blindaje", "Informes & Libros Blancos", "Ventas & Cierre", "SEO & Adquisición", "Herramientas & Checklists"];
+  const categories = [
+    "TODAS",
+    "Legal & Blindaje",
+    "Informes & Libros Blancos",
+    "Ventas & Cierre",
+    "SEO & Adquisición",
+    "Herramientas & Checklists",
+  ];
+
+  const typedCampusData = campusData as unknown as CampusDoc[];
 
   const filteredDocs = useMemo(() => {
-    return campusData.filter(doc => {
-      const matchesSearch = doc.nombre.toLowerCase().includes(searchTerm.toLowerCase()) || doc.seoAngle.toLowerCase().includes(searchTerm.toLowerCase());
+    return typedCampusData.filter((doc) => {
+      const titleMatch = (doc.titulo || "").toLowerCase().includes(searchTerm.toLowerCase());
+      const nameMatch = doc.nombre.toLowerCase().includes(searchTerm.toLowerCase());
+      const seoMatch = doc.seoAngle.toLowerCase().includes(searchTerm.toLowerCase());
+      const summaryMatch = (doc.resumenEjecutivo || "").toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesSearch = titleMatch || nameMatch || seoMatch || summaryMatch;
       const matchesCategory = selectedCategory === "TODAS" || doc.categoria === selectedCategory;
       return matchesSearch && matchesCategory;
     });
-  }, [searchTerm, selectedCategory]);
+  }, [typedCampusData, searchTerm, selectedCategory]);
 
   const handleDecision = (docId: string, decision: string) => {
-    setDocDecisions(prev => ({ ...prev, [docId]: decision }));
+    setDocDecisions((prev) => {
+      const updated = { ...prev, [docId]: decision };
+      try {
+        localStorage.setItem(DECISIONS_STORAGE_KEY, JSON.stringify(updated));
+      } catch {
+        // Ignore storage errors
+      }
+      return updated;
+    });
   };
 
   const handleRunOracle = () => {
@@ -133,75 +276,80 @@ export function ProCampusTab() {
 
   return (
     <div className="space-y-8 animate-in fade-in duration-300 overflow-x-hidden">
-      {/* Top Banner */}
-      <div className="p-6 lg:p-8 rounded-2xl border border-[#ecb613]/30 bg-gradient-to-br from-[#0c0c12] via-[#08080c] to-[#040406] space-y-4 shadow-2xl relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-[#ecb613]/5 rounded-full blur-3xl pointer-events-none" />
+      {/* Top Banner OLED */}
+      <div className="p-6 lg:p-8 rounded-2xl border border-[#ecb613]/30 bg-gradient-to-br from-[#09090d] via-[#050507] to-[#030305] space-y-4 shadow-2xl relative overflow-hidden">
+        {/* Sutil resplandor OLED conforme a Taste Engine */}
+        <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-b from-[#ecb613]/5 to-transparent rounded-full pointer-events-none" />
 
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-xs font-mono tracking-wider uppercase">
-              <GraduationCap className="w-3.5 h-3.5" />
+              <GraduationCap className="w-3.5 h-3.5" strokeWidth={1.5} />
               Bóveda de Crecimiento &amp; Playbooks de Cierre
             </div>
             <h2 className="text-2xl lg:text-3xl font-bold font-['Syne'] text-white">
               Campus S-Class &bull; Inteligencia Absorbida y Negocio Real
             </h2>
             <p className="text-sm text-zinc-400 max-w-2xl leading-relaxed">
-              Amortizando al 1000% los 2.245,76 € invertidos en directorios: 61 activos desduplicados, 389 PDFs nupciales locales, y el Oráculo Cuántico para convertir cada búsqueda en una reserva con Stripe.
+              Amortizando al 1000% los 2.245,76 € invertidos en directorios: 61 activos desduplicados,
+              389 PDFs nupciales locales, y el Oráculo Cuántico para convertir cada búsqueda en una
+              reserva con Stripe.
             </p>
           </div>
 
           {/* SubTab Toggle */}
-          <div className="flex items-center gap-2 bg-zinc-950/90 p-1.5 rounded-xl border border-zinc-800">
+          <div className="flex items-center gap-2 bg-[#050507] p-1.5 rounded-xl border border-zinc-800">
             <button
               onClick={() => setActiveSubTab("BOVEDA_ACTIVOS")}
               aria-pressed={activeSubTab === "BOVEDA_ACTIVOS"}
-              className={`px-4 py-2.5 rounded-lg text-xs font-mono font-bold flex items-center gap-2 transition ${activeSubTab === "BOVEDA_ACTIVOS"
-                ? "bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20"
-                : "text-zinc-400 hover:text-white hover:bg-zinc-900"
-                }`}
+              className={`px-4 py-2.5 rounded-lg text-xs font-mono font-bold flex items-center gap-2 transition ${
+                activeSubTab === "BOVEDA_ACTIVOS"
+                  ? "bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20"
+                  : "text-zinc-400 hover:text-white hover:bg-zinc-900"
+              }`}
             >
-              <Database className="w-3.5 h-3.5" />
+              <Database className="w-3.5 h-3.5" strokeWidth={1.5} />
               <span>Bóveda (61 Activos + 389 PDFs)</span>
             </button>
 
             <button
               onClick={() => setActiveSubTab("PLAYBOOKS")}
               aria-pressed={activeSubTab === "PLAYBOOKS"}
-              className={`px-4 py-2.5 rounded-lg text-xs font-mono font-bold flex items-center gap-2 transition ${activeSubTab === "PLAYBOOKS"
-                ? "bg-zinc-800 text-white shadow-lg"
-                : "text-zinc-400 hover:text-white hover:bg-zinc-900"
-                }`}
+              className={`px-4 py-2.5 rounded-lg text-xs font-mono font-bold flex items-center gap-2 transition ${
+                activeSubTab === "PLAYBOOKS"
+                  ? "bg-zinc-800 text-white shadow-lg"
+                  : "text-zinc-400 hover:text-white hover:bg-zinc-900"
+              }`}
             >
-              <BookOpen className="w-3.5 h-3.5" />
+              <BookOpen className="w-3.5 h-3.5" strokeWidth={1.5} />
               <span>Playbooks de Cierre</span>
             </button>
           </div>
         </div>
 
-        {/* Telemetry Band (Espejo Bodas.net Campus: 496 Artículos + 61 PDFs Descargados + 389 Bóveda) */}
+        {/* Telemetry Band: Espejo Bodas.net Campus (496 Artículos + 61 PDFs Descargados + 389 Bóveda) */}
         <div className="grid grid-cols-2 sm:grid-cols-6 gap-3 pt-4 border-t border-zinc-800/80">
-          <div className="p-3 rounded-xl bg-zinc-950/60 border border-zinc-800/60 text-center">
+          <div className="p-3 rounded-xl bg-[#030305] border border-zinc-800/60 text-center">
             <div className="text-base font-bold font-mono text-[#ecb613]">496</div>
             <div className="text-[10px] font-mono text-zinc-500 uppercase">Campus Total</div>
           </div>
-          <div className="p-3 rounded-xl bg-zinc-950/60 border border-zinc-800/60 text-center">
+          <div className="p-3 rounded-xl bg-[#030305] border border-zinc-800/60 text-center">
             <div className="text-base font-bold font-mono text-emerald-400">191</div>
             <div className="text-[10px] font-mono text-zinc-500 uppercase">Ventas & Cierre</div>
           </div>
-          <div className="p-3 rounded-xl bg-zinc-950/60 border border-zinc-800/60 text-center">
+          <div className="p-3 rounded-xl bg-[#030305] border border-zinc-800/60 text-center">
             <div className="text-base font-bold font-mono text-cyan-400">143</div>
             <div className="text-[10px] font-mono text-zinc-500 uppercase">Marketing</div>
           </div>
-          <div className="p-3 rounded-xl bg-zinc-950/60 border border-zinc-800/60 text-center">
+          <div className="p-3 rounded-xl bg-[#030305] border border-zinc-800/60 text-center">
             <div className="text-base font-bold font-mono text-amber-400">127</div>
             <div className="text-[10px] font-mono text-zinc-500 uppercase">Noticias Sector</div>
           </div>
-          <div className="p-3 rounded-xl bg-zinc-950/60 border border-zinc-800/60 text-center">
+          <div className="p-3 rounded-xl bg-[#030305] border border-zinc-800/60 text-center">
             <div className="text-base font-bold font-mono text-rose-400">35</div>
             <div className="text-[10px] font-mono text-zinc-500 uppercase">Guías Escaparate</div>
           </div>
-          <div className="p-3 rounded-xl bg-zinc-950/60 border border-zinc-800/60 text-center">
+          <div className="p-3 rounded-xl bg-[#030305] border border-zinc-800/60 text-center">
             <div className="text-base font-bold font-mono text-white">61 PDFs</div>
             <div className="text-[10px] font-mono text-zinc-500 uppercase">Lead Magnets</div>
           </div>
@@ -212,28 +360,29 @@ export function ProCampusTab() {
       {activeSubTab === "BOVEDA_ACTIVOS" && (
         <div className="space-y-6">
           {/* Controls Bar */}
-          <div className="p-4 rounded-2xl bg-[#08080c] border border-zinc-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="p-4 rounded-2xl bg-[#050507] border border-zinc-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="relative flex-1">
-              <Search className="w-4 h-4 text-zinc-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <Search className="w-4 h-4 text-zinc-500 absolute left-3.5 top-1/2 -translate-y-1/2" strokeWidth={1.5} />
               <input
                 type="text"
                 value={searchTerm}
-                onChange={e => setSearchTerm(e.target.value)}
-                placeholder="Buscar documento por nombre o ángulo SEO..."
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="Buscar documento por título, resumen o ángulo SEO..."
                 aria-label="Buscar documento en la bóveda de activos"
-                className="w-full pl-10 pr-4 py-2 rounded-xl bg-zinc-950 border border-zinc-800 text-xs text-zinc-200 placeholder:text-zinc-600 focus:outline-none focus:border-[#ecb613] font-mono"
+                className="w-full pl-10 pr-4 py-2 rounded-xl bg-[#030305] border border-zinc-800 text-xs text-zinc-200 placeholder:text-zinc-600 focus:outline-none focus:border-[#ecb613] font-mono"
               />
             </div>
 
             <div className="flex flex-wrap items-center gap-1.5">
-              {categories.map(cat => (
+              {categories.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
-                  className={`px-3 py-1.5 rounded-lg text-[11px] font-mono transition ${selectedCategory === cat
-                    ? "bg-[#ecb613] text-black font-bold"
-                    : "bg-zinc-950 text-zinc-400 hover:text-white border border-zinc-800"
-                    }`}
+                  className={`px-3 py-1.5 rounded-lg text-[11px] font-mono transition ${
+                    selectedCategory === cat
+                      ? "bg-[#ecb613] text-black font-bold"
+                      : "bg-[#030305] text-zinc-400 hover:text-white border border-zinc-800"
+                  }`}
                 >
                   {cat}
                 </button>
@@ -243,79 +392,132 @@ export function ProCampusTab() {
 
           {/* Grid of Documents */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filteredDocs.map(doc => {
+            {filteredDocs.map((doc) => {
               const decision = docDecisions[doc.id];
+              const isRequested = Boolean(requestedDocs[doc.id]);
+              const displayTitle = doc.titulo || doc.nombre.replace(/\.(pdf|docx)$/i, "");
+              const displaySummary = doc.resumenEjecutivo || doc.seoAngle;
+              const isParejas = doc.targetAudience === "parejas";
+
               return (
                 <div
                   key={doc.id}
-                  className="p-5 rounded-2xl bg-[#08080c] border border-zinc-800 hover:border-zinc-700 transition flex flex-col justify-between space-y-4 relative group"
+                  className="p-5 rounded-2xl bg-[#050507] border border-zinc-800/80 hover:border-zinc-700 transition flex flex-col justify-between space-y-4 relative group"
                 >
-                  <div className="space-y-2">
+                  <div className="space-y-3">
                     <div className="flex items-center justify-between text-xs">
-                      <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-zinc-900 border border-zinc-700/60 text-[#ecb613]">
-                        {doc.categoria}
-                      </span>
+                      <div className="flex items-center gap-1.5">
+                        <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-[#09090d] border border-zinc-700/60 text-[#ecb613]">
+                          {doc.categoria}
+                        </span>
+                        <span
+                          className={`font-mono text-[9px] px-1.5 py-0.5 rounded border uppercase tracking-wider ${
+                            isParejas
+                              ? "bg-cyan-950/40 border-cyan-500/40 text-cyan-400"
+                              : "bg-amber-950/40 border-amber-500/40 text-amber-400"
+                          }`}
+                        >
+                          {isParejas ? "Parejas" : "Proveedores"}
+                        </span>
+                      </div>
                       <span className="font-mono text-[11px] text-zinc-500">{doc.sizeMB} MB</span>
                     </div>
 
-                    <h4 className="font-bold text-sm text-zinc-200 font-['Syne'] line-clamp-2 leading-snug">
-                      {doc.nombre.replace('.pdf', '').replace('.docx', '')}
+                    {/* Título con reserva geométrica vertical para erradicar CLS */}
+                    <h4 className="font-bold text-sm text-zinc-100 font-['Syne'] line-clamp-2 leading-snug min-h-[2.5rem]">
+                      {displayTitle}
                     </h4>
 
-                    <p className="text-xs text-zinc-400 line-clamp-2 leading-relaxed font-sans">
-                      <span className="text-[#ecb613] font-mono text-[11px]">Ángulo:</span> {doc.seoAngle}
+                    {/* Resumen ejecutivo / ángulo SEO con reserva geométrica */}
+                    <p className="text-xs text-zinc-400 line-clamp-2 leading-relaxed font-sans min-h-[2.5rem]">
+                      <span className="text-[#ecb613] font-mono text-[11px]">Resumen:</span> {displaySummary}
                     </p>
                   </div>
 
-                  {/* Action Buttons */}
-                  <div className="space-y-2 pt-3 border-t border-zinc-800/80">
-                    <div className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider flex items-center justify-between">
-                      <span>Destino Decidido por CEO:</span>
-                      {decision && (
-                        <span className="text-emerald-400 font-bold flex items-center gap-1">
-                          <Check className="w-3 h-3" /> Asignado
-                        </span>
+                  {/* Bloque de Acciones: Botón Canónico "Solicitar Guía" + Asignación CEO */}
+                  <div className="space-y-3 pt-3 border-t border-zinc-800/80">
+                    {/* Botón Primario "Solicitar Guía" conectado a n8n y WhatsApp */}
+                    <a
+                      href={buildCampusWhatsAppUrl(doc)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => {
+                        dispatchLeadMagnetTelemetry(doc);
+                        handleDecision(doc.id, "LEAD_MAGNET");
+                        setRequestedDocs((prev) => ({ ...prev, [doc.id]: true }));
+                      }}
+                      className={`w-full h-10 px-3 rounded-xl font-mono text-xs font-bold flex items-center justify-center gap-2 transition-all duration-200 border ${
+                        isRequested
+                          ? "bg-emerald-500/10 border-emerald-500/40 text-emerald-400"
+                          : "bg-[#ecb613] hover:bg-amber-400 text-black border-[#ecb613]/50 shadow-md shadow-[#ecb613]/10 active:scale-[0.98]"
+                      }`}
+                      title={`Solicitar guía descargable de "${displayTitle}" por WhatsApp`}
+                    >
+                      {isRequested ? (
+                        <>
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" strokeWidth={1.75} />
+                          <span>Guía Solicitada &bull; Reabrir</span>
+                        </>
+                      ) : (
+                        <>
+                          <Download className="w-3.5 h-3.5 text-black" strokeWidth={1.75} />
+                          <span>Solicitar Guía</span>
+                        </>
                       )}
-                    </div>
+                    </a>
 
-                    <div className="grid grid-cols-3 gap-1.5">
-                      <button
-                        onClick={() => handleDecision(doc.id, "BLOG_FINCAS")}
-                        className={`px-2 py-1.5 rounded-lg text-[10px] font-mono flex items-center justify-center gap-1 transition ${decision === "BLOG_FINCAS"
-                          ? "bg-amber-500 text-black font-bold"
-                          : "bg-zinc-950 text-zinc-400 hover:text-white border border-zinc-800"
-                          }`}
-                        title="Enviar al Blog de Fincas para Bodas"
-                      >
-                        <Building2 className="w-3 h-3" /> Fincas
-                      </button>
+                    {/* Sub-botones para categorización operativa del CEO */}
+                    <div className="space-y-1.5">
+                      <div className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider flex items-center justify-between">
+                        <span>Destino Decidido por CEO:</span>
+                        {decision && (
+                          <span className="text-emerald-400 font-bold flex items-center gap-1">
+                            <Check className="w-3 h-3" strokeWidth={1.75} /> Asignado
+                          </span>
+                        )}
+                      </div>
 
-                      <button
-                        onClick={() => handleDecision(doc.id, "BLOG_PRODUCTORA")}
-                        className={`px-2 py-1.5 rounded-lg text-[10px] font-mono flex items-center justify-center gap-1 transition ${decision === "BLOG_PRODUCTORA"
-                          ? "bg-[#ecb613] text-black font-bold"
-                          : "bg-zinc-950 text-zinc-400 hover:text-white border border-zinc-800"
+                      <div className="grid grid-cols-3 gap-1.5">
+                        <button
+                          onClick={() => handleDecision(doc.id, "BLOG_FINCAS")}
+                          className={`px-2 py-1.5 rounded-lg text-[10px] font-mono flex items-center justify-center gap-1 transition ${
+                            decision === "BLOG_FINCAS"
+                              ? "bg-amber-500 text-black font-bold"
+                              : "bg-[#030305] text-zinc-400 hover:text-white border border-zinc-800"
                           }`}
-                        title="Enviar al Blog de Productora EAR"
-                      >
-                        <Mic className="w-3 h-3" /> EAR
-                      </button>
+                          title="Enviar al Blog de Fincas para Bodas"
+                        >
+                          <Building2 className="w-3 h-3" strokeWidth={1.5} /> Fincas
+                        </button>
 
-                      <a
-                        href={`https://wa.me/34693693048?text=${encodeURIComponent(
-                          `Hola Edwin, quiero solicitar o despachar el Lead Magnet descargable "${doc.nombre.replace('.pdf', '').replace('.docx', '')}" (${doc.seoAngle}).`
-                        )}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={() => handleDecision(doc.id, "LEAD_MAGNET")}
-                        className={`px-2 py-1.5 rounded-lg text-[10px] font-mono flex items-center justify-center gap-1 transition ${decision === "LEAD_MAGNET"
-                          ? "bg-emerald-500 text-black font-bold"
-                          : "bg-zinc-950 text-zinc-400 hover:text-white border border-zinc-800"
+                        <button
+                          onClick={() => handleDecision(doc.id, "BLOG_PRODUCTORA")}
+                          className={`px-2 py-1.5 rounded-lg text-[10px] font-mono flex items-center justify-center gap-1 transition ${
+                            decision === "BLOG_PRODUCTORA"
+                              ? "bg-[#ecb613] text-black font-bold"
+                              : "bg-[#030305] text-zinc-400 hover:text-white border border-zinc-800"
                           }`}
-                        title="Despachar como Lead Magnet Descargable por WhatsApp"
-                      >
-                        <Download className="w-3 h-3" /> Magnet
-                      </a>
+                          title="Enviar al Blog de Productora EAR"
+                        >
+                          <Mic className="w-3 h-3" strokeWidth={1.5} /> EAR
+                        </button>
+
+                        <button
+                          onClick={() => {
+                            handleDecision(doc.id, "LEAD_MAGNET");
+                            dispatchLeadMagnetTelemetry(doc);
+                            setRequestedDocs((prev) => ({ ...prev, [doc.id]: true }));
+                          }}
+                          className={`px-2 py-1.5 rounded-lg text-[10px] font-mono flex items-center justify-center gap-1 transition ${
+                            decision === "LEAD_MAGNET"
+                              ? "bg-emerald-500 text-black font-bold"
+                              : "bg-[#030305] text-zinc-400 hover:text-white border border-zinc-800"
+                          }`}
+                          title="Marcar como Lead Magnet Descargable"
+                        >
+                          <Download className="w-3 h-3" strokeWidth={1.5} /> Magnet
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -324,10 +526,10 @@ export function ProCampusTab() {
           </div>
 
           {/* Mini Oráculo Live Refiner Box */}
-          <div className="p-6 rounded-2xl bg-gradient-to-r from-[#0a0a14] via-[#090910] to-[#050508] border border-[#ecb613]/30 space-y-4">
+          <div className="p-6 rounded-2xl bg-gradient-to-r from-[#09090d] via-[#050507] to-[#030305] border border-[#ecb613]/30 space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div className="flex items-center gap-2">
-                <Flame className="w-4 h-4 text-[#ecb613]" />
+                <Flame className="w-4 h-4 text-[#ecb613]" strokeWidth={1.5} />
                 <h3 className="text-sm font-bold font-mono text-white uppercase">
                   Consola de Prueba del Oráculo Cuántico
                 </h3>
@@ -336,17 +538,23 @@ export function ProCampusTab() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setOraclePersona("CEO")}
-                  className={`px-3 py-1 text-xs font-mono rounded-lg transition ${oraclePersona === "CEO" ? "bg-[#ecb613] text-black font-bold" : "text-zinc-400 hover:text-white bg-zinc-900"
-                    }`}
+                  className={`px-3 py-1 text-xs font-mono rounded-lg transition ${
+                    oraclePersona === "CEO"
+                      ? "bg-[#ecb613] text-black font-bold"
+                      : "text-zinc-400 hover:text-white bg-[#030305] border border-zinc-800"
+                  }`}
                 >
-                  <Crown className="w-3 h-3 inline mr-1" /> Modo CEO
+                  <Crown className="w-3 h-3 inline mr-1" strokeWidth={1.5} /> Modo CEO
                 </button>
                 <button
                   onClick={() => setOraclePersona("ARTISTA")}
-                  className={`px-3 py-1 text-xs font-mono rounded-lg transition ${oraclePersona === "ARTISTA" ? "bg-amber-500 text-white font-bold" : "text-zinc-400 hover:text-white bg-zinc-900"
-                    }`}
+                  className={`px-3 py-1 text-xs font-mono rounded-lg transition ${
+                    oraclePersona === "ARTISTA"
+                      ? "bg-amber-500 text-white font-bold"
+                      : "text-zinc-400 hover:text-white bg-[#030305] border border-zinc-800"
+                  }`}
                 >
-                  <Music2 className="w-3 h-3 inline mr-1" /> Modo Artista
+                  <Music2 className="w-3 h-3 inline mr-1" strokeWidth={1.5} /> Modo Artista
                 </button>
               </div>
             </div>
@@ -355,22 +563,22 @@ export function ProCampusTab() {
               <input
                 type="text"
                 value={oracleQuery}
-                onChange={e => setOracleQuery(e.target.value)}
+                onChange={(e) => setOracleQuery(e.target.value)}
                 placeholder="Escribe una consulta estratégica (ej: 'Cómo captar fincas en Sevilla sin pagar comisiones')..."
                 aria-label="Consulta estratégica para el oráculo cuántico"
-                className="flex-1 px-4 py-2.5 rounded-xl bg-zinc-950 border border-zinc-800 text-xs text-zinc-200 font-mono focus:outline-none focus:border-[#ecb613]"
+                className="flex-1 px-4 py-2.5 rounded-xl bg-[#030305] border border-zinc-800 text-xs text-zinc-200 font-mono focus:outline-none focus:border-[#ecb613]"
               />
               <button
                 onClick={handleRunOracle}
                 className="px-5 py-2.5 rounded-xl bg-[#ecb613] text-black font-bold text-xs font-mono flex items-center gap-2 hover:bg-amber-400 transition"
               >
-                <Sparkles className="w-3.5 h-3.5" />
+                <Sparkles className="w-3.5 h-3.5" strokeWidth={1.75} />
                 Refinar
               </button>
             </div>
 
             {oracleResult && (
-              <div className="p-4 rounded-xl bg-black border border-zinc-800 text-xs font-mono text-emerald-300 whitespace-pre-wrap leading-relaxed">
+              <div className="p-4 rounded-xl bg-[#030305] border border-zinc-800 text-xs font-mono text-emerald-300 whitespace-pre-wrap leading-relaxed">
                 {oracleResult.refinedPrompt}
               </div>
             )}
@@ -384,7 +592,7 @@ export function ProCampusTab() {
           {/* Left List */}
           <div className="lg:col-span-5 space-y-3">
             <div className="text-xs font-mono uppercase tracking-widest text-zinc-400 px-1 mb-1 flex items-center gap-2">
-              <BookOpen className="w-3.5 h-3.5 text-[#ecb613]" />
+              <BookOpen className="w-3.5 h-3.5 text-[#ecb613]" strokeWidth={1.5} />
               Módulos del Playbook de Conversión
             </div>
 
@@ -396,54 +604,49 @@ export function ProCampusTab() {
                 aria-pressed={selectedModule.id === mod.id}
                 onClick={() => setSelectedModule(mod)}
                 onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
+                  if (e.key === "Enter" || e.key === " ") {
                     e.preventDefault();
                     setSelectedModule(mod);
                   }
                 }}
-                className={`p-4 rounded-xl border transition cursor-pointer space-y-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613]/60 ${selectedModule.id === mod.id
-                  ? "bg-[#ecb613]/10 border-[#ecb613]/50 text-white shadow-lg"
-                  : "bg-[#08080c] border-zinc-800 text-zinc-300 hover:border-zinc-700 hover:bg-zinc-900/40"
-                  }`}
+                className={`p-4 rounded-xl border transition cursor-pointer space-y-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613]/60 ${
+                  selectedModule.id === mod.id
+                    ? "bg-[#ecb613]/10 border-[#ecb613]/50 text-white shadow-lg"
+                    : "bg-[#050507] border-zinc-800 text-zinc-300 hover:border-zinc-700 hover:bg-zinc-900/40"
+                }`}
               >
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-zinc-900 border border-zinc-700/60 text-[#ecb613]">
+                  <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-[#09090d] border border-zinc-700/60 text-[#ecb613]">
                     MOD 0{idx + 1} &bull; {mod.category}
                   </span>
                   <span className="text-[11px] font-mono text-zinc-400">{mod.duration}</span>
                 </div>
 
-                <h4 className="font-bold text-sm font-['Syne'] leading-snug">
-                  {mod.title}
-                </h4>
+                <h4 className="font-bold text-sm font-['Syne'] leading-snug">{mod.title}</h4>
 
-                <p className="text-xs text-zinc-400 line-clamp-2">
-                  {mod.summary}
-                </p>
+                <p className="text-xs text-zinc-400 line-clamp-2">{mod.summary}</p>
               </div>
             ))}
           </div>
 
           {/* Right Detail */}
-          <div className="lg:col-span-7 rounded-2xl border border-zinc-800 bg-[#08080c] p-6 lg:p-8 space-y-6">
+          <div className="lg:col-span-7 rounded-2xl border border-zinc-800 bg-[#050507] p-6 lg:p-8 space-y-6">
             <div className="space-y-2 border-b border-zinc-800 pb-5">
               <div className="flex items-center gap-2 text-xs font-mono text-[#ecb613]">
                 <span>Módulo Formativo Activo</span>
                 <span>&bull;</span>
                 <span className="text-zinc-400">{selectedModule.category}</span>
               </div>
-              <h3 className="text-xl font-bold font-['Syne'] text-white">
-                {selectedModule.title}
-              </h3>
+              <h3 className="text-xl font-bold font-['Syne'] text-white">{selectedModule.title}</h3>
             </div>
 
             {/* Core Summary */}
             <div className="space-y-2">
               <h4 className="text-xs font-mono uppercase text-zinc-400 flex items-center gap-2">
-                <Target className="w-3.5 h-3.5 text-[#ecb613]" />
+                <Target className="w-3.5 h-3.5 text-[#ecb613]" strokeWidth={1.5} />
                 Contexto Táctico
               </h4>
-              <p className="text-sm text-zinc-300 leading-relaxed bg-zinc-950/60 p-4 rounded-xl border border-zinc-800/80">
+              <p className="text-sm text-zinc-300 leading-relaxed bg-[#030305] p-4 rounded-xl border border-zinc-800/80">
                 {selectedModule.summary}
               </p>
             </div>
@@ -451,7 +654,7 @@ export function ProCampusTab() {
             {/* Key Rule */}
             <div className="p-4 rounded-xl border border-amber-500/20 bg-amber-950/10 space-y-2">
               <div className="flex items-center gap-2 text-xs font-bold text-amber-400 uppercase tracking-wider font-mono">
-                <AlertTriangle className="w-4 h-4" />
+                <AlertTriangle className="w-4 h-4" strokeWidth={1.5} />
                 Regla de Oro Inmutable
               </div>
               <p className="text-xs text-zinc-200 leading-relaxed font-medium">
@@ -462,10 +665,10 @@ export function ProCampusTab() {
             {/* Script Snippet */}
             <div className="space-y-2">
               <h4 className="text-xs font-mono uppercase text-zinc-400 flex items-center gap-2">
-                <FileText className="w-3.5 h-3.5 text-emerald-400" />
+                <FileText className="w-3.5 h-3.5 text-emerald-400" strokeWidth={1.5} />
                 Guión Canónico para Despacho Directo
               </h4>
-              <div className="p-4 rounded-xl bg-black border border-zinc-800 font-mono text-xs text-emerald-300 leading-relaxed selection:bg-emerald-500 selection:text-black">
+              <div className="p-4 rounded-xl bg-[#030305] border border-zinc-800 font-mono text-xs text-emerald-300 leading-relaxed selection:bg-emerald-500 selection:text-black">
                 {selectedModule.scriptSnippet}
               </div>
             </div>
@@ -473,12 +676,41 @@ export function ProCampusTab() {
             {/* Action Item */}
             <div className="p-4 rounded-xl border border-blue-500/20 bg-blue-950/10 space-y-1.5">
               <div className="text-xs font-mono uppercase text-blue-400 flex items-center gap-2">
-                <Zap className="w-3.5 h-3.5" />
+                <Zap className="w-3.5 h-3.5" strokeWidth={1.5} />
                 Acción Inmediata en EAR OS
               </div>
-              <div className="text-xs text-zinc-300">
-                {selectedModule.actionItem}
-              </div>
+              <div className="text-xs text-zinc-300">{selectedModule.actionItem}</div>
+            </div>
+
+            {/* CTA Despacho Playbook Concierge WhatsApp + n8n */}
+            <div className="pt-2">
+              <a
+                href={buildPlaybookWhatsAppUrl(selectedModule)}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => {
+                  dispatchPlaybookTelemetry(selectedModule);
+                  setRequestedPlaybooks((prev) => ({ ...prev, [selectedModule.id]: true }));
+                }}
+                className={`w-full h-10 px-4 rounded-xl font-mono text-xs font-bold flex items-center justify-center gap-2 transition-all duration-200 border ${
+                  requestedPlaybooks[selectedModule.id]
+                    ? "bg-emerald-500/10 border-emerald-500/40 text-emerald-400"
+                    : "bg-[#ecb613] hover:bg-amber-400 text-black border-[#ecb613]/50 shadow-md shadow-[#ecb613]/10 active:scale-[0.98]"
+                }`}
+                title={`Solicitar protocolo concierge de "${selectedModule.title}" por WhatsApp`}
+              >
+                {requestedPlaybooks[selectedModule.id] ? (
+                  <>
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" strokeWidth={1.75} />
+                    <span>Playbook Solicitado &bull; Reabrir</span>
+                  </>
+                ) : (
+                  <>
+                    <Download className="w-3.5 h-3.5 text-black" strokeWidth={1.75} />
+                    <span>Solicitar Guía Oficial: Protocolo Concierge</span>
+                  </>
+                )}
+              </a>
             </div>
           </div>
         </div>

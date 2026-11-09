@@ -75,6 +75,8 @@ export interface UniversalProviderMetadata {
   readonly category: string;
   readonly province: string;
   readonly headquartersAddress?: string | null;
+  readonly registeredOriginPostalCode?: string | null;
+  readonly registeredOriginCity?: string | null;
   readonly basePriceEur?: number | null;
   readonly freeKm?: number | null;
   readonly kmRateEur?: number | null;
@@ -83,6 +85,55 @@ export interface UniversalProviderMetadata {
   readonly maxPax?: number | null;
   readonly menus?: readonly ProviderMenuOption[];
 }
+
+/**
+ * Predicado de Identidad Artística Canónica (AGENTS.md §1 & §4):
+ * Determina si la entidad es Edwin Agudelo o Productora EAR.
+ */
+export function isEdwinOrProductoraEarProvider(provider?: UniversalProviderMetadata | null): boolean {
+  if (!provider) return false;
+  const identityText = `${provider.id || ''} ${provider.slug || ''} ${provider.name || ''}`.toLowerCase();
+  return /edwin|agudelo|productora[\s_-]*ear/i.test(identityText);
+}
+
+/**
+ * Predicado Canónico de Gobernanza (AGENTS.md §4):
+ * Determina si el proveedor pertenece al Hub Méntrida de Edwin Agudelo / Productora EAR
+ * o tiene su sede física registrada en Méntrida (Toledo, CP 45290).
+ */
+export function isHubMentridaProvider(provider?: UniversalProviderMetadata | null): boolean {
+  if (!provider) return false;
+  if (isEdwinOrProductoraEarProvider(provider)) return true;
+
+  const cp = (provider.registeredOriginPostalCode || '').trim();
+  const city = (provider.registeredOriginCity || '').trim();
+  const address = (provider.headquartersAddress || '').trim();
+
+  // Si tiene un código postal de 5 dígitos distinto de 45290 (ej. 28001, 28043, 46001), NO es Méntrida
+  if (/^\d{5}$/.test(cp) && cp !== '45290') {
+    return false;
+  }
+
+  if (cp === '45290' || /45290/.test(cp)) {
+    return true;
+  }
+
+  if (/^m[eé]ntrida$/i.test(city) || /\bm[eé]ntrida\b/i.test(city)) {
+    return true;
+  }
+
+  if (address.length > 0) {
+    if (/45290/.test(address)) return true;
+    const isStreetName = /(?:calle|c\/|c\.?|avenida|avda\.?|av\.?|plaza|pz\.?|paseo|p\.?|traves[ií]a|trav\.?|camino|ctra\.?|carretera)\s+(?:de\s+)?m[eé]ntrida\b/i.test(address);
+    const hasMentridaMunicipality = /(?:,\s*|\(\s*)m[eé]ntrida\b/i.test(address) || /\bm[eé]ntrida\s*(?:\(toledo\)|toledo)/i.test(address);
+    if (hasMentridaMunicipality && !isStreetName) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 
 export interface UniversalSimulationParams {
   readonly provider: UniversalProviderMetadata;
@@ -294,14 +345,23 @@ export function simulateUniversalProviderQuote(
   params: UniversalSimulationParams,
 ): UniversalSimulationResult {
   const { provider } = params;
-  const guestsPax = Math.max(10, Math.min(1200, Math.round(params.guestsPax || 120)));
-  const coupleTotalBudgetEur = Math.max(1500, Math.round(params.coupleTotalBudgetEur || 22000));
+  const rawPax = typeof params.guestsPax === 'number' && Number.isFinite(params.guestsPax) ? params.guestsPax : 120;
+  const guestsPax = Math.max(10, Math.min(1200, Math.round(rawPax)));
+
+  const rawBudget = typeof params.coupleTotalBudgetEur === 'number' && Number.isFinite(params.coupleTotalBudgetEur) ? params.coupleTotalBudgetEur : 22000;
+  const coupleTotalBudgetEur = Math.max(1500, Math.round(rawBudget));
+
   const tolerancePct: ElasticTolerancePct = ELASTIC_TOLERANCE_STEPS.includes(params.tolerancePct)
     ? params.tolerancePct
     : 10;
-  const distanceKm = Math.max(0, Math.round(params.distanceKm ?? 25));
-  const durationHours = Math.max(1, Math.min(12, Math.round(params.durationHours ?? 3)));
-  const endHour24 = params.endHour24 ?? 2;
+
+  const rawDistance = typeof params.distanceKm === 'number' && Number.isFinite(params.distanceKm) ? params.distanceKm : 25;
+  const distanceKm = Math.max(0, Math.round(rawDistance));
+
+  const rawDuration = typeof params.durationHours === 'number' && Number.isFinite(params.durationHours) ? params.durationHours : 3;
+  const durationHours = Math.max(1, Math.min(12, Math.round(rawDuration)));
+
+  const endHour24 = typeof params.endHour24 === 'number' && Number.isFinite(params.endHour24) ? params.endHour24 : 2;
 
   const meta = resolveProviderArchetype(provider.category);
   const hasVerifiedBasePrice =
@@ -346,13 +406,17 @@ export function simulateUniversalProviderQuote(
       subtotalServiceEur = Math.round(unitBasePriceEur * guestsPax);
     }
   } else if (meta.archetype === 'musica_produccion') {
-    unitBasePriceEur =
-      hasVerifiedBasePrice && provider.basePriceEur
-        ? provider.basePriceEur
-        : TARIFA_BASE_SOLISTA_EUR;
-    unitLabel = hasVerifiedBasePrice
-      ? 'Caché base verificado en ficha'
-      : 'Tarifa Base Solista SSOT (350 €)';
+    const isEdwin = isEdwinOrProductoraEarProvider(provider);
+    if (hasVerifiedBasePrice && provider.basePriceEur !== null && provider.basePriceEur !== undefined) {
+      unitBasePriceEur = provider.basePriceEur;
+      unitLabel = 'Caché base verificado en ficha';
+    } else if (isEdwin) {
+      unitBasePriceEur = TARIFA_BASE_SOLISTA_EUR;
+      unitLabel = 'Tarifa Base Solista SSOT (350 €)';
+    } else {
+      unitBasePriceEur = 550;
+      unitLabel = 'Partida base estimada de producción musical';
+    }
     const extraHours = Math.max(0, durationHours - 2);
     subtotalServiceEur = Math.round(unitBasePriceEur + extraHours * 90);
   } else if (meta.archetype === 'foto_video') {
@@ -373,23 +437,27 @@ export function simulateUniversalProviderQuote(
   }
 
   // Regla de Origen S-Class (AGENTS.md §4):
-  // Hub Méntrida (50 km exentos + 1,50 €/km) aplica EXCLUSIVAMENTE a Edwin Agudelo / Productora EAR.
+  // Hub Méntrida (50 km exentos + 1,50 €/km) aplica EXCLUSIVAMENTE a Edwin Agudelo / Productora EAR
+  // o proveedores con sede física en Méntrida (Toledo, 45290).
   // Para cualquier otro proveedor, la logística se calcula desde la sede registrada en su ficha.
-  const isEdwinOrProductoraEar = /edwin|agudelo|productora\s*ear/i.test(
-    `${provider.id || ''} ${provider.slug || ''} ${provider.name || ''}`,
-  );
-  const originLabel = isEdwinOrProductoraEar
+  const isEdwin = isEdwinOrProductoraEarProvider(provider);
+  const isMentrida = isHubMentridaProvider(provider);
+  const originLabel = isEdwin
     ? 'Hub Méntrida (Exclusivo Edwin Agudelo)'
-    : provider.headquartersAddress && provider.headquartersAddress.trim().length > 0
-      ? `Sede en ${provider.headquartersAddress.trim()}`
-      : `Sede Registrada en ${provider.province || 'Origen'}`;
+    : isMentrida
+      ? `Hub Méntrida (Sede Local Méntrida - CP ${provider.registeredOriginPostalCode || '45290'})`
+      : provider.headquartersAddress && provider.headquartersAddress.trim().length > 0
+        ? `Sede en ${provider.headquartersAddress.trim()}`
+        : provider.registeredOriginCity
+          ? `Sede en ${provider.registeredOriginCity} (${provider.registeredOriginPostalCode || ''})`
+          : `Sede Registrada en ${provider.province || 'Origen'}`;
 
-  const freeKmIncluded = isEdwinOrProductoraEar
+  const freeKmIncluded = isMentrida
     ? LOGISTICA_KM_EXENTOS
     : typeof provider.freeKm === 'number' && provider.freeKm >= 0
       ? provider.freeKm
       : 30;
-  const kmRateEur = isEdwinOrProductoraEar
+  const kmRateEur = isMentrida
     ? LOGISTICA_EUR_PER_KM
     : typeof provider.kmRateEur === 'number' && provider.kmRateEur >= 0
       ? provider.kmRateEur
@@ -401,7 +469,7 @@ export function simulateUniversalProviderQuote(
 
   const appliesLogistics = meta.archetype === 'musica_produccion';
   const billableKm = appliesLogistics ? Math.max(0, distanceKm - freeKmIncluded) : 0;
-  const travelCostEur = appliesLogistics ? Math.round(billableKm * kmRateEur) : 0;
+  const travelCostEur = appliesLogistics ? Math.round(billableKm * kmRateEur * 100) / 100 : 0;
   const hotelRequired =
     appliesLogistics &&
     (distanceKm > LOGISTICA_KM_HOTEL || (endHour24 >= HORA_FIN_HOTEL && endHour24 <= 7));
@@ -528,6 +596,207 @@ export function simulateUniversalProviderQuote(
     signatureHash,
     whatsappBriefText,
     whatsappConciergeUrl,
+  };
+}
+
+export interface ProviderLogisticsCalculation {
+  readonly isHubMentrida: boolean;
+  readonly isEdwinOrProductoraEar: boolean;
+  readonly providerId: string;
+  readonly originLabel: string;
+  readonly originPostalCode: string;
+  readonly destinationPostalCode?: string;
+  readonly distanceKm: number;
+  readonly freeKmIncluded: number;
+  readonly kmRateEur: number;
+  readonly billableKm: number;
+  readonly travelCostEur: number;
+  readonly hotelRequired: boolean;
+  readonly hotelSupplementEur: number;
+  readonly baseServiceEur: number;
+  readonly totalLogisticsEur: number;
+}
+
+export interface ProviderLogisticsOptions {
+  readonly distanceKm?: number;
+  readonly endHour24?: number;
+  readonly customBasePriceEur?: number;
+  readonly customFreeKm?: number;
+  readonly customKmRateEur?: number;
+  readonly headquartersAddress?: string;
+  readonly province?: string;
+  readonly registeredOriginPostalCode?: string;
+  readonly registeredOriginCity?: string;
+}
+
+/**
+ * Contrato Canónico de Cálculo Logístico por Proveedor (PROJECT.md F1 & AGENTS.md §4):
+ * - Edwin Agudelo / Sede Méntrida: Base 350,00 €, 50 km exentos, 1,50 €/km, hotel 120,00 € si > 200 km o >= 3:00 AM.
+ * - Proveedor Externo: Sede y CP registrados propios, tarifas y kilómetros declarados o defecto sectorial.
+ */
+export function calculateProviderLogistics(
+  provider: UniversalProviderMetadata | string,
+  distanceKmOrPostalCode?: number | string,
+  endHourOrOptions?: number | ProviderLogisticsOptions,
+): ProviderLogisticsCalculation {
+  const isProviderString = typeof provider === 'string';
+  const providerId = isProviderString
+    ? provider
+    : (provider && typeof provider === 'object' && (provider.id || provider.slug)) || 'universal-provider';
+
+  const options: ProviderLogisticsOptions =
+    typeof endHourOrOptions === 'object' && endHourOrOptions !== null
+      ? endHourOrOptions
+      : {};
+
+  const endHour24 =
+    typeof endHourOrOptions === 'number' && Number.isFinite(endHourOrOptions)
+      ? Math.max(0, Math.min(24, Math.floor(endHourOrOptions)))
+      : typeof options.endHour24 === 'number' && Number.isFinite(options.endHour24)
+        ? Math.max(0, Math.min(24, Math.floor(options.endHour24)))
+        : 2;
+
+  let distanceKm = 0;
+  let destinationPostalCode: string | undefined;
+
+  if (typeof distanceKmOrPostalCode === 'number') {
+    distanceKm = Number.isFinite(distanceKmOrPostalCode)
+      ? Math.max(0, Math.round(distanceKmOrPostalCode))
+      : 0;
+  } else if (typeof distanceKmOrPostalCode === 'string') {
+    destinationPostalCode = distanceKmOrPostalCode.trim();
+    if (typeof options.distanceKm === 'number' && Number.isFinite(options.distanceKm)) {
+      distanceKm = Math.max(0, Math.round(options.distanceKm));
+    } else {
+      distanceKm = destinationPostalCode === '45290' ? 0 : 60;
+    }
+  }
+
+  const provMeta: UniversalProviderMetadata = isProviderString || !provider || typeof provider !== 'object'
+    ? {
+        id: providerId,
+        slug: providerId,
+        name: providerId,
+        category: 'musica_produccion',
+        province: options.province || 'Madrid',
+        headquartersAddress: options.headquartersAddress,
+        registeredOriginPostalCode: options.registeredOriginPostalCode,
+        registeredOriginCity: options.registeredOriginCity,
+        freeKm: options.customFreeKm,
+        kmRateEur: options.customKmRateEur,
+        basePriceEur: options.customBasePriceEur,
+      }
+    : provider;
+
+  const isEdwin = isEdwinOrProductoraEarProvider(provMeta);
+  const isMentrida = isHubMentridaProvider(provMeta);
+
+  const originLabel = isEdwin
+    ? 'Hub Méntrida (Exclusivo Edwin Agudelo)'
+    : isMentrida
+      ? `Hub Méntrida (Sede Local Méntrida - CP ${provMeta.registeredOriginPostalCode || '45290'})`
+      : provMeta.headquartersAddress && provMeta.headquartersAddress.trim().length > 0
+        ? `Sede en ${provMeta.headquartersAddress.trim()}`
+        : provMeta.registeredOriginCity
+          ? `Sede en ${provMeta.registeredOriginCity} (${provMeta.registeredOriginPostalCode || ''})`
+          : `Sede Registrada en ${provMeta.province || 'Origen'}`;
+
+  const originPostalCode = isMentrida
+    ? '45290'
+    : provMeta.registeredOriginPostalCode || (provMeta.province === 'Valencia' ? '46001' : '28001');
+
+  const freeKmIncluded = isMentrida
+    ? LOGISTICA_KM_EXENTOS
+    : typeof provMeta.freeKm === 'number' && Number.isFinite(provMeta.freeKm) && provMeta.freeKm >= 0
+      ? provMeta.freeKm
+      : 30;
+
+  const kmRateEur = isMentrida
+    ? LOGISTICA_EUR_PER_KM
+    : typeof provMeta.kmRateEur === 'number' && Number.isFinite(provMeta.kmRateEur) && provMeta.kmRateEur >= 0
+      ? provMeta.kmRateEur
+      : 1.2;
+
+  const hotelSupplement =
+    typeof provMeta.hotelSupplementEur === 'number' && Number.isFinite(provMeta.hotelSupplementEur) && provMeta.hotelSupplementEur >= 0
+      ? provMeta.hotelSupplementEur
+      : SUPLEMENTO_HOTEL_EUR;
+
+  const billableKm = Math.max(0, distanceKm - freeKmIncluded);
+  // Preservar precisión de 50 céntimos exactos de la tasa de 1,50 €/km
+  const travelCostEur = Math.round(billableKm * kmRateEur * 100) / 100;
+  const hotelRequired =
+    distanceKm > LOGISTICA_KM_HOTEL || (endHour24 >= HORA_FIN_HOTEL && endHour24 <= 7);
+  const hotelSupplementEur = hotelRequired ? hotelSupplement : 0;
+
+  // Preservar tarifa base declarada si existe y es finita
+  const baseServiceEur =
+    typeof provMeta.basePriceEur === 'number' && Number.isFinite(provMeta.basePriceEur) && provMeta.basePriceEur > 0
+      ? provMeta.basePriceEur
+      : isEdwin
+        ? TARIFA_BASE_SOLISTA_EUR
+        : 550;
+
+  const totalLogisticsEur = Math.round((travelCostEur + hotelSupplementEur) * 100) / 100;
+
+  return {
+    isHubMentrida: isMentrida,
+    isEdwinOrProductoraEar: isEdwin,
+    providerId,
+    originLabel,
+    originPostalCode,
+    destinationPostalCode,
+    distanceKm,
+    freeKmIncluded,
+    kmRateEur,
+    billableKm,
+    travelCostEur,
+    hotelRequired,
+    hotelSupplementEur,
+    baseServiceEur,
+    totalLogisticsEur,
+  };
+}
+
+export interface GuaranteePolicyInfo {
+  readonly providerId: string;
+  readonly policyTitle: 'Garantía de Match Bilateral de Expectativas';
+  readonly policyName: 'Garantía de Match Bilateral de Expectativas';
+  readonly guaranteeBadge: 'Match Bilateral Verificado';
+  readonly description: string;
+  readonly clientProtection: string;
+  readonly providerProtection: string;
+  readonly strictExclusions: readonly string[];
+}
+
+/**
+ * Política Canónica de Match Bilateral de Expectativas (PROJECT.md F2):
+ * Erradica formalmente reclamaciones punitivas en beneficio de una garantía
+ * determinista de correspondencia mutua de requisitos técnicos, legales y económicos.
+ */
+export function getGuaranteePolicy(
+  provider?: UniversalProviderMetadata | string,
+): GuaranteePolicyInfo {
+  const providerId =
+    typeof provider === 'string'
+      ? provider
+      : provider?.id || provider?.slug || 'universal-provider';
+
+  return {
+    providerId,
+    policyTitle: 'Garantía de Match Bilateral de Expectativas',
+    policyName: 'Garantía de Match Bilateral de Expectativas',
+    guaranteeBadge: 'Match Bilateral Verificado',
+    description:
+      'Filtrado determinista bilateral: el cliente accede a condiciones técnicas transparentes y el proveedor recibe eventos que respetan estrictamente su suelo tarifario, aforo y radio logístico.',
+    clientProtection:
+      'Precios en céntimos enteros, trazabilidad y calibración según Ley 37/2003 del Ruido (< 75 dB SPL).',
+    providerProtection:
+      'Blindaje de suelo tarifario, kilometraje exacto y exclusión de solicitudes fuera de radio o presupuesto.',
+    strictExclusions: [
+      'Garantías punitivas sin medición acústica previa',
+      'Penalizaciones unilaterales sin mediación técnica',
+    ],
   };
 }
 

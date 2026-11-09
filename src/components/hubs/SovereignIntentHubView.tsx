@@ -66,6 +66,7 @@ function detectInitialScope(
   serviceId?: string,
   title?: string,
   providerName?: string,
+  vertical?: IntentVertical,
 ): PricingScopeMode {
   const combined = `${serviceId || ''} ${title || ''} ${providerName || ''}`.toLowerCase();
   if (
@@ -75,6 +76,9 @@ function detectInitialScope(
     return 'EDWIN_AGUDELO_HUB_MENTRIDA';
   }
   if (providerName && !/edwin|productora ear/i.test(providerName)) {
+    return 'PROVEEDOR_SEDE_PROPIA';
+  }
+  if (vertical && vertical !== 'ARTISTAS') {
     return 'PROVEEDOR_SEDE_PROPIA';
   }
   return 'EDWIN_AGUDELO_HUB_MENTRIDA';
@@ -110,19 +114,21 @@ export function SovereignIntentHubView({
   const [activeTab, setActiveTab] = useState<'calculator' | 'catalog' | 'acoustics' | 'hubs'>('calculator');
   const [selectedVertical, setSelectedVertical] = useState<IntentVertical>(detectedVertical);
   const [pricingScope, setPricingScope] = useState<PricingScopeMode>(() =>
-    detectInitialScope(serviceId, title, providerName)
+    detectInitialScope(serviceId, title, providerName, detectedVertical)
   );
   const [distanceKm, setDistanceKm] = useState<number>(35);
   const [lateNight, setLateNight] = useState<boolean>(false);
   const [guestsPax, setGuestsPax] = useState<number>(120);
   const [formatMultiplier, setFormatMultiplier] = useState<number>(1);
-  const [customProviderBaseEur, setCustomProviderBaseEur] = useState<number>(
-    providerBasePriceEur || 600
-  );
+  const [customProviderBaseEur, setCustomProviderBaseEur] = useState<number>(() => {
+    if (providerBasePriceEur && providerBasePriceEur > 0) return providerBasePriceEur;
+    if (detectedVertical === 'FINCAS') return 95;
+    return 600;
+  });
 
   const isEdwinScope = pricingScope === 'EDWIN_AGUDELO_HUB_MENTRIDA';
   const registeredOriginLabel = isEdwinScope
-    ? 'Hub Méntrida / Alcorcón (Exclusivo Edwin Agudelo)'
+    ? 'Hub Méntrida (Exclusivo Edwin Agudelo)'
     : providerHeadquarters || `Sede Registrada del Proveedor en ${province || location}`;
 
   const calculation = useMemo(() => {
@@ -131,16 +137,17 @@ export function SovereignIntentHubView({
       ? EDWIN_KM_RATE_CENTS
       : Math.round(providerKmRateEur * 100);
 
-    const billableKm = Math.max(0, distanceKm - activeFreeKm);
-    const logisticsCents = billableKm * activeKmRateCents;
-    const hotelCents = lateNight || distanceKm > 200 ? HOTEL_SUPPLEMENT_CENTS : 0;
+    const appliesLogistics = selectedVertical !== 'FINCAS';
+    const billableKm = appliesLogistics ? Math.max(0, distanceKm - activeFreeKm) : 0;
+    const logisticsCents = appliesLogistics ? billableKm * activeKmRateCents : 0;
+    const hotelCents = appliesLogistics && (lateNight || distanceKm > 200) ? HOTEL_SUPPLEMENT_CENTS : 0;
 
     let baseServiceCents = isEdwinScope
       ? SOLOIST_BASE_CENTS * formatMultiplier
       : Math.round(customProviderBaseEur * 100) * formatMultiplier;
 
     if (selectedVertical === 'FINCAS') {
-      baseServiceCents = guestsPax * (isEdwinScope ? 11500 : Math.round((providerBasePriceEur || 95) * 100));
+      baseServiceCents = guestsPax * (isEdwinScope ? 11500 : Math.round(customProviderBaseEur * 100));
     } else if (selectedVertical === 'PROVEEDORES') {
       baseServiceCents = (isEdwinScope ? 42000 : Math.round(customProviderBaseEur * 100)) * formatMultiplier;
     } else if (selectedVertical === 'B2G') {
@@ -226,7 +233,7 @@ export function SovereignIntentHubView({
           <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="space-y-1">
               <div className="text-xs font-mono uppercase tracking-wider text-[#ecb613] font-bold flex items-center gap-1.5">
-                <UserCheck size={14} />
+                <UserCheck size={14} strokeWidth={1.75} />
                 <span>Regla de Origen Logístico y Tarifario:</span>
               </div>
               <p className="text-xs text-white/70">
@@ -343,7 +350,7 @@ export function SovereignIntentHubView({
                       : `Calcula sobre las condiciones declaradas por el proveedor desde su propia sede registrada hasta ${location}.`}
                   </p>
                 </div>
-                <Sliders size={18} className="text-[#ecb613]" />
+                <Sliders size={18} strokeWidth={1.75} className="text-[#ecb613]" />
               </div>
 
               {/* Selector de Vertical */}
@@ -544,7 +551,7 @@ export function SovereignIntentHubView({
                   className="w-full py-3.5 px-5 rounded-2xl bg-[#ecb613] hover:bg-[#d9a40e] text-black font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-colors"
                 >
                   <span>Bloquear Fecha con Depósito 100,00 € (Deducible)</span>
-                  <ArrowRight size={15} />
+                  <ArrowRight size={15} strokeWidth={1.75} />
                 </Link>
 
                 <a
@@ -553,7 +560,7 @@ export function SovereignIntentHubView({
                   rel="noopener noreferrer"
                   className="w-full py-3 px-5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/15 text-white font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-colors"
                 >
-                  <MessageCircle size={15} className="text-[#ecb613]" />
+                  <MessageCircle size={15} strokeWidth={1.75} className="text-[#ecb613]" />
                   <span>Asesoría Rápida WhatsApp ({OFFICIAL_PHONE_DISPLAY})</span>
                 </a>
 
@@ -579,7 +586,7 @@ export function SovereignIntentHubView({
                 href="/artistas"
                 className="p-5 rounded-2xl bg-white/[0.02] hover:bg-white/[0.05] border border-white/10 hover:border-[#ecb613]/40 transition-colors space-y-2"
               >
-                <Music size={20} className="text-[#ecb613]" />
+                <Music size={20} strokeWidth={1.75} className="text-[#ecb613]" />
                 <div className="font-bold text-white">Catálogo de Artistas</div>
                 <p className="text-xs text-white/60">Solistas, mariachis, DJs y bandas con Panel 360 y condiciones propias.</p>
               </Link>
@@ -588,7 +595,7 @@ export function SovereignIntentHubView({
                 href="/fincas"
                 className="p-5 rounded-2xl bg-white/[0.02] hover:bg-white/[0.05] border border-white/10 hover:border-[#ecb613]/40 transition-colors space-y-2"
               >
-                <Building2 size={20} className="text-[#ecb613]" />
+                <Building2 size={20} strokeWidth={1.75} className="text-[#ecb613]" />
                 <div className="font-bold text-white">Explorador de Fincas</div>
                 <p className="text-xs text-white/60">Espacios homologados con simulador de menús 2026 desde su sede.</p>
               </Link>
@@ -597,7 +604,7 @@ export function SovereignIntentHubView({
                 href="/proveedores"
                 className="p-5 rounded-2xl bg-white/[0.02] hover:bg-white/[0.05] border border-white/10 hover:border-[#ecb613]/40 transition-colors space-y-2"
               >
-                <Sliders size={20} className="text-[#ecb613]" />
+                <Sliders size={20} strokeWidth={1.75} className="text-[#ecb613]" />
                 <div className="font-bold text-white">Directorio Multiservicio</div>
                 <p className="text-xs text-white/60">Sonido Bose F1, pantallas LED, catering, foto y transporte VIP.</p>
               </Link>
@@ -606,7 +613,7 @@ export function SovereignIntentHubView({
                 href="/b2g"
                 className="p-5 rounded-2xl bg-white/[0.02] hover:bg-white/[0.05] border border-white/10 hover:border-[#ecb613]/40 transition-colors space-y-2"
               >
-                <ShieldCheck size={20} className="text-[#ecb613]" />
+                <ShieldCheck size={20} strokeWidth={1.75} className="text-[#ecb613]" />
                 <div className="font-bold text-white">Ayuntamientos B2G & VIMUME</div>
                 <p className="text-xs text-white/60">Contratos menores &lt;14.250 € (Art. 118 LCSP) y SROI 4.85x.</p>
               </Link>
@@ -619,8 +626,8 @@ export function SovereignIntentHubView({
           <section className="p-6 sm:p-8 rounded-3xl bg-[#050507] border border-white/10 space-y-6">
             <div className="p-5 rounded-2xl bg-[#ecb613]/10 border border-[#ecb613]/30 space-y-2">
               <div className="flex items-center gap-2 text-[#ecb613] font-mono text-xs font-bold uppercase">
-                <CheckCircle2 size={16} />
-                <span>Garantía Soberana de Match Bilateral Perfecto (Cero Fricción)</span>
+                <CheckCircle2 size={16} strokeWidth={1.75} />
+                <span>Garantía de Match Bilateral de Expectativas</span>
               </div>
               <p className="text-sm text-white/90 leading-relaxed">
                 En EAR OS protegemos a ambas partes con filtrado determinista: <strong>a un proveedor jamás le llegan solicitudes de clientes que no cumplen su presupuesto mínimo, radio logístico y condiciones</strong>, y <strong>a un cliente jamás se le muestran proveedores que no encajan exactamente con sus expectativas, aforo y requisitos técnicos</strong>.
@@ -628,7 +635,7 @@ export function SovereignIntentHubView({
             </div>
 
             <div className="flex items-center gap-3 pt-2">
-              <Volume2 size={22} className="text-[#ecb613]" />
+              <Volume2 size={22} strokeWidth={1.75} className="text-[#ecb613]" />
               <h2 className="text-2xl font-bold text-white">Planificación Acústica Preventiva (Ley 37/2003 del Ruido)</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono text-xs">

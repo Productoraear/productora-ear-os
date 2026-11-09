@@ -1,490 +1,1283 @@
 [
   {
     "id": "doc-01",
-    "nombre": "Documentos_Tendencias Bodas_Bodas.net PRO.pdf",
+    "nombreOriginal": "Documentos_Tendencias Bodas_Bodas.net PRO.pdf",
+    "titulo": "Libro Blanco: Tendencias Nupciales y Presupuesto Medio en España",
     "sizeMB": "56.40",
     "categoria": "Informes & Libros Blancos",
+    "targetAudience": "parejas",
     "destinoSugerido": "Blog pSEO España",
-    "seoAngle": "Estadísticas del sector nupcial y presupuesto medio por provincia"
+    "seoAngle": "Estadísticas del sector nupcial y presupuesto medio por provincia",
+    "resumenEjecutivo": "Radiografía estadística del mercado nupcial en España con desglose de presupuestos medios provinciales (18.000 € - 35.000 €), estacionalidad y distribución recomendada de partidas clave.",
+    "checklist": [
+      "Definir el techo presupuestario global con un 10% reservado a imprevistos",
+      "Calcular el coste medio por comensal según la provincia del enlace",
+      "Establecer la fecha con 12-14 meses de antelación para temporada alta",
+      "Verificar que la finca permita música en vivo antes de abonar la fianza"
+    ],
+    "estimatedMinutes": 12,
+    "slug": "tendencias-nupciales-presupuesto-provincia",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Tendencias Bodas_Bodas.net PRO.pdf"
   },
   {
     "id": "doc-02",
-    "nombre": "Documentos_Promociones irresistibles_Bodas.net PRO.pdf",
+    "nombreOriginal": "Documentos_Promociones irresistibles_Bodas.net PRO.pdf",
+    "titulo": "Estrategia de Ofertas Irresistibles y Cierre de Contratos sin Descuentos",
     "sizeMB": "44.59",
     "categoria": "Ventas & Cierre",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Conversión de clientes y objeciones de precio"
+    "seoAngle": "Conversión de clientes y objeciones de precio",
+    "resumenEjecutivo": "Metodología para profesionales y fincas para empaquetar servicios de alto valor percibido, defender la tarifa base sin rebajas y acelerar la firma del contrato mediante bonuses tangibles.",
+    "checklist": [
+      "Sustituir descuentos monetarios por extras de alto valor (ej. tema exclusivo o iluminación acústica)",
+      "Fijar una validez máxima de 72 horas para presupuestos personalizados",
+      "Exigir depósito de reserva inmediato (100 € Stripe Price-Lock) para bloquear la fecha",
+      "Incluir comparativa visual de servicio estándar vs experiencia S-Class"
+    ],
+    "estimatedMinutes": 8,
+    "slug": "ofertas-irresistibles-cierre-sin-descuentos",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Promociones irresistibles_Bodas.net PRO.pdf"
   },
   {
     "id": "doc-03",
-    "nombre": "Documentos_Informe sector nupcial- Bodas.net.pdf",
+    "nombreOriginal": "Documentos_Informe sector nupcial- Bodas.net.pdf",
+    "titulo": "Libro Blanco del Sector Nupcial: Hábitos de Contratación y Gasto Medio",
     "sizeMB": "22.62",
     "categoria": "Informes & Libros Blancos",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Blog pSEO España",
-    "seoAngle": "Estadísticas del sector nupcial y presupuesto medio por provincia"
+    "seoAngle": "Estadísticas del sector nupcial y presupuesto medio por provincia",
+    "resumenEjecutivo": "Análisis pormenorizado del ciclo de decisión de las parejas: cuándo empiezan a buscar proveedores, canales de contacto preferidos y factores determinantes para la firma.",
+    "checklist": [
+      "Alinear campañas comerciales con el pico de búsqueda (enero-marzo y septiembre)",
+      "Optimizar tiempos de respuesta por WhatsApp por debajo de 15 minutos",
+      "Publicar precios transparentes para filtrar leads no cualificados",
+      "Disponer de dossier técnico y rider acústico para fincas colaboradoras"
+    ],
+    "estimatedMinutes": 10,
+    "slug": "libro-blanco-sector-nupcial",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Informe sector nupcial- Bodas.net.pdf"
   },
   {
     "id": "doc-04",
-    "nombre": "Documentos_Tendencias de bodas 2022-Bodas.net Pro.pdf",
+    "nombreOriginal": "Documentos_Tendencias de bodas 2022-Bodas.net Pro.pdf",
+    "titulo": "Guía de Estilos Nupciales y Experiencias de Boda Memorables",
     "sizeMB": "18.95",
     "categoria": "Informes & Libros Blancos",
+    "targetAudience": "parejas",
     "destinoSugerido": "Blog pSEO España",
-    "seoAngle": "Estadísticas del sector nupcial y presupuesto medio por provincia"
+    "seoAngle": "Estadísticas del sector nupcial y presupuesto medio por provincia",
+    "resumenEjecutivo": "Compendio de formatos de celebración: ceremonias civiles al aire libre, cócteles dinámicos con música en directo, cenas tipo banquete y transiciones sonoras.",
+    "checklist": [
+      "Definir el hilo conductor y estilo de la boda (boho, gala clásica, rústico chic)",
+      "Diseñar la transición acústica: música suave en cóctel, subida en sobremesa y fiesta",
+      "Comprobar el plan B de climatología y espacio cubierto en la finca",
+      "Coordinar al fotógrafo y al músico para momentos clave (entrada, brindis, primer baile)"
+    ],
+    "estimatedMinutes": 9,
+    "slug": "guia-estilos-nupciales-experiencias",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Tendencias de bodas 2022-Bodas.net Pro.pdf"
   },
   {
     "id": "doc-05",
-    "nombre": "Documentos_Libro Imprescindible de las bodas.pdf",
+    "nombreOriginal": "Documentos_Libro Imprescindible de las bodas.pdf",
+    "titulo": "El Libro Imprescindible de la Boda: Hoja de Ruta Paso a Paso para Novios",
     "sizeMB": "13.45",
     "categoria": "Informes & Libros Blancos",
+    "targetAudience": "parejas",
     "destinoSugerido": "Blog pSEO España",
-    "seoAngle": "Estadísticas del sector nupcial y presupuesto medio por provincia"
+    "seoAngle": "Estadísticas del sector nupcial y presupuesto medio por provincia",
+    "resumenEjecutivo": "Guía integral con el cronograma mes a mes desde el compromiso hasta el día B: trámites legales, elección de finca, contratación de profesionales y gestión del estrés.",
+    "checklist": [
+      "Mes 12: Tramitar expediente matrimonial y reservar finca con fecha bloqueada",
+      "Mes 9: Contratar fotógrafo, videógrafo y música del cóctel con contrato firmado",
+      "Mes 6: Enviar invitaciones y recopilar alergias o necesidades alimentarias",
+      "Mes 1: Ensayo general de timings con el coordinador del espacio"
+    ],
+    "estimatedMinutes": 15,
+    "slug": "libro-imprescindible-boda-novios",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Libro Imprescindible de las bodas.pdf"
   },
   {
     "id": "doc-06",
-    "nombre": "Documentos_2 - Bodas.net Leads.pdf",
+    "nombreOriginal": "Documentos_2 - Bodas.net Leads.pdf",
+    "titulo": "Protocolo de Conversión Ultrarrápida de Leads (< 15 Minutos)",
     "sizeMB": "10.93",
     "categoria": "Ventas & Cierre",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Conversión de clientes y objeciones de precio"
+    "seoAngle": "Conversión de clientes y objeciones de precio",
+    "resumenEjecutivo": "Sistema de triaje y contacto telemático para multiplicar por cuatro la ratio de respuesta a solicitudes de novios mediante mensajes empáticos y notas de voz profesionales.",
+    "checklist": [
+      "Activar notificaciones push inmediatas y webhook a CRM / n8n",
+      "Personalizar el primer mensaje con el nombre de los novios, finca y fecha exacta",
+      "Enviar nota de voz cálida de 25 segundos en lugar de un correo genérico con PDF",
+      "Cerrar la interacción con una llamada de 5 minutos o videollamada de calibración"
+    ],
+    "estimatedMinutes": 7,
+    "slug": "conversion-ultrarrapida-leads",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_2 - Bodas.net Leads.pdf"
   },
   {
     "id": "doc-07",
-    "nombre": "Documentos_Potencia tu negocio de bodas con IA - Bodas.net PRO.pdf",
+    "nombreOriginal": "Documentos_Potencia tu negocio de bodas con IA - Bodas.net PRO.pdf",
+    "titulo": "Automatización e Inteligencia Artificial para Empresas Nupciales",
     "sizeMB": "10.77",
     "categoria": "Ventas & Cierre",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Conversión de clientes y objeciones de precio"
+    "seoAngle": "Conversión de clientes y objeciones de precio",
+    "resumenEjecutivo": "Manual práctico para implementar agentes conversacionales, respuestas automáticas en WhatsApp Business, generación de presupuestos paramétricos y lead scoring.",
+    "checklist": [
+      "Conectar webhook de captación con motor n8n para enriquecer datos del lead",
+      "Configurar respuestas automáticas fuera de horario con link de reserva",
+      "Utilizar plantillas dinámicas con cálculo de kilometraje y logística en tiempo real",
+      "Auditar semanalmente las conversaciones para detectar dudas frecuentes"
+    ],
+    "estimatedMinutes": 11,
+    "slug": "automatizacion-ia-empresas-nupciales",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Potencia tu negocio de bodas con IA - Bodas.net PRO.pdf"
   },
   {
     "id": "doc-08",
-    "nombre": "Documentos_El boom de las bodas 2022-23-Bodas.net Pro.pdf",
+    "nombreOriginal": "Documentos_El boom de las bodas 2022-23-Bodas.net Pro.pdf",
+    "titulo": "Gestión de Capacidad y Calendario en Temporadas de Alta Demanda",
     "sizeMB": "9.20",
     "categoria": "Informes & Libros Blancos",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Blog pSEO España",
-    "seoAngle": "Estadísticas del sector nupcial y presupuesto medio por provincia"
+    "seoAngle": "Estadísticas del sector nupcial y presupuesto medio por provincia",
+    "resumenEjecutivo": "Estrategias para optimizar fechas pico, gestionar dobles turnos con calidad garantizada y elevar el ticket medio mediante paquetes exclusivos en viernes y domingos.",
+    "checklist": [
+      "Establecer política de precios diferenciada entre sábados pico y viernes/domingos",
+      "Implantar bloqueo pesimista de calendario para evitar solapamientos accidentales",
+      "Contar con equipo técnico de sustitución homologado ante contingencias",
+      "Promover incentivos para parejas que reserven fuera del periodo junio-septiembre"
+    ],
+    "estimatedMinutes": 8,
+    "slug": "gestion-capacidad-calendario-alta-demanda",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_El boom de las bodas 2022-23-Bodas.net Pro.pdf"
   },
   {
     "id": "doc-09",
-    "nombre": "Documentos_Pasos para convertir un contacto en contrato_Bodas.net PRO (1).pdf",
+    "nombreOriginal": "Documentos_Pasos para convertir un contacto en contrato_Bodas.net PRO (1).pdf",
+    "titulo": "De la Solicitud Inicial al Contrato Firmado: Blindaje Jurídico y Fianza",
     "sizeMB": "8.57",
     "categoria": "Legal & Blindaje",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Blog Fincas & Lead Magnet",
-    "seoAngle": "Contrato blindado y cláusula de fuerza mayor para fincas"
+    "seoAngle": "Contrato blindado y cláusula de fuerza mayor para fincas",
+    "resumenEjecutivo": "Estructura contractual formal para proveedores: cláusula de retención de depósito, penalizaciones por cancelación tardía, coberturas de seguro de RC y anexos técnicos.",
+    "checklist": [
+      "Incluir identificación fiscal y legal completa de ambas partes",
+      "Definir depósito de reserva no reembolsable en concepto de arras penitenciales",
+      "Detallar el rider técnico, tiempos de montaje y requerimientos eléctricos",
+      "Incorporar póliza de Responsabilidad Civil de al menos 300.000 €"
+    ],
+    "estimatedMinutes": 10,
+    "slug": "contacto-a-contrato-blindaje-juridico",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Pasos para convertir un contacto en contrato_Bodas.net PRO (1).pdf"
   },
   {
     "id": "doc-10",
-    "nombre": "Cómo preparar tu negocio para tener un año exitoso_Bodas.net PRO (2).pdf",
+    "nombreOriginal": "Cómo preparar tu negocio para tener un año exitoso_Bodas.net PRO (2).pdf",
+    "titulo": "Plan Estratégico Anual: Fijación de Metas de Facturación y Rentabilidad",
     "sizeMB": "6.61",
     "categoria": "Ventas & Cierre",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Conversión de clientes y objeciones de precio"
+    "seoAngle": "Conversión de clientes y objeciones de precio",
+    "resumenEjecutivo": "Metodología de planificación financiera para calcular el coste por hora real, margen neto por evento y número mínimo de bodas para asegurar rentabilidad anual.",
+    "checklist": [
+      "Calcular los costes fijos anuales (seguros, vehículos, software, mantenimiento)",
+      "Fijar el objetivo de margen neto unitario (mínimo 60% por servicio)",
+      "Establecer el cupo máximo de bodas anuales para garantizar excelencia",
+      "Revisar tarifas en noviembre antes de abrir contrataciones del año siguiente"
+    ],
+    "estimatedMinutes": 9,
+    "slug": "plan-estrategico-anual-facturacion",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Cómo preparar tu negocio para tener un año exitoso_Bodas.net PRO (2).pdf"
   },
   {
     "id": "doc-11",
-    "nombre": "Documentos_Bodas.net_Guía escaparate.pdf",
+    "nombreOriginal": "Documentos_Bodas.net_Guía escaparate.pdf",
+    "titulo": "Optimización de Ficha de Proveedor y Posicionamiento en Directorios",
     "sizeMB": "6.29",
     "categoria": "SEO & Adquisición",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Playbook Interno & Auditoría",
-    "seoAngle": "Posicionamiento orgánico y optimización de presencia digital"
+    "seoAngle": "Posicionamiento orgánico y optimización de presencia digital",
+    "resumenEjecutivo": "Guía de redacción persuasiva, selección de portfolio audiovisual en alta definición y optimización de palabras clave locales para maximizar clics de novios.",
+    "checklist": [
+      "Subir al menos 15 fotos reales de bodas con luz natural y alta resolución",
+      "Publicar vídeos breves de actuaciones en vivo sin edición de audio de estudio",
+      "Completar todos los campos de precios mínimos y servicios incluidos",
+      "Solicitar reseñas con texto detallado a clientes de los últimos 3 meses"
+    ],
+    "estimatedMinutes": 8,
+    "slug": "optimizacion-ficha-escaparate-digital",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Bodas.net_Guía escaparate.pdf"
   },
   {
     "id": "doc-12",
-    "nombre": "Documentos_libro_imprescindible_de_las_bodas.pdf",
+    "nombreOriginal": "Documentos_libro_imprescindible_de_las_bodas.pdf",
+    "titulo": "Guía Maestra para Evitar los 10 Errores Más Costosos al Organizar tu Boda",
     "sizeMB": "5.12",
     "categoria": "Informes & Libros Blancos",
+    "targetAudience": "parejas",
     "destinoSugerido": "Blog pSEO España",
-    "seoAngle": "Estadísticas del sector nupcial y presupuesto medio por provincia"
+    "seoAngle": "Estadísticas del sector nupcial y presupuesto medio por provincia",
+    "resumenEjecutivo": "Recopilación de fallos habituales cometidos por novios primerizos: descoordinación de horarios, sobrecostes no previstos, problemas de sonido y contratación sin contrato.",
+    "checklist": [
+      "Exigir contrato detallado con NIF y dirección fiscal a cada proveedor",
+      "Comprobar limitadores de decibelios de la finca antes de contratar DJ o banda",
+      "Establecer margen de 45 minutos entre ceremonia y aperitivo para fotos",
+      "Confirmar menú especial para proveedores que trabajan más de 5 horas seguidas"
+    ],
+    "estimatedMinutes": 10,
+    "slug": "guia-evitar-errores-costosos-boda",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_libro_imprescindible_de_las_bodas.pdf"
   },
   {
     "id": "doc-13",
-    "nombre": "Documentos_Cómo transmitir tu valor a las parejas - Bodas.net Pro.pdf",
+    "nombreOriginal": "Documentos_Cómo transmitir tu valor a las parejas - Bodas.net Pro.pdf",
+    "titulo": "Comunicación de Alto Valor: Cómo Justificar Honorarios Premium",
     "sizeMB": "4.85",
     "categoria": "Ventas & Cierre",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Conversión de clientes y objeciones de precio"
+    "seoAngle": "Conversión de clientes y objeciones de precio",
+    "resumenEjecutivo": "Técnicas de encuadre psicológico para transformar una cotización en una inversión emocional que garantiza la tranquilidad absoluta de las parejas.",
+    "checklist": [
+      "Explicar qué problema crítico resuelves (ej. cero acoples ni cortes de sonido)",
+      "Mostrar equipamiento profesional de alta gama (Bose F1, microfonía Shure)",
+      "Presentar testimonios con nombre y fecha de bodas en fincas reconocidas",
+      "Ofrecer asesoría personalizada de repertorio adaptada a la historia de los novios"
+    ],
+    "estimatedMinutes": 7,
+    "slug": "comunicacion-alto-valor-honorarios-premium",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Cómo transmitir tu valor a las parejas - Bodas.net Pro.pdf"
   },
   {
     "id": "doc-14",
-    "nombre": "Documentos_Los 6 secretos para que más parejas te contraten-Bodas.net Pro.pdf",
+    "nombreOriginal": "Documentos_Los 6 secretos para que más parejas te contraten-Bodas.net Pro.pdf",
+    "titulo": "Los 6 Pilares de Conversión para Multiplicar las Contrataciones de Bodas",
     "sizeMB": "4.45",
     "categoria": "Ventas & Cierre",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Conversión de clientes y objeciones de precio"
+    "seoAngle": "Conversión de clientes y objeciones de precio",
+    "resumenEjecutivo": "Las 6 claves psicológicas que decantan la decisión de los novios: rapidez de respuesta, escucha empática, solvencia técnica, garantías por escrito, flexibilidad y química personal.",
+    "checklist": [
+      "Responder el primer contacto en menos de 10 minutos con saludo personalizado",
+      "Escuchar activamente antes de enviar precios o paquetes comerciales",
+      "Acreditar seguro de RC y cumplimiento de la Ley del Ruido para la finca",
+      "Facilitar el pago del depósito con pasarela segura Stripe"
+    ],
+    "estimatedMinutes": 8,
+    "slug": "seis-secretos-conversion-parejas",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Los 6 secretos para que más parejas te contraten-Bodas.net Pro.pdf"
   },
   {
     "id": "doc-15",
-    "nombre": "Documentos_Wedding Trends 2023-Bodas.net PRO.pdf",
+    "nombreOriginal": "Documentos_Wedding Trends 2023-Bodas.net PRO.pdf",
+    "titulo": "Tendencias Musicales y Ambientación Sonora para Bodas Actuales",
     "sizeMB": "4.41",
     "categoria": "Ventas & Cierre",
+    "targetAudience": "parejas",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Conversión de clientes y objeciones de precio"
+    "seoAngle": "Conversión de clientes y objeciones de precio",
+    "resumenEjecutivo": "Formatos acústicos modernos para bodas: cócteles amenizados con versiones pop/rock en acústico, música de gala para banquetes y transiciones sin baches.",
+    "checklist": [
+      "Elegir canciones con significado para la entrada y momentos especiales",
+      "Seleccionar un repertorio de cóctel elegante con volumen moderado (<75 dB)",
+      "Validar que el artista admita peticiones especiales de la pareja",
+      "Coordinar la prueba de sonido al menos 2 horas antes de la llegada de invitados"
+    ],
+    "estimatedMinutes": 9,
+    "slug": "tendencias-musicales-ambientacion-sonora",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Wedding Trends 2023-Bodas.net PRO.pdf"
   },
   {
     "id": "doc-16",
-    "nombre": "5 errores que pueden hacerte perder a un cliente -Bodas.net Pro (2).pdf",
+    "nombreOriginal": "5 errores que pueden hacerte perder a un cliente -Bodas.net Pro (2).pdf",
+    "titulo": "Los 5 Fallos Fatales en la Atención a Novios que Arruinan tus Ventas",
     "sizeMB": "4.11",
     "categoria": "Ventas & Cierre",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Conversión de clientes y objeciones de precio"
+    "seoAngle": "Conversión de clientes y objeciones de precio",
+    "resumenEjecutivo": "Errores comunes que generan desconfianza inmediata: tardar días en responder, enviar un PDF frío sin saludar, no tener fotos de calidad, hablar de uno mismo y presionar con descuentos falsos.",
+    "checklist": [
+      "Erradicar los correos genéricos masivos sin personalización",
+      "Nunca enviar cotizaciones en un PDF sin antes haber hablado con la pareja",
+      "Demostrar interés genuino en los detalles de su finca y temática",
+      "Evitar la agresividad comercial y basar el cierre en confianza mutua"
+    ],
+    "estimatedMinutes": 6,
+    "slug": "fallos-fatales-atencion-novios",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "5 errores que pueden hacerte perder a un cliente -Bodas.net Pro (2).pdf"
   },
   {
     "id": "doc-17",
-    "nombre": "Documentos_Informe Global de Bodas - Bodas.net PRO.pdf",
+    "nombreOriginal": "Documentos_Informe Global de Bodas - Bodas.net PRO.pdf",
+    "titulo": "Informe Internacional del Sector Nupcial: Benchmarking y Tendencias",
     "sizeMB": "3.97",
     "categoria": "Informes & Libros Blancos",
+    "targetAudience": "parejas",
     "destinoSugerido": "Blog pSEO España",
-    "seoAngle": "Estadísticas del sector nupcial y presupuesto medio por provincia"
+    "seoAngle": "Estadísticas del sector nupcial y presupuesto medio por provincia",
+    "resumenEjecutivo": "Comparativa de formatos de boda, número medio de invitados (120-150 en España) y partidas presupuestarias entre España, resto de Europa y América.",
+    "checklist": [
+      "Ajustar el número de invitados para maximizar presupuesto por persona",
+      "Priorizar experiencias vivas (música, gastronomía) sobre detalles efímeros",
+      "Comparar costes de fincas con exclusividad de proveedores vs fincas libres",
+      "Contratar proveedores con experiencia acreditada en el sector local"
+    ],
+    "estimatedMinutes": 11,
+    "slug": "informe-internacional-sector-nupcial",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Informe Global de Bodas - Bodas.net PRO.pdf"
   },
   {
     "id": "doc-18",
-    "nombre": "Documentos_Descripción detallada de la web bodas.net.docx",
+    "nombreOriginal": "Documentos_Descripción detallada de la web bodas.net.docx",
+    "titulo": "Auditoría de Presencia Digital y Ecosistemas Nupciales para Proveedores",
     "sizeMB": "3.60",
     "categoria": "Ventas & Cierre",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Conversión de clientes y objeciones de precio"
+    "seoAngle": "Conversión de clientes y objeciones de precio",
+    "resumenEjecutivo": "Desglose de la arquitectura de directorios de bodas: algoritmos de visibilidad, métricas de engagement, reseñas verificadas y estrategias multicanal.",
+    "checklist": [
+      "Auditar periódicamente la posición de tu perfil en tu categoría y provincia",
+      "Revisar el porcentaje de conversión de visitas a solicitudes de presupuesto",
+      "Integrar botón de contacto directo por WhatsApp para reducir fricción",
+      "Mantener actualizados calendarios de disponibilidad y tarifas base"
+    ],
+    "estimatedMinutes": 7,
+    "slug": "auditoria-presencia-digital-proveedores",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Descripción detallada de la web bodas.net.docx"
   },
   {
     "id": "doc-19",
-    "nombre": "Documentos_Checklist para empezar bien el 2022-Bodas.net Pro.pdf",
+    "nombreOriginal": "Documentos_Checklist para empezar bien el 2022-Bodas.net Pro.pdf",
+    "titulo": "Checklist Anual de Planificación y Cronograma de Contratación",
     "sizeMB": "3.27",
     "categoria": "Herramientas & Checklists",
+    "targetAudience": "parejas",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Herramienta de organización y retención de parejas"
+    "seoAngle": "Herramienta de organización y retención de parejas",
+    "resumenEjecutivo": "Plantilla operativa descargable para parejas con el orden canónico de contratación de servicios para evitar fechas ocupadas y sobrecostes de última hora.",
+    "checklist": [
+      "Mes 12: Bloqueo de fecha en iglesia o juzgado y contrato de finca",
+      "Mes 10: Contratación de música en vivo (cóctel y ceremonia)",
+      "Mes 8: Selección de fotógrafo y videógrafo con reserva formal",
+      "Mes 3: Degustación de menú y fijación de rider técnico con el espacio"
+    ],
+    "estimatedMinutes": 10,
+    "slug": "checklist-anual-planificacion-contratacion",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Checklist para empezar bien el 2022-Bodas.net Pro.pdf"
   },
   {
     "id": "doc-20",
-    "nombre": "Documentos_Bodas.net SPAIN SEO Guide.pdf",
+    "nombreOriginal": "Documentos_Bodas.net SPAIN SEO Guide.pdf",
+    "titulo": "Guía de Posicionamiento SEO Local para Negocios y Fincas de Bodas",
     "sizeMB": "3.11",
     "categoria": "SEO & Adquisición",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Playbook Interno & Auditoría",
-    "seoAngle": "Posicionamiento orgánico y optimización de presencia digital"
+    "seoAngle": "Posicionamiento orgánico y optimización de presencia digital",
+    "resumenEjecutivo": "Técnicas de optimización para motores de búsqueda: Google Business Profile, SEO semántico de fichas de fincas, palabras clave transaccionales y schema.org.",
+    "checklist": [
+      "Configurar Google Business Profile con categoría exacta y fotos semanales",
+      "Incorporar palabras clave geolocalizadas (músico para bodas en Toledo)",
+      "Validar datos estructurados LocalBusiness en la página web oficial",
+      "Conseguir enlaces naturales de fincas, fotógrafos y proveedores aliados"
+    ],
+    "estimatedMinutes": 9,
+    "slug": "seo-local-negocios-fincas-bodas",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Bodas.net SPAIN SEO Guide.pdf"
   },
   {
     "id": "doc-21",
-    "nombre": "Documentos_Cómo hacer para que tu negocio destaque en 2023-Bodas.net PRO.pdf",
+    "nombreOriginal": "Documentos_Cómo hacer para que tu negocio destaque en 2023-Bodas.net PRO.pdf",
+    "titulo": "Estrategias de Diferenciación Radical en el Mercado Nupcial",
     "sizeMB": "3.05",
     "categoria": "Ventas & Cierre",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Conversión de clientes y objeciones de precio"
+    "seoAngle": "Conversión de clientes y objeciones de precio",
+    "resumenEjecutivo": "Cómo salir del océano rojo de precios bajos y posicionarse como la opción premium insustituible mediante una propuesta única de venta (USP).",
+    "checklist": [
+      "Definir una propuesta de valor única basada en especialización extrema",
+      "Crear una experiencia de cliente memorable desde el primer contacto",
+      "Eliminar de la web y propuestas cualquier jerga técnica incomprensible",
+      "Presentar casos de éxito y vídeos de reacciones reales de novios e invitados"
+    ],
+    "estimatedMinutes": 8,
+    "slug": "estrategias-diferenciacion-mercado-nupcial",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Cómo hacer para que tu negocio destaque en 2023-Bodas.net PRO.pdf"
   },
   {
     "id": "doc-22",
-    "nombre": "1904272019_VA bodas.net.pdf",
+    "nombreOriginal": "1904272019_VA bodas.net.pdf",
+    "titulo": "Manual de Cualificación y Argumentario de Ventas de Alto Rendimiento",
     "sizeMB": "3.00",
     "categoria": "Ventas & Cierre",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Conversión de clientes y objeciones de precio"
+    "seoAngle": "Conversión de clientes y objeciones de precio",
+    "resumenEjecutivo": "Guía táctica para vendedores y proveedores para identificar en 3 minutos el perfil presupuestario y decisorio de una pareja interesada.",
+    "checklist": [
+      "Preguntar con tacto el rango presupuestario global previsto para la partida",
+      "Identificar quién toma la decisión final (novia, novio, padres o wedding planner)",
+      "Despejar objeciones de coste argumentando solvencia y equipo homologado",
+      "Proponer fecha límite para congelar la tarifa con depósito oficial"
+    ],
+    "estimatedMinutes": 7,
+    "slug": "cualificacion-argumentario-ventas-nupciales",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "1904272019_VA bodas.net.pdf"
   },
   {
     "id": "doc-23",
-    "nombre": "Documentos_Optimiza tu Funnel de Ventas-Bodas.net.pdf",
+    "nombreOriginal": "Documentos_Optimiza tu Funnel de Ventas-Bodas.net.pdf",
+    "titulo": "Arquitectura y Optimización del Embudo de Ventas (Funnel) para Bodas",
     "sizeMB": "2.83",
     "categoria": "SEO & Adquisición",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Playbook Interno & Auditoría",
-    "seoAngle": "Posicionamiento orgánico y optimización de presencia digital"
+    "seoAngle": "Posicionamiento orgánico y optimización de presencia digital",
+    "resumenEjecutivo": "Diseño paso a paso de embudos de captación: desde el anuncio o directorio hasta la llamada de descubrimiento, propuesta comercial interactiva y firma.",
+    "checklist": [
+      "Mapear las 4 fases del embudo: Tráfico -> Lead -> Calificación -> Cierre",
+      "Reducir el número de campos del formulario a nombre, fecha, finca y teléfono",
+      "Automatizar secuencia de seguimiento por WhatsApp ante presupuestos no respondidos",
+      "Medir semanalmente el porcentaje de conversión en cada etapa del embudo"
+    ],
+    "estimatedMinutes": 10,
+    "slug": "optimizacion-funnel-ventas-bodas",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Optimiza tu Funnel de Ventas-Bodas.net.pdf"
   },
   {
     "id": "doc-24",
-    "nombre": "Documentos_Cómo hacer crecer tu negocio en 2022-Bodas.net Pro.pdf",
+    "nombreOriginal": "Documentos_Cómo hacer crecer tu negocio en 2022-Bodas.net Pro.pdf",
+    "titulo": "Escalado Operativo y Alianzas Estratégicas entre Proveedores y Fincas",
     "sizeMB": "2.77",
     "categoria": "Ventas & Cierre",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Conversión de clientes y objeciones de precio"
+    "seoAngle": "Conversión de clientes y objeciones de precio",
+    "resumenEjecutivo": "Cómo tejer una red de referencias mutuas con coordinadores de fincas, catering y fotógrafos para recibir solicitudes cualificadas continuas con cero coste publicitario.",
+    "checklist": [
+      "Visitar y presentarse en persona a los directores de eventos de 5 fincas locales",
+      "Entregar la ficha técnica acústica y seguro de RC para ser incluido en su lista recomendada",
+      "Establecer pactos éticos de recomendación cruzada con fotógrafos de prestigio",
+      "Agradecer cada recomendación con llamadas o detalles personalizados"
+    ],
+    "estimatedMinutes": 8,
+    "slug": "escalado-operativo-alianzas-fincas",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Cómo hacer crecer tu negocio en 2022-Bodas.net Pro.pdf"
   },
   {
     "id": "doc-25",
-    "nombre": "bodas.net textos campus Marketing_v1.docx",
+    "nombreOriginal": "bodas.net textos campus Marketing_v1.docx",
+    "titulo": "Manual de Copywriting Persuasivo y Mensajes Clave para Parejas",
     "sizeMB": "2.63",
     "categoria": "SEO & Adquisición",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Playbook Interno & Auditoría",
-    "seoAngle": "Posicionamiento orgánico y optimización de presencia digital"
+    "seoAngle": "Posicionamiento orgánico y optimización de presencia digital",
+    "resumenEjecutivo": "Fórmulas de redacción publicitaria para anuncios, perfiles y correos que conectan con la emoción de los novios evitando frases clichés y vacías.",
+    "checklist": [
+      "Sustituir frases genéricas por beneficios concretos y tangibles",
+      "Estructurar los textos con la fórmula Problema - Agitación - Solución (PAS)",
+      "Incluir llamadas a la acción directas con canal WhatsApp disponible",
+      "Utilizar tipografía clara y párrafos cortos de lectura ágil en móviles"
+    ],
+    "estimatedMinutes": 7,
+    "slug": "manual-copywriting-mensajes-parejas",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "bodas.net textos campus Marketing_v1.docx"
   },
   {
     "id": "doc-26",
-    "nombre": "Documentos_Bodas.net-Top Wedding Trends.pdf",
+    "nombreOriginal": "Documentos_Bodas.net-Top Wedding Trends.pdf",
+    "titulo": "Top Tendencias Nupciales: Música en Directo, Estética y Experiencias",
     "sizeMB": "2.33",
     "categoria": "Ventas & Cierre",
+    "targetAudience": "parejas",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Conversión de clientes y objeciones de precio"
+    "seoAngle": "Conversión de clientes y objeciones de precio",
+    "resumenEjecutivo": "Tendencias en ambientación y dinamización de bodas: repertorios personalizados, micro-conciertos acústicos en cócteles y coordinación con DJ de fiesta.",
+    "checklist": [
+      "Diseñar una lista de canciones imprescindibles y canciones prohibidas",
+      "Elegir solista acústico versátil capaz de interpretar pop, jazz, boleros y rock suave",
+      "Asegurar que el artista disponga de equipo autónomo con batería para zonas sin enchufes",
+      "Coordinar el momento de entrada de los novios con un tema de impacto emocional"
+    ],
+    "estimatedMinutes": 6,
+    "slug": "top-tendencias-musica-directo",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Bodas.net-Top Wedding Trends.pdf"
   },
   {
     "id": "doc-27",
-    "nombre": "Documentos_Libro Imprescindible de las las Bodas - Avance en exclusiva.pdf",
+    "nombreOriginal": "Documentos_Libro Imprescindible de las las Bodas - Avance en exclusiva.pdf",
+    "titulo": "Guía Resumida de Planificación Rápida para Bodas Express",
     "sizeMB": "2.17",
     "categoria": "Informes & Libros Blancos",
+    "targetAudience": "parejas",
     "destinoSugerido": "Blog pSEO España",
-    "seoAngle": "Estadísticas del sector nupcial y presupuesto medio por provincia"
+    "seoAngle": "Estadísticas del sector nupcial y presupuesto medio por provincia",
+    "resumenEjecutivo": "Plan de acción concentrado para parejas que organizan su enlace en menos de 6 meses sin renunciar a calidad ni proveedores solventes.",
+    "checklist": [
+      "Consultar disponibilidad en tiempo real mediante calendarios centralizados",
+      "Priorizar proveedores con experiencia contrastada y respuesta inmediata",
+      "Simplificar el diseño de invitaciones mediante formularios digitales",
+      "Formalizar depósitos y contratos telemáticos en 24 horas"
+    ],
+    "estimatedMinutes": 8,
+    "slug": "guia-planificacion-bodas-express",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Libro Imprescindible de las las Bodas - Avance en exclusiva.pdf"
   },
   {
     "id": "doc-28",
-    "nombre": "Documentos_¿Tu estrategia de precios funciona_-Bodas.net.pdf",
+    "nombreOriginal": "Documentos_¿Tu estrategia de precios funciona_-Bodas.net.pdf",
+    "titulo": "Fijación Estratégica de Precios y Eliminación Definitiva de Rebajas",
     "sizeMB": "1.94",
     "categoria": "Ventas & Cierre",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Conversión de clientes y objeciones de precio"
+    "seoAngle": "Conversión de clientes y objeciones de precio",
+    "resumenEjecutivo": "Guía para erradicar la cultura de descuentos, blindar la tarifa canónica (350 € solista base) y justificar el valor intangible de la tranquilidad y fiabilidad técnica.",
+    "checklist": [
+      "Calcular el coste real de preparación, desplazamiento, montaje y horas de directo",
+      "Responder a las peticiones de descuento añadiendo valor en vez de restar precio",
+      "Publicar precios base sin asteriscos engañosos para filtrar clientes tóxicos",
+      "Exigir el 100% de la liquidación antes de iniciar la actuación o montaje"
+    ],
+    "estimatedMinutes": 9,
+    "slug": "estrategia-precios-eliminacion-rebajas",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_¿Tu estrategia de precios funciona_-Bodas.net.pdf"
   },
   {
     "id": "doc-29",
-    "nombre": "Documentos_¿Cómo definir a tu cliente ideal__Bodas.net PRO.pdf",
+    "nombreOriginal": "Documentos_¿Cómo definir a tu cliente ideal__Bodas.net PRO.pdf",
+    "titulo": "Definición del Perfil de Cliente Ideal (ICP) para Servicios Nupciales",
     "sizeMB": "1.91",
     "categoria": "Ventas & Cierre",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Conversión de clientes y objeciones de precio"
+    "seoAngle": "Conversión de clientes y objeciones de precio",
+    "resumenEjecutivo": "Plantilla para segmentar parejas: bodas íntimas vs multitudinarias, parejas exigentes con el repertorio musical y parejas que valoran el cumplimiento normativo.",
+    "checklist": [
+      "Definir el rango de edad, presupuesto medio y estilo de celebración de tu cliente ideal",
+      "Identificar los dolores principales del cliente (miedo a que la boda sea aburrida o ruidosa)",
+      "Rechazar con elegancia a leads que no encajen en tu propuesta o estándar de calidad",
+      "Orientar todas las fotos y vídeos de tu perfil hacia el tipo de evento que deseas captar"
+    ],
+    "estimatedMinutes": 8,
+    "slug": "definicion-cliente-ideal-servicios-nupciales",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_¿Cómo definir a tu cliente ideal__Bodas.net PRO.pdf"
   },
   {
     "id": "doc-30",
-    "nombre": "bodas.net textos campus Ventas_v1.docx",
+    "nombreOriginal": "bodas.net textos campus Ventas_v1.docx",
+    "titulo": "Guiones Canónicos de Cierre Telefónico y WhatsApp para Músicos y Fincas",
     "sizeMB": "1.73",
     "categoria": "Ventas & Cierre",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Conversión de clientes y objeciones de precio"
+    "seoAngle": "Conversión de clientes y objeciones de precio",
+    "resumenEjecutivo": "Recopilación de guiones textuales probados para desbloquear conversaciones estancadas, responder a nos lo estamos pensando y cerrar la fecha en 48 horas.",
+    "checklist": [
+      "Utilizar la técnica de congelación de fecha: avisar de que hay otra consulta para el mismo día",
+      "Enviar mensaje de reactivación tras 48 horas sin respuesta con propuesta de llamada breve",
+      "Resolver dudas sobre repertorio enviando un enlace de vídeo de 30 segundos",
+      "Facilitar el enlace directo de depósito con Stripe para confirmar al instante"
+    ],
+    "estimatedMinutes": 7,
+    "slug": "guiones-cierre-telefonico-whatsapp",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "bodas.net textos campus Ventas_v1.docx"
   },
   {
     "id": "doc-31",
-    "nombre": "Documentos_Glosario de términos de marketing -Bodas.net Pro .pdf",
+    "nombreOriginal": "Documentos_Glosario de términos de marketing -Bodas.net Pro .pdf",
+    "titulo": "Glosario Operativo de Marketing Digital Nupcial y Métricas de Rendimiento",
     "sizeMB": "1.55",
     "categoria": "SEO & Adquisición",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Playbook Interno & Auditoría",
-    "seoAngle": "Posicionamiento orgánico y optimización de presencia digital"
+    "seoAngle": "Posicionamiento orgánico y optimización de presencia digital",
+    "resumenEjecutivo": "Diccionario práctico con los conceptos clave: CAC, LTV, ROAS, ratio de conversión de lead a cliente, tasa de rebote y retorno social de la inversión (SROI).",
+    "checklist": [
+      "Calcular el Coste de Adquisición de Cliente (CAC) por cada canal de captación",
+      "Medir el retorno de la inversión en directorios y plataformas de pago",
+      "Comprobar que el valor de vida del cliente incluye recomendaciones futuras",
+      "Familiarizarse con los términos técnicos de campañas publicitarias en Meta y Google"
+    ],
+    "estimatedMinutes": 6,
+    "slug": "glosario-marketing-digital-nupcial",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Glosario de términos de marketing -Bodas.net Pro .pdf"
   },
   {
     "id": "doc-32",
-    "nombre": "Documentos_instrucciones para crear el sitio de bodas inspirado en bodas.net.docx",
+    "nombreOriginal": "Documentos_instrucciones para crear el sitio de bodas inspirado en bodas.net.docx",
+    "titulo": "Arquitectura Web de Alta Conversión para Profesionales de Eventos",
     "sizeMB": "0.53",
     "categoria": "Ventas & Cierre",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Conversión de clientes y objeciones de precio"
+    "seoAngle": "Conversión de clientes y objeciones de precio",
+    "resumenEjecutivo": "Estructura canónica de una web nupcial: hero con propuesta clara, vídeo en directo, calculadora de presupuestos, testimonios verificados y botón directo de WhatsApp.",
+    "checklist": [
+      "Diseñar la cabecera con propuesta de valor directa y botón de WhatsApp destacado",
+      "Integrar reproductor de audio o vídeo nativo sin redirecciones externas",
+      "Añadir sección de preguntas frecuentes que resuelva objeciones sobre volumen y repertorio",
+      "Garantizar carga en menos de 1,5 segundos en conexiones móviles 4G/5G"
+    ],
+    "estimatedMinutes": 8,
+    "slug": "arquitectura-web-alta-conversion-eventos",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_instrucciones para crear el sitio de bodas inspirado en bodas.net.docx"
   },
   {
     "id": "doc-33",
-    "nombre": "Documentos_Bridal Journey, Bodas.net.pdf",
+    "nombreOriginal": "Documentos_Bridal Journey, Bodas.net.pdf",
+    "titulo": "Mapeo del Viaje de la Novia (Bridal Journey): Puntos de Contacto Críticos",
     "sizeMB": "0.48",
     "categoria": "SEO & Adquisición",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Playbook Interno & Auditoría",
-    "seoAngle": "Posicionamiento orgánico y optimización de presencia digital"
+    "seoAngle": "Posicionamiento orgánico y optimización de presencia digital",
+    "resumenEjecutivo": "Las 6 etapas emocionales y operativas de los novios: Inspiración, Búsqueda, Validación, Reserva, Preparación y Celebración, y cómo intervenir en cada una.",
+    "checklist": [
+      "Intervenir en la fase de Búsqueda con contenido inspiracional en Instagram y Pinterest",
+      "Ofrecer validación social inmediata mediante reseñas de novios reales",
+      "Facilitar la fase de Reserva con firma de contrato telemática en 1 clic",
+      "Mantener el contacto en la fase de Preparación con revisiones periódicas de detalles"
+    ],
+    "estimatedMinutes": 9,
+    "slug": "viaje-de-la-novia-puntos-contacto",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Bridal Journey, Bodas.net.pdf"
   },
   {
     "id": "doc-34",
-    "nombre": "Documentos_Los contratos con las parejas- Edición banquetes-Bodas.net Pro.docx.pdf",
+    "nombreOriginal": "Documentos_Los contratos con las parejas- Edición banquetes-Bodas.net Pro.docx.pdf",
+    "titulo": "Guía de Revisión de Contratos de Fincas y Banquetes para Novios",
     "sizeMB": "0.46",
     "categoria": "Legal & Blindaje",
+    "targetAudience": "parejas",
     "destinoSugerido": "Blog Fincas & Lead Magnet",
-    "seoAngle": "Contrato blindado y cláusula de fuerza mayor para fincas"
+    "seoAngle": "Contrato blindado y cláusula de fuerza mayor para fincas",
+    "resumenEjecutivo": "Aspectos legales críticos a revisar antes de firmar con una finca: exclusividades de catering/música, canon por proveedores externos, limitación de decibelios y horarios límite.",
+    "checklist": [
+      "Comprobar si la finca impone canon económico por traer músicos o fotógrafos propios",
+      "Verificar la hora exacta de corte de música exterior y transición al interior",
+      "Revisar las condiciones de cancelación y devolución de fianza por causa de fuerza mayor",
+      "Exigir por escrito que el espacio cuenta con licencia municipal y seguro de RC en regla"
+    ],
+    "estimatedMinutes": 10,
+    "slug": "guia-revision-contratos-fincas-banquetes",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Los contratos con las parejas- Edición banquetes-Bodas.net Pro.docx.pdf"
   },
   {
     "id": "doc-35",
-    "nombre": "Documentos_Planificador semanal-Bodas.net PRO.pdf",
+    "nombreOriginal": "Documentos_Planificador semanal-Bodas.net PRO.pdf",
+    "titulo": "Planificador de Gestión Semanal de Tareas y Contacto con Clientes",
     "sizeMB": "0.39",
     "categoria": "Ventas & Cierre",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Conversión de clientes y objeciones de precio"
+    "seoAngle": "Conversión de clientes y objeciones de precio",
+    "resumenEjecutivo": "Sistema de bloques de tiempo (time-blocking) para profesionales: mañanas de ensayo y técnica, tardes de atención al cliente y fines de semana dedicados a eventos.",
+    "checklist": [
+      "Bloquear 2 horas diarias para atención y seguimiento de solicitudes de novios",
+      "Reservar mañanas entre semana para mantenimiento técnico de instrumentos y equipos",
+      "Agrupar reuniones de asesoría en dos días fijos por semana para no dispersar el foco",
+      "Planificar las rutas de desplazamiento del fin de semana los miércoles"
+    ],
+    "estimatedMinutes": 6,
+    "slug": "planificador-gestion-semanal-proveedores",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Planificador semanal-Bodas.net PRO.pdf"
   },
   {
     "id": "doc-36",
-    "nombre": "Documentos_Modelo_Cláusula fuerza mayor-Campus Bodas.net.pdf",
+    "nombreOriginal": "Documentos_Modelo_Cláusula fuerza mayor-Campus Bodas.net.pdf",
+    "titulo": "Cláusula Estándar de Fuerza Mayor y Protección de Reservas Nupciales",
     "sizeMB": "0.37",
     "categoria": "Legal & Blindaje",
+    "targetAudience": "parejas",
     "destinoSugerido": "Blog Fincas & Lead Magnet",
-    "seoAngle": "Contrato blindado y cláusula de fuerza mayor para fincas"
+    "seoAngle": "Contrato blindado y cláusula de fuerza mayor para fincas",
+    "resumenEjecutivo": "Modelo legal redactado por letrados especialistas para proteger tanto a la pareja como al proveedor ante situaciones meteorológicas extremas, pandemias o causas sobrevenidas.",
+    "checklist": [
+      "Incluir definición exhaustiva de supuestos de fuerza mayor involuntaria",
+      "Prever el cambio de fecha prioritario sin penalización económica dentro de los 12 meses",
+      "Determinar qué porcentaje del depósito cubre costes ya incurridos de preparación",
+      "Establecer protocolo de notificación fehaciente por escrito en plazo máximo de 48h"
+    ],
+    "estimatedMinutes": 8,
+    "slug": "clausula-fuerza-mayor-proteccion-reservas",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Modelo_Cláusula fuerza mayor-Campus Bodas.net.pdf"
   },
   {
     "id": "doc-37",
-    "nombre": "Documentos_Los contratos con las parejas- Edición fotógrafos-Bodas.net Pro.docx.pdf",
+    "nombreOriginal": "Documentos_Los contratos con las parejas- Edición fotógrafos-Bodas.net Pro.docx.pdf",
+    "titulo": "Marco Contractual Blindado para Fotografía y Videografía de Bodas",
     "sizeMB": "0.34",
     "categoria": "Legal & Blindaje",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Blog Fincas & Lead Magnet",
-    "seoAngle": "Contrato blindado y cláusula de fuerza mayor para fincas"
+    "seoAngle": "Contrato blindado y cláusula de fuerza mayor para fincas",
+    "resumenEjecutivo": "Cláusulas esenciales para profesionales de la imagen: cesión de derechos para portfolio, plazos de entrega del material editado, backup de seguridad y sustituto de emergencia.",
+    "checklist": [
+      "Definir el plazo máximo de entrega del material fotográfico y vídeo final (máx. 90 días)",
+      "Fijar cláusula de cesión de derechos de imagen para portfolio comercial",
+      "Estipular obligación de doble ranura de tarjeta y copia de seguridad inmediata en nube",
+      "Designar un fotógrafo suplente de idéntico estándar en caso de enfermedad grave"
+    ],
+    "estimatedMinutes": 9,
+    "slug": "contrato-blindado-fotografia-videografia",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Los contratos con las parejas- Edición fotógrafos-Bodas.net Pro.docx.pdf"
   },
   {
     "id": "doc-38",
-    "nombre": "Documentos_Los contratos con las parejas- Bodas.net Pro.docx.pdf",
+    "nombreOriginal": "Documentos_Los contratos con las parejas- Bodas.net Pro.docx.pdf",
+    "titulo": "Contrato General de Prestación de Servicios Artísticos y Musicales en Bodas",
     "sizeMB": "0.28",
     "categoria": "Legal & Blindaje",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Blog Fincas & Lead Magnet",
-    "seoAngle": "Contrato blindado y cláusula de fuerza mayor para fincas"
+    "seoAngle": "Contrato blindado y cláusula de fuerza mayor para fincas",
+    "resumenEjecutivo": "Modelo canónico de contrato de actuación: duración del pase, descansos reglamentarios, requisitos de corriente eléctrica (230V protegida), montaje y limitación sonora.",
+    "checklist": [
+      "Establecer horario de llegada (mínimo 90 minutos antes del inicio del evento)",
+      "Definir especificaciones eléctricas: toma de corriente protegida independiente",
+      "Incluir cláusula de suspensión de actuación ante lluvia directa sobre equipamiento eléctrico",
+      "Fijar el importe de la hora extra pactada en caso de prolongación del evento"
+    ],
+    "estimatedMinutes": 10,
+    "slug": "contrato-general-servicios-musicales",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Los contratos con las parejas- Bodas.net Pro.docx.pdf"
   },
   {
     "id": "doc-39",
-    "nombre": "Misión de Auditoría de Proveedor (Bodas.net)__Usa.pdf",
+    "nombreOriginal": "Misión de Auditoría de Proveedor (Bodas.net)__Usa.pdf",
+    "titulo": "Plantilla de Auto-Auditoría de Calidad y Solvencia para Proveedores",
     "sizeMB": "0.23",
     "categoria": "Ventas & Cierre",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Conversión de clientes y objeciones de precio"
+    "seoAngle": "Conversión de clientes y objeciones de precio",
+    "resumenEjecutivo": "Checklist de 20 puntos de control para auditar tu propuesta: tiempo medio de respuesta, modernidad de equipos, vigencia de seguros y satisfacción de clientes.",
+    "checklist": [
+      "Comprobar que todas las consultas de la última semana fueron respondidas en < 1 hora",
+      "Verificar que el seguro de Responsabilidad Civil está al corriente de pago",
+      "Revisar el estado y cableado de sistemas de sonido e iluminación",
+      "Evaluar si la puntuación media en plataformas públicas es igual o superior a 4,9/5"
+    ],
+    "estimatedMinutes": 7,
+    "slug": "auditoria-calidad-solvencia-proveedores",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Misión de Auditoría de Proveedor (Bodas.net)__Usa.pdf"
   },
   {
     "id": "doc-40",
-    "nombre": "Bodas.net-La escucha activa para comunicar (de verdad) con tus parejas (2).pdf",
+    "nombreOriginal": "Bodas.net-La escucha activa para comunicar (de verdad) con tus parejas (2).pdf",
+    "titulo": "Técnicas de Escucha Activa y Psicología del Cierre con Parejas",
     "sizeMB": "0.23",
     "categoria": "Ventas & Cierre",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Conversión de clientes y objeciones de precio"
+    "seoAngle": "Conversión de clientes y objeciones de precio",
+    "resumenEjecutivo": "Cómo detectar las necesidades no expresadas de los novios: miedos ocultos al ridículo, preocupación por los invitados mayores y deseos de exclusividad.",
+    "checklist": [
+      "Hacer preguntas abiertas en lugar de preguntas de sí o no",
+      "Parafrasear los deseos de la pareja para demostrar comprensión absoluta",
+      "Detectar quién de los dos lidera la decisión musical y conectar con su estilo",
+      "Proponer soluciones personalizadas en lugar de paquetes estándar cerrados"
+    ],
+    "estimatedMinutes": 6,
+    "slug": "escucha-activa-psicologia-cierre",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Bodas.net-La escucha activa para comunicar (de verdad) con tus parejas (2).pdf"
   },
   {
     "id": "doc-41",
-    "nombre": "Bodas.net Ficha cliente (2).pdf",
+    "nombreOriginal": "Bodas.net Ficha cliente (2).pdf",
+    "titulo": "Ficha Canónica de Seguimiento y Datos del Evento Nupcial",
     "sizeMB": "0.19",
     "categoria": "Herramientas & Checklists",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Herramienta de organización y retención de parejas"
+    "seoAngle": "Herramienta de organización y retención de parejas",
+    "resumenEjecutivo": "Formulario exhaustivo para registrar todos los detalles de la boda: nombres de novios, teléfono de emergencia del padrino/madrina, contacto del maitre y minutaje.",
+    "checklist": [
+      "Recoger teléfonos directos de novios y de un testigo o familiar de apoyo para el día B",
+      "Anotar nombre y teléfono del metre o coordinador de la finca para montaje",
+      "Fijar minutaje exacto de cada pase musical (ceremonia, cóctel, sobremesa)",
+      "Registrar peticiones de temas especiales y momentos de microfonía inalámbrica"
+    ],
+    "estimatedMinutes": 5,
+    "slug": "ficha-seguimiento-datos-evento",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Bodas.net Ficha cliente (2).pdf"
   },
   {
     "id": "doc-42",
-    "nombre": "Documentos_Links bodas.net web total scraper.docx",
+    "nombreOriginal": "Documentos_Links bodas.net web total scraper.docx",
+    "titulo": "Directorio de Fincas y Referencias de Mercado por Provincias",
     "sizeMB": "0.16",
     "categoria": "Ventas & Cierre",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Conversión de clientes y objeciones de precio"
+    "seoAngle": "Conversión de clientes y objeciones de precio",
+    "resumenEjecutivo": "Índice de espacios de celebración y fincas colaboradoras de referencia en la zona centro y sur de España para prospección comercial directa.",
+    "checklist": [
+      "Identificar las 10 fincas con mayor volumen de bodas de tu zona de influencia",
+      "Investigar qué proveedores musicales recomiendan habitualmente",
+      "Solicitar reunión con el departamento comercial para presentar rider acústico",
+      "Mantener actualizada la base de datos de contactos de fincas"
+    ],
+    "estimatedMinutes": 6,
+    "slug": "directorio-fincas-referencias-mercado",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Links bodas.net web total scraper.docx"
   },
   {
     "id": "doc-43",
-    "nombre": "Documentos_Pasos clave para preparar tu próxima campaña de marketing_Bodas.net PRO.pdf",
+    "nombreOriginal": "Documentos_Pasos clave para preparar tu próxima campaña de marketing_Bodas.net PRO.pdf",
+    "titulo": "Plan de Campañas Estacionales de Captación para Temporada Nupcial",
     "sizeMB": "0.15",
     "categoria": "SEO & Adquisición",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Playbook Interno & Auditoría",
-    "seoAngle": "Posicionamiento orgánico y optimización de presencia digital"
+    "seoAngle": "Posicionamiento orgánico y optimización de presencia digital",
+    "resumenEjecutivo": "Estrategia para lanzar campañas de captación en los dos periodos críticos de decisión: tras las pedidas navideñas (enero) y a finales de verano (septiembre).",
+    "checklist": [
+      "Preparar creatividades visuales y vídeos de actuaciones en directo",
+      "Lanzar campañas de retargeting dirigidas a parejas que visitaron tu perfil",
+      "Crear una página de aterrizaje (landing page) específica con agenda abierta",
+      "Ofrecer asesoría gratuita de diseño de repertorio como gancho de captación"
+    ],
+    "estimatedMinutes": 7,
+    "slug": "campanas-estacionales-captacion-bodas",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Pasos clave para preparar tu próxima campaña de marketing_Bodas.net PRO.pdf"
   },
   {
     "id": "doc-44",
-    "nombre": "Documentos_Planificador semanal_Bodas.net PRO.pdf",
+    "nombreOriginal": "Documentos_Planificador semanal_Bodas.net PRO.pdf",
+    "titulo": "Hoja de Ruta Semanal de Logística y Rutas de Desplazamiento",
     "sizeMB": "0.15",
     "categoria": "Ventas & Cierre",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Conversión de clientes y objeciones de precio"
+    "seoAngle": "Conversión de clientes y objeciones de precio",
+    "resumenEjecutivo": "Planificador de traslados para músicos y técnicos: cálculo de tiempos de viaje, previsión de peajes, kilometraje desde la sede fiscal y reservas hoteleras.",
+    "checklist": [
+      "Calcular la distancia en km y aplicar la tarifa de 1,50 €/km a partir del km 50",
+      "Prever 120 € de alojamiento si el evento termina más tarde de las 3:00 AM o supera 200 km",
+      "Revisar el estado mecánico del vehículo y fijación de carga pesada los jueves",
+      "Confirmar accesos de vehículos y zonas de carga y descarga con la finca"
+    ],
+    "estimatedMinutes": 6,
+    "slug": "hoja-ruta-semanal-logistica-desplazamientos",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Planificador semanal_Bodas.net PRO.pdf"
   },
   {
     "id": "doc-45",
-    "nombre": "Documentos_Checklist Onboarding - Bodas.net PRO.pdf",
+    "nombreOriginal": "Documentos_Checklist Onboarding - Bodas.net PRO.pdf",
+    "titulo": "Checklist de Onboarding y Coordinación de Nueva Boda Confirmada",
     "sizeMB": "0.12",
     "categoria": "Herramientas & Checklists",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Herramienta de organización y retención de parejas"
+    "seoAngle": "Herramienta de organización y retención de parejas",
+    "resumenEjecutivo": "Protocolo de bienvenida para la pareja tras abonar el depósito: entrega de dossier de repertorio, invitación a WhatsApp VIP y cuestionario de preferencias.",
+    "checklist": [
+      "Enviar mensaje de bienvenida y confirmación formal de bloqueo de fecha",
+      "Facilitar acceso al catálogo interactivo de repertorio para selección de temas",
+      "Programar la sesión de asesoría musical para 4 semanas antes del enlace",
+      "Notificar a la finca la contratación formal y enviar la ficha técnica acústica"
+    ],
+    "estimatedMinutes": 5,
+    "slug": "checklist-onboarding-coordinacion-boda",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Checklist Onboarding - Bodas.net PRO.pdf"
   },
   {
     "id": "doc-46",
-    "nombre": "Documentos_Checklist Offboarding- Bodas.net PRO.pdf",
+    "nombreOriginal": "Documentos_Checklist Offboarding- Bodas.net PRO.pdf",
+    "titulo": "Checklist de Cierre de Evento (Offboarding), Reseñas y Fidelización",
     "sizeMB": "0.10",
     "categoria": "Herramientas & Checklists",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Herramienta de organización y retención de parejas"
+    "seoAngle": "Herramienta de organización y retención de parejas",
+    "resumenEjecutivo": "Procedimiento posterior a la boda: felicitación a los recién casados, solicitud delicada de valoración de 5 estrellas y entrega de certificado de aportación VIMUME.",
+    "checklist": [
+      "Enviar felicitación por WhatsApp el lunes siguiente a la boda",
+      "Facilitar enlace directo de 1 clic para dejar opinión en Google / plataformas",
+      "Emitir y enviar el Certificado de Aportación Social VIMUME (10% deducible)",
+      "Archivar grabaciones y registros del evento en el histórico del cliente"
+    ],
+    "estimatedMinutes": 5,
+    "slug": "checklist-offboarding-resenas-fidelizacion",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Checklist Offboarding- Bodas.net PRO.pdf"
   },
   {
     "id": "doc-47",
-    "nombre": "Contacto con las parejas_Bodas.net PRO (1).pdf",
+    "nombreOriginal": "Contacto con las parejas_Bodas.net PRO (1).pdf",
+    "titulo": "Protocolo de Primer Mensaje y Rompehielos por WhatsApp",
     "sizeMB": "0.08",
     "categoria": "Ventas & Cierre",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Conversión de clientes y objeciones de precio"
+    "seoAngle": "Conversión de clientes y objeciones de precio",
+    "resumenEjecutivo": "Ejemplos de frases de apertura que despiertan interés inmediato en los novios sin sonar como un robot ni como un comercial agresivo.",
+    "checklist": [
+      "Saludar mencionando los nombres de pila y la fecha exacta del enlace",
+      "Hacer un comentario positivo sobre la finca seleccionada para el evento",
+      "Confirmar disponibilidad inmediata para su fecha antes de que sigan buscando",
+      "Plantear una pregunta sencilla sobre la música que imaginan para el cóctel"
+    ],
+    "estimatedMinutes": 5,
+    "slug": "protocolo-primer-mensaje-rompehielos",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Contacto con las parejas_Bodas.net PRO (1).pdf"
   },
   {
     "id": "doc-48",
-    "nombre": "Documentos_Bodas.net-Planner.pdf",
+    "nombreOriginal": "Documentos_Bodas.net-Planner.pdf",
+    "titulo": "Minutaje y Cronograma Oficial del Día B para Novios y Coordinadores",
     "sizeMB": "0.07",
     "categoria": "Herramientas & Checklists",
+    "targetAudience": "parejas",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Herramienta de organización y retención de parejas"
+    "seoAngle": "Herramienta de organización y retención de parejas",
+    "resumenEjecutivo": "Plantilla descargable de escaleta horaria: llegada de invitados, música de recepción, ceremonia, sesión fotográfica, aperitivo, entrada al banquete y barra libre.",
+    "checklist": [
+      "Fijar hora de llegada de músicos: 90 minutos antes de la recepción de invitados",
+      "Establecer duración del cóctel: entre 90 y 120 minutos de amenización en vivo",
+      "Sincronizar la música de entrada al banquete con el metre para servicio de aperitivos",
+      "Disponer de copias impresas de la escaleta para los responsables de cada servicio"
+    ],
+    "estimatedMinutes": 8,
+    "slug": "minutaje-cronograma-dia-b-novios",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Bodas.net-Planner.pdf"
   },
   {
     "id": "doc-49",
-    "nombre": "Documentos_Plantilla cliente ideal-Bodas.net PRO (1).pdf",
+    "nombreOriginal": "Documentos_Plantilla cliente ideal-Bodas.net PRO (1).pdf",
+    "titulo": "Lienzo de Segmentación de Parejas VIP y Bodas Exclusivas",
     "sizeMB": "0.06",
     "categoria": "Ventas & Cierre",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Conversión de clientes y objeciones de precio"
+    "seoAngle": "Conversión de clientes y objeciones de precio",
+    "resumenEjecutivo": "Herramienta visual para definir a las parejas de alto valor: perfiles profesionales, fincas elegidas, preferencias musicales y presupuesto disponible.",
+    "checklist": [
+      "Identificar fincas y hoteles de 5 estrellas con las que encaja tu propuesta",
+      "Adaptar el repertorio a clásicos internacionales en inglés y música en directo sofisticada",
+      "Diseñar una propuesta estética cuidada (vestimenta, soportes de altavoces ocultos)",
+      "Fijar tarifas que reflejen la exclusividad sin miedo a perder clientes de bajo presupuesto"
+    ],
+    "estimatedMinutes": 6,
+    "slug": "lienzo-segmentacion-parejas-vip",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Plantilla cliente ideal-Bodas.net PRO (1).pdf"
   },
   {
     "id": "doc-50",
-    "nombre": "Como pedir opiniones a las parejas - Bodas.net PRO (2).pdf",
+    "nombreOriginal": "Como pedir opiniones a las parejas - Bodas.net PRO (2).pdf",
+    "titulo": "Guía para Conseguir Reseñas 5 Estrellas Detalladas y Espontáneas",
     "sizeMB": "0.05",
     "categoria": "Ventas & Cierre",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Conversión de clientes y objeciones de precio"
+    "seoAngle": "Conversión de clientes y objeciones de precio",
+    "resumenEjecutivo": "Técnica del momento de máxima gratitud: cuándo y cómo pedir la valoración a los novios para que escriban un texto emotivo que atraiga nuevos clientes.",
+    "checklist": [
+      "Solicitar la opinión entre 3 y 7 días después del evento, durante la luna de miel",
+      "Guiar a los novios sugiriendo qué aspectos mencionar (puntualidad, volumen, repertorio)",
+      "Proporcionar el enlace directo a la ficha para evitar que se pierdan",
+      "Responder a todas las reseñas con gratitud y profesionalidad"
+    ],
+    "estimatedMinutes": 5,
+    "slug": "conseguir-resenas-5-estrellas",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Como pedir opiniones a las parejas - Bodas.net PRO (2).pdf"
   },
   {
     "id": "doc-51",
-    "nombre": "Documentos_Bodas.net sitio inspirado en esta excelente web de bodas.docx",
+    "nombreOriginal": "Documentos_Bodas.net sitio inspirado en esta excelente web de bodas.docx",
+    "titulo": "Diseño Visual y Experiencia de Usuario (UX) para Sitios de Bodas",
     "sizeMB": "0.05",
     "categoria": "Ventas & Cierre",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Conversión de clientes y objeciones de precio"
+    "seoAngle": "Conversión de clientes y objeciones de precio",
+    "resumenEjecutivo": "Principios de diseño para webs de bodas: contraste elegante OLED (#030305), tipografías display prémium, ausencia de slop de IA y botones de acción inmediatos.",
+    "checklist": [
+      "Aplicar paleta de color oscura y sobria con acentos dorados (#ecb613)",
+      "Garantizar tipografías legibles y optimizadas sin saltos de maquetación (CLS < 0.02)",
+      "Eliminar elementos genéricos (emojis como iconos, degradados pastel)",
+      "Disponer de botón de contacto flotante que active WhatsApp sin demora"
+    ],
+    "estimatedMinutes": 7,
+    "slug": "diseno-visual-ux-sitios-bodas",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Bodas.net sitio inspirado en esta excelente web de bodas.docx"
   },
   {
     "id": "doc-52",
-    "nombre": "D_OS AZUL_1_EAR_00_CEREBRO_DIGITAL_10_MI_VOZ_01_CAOS_ORIGINAL_TEXTOS_D_OS AZUL_0_INBOX_Documentos_Bodas.net sitio inspirado en esta excelente web de bodas_v4.docx",
+    "nombreOriginal": "D_OS AZUL_1_EAR_00_CEREBRO_DIGITAL_10_MI_VOZ_01_CAOS_ORIGINAL_TEXTOS_D_OS AZUL_0_INBOX_Documentos_Bodas.net sitio inspirado en esta excelente web de bodas_v4.docx",
+    "titulo": "Manifiesto de Voz de Marca y Propuesta de Autoridad en Directo",
     "sizeMB": "0.05",
     "categoria": "Ventas & Cierre",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Conversión de clientes y objeciones de precio"
+    "seoAngle": "Conversión de clientes y objeciones de precio",
+    "resumenEjecutivo": "Cómo construir un discurso de artista que proyecte autoridad, técnica impecable y elegancia, erradicando la percepción de aficionado.",
+    "checklist": [
+      "Definir el tono comunicativo: educado, formal, apasionado por el sonido acústico",
+      "Presentar tu formación musical y años de trayectoria en eventos privados",
+      "Enfatizar la solvencia técnica y el respeto absoluto a los tiempos de la ceremonia",
+      "Mantener la coherencia estética en todos los canales de comunicación"
+    ],
+    "estimatedMinutes": 6,
+    "slug": "manifiesto-voz-marca-autoridad-directo",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "D_OS AZUL_1_EAR_00_CEREBRO_DIGITAL_10_MI_VOZ_01_CAOS_ORIGINAL_TEXTOS_D_OS AZUL_0_INBOX_Documentos_Bodas.net sitio inspirado en esta excelente web de bodas_v4.docx"
   },
   {
     "id": "doc-53",
-    "nombre": "Documentos_Textos desde bodas.net para crear una comunicacion que atrape y atraiga a las parejas weddings.docx",
+    "nombreOriginal": "Documentos_Textos desde bodas.net para crear una comunicacion que atrape y atraiga a las parejas weddings.docx",
+    "titulo": "Plantillas de Textos Magnéticos para Descripciones de Servicios",
     "sizeMB": "0.04",
     "categoria": "Ventas & Cierre",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Conversión de clientes y objeciones de precio"
+    "seoAngle": "Conversión de clientes y objeciones de precio",
+    "resumenEjecutivo": "Ejemplos de descripciones para ceremonias, cócteles y momentos especiales que conectan emocionalmente y transmiten magia y profesionalidad.",
+    "checklist": [
+      "Describir la atmósfera acústica que se crea en el cóctel con voz y guitarra en vivo",
+      "Destacar la versatilidad de estilos para complacer a distintas generaciones de invitados",
+      "Garantizar que el volumen sonoro permite la conversación fluida entre amigos y familiares",
+      "Cerrar con una llamada afectuosa para consultar disponibilidad de fecha"
+    ],
+    "estimatedMinutes": 6,
+    "slug": "plantillas-textos-magneticos-servicios",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Textos desde bodas.net para crear una comunicacion que atrape y atraiga a las parejas weddings.docx"
   },
   {
     "id": "doc-54",
-    "nombre": "Documentos_Texto  a organizar para  escaparate de bodas.net.docx",
+    "nombreOriginal": "Documentos_Texto  a organizar para  escaparate de bodas.net.docx",
+    "titulo": "Estructura Textual Canónica para Perfiles de Directorios",
     "sizeMB": "0.04",
     "categoria": "SEO & Adquisición",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Playbook Interno & Auditoría",
-    "seoAngle": "Posicionamiento orgánico y optimización de presencia digital"
+    "seoAngle": "Posicionamiento orgánico y optimización de presencia digital",
+    "resumenEjecutivo": "Orden recomendado para redactar la sección Sobre nosotros en portales especializados: presentación, experiencia, equipamiento, repertorio y llamada a la acción.",
+    "checklist": [
+      "Iniciar con un titular que resuma tu propuesta en 10 palabras",
+      "Dividir el texto en párrafos cortos de 3 líneas con viñetas claras",
+      "Explicar qué incluye la tarifa base y qué opciones adicionales existen",
+      "Rematar con invitación clara a solicitar dossier completo por WhatsApp"
+    ],
+    "estimatedMinutes": 5,
+    "slug": "estructura-textual-perfiles-directorios",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Texto  a organizar para  escaparate de bodas.net.docx"
   },
   {
     "id": "doc-55",
-    "nombre": "Documentos_¿Cómo contestar a las opiniones de tus parejas_-Bodas.net PRO.pdf",
+    "nombreOriginal": "Documentos_¿Cómo contestar a las opiniones de tus parejas_-Bodas.net PRO.pdf",
+    "titulo": "Protocolo de Respuesta a Opiniones Públicas y Gestión Reputacional",
     "sizeMB": "0.02",
     "categoria": "Ventas & Cierre",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Conversión de clientes y objeciones de precio"
+    "seoAngle": "Conversión de clientes y objeciones de precio",
+    "resumenEjecutivo": "Cómo responder tanto a comentarios elogiosos como a posibles incidencias o malentendidos con máxima elegancia, empatía y profesionalismo.",
+    "checklist": [
+      "Agradecer cada opinión mencionando anécdotas concretas de su boda",
+      "Responder siempre en tono sereno y conciliador ante cualquier objeción",
+      "Aprovechar la respuesta para reiterar tu compromiso con la excelencia y el sonido limpio",
+      "Publicar la respuesta en un plazo no superior a 48 horas"
+    ],
+    "estimatedMinutes": 5,
+    "slug": "protocolo-respuesta-opiniones-reputacion",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_¿Cómo contestar a las opiniones de tus parejas_-Bodas.net PRO.pdf"
   },
   {
     "id": "doc-56",
-    "nombre": "Documentos_LINKS BODAS.NET A PRODUCTORAEAR.COM   CATEGORIAS.docx",
+    "nombreOriginal": "Documentos_LINKS BODAS.NET A PRODUCTORAEAR.COM   CATEGORIAS.docx",
+    "titulo": "Estrategia de Enlazado Externo y Derivación de Tráfico a EAR OS",
     "sizeMB": "0.02",
     "categoria": "Ventas & Cierre",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Conversión de clientes y objeciones de precio"
+    "seoAngle": "Conversión de clientes y objeciones de precio",
+    "resumenEjecutivo": "Cómo derivar el tráfico cautivo de plataformas y redes hacia la infraestructura propia de Productora EAR para cerrar contratos sin intermediarios.",
+    "checklist": [
+      "Colocar enlaces directos a la landing de contratación en biografía y perfiles",
+      "Configurar UTMs para trazar qué canal genera leads con mayor tasa de conversión",
+      "Utilizar conserjería WhatsApp directa como canal prioritario de resolución de dudas",
+      "Registrar cada interacción en la base de datos central de eventos"
+    ],
+    "estimatedMinutes": 5,
+    "slug": "enlazado-externo-derivacion-trafico",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_LINKS BODAS.NET A PRODUCTORAEAR.COM   CATEGORIAS.docx"
   },
   {
     "id": "doc-57",
-    "nombre": "Documentos_Texto para bodas.net.docx",
+    "nombreOriginal": "Documentos_Texto para bodas.net.docx",
+    "titulo": "Plantillas de Preguntas Frecuentes (FAQ) que Despejan Objeciones",
     "sizeMB": "0.02",
     "categoria": "Ventas & Cierre",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Conversión de clientes y objeciones de precio"
+    "seoAngle": "Conversión de clientes y objeciones de precio",
+    "resumenEjecutivo": "Respuestas directas a las preguntas que todas las parejas se hacen: qué pasa si llueve, cuánto dura la actuación, cómo se gestionan peticiones especiales.",
+    "checklist": [
+      "Detallar el tiempo de montaje y prueba de sonido (mínimo 60 minutos)",
+      "Aclarar la política de lluvia y opciones de traslado a cubierto",
+      "Indicar el límite de peticiones especiales fuera del repertorio habitual",
+      "Explicar el procedimiento de reserva y firma de contrato de exclusividad"
+    ],
+    "estimatedMinutes": 5,
+    "slug": "preguntas-frecuentes-despeje-objeciones",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_Texto para bodas.net.docx"
   },
   {
     "id": "doc-58",
-    "nombre": "Documentos_bodas.net copia del texto escaparate.docx",
+    "nombreOriginal": "Documentos_bodas.net copia del texto escaparate.docx",
+    "titulo": "Auditoría de Copys y Reescritura Anti-Slop de Escaparates",
     "sizeMB": "0.02",
     "categoria": "SEO & Adquisición",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Playbook Interno & Auditoría",
-    "seoAngle": "Posicionamiento orgánico y optimización de presencia digital"
+    "seoAngle": "Posicionamiento orgánico y optimización de presencia digital",
+    "resumenEjecutivo": "Ejercicios de redacción técnica que eliminan la paja publicitaria y colocan en primer plano datos certificados: potencia Bose, decibelios y tarifas oficiales.",
+    "checklist": [
+      "Eliminar adjetivos vacíos y sustituir por hechos objetivos",
+      "Incluir especificaciones de equipamiento: 1000W Bose F1, limitador telemático",
+      "Citar experiencia contrastada en más de 200 bodas y eventos corporativos",
+      "Verificar que la ortografía y puntuación sean impecables"
+    ],
+    "estimatedMinutes": 5,
+    "slug": "auditoria-copys-reescritura-anti-slop",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Documentos_bodas.net copia del texto escaparate.docx"
   },
   {
     "id": "doc-59",
-    "nombre": "Descripción detallada página web  Bodas.net_v1.docx",
+    "nombreOriginal": "Descripción detallada página web  Bodas.net_v1.docx",
+    "titulo": "Matriz de Secciones Esenciales para un Catálogo de Servicios Nupciales",
     "sizeMB": "0.02",
     "categoria": "Ventas & Cierre",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Conversión de clientes y objeciones de precio"
+    "seoAngle": "Conversión de clientes y objeciones de precio",
+    "resumenEjecutivo": "Esquema funcional de información para que los novios encuentren en menos de 10 segundos todo lo necesario para tomar una decisión informada.",
+    "checklist": [
+      "Sección 1: Formato solista con voz en directo y guitarra acústica",
+      "Sección 2: Muestras de audio y vídeos en directo grabados en bodas reales",
+      "Sección 3: Ficha técnica acústica para coordinadores de fincas",
+      "Sección 4: Calculadora de disponibilidad y botón de WhatsApp Concierge"
+    ],
+    "estimatedMinutes": 5,
+    "slug": "matriz-secciones-catalogo-servicios",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "Descripción detallada página web  Bodas.net_v1.docx"
   },
   {
     "id": "doc-60",
-    "nombre": "BODAS_NET_FEATURES.md.pdf",
+    "nombreOriginal": "BODAS_NET_FEATURES.md.pdf",
+    "titulo": "Especificación Funcional de Integración y Servicios Ecosistémicos",
     "sizeMB": "0.02",
     "categoria": "Ventas & Cierre",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Conversión de clientes y objeciones de precio"
+    "seoAngle": "Conversión de clientes y objeciones de precio",
+    "resumenEjecutivo": "Documento técnico sobre las capacidades de la plataforma: split soberano 80/10/10, cerrojos de fecha ACID, depósito Stripe y telemetría n8n.",
+    "checklist": [
+      "Validar el split canónico: 80% artista, 10% infraestructura EAR, 10% VIMUME",
+      "Comprobar el cálculo de kilometraje desde la sede fiscal registrada del artista",
+      "Revisar el registro de telemetría y disparos a webhooks en segundo plano",
+      "Verificar la trazabilidad íntegra de cada transacción en céntimos enteros"
+    ],
+    "estimatedMinutes": 6,
+    "slug": "especificacion-integracion-servicios-ecosistema",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "BODAS_NET_FEATURES.md.pdf"
   },
   {
     "id": "doc-61",
-    "nombre": "~$OS AZUL_1_EAR_00_CEREBRO_DIGITAL_10_MI_VOZ_01_CAOS_ORIGINAL_TEXTOS_Documentos_Bodas.net sitio inspirado en esta excelente web de bodas_v1.docx",
+    "nombreOriginal": "~$OS AZUL_1_EAR_00_CEREBRO_DIGITAL_10_MI_VOZ_01_CAOS_ORIGINAL_TEXTOS_Documentos_Bodas.net sitio inspirado en esta excelente web de bodas_v1.docx",
+    "titulo": "Guía de Recuperación y Depuración de Activos Digitales de la Bóveda",
     "sizeMB": "0.00",
     "categoria": "Ventas & Cierre",
+    "targetAudience": "proveedores",
     "destinoSugerido": "Lead Magnet Descargable",
-    "seoAngle": "Conversión de clientes y objeciones de precio"
+    "seoAngle": "Conversión de clientes y objeciones de precio",
+    "resumenEjecutivo": "Protocolo de saneamiento documental: depuración de archivos residuales, desduplicación de fuentes y compilación de inteligencia en la Bóveda S-Class.",
+    "checklist": [
+      "Identificar y sustituir nombres corruptos o rutas temporales de sistema",
+      "Asignar un identificador canónico permanente y metadatos limpios a cada activo",
+      "Garantizar que ningún archivo pesado binario sea versionado en el repositorio Git",
+      "Centralizar la entrega de material a través de Conserjería WhatsApp oficial"
+    ],
+    "estimatedMinutes": 5,
+    "slug": "guia-depuracion-activos-digitales-boveda",
+    "deliveryMode": "whatsapp_concierge_and_n8n",
+    "nombre": "~$OS AZUL_1_EAR_00_CEREBRO_DIGITAL_10_MI_VOZ_01_CAOS_ORIGINAL_TEXTOS_Documentos_Bodas.net sitio inspirado en esta excelente web de bodas_v1.docx"
   }
 ]
