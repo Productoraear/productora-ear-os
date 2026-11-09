@@ -1,5 +1,6 @@
 import React from 'react';
-import { notFound, redirect } from 'next/navigation';
+import { notFound, redirect, permanentRedirect } from 'next/navigation';
+import { buildCanonicalProviderSlug, isOpaqueProviderSlug } from '@/lib/providers/semantic-slug';
 import {
   ShieldCheck,
   Sparkles,
@@ -289,7 +290,10 @@ async function getProviderData(slug: string) {
       const found = cachedCuratedProviders.find((p: any) => {
         if (p.id?.toLowerCase() === slugNorm) return true;
         if (p.slug?.toLowerCase() === slugNorm) return true;
+        if (p.legacySlug?.toLowerCase() === slugNorm) return true;
         if (p.atomic_specs?.slug?.toLowerCase() === slugNorm) return true;
+        const canonical = buildCanonicalProviderSlug(p);
+        if (canonical === slugNorm) return true;
         const nameSlug = (p.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
         return nameSlug === slugNorm;
       });
@@ -630,9 +634,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   // CLAIMED (whitelist reclamada) = verificado. Todo lo demás (DIRECTORY_UNCLAIMED,
   // fichas prov-* sin reclamar y BLACKLISTED) se emite con noindex para erradicar
   // el castigo algorítmico por "Thin Content / Doorways" y disparar el CTR real.
+  const canonicalSlug = buildCanonicalProviderSlug(provider);
   const isVerifiedTier = tier === 'SOVEREIGN' || tier === 'CLAIMED';
-  const isGenericDoorway = cleanName.toLowerCase().startsWith('prov-') || slug.toLowerCase().startsWith('prov-');
-  const shouldNoIndex = isBlacklisted || !isVerifiedTier || isGenericDoorway;
+  const isGenericDoorway = isOpaqueProviderSlug(canonicalSlug) || cleanName.toLowerCase().startsWith('prov-');
+  const shouldNoIndex = isBlacklisted || isGenericDoorway || (!isVerifiedTier && !cleanName);
 
   const isGenericName = !cleanName || cleanName.toLowerCase().startsWith('prov-') || isBlacklisted;
   const isFinca = category.toLowerCase().includes('finca') || category.toLowerCase().includes('espacio') || slug.includes('finca');
@@ -654,10 +659,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     displayTitle = `${cleanName} (${category}) en ${location} · Presupuesto Verificado y Enlace Oficial | Productora EAR`;
     metaDescription = `Solicita presupuesto oficial para ${cleanName} (${category}) en ${location}. Enlace verificado vía n8n Dispatcher, garantía de fianza y homologación S-Class.`;
   }
-
-  const canonicalSlug = provider.slug && !provider.slug.toLowerCase().startsWith('prov-')
-    ? provider.slug.toLowerCase().trim()
-    : slug.toLowerCase().trim();
 
   const firstGallery = Array.isArray(provider.gallery) ? provider.gallery[0] : undefined;
   const coverImg = isBlacklisted
@@ -716,6 +717,18 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
 
   if (!rawProvider) {
     notFound();
+  }
+
+  // Redirección 308/301 Permanente desde slugs opacos de Search Console (ej. /proveedores/prov-4765)
+  // hacia su slug semántico limpio (/proveedores/setroimagen-madrid)
+  const canonicalProviderSlug = buildCanonicalProviderSlug(rawProvider);
+  if (
+    isOpaqueProviderSlug(slugLower) &&
+    canonicalProviderSlug &&
+    !isOpaqueProviderSlug(canonicalProviderSlug) &&
+    canonicalProviderSlug !== slugLower
+  ) {
+    permanentRedirect(`/proveedores/${canonicalProviderSlug}`);
   }
 
   /**

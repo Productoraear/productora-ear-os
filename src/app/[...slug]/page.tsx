@@ -1,7 +1,7 @@
 import React from 'react';
 import { Metadata } from 'next';
 import { notFound, redirect, RedirectType } from 'next/navigation';
-import { BespokeTemplate } from '@/app/components/SClassScreens/BespokeTemplate';
+import { SovereignIntentHubView } from '@/components/hubs/SovereignIntentHubView';
 import ChauffeurVipView from '@/features/chauffeur/ui/ChauffeurVipView';
 import { PROVINCIAS, GUIAS } from '@/lib/constants/seo-data';
 import { generateSemanticPageData, resolveGeoLocation } from '@/lib/seo/semantic-engine';
@@ -237,14 +237,13 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
 
   if (catalogItem) {
     return (
-      <BespokeTemplate
+      <SovereignIntentHubView
         title={`${catalogItem.name} en Madrid`}
         description={catalogItem.description}
         location="Madrid"
         province="Madrid"
         category={catalogItem.category}
         serviceId={catalogItem.id}
-        isApex={true}
       />
     );
   }
@@ -264,14 +263,13 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
 
   if (gscItem) {
     return (
-      <BespokeTemplate
+      <SovereignIntentHubView
         title={gscItem.seoTitle}
         description={gscItem.metaDescription}
         location={gscItem.province ? gscItem.province.toUpperCase() : 'MADRID'}
         province={gscItem.province ? gscItem.province.toUpperCase() : 'MADRID'}
         category={gscItem.intentType ? gscItem.intentType.replace(/_/g, ' ') : 'Servicios'}
         serviceId={gscItem.query}
-        isApex={true}
       />
     );
   }
@@ -284,14 +282,13 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
     const guide = GUIAS.find(g => g.slug === guideSlug);
     if (guide) {
       return (
-        <BespokeTemplate
+        <SovereignIntentHubView
           title={guide.nombre}
           description={guide.descripcion}
           location="Madrid"
           province="Madrid"
           category="Guías Estratégicas"
           serviceId={guide.slug}
-          isApex={true}
         />
       );
     }
@@ -376,13 +373,11 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
     const semantic = generateSemanticPageData(slug);
 
     return (
-      <BespokeTemplate
+      <SovereignIntentHubView
         title={semantic.title}
         description={semantic.description}
-        location={cityName}
+        location={cityName || 'España'}
         serviceId={serviceSlug || 'mariachis'}
-        keywords={semantic.keywords}
-        isApex={true}
       />
     );
   }
@@ -408,19 +403,17 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
     const { cityName } = resolveGeoLocation(provinceSlug);
 
     if (/chofer|conductor|transfer|coche|transporte-vip/.test(primaryPrefix) || /chofer|conductor|transfer|coche|transporte-vip/.test(serviceSlug)) {
-      return <ChauffeurVipView location={cityName} />;
+      return <ChauffeurVipView location={cityName || 'Madrid'} />;
     }
 
     const semantic = generateSemanticPageData(slug);
 
     return (
-      <BespokeTemplate
+      <SovereignIntentHubView
         title={semantic.title}
         description={semantic.description}
-        location={cityName}
+        location={cityName || 'Madrid'}
         serviceId={serviceSlug || primaryPrefix}
-        keywords={semantic.keywords}
-        isApex={true}
       />
     );
   }
@@ -436,13 +429,12 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
     const semantic = generateSemanticPageData(slug);
 
     return (
-      <BespokeTemplate
+      <SovereignIntentHubView
         title={semantic.title}
         description={semantic.description}
-        location={cityName}
+        location={cityName || 'Madrid'}
         serviceId={equipmentSlug}
-        keywords={semantic.keywords}
-        isApex={true}
+        category="PROVEEDORES"
       />
     );
   }
@@ -458,13 +450,12 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
     const semantic = generateSemanticPageData(slug);
 
     return (
-      <BespokeTemplate
+      <SovereignIntentHubView
         title={semantic.title}
         description={semantic.description}
-        location={cityName}
+        location={cityName || 'Madrid'}
         serviceId={eventSlug}
-        keywords={semantic.keywords}
-        isApex={true}
+        category="B2G"
       />
     );
   }
@@ -475,13 +466,11 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
     const semantic = generateSemanticPageData(slug);
 
     return (
-      <BespokeTemplate
+      <SovereignIntentHubView
         title={semantic.title}
         description={semantic.description}
-        location={cityName}
+        location={cityName || 'España'}
         serviceId="produccion-integral"
-        keywords={semantic.keywords}
-        isApex={true}
       />
     );
   }

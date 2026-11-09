@@ -195,6 +195,17 @@ const nextConfig: NextConfig = {
       // Consolidación anti-doorway: rutas legacy /weddings -> hub real de bodas
       { source: "/weddings", destination: "/bodas", permanent: true },
       { source: "/weddings/:path*", destination: "/bodas", permanent: true },
+      // Consolidación 12 Super-Pantallas (Anti-Frankenstein 301)
+      { source: "/artists", destination: "/artistas", permanent: true },
+      { source: "/artists/:slug", destination: "/artistas/:slug", permanent: true },
+      { source: "/fincas-landing", destination: "/fincas", permanent: true },
+      { source: "/fincasparaboda", destination: "/fincas", permanent: true },
+      { source: "/boda", destination: "/fincas", permanent: true },
+      { source: "/ayuntamientospremium", destination: "/b2g", permanent: true },
+      { source: "/ayuntamientos-premium", destination: "/b2g", permanent: true },
+      { source: "/afiliado", destination: "/contacto", permanent: true },
+      { source: "/voicestudio", destination: "/studio/artist", permanent: true },
+      { source: "/proveedores-servicios", destination: "/proveedores", permanent: true },
       // Canonicalización mariachi con tilde: slugs ASCII legacy -> slug español canónico.
       { source: "/mariachis/cumpleanos", destination: "/mariachis/cumpleaños", permanent: true },
       { source: "/mariachis/quinceanera", destination: "/mariachis/quinceañera", permanent: true },
