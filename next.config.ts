@@ -206,6 +206,10 @@ const nextConfig: NextConfig = {
       { source: "/afiliado", destination: "/contacto", permanent: true },
       { source: "/voicestudio", destination: "/studio/artist", permanent: true },
       { source: "/proveedores-servicios", destination: "/proveedores", permanent: true },
+      { source: "/agent-skills", destination: "/admin/agentes", permanent: true },
+      { source: "/radar", destination: "/admin?tab=RADAR", permanent: true },
+      { source: "/sourcing", destination: "/admin/sourcing", permanent: true },
+      { source: "/voice-studio", destination: "/admin/voice-studio", permanent: true },
       // Canonicalización mariachi con tilde: slugs ASCII legacy -> slug español canónico.
       { source: "/mariachis/cumpleanos", destination: "/mariachis/cumpleaños", permanent: true },
       { source: "/mariachis/quinceanera", destination: "/mariachis/quinceañera", permanent: true },

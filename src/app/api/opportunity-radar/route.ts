@@ -79,12 +79,48 @@ export async function POST(req: NextRequest) {
             if (!target) {
                 return NextResponse.json({ success: false, error: 'Oportunidad no encontrada' }, { status: 404 });
             }
+            const hasCreds = Boolean(process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID);
+            if (!hasCreds) {
+                return NextResponse.json({
+                    success: false,
+                    dispatched: false,
+                    opportunityId: body.opportunityId,
+                    message: 'Falta configurar TELEGRAM_BOT_TOKEN y TELEGRAM_CHAT_ID en las variables de entorno de Coolify.',
+                });
+            }
             const sent = await sendTelegramOpportunity(target);
             return NextResponse.json({
                 success: sent,
                 dispatched: sent,
                 opportunityId: body.opportunityId,
-                message: sent ? 'Alerta enviada a Telegram con éxito' : 'No se pudo enviar la alerta (verificar credenciales de Telegram)',
+                message: sent ? 'Alerta enviada a Telegram con éxito' : 'Error de red con api.telegram.org (verifica validez de TELEGRAM_BOT_TOKEN y TELEGRAM_CHAT_ID)',
+            });
+        }
+
+        if (body.action === 'dispatch_top_telegram') {
+            const hasCreds = Boolean(process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID);
+            if (!hasCreds) {
+                return NextResponse.json({
+                    success: false,
+                    dispatchedCount: 0,
+                    message: 'Falta configurar TELEGRAM_BOT_TOKEN y TELEGRAM_CHAT_ID en las variables de entorno de Coolify.',
+                });
+            }
+            const store = await getRadarStore();
+            const top5 = [...store.opportunities]
+                .sort((a, b) => b.matchScore - a.matchScore)
+                .slice(0, 5);
+            let sentCount = 0;
+            for (const opp of top5) {
+                const ok = await sendTelegramOpportunity(opp);
+                if (ok) sentCount++;
+            }
+            return NextResponse.json({
+                success: sentCount > 0,
+                dispatchedCount: sentCount,
+                message: sentCount > 0
+                    ? `¡${sentCount} oportunidades Top enviadas en vivo a tu Telegram!`
+                    : 'No se pudo conectar con Telegram (verifica TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID).',
             });
         }
 

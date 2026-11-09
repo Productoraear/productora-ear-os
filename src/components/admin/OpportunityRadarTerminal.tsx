@@ -103,6 +103,25 @@ export default function OpportunityRadarTerminal() {
     }
   };
 
+  const handleDispatchTopTelegram = async () => {
+    setScanning(true);
+    setScanMessage('Enviando el Top 5 de oportunidades a tu canal de Telegram...');
+    try {
+      const res = await fetch('/api/opportunity-radar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'dispatch_top_telegram' }),
+      });
+      const data = await res.json();
+      setScanMessage(data.message || 'Proceso de despacho a Telegram finalizado.');
+    } catch {
+      setScanMessage('Error al conectar con el despachador de Telegram.');
+    } finally {
+      setScanning(false);
+      setTimeout(() => setScanMessage(null), 9000);
+    }
+  };
+
   const handleDispatchTelegram = async (opp: Opportunity) => {
     setDispatchStatus((prev) => ({ ...prev, [opp.id]: 'sending' }));
     try {
@@ -119,6 +138,7 @@ export default function OpportunityRadarTerminal() {
         setDispatchStatus((prev) => ({ ...prev, [opp.id]: 'sent' }));
       } else {
         setDispatchStatus((prev) => ({ ...prev, [opp.id]: 'error' }));
+        if (data.message) setScanMessage(data.message);
       }
     } catch {
       setDispatchStatus((prev) => ({ ...prev, [opp.id]: 'error' }));
@@ -178,6 +198,15 @@ export default function OpportunityRadarTerminal() {
             title="Recargar almacén"
           >
             <RefreshCcw className={`w-4 h-4 ${loading ? 'animate-spin text-[#ecb613]' : ''}`} />
+          </button>
+
+          <button
+            onClick={handleDispatchTopTelegram}
+            disabled={scanning || opportunities.length === 0}
+            className="px-4 py-2.5 rounded-xl bg-cyan-500/15 hover:bg-cyan-500/25 border border-cyan-500/40 text-cyan-300 font-bold text-xs font-mono uppercase tracking-wider flex items-center gap-2 transition-all disabled:opacity-50"
+          >
+            <Send className="w-3.5 h-3.5" />
+            <span>Enviar Top 5 a Telegram</span>
           </button>
 
           <button

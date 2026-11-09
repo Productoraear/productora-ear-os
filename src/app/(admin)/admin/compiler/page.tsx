@@ -111,6 +111,15 @@ export default function MasterCompilerPage() {
   const [selectedModel, setSelectedModel] = useState<string>('qwen3.8-27b-fast:latest');
   const [forgeEnabled, setForgeEnabled] = useState<boolean>(true);
   const [masterPrompt, setMasterPrompt] = useState<string | null>(null);
+  const [editableYaml, setEditableYaml] = useState<string>('');
+  const [editableTitle, setEditableTitle] = useState<string>('');
+  const [editableAction, setEditableAction] = useState<string>('');
+  const [editableFiles, setEditableFiles] = useState<string>('');
+  const [editableValidation, setEditableValidation] = useState<string>('npx tsc --noEmit -> Exit Code 0');
+  const [isEditingDag, setIsEditingDag] = useState<boolean>(false);
+  const [isEditingMaster, setIsEditingMaster] = useState<boolean>(true);
+  const [compileError, setCompileError] = useState<string | null>(null);
+  const [injectMessage, setInjectMessage] = useState<string | null>(null);
   const [gpuStatus, setGpuStatus] = useState<GpuStatusPayload | null>(null);
   const [gpuModels, setGpuModels] = useState<SelectableGpuModel[]>([]);
   const [isPreloading, setIsPreloading] = useState<string | null>(null);
@@ -182,6 +191,8 @@ export default function MasterCompilerPage() {
     if (!prompt.trim()) return;
     setIsCompiling(true);
     setInjected(false);
+    setInjectMessage(null);
+    setCompileError(null);
     setMasterPrompt(null);
     setLastLatency(null);
     try {
@@ -189,9 +200,6 @@ export default function MasterCompilerPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          // La orden viaja limpia y los tres ejes de la Guía Maestra se envían
-          // como campos cerrados que el servidor valida (antes iban pegados al
-          // texto con etiquetas y cualquier valor pasaba sin validar).
           intent: prompt,
           objective: selectedObjective,
           tactic: selectedTactic,
@@ -206,20 +214,31 @@ export default function MasterCompilerPage() {
         })
       });
       const data = await res.json();
-      if (data.success) {
-        setCompiledData(data.compiled);
+      if (data.success && data.compiled) {
+        const comp: CompiledDAGResult = data.compiled;
+        setCompiledData(comp);
+        setEditableYaml(comp.yaml ?? '');
+        setEditableTitle(comp.jsonTask?.title ?? `B0.Omega: ${prompt.slice(0, 50)}`);
+        setEditableAction(comp.jsonTask?.action ?? prompt);
+        setEditableFiles(Array.isArray(comp.jsonTask?.files) ? comp.jsonTask.files.join('\n') : '');
+        setEditableValidation(comp.jsonTask?.validation ?? 'npx tsc --noEmit -> Exit Code 0');
         if (data.oracle) {
           setOracleResult(data.oracle);
         }
         if (typeof data.masterPrompt === 'string' && data.masterPrompt) {
           setMasterPrompt(data.masterPrompt);
+        } else if (comp.jsonTask?.scaffold) {
+          setMasterPrompt(comp.jsonTask.scaffold);
         }
         if (typeof data.latencyMs === 'number') {
           setLastLatency(data.latencyMs);
         }
+      } else {
+        setCompileError(data?.error || `Error HTTP ${res.status} al compilar.`);
       }
     } catch (e) {
       console.error(e);
+      setCompileError(e instanceof Error ? e.message : 'Fallo de red al compilar.');
     } finally {
       setIsCompiling(false);
       void refreshGpuStatus();
@@ -254,7 +273,7 @@ export default function MasterCompilerPage() {
   };
 
   const yamlLines = useMemo(() => {
-    const yaml: string = compiledData?.yaml ?? '';
+    const yaml: string = editableYaml || compiledData?.yaml || '';
     if (!yaml) return [];
     return yaml.split('\n').map((line) => {
       const trimmed = line.trimStart();
@@ -272,11 +291,12 @@ export default function MasterCompilerPage() {
       }
       return { text: line, className: 'text-zinc-300' };
     });
-  }, [compiledData]);
+  }, [editableYaml, compiledData]);
 
   const handleCopyYAML = () => {
-    if (!compiledData?.yaml) return;
-    navigator.clipboard.writeText(compiledData.yaml);
+    const textToCopy = editableYaml || compiledData?.yaml || '';
+    if (!textToCopy) return;
+    navigator.clipboard.writeText(textToCopy);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -289,20 +309,42 @@ export default function MasterCompilerPage() {
   };
 
   const handleInjectQueue = async () => {
-    if (!compiledData?.jsonTask) return;
+    const baseTask = compiledData?.jsonTask;
+    const filesArray = editableFiles
+      .split('\n')
+      .map(f => f.trim())
+      .filter(Boolean);
+
+    const payloadTask = {
+      id: baseTask?.id || `omega-custom-${Date.now().toString().slice(-4)}`,
+      title: (editableTitle || baseTask?.title || `B0.Omega: ${prompt.slice(0, 50)}`).slice(0, 230),
+      status: 'QUEUED' as const,
+      description: (editableAction || prompt || baseTask?.description || 'Orden personalizada CEO').slice(0, 1900),
+      files: filesArray.length > 0 ? filesArray : (baseTask?.files ?? ['src/app/(admin)/admin/page.tsx']),
+      action: (editableAction || prompt || baseTask?.action || 'Ejecutar directiva CEO').slice(0, 1800),
+      scaffold: (masterPrompt || editableYaml || baseTask?.scaffold || prompt).slice(0, 7800),
+      done_when: (editableValidation || baseTask?.done_when || 'npx tsc --noEmit -> Exit Code 0').slice(0, 480),
+      validation: (editableValidation || baseTask?.validation || 'npx tsc --noEmit -> Exit Code 0').slice(0, 480),
+    };
+
     setIsInjecting(true);
+    setInjectMessage(null);
     try {
       const res = await fetch('/api/admin/tasks/inject', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ task: compiledData.jsonTask })
+        body: JSON.stringify({ task: payloadTask })
       });
       const data = await res.json();
-      if (data.success) {
+      if (data.ok || data.success) {
         setInjected(true);
+        setInjectMessage(`Tarea inyectada en tasks_queue.json con ID: ${data.task?.id || payloadTask.id}`);
+      } else {
+        setInjectMessage(`Error al inyectar: ${data.error || 'Verifica tu sesión admin'}`);
       }
     } catch (e) {
       console.error(e);
+      setInjectMessage('Error de red al inyectar en tasks_queue.json');
     } finally {
       setIsInjecting(false);
     }
@@ -749,32 +791,178 @@ export default function MasterCompilerPage() {
           </div>
         </div>
 
-        {/* Right Column: Compiled Manifest DAG */}
+        {/* Right Column: Compiled Manifest DAG & Editable Studio */}
         <div className="lg:col-span-7 flex flex-col gap-4">
-          <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 backdrop-blur-md flex flex-col flex-1 min-h-[520px]">
-            <div className="flex items-center justify-between pb-3 border-b border-zinc-800 mb-4">
+          {compileError && (
+            <div className="p-4 rounded-2xl bg-[#FF2B44]/10 border border-[#FF2B44]/40 text-xs font-mono text-[#FF2B44]">
+              {compileError}
+            </div>
+          )}
+
+          {injectMessage && (
+            <div className={'p-4 rounded-2xl border text-xs font-mono ' + (injected ? 'bg-emerald-500/10 border-emerald-500/40 text-emerald-300' : 'bg-amber-500/10 border-amber-500/40 text-amber-300')}>
+              {injectMessage}
+            </div>
+          )}
+
+          {/* Forged Master Prompt Studio (Edición Palabra por Palabra) */}
+          <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-[#ecb613]/30 backdrop-blur-md space-y-3">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-800 pb-2">
+              <div className="flex items-center gap-2">
+                <BrainCircuit className="w-4 h-4 text-[#ecb613]" />
+                <span className="text-xs font-mono uppercase text-[#ecb613] font-bold">
+                  Estudio de Prompt Maestro (Editable Bit a Bit / Palabra por Palabra)
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setIsEditingMaster(v => !v)}
+                  className="px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-200 text-xs font-mono transition"
+                >
+                  {isEditingMaster ? 'Ver Modo Lectura' : 'Editar Texto Libre'}
+                </button>
+                <button
+                  type="button"
+                  onClick={handleCopyMasterPrompt}
+                  disabled={!masterPrompt}
+                  className="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-mono flex items-center gap-1.5 transition disabled:opacity-40"
+                >
+                  {copiedMaster ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                  <span>{copiedMaster ? 'Copiado' : 'Copiar Prompt Maestro'}</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Inyección rápida de bloques modulares al Prompt Maestro */}
+            <div className="flex flex-wrap items-center gap-1.5">
+              <span className="text-[10px] font-mono text-zinc-500 uppercase mr-1">Insertar bloque:</span>
+              {[
+                { label: '+ Regla 350€ Solista', snippet: '\n- [REGLA SSOT]: Respetar suelo canónico de 350,00 € para Solista (Edwin Agudelo) + 1,50 €/km desde km 50.' },
+                { label: '+ Split 80/10/10 Céntimos', snippet: '\n- [REGLA SPLIT]: Calcular reparto 80% Artista / 10% EAR OS / 10% VIMUME en céntimos enteros (integer cents).' },
+                { label: '+ Acústica Ley 37/2003', snippet: '\n- [REGLA ACÚSTICA]: Garantizar < 75 dB SPL (salud pública) y 12 W/pax con limitador homologado.' },
+                { label: '+ Techo B2G 14.250€', snippet: '\n- [REGLA B2G]: Contrato menor Art. 118 LCSP con tope preventivo en 14.250,00 € y SROI 4.85x.' },
+                { label: '+ Cero Emojis / UNSLOP', snippet: '\n- [UNSLOP OLED]: Fondo #030305, un solo acento (#ecb613), iconos Lucide strokeWidth 1.5, cero emojis.' },
+              ].map((blk) => (
+                <button
+                  key={blk.label}
+                  type="button"
+                  onClick={() => setMasterPrompt(prev => (prev || prompt || '') + blk.snippet)}
+                  className="px-2 py-1 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-[#ecb613]/50 text-[10px] font-mono text-zinc-300 transition"
+                >
+                  {blk.label}
+                </button>
+              ))}
+            </div>
+
+            {isEditingMaster ? (
+              <textarea
+                value={masterPrompt ?? ''}
+                onChange={e => setMasterPrompt(e.target.value)}
+                placeholder="Aquí aparecerá el Prompt Maestro al pulsar 'Compilar a DAG', o puedes escribir/pegar y modificar cualquier palabra, frase o bloque directamente aquí antes de copiarlo o inyectarlo a la cola..."
+                rows={14}
+                className="w-full p-4 rounded-xl bg-black border border-[#ecb613]/30 text-xs font-mono leading-relaxed text-zinc-200 focus:outline-none focus:border-[#ecb613] resize-y"
+              />
+            ) : (
+              <pre className="p-4 rounded-xl bg-black border border-[#ecb613]/20 text-[11px] font-mono leading-relaxed overflow-x-auto whitespace-pre-wrap text-zinc-300 max-h-96">
+                {masterPrompt || 'Pulsa "Compilar a DAG" o activa "Editar Texto Libre" para redactar tu propio Prompt Maestro.'}
+              </pre>
+            )}
+          </div>
+
+          {/* Control Quirúrgico de la Tarea antes de Inyectar a tasks_queue.json */}
+          <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 backdrop-blur-md space-y-3">
+            <div className="flex items-center justify-between border-b border-zinc-800 pb-2">
+              <span className="text-xs font-mono uppercase text-zinc-300 font-bold">
+                Parámetros Exactos de la Orden para tasks_queue.json (100% Editables)
+              </span>
+              <span className="text-[10px] font-mono text-zinc-500">Modifica cualquier campo libremente</span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label className="text-[10px] font-mono uppercase text-zinc-400">Título de la Tarea</label>
+                <input
+                  type="text"
+                  value={editableTitle}
+                  onChange={e => setEditableTitle(e.target.value)}
+                  placeholder="Ej: B0.Omega: Unificar fichas y cotizador..."
+                  className="mt-1 w-full px-3 py-2 rounded-xl bg-zinc-950 border border-zinc-800 text-xs font-mono text-white focus:outline-none focus:border-[#ecb613]"
+                />
+              </div>
+              <div>
+                <label className="text-[10px] font-mono uppercase text-zinc-400">Comando de Verificación (Done When)</label>
+                <input
+                  type="text"
+                  value={editableValidation}
+                  onChange={e => setEditableValidation(e.target.value)}
+                  placeholder="npx tsc --noEmit -> Exit Code 0"
+                  className="mt-1 w-full px-3 py-2 rounded-xl bg-zinc-950 border border-zinc-800 text-xs font-mono text-emerald-400 focus:outline-none focus:border-[#ecb613]"
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label className="text-[10px] font-mono uppercase text-zinc-400">Archivos Autorizados (1 por línea)</label>
+                <textarea
+                  value={editableFiles}
+                  onChange={e => setEditableFiles(e.target.value)}
+                  rows={3}
+                  placeholder={'src/app/(admin)/admin/page.tsx\nsrc/components/hubs/SovereignIntentHubView.tsx'}
+                  className="mt-1 w-full p-2.5 rounded-xl bg-zinc-950 border border-zinc-800 text-xs font-mono text-cyan-300 focus:outline-none focus:border-[#ecb613]"
+                />
+              </div>
+              <div>
+                <label className="text-[10px] font-mono uppercase text-zinc-400">Resumen de Acción Ejecutiva</label>
+                <textarea
+                  value={editableAction}
+                  onChange={e => setEditableAction(e.target.value)}
+                  rows={3}
+                  placeholder="Describe exactamente qué cambio quieres que ejecute el obrero..."
+                  className="mt-1 w-full p-2.5 rounded-xl bg-zinc-950 border border-zinc-800 text-xs font-mono text-zinc-200 focus:outline-none focus:border-[#ecb613]"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 backdrop-blur-md flex flex-col flex-1 min-h-[380px]">
+            <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-zinc-800 mb-4">
               <div className="flex items-center gap-2">
                 <Code2 className="w-4 h-4 text-[#ecb613]" />
-                <span className="text-xs font-mono uppercase text-zinc-300">Manifiesto DAG · servidor propio</span>
+                <span className="text-xs font-mono uppercase text-zinc-300">Manifiesto DAG YAML · servidor propio</span>
               </div>
-              {compiledData && (
-                <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2">
+                {compiledData && (
                   <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-zinc-800 text-zinc-400 border border-zinc-700">
-                    ~{compiledData.estimatedTokens} tokens
+                    ~{Math.round((editableYaml || compiledData.yaml).length / 4)} tokens
                   </span>
-                  <button onClick={handleCopyYAML} className="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-mono flex items-center gap-1.5 transition">
-                    {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-                    <span>{copied ? 'Copiado' : 'Copiar DAG'}</span>
-                  </button>
-                  <button onClick={handleInjectQueue} disabled={isInjecting || injected} className="px-3 py-1.5 rounded-lg bg-[#ecb613]/20 hover:bg-[#ecb613]/30 border border-[#ecb613]/40 text-[#ecb613] text-xs font-mono flex items-center gap-1.5 transition disabled:opacity-50">
-                    {injected ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Send className="w-3.5 h-3.5" />}
-                    <span>{injected ? 'En Cola' : 'Inyectar a tasks_queue.json'}</span>
-                  </button>
-                </div>
-              )}
+                )}
+                <button
+                  type="button"
+                  onClick={() => setIsEditingDag(v => !v)}
+                  className="px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-200 text-xs font-mono transition"
+                >
+                  {isEditingDag ? 'Vista Coloreada' : 'Editar YAML'}
+                </button>
+                <button onClick={handleCopyYAML} className="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-mono flex items-center gap-1.5 transition">
+                  {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                  <span>{copied ? 'Copiado' : 'Copiar DAG'}</span>
+                </button>
+                <button onClick={handleInjectQueue} disabled={isInjecting} className="px-3 py-1.5 rounded-lg bg-[#ecb613]/20 hover:bg-[#ecb613]/30 border border-[#ecb613]/40 text-[#ecb613] text-xs font-mono flex items-center gap-1.5 transition disabled:opacity-50">
+                  {injected ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Send className="w-3.5 h-3.5" />}
+                  <span>{isInjecting ? 'Inyectando...' : injected ? 'En Cola (Re-inyectar)' : 'Inyectar a tasks_queue.json'}</span>
+                </button>
+              </div>
             </div>
-            {compiledData ? (
-              <pre className="flex-1 p-4 rounded-xl bg-black border border-zinc-800 text-[11px] font-mono leading-relaxed overflow-x-auto selection:bg-emerald-950 selection:text-white">
+            {isEditingDag ? (
+              <textarea
+                value={editableYaml}
+                onChange={e => setEditableYaml(e.target.value)}
+                rows={14}
+                placeholder="Puedes editar cada línea del YAML aquí..."
+                className="flex-1 w-full p-4 rounded-xl bg-black border border-[#ecb613]/30 text-[11px] font-mono leading-relaxed text-zinc-200 focus:outline-none focus:border-[#ecb613]"
+              />
+            ) : compiledData || editableYaml ? (
+              <pre className="flex-1 p-4 rounded-xl bg-black border border-zinc-800 text-[11px] font-mono leading-relaxed overflow-x-auto selection:bg-emerald-950 selection:text-white max-h-96">
                 {yamlLines.map((line, i) => (
                   <div key={i} className={line.className}>{line.text || ' '}</div>
                 ))}
@@ -782,62 +970,13 @@ export default function MasterCompilerPage() {
             ) : (
               <div className="flex-1 flex flex-col items-center justify-center text-center p-8 border border-dashed border-zinc-800 rounded-xl">
                 <Terminal className="w-10 h-10 text-zinc-700 mb-3" />
-                <p className="text-sm text-zinc-400 font-medium mb-1">Esperando entrada del Oráculo</p>
+                <p className="text-sm text-zinc-400 font-medium mb-1">Esperando entrada del Oráculo o Edición Directa</p>
                 <p className="text-xs text-zinc-600 font-mono max-w-sm">
-                  Selecciona el Modo ({oraclePersona === 'CEO' ? 'CEO / Empresario' : 'Artista Soberano'}), escribe tu visión comercial a la izquierda y pulsa 'Compilar a DAG'.
+                  Escribe tu visión comercial a la izquierda y pulsa &apos;Compilar a DAG&apos;, o edita directamente el Prompt Maestro arriba e inyéctalo a la cola.
                 </p>
               </div>
             )}
           </div>
-
-          {/* Barra de acciones del DAG — siempre visible cuando hay DAG compilado */}
-          {compiledData && (
-            <div className="p-4 rounded-2xl bg-[#09090d]/80 border border-white/10 backdrop-blur-md flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-              <div className="flex items-center gap-2 text-xs font-mono text-zinc-400">
-                <Send className="w-4 h-4 text-[#ecb613]" />
-                <span>Acciones del Manifiesto DAG</span>
-              </div>
-              <div className="flex flex-col sm:flex-row gap-2">
-                <button
-                  onClick={handleCopyYAML}
-                  className="px-4 py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-mono font-bold flex items-center justify-center gap-2 transition"
-                >
-                  {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
-                  <span>{copied ? 'DAG Copiado' : 'Copiar DAG completo'}</span>
-                </button>
-                <button
-                  onClick={handleInjectQueue}
-                  disabled={isInjecting || injected}
-                  className="px-4 py-2.5 rounded-xl bg-[#ecb613]/20 hover:bg-[#ecb613]/30 border border-[#ecb613]/40 text-[#ecb613] text-xs font-mono font-bold flex items-center justify-center gap-2 transition disabled:opacity-50"
-                >
-                  {injected ? <Check className="w-4 h-4 text-emerald-400" /> : <Send className="w-4 h-4" />}
-                  <span>{injected ? 'Tarea en Cola' : 'Enviar a tasks_queue.json'}</span>
-                </button>
-              </div>
-            </div>
-          )}
-
-          {/* Forged Master Prompt (nivel Frontera S-Class) */}
-          {masterPrompt && (
-            <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-[#ecb613]/30 backdrop-blur-md space-y-3">
-              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-800 pb-2">
-                <div className="flex items-center gap-2">
-                  <BrainCircuit className="w-4 h-4 text-[#ecb613]" />
-                  <span className="text-xs font-mono uppercase text-[#ecb613] font-bold">Prompt Maestro Forjado (nivel frontera)</span>
-                </div>
-                <button
-                  onClick={handleCopyMasterPrompt}
-                  className="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-mono flex items-center gap-1.5 transition"
-                >
-                  {copiedMaster ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-                  <span>{copiedMaster ? 'Copiado' : 'Copiar Prompt Maestro'}</span>
-                </button>
-              </div>
-              <pre className="p-4 rounded-xl bg-black border border-[#ecb613]/20 text-[11px] font-mono leading-relaxed overflow-x-auto whitespace-pre-wrap text-zinc-300 max-h-96">
-                {masterPrompt}
-              </pre>
-            </div>
-          )}
         </div>
       </div>
     </div>
