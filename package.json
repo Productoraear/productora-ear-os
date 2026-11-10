@@ -78,7 +78,7 @@
     "verify:domains": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_domain_isolation.ts",
     "probe:cron": "node scripts/cron_secret_probe.cjs",
     "deploy:freshness": "node scripts/prod_deploy_freshness.cjs",
-    "gate:prepush": "node scripts/audit_orphan_imports.cjs && npm run audit:http && npm run audit:routes && npm run audit:cta-matrix && npm run verify:provider-ctas && npm run audit:phone && npm run audit:edge && npm run verify:pricing && npm run verify:logistics && npm run verify:context && npm run verify:leadgate && npm run audit:ssot && npm run lint && npm run audit:contrast:core && npm run typecheck:landings && node ./node_modules/typescript/bin/tsc --noEmit && npm run audit:admin && npm run audit:ci-gate && npm run verify:voice && npm run verify:cron-secret && npm run verify:domains && npm run verify:confianza && npm run audit:tariff-copy && npm run audit:residues && node scripts/verify_sonometro_pwa.cjs && node scripts/verify_price_lock_flow.cjs && npm run verify:master-guide && npm run audit:admin-ecosystem && npm run verify:b2g-fast-track && npm run audit:omega-rojo && node scripts/audit_cls_budget.cjs",
+    "gate:prepush": "node scripts/audit_queue_counter_integrity.cjs && node scripts/audit_orphan_imports.cjs && npm run audit:http && npm run audit:routes && npm run audit:cta-matrix && npm run verify:provider-ctas && npm run audit:phone && npm run audit:edge && npm run verify:pricing && npm run verify:logistics && npm run verify:context && npm run verify:leadgate && npm run audit:ssot && npm run lint && npm run audit:contrast:core && npm run typecheck:landings && node ./node_modules/typescript/bin/tsc --noEmit && npm run audit:admin && npm run audit:ci-gate && npm run verify:voice && npm run verify:cron-secret && npm run verify:domains && npm run verify:confianza && npm run verify:concierge-saga && npm run audit:tariff-copy && npm run audit:residues && node scripts/verify_sonometro_pwa.cjs && node scripts/verify_price_lock_flow.cjs && npm run verify:master-guide && npm run audit:admin-ecosystem && npm run verify:b2g-fast-track && npm run audit:omega-rojo && node scripts/audit_cls_budget.cjs",
     "sim:event": "node scripts/simulate_100_services_event.mjs",
     "audit:webgl": "node scripts/audit_webgl_friction.cjs",
     "audit:webgl:strict": "node scripts/audit_webgl_friction.cjs --strict",
@@ -121,7 +121,17 @@
     "verify:confianza:prod": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_trust_ledger.ts --prod",
     "audit:omega-rojo": "node scripts/audit_omega_rojo_scorecard.cjs",
     "audit:omega-rojo:strict": "node scripts/audit_omega_rojo_scorecard.cjs --strict",
-    "audit:cls-budget": "node scripts/audit_cls_budget.cjs"
+    "audit:cls-budget": "node scripts/audit_cls_budget.cjs",
+    "audit:queue-counters": "node scripts/audit_queue_counter_integrity.cjs",
+    "audit:queue-forensic": "node scripts/audit_queue_forensic.cjs",
+    "verify:concierge-saga": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_concierge_saga_contract.ts",
+    "ledger:reconcile": "node scripts/ledger_reconcile_legacy.cjs",
+    "audit:elevation": "node .antigravity/omega.js audit --elevation-spec=.antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+    "audit:elevation-harness": "node scripts/audit_elevation_task_harness.cjs",
+    "audit:queue-counters:sync": "node scripts/audit_queue_counter_integrity.cjs --sync",
+    "ledger:claim": "node scripts/ledger_append_claim.cjs",
+    "verify:showcase": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_showcase_ingest.ts",
+    "ingest:showcase": "node scripts/ingest_competitor_showcase.cjs"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
