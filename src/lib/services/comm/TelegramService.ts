@@ -8,9 +8,11 @@ export class TelegramService {
     private adminChatId: string;
 
     constructor() {
-        // Usamos las variables del .env.local recuperado con fallback
-        this.botToken = process.env.TELEGRAM_BOT_TOKEN || process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN || '';
-        this.adminChatId = process.env.TELEGRAM_CHAT_ID || process.env.NEXT_PUBLIC_TELEGRAM_ADMIN_ID || '';
+        // 🔒 INV-07 / SEC-3: sólo credenciales de servidor. El fallback a las
+        // variantes públicas de Telegram se eliminó el 2026-11-09: un valor con
+        // prefijo `NEXT_PUBLIC_` viaja en el bundle y es exfiltrable con DevTools.
+        this.botToken = process.env.TELEGRAM_BOT_TOKEN || '';
+        this.adminChatId = process.env.TELEGRAM_CHAT_ID || process.env.TELEGRAM_ADMIN_ID || '';
     }
 
     /**

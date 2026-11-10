@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import type * as THREE from 'three';
 import Link from 'next/link';
 import { ArrowUpRight, Activity, ShieldCheck, Compass } from 'lucide-react';
+import { useWebglLifecycle } from '@/lib/hooks/useWebglLifecycle';
 
 interface PrismaDiamondHero3DProps {
   onSelectRole?: (role: string) => void;
@@ -18,11 +19,43 @@ const AXIS_NODES = [
 ];
 
 export default React.memo(function PrismaDiamondHero3D({ onSelectRole }: PrismaDiamondHero3DProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [activeAxis, setActiveAxis] = useState<string | null>(null);
 
+  // F-4 (viewport + accesibilidad 3D): la escena NO se inicializa por inercia.
+  //   · prefers-reduced-motion / SSR / sin GPU / save-data → 'static': el canvas
+  //     WebGL nunca se crea y manda la alternativa 2D (ESCENARIO ESTÁTICO).
+  //   · fuera de viewport o pestaña oculta          → 'paused': se cancela el
+  //     rAF (0 frames = 0% CPU/GPU) y se conserva el contexto WebGL.
+  //   · dentro de viewport y tab visible            → 'running'.
+  const {
+    ref: containerRef,
+    decision,
+    label: webglStateLabel,
+    shouldMountCanvas,
+    shouldAnimate,
+    shouldRenderStaticAlternative,
+  } = useWebglLifecycle();
+
+  const targetFps = decision.animateBudget.fps;
+  const particleBudget = Math.max(1, decision.animateBudget.maxParticles);
+
+  // El bucle rAF vive dentro de un efecto de larga vida: leer el estado por ref
+  // evita destruir y reconstruir la escena (y su contexto WebGL) en cada scroll.
+  const shouldAnimateRef = useRef<boolean>(shouldAnimate);
+  /** Handle de reanudación publicado por el efecto; `null` si no hay escena. */
+  const resumeLoopRef = useRef<(() => void) | null>(null);
+
   useEffect(() => {
+    shouldAnimateRef.current = shouldAnimate;
+    // Reanudar es pedir OTRO frame, no reconstruir: 0 coste de contexto.
+    if (shouldAnimate) resumeLoopRef.current?.();
+  }, [shouldAnimate]);
+
+  useEffect(() => {
+    // Sin canvas no hay contexto: este efecto jamás crea un renderer WebGL.
+    if (!shouldMountCanvas) return;
+
     const canvas = canvasRef.current;
     const container = containerRef.current;
     if (!canvas || !container) return;
@@ -158,8 +191,8 @@ export default React.memo(function PrismaDiamondHero3D({ onSelectRole }: PrismaD
         lineGeometries.push(lineGeom);
       });
 
-      // 5. Nube de partículas
-      const particleCount = 260;
+      // 5. Nube de partículas (presupuesto gobernado, no un número mágico)
+      const particleCount = particleBudget;
       const particlePositions = new Float32Array(particleCount * 3);
       const particleColors = new Float32Array(particleCount * 3);
       const pColor1 = new THREE.Color(0xff2b44);
@@ -232,11 +265,15 @@ export default React.memo(function PrismaDiamondHero3D({ onSelectRole }: PrismaD
       resizeObserver.observe(container);
       handleResize();
 
-      // 8. Bucle de animación
+      // 8. Bucle de animación GOBERNADO POR VIEWPORT (hallazgo F-4)
+      // El bucle NO se auto-invoca: sólo se pide el siguiente frame si el
+      // lifecycle dice 'running'. Al salir del viewport se cancela el rAF y el
+      // coste de CPU/GPU baja a 0% sin destruir el contexto WebGL.
       const clock = new THREE.Clock();
+      let lastFrameMs = 0;
+      const minFrameMs = targetFps > 0 ? 1000 / targetFps : 1000 / 30;
 
-      const animate = () => {
-        animationFrameId = requestAnimationFrame(animate);
+      const renderFrame = (): void => {
         const elapsedTime = clock.getElapsedTime();
 
         currentRotX += (targetRotX - currentRotX) * 0.05;
@@ -258,10 +295,40 @@ export default React.memo(function PrismaDiamondHero3D({ onSelectRole }: PrismaD
         renderer.render(scene, camera);
       };
 
+      const animate = (timestamp?: number): void => {
+        // Re-verificación por frame: entre dos frames el usuario puede haber
+        // scrolleado fuera de pantalla o cambiado de pestaña.
+        if (!shouldAnimateRef.current) {
+          animationFrameId = 0;
+          return;
+        }
+
+        animationFrameId = requestAnimationFrame(animate);
+
+        const now = typeof timestamp === 'number' ? timestamp : performance.now();
+        if (now - lastFrameMs < minFrameMs) return;
+        lastFrameMs = now;
+
+        renderFrame();
+      };
+
+      // Primer frame pintado de inmediato: el póster ya cubre el hueco, así que
+      // no hay parpadeo, y el usuario ve la escena en el mismo tick del montaje.
+      renderFrame();
       animate();
 
+      // Handle de reanudación: si el lifecycle pasó a 'paused' el bucle se
+      // detuvo; volver a 'running' reengancha sin reconstruir la escena.
+      resumeLoopRef.current = () => {
+        if (animationFrameId === 0 && shouldAnimateRef.current) {
+          animate();
+        }
+      };
+
       cleanup = () => {
+        resumeLoopRef.current = null;
         cancelAnimationFrame(animationFrameId);
+        animationFrameId = 0;
         window.removeEventListener('mousemove', handleMouseMove);
         window.removeEventListener('touchmove', handleTouchMove);
         resizeObserver.disconnect();
@@ -281,14 +348,57 @@ export default React.memo(function PrismaDiamondHero3D({ onSelectRole }: PrismaD
       cancelled = true;
       if (cleanup) cleanup();
     };
-  }, []);
+  }, [shouldMountCanvas, containerRef, particleBudget, targetFps]);
 
   return (
     <div
       ref={containerRef}
+      data-webgl-state={webglStateLabel}
+      data-webgl-tier={decision.reason}
       className="relative w-full min-h-[580px] sm:min-h-[660px] lg:min-h-[760px] flex items-center justify-center overflow-hidden bg-[#030305] select-none"
     >
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-10" />
+      {/* Canvas WebGL: SÓLO existe si el lifecycle lo autoriza. En 'static' no se
+          crea ni un contexto (batería y accesibilidad), y manda la capa 2D. */}
+      {shouldMountCanvas ? (
+        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-10" />
+      ) : null}
+
+      {/* Alternativa 2D estática de alta fidelidad: mismo encuadre, mismos ejes,
+          cero movimiento. Se pinta con CSS puro (sin three, sin shaders). */}
+      {shouldRenderStaticAlternative ? (
+        <div
+          className="absolute inset-0 z-10 pointer-events-none flex items-center justify-center"
+          aria-hidden="true"
+        >
+          <div className="relative w-[min(74vw,420px)] aspect-square">
+            <div className="absolute inset-0 rounded-full border border-white/10" />
+            <div className="absolute inset-[18%] rounded-full border border-white/10" />
+            <div className="absolute inset-[36%] rotate-45 border border-[#FF2B44]/40" />
+            <div className="absolute inset-[36%] border border-[#00E5FF]/30" />
+            <div className="absolute -inset-[2%] rounded-full opacity-60 bg-[radial-gradient(circle_at_50%_35%,rgba(255,43,68,0.14)_0%,rgba(0,229,255,0.08)_45%,transparent_70%)]" />
+            {AXIS_NODES.map((node) => {
+              const x = 50 + Math.cos(node.angle) * 46;
+              const y = 50 + Math.sin(node.angle) * 46;
+              return (
+                <span
+                  key={`static-${node.id}`}
+                  className="absolute w-1.5 h-1.5 rounded-full"
+                  style={{
+                    left: `${x}%`,
+                    top: `${y}%`,
+                    backgroundColor: node.color,
+                    boxShadow: `0 0 10px ${node.color}`,
+                  }}
+                />
+              );
+            })}
+          </div>
+          <span className="absolute bottom-3 right-4 font-mono text-[9px] uppercase tracking-widest text-zinc-500">
+            Escenario estatico / motion reducido
+          </span>
+        </div>
+      ) : null}
+
       <div className="absolute inset-0 bg-gradient-to-t from-[#030305] via-transparent to-[#030305]/80 pointer-events-none z-10" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,43,68,0.06)_0%,rgba(0,229,255,0.04)_40%,transparent_75%)] pointer-events-none z-10" />
 

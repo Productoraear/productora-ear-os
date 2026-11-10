@@ -7,7 +7,8 @@ let genAIClient: GoogleGenerativeAI | null = null;
 
 function getGenAI(): GoogleGenerativeAI | null {
   // 🔒 BLINDAJE P1-3: el cliente NUNCA debe portar la API key de Gemini.
-  // Cualquier `NEXT_PUBLIC_GEMINI_API_KEY` embebida en el bundle es exfiltrable.
+  // Ninguna clave de Gemini puede llevar prefijo público (`NEXT_PUBLIC_`/`VITE_`):
+  // el bundle del navegador es legible y la clave quedaría exfiltrable.
   // La inferencia real de Gemini se resuelve EXCLUSIVAMENTE en el servidor vía /api/astra.
   // Aquí forzamos el fallback heurístico local (sin clave en cliente).
   return null;

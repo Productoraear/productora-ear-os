@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { fireAndForgetN8n } from '@/lib/services/n8n-dispatcher';
+import { prisma } from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -7,10 +8,13 @@ export const runtime = 'nodejs';
 /**
  * Telemetría real de pings GPS para seguimiento "Día D".
  *
- * v1 en memoria del proceso; persistencia PostgreSQL en Wave 27.
- * Sustituye los datos simulados (setInterval + generación aleatoria de SPL)
- * que antes alimentaban LiveFleetTracker. Este backend es la fuente de verdad;
- * la UI se conecta a él en la tarea W26_T03.
+ * F-6 (persistencia durable): la fuente de verdad es PostgreSQL 16
+ * (`LiveTelemetryPing`). Un redeploy de Coolify ya NO vacía el rastro GPS.
+ *
+ * Contrato de honestidad (AGENTS.md AF-1 / INV-16): toda respuesta declara
+ * `probed`, `source`, `mode` y `checkedAt`. Nunca "verde por defecto": si
+ * PostgreSQL no responde se sirve la caché de proceso y se declara
+ * `source:"cache"` + `mode:"SIMULADO"` con el error real (SIN_CONFIRMAR, AF-3).
  */
 
 type TelemetryStatus =
@@ -39,14 +43,21 @@ type TelemetryPing = {
 };
 
 const ID_PATTERN = /^[A-Z0-9-]{4,40}$/;
-const MAX_PINGS_PER_ID = 200;
 const LIVE_WINDOW_MS = 120_000;
+/** Ventana de lectura devuelta al cliente (traza reciente suficiente). */
+const READ_LIMIT = 200;
+/** Poda de retención: la tabla no crece indefinidamente. */
+const RETENTION_DAYS = 30;
 
 type TelemetryStore = {
   __earTelemetry?: Map<string, TelemetryPing[]>;
 };
 
-function getStore(): Map<string, TelemetryPing[]> {
+/**
+ * Caché de proceso: NO es fuente de verdad. Sólo actúa como contingencia si
+ * PostgreSQL cae durante el evento, para no dejar la UI en "Sin señal aún".
+ */
+function getCache(): Map<string, TelemetryPing[]> {
   const store = globalThis as unknown as TelemetryStore;
   if (!store.__earTelemetry) {
     store.__earTelemetry = new Map<string, TelemetryPing[]>();
@@ -54,21 +65,20 @@ function getStore(): Map<string, TelemetryPing[]> {
   return store.__earTelemetry;
 }
 
-function getPings(id: string): TelemetryPing[] {
-  return getStore().get(id) ?? [];
+function cachePing(id: string, ping: TelemetryPing): void {
+  const cache = getCache();
+  const pings = cache.get(id) ?? [];
+  pings.push(ping);
+  if (pings.length > READ_LIMIT) {
+    pings.splice(0, pings.length - READ_LIMIT);
+  }
+  cache.set(id, pings);
 }
 
-function appendPing(id: string, ping: TelemetryPing): TelemetryPing[] {
-  const store = getStore();
-  const pings = store.get(id) ?? [];
-  pings.push(ping);
-  // Mantener solo los últimos N pings para no crecer sin límite en memoria.
-  if (pings.length > MAX_PINGS_PER_ID) {
-    pings.splice(0, pings.length - MAX_PINGS_PER_ID);
-  }
-  store.set(id, pings);
-  return pings;
+function cacheRead(id: string): TelemetryPing[] {
+  return getCache().get(id) ?? [];
 }
+
 
 function isTelemetryStatus(value: unknown): value is TelemetryStatus {
   return typeof value === 'string' && (TELEMETRY_STATUSES as readonly string[]).includes(value);
@@ -111,6 +121,31 @@ function isLive(last: TelemetryPing | null): boolean {
   return Date.now() - ts < LIVE_WINDOW_MS;
 }
 
+/** Convierte una fila persistida al contrato público de ping. */
+function rowToPing(row: {
+  lat: number;
+  lng: number;
+  accuracy: number;
+  status: string;
+  capturedAt: Date;
+}): TelemetryPing {
+  return {
+    lat: row.lat,
+    lng: row.lng,
+    accuracy: row.accuracy,
+    status: isTelemetryStatus(row.status) ? row.status : 'EN_RUTA',
+    at: row.capturedAt.toISOString(),
+  };
+}
+
+function describeError(reason: unknown): string {
+  if (reason instanceof Error) {
+    return reason.message.slice(0, 180);
+  }
+  return String(reason).slice(0, 180);
+}
+
+
 export async function POST(
   req: Request,
   { params }: { params: Promise<{ id: string }> },
@@ -144,20 +179,94 @@ export async function POST(
     return NextResponse.json({ error: 'invalid_payload' }, { status: 422 });
   }
 
-  const previous = getPings(id);
-  const hadEnRuta = previous.some((p) => p.status === 'EN_RUTA');
+  const parsedCapturedAt = new Date(ping.at);
+  const capturedAt = Number.isFinite(parsedCapturedAt.getTime()) ? parsedCapturedAt : new Date();
 
-  const pings = appendPing(id, ping);
-
-  // Disparo a n8n: primer ping EN_RUTA y cualquier FINALIZADO.
-  if (ping.status === 'FINALIZADO' || (ping.status === 'EN_RUTA' && !hadEnRuta)) {
-    fireAndForgetN8n('call-center-intake', { kind: 'telemetry', id, status: ping.status });
+  // ¿Había ya un ping EN_RUTA? Se consulta ANTES de insertar (aviso n8n idempotente).
+  let hadEnRuta = false;
+  try {
+    const previous = await prisma.liveTelemetryPing.findFirst({
+      where: { missionId: id, status: 'EN_RUTA' },
+      select: { id: true },
+    });
+    hadEnRuta = previous !== null;
+  } catch (reason) {
+    console.error(`[telemetry] Pre-lectura fallida para ${id}: ${describeError(reason)}`);
   }
 
-  return NextResponse.json(
-    { id, ok: true, count: pings.length, status: ping.status },
-    { status: 202 },
-  );
+  try {
+    await prisma.liveTelemetryPing.create({
+      data: {
+        missionId: id,
+        lat: ping.lat,
+        lng: ping.lng,
+        accuracy: ping.accuracy,
+        status: ping.status,
+        source: 'live',
+        capturedAt,
+      },
+      select: { id: true },
+    });
+
+    const total = await prisma.liveTelemetryPing.count({ where: { missionId: id } });
+
+    // Caché de contingencia alineada con la verdad persistida.
+    cachePing(id, ping);
+
+    // Disparo a n8n: primer ping EN_RUTA y cualquier FINALIZADO.
+    if (ping.status === 'FINALIZADO' || (ping.status === 'EN_RUTA' && !hadEnRuta)) {
+      fireAndForgetN8n('call-center-intake', { kind: 'telemetry', id, status: ping.status });
+    }
+
+    // Poda de retención (best-effort: nunca bloquea la respuesta al proveedor).
+    void prisma.liveTelemetryPing
+      .deleteMany({
+        where: {
+          capturedAt: { lt: new Date(Date.now() - RETENTION_DAYS * 86_400_000) },
+        },
+      })
+      .catch(() => undefined);
+
+    return NextResponse.json(
+      {
+        id,
+        ok: true,
+        count: total,
+        status: ping.status,
+        persisted: true,
+        probed: true,
+        source: 'live',
+        mode: 'REAL',
+        checkedAt: new Date().toISOString(),
+      },
+      { status: 202 },
+    );
+  } catch (reason) {
+    const lastError = describeError(reason);
+    console.error(`[telemetry] Persistencia fallida para ${id}: ${lastError}`);
+
+    // Contingencia: el ping no se pierde, pero se declara SIN_CONFIRMAR (AF-3).
+    cachePing(id, ping);
+    const cached = cacheRead(id);
+
+    return NextResponse.json(
+      {
+        id,
+        ok: false,
+        persisted: false,
+        count: cached.length,
+        status: ping.status,
+        probed: true,
+        source: 'cache',
+        mode: 'SIMULADO',
+        disclaimer:
+          'Ping aceptado en caché de proceso: PostgreSQL no confirmó la escritura. Estado SIN_CONFIRMAR (AGENTS.md AF-3).',
+        lastError,
+        checkedAt: new Date().toISOString(),
+      },
+      { status: 503 },
+    );
+  }
 }
 
 export async function GET(
@@ -171,13 +280,54 @@ export async function GET(
     return NextResponse.json({ error: 'invalid_id' }, { status: 400 });
   }
 
-  const pings = getPings(id);
-  const last: TelemetryPing | null = pings.length > 0 ? (pings[pings.length - 1] ?? null) : null;
+  const checkedAt = new Date().toISOString();
 
-  return NextResponse.json({
-    id,
-    last,
-    count: pings.length,
-    live: isLive(last),
-  });
+  try {
+    const [rows, count] = await prisma.$transaction([
+      prisma.liveTelemetryPing.findMany({
+        where: { missionId: id },
+        orderBy: { capturedAt: 'desc' },
+        take: READ_LIMIT,
+        select: { lat: true, lng: true, accuracy: true, status: true, capturedAt: true },
+      }),
+      prisma.liveTelemetryPing.count({ where: { missionId: id } }),
+    ]);
+
+    const firstRow = rows.at(0);
+    const last: TelemetryPing | null = firstRow === undefined ? null : rowToPing(firstRow);
+
+    return NextResponse.json({
+      id,
+      last,
+      count,
+      live: isLive(last),
+      persisted: true,
+      probed: true,
+      source: 'live',
+      mode: 'REAL',
+      checkedAt,
+    });
+  } catch (reason) {
+    const lastError = describeError(reason);
+    console.error(`[telemetry] Lectura persistida fallida para ${id}: ${lastError}`);
+
+    const cached = cacheRead(id);
+    const last: TelemetryPing | null = cached.at(-1) ?? null;
+
+    return NextResponse.json({
+      id,
+      last,
+      count: cached.length,
+      live: isLive(last),
+      persisted: false,
+      probed: true,
+      source: 'cache',
+      mode: 'SIMULADO',
+      disclaimer:
+        'PostgreSQL no respondió: se sirve la caché de proceso. Estado SIN_CONFIRMAR (AGENTS.md AF-3).',
+      lastError,
+      checkedAt,
+    });
+  }
 }
+

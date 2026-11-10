@@ -481,6 +481,27 @@ model FleetPosition {
   @@index([unitId, timestamp(sort: Desc)])
 }
 
+/// F-6 - Telemetria durable "Dia D" consumida por /seguimiento/[id].
+/// Sustituye el Map en memoria (globalThis.__earTelemetry) por persistencia real
+/// en PostgreSQL 16: un redeploy de Coolify ya no borra el rastro GPS.
+/// `missionId` es el identificador publico de expediente (patron ^[A-Z0-9-]{4,40}$).
+/// `source` distingue ping del proveedor ("live") de ping de contingencia.
+model LiveTelemetryPing {
+  id         String   @id @default(cuid())
+  missionId  String
+  lat        Float
+  lng        Float
+  accuracy   Float
+  status     String
+  source     String   @default("live")
+  capturedAt DateTime @default(now())
+  createdAt  DateTime @default(now())
+
+  @@index([missionId, capturedAt(sort: Desc)])
+  @@index([createdAt])
+  @@map("LiveTelemetryPing")
+}
+
 model ProductionEvent {
   id           String   @id @default(cuid())
   title        String

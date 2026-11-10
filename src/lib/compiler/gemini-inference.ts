@@ -12,7 +12,10 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 let geminiClient: GoogleGenerativeAI | null = null;
 
 function getGeminiClient(): GoogleGenerativeAI | null {
-  const apiKey = (process.env.GEMINI_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY || '').trim();
+  // 🔒 INV-07 / SEC-3: SÓLO `GEMINI_API_KEY` (servidor). Cualquier variante
+  // `NEXT_PUBLIC_*`/`VITE_*` se compila al bundle del navegador y es exfiltrable
+  // con DevTools. El fallback público se eliminó el 2026-11-09.
+  const apiKey = (process.env.GEMINI_API_KEY || '').trim();
   if (!apiKey) return null;
   if (!geminiClient) {
     geminiClient = new GoogleGenerativeAI(apiKey);
@@ -21,7 +24,7 @@ function getGeminiClient(): GoogleGenerativeAI | null {
 }
 
 export function isGeminiConfigured(): boolean {
-  return Boolean(process.env.GEMINI_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY);
+  return Boolean((process.env.GEMINI_API_KEY || '').trim());
 }
 
 export interface GeminiForgePayload {

@@ -221,7 +221,7 @@ src/data/raw_wp_lessons_all.json
 .antigravity/w4*_*.bat
 .antigravity/w42_towns.json
 
-# Ficheros de trabajo de agentes (no producción)
+# Ficheros de trabajo de agentes (no producciï¿½n)
 .agents/teamwork/
 reports/prototype_audit/
 TEST_INFRA.md
@@ -238,3 +238,7 @@ PROJECT.md
 .antigravity/ORDEN_EJECUTIVO_OMEGA_ROJO_FASE_1.md
 .agents/mcp_config.json
 src/data/*_raw.txt
+
+# Copias de seguridad locales de agentes: pueden contener .env.local con credenciales
+# reales (INV-07 / SEC-3). JAMAS deben entrar al arbol de Git.
+.antigravity/backups/
