@@ -136,4 +136,52 @@ sigue sirviendo la build anterior y el `production-smoke` la caza correctamente
 antigua** (`verify:confianza --prod` → `OK=false`, `ROWS=0`). Lo que falta **no es
 código**: es un secreto de despliegue que sólo el CEO puede inyectar.
 
+### Addenda (2026-11-10 23:15Z) — el deploy SÍ ocurrió; el fallo es otro
+
+Medido después del diagnóstico anterior, y **corrige** la conclusión de "producción
+sirve la build anterior":
+
+```
+$ GET https://www.productoraear.com/api/health
+{"status":"ok","buildSha":"91e670ad8f1be24f507fe43eb422e6e257bab477",
+ "buildSource":"coolify-source-commit", ...}
+$ GET https://www.productoraear.com/          -> HTTP 200 · contiene `color-mix` = true
+$ GET https://www.productoraear.com/confianza -> HTTP 200 · source=missing=true · filas=0
+```
+
+Es decir: **Coolify desplegó mi commit `91e670ad`** y el fix de contraste del carril
+VIMUME está vivo en producción. El job `production-smoke` falla por `/confianza`, no por
+el deploy.
+
+**Causa raíz del fallo de `/confianza` (reproducida en local, no inferida)**:
+
+```
+$ (cwd = repo)               -> readFileSync('.antigravity/evidence/ledger.jsonl') = OK  (127999 B)
+$ (cwd = node_modules/next)  -> readFileSync(...) = ENOENT
+```
+
+`src/lib/evidence/evidence-ledger.ts:312` resuelve el ledger con `process.cwd()`, y
+`src/app/(public)/confianza/page.tsx:22` declara `dynamic = 'force-static'`, de modo que
+las 0 filas quedan **horneadas en el HTML** en el momento del build. Reproducción en el
+artefacto local: `.next/server/app/confianza.html` contiene `source=missing` y
+`0 fila(s) vigente(s)` mientras el mismo lector, ejecutado desde la raíz, devuelve
+`source=live rows=71`.
+
+**Qué NO se ha hecho y por qué**: la corrección exige que una página **congelada en
+build-time** lea del **sistema de ficheros del contenedor**; el script de verificación
+local hereda esa misma limitación, así que no puede demostrar el arreglo. Tocar
+`force-static` cambia el modelo de caché de una ruta pública (INV-16: «toda ruta de salud
+dice la verdad de lo sondeado») y merece decisión del Arquitecto, no una carrera del
+obrero minutos antes de cerrar sesión.
+
+**Candidato de arreglo (evaluado, no aplicado)**:
+1. `resolveLedgerPath()` que suba desde `process.cwd()` buscando `.antigravity/evidence/ledger.jsonl`
+   hasta 3 niveles (`cwd`, `cwd/..`, `cwd/../..`) — cubre `repo` y `repo/node_modules/next`.
+2. `export const dynamic = 'force-dynamic'` + `Cache-Control: s-maxage=300` ya declarado en
+   `next.config.ts` — la página lee el ledger en cada revalidación de 5 min en lugar de
+   congelarlo en build.
+Ambos son reversibles con `git revert` y no tocan la Zona Cero.
+
+
+
 
