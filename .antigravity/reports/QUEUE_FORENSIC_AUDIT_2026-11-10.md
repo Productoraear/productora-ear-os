@@ -106,3 +106,34 @@ en origen (no se aflojó el gate, no se tocó el SSOT):
 de la URL pública.** Si el webhook no está en el entorno, el script sale `Exit 2` a
 propósito: prefiere fallar a imprimir un verde falso.
 
+### Diagnóstico del bloqueo (medido contra la API de GitHub, 2026-11-10 22:52Z)
+
+```
+$ node scripts/trigger_coolify_deploy.cjs
+  [PASS] Conectividad HTTP confirmada (166ms) · HTTP 302 -> panel Coolify v4 operativo
+  [FAIL] COOLIFY_DEPLOY_WEBHOOK no definido en el entorno.
+  Despliegue NO disparado (Exit 2)
+
+$ GET /repos/.../actions/runs  (público)
+  RUN 42864097494  834e8fb7  failure
+    contract-gate    -> success
+    typecheck-gate   -> success
+    build-and-push   -> success
+    production-smoke -> failure
+      STEP_FAIL: Smoke de produccion (ruta viva + landing real)
+      STEP_FAIL: Frescura del despliegue (sha vivo == sha construido)
+  RUN 42789462370  77b8cee1  failure   (idéntico patrón)
+```
+
+**Causa raíz**: la imagen **sí** se construye y se publica en GHCR, pero el paso
+`Trigger Coolify Webhook Deployment` es `continue-on-error` y depende de
+`secrets.COOLIFY_WEBHOOK_URL` + `secrets.COOLIFY_API_TOKEN` (el propio workflow
+documenta en su línea 139 que el token **no existe** en el repo). Resultado: producción
+sigue sirviendo la build anterior y el `production-smoke` la caza correctamente
+(`/confianza` responde `source=missing`, la home no contiene el `color-mix` nuevo).
+
+**Estado de `main`**: `91e670ad`. Producción verificada: `HTTP 200` pero **build
+antigua** (`verify:confianza --prod` → `OK=false`, `ROWS=0`). Lo que falta **no es
+código**: es un secreto de despliegue que sólo el CEO puede inyectar.
+
+
