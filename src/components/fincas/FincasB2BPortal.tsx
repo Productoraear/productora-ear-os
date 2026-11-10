@@ -320,7 +320,19 @@ export default function FincasB2BPortal() {
             >
               <Sparkles size={14} className="text-[#ecb613] shrink-0" aria-hidden="true" />
               <span>Pacto 100 Fundadores</span>
-              <span className="ml-1 rounded-full bg-emerald-500/20 px-1.5 py-0.5 text-[9px] font-bold text-emerald-400">
+              {/*
+                Contraste AA: el badge hereda el fondo del botón. Con la pestaña activa
+                el botón es oro (#ecb613) y `text-emerald-400` sobre `emerald-500/20`
+                medía 1.09:1 (audit:contrast:core). En ese estado el badge pasa a
+                negro sobre blanco translúcido; inactivo conserva el verde esmeralda.
+              */}
+              <span
+                className={`ml-1 rounded-full px-1.5 py-0.5 text-[9px] font-bold ${
+                  activeView === 'PACTO_100_FUNDADORES'
+                    ? 'bg-black/25 text-black'
+                    : 'bg-emerald-500/20 text-emerald-300'
+                }`}
+              >
                 42/100
               </span>
             </button>

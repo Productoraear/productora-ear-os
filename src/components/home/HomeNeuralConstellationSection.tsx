@@ -266,7 +266,11 @@ export function HomeNeuralConstellationSection() {
                     className="text-[10px] font-mono px-2 py-0.5 rounded-full border"
                     style={{
                       borderColor: card.borderColor,
-                      color: card.color,
+                      // Contraste AA: `card.color` sobre el fondo OLED medía 4.5:1 exacto
+                      // en el carril VIMUME (#8b5cf6). El texto se aclara un 32 % hacia
+                      // blanco (identidad de marca intacta); el punto y el borde del
+                      // indicador conservan el color puro.
+                      color: `color-mix(in srgb, ${card.color} 68%, #ffffff)`,
                       backgroundColor: `${card.color}15`,
                     }}
                   >
