@@ -2044,4 +2044,1153 @@ siguiente_paso : Reparar el canal de ejecucion (reiniciar el terminal de Cline /
 
 ---
 
+## 2026-11-10T11:46Z · F-9 · AUDITORÍA DE LA ORDEN "CIERRE DE PERSISTENCIA VIVA (F-6 LIVE)"
+
+**Veredicto: PARCIALMENTE CONFIRMADA, con el ORDEN CAUSAL INVERTIDO en dos de sus tres pasos.**
+El paso 1 (frescura) es CIERTO y lo he re-medido. El paso 2 (persistencia remota) es FALSO por evidencia viva.
+El paso 3 (abrir Wave 53) requiere un arreglo que ningún comando de la orden toca: la variable del contenedor.
+
+### Paso 1 · Frescura del deploy → VERIFICADO (Exit 0)
+
+```
+$ node scripts/prod_deploy_freshness.cjs --expect=77b8cee1 --wait=30
+HEALTH intento 1 http=200 buildSha=77b8cee1e9a394befe3f115f81e9772a5811c402
+                    buildSource=coolify-source-commit buildTime=unknown esperado=77b8cee
+VERDICT=FRESH produccion sirve el commit construido en este run.
+EXIT=0
+```
+
+`/api/health` en vivo: `status:"ok"`, `buildSha:"77b8cee1e9a394befe3f115f81e9772a5811c402"`,
+`buildSource:"coolify-source-commit"`, `cron.mode:"fail-closed"` con `CRON_SECRET` presente y `weak:true`.
+**Captura de Coolify y sonda coinciden: ya no hay desfase de despliegue. El bloqueo ya NO es el deploy.**
+
+```
+$ node scripts/prod_smoke_intake.cjs
+SMOKE_IMAGE_BUILD_ID=GhxSb-n1tPsN13GJHIoew (HTTP_200)
+[GET] /api/outreach/intake -> HTTP 401  PASS (guard cerrado por defecto)
+[PASS] Landing real (HTTP 200, 125717 bytes)
+SMOKE_RESULT=OK EXIT=0
+```
+
+### Paso 2 · Persistencia viva → SOSPECHOSO (Exit 1), causa raíz medida en el propio JSON
+
+```
+$ node scripts/verify_telemetry_persistence.cjs --remote
+MODO_REMOTE url=https://www.productoraear.com/api/telemetry/EXP-VERIFY-F6
+SONDA http=200 persisted=false mode=SIMULADO source=cache probed=true count=0
+lastError= Invalid `prisma.liveTelemetryPing.findMany()` invocation:
+           error: Environment variable not found: POSTGRES_PRISMA_URL. --> schema.prisma:7
+RESULTADO: SOSPECHOSO — producción NO declara persistencia duradera.
+EXIT=1
+```
+
+**`--remote` no existía en disco hasta esta sesión.** La orden invocaba un flag que el script no implementaba:
+por L0/L2 ese comando era `SIN_EVIDENCIA` con formato de verdad. Implementado en
+`scripts/verify_telemetry_persistence.cjs:22-112`: lee el campo **durable** `persisted` (no `count`) y exige
+`persisted:true` **y** `mode:"REAL"` **y** `source:"live"`, con `AbortController` de 8 s (INV-17).
+
+### Paso 3 · Migración en producción → SIN_EVIDENCIA (Exit 2), 0 DDL ejecutado
+
+```
+$ npm run db:migrate:production -- --allow-baseline
+[FAIL] No hay URL de base de datos (POSTGRES_PRISMA_URL, POSTGRES_URL_NON_POOLING, DATABASE_URL,
+       EAR_VERIFY_DATABASE_URL). No se firma un verde inventado.
+EXIT=2
+```
+
+- `.env`, `.env.local` y `.env.production` locales declaran `postgresql://…@localhost:5432/ear_os` (dev).
+  **Descartado usarlos**: certificaría el baseline contra una base que no es producción = falso verde (AF-5).
+- `node scripts/trigger_coolify_deploy.cjs` → `EXIT=2` (`COOLIFY_DEPLOY_WEBHOOK` ausente): el **redeploy
+  tampoco se puede disparar desde esta estación**; el panel `82.29.179.172:8000` sí responde (HTTP 302).
+- La persistencia sobre PostgreSQL **efímero** ya estaba VERIFICADA desde F-6 (5 pasos, supervivencia a
+  proceso nuevo). Ese verde **no se traslada** a producción: mide el código, no la configuración del contenedor.
+
+### Corrección de contrato AF-1 (desviación real, no cosmética)
+
+`src/app/api/telemetry/[id]/route.ts:266` y `:330` publicaban `source:"cache"`, valor **fuera** del vocabulario
+cerrado `"live"|"static"` de AF-1. Corregido a `source:"static"` (lectura estática de caché), manteniendo
+`persisted:false` + `mode:"SIMULADO"` + `lastError`. `tsc --noEmit` Exit 0 y eslint Exit 0 en los ficheros tocados.
+
+---
+
+
+
+### Ledger sellado (append-only, 8 líneas nuevas; 107 líneas, 0 JSON inválido)
+
+```
+F9-DEPLOY-FRESHNESS        VERIFICADO    exit=0  sha256=8a05a49e66eeffa9…  supersedes=F8-DEPLOY-FRESHNESS
+F9-PROD-SMOKE              VERIFICADO    exit=0  sha256=44a53eca90fb651d…
+F9-PROD-MIGRATE-BASELINE   VERIFICADO    exit=2  sha256=ceaa08750ce56fcd…  supersedes=F8-PROD-MIGRATE-BASELINE
+F9-DEPLOY-TRIGGER          SIN_EVIDENCIA exit=2  sha256=8c13dfdb88d91cab…
+F9-REMOTE-PROBE-ACTUATOR   VERIFICADO    exit=0  sha256=e3b0c44298fc1c14…
+F9-LIVE-TELEMETRY-PERSIST  SOSPECHOSO    exit=1  sha256=e9957058777c5c5a…  (intento espurio, sustituido)
+F9-LIVE-TELEMETRY-PERSIST  SOSPECHOSO    exit=1  sha256=d5495a64f01b7385…  supersedes=F9-LIVE-TELEMETRY-PERSISTENCE
+F9-TELEMETRY-CONTRACT-AF1  VERIFICADO    exit=0  sha256=e3b0c44298fc1c14…  supersedes=F8-TELEMETRY-CONTRACT
+```
+
+### Escalera correcta (reto_espejo) y contra-verificación de la cola
+
+`docker-entrypoint.cjs:48-68` ejecuta `prisma migrate deploy` heredando el entorno del contenedor: sin
+`POSTGRES_PRISMA_URL` aplica fail-open y la API seguirá en `mode:"SIMULADO"` **aunque** la tabla exista. El orden
+exigente es: **(1)** crear `POSTGRES_PRISMA_URL` en Coolify > app > Environment Variables (runtime *y* build),
+**(2)** redeploy (el entrypoint migra), **(3)** `node scripts/verify_telemetry_persistence.cjs --remote` debe dar
+Exit 0, **(4)** recién entonces `npm run db:migrate:production -- --allow-baseline` como verificación fail-closed
+del catálogo, **(5)** Wave 53.
+
+```
+$ node scripts/audit_queue_counter_integrity.cjs   -> QUEUE_COUNTERS=CONSISTENT EXIT=0
+$ node .antigravity/omega.js next                  -> MISION: W52_T05_ASTRA_IKIGAI_PORT
+```
+
+Cola reconciliada: 40 tareas = 3 COMPLETED_REAL + 34 PENDING (W53) + 1 QUEUED (W52_T05) + 1
+CODE_PRESENT_PENDING_GATE (W52_T04) + 1 BLOCKED_CEO (W52_T06); **35 pendientes**. El slot único WF-5 apunta a
+**W52_T05**, no a W53_T01: abrir W53_T01 saltándose el slot violaría WF-5 (regla de serie).
+
+---
+```
+SIGMA://CLOSE/v1
+task_id        : F-9 · AUDITORIA DE LA ORDEN F-6-LIVE (persistencia viva en produccion)
+estado_bloque  : SOSPECHOSO
+hecho          : (a) frescura VERIFICADA (77b8cee1 vivo); (b) persistencia remota REFUTADA con causa raiz
+                 medida (POSTGRES_PRISMA_URL ausente en el contenedor); (c) implementado el actuador --remote
+                 inexistente hasta hoy; (d) corregido source:"cache" -> "static" (AF-1).
+evidence[]     : {E1, cmd:"node scripts/prod_deploy_freshness.cjs --expect=77b8cee1 --wait=30", exit:0}
+                 {E2, cmd:"node scripts/prod_smoke_intake.cjs", exit:0}
+                 {E3, cmd:"node scripts/verify_telemetry_persistence.cjs --remote", exit:1, detail:"persisted=false"}
+                 {E4, cmd:"npm run db:migrate:production -- --allow-baseline", exit:2, detail:"SIN_EVIDENCIA, 0 DDL"}
+                 {E5, cmd:"node scripts/trigger_coolify_deploy.cjs", exit:2, detail:"COOLIFY_DEPLOY_WEBHOOK ausente"}
+                 {E6, cmd:"node ./node_modules/typescript/bin/tsc --noEmit", exit:0}
+                 {E7, cmd:"npm run audit:ssot", exit:0, detail:"hash ebc011a0… coincide"}
+                 {E8, cmd:"npm run audit:omega-rojo", exit:0, detail:"14/20 · 8/8 P0 VERIFICADO"}
+cambios[]      : scripts/verify_telemetry_persistence.cjs (modo --remote)
+                 src/app/api/telemetry/[id]/route.ts (source:"static" AF-1, 2 sitios + doc del modulo)
+                 .antigravity/evidence/ledger.jsonl (8 lineas) · CLINE_EXECUTION_LOG.md (esta acta)
+gates          : {G0:PASS, G1:PASS, G2:PASS (eslint Exit 0 en los 2 ficheros tocados),
+                  G3:SIN_EVIDENCIA (17 puertas no ejecutadas en esta sesion), G4:PASS, G5:SIN_EVIDENCIA,
+                  G6:PASS (8/8 P0), G7:SIN_EVIDENCIA (CLS no re-medido), G8:PASS (premortem abajo)}
+omega_diamante : {score:"14/20", verdict:"VERDE", pendientes:["09 ISO 25010","10 CISQ","11 ASVS L3",
+                  "12 Lighthouse x4","15 Rich Results","16 Similaridad corpus"]}
+hipotesis[]    : que el servicio PostgreSQL de Coolify exista sin cadena interna usable por la app; que la DB
+                 de produccion este creada fuera del historial de Prisma (needsBaseline/P3005) — NO comprobado.
+decision       : NO migrar contra un destino no confirmado y NO usar el .env local (localhost/ear_os). Se
+                 descarta certificar VERIFICADO con la frescura: el objeto de la orden es la persistencia viva.
+                 NO se abre W53_T01: el slot WF-5 apunta a W52_T05.
+riesgos        : migrar antes de inyectar la variable deja la tabla creada y la app en mode=SIMULADO; el
+                 siguiente redeploy volveria a vaciar el estado percibido y nadie sabria por que.
+reto_espejo    : invertir el orden de la orden (variable -> redeploy -> sonda -> migracion) porque el fallo
+                 medido es de configuracion del contenedor, no de esquema.
+aprendizaje_ceo: 60 s — El codigo nuevo ya esta en la calle (probado con la sonda). Lo que falta no es una
+                 migracion: es la llave. El contenedor de produccion arranca sin la clave de la base de datos,
+                 asi que la telemetria GPS vive en memoria y muere en cada redeploy. Meter la tabla desde mi
+                 ordenador seria pintar la caja fuerte por fuera y dejar la puerta sin llave.
+siguiente_paso : Coolify > app > Environment Variables: POSTGRES_PRISMA_URL = cadena interna del servicio
+                 PostgreSQL (runtime + build) y Redeploy; despues verify_telemetry_persistence.cjs --remote.
+```
+
+### Premortem G-8 (5 preguntas)
+
+1. **Propósito original.** La orden pedía cerrar F-6 LIVE (persistencia en producción). No está cerrado y se
+   declara `SOSPECHOSO`: entregar un VERIFICADO con la frescura del deploy habría sido un primo hermano cosmético.
+2. **Datos y asunciones frágiles.** `lastError` literal de `/api/telemetry/EXP-VERIFY-F6`; `/api/health` como
+   única fuente de procedencia del build; la suposición (NO comprobada) de que la DB de producción está fuera del
+   historial de Prisma.
+3. **Alternativas descartadas.** (i) Usar el `.env` local: falso verde sobre `localhost/ear_os`. (ii) Fijar
+   `POSTGRES_PRISMA_URL` por SSH en el contenedor en marcha: se pierde en el siguiente redeploy. (iii) Aceptar
+   `count>=1` como prueba de persistencia: `count` es la caché de proceso, no la base.
+4. **Qué se rompería en producción y cómo lo detectamos antes que el cliente.** Sin la variable, cada redeploy vacía
+   el rastro GPS y la UI cae a "Sin señal" en pleno evento. Detección: `--remote` (Exit 1) y `lastError` en el JSON
+   público, ejecutable en <1 s antes de cualquier boda.
+5. **Consecuencia aceptada.** Sin commit ni push en esta acta (el diff local incluye trabajo ajeno pendiente sobre
+   SSOT/AGENTS.md). El repo local queda con `--remote` y AF-1 corregidos; producción sigue sirviendo 77b8cee1 hasta
+   el siguiente despliegue autorizado.
+
+---
+
+## W43/W49 · INGESTA DEL ESCAPARATE DE PROVEEDOR (CABALLO DE TROYA) — 2026-11-10T14:00Z
+
+```
+SIGMA://CLOSE/v1
+task_id        : W43_W49_SHOWCASE_INGEST_CONTRACT
+estado_bloque  : VERIFICADO
+hecho          : scripts/ingest_competitor_showcase.cjs:1-989 → parser determinista del volcado crudo
+                 (2.097 líneas / 55.450 chars) que separa 8 secciones del panel, erradica el cromo de
+                 interfaz, repara mojibake Latin-1/UTF-8 y emite public/data/providers/
+                 showcase_seed_canonical.json:28659 bytes (identity, location, faq, metrics, reputation,
+                 knowledge_tags, partners, media, doctrine, providerFields, completeness, selfHash).
+                 scripts/verify_showcase_ingest.ts:1-302 → 4 puertas ejecutables. package.json:128-129 →
+                 alias `verify:showcase` e `ingest:showcase`.
+cambios[]      : scripts/ingest_competitor_showcase.cjs (nuevo, 49.640 B)
+                 scripts/verify_showcase_ingest.ts      (nuevo, 15.029 B)
+                 public/data/providers/showcase_seed_canonical.json (nuevo, 28.659 B)
+                 package.json (2 alias añadidos, líneas 128-129)
+                 .antigravity/evidence/ledger.jsonl (1 línea, 109 total)
+evidence[]     : { id: W43_W49_SHOWCASE_INGEST_CONTRACT, cmd: "npm run verify:showcase", exit: 0,
+                   url: "/data/providers/showcase_seed_canonical.json",
+                   sha256: e302761dd03428388bd2c7d4d37f9fe0a3eba422f803b33c074b3f6d953cf1a6,
+                   ts: 2026-11-10T14:00:25.948Z }
+                 { id: G-1, cmd: "npm run typecheck", exit: 0 }
+                 { id: G-2, cmd: "eslint --no-ignore scripts/verify_showcase_ingest.ts", exit: 0 }
+                 { id: G-6, cmd: "npm run audit:omega-rojo", exit: 0, score: 14/20, P0: 8/8, verdict: VERDE }
+gates          : { G0: PASS, G1: PASS, G2: PASS, G3: SIN_EVIDENCIA, G4: SIN_EVIDENCIA, G5: SIN_EVIDENCIA,
+                   G6: PASS, G7: SIN_EVIDENCIA, G8: PASS }
+omega_diamante : { score: "14/20", verdict: "VERDE", pendientes: [10-CISQ, 11-ASVS-L3, 12-Lighthouse-x4,
+                   15-RichResults, 16-Jaccard/TF-IDF, 9-ISO-25010] }
+hipotesis[]    : (1) El layout de líneas del portal cambia ⇒ el parser degrada a campos `null`, no a datos
+                     falsos; `completeness.gaps` lo delata en la misma ejecución.
+                 (2) El badge "4" del panel se lee como `solicitudes_totales`; es el contador visible de la
+                     carpeta y se contrasta con `atendidas` (208) + `descartadas` (14).
+                 (3) `media.labelsDetected` cuenta rótulos de galería, NO URLs: si el portal cambia el sufijo
+                     "- N", el bloque `media_real` baja de peso y la completitud caerá de 100 a 90.
+decision       : Se DESCARTÓ poblar `cont.telefono_principal` y `cont.email_principal` con los datos que el
+                 volcado sí trae (693 693 048 · edwinagudelomariachi@gmail.com). Motivo técnico: INV-06/INV-12
+                 prohíben `verified:true` con teléfono no verificado y el contact-gate exige `exposePhone:false`
+                 hasta reserva o depósito 100 €. Los tres PII detectados quedan enmascarados
+                 (`693****48`, `edw*****************@gmail.com`) con `expose:false` y la Puerta 4 falla si
+                 cualquier email/teléfono se cuela en un campo público.
+riesgos        : Si el catálogo de campos renombra `esc.*`/`ubic.*`, la Puerta 4 aborta el release antes que
+                 PostgreSQL rechace la escritura; el coste es un rojo en CI, no un dato corrupto en producción.
+reto_espejo    : La orden pedía 4 puertas; se añadieron dentro de la Puerta 3 tres guardas no pedidas
+                 (`sections.length === 0 return null`, pares FAQ sin pregunta, sección sin pares ni campos),
+                 porque sin ellas la proyección pública podría pintar un contenedor vacío y aparentar ficha.
+aprendizaje_ceo: Un volcado de Ctrl+A es basura hasta que alguien lo ordena: 55 KB de ruido se convierten en
+                 24 FAQ reales y 28 campos que el motor ya entiende. El valor no está en copiar el escaparate
+                 de Bodas.net, sino en tener la tubería que digiere cualquier portal mañana sin tocar código.
+siguiente_paso : Cerrar el bloqueo de F-9: rotar la contraseña de Supabase (o reanudar el proyecto pausado) y
+                 sustituir DATABASE_URL malformada de `.env.local` (118 chars, `Invalid URL`) antes de
+                 reintentar `db:migrate:production --allow-baseline`.
+```
+
+### Bloqueo declarado de F-9 (persistencia remota) — NO VERIFICADO
+
+| Comprobación | Comando | Exit | Veredicto |
+|---|---|---|---|
+| Sonda remota de producción | `node scripts/verify_telemetry_persistence.cjs --remote` | **1** | **SOSPECHOSO** — `persisted=false`, `mode=SIMULADO`, `source=cache` |
+| Migración producción | `npm run db:migrate:production -- --allow-baseline` | **2** | **SIN_EVIDENCIA** — el shell no expone URL de BD |
+| Migración contra Supabase | `node --env-file-if-exists=.env.local scripts/deploy_production_migrations.cjs --allow-baseline` | **4** | **SOSPECHOSO** — `Authentication failed … credentials for postgres are not valid` |
+
+**Causa raíz medida (no supuesta):** el error ya NO es `Environment variable not found: POSTGRES_PRISMA_URL`.
+Las variables están inyectadas y el TCP abre (`DB_TCP=OPEN detail=tcp-connect`), pero el pooler rechaza la
+credencial. Forense del DSN local: usuario `postgres.ocrjsvjmdeqovkfdqoql`, host
+`aws-0-eu-west-1.pooler.supabase.com`, contraseña de 11 chars con `*` **sin URL-encode**, y `DATABASE_URL`
+**no parseable** (118 chars). Dos vectores: contraseña rotada/proyecto pausado, y DSN malformada.
+
+---
+
+## W43/W49 · ESTÁNDAR DE CONVERSIÓN CONECTADO AL GENERADOR DE FICHAS — 2026-11-10T14:04Z
+
+```
+SIGMA://CLOSE/v1
+task_id        : W43_W49_FICHAS_SHOWCASE_STANDARD
+estado_bloque  : VERIFICADO
+hecho          : scripts/build_provider_fichas.cjs:42-55 · 447-516 · 640-661 · 731-751 · 782-799 → la semilla
+                 canónica del escaparate se conecta al pipeline de fichas mediante `readShowcaseSeed()`
+                 (fail-open de entrada: semilla ausente o corrupta degrada a `present:false`, el build no
+                 muere) y se publica como `report.showcaseStandard` con selfHash, exposePhone, contactGate,
+                 claves de conversión presentes/ausentes, pares de FAQ y huecos de completitud. La puerta
+                 `--check` gana 4 invariantes nuevos sobre la doctrina de la semilla.
+cambios[]      : scripts/build_provider_fichas.cjs (modificado: +5 bloques, 3 exportaciones nuevas)
+                 public/data/providers/showcase_seed_canonical.json (consumido, 28.659 B)
+                 scripts/ingest_competitor_showcase.cjs (origen de la semilla, 49.640 B)
+                 scripts/verify_showcase_ingest.ts (arnés 4 puertas, 15.029 B)
+                 .antigravity/evidence/ledger.jsonl (1 línea, 110 total)
+evidence[]     : { id: W43_W49_FICHAS_SHOWCASE_STANDARD, cmd: "node scripts/ingest_competitor_showcase.cjs --verify-only",
+                   exit: 0, url: "/data/providers/showcase_seed_canonical.json",
+                   sha256: 1b19fc778821e50bdae65ad81f96393d2c8b5a61c309ca5fce1f5d162e8905a6,
+                   ts: 2026-11-10T14:04:51.238Z }
+                 { id: AISLAMIENTO, cmd: "buildArtifacts() con y sin semilla", exit: 0,
+                   nota: "fichas_gold.json y fichas_index.json BYTE-IDÉNTICOS ⇒ cero regresión de fichas" }
+                 { id: G-1, cmd: "npm run typecheck", exit: 0 }
+                 { id: G-6, cmd: "npm run audit:omega-rojo", exit: 0, P0: 8/8, score: 14/20, verdict: VERDE }
+gates          : { G0: PASS, G1: PASS, G2: PASS, G3: SIN_EVIDENCIA, G4: SIN_EVIDENCIA, G5: SIN_EVIDENCIA,
+                   G6: PASS, G7: SIN_EVIDENCIA, G8: PASS }
+omega_diamante : { score: "14/20", verdict: "VERDE", pendientes: [9-ISO-25010, 10-CISQ, 11-ASVS-L3,
+                   12-Lighthouse-x4, 15-RichResults, 16-Jaccard/TF-IDF] }
+hipotesis[]    : (1) `matchedFichas = 0`: Productora EAR no figura en CATALOGO_PROVEEDORES_HTML_INDEX.json,
+                     así que la semilla describe el estándar pero no homologa ninguna ficha real aún.
+                 (2) `packagesDocumented = false`: el volcado no trae bloque de paquetes estructurado; los
+                     formatos viven en prosa dentro de la FAQ nº1. Se declara el hueco en lugar de fabricarlo.
+                 (3) La homologación exige 6 claves; si el catálogo renombra `esc.rating`, baja a 5/6 y el
+                     reporte lo dirá con `missingKeys`.
+decision       : Se DESCARTÓ mutar `computeCompleteness` de las fichas para inyectar los pesos de la semilla
+                 (FAQ, fotos, descripción, opiniones) y DESCARTÓ añadir fichas sintéticas de Productora EAR.
+                 Motivo técnico: los artefactos publicados están versionados en git y la puerta `--check` los
+                 compara byte a byte; mutarlos habría roto esa puerta y habría fabricado una ficha comercial
+                 sin respaldo en el catálogo (violaría AF-5 y §4bis). La semilla entra como TRAZABILIDAD
+                 medida, no como maquillaje de datos.
+riesgos        : Si alguien edita la semilla sin re-ejecutar la ingesta, la Puerta 4 de verify:showcase y el
+                 invariante selfHash de `--check` lo detectan antes del deploy.
+reto_espejo    : La orden pedía «conectar al generador de fichas». Se entregó además una prueba de
+                 aislamiento que NO se solicitó: build ejecutado con la semilla movida de sitio, demostrando
+                 que gold e index siguen idénticos. Sin esa prueba, conectar el seed habría sido una promesa
+                 sin medición.
+aprendizaje_ceo: La semilla del escaparate no cambia una sola ficha: la usa el auditor como vara de medir.
+                 2150 fichas, 76 verificadas con teléfono real; Productora EAR aún no está en el catálogo,
+                 así que el estándar queda instalado y esperando a su primera ficha homologada.
+siguiente_paso : Corregir la credencial de Supabase (rotar contraseña del rol postgres y URL-encodear los
+                 caracteres especiales) y esperar a que expire el circuit breaker ECIRCUITBREAKER antes de
+                 reintentar la migración baseline.
+```
+
+### Deuda preexistente detectada (NO introducida en esta sesión)
+
+`node scripts/build_provider_fichas.cjs --check` → **Exit 1** con `fichas_gold.json`, `fichas_index.json` y
+`fichas_audit_report.json` DESINCRONIZADOS. Los tres artefactos están **limpios en git** (`git status` vacío)
+y fechados `28/10/2026 20:11`, mientras el build regenera desde fuentes más nuevas (2.150 fichas). Por tanto
+`npm run audit:fichas` (y el `gate:prepush` que lo encadena) **ya estaba en rojo en HEAD antes de esta
+sesión**. No se regeneraron los artefactos: publicar 2.150 fichas nuevas a producción es una decisión
+comercial del CEO, no un efecto colateral de esta tarea.
+
+
+
+
+
+
+---
+
+## 2026-11-10T16:10Z · F-9 bis · CERTIFICACIÓN REMOTA POST-INYECCIÓN DE SUPABASE
+
+**Veredicto: NO CERTIFICA. `SOSPECHOSO` (exit 1).** La toma de contacto con la base ya ocurre —eso prueba que la
+variable llegó al contenedor— pero la autenticación es rechazada. El bloqueo ha cambiado de naturaleza: ya no es
+"falta la llave", ahora es **"la llave no abre"**.
+
+### Paso 1 · Sonda remota de persistencia → SOSPECHOSO (Exit 1)
+
+```
+$ node scripts/verify_telemetry_persistence.cjs --remote
+MODO_REMOTE url=https://www.productoraear.com/api/telemetry/EXP-VERIFY-F6
+SONDA http=200 persisted=false mode=SIMULADO source=cache probed=true count=0
+lastError= Invalid `prisma.liveTelemetryPing.findMany()` invocation:
+           Error querying the database: FATAL: (ECIRCUITBREAKER) too many authentication failures,
+           new connections are temporarily ...
+RESULTADO: SOSPECHOSO — producción NO declara persistencia duradera.
+EXIT=1
+```
+
+`checkedAt=2026-11-10T16:09:44.315Z`. **Cambio medido respecto a 11:46Z** (que decía
+`Environment variable not found: POSTGRES_PRISMA_URL`): el error es ahora de **credenciales**, no de variable
+ausente. La cadena llega y el servidor rechaza la autenticación.
+
+`(ECIRCUITBREAKER)` es un **cortacircuitos del motor**: tras N intentos fallidos seguidos deja de aceptar
+conexiones nuevas durante un periodo. Consecuencia operativa que debe saber el CEO: **reintentar en bucle
+prolonga el bloqueo**. Cualquier prueba nueva debe espaciarse, y la corrección debe entrar en un solo redeploy.
+
+### Paso 2 · Migración baseline → SIN_EVIDENCIA (Exit 2), 0 DDL ejecutado
+
+```
+$ npm run db:migrate:production -- --allow-baseline
+[FAIL] No hay URL de base de datos (…). No se firma un verde inventado.
+EXIT=2
+```
+
+Las variables están en **Coolify**, no en esta estación. La migración correcta la ejecuta el **entrypoint del
+contenedor** (`docker-entrypoint.cjs:48-68`) en cada arranque; este comando sólo sirve aquí como verificación
+fail-closed cuando la cadena se pasa de forma explícita. Se descarta mover credenciales al portátil (AF-5 y JUR:
+la credencial vive en el gestor de secretos del despliegue, no en un `.env` local).
+
+### Paso 3 · Ledger — sellado honesto (3 líneas nuevas; 113 líneas, 0 JSON inválido)
+
+```
+F9-LIVE-TELEMETRY-PERSIST  SOSPECHOSO    exit=1  sha256=d44628c2f4d9bc51…  supersedes=F9-LIVE-TELEMETRY-PERSISTENCE
+F9-PROD-MIGRATE-BASELINE   SIN_EVIDENCIA exit=2  sha256=…                 supersedes=F9-PROD-MIGRATE-BASELINE
+F9-DEPLOY-FRESHNESS        VERIFICADO    exit=0  sha256=…                 supersedes=F9-DEPLOY-FRESHNESS
+```
+
+**No se promueve a VERIFICADO.** SIG-1: un fallo del arnés obliga a `SOSPECHOSO`, y las 3 líneas firmadas
+prueban lo contrario de lo que la orden quería certificar.
+
+### Reto_espejo · Qué corregir para que pase a la primera (una sola pasada)
+
+1. **Contraseña codificada.** Si la clave de Supabase contiene `@ : / ? # % & +`, dentro de la URL debe ir
+   percent-encoded (`@`→`%40`, `#`→`%23`, `?`→`%3F`, `%`→`%25`, `/`→`%2F`). Es la causa nº1 de
+   *authentication failed* con contraseñas fuertes. En Coolify, la variable se pega literal: no se escapa sola.
+2. **Cadena correcta para Prisma.** Mismo proyecto Supabase que el resto del despliegue:
+   `postgresql://postgres.<ref>:<clave-encoded>@aws-0-<region>.pooler.supabase.com:6543/postgres?pgbouncer=true&schema=public`
+   (pooler, 6543 + `pgbouncer=true`) y `POSTGRES_URL_NON_POOLING` en `…:5432/postgres` para migraciones.
+   **Un `<ref>` o una `<region>` de otro proyecto da exactamente este FATAL.**
+3. **`sslmode=require`** en ambas (Supabase lo exige; sin él, algunas redes fallan en el handshake).
+4. **Una sola prueba por corrección.** Dado el `ECIRCUITBREAKER`, encadenar intentos alarga el bloqueo: redeploy →
+   `--remote` una vez → si falla, leer `lastError` y no reintentar hasta corregir.
+5. **Verificar que el redeploy realmente reinició el contenedor** con las nuevas variables (no basta con guardar).
+
+
+```
+SIGMA://CLOSE/v1
+task_id        : F-9-bis · CERTIFICACION REMOTA POST-INYECCION SUPABASE
+estado_bloque  : SOSPECHOSO
+hecho          : sonda remota EJECUTADA de inmediato; el error muto de "variable ausente" a
+                 "FATAL (ECIRCUITBREAKER) too many authentication failures": la cadena llega al contenedor
+                 pero es RECHAZADA. persistencia NO certificada.
+evidence[]     : {E1, cmd:"node scripts/verify_telemetry_persistence.cjs --remote", exit:1,
+                     detail:"persisted=false mode=SIMULADO source=cache; ECIRCUITBREAKER auth failures",
+                     url:"https://www.productoraear.com/api/telemetry/EXP-VERIFY-F6", ts:"2026-11-10T16:09:52Z"}
+                 {E2, cmd:"npm run db:migrate:production -- --allow-baseline", exit:2,
+                     detail:"SIN_EVIDENCIA: la cadena vive en Coolify, no en esta estacion; 0 DDL"}
+                 {E3, cmd:"node scripts/prod_deploy_freshness.cjs --expect=77b8cee1", exit:0,
+                     detail:"FRESH: el reinicio con nuevas envs no rompio el codigo vivo"}
+cambios[]      : .antigravity/evidence/ledger.jsonl (3 lineas) · CLINE_EXECUTION_LOG.md (esta acta).
+                 CERO cambios de codigo en esta sesion.
+gates          : {G0:PASS, G1:SIN_EVIDENCIA (sin diff de codigo), G2:SIN_EVIDENCIA, G3:SIN_EVIDENCIA,
+                  G4:SIN_EVIDENCIA (no re-ejecutado ahora), G5:SIN_EVIDENCIA, G6:SIN_EVIDENCIA,
+                  G7:SIN_EVIDENCIA, G8:PASS (premortem abajo)}
+omega_diamante : {score:"SIN_EVIDENCIA", verdict:"ROJO", pendientes:["R1..R20 no re-ejecutados en esta sesion",
+                  "persistencia viva en Supabase: auth rechazada"]}
+hipotesis[]    : que la clave contenida en la URL no este percent-encoded; que el host/ref del pooler sea de
+                 otro proyecto; que falte sslmode=require; NO comprobado — requiere ver el valor en Coolify.
+decision       : NO se reintenta en bucle (el ECIRCUITBREAKER penaliza cada intento) y NO se exporta la cadena
+                 al portatil. Se entrega la lista de causas ordenada por probabilidad para corregir en un solo
+                 redeploy.
+riesgos        : insistir sin corregir mantiene el cortacircuitos activo y alarga la caida de persistencia;
+                 el estado del evento sigue en memoria (se pierde en cada reinicio del contenedor).
+reto_espejo    : "inyectar variables" no equivale a "conectar la base". La prueba de que la variable llego es
+                 que el error cambio de naturaleza; la prueba de que conecta es persisted:true, y aun no existe.
+aprendizaje_ceo: 60 s — Hemos pasado de "no hay llave" a "la llave no gira". Eso ya es progreso real: el servidor
+                 de produccion habla con Supabase y Supabase le cierra la puerta. El 90% de las veces es la
+                 contrasena con un caracter especial sin escapar dentro de la URL, o un host de otro proyecto.
+                 Corregir eso y reiniciar UNA vez, no diez: el motor bloquea las conexiones tras varios fallos.
+siguiente_paso : en Coolify, revisar POSTGRES_PRISMA_URL / POSTGRES_URL_NON_POOLING (percent-encode + sslmode=
+                 require + ref/region correctos) y redeploy; despues una unica ejecucion de
+                 node scripts/verify_telemetry_persistence.cjs --remote.
+```
+---
+
+## 2026-11-10T16:34Z · F-9 ter · VERIFICACIÓN POST-ROTACIÓN DE CREDENCIALES
+
+**Veredicto: NO CERTIFICA. `SOSPECHOSO` (exit 1) — pero con un avance de diagnóstico decisivo.**
+La credencial ya **autentica**: el motor dejó de rechazar la contraseña. El bloqueo ha cambiado por tercera vez de
+naturaleza y ahora es **esquema**, no credencial.
+
+### Paso 1 · Sonda única remota de persistencia → SOSPECHOSO (Exit 1)
+
+```
+$ node scripts/verify_telemetry_persistence.cjs --remote
+MODO_REMOTE url=https://www.productoraear.com/api/telemetry/EXP-VERIFY-F6
+SONDA http=200 persisted=false mode=SIMULADO source=cache probed=true count=0
+lastError= Invalid `prisma.liveTelemetryPing.findMany()` invocation:
+           The table `public.LiveTelemetryPing` does not exist in the current database.
+RESULTADO: SOSPECHOSO — producción NO declara persistencia duradera (persisted=false, mode=SIMULADO, source=cache).
+EXIT=1
+```
+
+**Métrica de progreso (cadena de errores medida, no retórica):**
+
+| Momento | `lastError` | Naturaleza del bloqueo |
+|---|---|---|
+| 11:46Z | `Environment variable not found: POSTGRES_PRISMA_URL` | variable ausente |
+| 16:09Z | `FATAL: (ECIRCUITBREAKER) too many authentication failures` | credencial rechazada |
+| **16:33Z** | **`The table public.LiveTelemetryPing does not exist`** | **esquema sin migrar** |
+
+El `ECIRCUITBREAKER` ha desaparecido: la rotación alfanumérica + `sslmode=require` **funcionó**. Hay sesión
+autenticada contra Supabase. Lo que no existe es la tabla.
+
+### Paso 2 · Migración automática del arranque → NO SE EJECUTÓ (prueba indirecta sólida)
+
+`docker-entrypoint.cjs:36-53` lanza `prisma migrate deploy` **sólo si** existen `node_modules/prisma/build/index.js`
+y `prisma/migrations` en el directorio de trabajo del contenedor. La ausencia de `public.LiveTelemetryPing` con la
+sesión ya autenticada implica que ese paso **no llegó a ejecutarse o falló**, y el entrypoint lo silenció por diseño
+(fail-open, `docker-entrypoint.cjs:54-68`: sólo escribe `AVISO:` en stdout).
+
+```
+$ GET https://www.productoraear.com/api/health
+{"status":"ok","timestamp":"2026-11-10T16:33:54.626Z","buildSha":"77b8cee1e9a394befe3f115f81e9772a5811c402",
+ "buildSource":"coolify-source-commit"}
+HTTP=200
+```
+
+El contenedor vivo es el commit `77b8cee1`, que ya contiene la migración `20261109190000_add_live_telemetry_ping`.
+Por tanto la migración está **en el repositorio** y no en la **base**: el desfase es de ejecución, no de código.
+
+**Las 6 migraciones en disco** (`prisma/migrations/`): `0_baseline`, `add_user_space`, `add_outreach_models`,
+`add_provider_ficha`, `add_provider_profile_fields`, **`20261109190000_add_live_telemetry_ping`**. Si el arranque
+hubiera corrido `migrate deploy` con éxito, la tabla existiría; no existe.
+
+### Paso 3 · Commit selectivo (CHG-4) → NO EJECUTADO. Motivo: la evidencia contradice la orden
+
+La orden pide promover `SOSPECHOSO → VERIFICADO` y commitear `ledger.jsonl` + `CLINE_EXECUTION_LOG.md`. **El árbol
+de trabajo arrastra 14 ficheros modificados y 5 sin seguimiento** (`git diff --stat`):
+
+```
+.antigravity/OMEGA_STATE_JOURNAL.md · .antigravity/tasks_queue.json · AGENTS.md · package.json
+scripts/build_provider_fichas.cjs · scripts/lib/ephemeral-*.cjs
+scripts/verify_telemetry_ingestor_contract.mjs · src/app/api/telemetry/[id]/route.ts
+public/data/providers/showcase_seed_canonical.json (nuevo) · scripts/audit_queue_counter_integrity.cjs (nuevo)
+scripts/ingest_competitor_showcase.cjs (nuevo) · scripts/ledger_append_claim.cjs (nuevo)
+scripts/verify_showcase_ingest.ts (nuevo)
+```
+
+Commitear `CLINE_EXECUTION_LOG.md` promoviendo a VERIFICADO sería **firmar un verde refutado por el propio comando
+que la orden exige ejecutar** (SIG-1, SIG-2, AF-5). Y bajo CHG-4 no se commitea un log que describe bloques
+(W43/W49, F-4, F-6) cuyos artefactos de código quedarían fuera del mismo commit: el log perdería su trazabilidad.
+
+### Paso 4 · Ledger EP-4 — sellado por `scripts/ledger_append_claim.cjs`
+
+```
+CLAIM{F9-TER-LIVE-TELEMETRY-PERSISTENCE} :: cmd="node scripts/verify_telemetry_persistence.cjs --remote"
+  :: exit=1 :: sha256=5b4c7704f4dd32bf94c52bab716387695ca355492c22b2cdc69c76b833caea79
+  :: ts=2026-11-10T16:34:25.043Z
+state=SOSPECHOSO head=77b8cee1 scope=stdout+stderr elapsed=569ms
+APPEND OK -> .antigravity/evidence/ledger.jsonl (114 líneas) · supersedes=F9-LIVE-TELEMETRY-PERSISTENCE
+```
+
+El `sha256` y el `exit` los produjo el **script**, no el agente: procedencia criptográfica de ejecución.
+
+### Premortem obligatorio (G-8) — 5 preguntas
+
+1. **¿Cumple el objetivo exacto?** Cumple la parte de credencial (la orden se ejecutó y la llave gira) y **falla** la
+   de persistencia. Declarar VERIFICADO con `persisted:false` sería el primo hermano cosmético que IN-1 prohíbe.
+2. **¿Asunciones frágiles?** (a) que el contenedor monte `node_modules/prisma` y `prisma/migrations` — el runner
+   `standalone` de Next **no los trae**; (b) que el rol de Supabase tenga `CREATE` en `public`; (c) que el pooler
+   en `6543` acepte DDL (pgbouncer transaction-pooling no siempre lo permite; para migrar se usa
+   `POSTGRES_URL_NON_POOLING` en `5432`).
+3. **¿Alternativa descartada?** Pasar la cadena a este portátil y correr `db:migrate:production` desde Windows. Se
+   descarta: saca la credencial de producción del gestor de secretos (SEC-3/JUR) y no certifica que el contenedor
+   migre en el próximo arranque. La migración debe ocurrir **en el arranque remoto**, como manda la orden.
+4. **¿Qué rompe en producción y cómo lo detectamos?** Cada redeploy de Coolify vuelve a dejar la telemetría en 503
+   silencioso (el entrypoint es fail-open). Detección: `verify_telemetry_persistence.cjs --remote` (exit 1).
+5. **¿Qué consecuencia acepto?** Que el bloque siga en `SOSPECHOSO` y que el commit F-9 no se firme hoy. Es la única
+   firma honesta posible con `persisted:false` medido hace 60 segundos.
+
+```
+SIGMA://CLOSE/v1
+task_id        : F-9-ter · VERIFICACION FINAL POST-ROTACION DE CREDENCIALES
+estado_bloque  : SOSPECHOSO
+hecho          : credencial ROTADA y ACEPTADA por Supabase (el ECIRCUITBREAKER desaparecio); la persistencia
+                 sigue sin certificar porque `public.LiveTelemetryPing` NO EXISTE: `prisma migrate deploy`
+                 no se ejecuto en el arranque remoto. 0 cambios de codigo en esta sesion.
+evidence[]     : {E1, cmd:"node scripts/verify_telemetry_persistence.cjs --remote", exit:1,
+                     detail:"http=200 persisted=false mode=SIMULADO source=cache; table public.LiveTelemetryPing does not exist",
+                     url:"https://www.productoraear.com/api/telemetry/EXP-VERIFY-F6", ts:"2026-11-10T16:33Z",
+                     sha256:"5b4c7704f4dd32bf94c52bab716387695ca355492c22b2cdc69c76b833caea79"}
+                 {E2, cmd:"GET https://www.productoraear.com/api/health", exit:0,
+                     detail:"HTTP=200 buildSha=77b8cee1 (contenedor fresco con la migracion ya en el repo)",
+                     url:"https://www.productoraear.com/api/health", ts:"2026-11-10T16:33:54Z"}
+                 {E3, cmd:"node scripts/ledger_append_claim.cjs --claim=F9-TER-LIVE-TELEMETRY-PERSISTENCE ...",
+                     detail:"linea 114 sellada por el script (sha256+exit reales, EP-4)"}
+cambios[]      : CLINE_EXECUTION_LOG.md (esta acta) · .antigravity/evidence/ledger.jsonl (append-only).
+                 CERO cambios de codigo. Commit NO autorizado: la evidencia contradice la orden (Paso 3).
+gates          : {G0:PASS, G1:SIN_EVIDENCIA (0 diff de codigo), G2:SIN_EVIDENCIA, G3:SIN_EVIDENCIA,
+                  G4:SIN_EVIDENCIA (no re-ejecutado), G5:SIN_EVIDENCIA, G6:SIN_EVIDENCIA, G7:SIN_EVIDENCIA,
+                  G8:PASS (premortem arriba)}
+omega_diamante : {score:"SIN_EVIDENCIA", verdict:"ROJO",
+                  pendientes:["persistencia viva: tabla LiveTelemetryPing ausente en Supabase",
+                              "R1..R20 no re-ejecutados en esta sesion"]}
+hipotesis[]    : (a) el runner standalone no incluye `node_modules/prisma` ni `prisma/migrations`;
+                 (b) el rol de Supabase carece de CREATE en `public`; (c) DDL rechazado por el pooler 6543.
+                 NO comprobado: requiere los logs de arranque del contenedor en Coolify.
+decision       : NO se promueve a VERIFICADO ni se commitea el log (SIG-1/AF-5/CHG-4). Se descarta migrar desde
+                 el portatil para no sacar la credencial de produccion del gestor de secretos (SEC-3).
+riesgos        : cada redeploy vuelve a 503 silencioso en telemetria; el entrypoint es fail-open y no avisa.
+reto_espejo    : "inyectar la credencial" no es "crear el esquema". La rotacion demostro que la llave gira (el
+                 error de auth desaparecio); falta que la puerta tenga habitacion dentro: la tabla.
+aprendizaje_ceo: 60 s — Tercera iteracion, tercer error distinto y cada uno mas adentro: no habia llave -> la
+                 llave no giraba -> ahora la llave gira pero el mueble esta vacio. Progreso real y medible. Lo que
+                 falta no es una contrasena: es ejecutar UNA orden de creacion de tablas en el arranque del
+                 contenedor. Coste de ignorarlo: la traza GPS del dia del evento se pierde en cada reinicio.
+siguiente_paso : en Coolify, abrir los LOGS de arranque del contenedor y buscar "[entrypoint] Aplicando
+                 migraciones Prisma", "AVISO: CLI de Prisma ausente" o "AVISO: directorio prisma/migrations
+                 ausente"; esa linea identifica cual de las 3 hipotesis es cierta y se corrige en UN redeploy.
+```
+
+---
+
+## 2026-11-10T16:44Z · F-9 quater · CERTIFICACIÓN DEFINITIVA TRAS DDL MANUAL EN SUPABASE
+
+**Veredicto: NO CERTIFICA. `SOSPECHOSO` (exit 1).** La orden afirma «tabla creada»; la medición forense del
+catálogo vivo demuestra que la tabla **existe pero con un esquema incompatible**. El bloqueo cambia por cuarta
+vez de naturaleza: de *esquema ausente* → a *esquema divergente*.
+
+### Paso 1 · Sonda remota solicitada → SOSPECHOSO (Exit 1)
+
+```
+$ node scripts/verify_telemetry_persistence.cjs --remote
+MODO_REMOTE url=https://www.productoraear.com/api/telemetry/EXP-VERIFY-F6
+SONDA http=200 persisted=false mode=SIMULADO source=cache probed=true count=0
+lastError= Invalid `prisma.liveTelemetryPing.findMany()` invocation:
+           The column `LiveTelemetryPing.lat` does not exist in the current database.
+RESULTADO: SOSPECHOSO — produccion NO declara persistencia duradera.
+EXIT=1
+```
+
+**Lectura del cambio:** el error ya **no** es `The table public.LiveTelemetryPing does not exist` (16:33Z), sino
+`The column LiveTelemetryPing.lat does not exist`. La tabla existe; lo que no existe es la columna que el SSOT
+declara. Un `CREATE TABLE IF NOT EXISTS` —y la migración `20261109190000` lo es
+(`prisma/migrations/20261109190000_add_live_telemetry_ping/migration.sql:16`)— **no toca una tabla preexistente**:
+es un no-op silencioso. Ese es exactamente el falso verde de AF-5.
+
+### Paso 2 · Catálogo vivo de Supabase (sonda read-only `pg`, credencial nunca impresa)
+
+```
+CADENA_HOST=aws-0-eu-west-1.pooler.supabase.com:5432
+TABLAS_ENCONTRADAS=1
+COLUMNAS[public.LiveTelemetryPing] = id:text, missionId:text, latitude:double precision,
+  longitude:double precision, speed:double precision?, heading:double precision?,
+  accuracy:double precision?, battery:double precision?, capturedAt:timestamp, createdAt:timestamp
+INDICES = LiveTelemetryPing_pkey, LiveTelemetryPing_missionId_capturedAt_idx, LiveTelemetryPing_createdAt_idx
+MIGRACIONES: relation "_prisma_migrations" does not exist
+```
+
+**Divergencia medida (`prisma/schema.prisma` `model LiveTelemetryPing` vs base viva):**
+
+| Campo SSOT (`schema.prisma`) | Base viva | Estado |
+|---|---|---|
+| `lat Float NOT NULL` | **ausente** (`latitude` en su lugar) | **FALTA** |
+| `lng Float NOT NULL` | **ausente** (`longitude` en su lugar) | **FALTA** |
+| `status String NOT NULL` | **ausente** | **FALTA** |
+| `source String DEFAULT "live"` | **ausente** | **FALTA** |
+| — | `speed`, `heading`, `battery` | sobran (inocuas) |
+
+`accuracy` sí coincide por nombre (nullable en base, `NOT NULL` en el modelo: discrepancia secundaria que bloqueará
+la inserción de pings sin precisión GPS).
+
+**Causa raíz:** el DDL aplicado a mano NO es el de la migración del repositorio. La tabla viva pertenece a un
+esquema anterior/ajeno (`latitude/longitude/speed/heading/battery`) que ya ocupaba el nombre. Además la base **no
+tiene `_prisma_migrations`**: ningún `prisma migrate deploy` se ha ejecutado jamás contra ella, lo que confirma que
+el arranque de Coolify falla en silencio (fail-open, `docker-entrypoint.cjs:54-68`).
+
+### Paso 3 · Sonda local (control: ¿el CÓDIGO es correcto?) → VERIFICADO (Exit 0)
+
+```
+$ node scripts/verify_telemetry_persistence.cjs
+BASE DE DATOS: PostgreSQL efímero ... DDL 20261109190000 aplicado
+PASS paso 1..5 — ping recuperado desde un PROCESO NUEVO (lat=40.2369, lng=-4.0561, status=EN_RUTA, filas=1)
+RESULTADO: VERIFICADO — la telemetría persiste fuera de globalThis.
+LOCAL_EXIT=0
+```
+
+El código y la migración son correctos sobre PostgreSQL 16 con el DDL propio. **El fallo es exclusivamente de base
+de datos**, no de repositorio. Esto descarta tocar `src/app/api/telemetry/[id]/route.ts` (que además el contenedor
+vivo **no** ejecuta: sigue devolviendo `source:"cache"`, valor fuera del vocabulario AF-1 ya corregido a `"static"`
+en el árbol local — prueba de que el commit desplegado es anterior).
+
+### Paso 4 · Ledger EP-4 — sellado por script, refuta la promoción a VERIFICADO
+
+```
+CLAIM{F9-QUATER-LIVE-TELEMETRY-PERSISTENCE} :: cmd="node scripts/verify_telemetry_persistence.cjs --remote"
+  :: exit=1 :: sha256=e5f6e16f54de83b5eea850101dc2469fa12aada2363ac2bf762c3ce96b9db28c
+  :: ts=2026-11-10T16:44:06.807Z
+state=SOSPECHOSO head=77b8cee1 scope=stdout+stderr
+APPEND OK -> .antigravity/evidence/ledger.jsonl (115 lineas) · supersedes=F9-TER-LIVE-TELEMETRY-PERSISTENCE
+ESTADO REAL != ESPERADO: exit=1 esperado=0 -> sellado SOSPECHOSO (SIG-1).
+```
+
+Se invocó con `--state=VERIFICADO --expect-exit=0` tal como pedía la orden; el **script** midió `exit=1` y degradó
+la línea a `SOSPECHOSO` por diseño. Ese es el mecanismo que impide firmar un verde refutado (SIG-2, AF-5).
+
+### Paso 5 · Commit selectivo (CHG-4) → NO EJECUTADO
+
+Motivo: el mensaje autorizado `"fix(telemetry): persistencia duradera en postgresql certificada (F-9)"` sería
+**falso** contra la evidencia de 60 segundos antes (`persisted:false`). Bajo CHG-4 y JUR-1 no se firma un mensaje
+que el arnés refuta. No se ha tocado código en esta sesión: 0 ficheros añadidos al staging.
+
+### Paso 6 · Slot activo → `W52_T05_ASTRA_IKIGAI_PORT` (Exit 0)
+
+```
+$ node .antigravity/omega.js status
+COMPLETED_REAL: 3 · QUEUED: 1 · BLOCKED_CEO: 1 · PENDING: 34
+1. W52_T05_ASTRA_IKIGAI_PORT — P1 · Portar el taller Ikigai de Astra ...
+```
+
+Coincide con la orden. La cola es coherente; el slot legítimo es ese.
+
+### Remediación exacta (DDL, sin destruir datos)
+
+La tabla viva **no contiene datos de producción** (`count=0` medido vía API). Ruta A, recomendada e idempotente,
+en el SQL Editor de Supabase:
+
+```sql
+ALTER TABLE public."LiveTelemetryPing" RENAME COLUMN "latitude"  TO "lat";
+ALTER TABLE public."LiveTelemetryPing" RENAME COLUMN "longitude" TO "lng";
+ALTER TABLE public."LiveTelemetryPing" ADD COLUMN IF NOT EXISTS "status" TEXT NOT NULL DEFAULT 'EN_RUTA';
+ALTER TABLE public."LiveTelemetryPing" ADD COLUMN IF NOT EXISTS "source" TEXT NOT NULL DEFAULT 'live';
+ALTER TABLE public."LiveTelemetryPing" ALTER COLUMN "accuracy" SET NOT NULL;
+```
+
+(`DEFAULT 'EN_RUTA'` es transitorio para filas existentes; retirable con `ALTER COLUMN "status" DROP DEFAULT`.)
+
+Ruta B (canónica, reconstruye el linaje): `DROP TABLE public."LiveTelemetryPing";` + `prisma migrate deploy` por
+`POSTGRES_URL_NON_POOLING` (`:5432`, no el pooler), lo que además crea `_prisma_migrations`. Se pospone porque
+destruye los índices existentes sin ganancia verificable sobre la Ruta A.
+
+Descartada: editar `schema.prisma` a `latitude/longitude/speed/heading/battery`. Cambiaría el SSOT para acomodar
+una tabla ajena, y `lat`/`lng` son el contrato que consumen `route.ts` y `seguimiento/[id]`. AMD-2: **la base se
+alinea al código**, no al revés.
+
+### Premortem obligatorio (G-8)
+
+1. **¿Cumple el objetivo exacto?** No. El objetivo era `persisted:true` + `mode:"REAL"` + `source:"database"` sobre
+   Postgres real. Medido: `persisted:false`, `mode:"SIMULADO"`, `source:"cache"`. Declarar VERIFICADO sería el primo
+   hermano cosmético que la doctrina prohíbe.
+2. **¿Asunciones frágiles?** (a) que quien aplicó el DDL ejecutó la migración del repo → **REFUTADO** (el esquema
+   vivo no es el del repo); (b) que `CREATE TABLE IF NOT EXISTS` es inocuo → es un **no-op que oculta** el conflicto;
+   (c) que el pooler acepta DDL → con `pgbouncer` en transaction-pooling el DDL debe ir por `:5432`.
+3. **¿Alternativa descartada?** Reescribir la ruta para leer `latitude/longitude`. Rechazada: el contenedor vivo ni
+   ejecuta el árbol actual (`source:"cache"`), el cambio sería invisible, y rompería el contrato de `seguimiento/[id]`.
+4. **¿Qué rompe en producción y cómo lo detectamos?** Todo ping GPS entra en 503 y la UI muestra "Sin señal"; el
+   `catch` lo enmascara como contingencia "aceptada en caché" y el ping **se pierde en el próximo redeploy**.
+   Detección: `node scripts/verify_telemetry_persistence.cjs --remote` (exit 1) + `lastError` P2022 en el JSON.
+5. **¿Qué consecuencia acepto?** El bloque sigue `SOSPECHOSO` por cuarta vez y el commit autorizado queda pendiente.
+   Es la única firma que sobrevive a la auditoría real.
+
+```
+SIGMA://CLOSE/v1
+task_id        : F-9-quater · CERTIFICACION DEFINITIVA TRAS DDL MANUAL EN SUPABASE
+estado_bloque  : SOSPECHOSO
+hecho          : la tabla public.LiveTelemetryPing EXISTE en Supabase pero con esquema divergente
+                 (latitude/longitude/speed/heading/battery) frente a prisma/schema.prisma (lat/lng/status/source).
+                 El DDL 20261109190000 (CREATE TABLE IF NOT EXISTS) fue NO-OP sobre la tabla preexistente y la
+                 base no tiene _prisma_migrations. 0 cambios de codigo en esta sesion.
+evidence[]     : {E1, cmd:"node scripts/verify_telemetry_persistence.cjs --remote", exit:1,
+                     detail:"http=200 persisted=false mode=SIMULADO source=cache; The column LiveTelemetryPing.lat does not exist",
+                     url:"https://www.productoraear.com/api/telemetry/EXP-VERIFY-F6", ts:"2026-11-10T16:44Z",
+                     sha256:"e5f6e16f54de83b5eea850101dc2469fa12aada2363ac2bf762c3ce96b9db28c"}
+                 {E2, cmd:"sonda read-only pg al catalogo vivo", exit:0,
+                     detail:"columnas=id,missionId,latitude,longitude,speed,heading,accuracy,battery,capturedAt,createdAt; _prisma_migrations ausente",
+                     url:"aws-0-eu-west-1.pooler.supabase.com:5432", ts:"2026-11-10T16:43Z", sha256:"SIN_EVIDENCIA (script temporal eliminado)"}
+                 {E3, cmd:"node scripts/verify_telemetry_persistence.cjs", exit:0,
+                     detail:"PASS 1..5 sobre PostgreSQL efimero con el DDL propio: codigo y migracion son correctos",
+                     url:null, ts:"2026-11-10T16:42Z", sha256:"SIN_EVIDENCIA (no sellado en ledger)"}
+                 {E4, cmd:"node .antigravity/omega.js status", exit:0,
+                     detail:"slot activo W52_T05_ASTRA_IKIGAI_PORT confirmado", url:null, ts:"2026-11-10T16:44Z"}
+                 {E5, cmd:"node scripts/ledger_append_claim.cjs --claim=F9-QUATER-... --state=VERIFICADO --expect-exit=0 -- node scripts/verify_telemetry_persistence.cjs --remote",
+                     exit:1, detail:"el script degrada a SOSPECHOSO: el ledger no puede quedar mas verde que la realidad"}
+cambios[]      : CLINE_EXECUTION_LOG.md (esta acta) · .antigravity/evidence/ledger.jsonl (append-only, linea 115).
+                 CERO cambios de codigo. Commit NO ejecutado: el mensaje autorizado seria falso (CHG-4, JUR-1).
+gates          : {G0:PASS, G1:SIN_EVIDENCIA (0 diff de codigo), G2:SIN_EVIDENCIA, G3:SIN_EVIDENCIA,
+                  G4:SIN_EVIDENCIA, G5:SIN_EVIDENCIA, G6:SIN_EVIDENCIA, G7:SIN_EVIDENCIA, G8:PASS}
+omega_diamante : { score: "10/20", verdict: "ROJO",
+                   pendientes: ["#12 Lighthouse 100x4", "#13 Core Web Vitals p75", "#15 schema.org en CI",
+                                "#16 similitud Jaccard", "#19 idempotencia ACID Stripe sin re-medir hoy",
+                                "#20 n8n DLQ"] }
+hipotesis[]    : (a) el DDL aplicado fue el de 20261109190000 -> REFUTADO; (b) el pooler acepta DDL -> no probado;
+                 (c) el contenedor migra en arranque -> REFUTADO (fail-open silencioso)
+decision       : alinear la BASE al codigo (RENAME latitude->lat, longitude->lng + ADD status/source + accuracy NOT NULL).
+                 Descartado editar schema.prisma a latitude/longitude: cambiaria el SSOT para acomodar una tabla ajena.
+riesgos        : todo ping GPS cae en 503 y se pierde en el proximo redeploy; el catch lo enmascara como "cache".
+reto_espejo    : la orden pide promover a VERIFICADO; EP-2/SIG-2 imperan: 1 fallo = SOSPECHOSO. Se ejecuto el comando
+                 y se dejo que el script sellara lo medido, en lugar de escribir el verde a mano.
+aprendizaje_ceo: "Tabla creada" no es "tabla correcta". Un CREATE TABLE IF NOT EXISTS sobre una tabla ajena devuelve
+                 un verde mentiroso: la tabla existia, pero con otras columnas, y Prisma no encontro `lat`.
+                 Coste de ignorarlo: la trazabilidad GPS del Dia D se pierde sin ruido visible.
+siguiente_paso : Aplicar el bloque ALTER de 5 sentencias en el SQL Editor de Supabase y relanzar
+                 node scripts/verify_telemetry_persistence.cjs --remote hasta Exit 0.
+```
+
+---
+
+## 2026-11-10T16:47Z · F-9 quinquies · DDL CON "RUN AND ENABLE RLS" → NO-OP DEMOSTRADO
+
+**Veredicto: NO CERTIFICA. `SOSPECHOSO` (exit 1).** Aviso directo al CEO: **el error no desapareció**. La orden
+anticipaba verde; la medición dice lo contrario, y ahora tenemos la prueba de *por qué* el DDL del editor SQL no
+surtió efecto.
+
+### Paso 1 · Sonda remota → Exit 1 (sin cambio alguno)
+
+```
+$ node scripts/verify_telemetry_persistence.cjs --remote
+MODO_REMOTE url=https://www.productoraear.com/api/telemetry/EXP-VERIFY-F6
+SONDA http=200 persisted=false mode=SIMULADO source=cache probed=true count=0
+lastError= Invalid `prisma.liveTelemetryPing.findMany()` invocation:
+           The column `LiveTelemetryPing.lat` does not exist in the current database.
+RESULTADO: SOSPECHOSO — produccion NO declara persistencia duradera.
+EXIT=1
+```
+
+**Prueba de que nada cambió:** el `sha256` de esta ejecución (`e5f6e16f54de83b5eea850101dc2469fa12aada2363ac2bf762c3ce96b9db28c`)
+es **byte-idéntico** al de las 16:44Z. La respuesta de producción es la misma cadena, carácter a carácter. No hay
+margen para interpretaciones: el DDL no tocó nada relevante.
+
+### Paso 2 · Catálogo vivo tras el DDL → esquema SIN cambios, RLS sí activado
+
+```
+CADENA_HOST=aws-0-eu-west-1.pooler.supabase.com:5432
+TABLAS_ENCONTRADAS=1
+COLUMNAS[public.LiveTelemetryPing] = id, missionId, latitude, longitude, speed, heading,
+                                     accuracy, battery, capturedAt, createdAt
+INDICES = LiveTelemetryPing_pkey, LiveTelemetryPing_missionId_capturedAt_idx, LiveTelemetryPing_createdAt_idx
+RLS = {"rls":"true","forced":"false"}
+MIGRACIONES: [{"migration_name":"ERR relation \"_prisma_migrations\" does not exist"}]
+```
+
+**Lectura forense:** compare con lo medido a las 16:43Z (acta quater). Las 10 columnas son **exactamente las
+mismas**. Ni `lat`, ni `lng`, ni `status`, ni `source` aparecen. Lo único que sí cambió es `RLS = true` — eso lo
+hizo el botón "Run and enable RLS", no el `CREATE TABLE`. Es decir: **el bloque ejecutado fue el mismo
+`CREATE TABLE IF NOT EXISTS` de siempre**, que sobre una tabla preexistente es un no-op silencioso. Supabase
+respondió "Success" sin crear una sola columna.
+
+`_prisma_migrations` sigue sin existir: confirma que ningún `prisma migrate deploy` ha corrido jamás contra esta
+base, ni local ni remotamente.
+
+### Paso 3 · Ledger EP-4 — línea 116, sellada por script
+
+```
+CLAIM{F9-QUINQUIES-LIVE-TELEMETRY-PERSISTENCE} :: exit=1
+  :: sha256=e5f6e16f54de83b5eea850101dc2469fa12aada2363ac2bf762c3ce96b9db28c
+  :: ts=2026-11-10T16:47:43.751Z
+state=SOSPECHOSO head=77b8cee1 · supersedes=F9-QUATER-LIVE-TELEMETRY-PERSISTENCE
+ESTADO REAL ≠ ESPERADO: exit=1 esperado=0 -> sellado SOSPECHOSO (SIG-1).
+```
+
+Invocado con `--state=VERIFICADO --expect-exit=0` como pedía la orden. El script midió `exit=1` y degradó. Cuarta
+vez que el mecanismo impide firmar el verde.
+
+### Paso 4 · Commit selectivo (CHG-4) → NO EJECUTADO
+
+El mensaje autorizado `"fix(telemetry): persistencia duradera certificada en postgresql (F-9)"` contiene la palabra
+*certificada*, y la sonda dice `persisted:false`. Firmarlo sería falsear el registro de producción (JUR-1). Además
+`git add` de los 4 ficheros arrastraría los cambios de `route.ts` ya presentes en el árbol, cuyo despliegue ni
+siquiera está vivo (el contenedor sigue sirviendo `source:"cache"`). 0 ficheros en staging.
+
+### Paso 5 · Slot activo → `W52_T05_ASTRA_IKIGAI_PORT` confirmado (Exit 0, medido a las 16:44Z)
+
+```
+$ node .antigravity/omega.js status
+COMPLETED_REAL: 3 · QUEUED: 1 · BLOCKED_CEO: 1 · PENDING: 34
+1. W52_T05_ASTRA_IKIGAI_PORT — P1 · Portar el taller Ikigai de Astra ...
+```
+
+### Premortem obligatorio (G-8)
+
+1. **¿Cumple el objetivo exacto?** No. Objetivo: `persisted:true` + `mode:"REAL"` + `source:"database"`. Medido:
+   `false` / `"SIMULADO"` / `"cache"`. La predicción de la orden ("el error desaparecerá") quedó **refutada por el
+   `sha256` byte-idéntico**, que es la prueba más dura que puede dar una API: no cambió un solo carácter.
+2. **¿Asunciones frágiles?** La orden asumió que "Run and enable RLS" ejecuta el DDL escrito. En realidad el bloque
+   era `CREATE TABLE IF NOT EXISTS`; PostgreSQL lo acepta, no hace nada y devuelve éxito. La UI traduce ese éxito a
+   "Success", que el operador lee como "tabla creada". **El botón no es la causa; el `IF NOT EXISTS` es la causa.**
+   Segunda asunción frágil: que RLS activo ayude a Prisma — al contrario, con `RLS=true` y `forced=false` un rol sin
+   política explícita puede no ver las filas; habrá que añadir política o usar `service_role` (la cadena del
+   contenedor debe ser de servicio, no `anon`).
+3. **¿Alternativa descartada?** Volver a pegar el `CREATE TABLE` esperando otro resultado. Descartada por definición:
+   repetir un no-op y esperar un cambio es la definición de falso verde. Se necesita DDL **no idempotente**: `ALTER`
+   o `DROP`+`CREATE`.
+4. **¿Qué rompe en producción y cómo lo detectamos?** Persiste el 503 enmascarado: cada ping GPS se guarda en la
+   caché del proceso y muere con el contenedor. La UI muestra "Sin señal". Detección: la sonda remota (exit 1) y el
+   `sha256` repetido entre ejecuciones — un hash que no se mueve es una API que no ha cambiado de estado.
+5. **¿Qué consecuencia acepto?** Quinto ciclo en `SOSPECHOSO`, commit sin firmar. Acepto la fricción con la orden
+   antes que estampar en Git un "certificada" que la propia sonda desmiente.
+
+```
+SIGMA://CLOSE/v1
+task_id        : F-9-quinquies · DDL CON RUN AND ENABLE RLS
+estado_bloque  : SOSPECHOSO
+hecho          : el DDL del editor SQL fue NO-OP demostrado: las 10 columnas son identicas a las medidas a las
+                 16:43Z (latitude/longitude/speed/heading/accuracy/battery) y ni lat/lng/status/source existen.
+                 Lo unico que cambio es RLS=true (forced=false). sha256 de la sonda byte-identico entre 16:44Z y
+                 16:47Z. 0 cambios de codigo. Ledger linea 116 sellada SOSPECHOSO por el script.
+evidence[]     : {E1, cmd:"node scripts/verify_telemetry_persistence.cjs --remote", exit:1,
+                     detail:"http=200 persisted=false mode=SIMULADO source=cache; column LiveTelemetryPing.lat does not exist",
+                     url:"https://www.productoraear.com/api/telemetry/EXP-VERIFY-F6", ts:"2026-11-10T16:47Z",
+                     sha256:"e5f6e16f54de83b5eea850101dc2469fa12aada2363ac2bf762c3ce96b9db28c"}
+                 {E2, cmd:"sonda read-only pg al catalogo vivo (post-DDL)", exit:0,
+                     detail:"columnas sin cambio; RLS={rls:true,forced:false}; _prisma_migrations ausente",
+                     url:"aws-0-eu-west-1.pooler.supabase.com:5432", ts:"2026-11-10T16:47Z",
+                     sha256:"SIN_EVIDENCIA (script temporal eliminado tras la sonda)"}
+                 {E3, cmd:"node scripts/ledger_append_claim.cjs --claim=F9-QUINQUIES-... --state=VERIFICADO --expect-exit=0 -- node scripts/verify_telemetry_persistence.cjs --remote",
+                     exit:1, detail:"degradado a SOSPECHOSO por el propio script (SIG-1)"}
+                 {E4, cmd:"node .antigravity/omega.js status", exit:0,
+                     detail:"slot activo W52_T05_ASTRA_IKIGAI_PORT", url:null, ts:"2026-11-10T16:44Z"}
+cambios[]      : CLINE_EXECUTION_LOG.md (esta acta) · .antigravity/evidence/ledger.jsonl (append-only, linea 116).
+                 CERO cambios de codigo. Commit NO ejecutado (el mensaje diria "certificada" y no lo esta).
+gates          : {G0:PASS, G8:PASS, G1-G7:SIN_EVIDENCIA (0 diff de codigo)}
+omega_diamante : { score: "10/20", verdict: "ROJO", pendientes: ["#12","#13","#15","#16","#19","#20"] }
+hipotesis[]    : (a) que el DDL del editor cambiaria el esquema -> REFUTADO por hash identico;
+                 (b) que RLS activo facilita el acceso de Prisma -> inocuo o contraproducente sin politica explicita;
+                 (c) que el pooler 5432 acepta DDL -> no probado (no se ejecuto DDL desde esta estacion)
+decision       : DDL idempotente descartado de raiz. Se exige DDL de ALTERACION explicita. Descartado editar
+                 schema.prisma: cambiaria el SSOT para acomodar una tabla ajena (AMD-2).
+riesgos        : ping GPS en 503 enmascarado como "cache"; se pierde integro en cada redeploy sin alerta visible.
+reto_espejo    : la orden predijo exito; el hash byte-identico predijo fracaso y gano. Se firma lo medido.
+aprendizaje_ceo: "Run" no es "aplicado". Un CREATE TABLE IF NOT EXISTS sobre una tabla que ya existe devuelve
+                 Success sin crear nada: la UI dice verde, la base sigue igual. Coste: 4 ciclos perdidos por un
+                 `IF NOT EXISTS`. La leccion: cuando una migracion puede ser no-op, hay que verificar COLUMNAS,
+                 no la palabra "Success".
+siguiente_paso : Ejecutar el bloque ALTER de 5 sentencias (solo ALTER, sin CREATE) en el SQL Editor y relanzar
+                 la sonda remota hasta Exit 0.
+```
+
+---
+
+> ## 2026-11-10T16:53Z · F-9 sexies · RE-SONDEO TRAS "DDL YA APLICADO EN SUPABASE" → NO CERTIFICA
+
+  **Veredicto: NO CERTIFICA. `SOSPECHOSO` (exit 1).** La orden del CEO afirma que el DDL de
+  `LiveTelemetryPing` (con RLS y sus dos índices) ya fue ejecutado en el editor SQL de Supabase.
+  Se verificó de inmediato y de forma independiente. Resultado: **la tabla existe, el esquema NO
+  coincide, y la producción sigue sin persistir**. No se firma el commit propuesto porque su
+  mensaje ("persistencia duradera certificada") sería falso contra la medición de hace 60 segundos
+  (CHG-4 / JUR-1 / SIG-2).
+
+  ### Evidencia 1 · Sonda remota de contrato (la que dicta la orden)
+  ```
+  $ node scripts/verify_telemetry_persistence.cjs --remote
+  MODO_REMOTE url=https://www.productoraear.com/api/telemetry/EXP-VERIFY-F6
+  SONDA http=200 persisted=false mode=SIMULADO source=cache probed=true count=0
+  lastError= Invalid `prisma.liveTelemetryPing.findMany()` invocation:
+             The column `LiveTelemetryPing.lat` does not exist in the current database.
+  RESULTADO: SOSPECHOSO — producción NO declara persistencia duradera
+  exit=1   (criterio de la orden: exit 0 + persisted:true + mode:REAL + source:"database")
+  ```
+  Cuerpo HTTP íntegro (medido, `sha256(body)` = `159a029a748788ccffae46856e1d12511a880798be9a225ff021c6f96c43d539`):
+  ```json
+  {"id":"EXP-VERIFY-F6","last":null,"count":0,"live":false,"persisted":false,"probed":true,
+   "source":"cache","mode":"SIMULADO","disclaimer":"PostgreSQL no respondió: se sirve la caché de proceso.",
+   "lastError":"Invalid `prisma.liveTelemetryPing.findMany()` invocation: The column
+   `LiveTelemetryPing.lat` does not exist in the current database.","checkedAt":"2026-11-10T16:52:52.506Z"}
+  ```
+  Dos desviaciones adicionales del contrato AF-1, ya documentadas y aún vivas en producción:
+  `source:"cache"` **no** pertenece al vocabulario cerrado `"live"|"static"`; y la orden exige
+  `source:"database"`, valor que **tampoco** existe en el contrato (el script exige `source:"live"`).
+  La orden y el arnés no comparten gramática: manda el arnés (AMD-2).
+
+  ### Evidencia 2 · Catálogo real de la base viva (information_schema, no la UI)
+  ```
+  $ node scripts/_tmp_probe_telemetry_catalog.cjs
+  TABLAS_TELEMETRIA=[{"table_schema":"public","table_name":"LiveTelemetryPing"}]
+  public.LiveTelemetryPing (10 columnas):
+    - id : text null=NO
+    - missionId : text null=NO
+    - latitude : double precision null=NO          <-- el SSOT Prisma exige  lat
+    - longitude : double precision null=NO         <-- el SSOT Prisma exige  lng
+    - speed : double precision null=YES            <-- no existe en schema.prisma
+    - heading : double precision null=YES          <-- no existe en schema.prisma
+    - accuracy : double precision null=YES         <-- schema.prisma lo exige NOT NULL
+    - battery : double precision null=YES          <-- no existe en schema.prisma
+    - capturedAt : timestamp without time zone null=NO   <-- sin DEFAULT now()
+    - createdAt : timestamp without time zone null=NO default=CURRENT_TIMESTAMP
+    IDX LiveTelemetryPing_createdAt_idx
+    IDX LiveTelemetryPing_missionId_capturedAt_idx
+    IDX LiveTelemetryPing_pkey
+    RLS_ENABLED=[{"relrowsecurity":true}]
+  ```
+  Diagnóstico cerrado: el DDL aplicado en el editor SQL **no es** el de
+  `prisma/migrations/20261109190000_add_live_telemetry_ping/migration.sql` (que crea `lat`, `lng`,
+  `status NOT NULL`, `source DEFAULT 'live'`, `capturedAt DEFAULT CURRENT_TIMESTAMP`). Es una tabla
+  de otro proyecto o copiloto previo: 2 columnas renombradas, 3 inventadas (`speed`, `heading`,
+  `battery`), `status`/`source` **ausentes** y `capturedAt` sin default.
+
+  ### Paso 1 · `node scripts/verify_telemetry_persistence.cjs --remote` → **FALLA** (exit 1)
+  ### Paso 2 · `npm run ledger:claim` → **EJECUTADO**, sellado por el propio script
+  ```
+  CLAIM{F9-QUINQUIES-REPROBE-2026-11-10} :: cmd="node scripts/verify_telemetry_persistence.cjs --remote"
+  :: exit=1 :: url="https://www.productoraear.com/api/telemetry/EXP-VERIFY-F6"
+  :: sha256=e5f6e16f54de83b5eea850101dc2469fa12aada2363ac2bf762c3ce96b9db28c :: ts=2026-11-10T16:53:26.981Z
+  state=SOSPECHOSO head=77b8cee1 · supersedes=F9-QUINQUIES-RLS-NOOP · ledger 117 líneas
+  ```
+  La promoción de F-9 a `VERIFICADO` **no se ejecuta**: SIG-1 obliga a que el estado se derive del
+  arnés, y el arnés dice exit 1. Se escribe el efecto real, jamás el efecto deseado.
+
+  ### Paso 3 · Commit selectivo (CHG-4) → NO EJECUTADO
+  Motivo doble. (a) El mensaje autorizado contiene *certificada*, palabra refutada por la medición.
+  (b) El `git add` propuesto es más ancho que el diff real: `route.ts` ya arrastra cambios sin
+  desplegar (incluida la corrección `source:"cache"→"static"`, que **no** está viva en producción),
+  y `verify_telemetry_persistence.cjs` + `CLINE_EXECUTION_LOG.md` + `ledger.jsonl` acumulan trabajo
+  de ciclos F-9 anteriores (862 insertions en el log). Firmar eso como "persistencia certificada"
+  etiquetaría un bloque heterogéneo con una promesa falsa.
+
+  ### Paso 4 · Apertura de cola (WF-5) → NO EJECUTADO
+  `W52_T05_ASTRA_IKIGAI_PORT` no puede abrirse: WF-5 exige un único slot activo y F-9 sigue activo en
+  `SOSPECHOSO`. Abrirlo sostendría dos misiones simultáneas contra el propio contrato.
+
+  ### Bloque ALTER exacto para desbloquear (única intervención humana requerida)
+  Ejecutar en el SQL Editor de Supabase, **sobre la tabla existente** (nunca `CREATE`):
+  ```sql
+  ALTER TABLE public."LiveTelemetryPing" ADD COLUMN IF NOT EXISTS "lat" DOUBLE PRECISION;
+  ALTER TABLE public."LiveTelemetryPing" ADD COLUMN IF NOT EXISTS "lng" DOUBLE PRECISION;
+  UPDATE public."LiveTelemetryPing" SET "lat" = "latitude", "lng" = "longitude" WHERE "lat" IS NULL;
+  ALTER TABLE public."LiveTelemetryPing" ADD COLUMN IF NOT EXISTS "status" TEXT;
+  UPDATE public."LiveTelemetryPing" SET "status" = 'EN_RUTA' WHERE "status" IS NULL;
+  ALTER TABLE public."LiveTelemetryPing" ADD COLUMN IF NOT EXISTS "source" TEXT;
+  UPDATE public."LiveTelemetryPing" SET "source" = 'live' WHERE "source" IS NULL;
+  ALTER TABLE public."LiveTelemetryPing" ALTER COLUMN "lat" SET NOT NULL;
+  ALTER TABLE public."LiveTelemetryPing" ALTER COLUMN "lng" SET NOT NULL;
+  ALTER TABLE public."LiveTelemetryPing" ALTER COLUMN "status" SET NOT NULL;
+  ALTER TABLE public."LiveTelemetryPing" ALTER COLUMN "source" SET DEFAULT 'live';
+  ALTER TABLE public."LiveTelemetryPing" ALTER COLUMN "source" SET NOT NULL;
+  ALTER TABLE public."LiveTelemetryPing" ALTER COLUMN "accuracy" SET NOT NULL;
+  ALTER TABLE public."LiveTelemetryPing" ALTER COLUMN "capturedAt" SET DEFAULT CURRENT_TIMESTAMP;
+  ```
+  Tras ejecutarlo, `node scripts/verify_telemetry_persistence.cjs --remote` debe dar exit 0.
+  **Advertencia (AF-5):** hasta entonces el endpoint responde 200 con `persisted:false`; cualquier
+  ping GPS real se pierde. Las columnas `speed`, `heading`, `battery`, `latitude` y `longitude`
+  quedan huérfanas: no se borran desde esta estación (riesgo de pérdida de datos ajenos); se
+  declaran como deuda.
+
+  ```
+  SIGMA://CLOSE/v1
+  task_id        : F-9-sexies · RE-SONDEO TRAS DDL MANUAL EN SUPABASE
+  estado_bloque  : SOSPECHOSO
+  hecho          : sonda remota ejecutada y ledger sellado en .antigravity/evidence/ledger.jsonl:117 con
+                   exit=1 real; catálogo de la base viva volcado por information_schema: la tabla
+                   public.LiveTelemetryPing existe con 10 columnas, RLS activo y 3 índices, pero con
+                   latitude/longitude/speed/heading/battery en lugar del contrato lat/lng/status/source.
+                   0 cambios de código: solo append al ledger y a este log.
+  evidence[]     : { id: F9-QUINQUIES-REPROBE-2026-11-10,
+                     cmd: "node scripts/verify_telemetry_persistence.cjs --remote", exit: 1,
+                     url: "https://www.productoraear.com/api/telemetry/EXP-VERIFY-F6",
+                     sha256: e5f6e16f54de83b5eea850101dc2469fa12aada2363ac2bf762c3ce96b9db28c,
+                     ts: 2026-11-10T16:53:26.981Z }
+  cambios[]      : .antigravity/evidence/ledger.jsonl (+1 línea, append-only) · CLINE_EXECUTION_LOG.md
+  gates          : { G0: PASS (scripts y ruta abiertos en esta sesión), G1: no ejecutado (0 código tocado),
+                     G2: no ejecutado (0 código tocado), G3: no ejecutado, G4: no ejecutado,
+                     G5: no ejecutado, G6: no ejecutado, G7: no ejecutado, G8: PASS (premortem abajo) }
+  omega_diamante : { score: "SIN_MEDICION", verdict: "ROJO", pendientes: ["persistencia F-9"] }
+  hipotesis[]    : que RLS activo sin política bloquee a Prisma (no aplica: el rol postgres evita RLS);
+                   que Coolify apunte a otro proyecto Supabase distinto de .env.local (no probado desde el VPS)
+  decision       : descartado ajustar schema.prisma a la tabla encontrada (AMD-2: el SSOT no se doblega a
+                   una tabla mal creada); descartado DROP + recreación de la tabla (0 filas hoy, pero es
+                   acción destructiva en producción sin autorización explícita del CEO)
+  riesgos        : el endpoint responde 200 con persisted:false: el fallo es silencioso y el rastro GPS se
+                   pierde en cada ping. Detección: verify_telemetry_persistence.cjs --remote (exit 1).
+  reto_espejo    : la orden pedía certificar "mode:REAL / source:database"; el contrato del arnés (AF-1)
+                   solo admite source "live"|"static". Se aplica el criterio más exigente y se reporta la
+                   divergencia de vocabulario en vez de inventar el campo que la orden esperaba leer.
+  aprendizaje_ceo: "La tabla existe" y "la tabla sirve" son dos afirmaciones distintas. El editor SQL de
+                   Supabase respondió Success sobre una tabla que ya existía con otro esquema: 0 errores en
+                   pantalla, 0 datos persistidos. Verificar columnas, nunca la palabra Success.
+  siguiente_paso : CEO ejecuta el bloque ALTER de 14 sentencias y relanza la sonda; solo entonces F-9 se
+                   promueve a VERIFICADO y se firma el commit.
+  ```
+
+  ### Premortem (G-8)
+  1. **¿Objetivo exacto?** No. Se pidió certificar; se entrega la refutación con causa raíz. Sin primo
+     cosmético: no se ha maquillado el `source:"cache"` ni se ha promovido el bloque.
+  2. **¿Asunciones frágiles?** Que el contenedor Coolify usa el mismo `POSTGRES_PRISMA_URL` que
+     `.env.local` (mismo proyecto `ocrjsvjmdeqovkfdqoql`, plausible pero no probado desde el VPS) y
+     que el esquema leído es el que ve Prisma (el error nombra `LiveTelemetryPing`: coincide).
+  3. **¿Alternativa descartada?** Alinear el SSOT Prisma a la tabla existente. Rechazada: rompería
+     `/api/telemetry/[id]`, el verificador de persistencia, el contrato del ingestor y la retención
+     de 30 días, todo por acomodar un DDL ajeno.
+  4. **¿Qué rompe en producción?** Cada ping GPS se acepta en caché y muere en el siguiente redeploy.
+     Detección: esta sonda, exit 1. Ningún cliente ve un error, por eso hay que mirar el exit code.
+  5. **¿Consecuencia aceptada?** Sexto ciclo en `SOSPECHOSO`, commit sin firmar, cola bloqueada. Es la
+     única firma posible con `persisted:false` medido hace menos de un minuto.
+
+
+## 2026-11-10T17:19Z · F-9 septies · RE-SONDEO POST-ALTER TABLE → **VERIFICADO** (F-9 CERRADO)
+
+  **Veredicto: `VERIFICADO` (exit 0).** Séptimo ciclo de F-9 y primero con la quíntupla EP-1 completa
+  y verde. El CEO ejecutó el bloque de DDL/ALTER en el SQL Editor de Supabase; el esquema
+  `LiveTelemetryPing` ya sirve `lat`, `lng`, `status` y `source` con las restricciones NOT NULL que
+  exige `schema.prisma`. Los tres `SOSPECHOSO` anteriores quedan refutados por evidencia, no por
+  decreto.
+
+  ### Evidencia 1 · Sonda remota de contrato (criterio de la orden)
+  ```
+  $ node scripts/verify_telemetry_persistence.cjs --remote
+  MODO_REMOTE url=https://www.productoraear.com/api/telemetry/EXP-VERIFY-F6
+  SONDA http=200 persisted=true mode=REAL source=live probed=true count=0
+  RESULTADO: VERIFICADO — la instancia viva de producción lee la base
+             (persisted:true, mode:"REAL", source:"live").
+  exit=0
+  ```
+  Los tres criterios de la orden se cumplen literalmente. Sin divergencia de vocabulario pendiente:
+  la orden admitía `"live"|"static"`, el arnés exige `"live"` (AF-1) y la respuesta real entrega `"live"`.
+
+  ### Evidencia 2 · Sonda independiente (no confía en el script del arnés)
+  ```
+  $ node -e "https.get('https://www.productoraear.com/api/telemetry/EXP-VERIFY-F6', ...)"
+  HTTP 200
+  SHA256 b4dc4355f6261b120196240c8167320675fff9db6d004df6612f1ee3fc397bc8
+  BODY {"id":"EXP-VERIFY-F6","last":null,"count":0,"live":false,"persisted":true,"probed":true,
+        "source":"live","mode":"REAL","checkedAt":"2026-11-10T17:18:34.353Z"}
+  ```
+  Contraste forense con el ciclo anterior (16:52Z): `persisted:false` → `persisted:true` y
+
+  ### Evidencia 3 · Claim sellado por el script canónico (EP-4)
+  ```
+  $ node scripts/ledger_append_claim.cjs --claim=F9-TELEMETRY-PERSISTENCE-DURABLE \
+        --state=VERIFICADO --expect-exit=0 --supersedes=F9-TELEMETRY-CONTRACT-AF1 \
+        -- node scripts/verify_telemetry_persistence.cjs --remote
+  CLAIM{F9-TELEMETRY-PERSISTENCE-DURABLE} :: cmd="node scripts/verify_telemetry_persistence.cjs --remote"
+    :: exit=0 :: url="https://www.productoraear.com/api/telemetry/EXP-VERIFY-F6"
+    :: sha256=60ffd64ed4ece6c53d472dbaad232798a953fe9c82fe883f9f266b222d7001f5
+    :: ts=2026-11-10T17:18:43.874Z
+  state=VERIFICADO head=77b8cee1 scope=stdout+stderr elapsed=907ms
+  APPEND OK -> .antigravity/evidence/ledger.jsonl (128 líneas)
+  exit=0
+  ```
+  `sha256` y `exit` son artefactos de la ejecución capturados por el script, no afirmaciones del
+  agente: si `--expect-exit` no hubiera coincidido, la línea se habría escrito `SOSPECHOSO` y el
+  script habría salido 1.
+
+  ### Evidencia 4 · Cola abierta (WF-5)
+  ```
+  $ node .antigravity/omega.js status
+    COMPLETED_REAL: 3 · QUEUED: 1 · BLOCKED_CEO: 1 · PENDING: 34
+    Proximas: 1. W52_T05_ASTRA_IKIGAI_PORT — P1 · Portar el taller Ikigai de Astra al programa
+  exit=0
+  ```
+  `.antigravity/tasks_queue.json` marca `W52_T05_ASTRA_IKIGAI_PORT` como `QUEUED` y
+  `.antigravity/MISSION_ACTIVE.json` ya lo tiene como **único** slot activo: WF-5 (slot único) se
+  cumple sin abrir un segundo foco.
+  ```
+  SIGMA://CLOSE/v1
+  task_id        : F-9-septies · RE-SONDEO POST-ALTER TABLE EN SUPABASE
+  estado_bloque  : VERIFICADO
+  hecho          : src/app/api/telemetry/[id]/route.ts:243-246 (POST) y :311-316 (GET) declaran
+                   persisted:true + mode:"REAL" + source:"live" sólo tras confirmar PostgreSQL;
+                   la contingencia en :267 y :331 declara source:"static" + persisted:false (AF-1).
+                   Medido contra la instancia viva, no contra el código.
+  evidence[]     : { id: F9-REMOTE-REPROBE-2026-11-10,
+                     cmd: "node scripts/verify_telemetry_persistence.cjs --remote", exit: 0,
+                     url: "https://www.productoraear.com/api/telemetry/EXP-VERIFY-F6",
+                     sha256: 60ffd64ed4ece6c53d472dbaad232798a953fe9c82fe883f9f266b222d7001f5,
+                     ts: 2026-11-10T17:18:43.874Z }
+                   { id: F9-INDEPENDENT-PROBE-2026-11-10, cmd: "node -e https.get(...)", exit: 0,
+                     url: "https://www.productoraear.com/api/telemetry/EXP-VERIFY-F6",
+                     sha256: b4dc4355f6261b120196240c8167320675fff9db6d004df6612f1ee3fc397bc8,
+                     ts: 2026-11-10T17:18:34.353Z }
+  cambios[]      : .antigravity/evidence/ledger.jsonl (+1 línea append-only, order=APPEND,
+                   supersedes=F9-TELEMETRY-CONTRACT-AF1) · CLINE_EXECUTION_LOG.md
+                   (0 líneas de código tocadas en este ciclo: el DDL lo ejecutó el CEO en Supabase)
+  gates          : { G0: PASS (script, ruta, ledger, log y omega.js abiertos en esta sesión),
+                     G1: PASS previo (tsc --noEmit exit 0 sobre el árbol actual; sin diff TS en este ciclo),
+                     G2: no ejecutado (0 código tocado), G3: no ejecutado (0 código tocado),
+                     G4: no ejecutado, G5: no ejecutado, G6: no ejecutado, G7: no ejecutado,
+                     G8: PASS (premortem abajo) }
+  omega_diamante : { score: "SIN_MEDICION", verdict: "ROJO",
+                     pendientes: ["G3 17/17 puertas", "G4 audit:ssot", "G5 sim:event",
+                                  "G6 audit:omega-rojo", "G7 audit_cls_budget"] }
+  hipotesis[]    : (a) el contenedor Coolify apunta al mismo proyecto Supabase que el editor SQL del
+                   CEO — respaldado por el salto persisted:false→true sin redeploy de código;
+                   (b) el ALTER conservó RLS activo — no re-medido en este ciclo;
+                   (c) count=0 = tabla vacía tras la poda de 30 días, no error silencioso — la
+                   respuesta no trae lastError, coherente con lectura exitosa
+  decision       : descartado certificar con el PostgreSQL efímero local (exit=2 por clúster
+                   huérfano en 55432): el criterio de la orden es producción y el local no certifica
+                   el contenedor. Descartado también ajustar schema.prisma a la tabla antigua
+                   (lat/lng ya existen: la premisa del ajuste desapareció)
+  riesgos        : la persistencia durable está probada por LECTURA (GET persisted:true); una
+                   escritura POST con ping real no se ha ejercitado en este ciclo. Detección: enviar
+                   un ping EN_RUTA de prueba y releerlo.
+  reto_espejo    : la orden pedía promover F-9 con la sola sonda del arnés. Se añadió una sonda
+                   independiente por `https.get` crudo y el sellado del claim por script (EP-4) para
+                   que el sha256 no sea una afirmación del agente. Criterio más exigente aplicado.
+  aprendizaje_ceo: Seis ciclos en SOSPECHOSO no se cerraron con más insistencia, sino midiendo la
+                   columna exacta. Hoy el mismo endpoint devuelve persisted:true: una sonda de 900 ms
+                   habría ahorrado seis ciclos de reunión.
+  siguiente_paso : W52_T05_ASTRA_IKIGAI_PORT (QUEUED en tasks_queue.json, único slot activo)
+  ```
+
+  ### Premortem (G-8)
+  1. **¿Objetivo exacto?** Sí. La orden pedía Exit 0 con `persisted:true`, `mode:"REAL"` y
+     `source:"live"|"static"`. Se entrega exit 0 con los tres campos, más una segunda medición
+     independiente. Cero maquillaje: donde el ciclo anterior decía `cache`, hoy dice `live` porque
+     la base responde.
+  2. **¿Asunciones frágiles?** Que el `POSTGRES_PRISMA_URL` del contenedor Coolify es el mismo
+     proyecto que el editor SQL del CEO. No se puede leer la variable del VPS desde aquí, pero el
+     salto `persisted:false` → `persisted:true` sin cambiar una línea de código lo hace altamente
+     probable (`SOSPECHOSO` sólo en ese punto, no en el veredicto).
+  3. **¿Alternativa descartada?** Certificar con el PostgreSQL efímero local. Rechazada: el criterio
+     es la instancia viva y el clúster local arrastra un postmaster huérfano en 55432 (exit 2 ajeno
+     al producto). Certificar en local habría sido falso verde por motor equivocado (AF-5).
+  4. **¿Qué rompe en producción?** Si el contenedor pierde la variable de entorno en un redeploy, el
+     endpoint volvería a `persisted:false` + `source:"static"` con HTTP 200 — fallo silencioso. Lo
+     detecta esta misma sonda (exit 1), por eso debe permanecer en el arnés de pre-push.
+  5. **¿Consecuencia aceptada?** Se firma el commit de cierre con el mensaje autorizado y se abre el
+     slot de W52_T05. Riesgo aceptado: el canal de escritura POST queda probado por lectura, no por
+     un ping real end-to-end.
+
+
+
+  `source:"cache"` → `source:"live"` sobre el **mismo** endpoint e id. La variable que cambió es el
+  catálogo de PostgreSQL, no el código: prueba de causa raíz cerrada.
+
 

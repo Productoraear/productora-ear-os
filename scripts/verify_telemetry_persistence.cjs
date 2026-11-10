@@ -19,12 +19,21 @@
  *   · si no ⇒ PostgreSQL EFÍMERO (`scripts/lib/ephemeral-postgres.cjs`) con el
  *     DDL de la migración 20261109190000 aplicado.
  *
+ * MODO --remote (sonda de PRODUCCIÓN, F-6 LIVE):
+ *   Interroga `GET <base>/api/telemetry/<id>` y EXIGE que el JSON declaren la
+ *   evidencia durable: `persisted:true` Y `mode:"REAL"` Y `source:"live"`. Basta
+ *   con que uno de los tres falle para sellar SOSPECHOSO: que la base exista no
+ *   prueba que el proceso vivo la lea (el contenedor puede estar sin la variable
+ *   de entorno y responder desde caché de proceso).
+ *
  * Exit codes:
  *   0 = persistencia verificada (VERIFICADO)
  *   1 = persistencia NO verificada (SOSPECHOSO)
- *   2 = PostgreSQL no alcanzable (SIN_EVIDENCIA, no es fallo de código)
+ *   2 = PostgreSQL no alcanzable / sonda remota sin respuesta (SIN_EVIDENCIA, no es fallo de código)
  *
  * Uso: npm run verify:telemetry-persistence
+ *      node scripts/verify_telemetry_persistence.cjs --remote
+ *      node scripts/verify_telemetry_persistence.cjs --remote --base=https://www.productoraear.com --id=EXP-VERIFY-F6
  */
 'use strict';
 
@@ -33,6 +42,74 @@ const { ROOT, resolveVerificationDatabase } = require('./lib/ephemeral-postgres.
 
 const MISSION_ID = 'EXP-VERIFY-F6';
 const PROBE = { lat: 40.2369, lng: -4.0561, accuracy: 8.5, status: 'EN_RUTA' };
+
+const REMOTE_BASE = (
+  process.argv.find((a) => a.startsWith('--base='))?.slice('--base='.length) ||
+  process.env.EAR_PROD_BASE_URL ||
+  'https://www.productoraear.com'
+).replace(/\/+$/, '');
+const REMOTE_ID =
+  process.argv.find((a) => a.startsWith('--id='))?.slice('--id='.length) || MISSION_ID;
+const REMOTE_TIMEOUT_MS = 8_000; // Ley del AbortController (INV-17).
+
+/** Sonda remota: el veredicto lo dicta el contrato durable, no la memoria del proceso. */
+async function probeRemote() {
+  const url = `${REMOTE_BASE}/api/telemetry/${encodeURIComponent(REMOTE_ID)}`;
+  log(`MODO_REMOTE url=${url}`);
+
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), REMOTE_TIMEOUT_MS);
+  let http;
+  let body;
+  try {
+    const res = await fetch(url, {
+      headers: { 'user-agent': 'EAR-OS-telemetry-persistence' },
+      signal: ctrl.signal,
+      cache: 'no-store',
+    });
+    http = res.status;
+    body = await res.text();
+  } catch (error) {
+    log(`SIN_EVIDENCIA: la sonda remota no respondió (${error instanceof Error ? error.message : String(error)}).`);
+    return 2;
+  } finally {
+    clearTimeout(timer);
+  }
+
+  let json;
+  try {
+    json = JSON.parse(body);
+  } catch {
+    log(`SIN_EVIDENCIA: respuesta no JSON (http=${http}): ${body.slice(0, 160)}`);
+    return 2;
+  }
+
+  const durable = json.persisted === true;
+  const real = json.mode === 'REAL';
+  const live = json.source === 'live';
+
+  log(
+    `SONDA http=${http} persisted=${String(json.persisted)} mode=${String(json.mode)} source=${String(json.source)} ` +
+      `probed=${String(json.probed)} count=${String(json.count)}`,
+  );
+  if (typeof json.lastError === 'string' && json.lastError.length > 0) {
+    log(`lastError=${json.lastError.replace(/\s+/g, ' ').slice(0, 240)}`);
+  }
+
+  if (durable && real && live) {
+    log('');
+    log('RESULTADO: VERIFICADO — la instancia viva de producción lee la base (persisted:true, mode:"REAL", source:"live").');
+    return 0;
+  }
+
+  log('');
+  log(
+    'RESULTADO: SOSPECHOSO — producción NO declara persistencia duradera ' +
+      `(persisted=${String(json.persisted)}, mode=${String(json.mode)}, source=${String(json.source)}).`,
+  );
+  log('  -> La base no está enlazada al contenedor: inyecta POSTGRES_PRISMA_URL en Coolify y redeploy ANTES de migrar.');
+  return 1;
+}
 
 function log(line) {
   process.stdout.write(`${line}\n`);
@@ -78,6 +155,10 @@ function readFromFreshProcess(url) {
 
 
 async function main() {
+  if (process.argv.includes('--remote')) {
+    return probeRemote();
+  }
+
   const database = await resolveVerificationDatabase();
   if (database === null) {
     log('SIN_EVIDENCIA: no hay PostgreSQL utilizable (ni declarado ni efímero).');

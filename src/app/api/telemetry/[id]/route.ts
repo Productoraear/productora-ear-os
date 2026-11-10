@@ -14,7 +14,13 @@ export const runtime = 'nodejs';
  * Contrato de honestidad (AGENTS.md AF-1 / INV-16): toda respuesta declara
  * `probed`, `source`, `mode` y `checkedAt`. Nunca "verde por defecto": si
  * PostgreSQL no responde se sirve la caché de proceso y se declara
- * `source:"cache"` + `mode:"SIMULADO"` con el error real (SIN_CONFIRMAR, AF-3).
+ * `source:"static"` + `mode:"SIMULADO"` + `persisted:false` con el error real
+ * (SIN_CONFIRMAR, AF-3).
+ *
+ * AF-1 fija el vocabulario cerrado `source:"live"|"static"`. La respuesta de
+ * contingencia llegó a publicar `source:"cache"` (valor fuera del contrato,
+ * medido el 2026-11-10 sobre `/api/telemetry/EXP-VERIFY-F6`): se corrige a
+ * `"static"` porque es lectura estática de la caché de proceso, no base de datos.
  */
 
 type TelemetryStatus =
@@ -56,6 +62,7 @@ type TelemetryStore = {
 /**
  * Caché de proceso: NO es fuente de verdad. Sólo actúa como contingencia si
  * PostgreSQL cae durante el evento, para no dejar la UI en "Sin señal aún".
+ * Se publica como `source:"static"` (AF-1), jamás como `"live"`.
  */
 function getCache(): Map<string, TelemetryPing[]> {
   const store = globalThis as unknown as TelemetryStore;
@@ -257,7 +264,7 @@ export async function POST(
         count: cached.length,
         status: ping.status,
         probed: true,
-        source: 'cache',
+        source: 'static',
         mode: 'SIMULADO',
         disclaimer:
           'Ping aceptado en caché de proceso: PostgreSQL no confirmó la escritura. Estado SIN_CONFIRMAR (AGENTS.md AF-3).',
@@ -321,7 +328,7 @@ export async function GET(
       live: isLive(last),
       persisted: false,
       probed: true,
-      source: 'cache',
+      source: 'static',
       mode: 'SIMULADO',
       disclaimer:
         'PostgreSQL no respondió: se sirve la caché de proceso. Estado SIN_CONFIRMAR (AGENTS.md AF-3).',
