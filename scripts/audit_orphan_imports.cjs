@@ -21,10 +21,21 @@
  */
 'use strict';
 
-const { execSync } = require('node:child_process');
+const { execSync, spawnSync } = require('node:child_process');
 const path = require('node:path');
 
-const REF = process.argv.find((a) => !a.startsWith('-') && a !== process.argv[0] && a !== process.argv[1]) || 'HEAD';
+/**
+ * DEFECTO CORREGIDO (2026-11-11): `--staged` estaba DOCUMENTADO (cabecera y
+ * `audit:http:staged`) pero `REF` se resolvía con `find(a => !a.startsWith('-'))`
+ * y el flag se descartaba en silencio: `--staged` auditaba HEAD igual que sin
+ * flag. Un modo que miente sobre lo que mide es una fachada (AF-5). Ahora el flag
+ * se traduce a la ref real del índice, que es lo que se va a commitear.
+ */
+const STAGED = process.argv.includes('--staged');
+const GIT_INDEX = 'GIT_INDEX';
+const REF =
+    (process.argv.find((a) => !a.startsWith('-') && a !== process.argv[0] && a !== process.argv[1]) || null) ||
+    (STAGED ? GIT_INDEX : 'HEAD');
 const AS_JSON = process.argv.includes('--json');
 const SHOW_EXCLUDED = process.argv.includes('--show-excluded');
 
@@ -72,9 +83,78 @@ function git(args, maxBuffer = 1 << 26) {
     return execSync(`git ${args}`, { encoding: 'utf8', maxBuffer, stdio: ['ignore', 'pipe', 'pipe'] });
 }
 
+/**
+ * LECTURA EN LOTE (2026-11-11 · BLOQUEO DE PREPUSH MEDIDO).
+ * ───────────────────────────────────────────────────────────────────────────
+ * DEFECTO: `makeReader` ejecutaba `git show <ref>:<file>` con `execSync` por
+ * CADA fichero del grafo. En este árbol (3.464 ficheros rastreados, ~2.600
+ * alcanzables) cada `execSync` paga el arranque completo de git y el de un
+ * `cmd /d /s /c` intermedio: medido a ~800 ms por invocación en esta máquina.
+ * Resultado real: `npm run gate:prepush` quedó colgado > 25 min en este paso
+ * con 3 procesos zombis (PIDs 20532/31820/29012) y bloqueó la terminal. El
+ * gate no era lento: era logarítmicamente inviable.
+ *
+ * ARREGLO: un ÚNICO `git cat-file --batch` con todos los objetos pedidos por
+ * stdin. Mismo dato, mismo árbol de git, mismo veredicto; una sola invocación.
+ * Se parsea el protocolo documentado (`<oid> blob <size>\n<contenido>\n`).
+ */
+function catFileBatch(ref, files) {
+    const contents = new Map();
+    if (files.length === 0) return contents;
+
+    // Sin `encoding` explícito la salida es un Buffer: el contenido llega binario tal
+    // cual y se decodifica por fichero (un .png tampoco rompe el parseo).
+    const full = spawnSync('git', ['cat-file', '--batch'], {
+        input: files.map((file) => objectSpec(ref, file)).join('\n') + '\n',
+        maxBuffer: 1 << 28,
+    });
+    if (full.error || !full.stdout) {
+        throw new Error(`git cat-file --batch falló: ${full.error ? full.error.message : 'sin salida'}`);
+    }
+
+    // Contadores reales del modo --batch (declarados en la salida, no inferidos).
+    const status = full.stdout;
+    let cursor = 0;
+    for (const file of files) {
+        const headerEnd = status.indexOf(10, cursor); // '\n'
+        if (headerEnd === -1) break;
+        const header = status.subarray(cursor, headerEnd).toString('utf8');
+        cursor = headerEnd + 1;
+
+        // Objeto ausente o ilegible: `<spec> missing|ambiguous` ⇒ sin imports que rastrear.
+        const fields = header.split(' ');
+        if (fields.length === 2 && (fields[1] === 'missing' || fields[1] === 'ambiguous')) {
+            contents.set(file, '');
+            continue;
+        }
+        if (fields.length < 3) {
+            contents.set(file, '');
+            continue;
+        }
+        const size = Number.parseInt(fields[2], 10);
+        if (!Number.isFinite(size) || size < 0) {
+            contents.set(file, '');
+            break; // protocolo roto: no se inventan contenidos
+        }
+        contents.set(file, status.subarray(cursor, cursor + size).toString('utf8'));
+        cursor += size + 1; // contenido + '\n' separador
+    }
+    return contents;
+}
+
 function listTree(ref) {
-    const raw = git(`ls-tree -r --name-only ${ref}`);
+    // Índice (pre-commit): lo que de verdad se va a commitear, no el working tree
+    // (que puede contener basura sin stagear) ni HEAD (que aún no lo tiene).
+    const cmd = ref === GIT_INDEX
+        ? 'git ls-files --cached'
+        : `git ls-tree -r --name-only ${ref}`;
+    const raw = execSync(cmd, { encoding: 'utf8', maxBuffer: 1 << 26, stdio: ['ignore', 'pipe', 'pipe'] });
     return raw.split(/\r?\n/).filter(Boolean);
+}
+
+/** Contenido de un objeto del índice: `git cat-file --batch` admite `:<path>`. */
+function objectSpec(ref, file) {
+    return ref === GIT_INDEX ? `:${file}` : `${ref}:${file}`;
 }
 
 /**
@@ -85,7 +165,10 @@ function listTree(ref) {
  */
 function loadPathMap(ref) {
     try {
-        const raw = git(`show ${ref}:tsconfig.json`);
+        const raw = execSync(
+            ref === GIT_INDEX ? 'git show :tsconfig.json' : `git show ${ref}:tsconfig.json`,
+            { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }
+        );
         const parsed = JSON.parse(raw);
         const paths = parsed?.compilerOptions?.paths ?? {};
         return Object.entries(paths).map(([pattern, targets]) => [pattern, Array.isArray(targets) ? targets : [targets]]);
@@ -128,20 +211,10 @@ function resolveInTree(fromFile, specifier, tree, pathMap) {
 /** Captura `from '...'`, `import('...')` y `require('...')`. */
 const IMPORT_RE = /(?:from\s+|import\s*\(\s*|require\s*\(\s*)['"]([^'"]+)['"]/g;
 
-function makeReader(ref) {
-    const cache = new Map();
-    return (file) => {
-        if (!cache.has(file)) {
-            let content = '';
-            try {
-                content = git(`show ${ref}:"${file}"`, 1 << 24);
-            } catch {
-                content = ''; // binario o no legible: no hay imports que rastrear
-            }
-            cache.set(file, content);
-        }
-        return cache.get(file);
-    };
+function makeReader(ref, files) {
+    // Sin lista de ficheros no hay lote que pedir (llamadas legadas): degrado honesto.
+    const contents = files ? catFileBatch(ref, [...new Set(files)]) : new Map();
+    return (file) => contents.get(file) ?? '';
 }
 
 function collectImports(content) {
@@ -161,9 +234,13 @@ function collectImports(content) {
  * uno fuera (bóveda huérfana, scripts sueltos) no lo toca.
  */
 function analyzeReachable(ref, tree) {
-    const read = makeReader(ref);
     const pathMap = loadPathMap(ref);
     const entrypoints = [...tree].filter(isEntrypoint).filter((file) => !isExcluded(file));
+    // LECTURA EN LOTE: se pide el árbol ENTERO elegible en una sola invocación de git
+    // (entrypoints + todo candidato resoluble). Un fichero no alcanzado sólo ocupa
+    // memoria unos milisegundos; una invocación de git por fichero costaba minutos.
+    const candidates = [...tree].filter((file) => /\.[cm]?[jt]sx?$/.test(file));
+    const read = makeReader(ref, candidates);
     const reachable = new Set();
     const queue = [...entrypoints];
     const broken = [];
@@ -189,12 +266,14 @@ function analyzeReachable(ref, tree) {
 }
 
 /** Imports rotos en zonas que el build no compila: deuda, nunca rojo de gate. */
-function analyzeExcluded(tree, pathMap) {
-    const read = makeReader(REF);
+function analyzeExcluded(tree, pathMap, ref) {
+    const excludedFiles = [...tree].filter(
+        (file) => isExcluded(file) && /\.(ts|tsx|js|jsx|mjs|cjs)$/.test(file)
+    );
+    const read = makeReader(ref, excludedFiles);
     const broken = [];
     let files = 0;
-    for (const file of tree) {
-        if (!isExcluded(file) || !/\.(ts|tsx|js|jsx|mjs|cjs)$/.test(file)) continue;
+    for (const file of excludedFiles) {
         files++;
         for (const specifier of collectImports(read(file))) {
             const { resolved, target } = resolveInTree(file, specifier, tree, pathMap);
@@ -207,7 +286,7 @@ function analyzeExcluded(tree, pathMap) {
 function main() {
     let tree;
     try {
-        git(`rev-parse --verify ${REF}`);
+        if (REF !== GIT_INDEX) git(`rev-parse --verify ${REF}`);
         tree = new Set(listTree(REF));
     } catch (error) {
         console.error(`AUDIT_ENV_ERROR: no se pudo leer la ref "${REF}": ${error.message}`);
@@ -215,7 +294,7 @@ function main() {
     }
 
     const reachable = analyzeReachable(REF, tree);
-    const excluded = analyzeExcluded(tree, reachable.pathMap);
+    const excluded = analyzeExcluded(tree, reachable.pathMap, REF);
 
     if (AS_JSON) {
         console.log(

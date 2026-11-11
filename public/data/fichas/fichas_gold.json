@@ -11,7 +11,7 @@
     },
     "canonical": {
       "path": "public/data/providers/providers_canonical.json",
-      "sha256": "3f24f5dec2ad8e95078dc216556c3dae0f2a00226b26e6748408a1cc8000bf01",
+      "sha256": "8294e62a1fc9482c592eddf14139467a621263e9057afb3830e0afc961f56f1e",
       "entries": 310
     }
   },
@@ -62,7 +62,7 @@
     {
       "key": "v-1086",
       "vendorId": "1086",
-      "slug": "prov-harvest-limutaxi-1086",
+      "slug": "limutaxi-navarra",
       "name": "Limutaxi",
       "category": "",
       "province": "Navarra",
@@ -90,7 +90,7 @@
     {
       "key": "v-13825",
       "vendorId": "13825",
-      "slug": "prov-3635-13825",
+      "slug": "casa-rafael-madrid",
       "name": "Casa Rafael",
       "category": "sonido",
       "province": "Madrid",
@@ -118,7 +118,7 @@
     {
       "key": "v-1480",
       "vendorId": "1480",
-      "slug": "prov-harvest-autoscasa-1480",
+      "slug": "autos-casa-madrid",
       "name": "Autos Casa",
       "category": "",
       "province": "Madrid",
@@ -174,7 +174,7 @@
     {
       "key": "v-17575",
       "vendorId": "17575",
-      "slug": "prov-harvest-totdiver-17575",
+      "slug": "tot-diver-tarragona",
       "name": "Tot Diver",
       "category": "",
       "province": "Tarragona",
@@ -202,7 +202,7 @@
     {
       "key": "v-18337",
       "vendorId": "18337",
-      "slug": "prov-harvest-jellejoyas-18337",
+      "slug": "joelle-joyas-as",
       "name": "Jöelle joyas",
       "category": "moda",
       "province": "Asturias",
@@ -286,7 +286,7 @@
     {
       "key": "v-26514",
       "vendorId": "26514",
-      "slug": "prov-harvest-classicavenir-26514",
+      "slug": "classic-avenir-tarragona",
       "name": "Classic Avenir",
       "category": "",
       "province": "Tarragona",
@@ -314,7 +314,7 @@
     {
       "key": "v-27137",
       "vendorId": "27137",
-      "slug": "prov-harvest-cateringsantacruz-27137",
+      "slug": "catering-santa-cruz-ciudad-real",
       "name": "Catering Santa Cruz",
       "category": "",
       "province": "Ciudad Real",
@@ -594,7 +594,7 @@
     {
       "key": "v-43241",
       "vendorId": "43241",
-      "slug": "prov-harvest-sandraroura-43241",
+      "slug": "sandra-roura-gerona",
       "name": "Sandra Roura",
       "category": "",
       "province": "Gerona",
@@ -622,7 +622,7 @@
     {
       "key": "v-43602",
       "vendorId": "43602",
-      "slug": "prov-harvest-autobusessnchez-43602",
+      "slug": "autobuses-sanchez-navarra",
       "name": "Autobuses Sánchez",
       "category": "",
       "province": "Navarra",
@@ -790,7 +790,7 @@
     {
       "key": "v-52656",
       "vendorId": "52656",
-      "slug": "prov-harvest-ortolshow-52656",
+      "slug": "ortola-show-valencia",
       "name": "Ortolá Show",
       "category": "",
       "province": "Valencia",
@@ -902,7 +902,7 @@
     {
       "key": "v-57523",
       "vendorId": "57523",
-      "slug": "prov-harvest-albapifarr-57523",
+      "slug": "alba-pifarre-lleida",
       "name": "Alba Pifarré",
       "category": "",
       "province": "Lérida",
@@ -930,7 +930,7 @@
     {
       "key": "v-59357",
       "vendorId": "59357",
-      "slug": "prov-harvest-ladarsena-59357",
+      "slug": "la-darsena-cantabria",
       "name": "La Darsena",
       "category": "",
       "province": "Cantabria",
@@ -958,7 +958,7 @@
     {
       "key": "v-60032",
       "vendorId": "60032",
-      "slug": "prov-harvest-costabravadjs-60032",
+      "slug": "costa-brava-djs-girona",
       "name": "Costa Brava Djs",
       "category": "",
       "province": "Gerona",
@@ -986,7 +986,7 @@
     {
       "key": "v-60035",
       "vendorId": "60035",
-      "slug": "prov-harvest-lauralavadofotografa-60035",
+      "slug": "laura-lavado-fotografia-caceres",
       "name": "Laura Lavado Fotografía",
       "category": "",
       "province": "Cáceres",
@@ -1014,7 +1014,7 @@
     {
       "key": "v-60163",
       "vendorId": "60163",
-      "slug": "prov-harvest-efphotographers-60163",
+      "slug": "efphotographers-caceres",
       "name": "Efphotographers",
       "category": "",
       "province": "Cáceres",
@@ -1070,7 +1070,7 @@
     {
       "key": "v-62661",
       "vendorId": "62661",
-      "slug": "prov-harvest-maragotijoyas-62661",
+      "slug": "maria-goti-joyas-asturias",
       "name": "María Goti Joyas",
       "category": "moda",
       "province": "Asturias",
@@ -1126,7 +1126,7 @@
     {
       "key": "v-71079",
       "vendorId": "71079",
-      "slug": "prov-harvest-maradj-71079",
+      "slug": "maradj-almeria",
       "name": "Maradj",
       "category": "",
       "province": "Almería",
@@ -1182,7 +1182,7 @@
     {
       "key": "v-71742",
       "vendorId": "71742",
-      "slug": "prov-harvest-claudiallop-71742",
+      "slug": "claudia-llop-lleida",
       "name": "Claudia Llop",
       "category": "",
       "province": "Lérida",
@@ -1238,7 +1238,7 @@
     {
       "key": "v-74531",
       "vendorId": "74531",
-      "slug": "prov-harvest-mnicaapariciojoyera-74531",
+      "slug": "monica-aparicio-joyeria-asturias",
       "name": "Mónica Aparicio Joyería",
       "category": "moda",
       "province": "Asturias",
@@ -1378,7 +1378,7 @@
     {
       "key": "v-81404",
       "vendorId": "81404",
-      "slug": "prov-harvest-algaraba-81404",
+      "slug": "algarabia-m",
       "name": "Algarabía",
       "category": "",
       "province": "Madrid",
@@ -1434,7 +1434,7 @@
     {
       "key": "v-8216",
       "vendorId": "8216",
-      "slug": "prov-harvest-almeradefiesta-8216",
+      "slug": "almeria-de-fiesta-almeria",
       "name": "Almería de Fiesta",
       "category": "",
       "province": "Almería",
@@ -1462,7 +1462,7 @@
     {
       "key": "v-87374",
       "vendorId": "87374",
-      "slug": "prov-harvest-joyeriasadeley-87374",
+      "slug": "joyerias-adeley-santa-cruz-de-tenerife",
       "name": "Joyerias Adeley",
       "category": "moda",
       "province": "Santa Cruz de Tenerife",
@@ -1518,7 +1518,7 @@
     {
       "key": "v-89422",
       "vendorId": "89422",
-      "slug": "prov-harvest-joyeracoronel-89422",
+      "slug": "joyeria-coronel-mc",
       "name": "Joyería Coronel",
       "category": "moda",
       "province": "Murcia",
@@ -1546,7 +1546,7 @@
     {
       "key": "v-92390",
       "vendorId": "92390",
-      "slug": "prov-harvest-tudelacaravaning-92390",
+      "slug": "tudela-caravaning-navarra",
       "name": "Tudela Caravaning",
       "category": "",
       "province": "Navarra",
@@ -1574,7 +1574,7 @@
     {
       "key": "v-92534",
       "vendorId": "92534",
-      "slug": "prov-harvest-joyeraroibs-92534",
+      "slug": "joyeria-roibas-asturias",
       "name": "Joyería Roibás",
       "category": "moda",
       "province": "Asturias",
@@ -1630,7 +1630,7 @@
     {
       "key": "v-94288",
       "vendorId": "94288",
-      "slug": "prov-harvest-pasoadosescueladedanza-94288",
+      "slug": "paso-a-dos-escuela-de-danza-asturias",
       "name": "Paso a Dos - Escuela de Danza",
       "category": "",
       "province": "Asturias",
@@ -1714,7 +1714,7 @@
     {
       "key": "v-97346",
       "vendorId": "97346",
-      "slug": "prov-harvest-autocaresmougn-97346",
+      "slug": "autocares-mougan-a-coruna",
       "name": "Autocares Mougán",
       "category": "",
       "province": "A Coruña",
@@ -1742,7 +1742,7 @@
     {
       "key": "v-99302",
       "vendorId": "99302",
-      "slug": "prov-harvest-latiendadepily-99302",
+      "slug": "la-tienda-de-pily-santa-cruz-de-tenerife",
       "name": "La Tienda de Pily",
       "category": "",
       "province": "Santa Cruz de Tenerife",

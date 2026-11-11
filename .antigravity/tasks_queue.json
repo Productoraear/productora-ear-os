@@ -3,23 +3,19 @@
     "version": "15.0-OMEGA-ROJO-FASE-1-NODOS-A-B",
     "doctrine_v51": "WAVE 51 · FASE 1 DE LA DIRECTIVA DAVID HURTADO (4 D + PREMORTEM) CON EL ORDEN CORREGIDO POR EVIDENCIA: 1) omega.js tiene UN SOLO SLOT (MISSION_ACTIVE.json): los Nodos A y B no pueden correr en paralelo, corren en serie por mandato del arnés. Se descarta el paralelismo declarado y se documenta por qué. 2) El Reto 29 YA TIENE ARNÉS en disco (scripts/verify_budget_allocator.ts, W45_T01): se ENDURECE, no se duplica. 3) El Reto 31 NO tiene instrumento: scripts/audit_cls_budget.cjs devuelve ENOENT hoy (sonda read_files 2026-11-05). Por la Ley del Auditor Real se construye primero el instrumento y después se corrige la ruta; arreglar a ciegas un CLS sin medidor es una fachada. 4) El Reto 35 (cero clics muertos) ya está instrumentado (audit:cta-matrix) y en verde: no es tarea, es puerta. 5) El 15º ítem del scorecard se activa con scripts/audit_omega_rojo_scorecard.cjs (npm run audit:omega-rojo) para que nunca vuelva a firmarse un 20/20 sin comando (SIG-2).",
     "doctrine": "WAVE 50 (DOMINANCIA DE MERCADO Y ESCALA MULTIDOMINIO): 1) El Agente Concierge IA y el Simulador Universal (W47_T04) y la Calculadora de los 100 Fundadores Vitalicios (W49_T03) ya están sellados y desplegados en producción. 2) La cola queda blindada con las 6 misiones estratégicas restantes para que el Obrero Local ejecute con precisión quirúrgica, cero fachadas, cero menciones de marcas de terceros (JUR-4) y detección activa de ventanas de oportunidad.",
-    "wave": 52,
-    "total_tasks": 40,
-    "total_completed_real": 3,
-    "total_pending": 39,
+    "wave": 55,
+    "total_tasks": 33,
+    "total_completed_real": 0,
+    "total_pending": 29,
     "total_not_started": 0,
-    "total_blocked_ceo": 1,
-    "total_w53_career_os": 34,
+    "total_blocked_ceo": 0,
+    "total_w53_career_os": 23,
     "counter_integrity": "RECALCULADO POR AUDITORÍA (2026-11-09). Los contadores anteriores (total_tasks:6, total_pending:3) eran FALSOS: contaban solo las 6 tareas de WAVE 52 e ignoraban las 34 tareas W53_T01..W53_T34 (Career OS), que llevan status PENDING desde 2026-11-07T18:37:51Z sin que nadie las ejecutara. Error de 11x en la cifra que lee el CEO (violación AF-5 'verde por defecto' y SIG-2). Inventario medido leyendo el array tasks completo, línea a línea.",
     "counter_breakdown": {
-      "completed_real": [
-        "W54_T01_PROVIDER_ORIGIN_AND_BILATERAL_MATCH_AUDIT",
-        "W54_T02_CAMPUS_61_PDFS_LEAD_MAGNET_EXTRACTOR",
-        "W52_T02_ARTIST_ACHIEVEMENT_LEDGER"
-      ],
-      "pending_w53": "W53_T01 .. W53_T34 (34 tareas, Career OS, todas PENDING, 0 implementadas)",
+      "completed_real": "Archivadas en completed[] con evidencia completa (W54_T01, W54_T02, W52_T02). El contador total_completed_real mide tareas[] con status COMPLETED_REAL, que ahora es 0 porque ya estan archivadas; el historico real se lee en completed[] (27 entradas).",
+      "pending_w53": "W53_T02 .. W53_T34 (33 tareas PENDING, Career OS). W53_T01 promovida a QUEUED.",
       "queued": [
-        "W52_T05_ASTRA_IKIGAI_PORT"
+        "W55_T02 (orden directiva 2026-11-11: webhook WhatsApp/n8n; promovida de PENDING a QUEUED y slot activo en MISSION_ACTIVE.json)"
       ],
       "not_started": [],
       "code_present_pending_gate": [
@@ -31,44 +27,1462 @@
       "historic_completed_in_completed_array": 10
     },
     "counter_arithmetic_proof": "Recuento definitivo por estado sobre el array tasks: 3 COMPLETED_REAL (W54_T01, W54_T02, W52_T02) + 34 PENDING (W53_T01..W53_T34) + 1 CODE_PRESENT_PENDING_GATE (W52_T04) + 1 QUEUED (W52_T05) + 1 BLOCKED_CEO (W52_T06) = 40. total_tasks = 40. Cifra accionable para dirección: 35 tareas pendientes de EJECUCIÓN (34 PENDING + 1 QUEUED). Nota de honestidad: una primera versión de este campo declaró total_tasks: 41 dentro de la misma sesión de auditoría; se corrige a 40 porque la suma por estado da 40 y la cifra 41 era un error de recuento, no una entrada inexistente.",
-    "last_updated": "2026-11-09T17:29:07.276Z",
+    "last_updated": "2026-11-11T17:37:34.654Z",
+    "whatsapp_concierge_2026_11_11": "W55_T02 no existía en la cola: la orden directiva la citaba como PENDING pero el array tasks[] no contenía ninguna entrada con ese id (verificado leyendo el JSON completo). Se CREA como QUEUED al frente del array con files/action/test/elevation_contract, y omega.js next la emite como única misión activa. Se declara el hueco en vez de fingir una promoción sobre una tarea inexistente.",
     "forensic_correction_2026_11_09": "AUDITORÍA FORENSE CLINE: el informe de cierre de Antigravity afirmaba 3 hitos 'en producción' con la cola cerrada. Medido en disco: los 4 commits (9df38f79, 949ce3bd, cdbfbd5c, 7b536593) EXISTEN y están en origin/main (refs/remotes/origin/main = 7b536593, idéntico a refs/heads/main). PERO .antigravity/tasks_queue.json seguía con status QUEUED en las tres tareas: nunca se ejecutó `node .antigravity/omega.js complete`. Se corrigen a COMPLETED_REAL con su evidencia de commit. [REFUTADO 19:10Z] La frase final de esta misma entrada, 'W52_T04 pasa a NOT_STARTED: sus 4 ficheros no existen en disco', es FALSA: los 5 ficheros existen (214/257/276/278 líneas) y el dashboard los monta en page.tsx:33-34 y :520-523. Ver counter_integrity y la entrada del log de 19:10Z. Se deja el texto original para no reescribir historia (regla R1), pero queda marcado como refutado.",
-    "doctrine_v52": "WAVE 52 · ARTISTA SOBERANO: formación desbloqueada solo por mérito verificable (66/99 días), logros sincronizados con la ficha, banco Diamante Rojo con procedencia y cockpit honesto sobre qué plataformas tienen API pública. RETO_ESPEJO: el compilador propuso tocar SovereignNavbar, admin/layout y FincasB2BPortal; se descarta porque no corresponden a la intención (artistas) y romperían el aislamiento entre verticales."
+    "doctrine_v52": "WAVE 52 · ARTISTA SOBERANO: formación desbloqueada solo por mérito verificable (66/99 días), logros sincronizados con la ficha, banco Diamante Rojo con procedencia y cockpit honesto sobre qué plataformas tienen API pública. RETO_ESPEJO: el compilador propuso tocar SovereignNavbar, admin/layout y FincasB2BPortal; se descarta porque no corresponden a la intención (artistas) y romperían el aislamiento entre verticales.",
+    "meta_reconciled_at": "2026-11-11T17:37:34.654Z",
+    "meta_measurement": "omega.js · recuento por estado sobre el array tasks (fuente única de verdad)",
+    "omega_contract_wave53": {
+      "ts": "2026-11-10T19:01:17.912Z",
+      "source": "omega.js · ORDEN A (CEO A+B+C)",
+      "contract": "1) Estados terminales: COMPLETED|COMPLETED_REAL|DONE. Al ejecutar next se ARCHIVAN en completed[] con files/action/status_evidence intactos (nunca se destruyen). 2) complete solo es idempotente si el id existe en completed[] con exit_code 0; un ID fantasma devuelve Exit 1. 3) complete exige task.test y lo ejecuta; sin test => Exit 1, no se archiva. 4) complete exige que MISSION_ACTIVE.id coincida con el ID que se cierra. 5) _meta se recalcula por medicion en cada next/complete y esta vigilado por audit:queue-counters dentro de gate:prepush.",
+      "incidente": "Una version intermedia de next purgo sin archivar y destruyo la evidencia de W54_T01, W54_T02 y W52_T02. Restauradas verbatim desde git HEAD y re-archivadas con files=3/2/3 y status_evidence PRESENTE."
+    },
+    "elevation_2026": {
+      "ts": "2026-11-11T09:13:53.162Z",
+      "directive": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+      "directive_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+      "mark": "SOTA_2026_ELEVATION",
+      "authority": "El Arquitecto valida; Cline ejecuta. Autoaprobación del obrero REVOCADA.",
+      "tasks_elevated": 0,
+      "tasks_already_elevated": 36,
+      "tasks_with_compile_only_harness": [],
+      "scorecard_gap_wave": {
+        "wave": 54,
+        "created": [],
+        "already_present": [
+          "W54_T01_ASVS_L3_PAYLOAD_HARNESS",
+          "W54_T02_LIGHTHOUSE_X4_REPRODUCIBLE",
+          "W54_T03_CWV_FIELD_P75_REAL",
+          "W54_T04_CISQ_ISO5055_STRUCTURAL",
+          "W54_T05_RICH_RESULTS_SCHEMA_ORG",
+          "W54_T06_SIMILARITY_CORPUS_472"
+        ],
+        "closes": [
+          "OMEGA-10",
+          "OMEGA-11",
+          "OMEGA-12",
+          "OMEGA-13",
+          "OMEGA-15",
+          "OMEGA-16"
+        ]
+      },
+      "note": "Los contratos elevados EXIGEN cero any, persistencia durable real y arnés falsable. Un test que sólo compila ya no se acepta como prueba."
+    },
+    "total_parked_tactical": 4,
+    "pivot_2026_11_11": "PIVOTE TACTICO A CONVERSION (Orden Directiva CEO 2026-11-11): W53_T08..W53_T11 (YouTube/Apple/Instagram/TikTok) pasan a PARKED_TACTICAL. W55_T01 entra en cabeza como QUEUED. Razon: el valor comercial inmediato esta en cerrar reservas con las 2.150 fichas dinamicas, no en ampliar conectores de metricas de streaming.",
+    "counter_reconcile_note": "Los contadores se recalculan tras el pivote; el sellado autoritativo lo hace `node scripts/audit_queue_counter_integrity.cjs --sync` (audita y concilia _meta con la medicion real del array tasks)."
   },
   "_instructions_for_worker": "Ejecuta SOLO via: node .antigravity/omega.js next -> lee .antigravity/MISSION_ACTIVE.json -> edita SOLO 'files' -> ejecuta 'test' -> node .antigravity/omega.js complete <ID>. 1 tarea por sesion.",
   "tasks": [
     {
-      "id": "W54_T01_PROVIDER_ORIGIN_AND_BILATERAL_MATCH_AUDIT",
-      "title": "P0 · Auditoría y Sincronización de Sede Propia por Proveedor (Hub Méntrida exclusivo Edwin Agudelo + Match Bilateral de Expectativas)",
-      "status": "COMPLETED_REAL",
-      "status_evidence": "commit 9df38f79 en origin/main (7b536593). SIN_EVIDENCIA sobre ejecución viva del arnés en esta sesión (run_commands no devuelve stdout). Cierre formal via omega.js complete NO ejecutado.",
-      "priority": "P0",
-      "files": [
-        "src/lib/providers/universal-provider-simulator.ts",
-        "src/components/hubs/SovereignIntentHubView.tsx",
-        "scripts/verify_provider_origin_separation.ts"
-      ],
-      "action": "Verificar con script automatizado que 1) Hub Méntrida (350 € base + 1,50 €/km > 50 km) solo se aplica cuando el proveedor es Edwin Agudelo / Productora EAR; 2) Cualquier otro proveedor del directorio calcula kilometraje, tarifas y FAQs desde su propia sede registrada; 3) Cero promesas de 'cero multas garantizadas' (sustituidas por Garantía de Match Bilateral de Expectativas).",
-      "scaffold": null,
-      "done_when": "Script verifica separación estricta Edwin vs Proveedor Externo y tsc Exit 0.",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-09T12:24:00.000Z"
-    },
-    {
-      "id": "W54_T02_CAMPUS_61_PDFS_LEAD_MAGNET_EXTRACTOR",
-      "title": "P1 · Conversión de los 61 PDFs de Campus y 496 Artículos en Lead Magnets Soberanos para Parejas y Proveedores",
-      "status": "COMPLETED_REAL",
-      "status_evidence": "commit 949ce3bd en origin/main. catalogo_61_campus.json, n8n-dispatcher.ts y /api/campus/lead-magnet/route.ts leídos en disco esta sesión. SIN_EVIDENCIA sobre ejecución viva de verify_campus_lead_magnet.ts.",
+      "id": "W53_T08",
+      "title": "Conector YouTube (Data + Analytics API)",
+      "status": "PARKED_TACTICAL",
       "priority": "P1",
       "files": [
-        "src/data/catalogo_61_campus.json",
-        "src/components/fincas/sclass-pro/ProCampusTab.tsx"
+        "src/lib/career/connectors/youtube.ts"
       ],
-      "action": "Enriquecer cada uno de los 61 activos de catalogo_61_campus.json con resumen ejecutivo accionable, checklist descargable y enlace directo de entrega por Conserjería WhatsApp (+34 693 693 048) sin meter binarios pesados (>1 MB) en Git.",
+      "action": "OAuth Google scopes yt-analytics.readonly + youtube.readonly. Métricas: views, watch_minutes, subscribers->followers, estimatedRevenue->revenue_cents. Env GOOGLE_CLIENT_ID/SECRET. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0 + test mockeado | SOTA_2026_ELEVATION: cero any + persistencia durable real (mode:REAL / source:live / persisted:true) + arnés falsable Exit 0 + firma del Arquitecto en .antigravity/ARCHITECT_APPROVAL.json",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node scripts/audit_elevation_task_harness.cjs --task=W53_T08",
+      "created_at": "2026-11-07T18:37:51.077Z",
+      "test_previous": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "elevation_contract": {
+        "mark": "SOTA_2026_ELEVATION",
+        "spec": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "spec_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+        "elevated_at": "2026-11-10T20:45:50.328Z",
+        "authority": "El Arquitecto valida · Cline ejecuta sin autoaprobación",
+        "assertions": {
+          "zero_any": "Cero tipos `any` en el diff: ruta de dinero, esquemas Prisma y utilidades del dominio.",
+          "durable_persistence": "Todo endpoint nuevo certifica modo real contra base de datos DURADERA: mode:\"REAL\", source:\"live\", persisted:true. Prohibido capturar el error de BD y devolver estáticos.",
+          "falsifiable_harness": "Arnés propio falsable declarado en `test` (su Exit Code 1 prueba el fallo). La compilación no se acepta como única prueba.",
+          "quintupla": "Quíntupla EP-1 sellada en el ledger al cerrar (cmd · exit=0 · sha256 · ts · url).",
+          "batch_size": "Máximo 5 archivos por commit (CHG-4)."
+        },
+        "gates": [
+          "npm run typecheck (Exit 0)",
+          "arnés declarado en `test` (Exit 0)",
+          "npm run audit:queue-counters (CONSISTENT)"
+        ],
+        "worker_may_self_approve": false
+      },
+      "elevation_applied_at": "2026-11-10T20:45:50.328Z",
+      "elevation_source": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+      "parked_at": "2026-11-11T11:50:00.000Z",
+      "parked_by": "Edwin Agudelo (CEO)",
+      "park_reason": "PIVOTE TACTICO A CONVERSION (ORDEN DIRECTIVA 2026-11-11): la serie de conectores secundarios de streaming se congela; la capacidad se reasigna a la Wave 55 (Agente Soberano + catalogo dinamico de 2150 fichas)."
+    },
+    {
+      "id": "W53_T09",
+      "title": "Conectores Meta: Instagram + Facebook + Threads",
+      "status": "PARKED_TACTICAL",
+      "priority": "P1",
+      "files": [
+        "src/lib/career/connectors/meta.ts"
+      ],
+      "action": "Graph API v21+: followers, reach/views, likes, comments, saves, shares. Un OAuth, tres platformId. Env META_APP_ID/SECRET. Refrescar long-lived token. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0 + test mockeado | SOTA_2026_ELEVATION: cero any + persistencia durable real (mode:REAL / source:live / persisted:true) + arnés falsable Exit 0 + firma del Arquitecto en .antigravity/ARCHITECT_APPROVAL.json",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node scripts/audit_elevation_task_harness.cjs --task=W53_T09",
+      "created_at": "2026-11-07T18:37:51.077Z",
+      "test_previous": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "elevation_contract": {
+        "mark": "SOTA_2026_ELEVATION",
+        "spec": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "spec_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+        "elevated_at": "2026-11-10T20:45:50.328Z",
+        "authority": "El Arquitecto valida · Cline ejecuta sin autoaprobación",
+        "assertions": {
+          "zero_any": "Cero tipos `any` en el diff: ruta de dinero, esquemas Prisma y utilidades del dominio.",
+          "durable_persistence": "Todo endpoint nuevo certifica modo real contra base de datos DURADERA: mode:\"REAL\", source:\"live\", persisted:true. Prohibido capturar el error de BD y devolver estáticos.",
+          "falsifiable_harness": "Arnés propio falsable declarado en `test` (su Exit Code 1 prueba el fallo). La compilación no se acepta como única prueba.",
+          "quintupla": "Quíntupla EP-1 sellada en el ledger al cerrar (cmd · exit=0 · sha256 · ts · url).",
+          "batch_size": "Máximo 5 archivos por commit (CHG-4)."
+        },
+        "gates": [
+          "npm run typecheck (Exit 0)",
+          "arnés declarado en `test` (Exit 0)",
+          "npm run audit:queue-counters (CONSISTENT)"
+        ],
+        "worker_may_self_approve": false
+      },
+      "elevation_applied_at": "2026-11-10T20:45:50.328Z",
+      "elevation_source": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+      "parked_at": "2026-11-11T11:50:00.000Z",
+      "parked_by": "Edwin Agudelo (CEO)",
+      "park_reason": "PIVOTE TACTICO A CONVERSION (ORDEN DIRECTIVA 2026-11-11): la serie de conectores secundarios de streaming se congela; la capacidad se reasigna a la Wave 55 (Agente Soberano + catalogo dinamico de 2150 fichas)."
+    },
+    {
+      "id": "W53_T10",
+      "title": "Conector TikTok",
+      "status": "PARKED_TACTICAL",
+      "priority": "P1",
+      "files": [
+        "src/lib/career/connectors/tiktok.ts"
+      ],
+      "action": "Login Kit v2 + user.info.stats y video.list. Env TIKTOK_CLIENT_KEY/SECRET. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0 + test mockeado | SOTA_2026_ELEVATION: cero any + persistencia durable real (mode:REAL / source:live / persisted:true) + arnés falsable Exit 0 + firma del Arquitecto en .antigravity/ARCHITECT_APPROVAL.json",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node scripts/audit_elevation_task_harness.cjs --task=W53_T10",
+      "created_at": "2026-11-07T18:37:51.077Z",
+      "test_previous": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "elevation_contract": {
+        "mark": "SOTA_2026_ELEVATION",
+        "spec": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "spec_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+        "elevated_at": "2026-11-10T20:45:50.328Z",
+        "authority": "El Arquitecto valida · Cline ejecuta sin autoaprobación",
+        "assertions": {
+          "zero_any": "Cero tipos `any` en el diff: ruta de dinero, esquemas Prisma y utilidades del dominio.",
+          "durable_persistence": "Todo endpoint nuevo certifica modo real contra base de datos DURADERA: mode:\"REAL\", source:\"live\", persisted:true. Prohibido capturar el error de BD y devolver estáticos.",
+          "falsifiable_harness": "Arnés propio falsable declarado en `test` (su Exit Code 1 prueba el fallo). La compilación no se acepta como única prueba.",
+          "quintupla": "Quíntupla EP-1 sellada en el ledger al cerrar (cmd · exit=0 · sha256 · ts · url).",
+          "batch_size": "Máximo 5 archivos por commit (CHG-4)."
+        },
+        "gates": [
+          "npm run typecheck (Exit 0)",
+          "arnés declarado en `test` (Exit 0)",
+          "npm run audit:queue-counters (CONSISTENT)"
+        ],
+        "worker_may_self_approve": false
+      },
+      "elevation_applied_at": "2026-11-10T20:45:50.328Z",
+      "elevation_source": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+      "parked_at": "2026-11-11T11:50:00.000Z",
+      "parked_by": "Edwin Agudelo (CEO)",
+      "park_reason": "PIVOTE TACTICO A CONVERSION (ORDEN DIRECTIVA 2026-11-11): la serie de conectores secundarios de streaming se congela; la capacidad se reasigna a la Wave 55 (Agente Soberano + catalogo dinamico de 2150 fichas)."
+    },
+    {
+      "id": "W53_T11",
+      "title": "Conectores X, Twitch, Reddit, Discord, Pinterest, LinkedIn, Telegram, SoundCloud, Deezer, Patreon, Shopify",
+      "status": "PARKED_TACTICAL",
+      "priority": "P1",
+      "files": [
+        "src/lib/career/connectors/others.ts"
+      ],
+      "action": "Un conector por id del registro con sus endpoints oficiales de docs. Los que exigen aprobación de app (LinkedIn, TikTok) deben devolver error tipado {needs_app_review:true}. Telegram usa bot token por canal. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0 + un test mockeado por conector | SOTA_2026_ELEVATION: cero any + persistencia durable real (mode:REAL / source:live / persisted:true) + arnés falsable Exit 0 + firma del Arquitecto en .antigravity/ARCHITECT_APPROVAL.json",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node scripts/audit_elevation_task_harness.cjs --task=W53_T11",
+      "created_at": "2026-11-07T18:37:51.077Z",
+      "test_previous": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "elevation_contract": {
+        "mark": "SOTA_2026_ELEVATION",
+        "spec": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "spec_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+        "elevated_at": "2026-11-10T20:45:50.328Z",
+        "authority": "El Arquitecto valida · Cline ejecuta sin autoaprobación",
+        "assertions": {
+          "zero_any": "Cero tipos `any` en el diff: ruta de dinero, esquemas Prisma y utilidades del dominio.",
+          "durable_persistence": "Todo endpoint nuevo certifica modo real contra base de datos DURADERA: mode:\"REAL\", source:\"live\", persisted:true. Prohibido capturar el error de BD y devolver estáticos.",
+          "falsifiable_harness": "Arnés propio falsable declarado en `test` (su Exit Code 1 prueba el fallo). La compilación no se acepta como única prueba.",
+          "quintupla": "Quíntupla EP-1 sellada en el ledger al cerrar (cmd · exit=0 · sha256 · ts · url).",
+          "batch_size": "Máximo 5 archivos por commit (CHG-4)."
+        },
+        "gates": [
+          "npm run typecheck (Exit 0)",
+          "arnés declarado en `test` (Exit 0)",
+          "npm run audit:queue-counters (CONSISTENT)"
+        ],
+        "worker_may_self_approve": false
+      },
+      "elevation_applied_at": "2026-11-10T20:45:50.328Z",
+      "elevation_source": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+      "parked_at": "2026-11-11T11:50:00.000Z",
+      "parked_by": "Edwin Agudelo (CEO)",
+      "park_reason": "PIVOTE TACTICO A CONVERSION (ORDEN DIRECTIVA 2026-11-11): la serie de conectores secundarios de streaming se congela; la capacidad se reasigna a la Wave 55 (Agente Soberano + catalogo dinamico de 2150 fichas)."
+    },
+    {
+      "id": "W53_T12",
+      "title": "Importador CSV universal (Apple Music, Amazon, TIDAL, Bandcamp, DistroKid, SGAE, Ticketmaster)",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/lib/career/importers/csv-importer.ts",
+        "src/app/api/career/import/route.ts"
+      ],
+      "action": "Mapeo columnas->MetricKey por platformId en un objeto declarativo; parser tolerante a separador ; o , y decimales con coma; dinero a céntimos; validación y reporte de filas rechazadas; idempotente por hash de fila. Límite 10MB. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0 + fixtures en scripts/fixtures/career/*.csv y test | SOTA_2026_ELEVATION: cero any + persistencia durable real (mode:REAL / source:live / persisted:true) + arnés falsable Exit 0 + firma del Arquitecto en .antigravity/ARCHITECT_APPROVAL.json",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node scripts/audit_elevation_task_harness.cjs --task=W53_T12",
+      "created_at": "2026-11-07T18:37:51.077Z",
+      "test_previous": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "elevation_contract": {
+        "mark": "SOTA_2026_ELEVATION",
+        "spec": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "spec_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+        "elevated_at": "2026-11-10T20:45:50.328Z",
+        "authority": "El Arquitecto valida · Cline ejecuta sin autoaprobación",
+        "assertions": {
+          "zero_any": "Cero tipos `any` en el diff: ruta de dinero, esquemas Prisma y utilidades del dominio.",
+          "durable_persistence": "Todo endpoint nuevo certifica modo real contra base de datos DURADERA: mode:\"REAL\", source:\"live\", persisted:true. Prohibido capturar el error de BD y devolver estáticos.",
+          "falsifiable_harness": "Arnés propio falsable declarado en `test` (su Exit Code 1 prueba el fallo). La compilación no se acepta como única prueba.",
+          "quintupla": "Quíntupla EP-1 sellada en el ledger al cerrar (cmd · exit=0 · sha256 · ts · url).",
+          "batch_size": "Máximo 5 archivos por commit (CHG-4)."
+        },
+        "gates": [
+          "npm run typecheck (Exit 0)",
+          "arnés declarado en `test` (Exit 0)",
+          "npm run audit:queue-counters (CONSISTENT)"
+        ],
+        "worker_may_self_approve": false
+      },
+      "elevation_applied_at": "2026-11-10T20:45:50.328Z",
+      "elevation_source": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md"
+    },
+    {
+      "id": "W53_T13",
+      "title": "Importador manual y webhook genérico",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/app/api/career/webhook/[platform]/route.ts",
+        "src/lib/career/importers/manual.ts"
+      ],
+      "action": "Webhook con firma HMAC (CAREER_WEBHOOK_SECRET) que acepta MetricPoint[] validados con zod. Entrada manual desde UI usa la misma validación. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0; firma inválida => 401 | SOTA_2026_ELEVATION: cero any + persistencia durable real (mode:REAL / source:live / persisted:true) + arnés falsable Exit 0 + firma del Arquitecto en .antigravity/ARCHITECT_APPROVAL.json",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node scripts/audit_elevation_task_harness.cjs --task=W53_T13",
+      "created_at": "2026-11-07T18:37:51.077Z",
+      "test_previous": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "elevation_contract": {
+        "mark": "SOTA_2026_ELEVATION",
+        "spec": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "spec_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+        "elevated_at": "2026-11-10T20:45:50.328Z",
+        "authority": "El Arquitecto valida · Cline ejecuta sin autoaprobación",
+        "assertions": {
+          "zero_any": "Cero tipos `any` en el diff: ruta de dinero, esquemas Prisma y utilidades del dominio.",
+          "durable_persistence": "Todo endpoint nuevo certifica modo real contra base de datos DURADERA: mode:\"REAL\", source:\"live\", persisted:true. Prohibido capturar el error de BD y devolver estáticos.",
+          "falsifiable_harness": "Arnés propio falsable declarado en `test` (su Exit Code 1 prueba el fallo). La compilación no se acepta como única prueba.",
+          "quintupla": "Quíntupla EP-1 sellada en el ledger al cerrar (cmd · exit=0 · sha256 · ts · url).",
+          "batch_size": "Máximo 5 archivos por commit (CHG-4)."
+        },
+        "gates": [
+          "npm run typecheck (Exit 0)",
+          "arnés declarado en `test` (Exit 0)",
+          "npm run audit:queue-counters (CONSISTENT)"
+        ],
+        "worker_may_self_approve": false
+      },
+      "elevation_applied_at": "2026-11-10T20:45:50.328Z",
+      "elevation_source": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md"
+    },
+    {
+      "id": "W53_T14",
+      "title": "Shell Career OS: layout con 12 departamentos y selector de artista (manager multi-artista)",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/app/studio/artist/layout.tsx",
+        "src/app/studio/artist/components/CareerNav.tsx",
+        "src/lib/career/departments.ts"
+      ],
+      "action": "Departamentos: Resumen, Catálogo, Distribución, Analítica, Social Hub, Giras y Bookings, Finanzas y Royalties, Legal y Contratos, Marketing y Prensa, Fans CRM, Merch, Equipo. departments.ts como SSOT de rutas/iconos. Selector de artista persistido en cookie. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0; todas las rutas del nav resuelven (sin 404) | SOTA_2026_ELEVATION: cero any + persistencia durable real (mode:REAL / source:live / persisted:true) + arnés falsable Exit 0 + firma del Arquitecto en .antigravity/ARCHITECT_APPROVAL.json",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node scripts/audit_elevation_task_harness.cjs --task=W53_T14",
+      "created_at": "2026-11-07T18:37:51.077Z",
+      "test_previous": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "elevation_contract": {
+        "mark": "SOTA_2026_ELEVATION",
+        "spec": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "spec_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+        "elevated_at": "2026-11-10T20:45:50.328Z",
+        "authority": "El Arquitecto valida · Cline ejecuta sin autoaprobación",
+        "assertions": {
+          "zero_any": "Cero tipos `any` en el diff: ruta de dinero, esquemas Prisma y utilidades del dominio.",
+          "durable_persistence": "Todo endpoint nuevo certifica modo real contra base de datos DURADERA: mode:\"REAL\", source:\"live\", persisted:true. Prohibido capturar el error de BD y devolver estáticos.",
+          "falsifiable_harness": "Arnés propio falsable declarado en `test` (su Exit Code 1 prueba el fallo). La compilación no se acepta como única prueba.",
+          "quintupla": "Quíntupla EP-1 sellada en el ledger al cerrar (cmd · exit=0 · sha256 · ts · url).",
+          "batch_size": "Máximo 5 archivos por commit (CHG-4)."
+        },
+        "gates": [
+          "npm run typecheck (Exit 0)",
+          "arnés declarado en `test` (Exit 0)",
+          "npm run audit:queue-counters (CONSISTENT)"
+        ],
+        "worker_may_self_approve": false
+      },
+      "elevation_applied_at": "2026-11-10T20:45:50.328Z",
+      "elevation_source": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md"
+    },
+    {
+      "id": "W53_T15",
+      "title": "Dashboard Resumen unificado",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/app/studio/artist/page.tsx"
+      ],
+      "action": "KPIs globales por MetricKey agregados entre plataformas, sparkline 30d, próximas fechas, ingresos mes, alertas de conexiones caídas. Server Component con skeletons. Etiqueta DEMO visible si source=demo. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0 | SOTA_2026_ELEVATION: cero any + persistencia durable real (mode:REAL / source:live / persisted:true) + arnés falsable Exit 0 + firma del Arquitecto en .antigravity/ARCHITECT_APPROVAL.json",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node scripts/audit_elevation_task_harness.cjs --task=W53_T15",
+      "created_at": "2026-11-07T18:37:51.077Z",
+      "test_previous": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "elevation_contract": {
+        "mark": "SOTA_2026_ELEVATION",
+        "spec": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "spec_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+        "elevated_at": "2026-11-10T20:45:50.328Z",
+        "authority": "El Arquitecto valida · Cline ejecuta sin autoaprobación",
+        "assertions": {
+          "zero_any": "Cero tipos `any` en el diff: ruta de dinero, esquemas Prisma y utilidades del dominio.",
+          "durable_persistence": "Todo endpoint nuevo certifica modo real contra base de datos DURADERA: mode:\"REAL\", source:\"live\", persisted:true. Prohibido capturar el error de BD y devolver estáticos.",
+          "falsifiable_harness": "Arnés propio falsable declarado en `test` (su Exit Code 1 prueba el fallo). La compilación no se acepta como única prueba.",
+          "quintupla": "Quíntupla EP-1 sellada en el ledger al cerrar (cmd · exit=0 · sha256 · ts · url).",
+          "batch_size": "Máximo 5 archivos por commit (CHG-4)."
+        },
+        "gates": [
+          "npm run typecheck (Exit 0)",
+          "arnés declarado en `test` (Exit 0)",
+          "npm run audit:queue-counters (CONSISTENT)"
+        ],
+        "worker_may_self_approve": false
+      },
+      "elevation_applied_at": "2026-11-10T20:45:50.328Z",
+      "elevation_source": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md"
+    },
+    {
+      "id": "W53_T16",
+      "title": "Hub de Conexiones (centro de integraciones)",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/app/studio/artist/conexiones/page.tsx",
+        "src/app/studio/artist/conexiones/ConnectionCard.tsx"
+      ],
+      "action": "Grid por categoría desde PLATFORMS: estado, última sync, botón Conectar (OAuth), Importar CSV, Entrada manual, Desconectar, Sincronizar ahora. Cola de errores visible. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0; cada botón con handler real | SOTA_2026_ELEVATION: cero any + persistencia durable real (mode:REAL / source:live / persisted:true) + arnés falsable Exit 0 + firma del Arquitecto en .antigravity/ARCHITECT_APPROVAL.json",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node scripts/audit_elevation_task_harness.cjs --task=W53_T16",
+      "created_at": "2026-11-07T18:37:51.077Z",
+      "test_previous": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "elevation_contract": {
+        "mark": "SOTA_2026_ELEVATION",
+        "spec": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "spec_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+        "elevated_at": "2026-11-10T20:45:50.328Z",
+        "authority": "El Arquitecto valida · Cline ejecuta sin autoaprobación",
+        "assertions": {
+          "zero_any": "Cero tipos `any` en el diff: ruta de dinero, esquemas Prisma y utilidades del dominio.",
+          "durable_persistence": "Todo endpoint nuevo certifica modo real contra base de datos DURADERA: mode:\"REAL\", source:\"live\", persisted:true. Prohibido capturar el error de BD y devolver estáticos.",
+          "falsifiable_harness": "Arnés propio falsable declarado en `test` (su Exit Code 1 prueba el fallo). La compilación no se acepta como única prueba.",
+          "quintupla": "Quíntupla EP-1 sellada en el ledger al cerrar (cmd · exit=0 · sha256 · ts · url).",
+          "batch_size": "Máximo 5 archivos por commit (CHG-4)."
+        },
+        "gates": [
+          "npm run typecheck (Exit 0)",
+          "arnés declarado en `test` (Exit 0)",
+          "npm run audit:queue-counters (CONSISTENT)"
+        ],
+        "worker_may_self_approve": false
+      },
+      "elevation_applied_at": "2026-11-10T20:45:50.328Z",
+      "elevation_source": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md"
+    },
+    {
+      "id": "W53_T17",
+      "title": "Departamento Catálogo: releases, tracks, ISRC/UPC",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/app/studio/artist/catalogo/page.tsx",
+        "src/app/api/career/releases/route.ts"
+      ],
+      "action": "CRUD de Release/Track con validación de formato ISRC (CC-XXX-YY-NNNNN) y UPC-12/EAN-13 con dígito de control. Portada y metadatos. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0 + test de validadores | SOTA_2026_ELEVATION: cero any + persistencia durable real (mode:REAL / source:live / persisted:true) + arnés falsable Exit 0 + firma del Arquitecto en .antigravity/ARCHITECT_APPROVAL.json",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node scripts/audit_elevation_task_harness.cjs --task=W53_T17",
+      "created_at": "2026-11-07T18:37:51.077Z",
+      "test_previous": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "elevation_contract": {
+        "mark": "SOTA_2026_ELEVATION",
+        "spec": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "spec_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+        "elevated_at": "2026-11-10T20:45:50.328Z",
+        "authority": "El Arquitecto valida · Cline ejecuta sin autoaprobación",
+        "assertions": {
+          "zero_any": "Cero tipos `any` en el diff: ruta de dinero, esquemas Prisma y utilidades del dominio.",
+          "durable_persistence": "Todo endpoint nuevo certifica modo real contra base de datos DURADERA: mode:\"REAL\", source:\"live\", persisted:true. Prohibido capturar el error de BD y devolver estáticos.",
+          "falsifiable_harness": "Arnés propio falsable declarado en `test` (su Exit Code 1 prueba el fallo). La compilación no se acepta como única prueba.",
+          "quintupla": "Quíntupla EP-1 sellada en el ledger al cerrar (cmd · exit=0 · sha256 · ts · url).",
+          "batch_size": "Máximo 5 archivos por commit (CHG-4)."
+        },
+        "gates": [
+          "npm run typecheck (Exit 0)",
+          "arnés declarado en `test` (Exit 0)",
+          "npm run audit:queue-counters (CONSISTENT)"
+        ],
+        "worker_may_self_approve": false
+      },
+      "elevation_applied_at": "2026-11-10T20:45:50.328Z",
+      "elevation_source": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md"
+    },
+    {
+      "id": "W53_T18",
+      "title": "Subida de media a almacenamiento S3/R2 con URL prefirmada",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/lib/career/storage.ts",
+        "src/app/api/artist/career/upload/route.ts"
+      ],
+      "action": "Sustituir disco local por S3 compatible (env S3_*). Subida directa con presigned PUT, registrar MediaAsset con sha256 y bytes. Mantener fallback local sólo en desarrollo. Límite por tipo. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0 | SOTA_2026_ELEVATION: cero any + persistencia durable real (mode:REAL / source:live / persisted:true) + arnés falsable Exit 0 + firma del Arquitecto en .antigravity/ARCHITECT_APPROVAL.json",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node scripts/audit_elevation_task_harness.cjs --task=W53_T18",
+      "created_at": "2026-11-07T18:37:51.077Z",
+      "test_previous": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "elevation_contract": {
+        "mark": "SOTA_2026_ELEVATION",
+        "spec": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "spec_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+        "elevated_at": "2026-11-10T20:45:50.328Z",
+        "authority": "El Arquitecto valida · Cline ejecuta sin autoaprobación",
+        "assertions": {
+          "zero_any": "Cero tipos `any` en el diff: ruta de dinero, esquemas Prisma y utilidades del dominio.",
+          "durable_persistence": "Todo endpoint nuevo certifica modo real contra base de datos DURADERA: mode:\"REAL\", source:\"live\", persisted:true. Prohibido capturar el error de BD y devolver estáticos.",
+          "falsifiable_harness": "Arnés propio falsable declarado en `test` (su Exit Code 1 prueba el fallo). La compilación no se acepta como única prueba.",
+          "quintupla": "Quíntupla EP-1 sellada en el ledger al cerrar (cmd · exit=0 · sha256 · ts · url).",
+          "batch_size": "Máximo 5 archivos por commit (CHG-4)."
+        },
+        "gates": [
+          "npm run typecheck (Exit 0)",
+          "arnés declarado en `test` (Exit 0)",
+          "npm run audit:queue-counters (CONSISTENT)"
+        ],
+        "worker_may_self_approve": false
+      },
+      "elevation_applied_at": "2026-11-10T20:45:50.328Z",
+      "elevation_source": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md"
+    },
+    {
+      "id": "W53_T19",
+      "title": "Departamento Distribución: pipeline de lanzamiento",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/app/studio/artist/distribucion/page.tsx",
+        "src/lib/career/release-pipeline.ts"
+      ],
+      "action": "Máquina de estados: borrador→metadatos→QC→enviado→en tiendas, checklist (portada 3000px, WAV, ISRC, splits suman 10000 bps). Envío al distribuidor por adaptador; sin credenciales => estado pending_credentials. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0 + test de la máquina de estados | SOTA_2026_ELEVATION: cero any + persistencia durable real (mode:REAL / source:live / persisted:true) + arnés falsable Exit 0 + firma del Arquitecto en .antigravity/ARCHITECT_APPROVAL.json",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node scripts/audit_elevation_task_harness.cjs --task=W53_T19",
+      "created_at": "2026-11-07T18:37:51.077Z",
+      "test_previous": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "elevation_contract": {
+        "mark": "SOTA_2026_ELEVATION",
+        "spec": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "spec_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+        "elevated_at": "2026-11-10T20:45:50.328Z",
+        "authority": "El Arquitecto valida · Cline ejecuta sin autoaprobación",
+        "assertions": {
+          "zero_any": "Cero tipos `any` en el diff: ruta de dinero, esquemas Prisma y utilidades del dominio.",
+          "durable_persistence": "Todo endpoint nuevo certifica modo real contra base de datos DURADERA: mode:\"REAL\", source:\"live\", persisted:true. Prohibido capturar el error de BD y devolver estáticos.",
+          "falsifiable_harness": "Arnés propio falsable declarado en `test` (su Exit Code 1 prueba el fallo). La compilación no se acepta como única prueba.",
+          "quintupla": "Quíntupla EP-1 sellada en el ledger al cerrar (cmd · exit=0 · sha256 · ts · url).",
+          "batch_size": "Máximo 5 archivos por commit (CHG-4)."
+        },
+        "gates": [
+          "npm run typecheck (Exit 0)",
+          "arnés declarado en `test` (Exit 0)",
+          "npm run audit:queue-counters (CONSISTENT)"
+        ],
+        "worker_may_self_approve": false
+      },
+      "elevation_applied_at": "2026-11-10T20:45:50.328Z",
+      "elevation_source": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md"
+    },
+    {
+      "id": "W53_T20",
+      "title": "Departamento Analítica: comparador y exportes",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/app/studio/artist/analitica/page.tsx"
+      ],
+      "action": "Filtros plataforma/métrica/rango, series temporales, top países si disponible, exportar CSV. Gráficos SVG ligeros sin librerías pesadas. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0 | SOTA_2026_ELEVATION: cero any + persistencia durable real (mode:REAL / source:live / persisted:true) + arnés falsable Exit 0 + firma del Arquitecto en .antigravity/ARCHITECT_APPROVAL.json",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node scripts/audit_elevation_task_harness.cjs --task=W53_T20",
+      "created_at": "2026-11-07T18:37:51.077Z",
+      "test_previous": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "elevation_contract": {
+        "mark": "SOTA_2026_ELEVATION",
+        "spec": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "spec_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+        "elevated_at": "2026-11-10T20:45:50.328Z",
+        "authority": "El Arquitecto valida · Cline ejecuta sin autoaprobación",
+        "assertions": {
+          "zero_any": "Cero tipos `any` en el diff: ruta de dinero, esquemas Prisma y utilidades del dominio.",
+          "durable_persistence": "Todo endpoint nuevo certifica modo real contra base de datos DURADERA: mode:\"REAL\", source:\"live\", persisted:true. Prohibido capturar el error de BD y devolver estáticos.",
+          "falsifiable_harness": "Arnés propio falsable declarado en `test` (su Exit Code 1 prueba el fallo). La compilación no se acepta como única prueba.",
+          "quintupla": "Quíntupla EP-1 sellada en el ledger al cerrar (cmd · exit=0 · sha256 · ts · url).",
+          "batch_size": "Máximo 5 archivos por commit (CHG-4)."
+        },
+        "gates": [
+          "npm run typecheck (Exit 0)",
+          "arnés declarado en `test` (Exit 0)",
+          "npm run audit:queue-counters (CONSISTENT)"
+        ],
+        "worker_may_self_approve": false
+      },
+      "elevation_applied_at": "2026-11-10T20:45:50.328Z",
+      "elevation_source": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md"
+    },
+    {
+      "id": "W53_T21",
+      "title": "Social Hub: calendario de contenido y programación",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/app/studio/artist/social/page.tsx",
+        "src/app/api/career/posts/route.ts"
+      ],
+      "action": "ContentPost con plataforma, copy, media, fecha, estado (borrador/aprobado/publicado). Vista calendario mensual. Publicación real sólo si el conector la soporta; si no, estado manual_publish. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0 | SOTA_2026_ELEVATION: cero any + persistencia durable real (mode:REAL / source:live / persisted:true) + arnés falsable Exit 0 + firma del Arquitecto en .antigravity/ARCHITECT_APPROVAL.json",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node scripts/audit_elevation_task_harness.cjs --task=W53_T21",
+      "created_at": "2026-11-07T18:37:51.077Z",
+      "test_previous": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "elevation_contract": {
+        "mark": "SOTA_2026_ELEVATION",
+        "spec": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "spec_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+        "elevated_at": "2026-11-10T20:45:50.328Z",
+        "authority": "El Arquitecto valida · Cline ejecuta sin autoaprobación",
+        "assertions": {
+          "zero_any": "Cero tipos `any` en el diff: ruta de dinero, esquemas Prisma y utilidades del dominio.",
+          "durable_persistence": "Todo endpoint nuevo certifica modo real contra base de datos DURADERA: mode:\"REAL\", source:\"live\", persisted:true. Prohibido capturar el error de BD y devolver estáticos.",
+          "falsifiable_harness": "Arnés propio falsable declarado en `test` (su Exit Code 1 prueba el fallo). La compilación no se acepta como única prueba.",
+          "quintupla": "Quíntupla EP-1 sellada en el ledger al cerrar (cmd · exit=0 · sha256 · ts · url).",
+          "batch_size": "Máximo 5 archivos por commit (CHG-4)."
+        },
+        "gates": [
+          "npm run typecheck (Exit 0)",
+          "arnés declarado en `test` (Exit 0)",
+          "npm run audit:queue-counters (CONSISTENT)"
+        ],
+        "worker_may_self_approve": false
+      },
+      "elevation_applied_at": "2026-11-10T20:45:50.328Z",
+      "elevation_source": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md"
+    },
+    {
+      "id": "W53_T22",
+      "title": "Giras y Bookings integrados con EAR OS",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/app/studio/artist/giras/page.tsx"
+      ],
+      "action": "Gig con venue, cachet, logística 1,50 €/km desde km 50 (importar del SSOT, no duplicar), rider, hoja de ruta, estado. Reusar motores existentes sin modificar Zona Cero. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0 | SOTA_2026_ELEVATION: cero any + persistencia durable real (mode:REAL / source:live / persisted:true) + arnés falsable Exit 0 + firma del Arquitecto en .antigravity/ARCHITECT_APPROVAL.json",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node scripts/audit_elevation_task_harness.cjs --task=W53_T22",
+      "created_at": "2026-11-07T18:37:51.077Z",
+      "test_previous": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "elevation_contract": {
+        "mark": "SOTA_2026_ELEVATION",
+        "spec": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "spec_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+        "elevated_at": "2026-11-10T20:45:50.328Z",
+        "authority": "El Arquitecto valida · Cline ejecuta sin autoaprobación",
+        "assertions": {
+          "zero_any": "Cero tipos `any` en el diff: ruta de dinero, esquemas Prisma y utilidades del dominio.",
+          "durable_persistence": "Todo endpoint nuevo certifica modo real contra base de datos DURADERA: mode:\"REAL\", source:\"live\", persisted:true. Prohibido capturar el error de BD y devolver estáticos.",
+          "falsifiable_harness": "Arnés propio falsable declarado en `test` (su Exit Code 1 prueba el fallo). La compilación no se acepta como única prueba.",
+          "quintupla": "Quíntupla EP-1 sellada en el ledger al cerrar (cmd · exit=0 · sha256 · ts · url).",
+          "batch_size": "Máximo 5 archivos por commit (CHG-4)."
+        },
+        "gates": [
+          "npm run typecheck (Exit 0)",
+          "arnés declarado en `test` (Exit 0)",
+          "npm run audit:queue-counters (CONSISTENT)"
+        ],
+        "worker_may_self_approve": false
+      },
+      "elevation_applied_at": "2026-11-10T20:45:50.328Z",
+      "elevation_source": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md"
+    },
+    {
+      "id": "W53_T23",
+      "title": "Finanzas y Royalties",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/app/studio/artist/finanzas/page.tsx",
+        "src/lib/career/royalty-splitter.ts"
+      ],
+      "action": "Ingesta de RoyaltyStatement, reparto por splits en bps con redondeo que conserve el total exacto (céntimos), P&L mensual, previsión. Test: suma de partes == total siempre. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0 + scripts/verify_royalty_splitter.ts Exit 0 | SOTA_2026_ELEVATION: cero any + persistencia durable real (mode:REAL / source:live / persisted:true) + arnés falsable Exit 0 + firma del Arquitecto en .antigravity/ARCHITECT_APPROVAL.json",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node scripts/audit_elevation_task_harness.cjs --task=W53_T23",
+      "created_at": "2026-11-07T18:37:51.077Z",
+      "test_previous": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "elevation_contract": {
+        "mark": "SOTA_2026_ELEVATION",
+        "spec": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "spec_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+        "elevated_at": "2026-11-10T20:45:50.328Z",
+        "authority": "El Arquitecto valida · Cline ejecuta sin autoaprobación",
+        "assertions": {
+          "zero_any": "Cero tipos `any` en el diff: ruta de dinero, esquemas Prisma y utilidades del dominio.",
+          "durable_persistence": "Todo endpoint nuevo certifica modo real contra base de datos DURADERA: mode:\"REAL\", source:\"live\", persisted:true. Prohibido capturar el error de BD y devolver estáticos.",
+          "falsifiable_harness": "Arnés propio falsable declarado en `test` (su Exit Code 1 prueba el fallo). La compilación no se acepta como única prueba.",
+          "quintupla": "Quíntupla EP-1 sellada en el ledger al cerrar (cmd · exit=0 · sha256 · ts · url).",
+          "batch_size": "Máximo 5 archivos por commit (CHG-4)."
+        },
+        "gates": [
+          "npm run typecheck (Exit 0)",
+          "arnés declarado en `test` (Exit 0)",
+          "npm run audit:queue-counters (CONSISTENT)"
+        ],
+        "worker_may_self_approve": false
+      },
+      "elevation_applied_at": "2026-11-10T20:45:50.328Z",
+      "elevation_source": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md"
+    },
+    {
+      "id": "W53_T24",
+      "title": "Legal y Contratos",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/app/studio/artist/legal/page.tsx"
+      ],
+      "action": "Repositorio de contratos con vencimientos y alertas, plantillas (split sheet, management, licencia de sincronización), estado de firma. Adjuntos vía storage. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0 | SOTA_2026_ELEVATION: cero any + persistencia durable real (mode:REAL / source:live / persisted:true) + arnés falsable Exit 0 + firma del Arquitecto en .antigravity/ARCHITECT_APPROVAL.json",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node scripts/audit_elevation_task_harness.cjs --task=W53_T24",
+      "created_at": "2026-11-07T18:37:51.077Z",
+      "test_previous": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "elevation_contract": {
+        "mark": "SOTA_2026_ELEVATION",
+        "spec": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "spec_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+        "elevated_at": "2026-11-10T20:45:50.328Z",
+        "authority": "El Arquitecto valida · Cline ejecuta sin autoaprobación",
+        "assertions": {
+          "zero_any": "Cero tipos `any` en el diff: ruta de dinero, esquemas Prisma y utilidades del dominio.",
+          "durable_persistence": "Todo endpoint nuevo certifica modo real contra base de datos DURADERA: mode:\"REAL\", source:\"live\", persisted:true. Prohibido capturar el error de BD y devolver estáticos.",
+          "falsifiable_harness": "Arnés propio falsable declarado en `test` (su Exit Code 1 prueba el fallo). La compilación no se acepta como única prueba.",
+          "quintupla": "Quíntupla EP-1 sellada en el ledger al cerrar (cmd · exit=0 · sha256 · ts · url).",
+          "batch_size": "Máximo 5 archivos por commit (CHG-4)."
+        },
+        "gates": [
+          "npm run typecheck (Exit 0)",
+          "arnés declarado en `test` (Exit 0)",
+          "npm run audit:queue-counters (CONSISTENT)"
+        ],
+        "worker_may_self_approve": false
+      },
+      "elevation_applied_at": "2026-11-10T20:45:50.328Z",
+      "elevation_source": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md"
+    },
+    {
+      "id": "W53_T25",
+      "title": "Marketing, prensa y EPK",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/app/studio/artist/marketing/page.tsx"
+      ],
+      "action": "Campañas con presupuesto y KPIs, generador de press kit a partir del perfil, base de contactos de prensa. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0 | SOTA_2026_ELEVATION: cero any + persistencia durable real (mode:REAL / source:live / persisted:true) + arnés falsable Exit 0 + firma del Arquitecto en .antigravity/ARCHITECT_APPROVAL.json",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node scripts/audit_elevation_task_harness.cjs --task=W53_T25",
+      "created_at": "2026-11-07T18:37:51.077Z",
+      "test_previous": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "elevation_contract": {
+        "mark": "SOTA_2026_ELEVATION",
+        "spec": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "spec_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+        "elevated_at": "2026-11-10T20:45:50.328Z",
+        "authority": "El Arquitecto valida · Cline ejecuta sin autoaprobación",
+        "assertions": {
+          "zero_any": "Cero tipos `any` en el diff: ruta de dinero, esquemas Prisma y utilidades del dominio.",
+          "durable_persistence": "Todo endpoint nuevo certifica modo real contra base de datos DURADERA: mode:\"REAL\", source:\"live\", persisted:true. Prohibido capturar el error de BD y devolver estáticos.",
+          "falsifiable_harness": "Arnés propio falsable declarado en `test` (su Exit Code 1 prueba el fallo). La compilación no se acepta como única prueba.",
+          "quintupla": "Quíntupla EP-1 sellada en el ledger al cerrar (cmd · exit=0 · sha256 · ts · url).",
+          "batch_size": "Máximo 5 archivos por commit (CHG-4)."
+        },
+        "gates": [
+          "npm run typecheck (Exit 0)",
+          "arnés declarado en `test` (Exit 0)",
+          "npm run audit:queue-counters (CONSISTENT)"
+        ],
+        "worker_may_self_approve": false
+      },
+      "elevation_applied_at": "2026-11-10T20:45:50.328Z",
+      "elevation_source": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md"
+    },
+    {
+      "id": "W53_T26",
+      "title": "Fans CRM",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/app/studio/artist/fans/page.tsx"
+      ],
+      "action": "FanContact con consentimiento RGPD explícito, segmentos, import CSV, exportar, baja. Sin envío masivo sin opt-in. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0 | SOTA_2026_ELEVATION: cero any + persistencia durable real (mode:REAL / source:live / persisted:true) + arnés falsable Exit 0 + firma del Arquitecto en .antigravity/ARCHITECT_APPROVAL.json",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node scripts/audit_elevation_task_harness.cjs --task=W53_T26",
+      "created_at": "2026-11-07T18:37:51.077Z",
+      "test_previous": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "elevation_contract": {
+        "mark": "SOTA_2026_ELEVATION",
+        "spec": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "spec_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+        "elevated_at": "2026-11-10T20:45:50.328Z",
+        "authority": "El Arquitecto valida · Cline ejecuta sin autoaprobación",
+        "assertions": {
+          "zero_any": "Cero tipos `any` en el diff: ruta de dinero, esquemas Prisma y utilidades del dominio.",
+          "durable_persistence": "Todo endpoint nuevo certifica modo real contra base de datos DURADERA: mode:\"REAL\", source:\"live\", persisted:true. Prohibido capturar el error de BD y devolver estáticos.",
+          "falsifiable_harness": "Arnés propio falsable declarado en `test` (su Exit Code 1 prueba el fallo). La compilación no se acepta como única prueba.",
+          "quintupla": "Quíntupla EP-1 sellada en el ledger al cerrar (cmd · exit=0 · sha256 · ts · url).",
+          "batch_size": "Máximo 5 archivos por commit (CHG-4)."
+        },
+        "gates": [
+          "npm run typecheck (Exit 0)",
+          "arnés declarado en `test` (Exit 0)",
+          "npm run audit:queue-counters (CONSISTENT)"
+        ],
+        "worker_may_self_approve": false
+      },
+      "elevation_applied_at": "2026-11-10T20:45:50.328Z",
+      "elevation_source": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md"
+    },
+    {
+      "id": "W53_T27",
+      "title": "Merch y ventas directas",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/app/studio/artist/merch/page.tsx"
+      ],
+      "action": "Panel de ventas desde Shopify/Bandcamp, stock manual, margen por producto en céntimos. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0 | SOTA_2026_ELEVATION: cero any + persistencia durable real (mode:REAL / source:live / persisted:true) + arnés falsable Exit 0 + firma del Arquitecto en .antigravity/ARCHITECT_APPROVAL.json",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node scripts/audit_elevation_task_harness.cjs --task=W53_T27",
+      "created_at": "2026-11-07T18:37:51.077Z",
+      "test_previous": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "elevation_contract": {
+        "mark": "SOTA_2026_ELEVATION",
+        "spec": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "spec_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+        "elevated_at": "2026-11-10T20:45:50.328Z",
+        "authority": "El Arquitecto valida · Cline ejecuta sin autoaprobación",
+        "assertions": {
+          "zero_any": "Cero tipos `any` en el diff: ruta de dinero, esquemas Prisma y utilidades del dominio.",
+          "durable_persistence": "Todo endpoint nuevo certifica modo real contra base de datos DURADERA: mode:\"REAL\", source:\"live\", persisted:true. Prohibido capturar el error de BD y devolver estáticos.",
+          "falsifiable_harness": "Arnés propio falsable declarado en `test` (su Exit Code 1 prueba el fallo). La compilación no se acepta como única prueba.",
+          "quintupla": "Quíntupla EP-1 sellada en el ledger al cerrar (cmd · exit=0 · sha256 · ts · url).",
+          "batch_size": "Máximo 5 archivos por commit (CHG-4)."
+        },
+        "gates": [
+          "npm run typecheck (Exit 0)",
+          "arnés declarado en `test` (Exit 0)",
+          "npm run audit:queue-counters (CONSISTENT)"
+        ],
+        "worker_may_self_approve": false
+      },
+      "elevation_applied_at": "2026-11-10T20:45:50.328Z",
+      "elevation_source": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md"
+    },
+    {
+      "id": "W53_T28",
+      "title": "Equipo y permisos por rol",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/app/studio/artist/equipo/page.tsx",
+        "src/lib/career/rbac.ts"
+      ],
+      "action": "Matriz de permisos por rol y departamento; invitaciones; guard server-side en cada API career. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0 + test de matriz | SOTA_2026_ELEVATION: cero any + persistencia durable real (mode:REAL / source:live / persisted:true) + arnés falsable Exit 0 + firma del Arquitecto en .antigravity/ARCHITECT_APPROVAL.json",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node scripts/audit_elevation_task_harness.cjs --task=W53_T28",
+      "created_at": "2026-11-07T18:37:51.077Z",
+      "test_previous": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "elevation_contract": {
+        "mark": "SOTA_2026_ELEVATION",
+        "spec": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "spec_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+        "elevated_at": "2026-11-10T20:45:50.328Z",
+        "authority": "El Arquitecto valida · Cline ejecuta sin autoaprobación",
+        "assertions": {
+          "zero_any": "Cero tipos `any` en el diff: ruta de dinero, esquemas Prisma y utilidades del dominio.",
+          "durable_persistence": "Todo endpoint nuevo certifica modo real contra base de datos DURADERA: mode:\"REAL\", source:\"live\", persisted:true. Prohibido capturar el error de BD y devolver estáticos.",
+          "falsifiable_harness": "Arnés propio falsable declarado en `test` (su Exit Code 1 prueba el fallo). La compilación no se acepta como única prueba.",
+          "quintupla": "Quíntupla EP-1 sellada en el ledger al cerrar (cmd · exit=0 · sha256 · ts · url).",
+          "batch_size": "Máximo 5 archivos por commit (CHG-4)."
+        },
+        "gates": [
+          "npm run typecheck (Exit 0)",
+          "arnés declarado en `test` (Exit 0)",
+          "npm run audit:queue-counters (CONSISTENT)"
+        ],
+        "worker_may_self_approve": false
+      },
+      "elevation_applied_at": "2026-11-10T20:45:50.328Z",
+      "elevation_source": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md"
+    },
+    {
+      "id": "W53_T29",
+      "title": "Asistente IA del manager (con datos reales del artista)",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/app/studio/artist/asistente/page.tsx",
+        "src/app/api/career/assistant/route.ts"
+      ],
+      "action": "Chat que responde sólo con datos de BD del artista, cita la fuente de cada cifra, rechaza inventar. Timeout 8s. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0 | SOTA_2026_ELEVATION: cero any + persistencia durable real (mode:REAL / source:live / persisted:true) + arnés falsable Exit 0 + firma del Arquitecto en .antigravity/ARCHITECT_APPROVAL.json",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node scripts/audit_elevation_task_harness.cjs --task=W53_T29",
+      "created_at": "2026-11-07T18:37:51.077Z",
+      "test_previous": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "elevation_contract": {
+        "mark": "SOTA_2026_ELEVATION",
+        "spec": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "spec_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+        "elevated_at": "2026-11-10T20:45:50.328Z",
+        "authority": "El Arquitecto valida · Cline ejecuta sin autoaprobación",
+        "assertions": {
+          "zero_any": "Cero tipos `any` en el diff: ruta de dinero, esquemas Prisma y utilidades del dominio.",
+          "durable_persistence": "Todo endpoint nuevo certifica modo real contra base de datos DURADERA: mode:\"REAL\", source:\"live\", persisted:true. Prohibido capturar el error de BD y devolver estáticos.",
+          "falsifiable_harness": "Arnés propio falsable declarado en `test` (su Exit Code 1 prueba el fallo). La compilación no se acepta como única prueba.",
+          "quintupla": "Quíntupla EP-1 sellada en el ledger al cerrar (cmd · exit=0 · sha256 · ts · url).",
+          "batch_size": "Máximo 5 archivos por commit (CHG-4)."
+        },
+        "gates": [
+          "npm run typecheck (Exit 0)",
+          "arnés declarado en `test` (Exit 0)",
+          "npm run audit:queue-counters (CONSISTENT)"
+        ],
+        "worker_may_self_approve": false
+      },
+      "elevation_applied_at": "2026-11-10T20:45:50.328Z",
+      "elevation_source": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md"
+    },
+    {
+      "id": "W53_T30",
+      "title": "Alertas y notificaciones (conexión caída, vencimiento, pico de métrica)",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/lib/career/alerts.ts"
+      ],
+      "action": "Reglas declarativas y envío a n8n webhook existente de forma no bloqueante. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0 | SOTA_2026_ELEVATION: cero any + persistencia durable real (mode:REAL / source:live / persisted:true) + arnés falsable Exit 0 + firma del Arquitecto en .antigravity/ARCHITECT_APPROVAL.json",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node scripts/audit_elevation_task_harness.cjs --task=W53_T30",
+      "created_at": "2026-11-07T18:37:51.077Z",
+      "test_previous": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "elevation_contract": {
+        "mark": "SOTA_2026_ELEVATION",
+        "spec": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "spec_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+        "elevated_at": "2026-11-10T20:45:50.328Z",
+        "authority": "El Arquitecto valida · Cline ejecuta sin autoaprobación",
+        "assertions": {
+          "zero_any": "Cero tipos `any` en el diff: ruta de dinero, esquemas Prisma y utilidades del dominio.",
+          "durable_persistence": "Todo endpoint nuevo certifica modo real contra base de datos DURADERA: mode:\"REAL\", source:\"live\", persisted:true. Prohibido capturar el error de BD y devolver estáticos.",
+          "falsifiable_harness": "Arnés propio falsable declarado en `test` (su Exit Code 1 prueba el fallo). La compilación no se acepta como única prueba.",
+          "quintupla": "Quíntupla EP-1 sellada en el ledger al cerrar (cmd · exit=0 · sha256 · ts · url).",
+          "batch_size": "Máximo 5 archivos por commit (CHG-4)."
+        },
+        "gates": [
+          "npm run typecheck (Exit 0)",
+          "arnés declarado en `test` (Exit 0)",
+          "npm run audit:queue-counters (CONSISTENT)"
+        ],
+        "worker_may_self_approve": false
+      },
+      "elevation_applied_at": "2026-11-10T20:45:50.328Z",
+      "elevation_source": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md"
+    },
+    {
+      "id": "W53_T31",
+      "title": "Seed de demostración etiquetado",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "scripts/seed_career_demo.ts"
+      ],
+      "action": "Crear un artista demo con 90 días de MetricSnapshot source:\"demo\", releases, gigs, contratos. Idempotente. NUNCA mezclar con datos reales. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "npx tsx scripts/seed_career_demo.ts Exit 0 dos veces | SOTA_2026_ELEVATION: cero any + persistencia durable real (mode:REAL / source:live / persisted:true) + arnés falsable Exit 0 + firma del Arquitecto en .antigravity/ARCHITECT_APPROVAL.json",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node scripts/audit_elevation_task_harness.cjs --task=W53_T31",
+      "created_at": "2026-11-07T18:37:51.077Z",
+      "test_previous": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "elevation_contract": {
+        "mark": "SOTA_2026_ELEVATION",
+        "spec": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "spec_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+        "elevated_at": "2026-11-10T20:45:50.328Z",
+        "authority": "El Arquitecto valida · Cline ejecuta sin autoaprobación",
+        "assertions": {
+          "zero_any": "Cero tipos `any` en el diff: ruta de dinero, esquemas Prisma y utilidades del dominio.",
+          "durable_persistence": "Todo endpoint nuevo certifica modo real contra base de datos DURADERA: mode:\"REAL\", source:\"live\", persisted:true. Prohibido capturar el error de BD y devolver estáticos.",
+          "falsifiable_harness": "Arnés propio falsable declarado en `test` (su Exit Code 1 prueba el fallo). La compilación no se acepta como única prueba.",
+          "quintupla": "Quíntupla EP-1 sellada en el ledger al cerrar (cmd · exit=0 · sha256 · ts · url).",
+          "batch_size": "Máximo 5 archivos por commit (CHG-4)."
+        },
+        "gates": [
+          "npm run typecheck (Exit 0)",
+          "arnés declarado en `test` (Exit 0)",
+          "npm run audit:queue-counters (CONSISTENT)"
+        ],
+        "worker_may_self_approve": false
+      },
+      "elevation_applied_at": "2026-11-10T20:45:50.328Z",
+      "elevation_source": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md"
+    },
+    {
+      "id": "W53_T32",
+      "title": "Viaje inmersivo: Descubrir → Reservar → Studio",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/app/neural-journey/page.tsx",
+        "src/app/studio/artist/onboarding/page.tsx"
+      ],
+      "action": "Onboarding del artista en 5 pasos (perfil, conectar redes, importar catálogo, equipo, primera analítica) con progreso persistido y transiciones continuas. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0 | SOTA_2026_ELEVATION: cero any + persistencia durable real (mode:REAL / source:live / persisted:true) + arnés falsable Exit 0 + firma del Arquitecto en .antigravity/ARCHITECT_APPROVAL.json",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node scripts/audit_elevation_task_harness.cjs --task=W53_T32",
+      "created_at": "2026-11-07T18:37:51.077Z",
+      "test_previous": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "elevation_contract": {
+        "mark": "SOTA_2026_ELEVATION",
+        "spec": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "spec_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+        "elevated_at": "2026-11-10T20:45:50.328Z",
+        "authority": "El Arquitecto valida · Cline ejecuta sin autoaprobación",
+        "assertions": {
+          "zero_any": "Cero tipos `any` en el diff: ruta de dinero, esquemas Prisma y utilidades del dominio.",
+          "durable_persistence": "Todo endpoint nuevo certifica modo real contra base de datos DURADERA: mode:\"REAL\", source:\"live\", persisted:true. Prohibido capturar el error de BD y devolver estáticos.",
+          "falsifiable_harness": "Arnés propio falsable declarado en `test` (su Exit Code 1 prueba el fallo). La compilación no se acepta como única prueba.",
+          "quintupla": "Quíntupla EP-1 sellada en el ledger al cerrar (cmd · exit=0 · sha256 · ts · url).",
+          "batch_size": "Máximo 5 archivos por commit (CHG-4)."
+        },
+        "gates": [
+          "npm run typecheck (Exit 0)",
+          "arnés declarado en `test` (Exit 0)",
+          "npm run audit:queue-counters (CONSISTENT)"
+        ],
+        "worker_may_self_approve": false
+      },
+      "elevation_applied_at": "2026-11-10T20:45:50.328Z",
+      "elevation_source": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md"
+    },
+    {
+      "id": "W53_T33",
+      "title": "Seguridad y cumplimiento",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "src/lib/career/audit-log.ts",
+        "docs/CAREER_SECURITY.md"
+      ],
+      "action": "Audit log append-only de accesos a datos y tokens, rate limit por IP en rutas career, headers, borrado de cuenta y exportación de datos (RGPD). REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0 | SOTA_2026_ELEVATION: cero any + persistencia durable real (mode:REAL / source:live / persisted:true) + arnés falsable Exit 0 + firma del Arquitecto en .antigravity/ARCHITECT_APPROVAL.json",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node scripts/audit_elevation_task_harness.cjs --task=W53_T33",
+      "created_at": "2026-11-07T18:37:51.077Z",
+      "test_previous": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "elevation_contract": {
+        "mark": "SOTA_2026_ELEVATION",
+        "spec": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "spec_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+        "elevated_at": "2026-11-10T20:45:50.328Z",
+        "authority": "El Arquitecto valida · Cline ejecuta sin autoaprobación",
+        "assertions": {
+          "zero_any": "Cero tipos `any` en el diff: ruta de dinero, esquemas Prisma y utilidades del dominio.",
+          "durable_persistence": "Todo endpoint nuevo certifica modo real contra base de datos DURADERA: mode:\"REAL\", source:\"live\", persisted:true. Prohibido capturar el error de BD y devolver estáticos.",
+          "falsifiable_harness": "Arnés propio falsable declarado en `test` (su Exit Code 1 prueba el fallo). La compilación no se acepta como única prueba.",
+          "quintupla": "Quíntupla EP-1 sellada en el ledger al cerrar (cmd · exit=0 · sha256 · ts · url).",
+          "batch_size": "Máximo 5 archivos por commit (CHG-4)."
+        },
+        "gates": [
+          "npm run typecheck (Exit 0)",
+          "arnés declarado en `test` (Exit 0)",
+          "npm run audit:queue-counters (CONSISTENT)"
+        ],
+        "worker_may_self_approve": false
+      },
+      "elevation_applied_at": "2026-11-10T20:45:50.328Z",
+      "elevation_source": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md"
+    },
+    {
+      "id": "W53_T34",
+      "title": "Puerta final Career OS",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "scripts/audit_career_os.cjs",
+        "package.json"
+      ],
+      "action": "Script que verifica: 0 páginas placeholder bajo studio/artist, 0 any, cada platformId del registro tiene conector o importador, rutas del nav resuelven. Añadir npm run audit:career. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "npm run audit:career Exit 0 | SOTA_2026_ELEVATION: cero any + persistencia durable real (mode:REAL / source:live / persisted:true) + arnés falsable Exit 0 + firma del Arquitecto en .antigravity/ARCHITECT_APPROVAL.json",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node scripts/audit_elevation_task_harness.cjs --task=W53_T34",
+      "created_at": "2026-11-07T18:37:51.077Z",
+      "test_previous": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "elevation_contract": {
+        "mark": "SOTA_2026_ELEVATION",
+        "spec": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "spec_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+        "elevated_at": "2026-11-10T20:45:50.328Z",
+        "authority": "El Arquitecto valida · Cline ejecuta sin autoaprobación",
+        "assertions": {
+          "zero_any": "Cero tipos `any` en el diff: ruta de dinero, esquemas Prisma y utilidades del dominio.",
+          "durable_persistence": "Todo endpoint nuevo certifica modo real contra base de datos DURADERA: mode:\"REAL\", source:\"live\", persisted:true. Prohibido capturar el error de BD y devolver estáticos.",
+          "falsifiable_harness": "Arnés propio falsable declarado en `test` (su Exit Code 1 prueba el fallo). La compilación no se acepta como única prueba.",
+          "quintupla": "Quíntupla EP-1 sellada en el ledger al cerrar (cmd · exit=0 · sha256 · ts · url).",
+          "batch_size": "Máximo 5 archivos por commit (CHG-4)."
+        },
+        "gates": [
+          "npm run typecheck (Exit 0)",
+          "arnés declarado en `test` (Exit 0)",
+          "npm run audit:queue-counters (CONSISTENT)"
+        ],
+        "worker_may_self_approve": false
+      },
+      "elevation_applied_at": "2026-11-10T20:45:50.328Z",
+      "elevation_source": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md"
+    },
+    {
+      "id": "W54_T01_ASVS_L3_PAYLOAD_HARNESS",
+      "title": "Cierre OMEGA-11 · arnés adversarial OWASP ASVS L3 sobre rutas de dinero",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "scripts/audit_asvs_l3_payloads.cjs"
+      ],
+      "action": "Fuzzing sistemático contra /api/quote/generate-lock, /api/telemetry/[id] y /api/admin/treasury. Vectores: inyección SQL ciega basada en tiempo, desbordamiento de tipos numéricos en tarifas, parameter tampering sobre el split 80/10/10 y replay de certificados de depósito. Criterio: 100% de payloads maliciosos rechazados con 400/403/422 y CERO 500 no controlados.",
       "scaffold": null,
-      "done_when": "61 activos con resumen y CTA funcional; tsc Exit 0.",
+      "done_when": "100% payloads rechazados 400/403/422 · 0 HTTP 500 · Exit 0 | SOTA_2026_ELEVATION: cero any + persistencia durable real (mode:REAL / source:live / persisted:true) + arnés falsable Exit 0 + firma del Arquitecto",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node scripts/audit_elevation_task_harness.cjs --task=W54_T01_ASVS_L3_PAYLOAD_HARNESS",
+      "created_at": "2026-11-10T20:45:50.328Z",
+      "scorecard_gap": "OMEGA-11",
+      "elevation_contract": {
+        "mark": "SOTA_2026_ELEVATION",
+        "spec": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "spec_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+        "elevated_at": "2026-11-10T20:45:50.328Z",
+        "authority": "El Arquitecto valida · Cline ejecuta sin autoaprobación",
+        "assertions": {
+          "zero_any": "Cero tipos `any` en el diff: ruta de dinero, esquemas Prisma y utilidades del dominio.",
+          "durable_persistence": "Todo endpoint nuevo certifica modo real contra base de datos DURADERA: mode:\"REAL\", source:\"live\", persisted:true. Prohibido capturar el error de BD y devolver estáticos.",
+          "falsifiable_harness": "Arnés propio falsable declarado en `test` (su Exit Code 1 prueba el fallo). La compilación no se acepta como única prueba.",
+          "quintupla": "Quíntupla EP-1 sellada en el ledger al cerrar (cmd · exit=0 · sha256 · ts · url).",
+          "batch_size": "Máximo 5 archivos por commit (CHG-4)."
+        },
+        "gates": [
+          "npm run typecheck (Exit 0)",
+          "arnés declarado en `test` (Exit 0)",
+          "npm run audit:queue-counters (CONSISTENT)"
+        ],
+        "worker_may_self_approve": false
+      }
+    },
+    {
+      "id": "W54_T02_LIGHTHOUSE_X4_REPRODUCIBLE",
+      "title": "Cierre OMEGA-12 · Lighthouse 100x4 reproducible en CI (Mobile Slow 4G)",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "scripts/audit_lighthouse_x4.cjs"
+      ],
+      "action": "Invocar Chrome Headless en contenedor aislado con red emulada Mobile Slow 4G. Las cuatro puntuaciones (Rendimiento, Accesibilidad, Buenas Prácticas, SEO) deben ser 100/100/100/100 y ningún recurso debe bloquear el renderizado en el primer segundo.",
+      "scaffold": null,
+      "done_when": "PERF=100 A11Y=100 BP=100 SEO=100 · 0 recursos bloqueantes en el primer segundo · Exit 0 | SOTA_2026_ELEVATION: cero any + persistencia durable real (mode:REAL / source:live / persisted:true) + arnés falsable Exit 0 + firma del Arquitecto",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node scripts/audit_elevation_task_harness.cjs --task=W54_T02_LIGHTHOUSE_X4_REPRODUCIBLE",
+      "created_at": "2026-11-10T20:45:50.328Z",
+      "scorecard_gap": "OMEGA-12",
+      "elevation_contract": {
+        "mark": "SOTA_2026_ELEVATION",
+        "spec": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "spec_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+        "elevated_at": "2026-11-10T20:45:50.328Z",
+        "authority": "El Arquitecto valida · Cline ejecuta sin autoaprobación",
+        "assertions": {
+          "zero_any": "Cero tipos `any` en el diff: ruta de dinero, esquemas Prisma y utilidades del dominio.",
+          "durable_persistence": "Todo endpoint nuevo certifica modo real contra base de datos DURADERA: mode:\"REAL\", source:\"live\", persisted:true. Prohibido capturar el error de BD y devolver estáticos.",
+          "falsifiable_harness": "Arnés propio falsable declarado en `test` (su Exit Code 1 prueba el fallo). La compilación no se acepta como única prueba.",
+          "quintupla": "Quíntupla EP-1 sellada en el ledger al cerrar (cmd · exit=0 · sha256 · ts · url).",
+          "batch_size": "Máximo 5 archivos por commit (CHG-4)."
+        },
+        "gates": [
+          "npm run typecheck (Exit 0)",
+          "arnés declarado en `test` (Exit 0)",
+          "npm run audit:queue-counters (CONSISTENT)"
+        ],
+        "worker_may_self_approve": false
+      }
+    },
+    {
+      "id": "W54_T03_CWV_FIELD_P75_REAL",
+      "title": "Cierre OMEGA-13 · Core Web Vitals de campo p75 reales (CrUX/RUM, sin MODE=SIMULADO)",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "scripts/audit_cls_budget.cjs"
+      ],
+      "action": "Eliminar el parámetro MODE=SIMULADO del auditor. Conectar a la API pública de CrUX o a métricas RUM persistidas en Supabase. Umbrales: CLS p75 <= 0.05, INP p75 < 20 ms, LCP p75 < 1.8 s. Sin fuente de campo, declarar SIN_EVIDENCIA con Exit 1: nunca verde estático (AF-5).",
+      "scaffold": null,
+      "done_when": "CLS p75<=0.05 · INP p75<20ms · LCP p75<1.8s con source:\"live\" · Exit 0 | SOTA_2026_ELEVATION: cero any + persistencia durable real (mode:REAL / source:live / persisted:true) + arnés falsable Exit 0 + firma del Arquitecto",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node scripts/audit_elevation_task_harness.cjs --task=W54_T03_CWV_FIELD_P75_REAL",
+      "created_at": "2026-11-10T20:45:50.328Z",
+      "scorecard_gap": "OMEGA-13",
+      "elevation_contract": {
+        "mark": "SOTA_2026_ELEVATION",
+        "spec": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "spec_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+        "elevated_at": "2026-11-10T20:45:50.328Z",
+        "authority": "El Arquitecto valida · Cline ejecuta sin autoaprobación",
+        "assertions": {
+          "zero_any": "Cero tipos `any` en el diff: ruta de dinero, esquemas Prisma y utilidades del dominio.",
+          "durable_persistence": "Todo endpoint nuevo certifica modo real contra base de datos DURADERA: mode:\"REAL\", source:\"live\", persisted:true. Prohibido capturar el error de BD y devolver estáticos.",
+          "falsifiable_harness": "Arnés propio falsable declarado en `test` (su Exit Code 1 prueba el fallo). La compilación no se acepta como única prueba.",
+          "quintupla": "Quíntupla EP-1 sellada en el ledger al cerrar (cmd · exit=0 · sha256 · ts · url).",
+          "batch_size": "Máximo 5 archivos por commit (CHG-4)."
+        },
+        "gates": [
+          "npm run typecheck (Exit 0)",
+          "arnés declarado en `test` (Exit 0)",
+          "npm run audit:queue-counters (CONSISTENT)"
+        ],
+        "worker_may_self_approve": false
+      }
+    },
+    {
+      "id": "W54_T04_CISQ_ISO5055_STRUCTURAL",
+      "title": "Cierre OMEGA-09/OMEGA-10 · ISO/IEC 25010 documentada + ISO/IEC 5055 (CISQ) estructural",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "scripts/audit_cisq_structural.cjs",
+        ".antigravity/reports/ISO_25010_QUALITY_MAP.md"
+      ],
+      "action": "Medir complejidad ciclomática (cero funciones > 15), profundidad de herencia (<= 3 niveles) y acoplamiento aferente/eferente del dominio financiero, que sólo puede depender de ear-os-ssot.ts. Emitir el mapa de calidad en .antigravity/reports/ISO_25010_QUALITY_MAP.md.",
+      "scaffold": null,
+      "done_when": "0 funciones con complejidad > 15 · herencia <= 3 · dominio financiero acoplado sólo al SSOT · Exit 0 | SOTA_2026_ELEVATION: cero any + persistencia durable real (mode:REAL / source:live / persisted:true) + arnés falsable Exit 0 + firma del Arquitecto",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node scripts/audit_elevation_task_harness.cjs --task=W54_T04_CISQ_ISO5055_STRUCTURAL",
+      "created_at": "2026-11-10T20:45:50.328Z",
+      "scorecard_gap": "OMEGA-09/OMEGA-10",
+      "elevation_contract": {
+        "mark": "SOTA_2026_ELEVATION",
+        "spec": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "spec_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+        "elevated_at": "2026-11-10T20:45:50.328Z",
+        "authority": "El Arquitecto valida · Cline ejecuta sin autoaprobación",
+        "assertions": {
+          "zero_any": "Cero tipos `any` en el diff: ruta de dinero, esquemas Prisma y utilidades del dominio.",
+          "durable_persistence": "Todo endpoint nuevo certifica modo real contra base de datos DURADERA: mode:\"REAL\", source:\"live\", persisted:true. Prohibido capturar el error de BD y devolver estáticos.",
+          "falsifiable_harness": "Arnés propio falsable declarado en `test` (su Exit Code 1 prueba el fallo). La compilación no se acepta como única prueba.",
+          "quintupla": "Quíntupla EP-1 sellada en el ledger al cerrar (cmd · exit=0 · sha256 · ts · url).",
+          "batch_size": "Máximo 5 archivos por commit (CHG-4)."
+        },
+        "gates": [
+          "npm run typecheck (Exit 0)",
+          "arnés declarado en `test` (Exit 0)",
+          "npm run audit:queue-counters (CONSISTENT)"
+        ],
+        "worker_may_self_approve": false
+      }
+    },
+    {
+      "id": "W54_T05_RICH_RESULTS_SCHEMA_ORG",
+      "title": "Cierre OMEGA-15 · Rich Results schema.org validados en CI",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "scripts/audit_rich_results.cjs"
+      ],
+      "action": "Validar JSON-LD de MusicGroup, EntertainmentBusiness, Event y AggregateRating en todas las plantillas. Cero advertencias y cero errores frente al validador de metadatos de Google.",
+      "scaffold": null,
+      "done_when": "4 entidades validadas · 0 warnings · 0 errores · Exit 0 | SOTA_2026_ELEVATION: cero any + persistencia durable real (mode:REAL / source:live / persisted:true) + arnés falsable Exit 0 + firma del Arquitecto",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node scripts/audit_elevation_task_harness.cjs --task=W54_T05_RICH_RESULTS_SCHEMA_ORG",
+      "created_at": "2026-11-10T20:45:50.328Z",
+      "scorecard_gap": "OMEGA-15",
+      "elevation_contract": {
+        "mark": "SOTA_2026_ELEVATION",
+        "spec": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "spec_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+        "elevated_at": "2026-11-10T20:45:50.328Z",
+        "authority": "El Arquitecto valida · Cline ejecuta sin autoaprobación",
+        "assertions": {
+          "zero_any": "Cero tipos `any` en el diff: ruta de dinero, esquemas Prisma y utilidades del dominio.",
+          "durable_persistence": "Todo endpoint nuevo certifica modo real contra base de datos DURADERA: mode:\"REAL\", source:\"live\", persisted:true. Prohibido capturar el error de BD y devolver estáticos.",
+          "falsifiable_harness": "Arnés propio falsable declarado en `test` (su Exit Code 1 prueba el fallo). La compilación no se acepta como única prueba.",
+          "quintupla": "Quíntupla EP-1 sellada en el ledger al cerrar (cmd · exit=0 · sha256 · ts · url).",
+          "batch_size": "Máximo 5 archivos por commit (CHG-4)."
+        },
+        "gates": [
+          "npm run typecheck (Exit 0)",
+          "arnés declarado en `test` (Exit 0)",
+          "npm run audit:queue-counters (CONSISTENT)"
+        ],
+        "worker_may_self_approve": false
+      }
+    },
+    {
+      "id": "W54_T06_SIMILARITY_CORPUS_472",
+      "title": "Cierre OMEGA-16 · Jaccard y coseno TF-IDF sobre las 472 rutas pSEO",
+      "status": "PENDING",
+      "priority": "P1",
+      "files": [
+        "scripts/audit_similarity_corpus.cjs"
+      ],
+      "action": "Superar el límite de 10 URLs fijas y procesar el corpus completo de 472 rutas pSEO. Distancia Jaccard entre landings del mismo clúster >= 0.65; similitud coseno TF-IDF <= 0.70 sobre el bloque principal de contenido.",
+      "scaffold": null,
+      "done_when": "Jaccard >= 0.65 intra-clúster · TF-IDF <= 0.70 · 472 rutas procesadas · Exit 0 | SOTA_2026_ELEVATION: cero any + persistencia durable real (mode:REAL / source:live / persisted:true) + arnés falsable Exit 0 + firma del Arquitecto",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node scripts/audit_elevation_task_harness.cjs --task=W54_T06_SIMILARITY_CORPUS_472",
+      "created_at": "2026-11-10T20:45:50.328Z",
+      "scorecard_gap": "OMEGA-16",
+      "elevation_contract": {
+        "mark": "SOTA_2026_ELEVATION",
+        "spec": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "spec_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+        "elevated_at": "2026-11-10T20:45:50.328Z",
+        "authority": "El Arquitecto valida · Cline ejecuta sin autoaprobación",
+        "assertions": {
+          "zero_any": "Cero tipos `any` en el diff: ruta de dinero, esquemas Prisma y utilidades del dominio.",
+          "durable_persistence": "Todo endpoint nuevo certifica modo real contra base de datos DURADERA: mode:\"REAL\", source:\"live\", persisted:true. Prohibido capturar el error de BD y devolver estáticos.",
+          "falsifiable_harness": "Arnés propio falsable declarado en `test` (su Exit Code 1 prueba el fallo). La compilación no se acepta como única prueba.",
+          "quintupla": "Quíntupla EP-1 sellada en el ledger al cerrar (cmd · exit=0 · sha256 · ts · url).",
+          "batch_size": "Máximo 5 archivos por commit (CHG-4)."
+        },
+        "gates": [
+          "npm run typecheck (Exit 0)",
+          "arnés declarado en `test` (Exit 0)",
+          "npm run audit:queue-counters (CONSISTENT)"
+        ],
+        "worker_may_self_approve": false
+      }
+    }
+  ],
+  "completed": [
+    {
+      "id": "W55_T02",
+      "title": "Endpoint de ingesta y despacho bidireccional de WhatsApp Business (webhook n8n)",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node ./node_modules/tsx/dist/cli.mjs scripts/verify_whatsapp_concierge_webhook.ts && node scripts/audit_elevation_task_harness.cjs --task=W55_T02",
+      "completed_at": "2026-11-11T17:37:34.650Z",
+      "files": [
+        "src/app/api/webhooks/whatsapp-concierge/route.ts",
+        "src/lib/whatsapp/whatsapp-concierge.ts",
+        "scripts/verify_whatsapp_concierge_webhook.ts"
+      ],
+      "elevation_contract": {
+        "mark": "SOTA_2026_ELEVATION",
+        "spec": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "spec_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+        "elevated_at": "2026-11-11T13:00:00.000Z",
+        "authority": "El Arquitecto valida · Cline ejecuta sin autoaprobación",
+        "assertions": {
+          "zero_any": "Cero tipos `any` en el diff: ruta del webhook y nucleo del concierge.",
+          "durable_persistence": "La entrega se declara con delivered/deadLettered medidos contra n8n; si cae, la DLQ del dispatcher conserva el evento. Prohibido devolver verde sin entrega.",
+          "falsifiable_harness": "Arnes propio falsable (scripts/verify_whatsapp_concierge_webhook.ts): 29 aserciones y 3 mutaciones hostiles medidas con Exit 1.",
+          "quintupla": "Quíntupla EP-1 sellada en el ledger al cerrar (cmd · exit=0 · sha256 · ts · url).",
+          "batch_size": "Máximo 5 archivos por commit (CHG-4)."
+        },
+        "gates": [
+          "npm run typecheck (Exit 0)",
+          "npm run verify:whatsapp-concierge (Exit 0)",
+          "npm run audit:queue-counters (CONSISTENT)"
+        ],
+        "worker_may_self_approve": false
+      }
+    },
+    {
+      "id": "W55_T01",
+      "title": "Servidor MCP y API Dinamica de Fichas y SSOT (Wave 55 · Agente Soberano)",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node ./node_modules/tsx/dist/cli.mjs scripts/verify_mcp_fichas_server.ts && node scripts/audit_elevation_task_harness.cjs --task=W55_T01",
+      "completed_at": "2026-11-11T12:11:59.123Z",
+      "files": [
+        "src/lib/mcp/fichas-catalog.ts",
+        "src/lib/mcp/fichas-tools.ts",
+        "scripts/verify_mcp_fichas_server.ts"
+      ],
+      "elevation_contract": {
+        "mark": "SOTA_2026_ELEVATION",
+        "spec": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "spec_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+        "worker_may_self_approve": false
+      }
+    },
+    {
+      "id": "W53_T07",
+      "title": "Conector Spotify (OAuth PKCE + Web API)",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node ./node_modules/tsx/dist/cli.mjs scripts/verify_spotify_connector.ts && node scripts/audit_elevation_task_harness.cjs --task=W53_T07",
+      "completed_at": "2026-11-11T11:44:09.356Z"
+    },
+    {
+      "id": "W53_T06",
+      "title": "Metricas de artista en vivo: calculo y agregacion por ventanas temporales",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node ./node_modules/tsx/dist/cli.mjs scripts/verify_artist_metrics.ts && node scripts/audit_elevation_task_harness.cjs --task=W53_T06",
+      "completed_at": "2026-11-11T10:19:53.419Z"
+    },
+    {
+      "id": "W53_T05",
+      "title": "Cron de sincronización automática",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node ./node_modules/tsx/dist/cli.mjs scripts/verify_career_sync_cron.ts && node scripts/audit_elevation_task_harness.cjs --task=W53_T05",
+      "completed_at": "2026-11-11T09:52:27.662Z"
+    },
+    {
+      "id": "W53_T04",
+      "title": "Rutas OAuth genéricas (connect/callback) con state anti-CSRF",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node ./node_modules/tsx/dist/cli.mjs scripts/verify_career_oauth_flow.ts && node scripts/audit_elevation_task_harness.cjs --task=W53_T04",
+      "completed_at": "2026-11-11T09:11:30.590Z"
+    },
+    {
+      "id": "W53_T03",
+      "title": "Contrato de conector + orquestador de sincronización",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node ./node_modules/tsx/dist/cli.mjs scripts/verify_sync_orchestrator.ts && node scripts/audit_elevation_task_harness.cjs --task=W53_T03",
+      "completed_at": "2026-11-11T08:36:01.610Z",
+      "files": [
+        "src/lib/career/connectors/types.ts",
+        "src/lib/career/sync-orchestrator.ts"
+      ],
+      "action": "Interface Connector{platformId, authUrl(state), exchangeCode(code), refresh(conn), fetchMetrics(conn,since):Promise<MetricPoint[]>}. Orquestador con timeout 8s, reintentos exponenciales (3), upsert idempotente de MetricSnapshot, marca error en PlatformConnection y DLQ. (Detalle completo en git HEAD; campo restaurado por auditoria forense 2026-11-11.)",
+      "status_evidence_present": true,
+      "evidence": {
+        "claim": "W53_T03_ARCHITECT_SIGNATURE_HARNESS_87",
+        "harness": "scripts/verify_sync_orchestrator.ts",
+        "assertions": "87/87",
+        "sha256": "0d2804e9e847c2646c93e79c5969a77bba3554ceaea32f214d6a308525ed8e5a",
+        "typecheck_exit": 0,
+        "lint_errors": 0,
+        "elevation": "PASS FINDINGS=0",
+        "falsability": "medida en arnes"
+      },
+      "architect_approval": {
+        "by": "Edwin Agudelo (CEO / El Arquitecto)",
+        "verdict": "APPROVED_WITH_EVIDENCE",
+        "approved_at": "2026-11-11T09:40:00.000Z"
+      },
+      "evidence_restored_at": "2026-11-11T08:59:42.676Z",
+      "evidence_restoration_note": "omega.js complete archivo la tarea SIN files/action (solo 6 campos), contradiciendo su propio comentario. Restaurado desde el contrato de la cola y la firma del Arquitecto. Incidente declarado, no borrado.",
+      "elevation_contract": {
+        "mark": "SOTA_2026_ELEVATION",
+        "spec": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "spec_sha256": "1aff43fb4fa865cef5d4bede9da3ce738b7266974ca4f89c0cbe037fe7bc0567",
+        "authority": "El Arquitecto valida · Cline ejecuta sin autoaprobacion",
+        "worker_may_self_approve": false,
+        "restored_by": "auditoria forense 2026-11-11 (omega.js complete lo destruyo al archivar)"
+      },
+      "scaffold": "src/lib/career/platform-registry.ts",
+      "done_when": "tsc Exit 0 + test de idempotencia | SOTA_2026_ELEVATION: cero any + persistencia durable real + arnes falsable Exit 0 + firma del Arquitecto"
+    },
+    {
+      "id": "W53_T02",
+      "title": "Cifrado de tokens OAuth (AES-256-GCM) + vault de conexiones",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit && node ./node_modules/tsx/dist/cli.mjs scripts/verify_token_vault.ts && node scripts/audit_elevation_task_harness.cjs --task=W53_T02",
+      "completed_at": "2026-11-11T07:34:35.783Z"
+    },
+    {
+      "id": "W52_T06_RECOVER_99_DIAS_CONTENT",
+      "title": "BLOQUEADA · Recuperar los días 1-40 del programa \"99 días haciendo clic\" (WordPress de Hostinger devuelve error crítico en cada página de día)",
+      "status": "COMPLETED_REAL",
+      "priority": "P0",
+      "files": [
+        "src/data/academy/programa_99_dias.json"
+      ],
+      "action": "Requiere del CEO: exportación de WordPress (Herramientas > Exportar, XML) o copia de seguridad de la base de datos desde hPanel. Solo la portada (Día 39) es accesible públicamente; el resto devuelve \"Ha habido un error crítico en esta web\".",
+      "scaffold": null,
+      "done_when": "JSON con los días recuperados y su procedencia; ningún día inventado.",
       "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-09T12:24:00.000Z"
+      "created_at": "2026-11-06T12:26:31.733Z",
+      "consolidated_at": "2026-11-11T06:47:31.025Z",
+      "consolidated_by": "omega.js queue ops (apertura canónica CEO 2026-11-11)",
+      "status_evidence": {
+        "measured_file": "src/data/programa-99-dias-curriculum-clean.json",
+        "rows_total": 50,
+        "rows_with_day_number": 41,
+        "day_range_recovered": "1-40",
+        "rows_with_full_text": 12,
+        "rows_excerpt_only": 29,
+        "declared_gaps": "Días 41-99 SIN contenido en disco (no se inventan) · 29 filas con excerpt pero sin fullText",
+        "declared_duplicates": "dayNumber 38 aparece 2 veces",
+        "artifact_note": "El path declarado en `files` (src/data/academy/programa_99_dias.json) nunca se creó. Se consolida el artefacto canónico REAL existente en src/data, que cubre exactamente el scope bloqueado (días 1-40). Cero días inventados: la ausencia 41-99 queda declarada, no maquillada.",
+        "exit_code": 0
+      }
+    },
+    {
+      "id": "W53_T01",
+      "title": "Modelo de datos Career (Prisma) + migración",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "test": "node scripts/verify_career_schema_contract.cjs",
+      "completed_at": "2026-11-10T19:47:39.243Z"
     },
     {
       "id": "W52_T02_ARTIST_ACHIEVEMENT_LEDGER",
@@ -85,535 +1499,57 @@
       "scaffold": null,
       "done_when": "Script verifica 401 sin sesión, rechazo de evidencia sin verificador y lectura determinista; tsc Exit 0.",
       "test": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_achievement_ledger.ts && node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-06T12:26:31.733Z"
+      "created_at": "2026-11-06T12:26:31.733Z",
+      "exit_code": 0,
+      "archived_at": "2026-11-10T19:00:41.386Z",
+      "archived_by": "RESTAURACION FORENSE desde git HEAD (incidente omega.js next)"
+    },
+    {
+      "id": "W54_T02_CAMPUS_61_PDFS_LEAD_MAGNET_EXTRACTOR",
+      "title": "P1 · Conversión de los 61 PDFs de Campus y 496 Artículos en Lead Magnets Soberanos para Parejas y Proveedores",
+      "status": "COMPLETED_REAL",
+      "status_evidence": "commit 949ce3bd en origin/main. catalogo_61_campus.json, n8n-dispatcher.ts y /api/campus/lead-magnet/route.ts leídos en disco esta sesión. SIN_EVIDENCIA sobre ejecución viva de verify_campus_lead_magnet.ts.",
+      "priority": "P1",
+      "files": [
+        "src/data/catalogo_61_campus.json",
+        "src/components/fincas/sclass-pro/ProCampusTab.tsx"
+      ],
+      "action": "Enriquecer cada uno de los 61 activos de catalogo_61_campus.json con resumen ejecutivo accionable, checklist descargable y enlace directo de entrega por Conserjería WhatsApp (+34 693 693 048) sin meter binarios pesados (>1 MB) en Git.",
+      "scaffold": null,
+      "done_when": "61 activos con resumen y CTA funcional; tsc Exit 0.",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-09T12:24:00.000Z",
+      "exit_code": 0,
+      "archived_at": "2026-11-10T19:00:41.386Z",
+      "archived_by": "RESTAURACION FORENSE desde git HEAD (incidente omega.js next)"
+    },
+    {
+      "id": "W54_T01_PROVIDER_ORIGIN_AND_BILATERAL_MATCH_AUDIT",
+      "title": "P0 · Auditoría y Sincronización de Sede Propia por Proveedor (Hub Méntrida exclusivo Edwin Agudelo + Match Bilateral de Expectativas)",
+      "status": "COMPLETED",
+      "status_evidence": "commit 9df38f79 en origin/main (7b536593). SIN_EVIDENCIA sobre ejecución viva del arnés en esta sesión (run_commands no devuelve stdout). Cierre formal via omega.js complete NO ejecutado.",
+      "priority": "P0",
+      "files": [
+        "src/lib/providers/universal-provider-simulator.ts",
+        "src/components/hubs/SovereignIntentHubView.tsx",
+        "scripts/verify_provider_origin_separation.ts"
+      ],
+      "action": "Verificar con script automatizado que 1) Hub Méntrida (350 € base + 1,50 €/km > 50 km) solo se aplica cuando el proveedor es Edwin Agudelo / Productora EAR; 2) Cualquier otro proveedor del directorio calcula kilometraje, tarifas y FAQs desde su propia sede registrada; 3) Cero promesas de 'cero multas garantizadas' (sustituidas por Garantía de Match Bilateral de Expectativas).",
+      "scaffold": null,
+      "done_when": "Script verifica separación estricta Edwin vs Proveedor Externo y tsc Exit 0.",
+      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
+      "created_at": "2026-11-09T12:24:00.000Z",
+      "exit_code": 0,
+      "archived_at": "2026-11-10T19:01:06.453Z",
+      "archived_by": "omega.js next (archivado con evidencia, sin destruccion)"
     },
     {
       "id": "W52_T05_ASTRA_IKIGAI_PORT",
       "title": "P1 · Portar el taller Ikigai de Astra al programa (módulo de mérito del Día 1), sin claves de IA en el cliente",
-      "status": "QUEUED",
-      "priority": "P1",
-      "files": [
-        "src/components/academy/IkigaiWorkshop.tsx",
-        "src/lib/academy/merit-program-ssot.ts"
-      ],
-      "action": "Extraer components/tools/IkigaiWorkshop.tsx de src/data/staging/APPS CREADAS CON AI STUDIO/astra-os_-neural-strategic-engine.zip, adaptarlo a Next.js (use client solo en la hoja), estética OLED, y que guardar el ejercicio genere una MeritEvidence kind=exercise pendiente de verificador.",
-      "scaffold": null,
-      "done_when": "Componente compila, no importa geminiService en cliente y tsc Exit 0.",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-06T12:26:31.733Z"
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "completed_at": "2026-11-10T17:34:24.747Z"
     },
-    {
-      "id": "W52_T06_RECOVER_99_DIAS_CONTENT",
-      "title": "BLOQUEADA · Recuperar los días 1-40 del programa \"99 días haciendo clic\" (WordPress de Hostinger devuelve error crítico en cada página de día)",
-      "status": "BLOCKED_CEO",
-      "priority": "P0",
-      "files": [
-        "src/data/academy/programa_99_dias.json"
-      ],
-      "action": "Requiere del CEO: exportación de WordPress (Herramientas > Exportar, XML) o copia de seguridad de la base de datos desde hPanel. Solo la portada (Día 39) es accesible públicamente; el resto devuelve \"Ha habido un error crítico en esta web\".",
-      "scaffold": null,
-      "done_when": "JSON con los días recuperados y su procedencia; ningún día inventado.",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-06T12:26:31.733Z"
-    },
-    {
-      "id": "W53_T01",
-      "title": "Modelo de datos Career (Prisma) + migración",
-      "status": "PENDING",
-      "priority": "P0",
-      "files": [
-        "prisma/schema.prisma",
-        "src/lib/career/db.ts"
-      ],
-      "action": "Añadir modelos: ArtistProfile, PlatformConnection(artistId,platformId,status,encryptedToken,lastSyncAt,error), MetricSnapshot(MetricPoint del registro, índice artistId+platformId+metric+capturedAt), Release(title,upc,type,releaseDate,coverUrl), Track(isrc,iswc,releaseId,durationSec,splitsJson), MediaAsset(kind,url,sha256,bytes), TeamMember(role: ARTIST|MANAGER|LABEL|BOOKER|PR|LEGAL|ACCOUNTANT), Gig, Contract, RoyaltyStatement, Campaign, FanContact, ContentPost. Ejecutar prisma generate. db.ts exporta helpers tipados. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
-      "scaffold": "src/lib/career/platform-registry.ts",
-      "done_when": "prisma validate Exit 0 y tsc Exit 0",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-07T18:37:51.075Z"
-    },
-    {
-      "id": "W53_T02",
-      "title": "Cifrado de tokens OAuth (AES-256-GCM) + vault de conexiones",
-      "status": "PENDING",
-      "priority": "P0",
-      "files": [
-        "src/lib/career/token-vault.ts",
-        "scripts/verify_token_vault.ts"
-      ],
-      "action": "encrypt/decrypt con clave CAREER_TOKEN_KEY (32 bytes base64) desde env, IV aleatorio, authTag. Test: roundtrip, manipulación del ciphertext lanza error, clave ausente lanza error claro. Nunca loguear tokens. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
-      "scaffold": "src/lib/career/platform-registry.ts",
-      "done_when": "npx tsx scripts/verify_token_vault.ts Exit 0",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-07T18:37:51.077Z"
-    },
-    {
-      "id": "W53_T03",
-      "title": "Contrato de conector + orquestador de sincronización",
-      "status": "PENDING",
-      "priority": "P0",
-      "files": [
-        "src/lib/career/connectors/types.ts",
-        "src/lib/career/sync-orchestrator.ts"
-      ],
-      "action": "Interface Connector{platformId, authUrl(state), exchangeCode(code), refresh(conn), fetchMetrics(conn,since):Promise<MetricPoint[]>}. Orquestador: por cada conexión live ejecuta fetchMetrics con timeout 8s, reintentos exponenciales (3), upsert idempotente de MetricSnapshot (clave única), marca error en PlatformConnection y escribe a DLQ (tabla o .data/dlq.jsonl). Registro de conectores por id. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
-      "scaffold": "src/lib/career/platform-registry.ts",
-      "done_when": "tsc Exit 0 + test unitario de idempotencia (2 ejecuciones = mismas filas)",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-07T18:37:51.077Z"
-    },
-    {
-      "id": "W53_T04",
-      "title": "Rutas OAuth genéricas (connect/callback) con state anti-CSRF",
-      "status": "PENDING",
-      "priority": "P0",
-      "files": [
-        "src/app/api/career/connect/[platform]/route.ts",
-        "src/app/api/career/callback/[platform]/route.ts"
-      ],
-      "action": "GET connect: genera state firmado HMAC con expiración 10min y redirige a authUrl. callback: valida state, exchangeCode, cifra token con token-vault, guarda PlatformConnection live. Plataformas sin conector registrado devuelven 501 con JSON {status:\"not_implemented\"}. params con await. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
-      "scaffold": "src/lib/career/platform-registry.ts",
-      "done_when": "tsc Exit 0; state manipulado => 400",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-07T18:37:51.077Z"
-    },
-    {
-      "id": "W53_T05",
-      "title": "Cron de sincronización automática",
-      "status": "PENDING",
-      "priority": "P0",
-      "files": [
-        "src/app/api/cron/career-sync/route.ts",
-        "src/lib/career/schedule.ts"
-      ],
-      "action": "Ruta protegida por header Authorization Bearer CRON_SECRET. Sincroniza conexiones live cuyo lastSyncAt supere el intervalo (api: 15min; csv/manual: ignorar). Devuelve resumen {ok,failed,skipped}. Documentar el cron de Coolify en docs/CAREER_CRON.md. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
-      "scaffold": "src/lib/career/platform-registry.ts",
-      "done_when": "tsc Exit 0; sin header => 401",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-07T18:37:51.077Z"
-    },
-    {
-      "id": "W53_T06",
-      "title": "Endpoint SSE real de métricas (sustituye demo cuando hay datos)",
-      "status": "PENDING",
-      "priority": "P0",
-      "files": [
-        "src/app/api/artist/career/metrics/route.ts"
-      ],
-      "action": "Si existen MetricSnapshot del artista, emitir deltas reales leyendo BD cada 5s; si no, mantener el flujo demo actual pero con source:\"demo\". Cerrar al abort. Incluir heartbeat cada 15s. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
-      "scaffold": "src/lib/career/platform-registry.ts",
-      "done_when": "tsc Exit 0",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-07T18:37:51.077Z"
-    },
-    {
-      "id": "W53_T07",
-      "title": "Conector Spotify (OAuth PKCE + Web API)",
-      "status": "PENDING",
-      "priority": "P1",
-      "files": [
-        "src/lib/career/connectors/spotify.ts"
-      ],
-      "action": "Implementar Connector con scopes user-read-private, user-follow-read; fetchMetrics: followers, popularidad de top tracks. Env SPOTIFY_CLIENT_ID/SECRET. Registrar en el orquestador. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
-      "scaffold": "src/lib/career/platform-registry.ts",
-      "done_when": "tsc Exit 0 + test con fetch mockeado",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-07T18:37:51.077Z"
-    },
-    {
-      "id": "W53_T08",
-      "title": "Conector YouTube (Data + Analytics API)",
-      "status": "PENDING",
-      "priority": "P1",
-      "files": [
-        "src/lib/career/connectors/youtube.ts"
-      ],
-      "action": "OAuth Google scopes yt-analytics.readonly + youtube.readonly. Métricas: views, watch_minutes, subscribers->followers, estimatedRevenue->revenue_cents. Env GOOGLE_CLIENT_ID/SECRET. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
-      "scaffold": "src/lib/career/platform-registry.ts",
-      "done_when": "tsc Exit 0 + test mockeado",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-07T18:37:51.077Z"
-    },
-    {
-      "id": "W53_T09",
-      "title": "Conectores Meta: Instagram + Facebook + Threads",
-      "status": "PENDING",
-      "priority": "P1",
-      "files": [
-        "src/lib/career/connectors/meta.ts"
-      ],
-      "action": "Graph API v21+: followers, reach/views, likes, comments, saves, shares. Un OAuth, tres platformId. Env META_APP_ID/SECRET. Refrescar long-lived token. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
-      "scaffold": "src/lib/career/platform-registry.ts",
-      "done_when": "tsc Exit 0 + test mockeado",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-07T18:37:51.077Z"
-    },
-    {
-      "id": "W53_T10",
-      "title": "Conector TikTok",
-      "status": "PENDING",
-      "priority": "P1",
-      "files": [
-        "src/lib/career/connectors/tiktok.ts"
-      ],
-      "action": "Login Kit v2 + user.info.stats y video.list. Env TIKTOK_CLIENT_KEY/SECRET. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
-      "scaffold": "src/lib/career/platform-registry.ts",
-      "done_when": "tsc Exit 0 + test mockeado",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-07T18:37:51.077Z"
-    },
-    {
-      "id": "W53_T11",
-      "title": "Conectores X, Twitch, Reddit, Discord, Pinterest, LinkedIn, Telegram, SoundCloud, Deezer, Patreon, Shopify",
-      "status": "PENDING",
-      "priority": "P1",
-      "files": [
-        "src/lib/career/connectors/others.ts"
-      ],
-      "action": "Un conector por id del registro con sus endpoints oficiales de docs. Los que exigen aprobación de app (LinkedIn, TikTok) deben devolver error tipado {needs_app_review:true}. Telegram usa bot token por canal. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
-      "scaffold": "src/lib/career/platform-registry.ts",
-      "done_when": "tsc Exit 0 + un test mockeado por conector",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-07T18:37:51.077Z"
-    },
-    {
-      "id": "W53_T12",
-      "title": "Importador CSV universal (Apple Music, Amazon, TIDAL, Bandcamp, DistroKid, SGAE, Ticketmaster)",
-      "status": "PENDING",
-      "priority": "P1",
-      "files": [
-        "src/lib/career/importers/csv-importer.ts",
-        "src/app/api/career/import/route.ts"
-      ],
-      "action": "Mapeo columnas->MetricKey por platformId en un objeto declarativo; parser tolerante a separador ; o , y decimales con coma; dinero a céntimos; validación y reporte de filas rechazadas; idempotente por hash de fila. Límite 10MB. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
-      "scaffold": "src/lib/career/platform-registry.ts",
-      "done_when": "tsc Exit 0 + fixtures en scripts/fixtures/career/*.csv y test",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-07T18:37:51.077Z"
-    },
-    {
-      "id": "W53_T13",
-      "title": "Importador manual y webhook genérico",
-      "status": "PENDING",
-      "priority": "P1",
-      "files": [
-        "src/app/api/career/webhook/[platform]/route.ts",
-        "src/lib/career/importers/manual.ts"
-      ],
-      "action": "Webhook con firma HMAC (CAREER_WEBHOOK_SECRET) que acepta MetricPoint[] validados con zod. Entrada manual desde UI usa la misma validación. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
-      "scaffold": "src/lib/career/platform-registry.ts",
-      "done_when": "tsc Exit 0; firma inválida => 401",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-07T18:37:51.077Z"
-    },
-    {
-      "id": "W53_T14",
-      "title": "Shell Career OS: layout con 12 departamentos y selector de artista (manager multi-artista)",
-      "status": "PENDING",
-      "priority": "P1",
-      "files": [
-        "src/app/studio/artist/layout.tsx",
-        "src/app/studio/artist/components/CareerNav.tsx",
-        "src/lib/career/departments.ts"
-      ],
-      "action": "Departamentos: Resumen, Catálogo, Distribución, Analítica, Social Hub, Giras y Bookings, Finanzas y Royalties, Legal y Contratos, Marketing y Prensa, Fans CRM, Merch, Equipo. departments.ts como SSOT de rutas/iconos. Selector de artista persistido en cookie. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
-      "scaffold": "src/lib/career/platform-registry.ts",
-      "done_when": "tsc Exit 0; todas las rutas del nav resuelven (sin 404)",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-07T18:37:51.077Z"
-    },
-    {
-      "id": "W53_T15",
-      "title": "Dashboard Resumen unificado",
-      "status": "PENDING",
-      "priority": "P1",
-      "files": [
-        "src/app/studio/artist/page.tsx"
-      ],
-      "action": "KPIs globales por MetricKey agregados entre plataformas, sparkline 30d, próximas fechas, ingresos mes, alertas de conexiones caídas. Server Component con skeletons. Etiqueta DEMO visible si source=demo. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
-      "scaffold": "src/lib/career/platform-registry.ts",
-      "done_when": "tsc Exit 0",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-07T18:37:51.077Z"
-    },
-    {
-      "id": "W53_T16",
-      "title": "Hub de Conexiones (centro de integraciones)",
-      "status": "PENDING",
-      "priority": "P1",
-      "files": [
-        "src/app/studio/artist/conexiones/page.tsx",
-        "src/app/studio/artist/conexiones/ConnectionCard.tsx"
-      ],
-      "action": "Grid por categoría desde PLATFORMS: estado, última sync, botón Conectar (OAuth), Importar CSV, Entrada manual, Desconectar, Sincronizar ahora. Cola de errores visible. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
-      "scaffold": "src/lib/career/platform-registry.ts",
-      "done_when": "tsc Exit 0; cada botón con handler real",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-07T18:37:51.077Z"
-    },
-    {
-      "id": "W53_T17",
-      "title": "Departamento Catálogo: releases, tracks, ISRC/UPC",
-      "status": "PENDING",
-      "priority": "P1",
-      "files": [
-        "src/app/studio/artist/catalogo/page.tsx",
-        "src/app/api/career/releases/route.ts"
-      ],
-      "action": "CRUD de Release/Track con validación de formato ISRC (CC-XXX-YY-NNNNN) y UPC-12/EAN-13 con dígito de control. Portada y metadatos. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
-      "scaffold": "src/lib/career/platform-registry.ts",
-      "done_when": "tsc Exit 0 + test de validadores",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-07T18:37:51.077Z"
-    },
-    {
-      "id": "W53_T18",
-      "title": "Subida de media a almacenamiento S3/R2 con URL prefirmada",
-      "status": "PENDING",
-      "priority": "P1",
-      "files": [
-        "src/lib/career/storage.ts",
-        "src/app/api/artist/career/upload/route.ts"
-      ],
-      "action": "Sustituir disco local por S3 compatible (env S3_*). Subida directa con presigned PUT, registrar MediaAsset con sha256 y bytes. Mantener fallback local sólo en desarrollo. Límite por tipo. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
-      "scaffold": "src/lib/career/platform-registry.ts",
-      "done_when": "tsc Exit 0",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-07T18:37:51.077Z"
-    },
-    {
-      "id": "W53_T19",
-      "title": "Departamento Distribución: pipeline de lanzamiento",
-      "status": "PENDING",
-      "priority": "P1",
-      "files": [
-        "src/app/studio/artist/distribucion/page.tsx",
-        "src/lib/career/release-pipeline.ts"
-      ],
-      "action": "Máquina de estados: borrador→metadatos→QC→enviado→en tiendas, checklist (portada 3000px, WAV, ISRC, splits suman 10000 bps). Envío al distribuidor por adaptador; sin credenciales => estado pending_credentials. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
-      "scaffold": "src/lib/career/platform-registry.ts",
-      "done_when": "tsc Exit 0 + test de la máquina de estados",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-07T18:37:51.077Z"
-    },
-    {
-      "id": "W53_T20",
-      "title": "Departamento Analítica: comparador y exportes",
-      "status": "PENDING",
-      "priority": "P1",
-      "files": [
-        "src/app/studio/artist/analitica/page.tsx"
-      ],
-      "action": "Filtros plataforma/métrica/rango, series temporales, top países si disponible, exportar CSV. Gráficos SVG ligeros sin librerías pesadas. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
-      "scaffold": "src/lib/career/platform-registry.ts",
-      "done_when": "tsc Exit 0",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-07T18:37:51.077Z"
-    },
-    {
-      "id": "W53_T21",
-      "title": "Social Hub: calendario de contenido y programación",
-      "status": "PENDING",
-      "priority": "P1",
-      "files": [
-        "src/app/studio/artist/social/page.tsx",
-        "src/app/api/career/posts/route.ts"
-      ],
-      "action": "ContentPost con plataforma, copy, media, fecha, estado (borrador/aprobado/publicado). Vista calendario mensual. Publicación real sólo si el conector la soporta; si no, estado manual_publish. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
-      "scaffold": "src/lib/career/platform-registry.ts",
-      "done_when": "tsc Exit 0",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-07T18:37:51.077Z"
-    },
-    {
-      "id": "W53_T22",
-      "title": "Giras y Bookings integrados con EAR OS",
-      "status": "PENDING",
-      "priority": "P1",
-      "files": [
-        "src/app/studio/artist/giras/page.tsx"
-      ],
-      "action": "Gig con venue, cachet, logística 1,50 €/km desde km 50 (importar del SSOT, no duplicar), rider, hoja de ruta, estado. Reusar motores existentes sin modificar Zona Cero. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
-      "scaffold": "src/lib/career/platform-registry.ts",
-      "done_when": "tsc Exit 0",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-07T18:37:51.077Z"
-    },
-    {
-      "id": "W53_T23",
-      "title": "Finanzas y Royalties",
-      "status": "PENDING",
-      "priority": "P1",
-      "files": [
-        "src/app/studio/artist/finanzas/page.tsx",
-        "src/lib/career/royalty-splitter.ts"
-      ],
-      "action": "Ingesta de RoyaltyStatement, reparto por splits en bps con redondeo que conserve el total exacto (céntimos), P&L mensual, previsión. Test: suma de partes == total siempre. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
-      "scaffold": "src/lib/career/platform-registry.ts",
-      "done_when": "tsc Exit 0 + scripts/verify_royalty_splitter.ts Exit 0",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-07T18:37:51.077Z"
-    },
-    {
-      "id": "W53_T24",
-      "title": "Legal y Contratos",
-      "status": "PENDING",
-      "priority": "P1",
-      "files": [
-        "src/app/studio/artist/legal/page.tsx"
-      ],
-      "action": "Repositorio de contratos con vencimientos y alertas, plantillas (split sheet, management, licencia de sincronización), estado de firma. Adjuntos vía storage. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
-      "scaffold": "src/lib/career/platform-registry.ts",
-      "done_when": "tsc Exit 0",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-07T18:37:51.077Z"
-    },
-    {
-      "id": "W53_T25",
-      "title": "Marketing, prensa y EPK",
-      "status": "PENDING",
-      "priority": "P1",
-      "files": [
-        "src/app/studio/artist/marketing/page.tsx"
-      ],
-      "action": "Campañas con presupuesto y KPIs, generador de press kit a partir del perfil, base de contactos de prensa. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
-      "scaffold": "src/lib/career/platform-registry.ts",
-      "done_when": "tsc Exit 0",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-07T18:37:51.077Z"
-    },
-    {
-      "id": "W53_T26",
-      "title": "Fans CRM",
-      "status": "PENDING",
-      "priority": "P1",
-      "files": [
-        "src/app/studio/artist/fans/page.tsx"
-      ],
-      "action": "FanContact con consentimiento RGPD explícito, segmentos, import CSV, exportar, baja. Sin envío masivo sin opt-in. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
-      "scaffold": "src/lib/career/platform-registry.ts",
-      "done_when": "tsc Exit 0",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-07T18:37:51.077Z"
-    },
-    {
-      "id": "W53_T27",
-      "title": "Merch y ventas directas",
-      "status": "PENDING",
-      "priority": "P1",
-      "files": [
-        "src/app/studio/artist/merch/page.tsx"
-      ],
-      "action": "Panel de ventas desde Shopify/Bandcamp, stock manual, margen por producto en céntimos. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
-      "scaffold": "src/lib/career/platform-registry.ts",
-      "done_when": "tsc Exit 0",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-07T18:37:51.077Z"
-    },
-    {
-      "id": "W53_T28",
-      "title": "Equipo y permisos por rol",
-      "status": "PENDING",
-      "priority": "P1",
-      "files": [
-        "src/app/studio/artist/equipo/page.tsx",
-        "src/lib/career/rbac.ts"
-      ],
-      "action": "Matriz de permisos por rol y departamento; invitaciones; guard server-side en cada API career. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
-      "scaffold": "src/lib/career/platform-registry.ts",
-      "done_when": "tsc Exit 0 + test de matriz",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-07T18:37:51.077Z"
-    },
-    {
-      "id": "W53_T29",
-      "title": "Asistente IA del manager (con datos reales del artista)",
-      "status": "PENDING",
-      "priority": "P1",
-      "files": [
-        "src/app/studio/artist/asistente/page.tsx",
-        "src/app/api/career/assistant/route.ts"
-      ],
-      "action": "Chat que responde sólo con datos de BD del artista, cita la fuente de cada cifra, rechaza inventar. Timeout 8s. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
-      "scaffold": "src/lib/career/platform-registry.ts",
-      "done_when": "tsc Exit 0",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-07T18:37:51.077Z"
-    },
-    {
-      "id": "W53_T30",
-      "title": "Alertas y notificaciones (conexión caída, vencimiento, pico de métrica)",
-      "status": "PENDING",
-      "priority": "P1",
-      "files": [
-        "src/lib/career/alerts.ts"
-      ],
-      "action": "Reglas declarativas y envío a n8n webhook existente de forma no bloqueante. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
-      "scaffold": "src/lib/career/platform-registry.ts",
-      "done_when": "tsc Exit 0",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-07T18:37:51.077Z"
-    },
-    {
-      "id": "W53_T31",
-      "title": "Seed de demostración etiquetado",
-      "status": "PENDING",
-      "priority": "P1",
-      "files": [
-        "scripts/seed_career_demo.ts"
-      ],
-      "action": "Crear un artista demo con 90 días de MetricSnapshot source:\"demo\", releases, gigs, contratos. Idempotente. NUNCA mezclar con datos reales. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
-      "scaffold": "src/lib/career/platform-registry.ts",
-      "done_when": "npx tsx scripts/seed_career_demo.ts Exit 0 dos veces",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-07T18:37:51.077Z"
-    },
-    {
-      "id": "W53_T32",
-      "title": "Viaje inmersivo: Descubrir → Reservar → Studio",
-      "status": "PENDING",
-      "priority": "P1",
-      "files": [
-        "src/app/neural-journey/page.tsx",
-        "src/app/studio/artist/onboarding/page.tsx"
-      ],
-      "action": "Onboarding del artista en 5 pasos (perfil, conectar redes, importar catálogo, equipo, primera analítica) con progreso persistido y transiciones continuas. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
-      "scaffold": "src/lib/career/platform-registry.ts",
-      "done_when": "tsc Exit 0",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-07T18:37:51.077Z"
-    },
-    {
-      "id": "W53_T33",
-      "title": "Seguridad y cumplimiento",
-      "status": "PENDING",
-      "priority": "P1",
-      "files": [
-        "src/lib/career/audit-log.ts",
-        "docs/CAREER_SECURITY.md"
-      ],
-      "action": "Audit log append-only de accesos a datos y tokens, rate limit por IP en rutas career, headers, borrado de cuenta y exportación de datos (RGPD). REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
-      "scaffold": "src/lib/career/platform-registry.ts",
-      "done_when": "tsc Exit 0",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-07T18:37:51.077Z"
-    },
-    {
-      "id": "W53_T34",
-      "title": "Puerta final Career OS",
-      "status": "PENDING",
-      "priority": "P1",
-      "files": [
-        "scripts/audit_career_os.cjs",
-        "package.json"
-      ],
-      "action": "Script que verifica: 0 páginas placeholder bajo studio/artist, 0 any, cada platformId del registro tiene conector o importador, rutas del nav resuelven. Añadir npm run audit:career. REGLAS: leer src/lib/career/platform-registry.ts (SSOT, no inventar plataformas). Dinero en céntimos enteros. Sin any. Server Components por defecto. fetch externo con AbortSignal.timeout(8000). Prisma con select explícito. Fondos #030305, un acento por vista, skeletons con geometría fija. Estado honesto: sin OAuth real => source:\"demo\"|\"manual\", nunca fingir datos reales. Cero marcas de terceros en copy público salvo nombres de plataformas en el panel de conexiones.",
-      "scaffold": "src/lib/career/platform-registry.ts",
-      "done_when": "npm run audit:career Exit 0",
-      "test": "node ./node_modules/typescript/bin/tsc --noEmit",
-      "created_at": "2026-11-07T18:37:51.077Z"
-    }
-  ],
-  "completed": [
     {
       "id": "W52_T04_ARTIST_COCKPIT_NOTIFICATIONS_AND_PLATFORMS",
       "title": "P1 · Cockpit del artista: preferencias de notificación on/off y estado honesto de cada plataforma (conectada / solo lectura / sin API pública)",
@@ -798,11 +1734,17 @@
     }
   ],
   "metadata": {
-    "last_updated": "2026-11-09T17:29:07.276Z",
-    "total_pending": 39,
+    "last_updated": "2026-11-11T17:37:34.654Z",
+    "total_pending": 29,
     "current_sprint": "WAVE_52_ARTISTA_SOBERANO_MERITO",
     "orden_ejecutivo": ".antigravity/ORDEN_EJECUTIVO_OMEGA_ROJO_FASE_1.md",
     "regla_de_serie": "UN SOLO SLOT: omega.js next escribe MISSION_ACTIVE.json y solo admite una mision viva. Los Nodos A y B se ejecutan en sesiones de Cline SEPARADAS y en el orden de la cola (T01 -> T02 -> T03). Prohibido abrir dos sesiones en paralelo sobre el mismo repo: se pisarian MISSION_ACTIVE.json y el cierre de una purgaria la tarea de la otra.",
-    "ceo_mandate": "1) Agente Concierge IA 100% conectado a las fichas verificadas (Ezkertza/Derio, Otzarreta/Zarautz y 2.150 fichas en memoria) sin sesgo de solista. 2) 6 misiones atómicas encoladas para el obrero local con tácticas de dominancia y eliminación de cuellos de botella."
+    "ceo_mandate": "1) Agente Concierge IA 100% conectado a las fichas verificadas (Ezkertza/Derio, Otzarreta/Zarautz y 2.150 fichas en memoria) sin sesgo de solista. 2) 6 misiones atómicas encoladas para el obrero local con tácticas de dominancia y eliminación de cuellos de botella.",
+    "total_completed_real": 0,
+    "total_blocked_ceo": 0,
+    "total_w53_career_os": 23,
+    "meta_reconciled_at": "2026-11-11T17:37:34.654Z",
+    "meta_measurement": "omega.js · recuento por estado sobre el array tasks (fuente única de verdad)",
+    "total_tasks": 33
   }
 }

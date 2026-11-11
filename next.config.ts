@@ -123,6 +123,22 @@ const nextConfig: NextConfig = {
         destination: "https://www.productoraear.com/:path*",
         permanent: true,
       },
+      // ORDEN DIRECTIVA 2026-11-11 · UNIFICACIÓN DE CALCULADORA:
+      // `/presupuesto` es la ruta CANÓNICA del cotizador. `/calculadora` (y su
+      // alias histórico `/cotizador`, al que apuntaba el conmutador de la propia
+      // página) dejan de ser rutas competidoras para no dividir autoridad SEO
+      // ni duplicar el estado del formulario. 301 permanente: el PageRank y las
+      // visitas consolidadas pasan íntegros a la canónica.
+      {
+        source: "/calculadora",
+        destination: "/presupuesto",
+        permanent: true,
+      },
+      {
+        source: "/cotizador",
+        destination: "/presupuesto",
+        permanent: true,
+      },
       // Alias de producción
       {
         source: "/checkout",

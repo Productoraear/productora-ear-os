@@ -36,6 +36,8 @@ import { ProviderNavigableReviews } from '@/components/providers/ProviderNavigab
 import { ProviderFooterClaimBanner } from '@/components/providers/ProviderFooterClaimBanner';
 import sanitizeHtml from 'sanitize-html';
 import { RequestToBookButton } from '@/components/booking/RequestToBookButton';
+import { ProviderFunnelCta } from '@/components/providers/ProviderFunnelCta';
+import type { FichaService } from '@/lib/budget/form-bridge';
 import {
   contactLabelForAccess,
   gatedPhoneNumber,
@@ -756,6 +758,38 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
   const providerId = rawProvider.id || slug;
   const providerIdShort = providerId.substring(0, 8).toUpperCase();
 
+  /**
+   * 🔗 EMBUDO (orden §1): categoría de la ficha → macro-partida canónica de la
+   * Zona Cero. Se resuelve por palabra clave para no inventar partidas: si no
+   * reconoce el gremio, la ficha entra por `musica_produccion` (la vertical
+   * propia) y se declara así al usuario. Cero precios inventados.
+   */
+  const funnelCategory: string = (() => {
+    const probe: string = `${category} ${cleanText(rawProvider.atomic_specs?.category ?? '')}`.toLowerCase();
+    if (probe.includes('finca') || probe.includes('espacio') || probe.includes('salón') || probe.includes('salon') || probe.includes('restaurante')) return 'espacio_banquete';
+    if (probe.includes('catering') || probe.includes('gastronom') || probe.includes('comida')) return 'espacio_banquete';
+    if (probe.includes('foto') || probe.includes('vídeo') || probe.includes('video')) return 'foto_video';
+    if (probe.includes('flor') || probe.includes('decoraci')) return 'decoracion_flores';
+    if (probe.includes('estilis') || probe.includes('belleza') || probe.includes('peluquer')) return 'estilismo';
+    return 'musica_produccion';
+  })();
+
+  /**
+   * Servicios seleccionables de la ficha, en CÉNTIMOS ENTEROS. Se toman del
+   * catálogo publicado de la ficha (`ear_catalog_price_eur` / `original_price_eur`)
+   * y se convierten una sola vez en el boundary (tolerancia 0 al descuadre).
+   */
+  const funnelServices: readonly FichaService[] = (Array.isArray(rawProvider.catalog) ? rawProvider.catalog : [])
+    .map((item: { title?: string; ear_catalog_price_eur?: number; original_price_eur?: number }, index: number) => {
+      const priceEur = Number(item.ear_catalog_price_eur ?? item.original_price_eur ?? 0);
+      if (!Number.isFinite(priceEur) || priceEur <= 0) return null;
+      const label: string = cleanText(item.title ?? `Servicio ${String(index + 1)}`);
+      return { id: `svc-${String(index + 1)}`, label, unitPriceCents: Math.round(priceEur * 100) };
+    })
+    .filter((service: FichaService | null): service is FichaService => service !== null)
+    .slice(0, 40);
+
+
   const tier = getProviderTier({ id: rawProvider.id || slug, slug, name: rawProvider.name });
   const isBlacklisted = tier === 'BLACKLISTED';
   const isUnclaimed = tier === 'DIRECTORY_UNCLAIMED';
@@ -1215,6 +1249,23 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
                   </div>
                 ))}
               </div>
+            </section>
+
+            {/* 🔗 EMBUDO TRANSACCIONAL (orden §1): la ficha inyecta su contexto
+                (providerId, slug, categoría y servicios) en la simulación
+                canónica y en el WhatsApp. Sin esto, la ficha era un callejón. */}
+            <section id="embudo-cotizacion" className="space-y-3 pt-4">
+              <div className="border-b border-white/10 pb-3">
+                <span className="text-[10px] font-mono text-[#ecb613] uppercase tracking-widest font-bold block">Siguiente Paso</span>
+                <h3 className="text-2xl font-bold font-syne text-white uppercase">Lleva esta ficha a tu presupuesto</h3>
+              </div>
+              <ProviderFunnelCta
+                providerId={providerId}
+                providerSlug={slug}
+                providerName={displayName}
+                category={funnelCategory}
+                services={funnelServices}
+              />
             </section>
 
             {/* 📦 CATÁLOGO DE PACKS & EQUIPAMIENTO OFICIAL (+20% EAR) */}

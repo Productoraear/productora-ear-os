@@ -97,6 +97,11 @@ public/data/yellowgreen_root_index.html
 # [V10_SIGMA · EP-4] Excepción quirúrgica: el ledger de evidencias ES la prueba del
 # contrato. Se versiona siempre; el resto de .jsonl sigue ignorado.
 !.antigravity/evidence/ledger.jsonl
+# [W53_T01 · 2026-11-10] Excepcion quirurgica: las MIGRACIONES Prisma NO son volcados.
+# Un .sql bajo prisma/migrations/ es el DDL que el deploy de Coolify ejecuta. Si se
+# ignora, la migracion no viaja al servidor y el schema queda como fachada. El resto
+# de .sql (volcados, dumps, exports) sigue ignorado.
+!prisma/migrations/**/*.sql
 
 # Bases de datos pesadas de scraping y volcados masivos (> 1MB)
 src/data/all_providers_database.json

@@ -1,0 +1,394 @@
+{
+  "schemaVersion": "1.0.0",
+  "source": {
+    "kind": "portal_showcase_dump",
+    "file": "vault_absorbed/textos desde bodas.net caballo de troya de mi escaparate.txt",
+    "chars": 55450,
+    "sections": [
+      "inicio",
+      "escaparate",
+      "solicitudes",
+      "opiniones",
+      "campus",
+      "facturacion",
+      "cuenta",
+      "preview"
+    ],
+    "parsedAt": "2026-11-10T13:56:14.798Z"
+  },
+  "identity": {
+    "nombre_usuario": "productora ear",
+    "nombre_comercial": "Productora EAR",
+    "persona_contacto": "EDWIN AGUDELO Tu mensajero de sentimientos",
+    "email": "edwinagudelomariachi@gmail.com",
+    "web": "http://www.productoraear.com/bodas",
+    "url_publica": "http://www.productoraear.com/bodas",
+    "descripcion_3a_persona": "Imaginad ver la cara de vuestra pareja, a vuestros seres queridos e invitados al recibir el impacto directo a su mente y su corazón. Verlos emocionados y sorprendidos al escuchar canciones que muchas veces reflejan parte de vuestra historia, que resaltan el amor, la familia, los amigos y ponen en valor que sean parte prioritaria de vuestras vidas, también por la elegancia y calidad musical que ofrece Productora EAR y su agrupación de músicos de alto nivel, cuidando la impecable puesta en escena.",
+    "descripcion_corta": "Imaginad ver la cara de vuestra pareja, a vuestros seres queridos e invitados al recibir el impacto directo a su mente y su corazón. Verlos emocionados y sorprendidos al escuchar canciones que muchas veces reflejan parte",
+    "lema": null,
+    "servicios_ofrecidos": [
+      "DJ",
+      "Orquesta",
+      "Música para la ceremonia",
+      "Música para el cóctel/banquete",
+      "Música para el baile",
+      "Animación",
+      "Karaoke",
+      "Audiovisuales",
+      "Otros (Casa-chalet para bodas, gestion integral 360 personalizada de vuestro enlace, maestro de ceremonia, protocolo de boda, espacio web para poder seguir el proceso de los preparativos. 24 horas los 7 días)"
+    ],
+    "estilos_musica": [
+      "Latina",
+      "Clásica",
+      "Coral",
+      "Chill out",
+      "Disco",
+      "Jazz",
+      "Rock",
+      "Electrónica",
+      "Flamenca",
+      "Regional",
+      "Mariachi",
+      "Étnica",
+      "Pop",
+      "Actual",
+      "Otros (Grupos de música latina: Vallenato con las canciones mas romanticas y bailables, bachata sensual y elegante, merengue divertida y con mucho movimiento, salsa romántica y sofisticada. Grupos de baladas)"
+    ],
+    "formaciones": [
+      "DJ",
+      "Góspel",
+      "Orquesta",
+      "Banda",
+      "Solista",
+      "Dueto",
+      "Trío",
+      "Cuarteto",
+      "Coro"
+    ],
+    "tamanos_formacion": [
+      "Solista",
+      "Pequeña (2-3 músicos)",
+      "Mediana (4-6 músicos)",
+      "Grande (más de 6 músicos)"
+    ],
+    "repertorio": [
+      "Cásate conmigo. Prometo, me gustas mucho. Hasta mi final. Algún día mamá, canción inédita (momento especial con las madres). Te amaré toda la vida. Para siempre. somos novios. La mitad que me faltaba"
+    ],
+    "equipo_propio": true,
+    "exclusividad_fecha": null,
+    "piiDetected": [
+      {
+        "kind": "email",
+        "masked": "edw*****************@gmail.com",
+        "expose": false
+      },
+      {
+        "kind": "phone",
+        "masked": "693****48",
+        "expose": false
+      },
+      {
+        "kind": "phone",
+        "masked": "659****76",
+        "expose": false
+      }
+    ],
+    "exposePhone": false
+  },
+  "location": {
+    "direccion": "Calle bailen, Alcorcón 28921 Madrid (Madrid)",
+    "municipio": "Alcorcón",
+    "provincia": "Madrid",
+    "codigo_postal": "28921",
+    "pais": "España",
+    "google_maps_url": null,
+    "radio_servicio": null,
+    "cobertura_declarada": [
+      "Europa"
+    ],
+    "desplazamiento_internacional": true,
+    "suplemento_fuera_de_madrid": false
+  },
+  "faq": [
+    {
+      "question": "¿Qué incluye el pack de boda?",
+      "answer": "Show dedicado en la media hora inicial a los novios, toman anotaciones para complacer a invitados en la segunda salida. Sesión de fotos con el artista y/o con su grupo acompañante, (opcional, sin coste) obviamente. Equipo profesional Bose 2.000w hasta para 300 personas al aire libre, con técnico de sonido. (garantizamos por escrito el resultado) Ramo de flores (así, cuando entran al sitio cantando se lo entregan al novio, o al padre; para que lo entregue a la novia(o) que le mira desde la distancia). Un regalo sorpresa único. Creado para la pareja y posiblemente incluido en la banda sonora del video de boda Compromiso de satisfacción por escrito. Productora EAR dispone de un amplio y variado repertorio para vuestra boda y también de canciones a la carta: Cásate conmigo. Prometo. Hasta mi final. Algún día mamá, canción inédita (momento especial con las madres). Te amaré toda la vida. Para siempre. Cuando manda el corazón. Si nos dejan. La mitad que me faltaba. La bikina. El rey. Entre muchos éxitos musicales más… Interpretando desde los clásicos, hasta lo exótico y rompedor. Siempre y cuando lo sepan con antelación y se acuerden los términos para asegurarse de que sus clientes reciben el mejor servicio de música para su boda. Disfrutad de una celebración única y emocional gracias a las canciones personalizadas de Productora EAR, cuidadosamente elegidas o creadas para reflejar la historia de amor entre los novios. Además, se asegurará de filtrar cualquier contenido machista o violento para ofrecer una experiencia única y de calidad para todos y todas. La música en directo a cargo de Edwin y su grupo de músicos hará de vuestra jornada, un día inolvidable para todos los asistentes. Las opciones que os ofrecen son las siguientes: Show solista premium Sonido profesional Bose, 2.000W. Actuación con 2 salidas de 30 minutos. Decoración temática (photocall con sombreros incluidos) Sesión de fotos con Edwin Agudelo (se acerca directamente a cada mesa o grupo para evitarles molestias y el fotógrafo le sigue para tal fin), un bello recuerdo; se entregan a través de correo electrónico, en alta calidad. Show solista Sonido profesional Bose, 2.000W. Actuación con 1 salida de 30 minutos aproximadamente. Decoración temática (photocall con sombreros incluidos) Sesión de fotos con Edwin Agudelo (se acerca directamente a cada mesa o grupo para evitarles molestias y el fotógrafo le sigue para tal fin), un bello recuerdo; se entregan a través de correo electrónico, en alta calidad. *Sin exclusividad en la fecha. Show con agrupación de 6 músicos Actuación del grupo durante una hora. Sesión de fotos con el artista Edwin Agudelo. (incluye decoración de sombreros tipo photocall). Show con agrupación de 9 músicos (formato profesional) Actuación del grupo durante una hora. Sesión de fotos con el artista Edwin Agudelo. (incluye decoración de sombreros tipo photocall). Show con agrupación de 13 músicos formato premium Actuación del grupo durante una hora, en dos salidas de 30 minutos: flexibilidad de cara al protocolo. Desplazamiento del grupo. Sesión de fotos con el artista Productora EAR y los integrantes del grupo. (incluye decoración de sombreros tipo photocall y complementos rústicos tales como balas de paja, ruedas de carruajes) u otros a elegir Sorteos de regalos personalizados. Exclusividad en la fecha por parte del artista. También ofrecen servicios por tener acuerdos de colaboración con personas asociadas y que están coordinadas y ya han trabajado durante años. Permiten una contratación integral para solo tratar con uno o muy pocos proveedores. Show personalizado y con decoración temática mexicana. Alquiler de equipos de sonido. Luces, fuentes de chocolate y máquinas de humo Con equipo de sonido Bose, de última generación. Mobiliario profesional en general (desde cubertería hasta tarimas y mesas calientes, baños químicos, etc.). Vestidos de mesas y sillas. Carpas para exteriores de diversas medidas. Decoración a medida incluso 3D. Fotografía y vídeo con alta calidad de sonido, tanto en las cámaras como en ambiente. Grupo Flamenco a tr3s Concierto Plaza de toros Escenario Grupo Flamenco a tr3s 5.0"
+    },
+    {
+      "question": "¿Qué servicios ofreces?",
+      "answer": "DJ Orquesta Música para la ceremonia Música para el cóctel/banquete Música para el baile Animación Karaoke Audiovisuales Otros (Casa-chalet para bodas, gestion integral 360 personalizada de vuestro enlace, maestro de ceremonia, protocolo de boda, espacio web para poder seguir el proceso de los preparativos. 24 horas los 7 días)"
+    },
+    {
+      "question": "¿Con cuánta antelación debo ponerme en contacto contigo?",
+      "answer": "Esa decisión es solo vuestra, pero asegúrate mejor, atendemos en diferentes tipos de eventos, desde negocios locales hasta masías y hoteles de lujo y la agenda es limitada por exclusividad en fechas"
+    },
+    {
+      "question": "¿Qué estilo de música ofreces?",
+      "answer": "Latina Clásica Coral Chill out Disco Jazz Rock Electrónica Flamenca Regional Mariachi Étnica Pop Actual Otros (Grupos de música latina: Vallenato con las canciones mas romanticas y bailables, bachata sensual y elegante, merengue divertida y con mucho movimiento, salsa romántica y sofisticada. Grupos de baladas)"
+    },
+    {
+      "question": "¿Existe algún problema o impedimento si solicito un tema que no está en el repertorio?",
+      "answer": "Siempre y cuando lo sepamos con antelación y se acuerden los términos para asegurarnos de que nuestros clientes reciban el mejor servicio de música para su boda"
+    },
+    {
+      "question": "¿Dispones de equipo propio?",
+      "answer": "Sí"
+    },
+    {
+      "question": "¿Necesitas algún material en concreto o condiciones específicas para poder ofrecer tus servicios?",
+      "answer": "No"
+    },
+    {
+      "question": "¿Tienes posibilidad de desplazarte?",
+      "answer": "Sí, provincias de España, y Toda Europa"
+    },
+    {
+      "question": "¿Existe algún cargo por desplazamiento?",
+      "answer": "Sí, dietas, combustible hospedaje si es fuera de la Comunidad de Madrid. Además, billetes aéreos si es fuera de España"
+    },
+    {
+      "question": "¿Cubres más de una boda al día?",
+      "answer": "No"
+    },
+    {
+      "question": "¿Trabajas solo o cuentas con un equipo de profesionales?",
+      "answer": "Somos un equipo"
+    },
+    {
+      "question": "¿Cuánto tiempo dura la actuación?",
+      "answer": "Normalmente el show principal es de 1 hora en 2 salidas de 25 a 30 minutos. Con posibilidad de varias horas con descuentos especiales a partir de la segunda hora"
+    },
+    {
+      "question": "¿Cuánto tiempo necesitas para preparar la actuación?",
+      "answer": "Si es en la misma ciudad con 24 horas es suficiente, ya que nos dedicamos en exclusiva. Y tenemos movilidad y disponibilidad"
+    },
+    {
+      "question": "¿Realizas actuaciones al aire libre?",
+      "answer": "Sí"
+    },
+    {
+      "question": "¿Cobras por horas o por evento?",
+      "answer": "Horas"
+    },
+    {
+      "question": "Si fuese necesario, ¿podrías trabajar horas extra?",
+      "answer": "Sí"
+    },
+    {
+      "question": "¿Cómo cobras las horas extra?",
+      "answer": "La hora extra adicional es más económica al ya estar en el sitio"
+    },
+    {
+      "question": "¿Cómo se efectúa el pago?",
+      "answer": "En cuenta bancaria el adelanto o en mano en una primera entrevista, así nos contáis un poco que quieren transmitir y a quien quieres sorprender. Y una semana antes del show el resto del dinero y bizum Opiniones de Productora EAR Valoración 5.0 de 5 5.0 Fantástico 4 opiniones Escribe una opinión Productora EAR - 1 Productora EAR - 2 Productora EAR - 3 +4 Productora EAR - 4 Adriana Valoración 5 de 5 5.0 Nuestra Boda Sergio y Adriana No tenemos palabras para expresar la inmensa gratitud que tenemos hacia Edwin y su grupo, ya que recibimos el mejor servicio de Mariachis, de fotos y decoración que ha hecho nuestra noche de bodas la mejor e inolvidable. Estamos inmensamente agradecidos por todo lo que hicieron ese diaLeer más Productora EAR - 5 Eduardo Valoración 5 de 5 5.0 Mi boda fue espectacular Muy agradecido por el espectacular show, cómo conecta a través de las emociones es increíbleLeer más Valoración 5 de 5 5.0 Insuperable Por mucho que busques, no encontraras alguien tan profesional como Edwin. ALeer más Alexandra Valoración 5 de 5 5.0 Excelente grupo de mariachis Edwin es un gran profesional, lo habíamos oído anteriormente en actuaciones individuales y para nuestra boda se trajo a su grupo de mariachis y fue espectacular, ¡un gran recuerdo! Estoy segura de que volveremos a contar con ellos en futuras celebraciones.Leer más Productora EAR - 6 Productora EAR - 7 +4 fotosProductora EAR - 8 Nuestro objetivo es tener tu confianza. Nuestra plataforma se basa en opiniones sinceras que ayuden a otras parejas a encontrar a sus proveedores. Jose Toro Photography Valoración 5.0 de 5 , 3 opiniones 5.0"
+    },
+    {
+      "question": "¿Cuánto cuesta el servicio de música para la boda en Productora EAR?",
+      "answer": "En Productora EAR se puede contratar la música para la boda desde 150€ hasta 10.000€."
+    },
+    {
+      "question": "¿Qué servicios musicales para la boda ofrece Productora EAR?",
+      "answer": "Productora EAR hará que la fiesta se convierta en un recuerdo único para los invitados con servicios musicales como: DJ Orquesta Música para la ceremonia Música para el cóctel/banquete Música para el baile Animación Karaoke Audiovisuales Otros (Casa-chalet para bodas, gestion integral 360 personalizada de vuestro enlace, maestro de ceremonia, protocolo de boda, espacio web para poder seguir el proceso de los preparativos. 24 horas los 7 días.)"
+    },
+    {
+      "question": "¿En qué estilo musical es especialista Productora EAR?",
+      "answer": "Para ambientar la ceremonia, el cóctel o la fiesta de la boda Productora EAR está especializado en música: Latina Clásica Coral Chill out Disco Jazz Rock Electrónica Flamenca Regional Mariachi Étnica Pop Actual Otros (Grupos de música latina: Vallenato con las canciones mas romanticas y bailables, bachata sensual y elegante, merengue divertida y con mucho movimiento, salsa romántica y sofisticada. Grupos de baladas.)"
+    },
+    {
+      "question": "¿Qué tipo de formación musical conforma Productora EAR?",
+      "answer": "Con Productora EAR se puede disfrutar de un amplio repertorio a cargo de estas formaciones musicales: DJ Góspel Orquesta Banda Solista Dueto Trío Cuarteto Coro"
+    },
+    {
+      "question": "¿Cuántos miembros componen Productora EAR?",
+      "answer": "La formación musical de Productora EAR es: Solista Pequeña (2-3 músicos) Mediana (4-6 músicos) Grande (más de 6 músicos)"
+    },
+    {
+      "question": "¿Cuántas parejas recomiendan a Productora EAR y cuáles son los aspectos mejor valorados de sus servicios para bodas?",
+      "answer": "A Productora EAR lo recomienda el 100% de las parejas que ya disfrutó de sus servicios. Su valoración global es de 5.0 y ha recibido esa puntuación evaluando los siguientes aspectos: calidad del servicio, flexibilidad, relación calidad/precio, profesionalidad y tiempo de respuesta. Coro Cantigal Madrid, Desde 300€ Edelmix DJ & Speaker 4.8"
+    }
+  ],
+  "metrics": {
+    "solicitudes_totales": 4,
+    "atendidas": 208,
+    "contratadas": 1,
+    "descartadas": 14,
+    "impresiones_12m": null,
+    "impresiones_totales": null,
+    "tiempo_respuesta_h": null,
+    "completitud_escaparate_pct": null,
+    "precio_min_publicado_eur": 150,
+    "precio_max_publicado_eur": 10000,
+    "ratio_atencion": 52,
+    "ratio_conversion": 0.25,
+    "peticiones_opinion_enviadas": 2
+  },
+  "reputation": {
+    "rating_publicado": 5,
+    "escala": 5,
+    "opiniones_totales": 4,
+    "recomendacion_pct": null,
+    "canal_recogida_opiniones": "https://www.bodas.net/shared/rate/78903",
+    "desglose": [],
+    "resenas": [
+      {
+        "titulo": "Nuestra Boda Sergio y Adriana",
+        "cuerpo": "No tenemos palabras para expresar la inmensa gratitud que tenemos hacia Edwin y su grupo, ya que recibimos el mejor servicio de Mariachis, de fotos y... Mostrar más Compartir : Responder"
+      },
+      {
+        "titulo": "Mi boda fue espectacular",
+        "cuerpo": "Muy agradecido por el espectacular show, cómo conecta a través de las emociones es increíble Mostrar más Compartir : Responder"
+      },
+      {
+        "titulo": "Insuperable",
+        "cuerpo": "Por mucho que busques, no encontraras alguien tan profesional como Edwin. A Mostrar más Compartir : Responder"
+      },
+      {
+        "titulo": "Excelente grupo de mariachis",
+        "cuerpo": "Edwin es un gran profesional, lo habíamos oído anteriormente en actuaciones individuales y para nuestra boda se trajo a su grupo de mariachis y fue espectacular, ¡un gran recuerdo! Estoy segura de que volveremos a contar con ellos en futuras celebraciones.Leer más Productora EAR - 6"
+      }
+    ]
+  },
+  "knowledge_tags": {
+    "categorias_portal": [
+      {
+        "nombre": "Marketing",
+        "articulos": 143
+      },
+      {
+        "nombre": "Noticias y eventos",
+        "articulos": 127
+      },
+      {
+        "nombre": "Escaparate",
+        "articulos": 35
+      },
+      {
+        "nombre": "Ventas",
+        "articulos": 191
+      }
+    ],
+    "articulos": [
+      {
+        "titulo": "Una primera impresión más potente: descubre el diseño renovado de tu Escaparate",
+        "categoria": "Escaparate"
+      },
+      {
+        "titulo": "[WEBINAR] El panel de parejas de Bodas.net: accede a la carta",
+        "categoria": "Noticias y eventos"
+      },
+      {
+        "titulo": "[Plantilla descargable] Tus tareas imprescindibles para la temporada alta",
+        "categoria": "Marketing"
+      },
+      {
+        "titulo": "[Blog] LLM para profesionales de bodas: cómo aparecer en las búsquedas por IA",
+        "categoria": "Ventas"
+      },
+      {
+        "titulo": "[NUEVO curso] Cómo llamar la atención en Bodas.net: un intensivo sobre visibilidad",
+        "categoria": "Marketing"
+      },
+      {
+        "titulo": "[NUEVA Plantilla] Pack de Bienvenida para empezar con buen pie",
+        "categoria": "Marketing"
+      },
+      {
+        "titulo": "[Plantilla] Tu guía para enamorarles desde el primer “Hola”",
+        "categoria": "Marketing"
+      }
+    ],
+    "temas_detectados": [
+      "DJ",
+      "Orquesta",
+      "Mariachi",
+      "Fotografía",
+      "Vídeo",
+      "Decoración",
+      "Catering",
+      "Animación",
+      "Karaoke",
+      "Audiovisuales",
+      "Protocolo",
+      "Ceremonia"
+    ]
+  },
+  "partners": [],
+  "media": {
+    "labelsDetected": 8,
+    "urls": [],
+    "invented": 0
+  },
+  "doctrine": {
+    "exposePhone": false,
+    "contactGate": true,
+    "centralitaOficial": "+34 693 693 048",
+    "depositEur": 100,
+    "split": {
+      "artista": 80,
+      "ear": 10,
+      "vimume": 10
+    },
+    "note": "Cero teléfonos sin verificar. El contacto directo queda bloqueado hasta la reserva o el depósito de 100 € del SSOT."
+  },
+  "providerFields": {
+    "values": {
+      "ident.nombre_comercial": "Productora EAR",
+      "ident.descripcion_larga": "Imaginad ver la cara de vuestra pareja, a vuestros seres queridos e invitados al recibir el impacto directo a su mente y su corazón. Verlos emocionados y sorprendidos al escuchar canciones que muchas veces reflejan parte de vuestra historia, que resaltan el amor, la familia, los amigos y ponen en valor que sean parte prioritaria de vuestras vidas, también por la elegancia y calidad musical que ofrece Productora EAR y su agrupación de músicos de alto nivel, cuidando la impecable puesta en escena.",
+      "ident.descripcion_corta": "Imaginad ver la cara de vuestra pareja, a vuestros seres queridos e invitados al recibir el impacto directo a su mente y su corazón. Verlos emocionados y sorprendidos al escuchar canciones que muchas veces reflejan parte",
+      "cont.web": "http://www.productoraear.com/bodas",
+      "ubic.direccion": "Calle bailen, Alcorcón 28921 Madrid (Madrid)",
+      "ubic.municipio": "Alcorcón",
+      "ubic.provincia": "Madrid",
+      "ubic.cp": "28921",
+      "ubic.pais": "España",
+      "ubic.desplazamiento_internacional": "true",
+      "esc.url": "http://www.productoraear.com/bodas",
+      "esc.rating": "5",
+      "esc.reviews_count": "4",
+      "esc.servicios_incluidos": "DJ\nOrquesta\nMúsica para la ceremonia\nMúsica para el cóctel/banquete\nMúsica para el baile\nAnimación\nKaraoke\nAudiovisuales\nOtros (Casa-chalet para bodas, gestion integral 360 personalizada de vuestro enlace, maestro de ceremonia, protocolo de boda, espacio web para poder seguir el proceso de los preparativos. 24 horas los 7 días)",
+      "esc.tipos_musica": "Latina\nClásica\nCoral\nChill out\nDisco\nJazz\nRock\nElectrónica\nFlamenca\nRegional\nMariachi\nÉtnica\nPop\nActual\nOtros (Grupos de música latina: Vallenato con las canciones mas romanticas y bailables, bachata sensual y elegante, merengue divertida y con mucho movimiento, salsa romántica y sofisticada. Grupos de baladas)",
+      "rep.testimonios": "Nuestra Boda Sergio y Adriana: No tenemos palabras para expresar la inmensa gratitud que tenemos hacia Edwin y su grupo, ya que recibimos el mejor servicio de Mariachis, de fotos y... Mostrar más Compartir : Responder\nMi boda fue espectacular: Muy agradecido por el espectacular show, cómo conecta a través de las emociones es increíble Mostrar más Compartir : Responder\nInsuperable: Por mucho que busques, no encontraras alguien tan profesional como Edwin. A Mostrar más Compartir : Responder\nExcelente grupo de mariachis: Edwin es un gran profesional, lo habíamos oído anteriormente en actuaciones individuales y para nuestra boda se trajo a su grupo de mariachis y fue espectacular, ¡un gran recuerdo! Estoy segura de que volveremos a contar con ellos en futuras celebraciones.Leer más Productora EAR - 6",
+      "faq.1.pregunta": "¿Qué incluye el pack de boda?",
+      "faq.1.respuesta": "Show dedicado en la media hora inicial a los novios, toman anotaciones para complacer a invitados en la segunda salida. Sesión de fotos con el artista y/o con su grupo acompañante, (opcional, sin coste) obviamente. Equipo profesional Bose 2.000w hasta para 300 personas al aire libre, con técnico de sonido. (garantizamos por escrito el resultado) Ramo de flores (así, cuando entran al sitio cantando se lo entregan al novio, o al padre; para que lo entregue a la novia(o) que le mira desde la distancia). Un regalo sorpresa único. Creado para la pareja y posiblemente incluido en la banda sonora del video de boda Compromiso de satisfacción por escrito. Productora EAR dispone de un amplio y variado repertorio para vuestra boda y también de canciones a la carta: Cásate conmigo. Prometo. Hasta mi final. Algún día mamá, canción inédita (momento especial con las madres). Te amaré toda la vida. Para siempre. Cuando manda el corazón. Si nos dejan. La mitad que me faltaba. La bikina. El rey. Entre muchos éxitos musicales más… Interpretando desde los clásicos, hasta lo exótico y rompedor. Siempre y cuando lo sepan con antelación y se acuerden los términos para asegurarse de que sus clientes reciben el mejor servicio de música para su boda. Disfrutad de una celebración única y emocional gracias a las canciones personalizadas de Productora EAR, cuidadosamente elegidas o creadas para reflejar la historia de amor entre los novios. Además, se asegurará de filtrar cualquier contenido machista o violento para ofrecer una experiencia única y de calidad para todos y todas. La música en directo a cargo de Edwin y su grupo de músicos hará de vuestra jornada, un día inolvidable para todos los asistentes. Las opciones que os ofrecen son las siguientes: Show solista premium Sonido profesional Bose, 2.000W. Actuación con 2 salidas de 30 minutos. Decoración temática (photocall con sombreros incluidos) Sesión de fotos con Edwin Agudelo (se acerca directamente a cada mesa o grupo para evitarles molestias y el fotógrafo le sigue para tal fin), un bello recuerdo; se entregan a través de correo electrónico, en alta calidad. Show solista Sonido profesional Bose, 2.000W. Actuación con 1 salida de 30 minutos aproximadamente. Decoración temática (photocall con sombreros incluidos) Sesión de fotos con Edwin Agudelo (se acerca directamente a cada mesa o grupo para evitarles molestias y el fotógrafo le sigue para tal fin), un bello recuerdo; se entregan a través de correo electrónico, en alta calidad. *Sin exclusividad en la fecha. Show con agrupación de 6 músicos Actuación del grupo durante una hora. Sesión de fotos con el artista Edwin Agudelo. (incluye decoración de sombreros tipo photocall). Show con agrupación de 9 músicos (formato profesional) Actuación del grupo durante una hora. Sesión de fotos con el artista Edwin Agudelo. (incluye decoración de sombreros tipo photocall). Show con agrupación de 13 músicos formato premium Actuación del grupo durante una hora, en dos salidas de 30 minutos: flexibilidad de cara al protocolo. Desplazamiento del grupo. Sesión de fotos con el artista Productora EAR y los integrantes del grupo. (incluye decoración de sombreros tipo photocall y complementos rústicos tales como balas de paja, ruedas de carruajes) u otros a elegir Sorteos de regalos personalizados. Exclusividad en la fecha por parte del artista. También ofrecen servicios por tener acuerdos de colaboración con personas asociadas y que están coordinadas y ya han trabajado durante años. Permiten una contratación integral para solo tratar con uno o muy pocos proveedores. Show personalizado y con decoración temática mexicana. Alquiler de equipos de sonido. Luces, fuentes de chocolate y máquinas de humo Con equipo de sonido Bose, de última generación. Mobiliario profesional en general (desde cubertería hasta tarimas y mesas calientes, baños químicos, etc.). Vestidos de mesas y sillas. Carpas para exteriores de diversas medidas. Decoración a medida incluso 3D. Fotografía y vídeo con alta calidad de sonido, tanto en las cámaras como en ambiente. Grupo Flamenco a tr3s Concierto Plaza de toros Escenario Grupo Flamenco a tr3s 5.0",
+      "faq.2.pregunta": "¿Qué servicios ofreces?",
+      "faq.2.respuesta": "DJ Orquesta Música para la ceremonia Música para el cóctel/banquete Música para el baile Animación Karaoke Audiovisuales Otros (Casa-chalet para bodas, gestion integral 360 personalizada de vuestro enlace, maestro de ceremonia, protocolo de boda, espacio web para poder seguir el proceso de los preparativos. 24 horas los 7 días)",
+      "faq.3.pregunta": "¿Con cuánta antelación debo ponerme en contacto contigo?",
+      "faq.3.respuesta": "Esa decisión es solo vuestra, pero asegúrate mejor, atendemos en diferentes tipos de eventos, desde negocios locales hasta masías y hoteles de lujo y la agenda es limitada por exclusividad en fechas",
+      "faq.4.pregunta": "¿Qué estilo de música ofreces?",
+      "faq.4.respuesta": "Latina Clásica Coral Chill out Disco Jazz Rock Electrónica Flamenca Regional Mariachi Étnica Pop Actual Otros (Grupos de música latina: Vallenato con las canciones mas romanticas y bailables, bachata sensual y elegante, merengue divertida y con mucho movimiento, salsa romántica y sofisticada. Grupos de baladas)",
+      "faq.5.pregunta": "¿Existe algún problema o impedimento si solicito un tema que no está en el repertorio?",
+      "faq.5.respuesta": "Siempre y cuando lo sepamos con antelación y se acuerden los términos para asegurarnos de que nuestros clientes reciban el mejor servicio de música para su boda",
+      "faq.6.pregunta": "¿Dispones de equipo propio?",
+      "faq.6.respuesta": "Sí"
+    },
+    "missing": [
+      "ident.lema",
+      "ubic.google_maps_url",
+      "ubic.radio_cobertura_km",
+      "esc.respuesta_horas"
+    ]
+  },
+  "completeness": {
+    "score": 100,
+    "max": 100,
+    "parts": {
+      "identidad": true,
+      "descripcion": true,
+      "ubicacion": true,
+      "faq": true,
+      "reputacion": true,
+      "canal_opiniones": true,
+      "media_real": true
+    },
+    "gaps": []
+  },
+  "integrity": {
+    "faqTotal": 24,
+    "faqConRespuesta": 24,
+    "providerFieldsProjected": 28,
+    "providerFieldsMissing": 4,
+    "piiDetected": 3,
+    "piiPublished": 0
+  },
+  "selfHash": "10f6c21bf6757453bdc900c62d4607bbd35f7635e9223e38a100120efcbc1355"
+}

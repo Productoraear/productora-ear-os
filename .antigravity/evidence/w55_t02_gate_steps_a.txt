@@ -1,0 +1,10 @@
+﻿npm run typecheck:landings -> exit=0 s=7.4
+npm run audit:admin -> exit=0 s=2
+npm run audit:ci-gate -> exit=0 s=1.1
+npm run verify:voice -> exit=0 s=16.7
+npm run verify:cron-secret -> exit=0 s=1.5
+npm run verify:domains -> exit=0 s=1.4
+npm run verify:confianza -> exit=0 s=1.5
+npm run verify:concierge-saga -> exit=0 s=1.6
+npm run audit:tariff-copy -> exit=0 s=60.9
+npm run audit:residues -> exit=0 s=26.9

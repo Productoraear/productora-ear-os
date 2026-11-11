@@ -1,0 +1,268 @@
+{
+  "auditoria": "ESTRES_ESTADIO",
+  "base": "http://127.0.0.1:3007",
+  "startedAt": "2026-11-11T17:17:56.525Z",
+  "concurrency": 100,
+  "peakDate": "2026-12-19",
+  "vectors": {
+    "avalancha": {
+      "estado": "SOSPECHOSO",
+      "concurrencia": 100,
+      "fechaPico": "2026-12-19",
+      "wallMs": 15959,
+      "bloqueos": {
+        "porStatus": {
+          "200": 75,
+          "500": 25
+        },
+        "aceptados": 75,
+        "conflictos": 0,
+        "error500": 25,
+        "red": 0,
+        "urlsCheckoutDistintas": 75,
+        "sobreventaDetectada": true,
+        "muestraVerdad": [
+          {
+            "i": 0,
+            "status": 200,
+            "ok": null,
+            "lock": null,
+            "error": null,
+            "hasCheckout": true
+          },
+          {
+            "i": 1,
+            "status": 200,
+            "ok": null,
+            "lock": null,
+            "error": null,
+            "hasCheckout": true
+          },
+          {
+            "i": 2,
+            "status": 200,
+            "ok": null,
+            "lock": null,
+            "error": null,
+            "hasCheckout": true
+          },
+          {
+            "i": 3,
+            "status": 200,
+            "ok": null,
+            "lock": null,
+            "error": null,
+            "hasCheckout": true
+          },
+          {
+            "i": 4,
+            "status": 500,
+            "ok": null,
+            "lock": null,
+            "error": "Error al crear el depósito de reserva",
+            "hasCheckout": false
+          }
+        ]
+      },
+      "cotizaciones": {
+        "porStatus": {
+          "200": 100
+        },
+        "ok": 100,
+        "error500": 0,
+        "invalidas": 0,
+        "descuadreCentimos": 0,
+        "splitNoSuma": 0,
+        "totalesDistintosObservados": 100,
+        "latenciaMs": {
+          "p50": 7710,
+          "p95": 9072,
+          "p99": 9166,
+          "max": 9204
+        }
+      },
+      "hallazgo": "SOBREVENTA: 75 bloqueos aceptados sobre la MISMA fecha (2026-12-19)."
+    },
+    "experienciaFan": {
+      "estado": "SOSPECHOSO",
+      "presupuesto": {
+        "inpMs": 50,
+        "cls": 0.05
+      },
+      "clics": 56,
+      "interactivosDetectados": 59,
+      "clickBurstMs": 21982,
+      "htmlStatus": 200,
+      "metricas": {
+        "inpMs": 1184,
+        "inpEvento": "pointerup",
+        "interaccionesObservadas": 978,
+        "cls": 0,
+        "lcpMs": null,
+        "ttfbMs": 969,
+        "domContentLoadedMs": 4551,
+        "loadMs": 19191,
+        "navegacionTotalMs": 4696
+      },
+      "excedeInp": true,
+      "excedeCls": false
+    },
+    "payloads": {
+      "estado": "SOSPECHOSO",
+      "casos": {
+        "desorbitado_100M": {
+          "status": 200,
+          "ms": 31,
+          "rejectedAsExpected": false,
+          "rpcCode": null,
+          "rpcMessage": null,
+          "bodyBytes": 1553,
+          "serverError": false
+        },
+        "pax_negativo": {
+          "status": 200,
+          "ms": 62,
+          "rejectedAsExpected": true,
+          "rpcCode": -32602,
+          "rpcMessage": "Argumentos inválidos para calculate_quote.",
+          "bodyBytes": 205,
+          "serverError": false
+        },
+        "precio_negativo": {
+          "status": 200,
+          "ms": 37,
+          "rejectedAsExpected": true,
+          "rpcCode": -32602,
+          "rpcMessage": "Argumentos inválidos para calculate_quote.",
+          "bodyBytes": 211,
+          "serverError": false
+        },
+        "rider_30k": {
+          "status": 200,
+          "ms": 106,
+          "rejectedAsExpected": true,
+          "rpcCode": -32602,
+          "rpcMessage": "Argumentos inválidos para calculate_quote.",
+          "bodyBytes": 215,
+          "serverError": false,
+          "payloadBytes": 240000
+        },
+        "xss": {
+          "status": 200,
+          "ms": 58,
+          "rejectedAsExpected": false,
+          "rpcCode": null,
+          "rpcMessage": null,
+          "bodyBytes": 1970,
+          "serverError": false
+        },
+        "sqli": {
+          "status": 200,
+          "ms": 50,
+          "rejectedAsExpected": false,
+          "rpcCode": null,
+          "rpcMessage": null,
+          "bodyBytes": 1714,
+          "serverError": false
+        },
+        "traversal": {
+          "status": 200,
+          "ms": 66,
+          "rejectedAsExpected": false,
+          "rpcCode": null,
+          "rpcMessage": null,
+          "bodyBytes": 1489,
+          "serverError": false
+        },
+        "herramienta_inexistente": {
+          "status": 200,
+          "ms": 25,
+          "rejectedAsExpected": true,
+          "rpcCode": -32601,
+          "rpcMessage": "Herramienta desconocida: rm_rf_everything",
+          "bodyBytes": 102,
+          "serverError": false
+        },
+        "json_basura": {
+          "status": 400,
+          "ms": 30,
+          "rejectedAsExpected": true,
+          "rpcCode": -32600,
+          "rpcMessage": "Petición JSON-RPC 2.0 inválida.",
+          "bodyBytes": 95,
+          "serverError": false
+        },
+        "flood_2mb": {
+          "status": 400,
+          "ms": 71,
+          "rejectedAsExpected": true,
+          "rpcCode": -32600,
+          "rpcMessage": "Petición JSON-RPC 2.0 inválida.",
+          "bodyBytes": 95,
+          "serverError": false,
+          "payloadBytes": 2097152
+        },
+        "webhook_whatsapp_sin_firma": {
+          "status": 413,
+          "ms": 16956,
+          "rejectedAsExpected": false,
+          "rpcCode": null,
+          "rpcMessage": null,
+          "bodyBytes": 176,
+          "serverError": false
+        },
+        "bloqueo_100M": {
+          "status": 200,
+          "ms": 582,
+          "rejectedAsExpected": false,
+          "rpcCode": null,
+          "rpcMessage": null,
+          "bodyBytes": 640,
+          "serverError": false
+        }
+      },
+      "resumen": {
+        "total": 12,
+        "rechazadosEstructuralmente": 6,
+        "aceptadosIndebidamente": 6,
+        "error500": []
+      }
+    },
+    "conversion": {
+      "estado": "SOSPECHOSO",
+      "intentos": 5,
+      "detalle": {
+        "wa": "https://wa.me/34693693048?text=%F0%9F%8F%9B%EF%B8%8F%20*Plan%20Maestro%20de%20Evento%20S-Class%20%C2%B7%20Productora%20EAR*%0ADemarcaci%C3%B3n%3A%20Madrid%20%7C%20Invitados%3A%20100%20pax%0APresupuesto%20Objetivo%3A%200%20%E2%82%AC%0ATotal%20Asignado%3A%200%20%E2%82%AC%0A%0A*Desglose%20por%20Partidas%3A*%0A%0A%0A*Split%20Soberano%20%C3%89tico%2080%2F10%2F10%3A*%0A%E2%80%A2%20Proveedores%20(80%25)%3A%200%20%E2%82%AC%0A%E2%80%A2%20EAR%20OS%20(10%25)%3A%200%20%E2%82%AC%0A%E2%80%A2%20VIMUME%20Retorno%20Social%20(10%25)%3A%200%20%E2%82%AC%20(Deducci%C3%B3n%20fiscal%20IRPF%2FSoc.%20hasta%200%20%E2%82%AC)%0A%0AQuiero%20verificar%20disponibilidad%20con%20este%20presupuesto%20cerrado%20y%20coordinar%20los%20100%20%E2%82%AC%20de%20Price-Lock.",
+        "waLinks": 4,
+        "totalAsignado": null,
+        "proveedores80": null,
+        "earos10": null,
+        "vimume10": null,
+        "hashMencionado": true,
+        "partyRows": 16
+      },
+      "url": {
+        "phone": "34693693048",
+        "textLength": 419
+      },
+      "desglose": "🏛️ *Plan Maestro de Evento S-Class · Productora EAR*\nDemarcación: Madrid | Invitados: 100 pax\nPresupuesto Objetivo: 0 €\nTotal Asignado: 0 €\n\n*Desglose por Partidas:*\n\n\n*Split Soberano Ético 80/10/10:*\n• Proveedores (80%): 0 €\n• EAR OS (10%): 0 €\n• VIMUME Retorno Social (10%): 0 € (Deducción fiscal IRPF/Soc. hasta 0 €)\n\nQuiero verificar disponibilidad con este presupuesto cerrado y coordinar los 100 € de Price-Lock.",
+      "checks": {
+        "telefonoCentralita": true,
+        "desglose80_10_10": true,
+        "deposito100": true,
+        "textoNoTruncado": true,
+        "sha256Presente": false
+      }
+    }
+  },
+  "sondaBase": {
+    "status": 200,
+    "ms": 157.28090000000003
+  },
+  "browser": {
+    "motor": "chrome",
+    "executablePath": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+  },
+  "finishedAt": "2026-11-11T17:19:41.987Z",
+  "veredicto": "SOSPECHOSO"
+}

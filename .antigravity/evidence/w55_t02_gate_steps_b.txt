@@ -1,0 +1,7 @@
+﻿node scripts/verify_sonometro_pwa.cjs -> exit=0 s=0.3
+node scripts/verify_price_lock_flow.cjs -> exit=0 s=0.2
+npm run verify:master-guide -> exit=0 s=1.8
+npm run audit:admin-ecosystem -> exit=0 s=2.1
+npm run verify:b2g-fast-track -> exit=0 s=1.9
+npm run audit:omega-rojo -> exit=0 s=2.5
+node scripts/audit_cls_budget.cjs -> exit=0 s=1.3

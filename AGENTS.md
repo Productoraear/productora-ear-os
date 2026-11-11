@@ -92,6 +92,28 @@ SISTEMA EN PRODUCCIÓN REAL: productoraear.com · Bare-Metal Coolify (82.29.179.
   * Ley del AbortController: Todo `fetch` a APIs externas o pasarelas debe usar timeout estricto <= 8.000 ms (`AbortController.timeout(8000)`). Prohibidas llamadas colgadas indefinidas.
   * Ley de Consulta Quirúrgica (Prisma): Todo query a base de datos debe solicitar exclusivamente las columnas renderizadas (`select: { id: true, ... }`), erradicando payload bloat.
 
+- STACK REAL VERIFICADO EN DISCO (fuente: `package.json` del repositorio, no doctrina):
+  * Gestor de paquetes: **npm** exclusivamente (hay `package-lock.json`). Prohibido invocar `pnpm`, `yarn` o `bun`.
+  * Runtime y framework: **next `^16.3.5`** · **react / react-dom `19.2.6`** · **typescript `^6.0.3`** (Strict).
+  * Runtime de datos: **@prisma/client `^6.19.3`** + **prisma CLI `^6.12.0`**, datasource PostgreSQL
+    (`prisma/schema.prisma:6` → `provider = "postgresql"`, `url = env("POSTGRES_PRISMA_URL")`).
+    Cliente canónico: `src/lib/prisma.ts`.
+  * Ejecución de TypeScript en scripts: `tsx` (`node ./node_modules/tsx/dist/cli.mjs`). No hay `vitest`
+    en el árbol de dependencias: el arnés de verificación son scripts `node`/`tsx` con Exit Code.
+  * Comandos de verificación REALES (todos existen en `package.json`):
+    `npm run typecheck` · `npm run lint` · `npm run audit:ssot` · `npm run audit:omega-rojo` ·
+    `npm run audit:public-secrets` · `npm run verify:telemetry-persistence` ·
+    `npm run verify:telemetry-contract` · `node scripts/run_sv_protocol_15_gates.cjs` (17/17).
+  * Arnés nativo de pre-push: `npm run gate:prepush` (encadena lint, typecheck, audit:ssot,
+    audit:cta-matrix, audit:omega-rojo, verify:price-lock-flow, audit_cls_budget, entre otros).
+  * Persistencia en local sin daemon: `scripts/lib/ephemeral-postgres.cjs` levanta un PostgreSQL
+    EFÍMERO (paquete `embedded-postgres`, binario portable bajo `node_modules/.cache`) y aplica la
+    migración 20261109190000. **Prohibido sustituirlo por SQLite**: otro motor no certifica
+    PostgreSQL y produce un falso verde (AF-5).
+  * Prohibido declarar en esta doctrina dependencias o comandos que no existan en `package.json`:
+    un agente que invoque un comando inexistente produce `SIN_EVIDENCIA` con formato de verdad.
+
+
 ━━ 6. TASTE ENGINE & ANTI-SLOP (ESTÁNDAR VISUAL DESIGN.MD & PROTOCOLO UNSLOP) ━━━━━
 - Estética OLED Pura: Fondos `#030305` y `#050507`. Prohibidos degradados pastel o grises lavados (AI Slop). Prohibido `w-screen` (usar `w-full overflow-x-hidden`).
 - Protocolo UNSLOP Global (9 Pases Obligatorios — .agents/skills/unslop/):

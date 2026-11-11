@@ -156,6 +156,10 @@ model UserSpace {
   @@index([verified], name: "idx_userspace_verified")
 }
 
+/// SSOT del artistProfile (tabla física "artistProfile", la del baseline 0_baseline).
+/// W53_T01: este modelo es el ÚNICO punto de anclaje del artista. El Career Manifest
+/// se cuelga de él vía `careerProfile` (model ArtistProfile, @@map("career_artist_profile")).
+/// Prohibido crear un modelo Artista alternativo que duplique esta tabla.
 model artistProfile {
   id          String           @id @default(cuid())
   userId      String           @unique
@@ -168,6 +172,20 @@ model artistProfile {
   genres      String[]
   riders      technicalRider[]
   waybills    waybill[]
+  // ── W53_T01 · EXTENSIÓN CAREER MANIFEST (relaciones 1:N, sin columnas nuevas) ──
+  careerProfile   ArtistProfile?      @relation("CareerArtistIdentity")
+  platformLinks   PlatformConnection[]
+  releases        Release[]
+  gigs            Gig[]
+  contracts       Contract[]
+  royaltyStmts    RoyaltyStatement[]
+  campaigns       Campaign[]
+  fanContacts     FanContact[]
+  contentPosts    ContentPost[]
+  teamMembers     TeamMember[]
+  // `MetricSnapshot` se ancla al SSOT del artista por la misma columna `artistId`.
+  // Nombre relacional único mientras los modelos legacy usen el campo `artist`.
+  metricSnapshots MetricSnapshot[]   @relation("ArtistMetricSnapshots")
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
 }
@@ -382,6 +400,11 @@ model MediaAsset {
 
   provider providerProfile? @relation(fields: [providerId], references: [id], onDelete: Cascade)
   vendor   VendorProfile?   @relation(fields: [vendorId], references: [id], onDelete: SetNull)
+
+  // W53_T01 · reutilización del activo existente por el Career Manifest
+  // (kind → `type`, sha256 → `fileHashSha256`, bytes → `sizeBytes`).
+  careerTracks Track[]
+  careerPosts  ContentPost[]
 
   @@index([providerId], name: "idx_media_provider")
   @@index([vendorId], name: "idx_media_vendor")
@@ -1317,5 +1340,431 @@ model ProviderPaymentRequestLog {
 
   @@index([providerSlug], name: "idx_payment_request_slug")
   @@index([createdAt], name: "idx_payment_request_created")
+}
+
+// ==========================================
+// CAREER OS — W53_T01 (CAREER MANIFEST)
+// ==========================================
+// Modelo de datos del panel de carrera del artista.
+//
+// CONTRATO DE ANCLAJE (extensión, NO duplicación):
+//   · La tabla canónica del artista sigue siendo `artistProfile` (baseline).
+//   · `ArtistProfile` (PascalCase, exigido por el cliente Prisma) es una
+//     extensión fina 1:1 mapeada a OTRA tabla física `career_artist_profile`
+//     mediante @@map. No colisiona con `artistProfile`, no exige DROP y no
+//     duplica la identidad: su PK es el id de `artistProfile`.
+//
+// INVARIANTES DE ESTE BLOQUE:
+//   · Dinero SIEMPRE en céntimos enteros (Int). Prohibido Float para divisa.
+//   · Plataformas: `platformId` es el `id` de src/lib/career/platform-registry.ts
+//     (SSOT). No se inventan plataformas ni endpoints aquí.
+//   · Estado honesto: `source` ∈ {api,csv,manual,demo}. Sin OAuth real el valor
+//     declarado es "demo" o "manual"; nunca se finge dato real (AF-2).
+//   · Secretos: los tokens se guardan cifrados en reposo (`encryptedToken`).
+
+enum CareerMetricSource {
+  api
+  csv
+  manual
+  demo
+}
+
+enum CareerConnectionStatus {
+  not_connected
+  pending_oauth
+  live
+  error
+}
+
+/// Roles del equipo de carrera (Career Manifest W53_T01).
+enum CareerTeamRole {
+  ARTIST
+  MANAGER
+  LABEL
+  BOOKER
+  PR
+  LEGAL
+  ACCOUNTANT
+}
+
+enum CareerReleaseType {
+  SINGLE
+  EP
+  ALBUM
+  MIXTAPE
+  LIVE
+  COMPILATION
+}
+
+enum CareerGigStatus {
+  DRAFT
+  HOLD
+  CONFIRMED
+  PLAYED
+  SETTLED
+  CANCELLED
+}
+
+enum CareerContractStatus {
+  DRAFT
+  SENT
+  SIGNED
+  ACTIVE
+  CLOSED
+  CANCELLED
+}
+
+enum CareerCampaignChannel {
+  ORGANIC
+  EMAIL
+  PAID_SOCIAL
+  RADIO
+  PRESS
+  TICKETING
+}
+
+enum CareerCampaignStatus {
+  PLANNED
+  ACTIVE
+  PAUSED
+  FINISHED
+}
+
+enum CareerFanConsent {
+  unknown
+  granted
+  revoked
+}
+
+enum CareerPostStatus {
+  DRAFT
+  SCHEDULED
+  PUBLISHED
+  ARCHIVED
+}
+
+/// Extensión 1:1 del SSOT `artistProfile`. Tabla física propia
+/// (`career_artist_profile`) para no tocar ni duplicar `artistProfile`.
+/// PK = id de `artistProfile` (relación 1:1, onDelete Cascade).
+model ArtistProfile {
+  id              String        @id
+  artist          artistProfile @relation("CareerArtistIdentity", fields: [id], references: [id], onDelete: Cascade)
+  /// ISO 3166-1 alfa-2 del territorio base del artista.
+  territory       String        @default("ES")
+  /// Año de inicio de actividad declarado. null = dato ausente, nunca inventado.
+  activeSince     Int?
+  isni            String?       @unique
+  /// Referencia de gestión colectiva (SGAE y similares). Texto declarado por el artista.
+  proAffiliation  String?
+  ipiCae          String?
+  primaryGenre    String?
+  /// Céntimos enteros del caché base declarado (350,00 € = 35000).
+  baseFeeCents    Int?
+  careerNotes     String?       @db.Text
+  connections     PlatformConnection[]
+  releases        Release[]
+  teamMembers     TeamMember[]
+  gigs            Gig[]
+  contracts       Contract[]
+  royaltyStmts    RoyaltyStatement[]
+  campaigns       Campaign[]
+  fanContacts     FanContact[]
+  contentPosts    ContentPost[]
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@map("career_artist_profile")
+}
+
+/// Conexión del artista con una plataforma del registrar SSOT
+/// (src/lib/career/platform-registry.ts). Una fila por artista + plataforma.
+model PlatformConnection {
+  id              String                 @id @default(cuid())
+  artistId        String
+  artist          artistProfile          @relation(fields: [artistId], references: [id], onDelete: Cascade)
+  careerProfileId String?
+  careerProfile   ArtistProfile?         @relation(fields: [careerProfileId], references: [id], onDelete: Cascade)
+  /// id de platform-registry.ts. Nunca un identificador inventado.
+  platformId      String
+  status          CareerConnectionStatus @default(not_connected)
+  /// Token OAuth cifrado en reposo. Jamás texto plano ni secreto de servidor en cliente (INV-07).
+  encryptedToken  String?                @db.Text
+  /// Última sincronización real. null = nunca sincronizado.
+  lastSyncAt      DateTime?
+  /// Mensaje del último fallo del conector. null = sin error declarado.
+  error           String?                @db.Text
+  metrics         MetricSnapshot[]
+  createdAt       DateTime               @default(now())
+  updatedAt       DateTime               @updatedAt
+
+  @@unique([artistId, platformId], name: "uniq_connection_artist_platform")
+  @@index([careerProfileId], name: "idx_connection_career_profile")
+  @@index([status], name: "idx_connection_status")
+}
+
+/// Espejo Prisma de `MetricPoint` (platform-registry.ts). Serie temporal de métricas
+/// normalizadas por plataforma. `value` es entero: dinero en céntimos.
+model MetricSnapshot {
+  id             String                  @id @default(cuid())
+  artistId       String
+  artist         artistProfile           @relation("ArtistMetricSnapshots", fields: [artistId], references: [id], onDelete: Cascade)
+  platformId     String
+  connectionId   String?
+  connection     PlatformConnection?     @relation(fields: [connectionId], references: [id], onDelete: SetNull)
+  /// MetricKey del registry: plays | listeners | followers | views | ... | revenue_cents.
+  metric         String
+  /// Entero. `revenue_cents` en céntimos, jamás en euros flotantes.
+  value          Int
+  capturedAt     DateTime
+  source         CareerMetricSource      @default(demo)
+  /// Sello SHA-256 del payload de origen (CSV o JSON de API) para procedencia.
+  provenanceHash String?
+  createdAt      DateTime                @default(now())
+
+  @@index([artistId, platformId, metric, capturedAt], name: "idx_metric_artist_platform_metric_at")
+  @@index([connectionId], name: "idx_metric_connection")
+  @@index([capturedAt], name: "idx_metric_captured")
+}
+
+model Release {
+  id              String            @id @default(cuid())
+  artistId        String
+  artist          artistProfile     @relation(fields: [artistId], references: [id], onDelete: Cascade)
+  careerProfileId String?
+  careerProfile   ArtistProfile?    @relation(fields: [careerProfileId], references: [id], onDelete: Cascade)
+  title           String
+  /// Código UPC/EAN-13. null si aún no está asignado: no se inventa.
+  upc             String?
+  type            CareerReleaseType @default(SINGLE)
+  releaseDate     DateTime?
+  coverUrl        String?
+  label           String?
+  tracks          Track[]
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  @@unique([artistId, upc], name: "uniq_release_artist_upc")
+  @@index([artistId, releaseDate], name: "idx_release_artist_date")
+  @@index([careerProfileId], name: "idx_release_career_profile")
+}
+
+model Track {
+  id          String      @id @default(cuid())
+  releaseId   String
+  release     Release     @relation(fields: [releaseId], references: [id], onDelete: Cascade)
+  title       String
+  /// ISRC (grabación) / ISWC (obra). null = pendiente de registrar, no inventado.
+  isrc        String?
+  iswc        String?
+  /// Posición 1-based dentro del release.
+  trackNumber Int         @default(1)
+  durationSec Int
+  /// Reparto de derechos [{name, role, shareBp}] en puntos base enteros
+  /// (10 000 = 100,00 %). Prohibido Float: los puntos base suman 10 000 exactos.
+  splitsJson  Json?
+  mediaId     String?
+  media       MediaAsset? @relation(fields: [mediaId], references: [id], onDelete: SetNull)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@unique([releaseId, trackNumber], name: "uniq_track_release_position")
+  @@index([isrc], name: "idx_track_isrc")
+  @@index([iswc], name: "idx_track_iswc")
+  @@index([mediaId], name: "idx_track_media")
+}
+
+model TeamMember {
+  id              String         @id @default(cuid())
+  artistId        String
+  artist          artistProfile  @relation(fields: [artistId], references: [id], onDelete: Cascade)
+  careerProfileId String?
+  careerProfile   ArtistProfile? @relation(fields: [careerProfileId], references: [id], onDelete: Cascade)
+  role            CareerTeamRole @default(MANAGER)
+  name            String
+  email           String?
+  /// Contacto protegido bajo contact-gate: maskedPhone en UI pública (INV-12).
+  phone           String?
+  company         String?
+  /// Comisión en puntos base enteros (2 000 = 20,00 %).
+  commissionBp    Int?
+  isActive        Boolean        @default(true)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  @@index([artistId, role], name: "idx_team_artist_role")
+  @@index([careerProfileId], name: "idx_team_career_profile")
+}
+
+model Gig {
+  id              String          @id @default(cuid())
+  artistId        String
+  artist          artistProfile   @relation(fields: [artistId], references: [id], onDelete: Cascade)
+  careerProfileId String?
+  careerProfile   ArtistProfile?  @relation(fields: [careerProfileId], references: [id], onDelete: Cascade)
+  venue           String
+  city            String?
+  province        String?
+  eventDate       DateTime
+  startsAt        DateTime?
+  endsAt          DateTime?
+  status          CareerGigStatus @default(DRAFT)
+  /// Caché pactado en céntimos enteros (35000 = 350,00 €).
+  feeCents        Int             @default(0)
+  /// Logística S-Class en céntimos (150 = 1,50 €/km a partir del km 50).
+  kmRateCents     Int?
+  distanceKm      Int?
+  hotelCents      Int             @default(0)
+  /// Depósito Price-Lock en céntimos (10000 = 100,00 €), 100 % deducible (INV-03).
+  depositCents    Int             @default(0)
+  /// Sesión Stripe que selló el depósito. Repetirla no duplica fila (INV-08).
+  stripeSessionId String?         @unique
+  pax             Int?
+  notes           String?         @db.Text
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@index([artistId, eventDate], name: "idx_gig_artist_date")
+  @@index([status], name: "idx_gig_status")
+  @@index([careerProfileId], name: "idx_gig_career_profile")
+}
+
+model Contract {
+  id              String                @id @default(cuid())
+  artistId        String
+  artist          artistProfile         @relation(fields: [artistId], references: [id], onDelete: Cascade)
+  careerProfileId String?
+  careerProfile   ArtistProfile?        @relation(fields: [careerProfileId], references: [id], onDelete: Cascade)
+  gigId           String?
+  title           String
+  counterparty    String?
+  status          CareerContractStatus  @default(DRAFT)
+  /// Importe total en céntimos enteros (14 250,00 € = 1425000, techo B2G INV-04).
+  amountCents     Int                   @default(0)
+  currency        String                @default("EUR")
+  signedAt        DateTime?
+  expiresAt       DateTime?
+  /// Ruta o URL del PDF firmado. El binario no vive en el repo (CHG-3).
+  documentUrl     String?
+  /// Sello SHA-256 del documento para procedencia verificable.
+  documentSha256  String?
+  notes           String?               @db.Text
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
+
+  @@index([artistId, status], name: "idx_contract_artist_status")
+  @@index([gigId], name: "idx_contract_gig")
+  @@index([careerProfileId], name: "idx_contract_career_profile")
+}
+
+model RoyaltyStatement {
+  id                String         @id @default(cuid())
+  artistId          String
+  artist            artistProfile  @relation(fields: [artistId], references: [id], onDelete: Cascade)
+  careerProfileId   String?
+  careerProfile     ArtistProfile? @relation(fields: [careerProfileId], references: [id], onDelete: Cascade)
+  /// Plataforma o sociedad de gestión de origen (id del registry cuando aplique).
+  sourcePlatform    String?
+  periodStart       DateTime
+  periodEnd         DateTime
+  currency          String         @default("EUR")
+  /// Bruto, retención y neto SIEMPRE en céntimos enteros.
+  grossCents        Int            @default(0)
+  taxWithheldCents  Int            @default(0)
+  netCents          Int            @default(0)
+  /// Reparto Soberano 80/10/10 en céntimos: artista / EAR OS / VIMUME (INV-02).
+  artistShareCents  Int            @default(0)
+  platformShareCents Int           @default(0)
+  vimumeShareCents  Int            @default(0)
+  /// Sello SHA-256 del CSV/factura original. null = dato ausente declarado.
+  statementSha256   String?
+  statementUrl      String?
+  receivedAt        DateTime?
+  notes             String?        @db.Text
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+
+  @@unique([artistId, sourcePlatform, periodStart, periodEnd], name: "uniq_royalty_artist_source_period")
+  @@index([artistId, periodEnd], name: "idx_royalty_artist_period")
+  @@index([careerProfileId], name: "idx_royalty_career_profile")
+}
+
+model Campaign {
+  id              String                @id @default(cuid())
+  artistId        String
+  artist          artistProfile         @relation(fields: [artistId], references: [id], onDelete: Cascade)
+  careerProfileId String?
+  careerProfile   ArtistProfile?        @relation(fields: [careerProfileId], references: [id], onDelete: Cascade)
+  releaseId       String?
+  name            String
+  channel         CareerCampaignChannel @default(ORGANIC)
+  status          CareerCampaignStatus  @default(PLANNED)
+  startsAt        DateTime?
+  endsAt          DateTime?
+  /// Presupuesto y gasto real en céntimos enteros.
+  budgetCents     Int                   @default(0)
+  spendCents      Int                   @default(0)
+  /// Resultado medido (tickets, streams, leads). 0 = sin medición, no estimación fingida.
+  resultCount     Int                   @default(0)
+  notes           String?               @db.Text
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
+
+  @@index([artistId, status], name: "idx_campaign_artist_status")
+  @@index([releaseId], name: "idx_campaign_release")
+  @@index([careerProfileId], name: "idx_campaign_career_profile")
+}
+
+/// Contacto de fan declarado por el artista. Dato personal: retención mínima,
+/// cero volcado a logs ni a URLs (INV-14).
+model FanContact {
+  id              String           @id @default(cuid())
+  artistId        String
+  artist          artistProfile    @relation(fields: [artistId], references: [id], onDelete: Cascade)
+  careerProfileId String?
+  careerProfile   ArtistProfile?   @relation(fields: [careerProfileId], references: [id], onDelete: Cascade)
+  email           String?
+  phone           String?
+  displayName     String?
+  city            String?
+  country         String           @default("ES")
+  /// Consentimiento explícito RGPD: unknown | granted | revoked.
+  consent         CareerFanConsent @default(unknown)
+  consentAt       DateTime?
+  /// Origen del alta: whatsapp | web | gig | csv | manual.
+  source          String           @default("manual")
+  /// Etiquetas de segmentación. JSON pequeño, nunca volcado masivo.
+  tags            Json?
+  lastSeenAt      DateTime?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  @@unique([artistId, email], name: "uniq_fan_artist_email")
+  @@index([artistId, consent], name: "idx_fan_artist_consent")
+  @@index([careerProfileId], name: "idx_fan_career_profile")
+}
+
+model ContentPost {
+  id              String           @id @default(cuid())
+  artistId        String
+  artist          artistProfile    @relation(fields: [artistId], references: [id], onDelete: Cascade)
+  careerProfileId String?
+  careerProfile   ArtistProfile?   @relation(fields: [careerProfileId], references: [id], onDelete: Cascade)
+  /// id de platform-registry.ts cuando el post se publica vía conector.
+  platformId      String?
+  title           String?
+  body            String           @db.Text
+  status          CareerPostStatus @default(DRAFT)
+  scheduledAt     DateTime?
+  publishedAt     DateTime?
+  /// URL pública del post publicado. null = borrador; no se simula publicación.
+  publishedUrl    String?
+  mediaId         String?
+  media           MediaAsset?      @relation(fields: [mediaId], references: [id], onDelete: SetNull)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  @@index([artistId, status], name: "idx_post_artist_status")
+  @@index([careerProfileId], name: "idx_post_career_profile")
+  @@index([mediaId], name: "idx_post_media")
 }
 

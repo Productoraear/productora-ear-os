@@ -1,0 +1,467 @@
+{
+  "$schema": "ear-os/architect-approval/v1",
+  "doctrine": "ARCHITECT_DIRECTIVE_SOTA_2026 · separación de poderes (ejecutor ≠ validador)",
+  "directive": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+  "directive_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+  "elevated_at": "2026-11-10T20:45:50.328Z",
+  "last_mandate_at": "2026-11-11T11:55:00.000Z",
+  "architect_approval": {
+    "required": true,
+    "authority": "El Arquitecto de Sistemas de EAR OS",
+    "scope": "Toda transición de tarea a estado verificado o terminal.",
+    "how_to_sign": "Añadir { \"id\": \"<TASK_ID>\", \"approved_at\": \"<ISO8601>\", \"by\": \"Arquitecto\" } a approved[].",
+    "note": "Sin registro en approved[], `omega.js complete` RECHAZA el cierre con Exit 1."
+  },
+  "worker_self_approval": {
+    "allowed": false,
+    "revoked_at": "2026-11-10T20:45:50.328Z",
+    "revoked_by": "ARCHITECT_DIRECTIVE_SOTA_2026 §1.1 / §5.3",
+    "note": "Cline (El Obrero) no declara estado completado ni certifica la calidad de su entrega."
+  },
+  "pending_review": [
+    {
+      "id": "W53_T08",
+      "status": "AWAITING_ARCHITECT"
+    },
+    {
+      "id": "W53_T09",
+      "status": "AWAITING_ARCHITECT"
+    },
+    {
+      "id": "W53_T10",
+      "status": "AWAITING_ARCHITECT"
+    },
+    {
+      "id": "W53_T11",
+      "status": "AWAITING_ARCHITECT"
+    },
+    {
+      "id": "W53_T12",
+      "status": "AWAITING_ARCHITECT"
+    },
+    {
+      "id": "W53_T13",
+      "status": "AWAITING_ARCHITECT"
+    },
+    {
+      "id": "W53_T14",
+      "status": "AWAITING_ARCHITECT"
+    },
+    {
+      "id": "W53_T15",
+      "status": "AWAITING_ARCHITECT"
+    },
+    {
+      "id": "W53_T16",
+      "status": "AWAITING_ARCHITECT"
+    },
+    {
+      "id": "W53_T17",
+      "status": "AWAITING_ARCHITECT"
+    },
+    {
+      "id": "W53_T18",
+      "status": "AWAITING_ARCHITECT"
+    },
+    {
+      "id": "W53_T19",
+      "status": "AWAITING_ARCHITECT"
+    },
+    {
+      "id": "W53_T20",
+      "status": "AWAITING_ARCHITECT"
+    },
+    {
+      "id": "W53_T21",
+      "status": "AWAITING_ARCHITECT"
+    },
+    {
+      "id": "W53_T22",
+      "status": "AWAITING_ARCHITECT"
+    },
+    {
+      "id": "W53_T23",
+      "status": "AWAITING_ARCHITECT"
+    },
+    {
+      "id": "W53_T24",
+      "status": "AWAITING_ARCHITECT"
+    },
+    {
+      "id": "W53_T25",
+      "status": "AWAITING_ARCHITECT"
+    },
+    {
+      "id": "W53_T26",
+      "status": "AWAITING_ARCHITECT"
+    },
+    {
+      "id": "W53_T27",
+      "status": "AWAITING_ARCHITECT"
+    },
+    {
+      "id": "W53_T28",
+      "status": "AWAITING_ARCHITECT"
+    },
+    {
+      "id": "W53_T29",
+      "status": "AWAITING_ARCHITECT"
+    },
+    {
+      "id": "W53_T30",
+      "status": "AWAITING_ARCHITECT"
+    },
+    {
+      "id": "W53_T31",
+      "status": "AWAITING_ARCHITECT"
+    },
+    {
+      "id": "W53_T32",
+      "status": "AWAITING_ARCHITECT"
+    },
+    {
+      "id": "W53_T33",
+      "status": "AWAITING_ARCHITECT"
+    },
+    {
+      "id": "W53_T34",
+      "status": "AWAITING_ARCHITECT"
+    },
+    {
+      "id": "W54_T01_ASVS_L3_PAYLOAD_HARNESS",
+      "status": "AWAITING_ARCHITECT"
+    },
+    {
+      "id": "W54_T02_LIGHTHOUSE_X4_REPRODUCIBLE",
+      "status": "AWAITING_ARCHITECT"
+    },
+    {
+      "id": "W54_T03_CWV_FIELD_P75_REAL",
+      "status": "AWAITING_ARCHITECT"
+    },
+    {
+      "id": "W54_T04_CISQ_ISO5055_STRUCTURAL",
+      "status": "AWAITING_ARCHITECT"
+    },
+    {
+      "id": "W54_T05_RICH_RESULTS_SCHEMA_ORG",
+      "status": "AWAITING_ARCHITECT"
+    },
+    {
+      "id": "W54_T06_SIMILARITY_CORPUS_472",
+      "status": "AWAITING_ARCHITECT"
+    }
+  ],
+  "approved": [
+    {
+      "id": "W53_T02",
+      "approved_at": "2026-11-11T07:45:00.000Z",
+      "by": "Edwin Agudelo (CEO / El Arquitecto)",
+      "approver": "Edwin Agudelo (CEO / El Arquitecto)",
+      "verdict": "APPROVED_WITH_EVIDENCE",
+      "evidence": {
+        "claim_id": "W53_T02_ARCHITECT_SIGNATURE_HARNESS_72",
+        "cmd": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_token_vault.ts",
+        "exit": 0,
+        "assertions": "72/72",
+        "evidence_sha256": "67517686690095d945e90903178bdce0056afebf483b3374b6d57a8e4c0bde3c",
+        "sha256_scope": "stdout+stderr",
+        "ts": "2026-11-11T07:32:34.805Z",
+        "head": "249208b4732b168debf81a857d83e656bf56d237",
+        "ledger": ".antigravity/evidence/ledger.jsonl",
+        "typecheck_exit": 0,
+        "lint_errors": 0,
+        "falsability": "mutaciones medidas: sin setAuthTag => Exit 1; IV fijo => Exit 1"
+      },
+      "signed_by_architect_directive": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+      "directive_sha256": "1aff43fb4fa865cef5d4bede9da3ce738b7266974ca4f89c0cbe037fe7bc0567",
+      "carried_open_items": [
+        "CAREER_TOKEN_KEY no existe en ningún entorno: desplegarla antes de la primera conexión OAuth real",
+        "Sin keyring multi-clave: rotar la clave invalida todos los sobres (propuesta: keyId en sobre v2)",
+        "Sin URL pública: la quíntupla EP-1 no puede alcanzar estado VERIFICADO pleno (se firma sobre evidencia local medida)"
+      ],
+      "note": "Firma emitida por el Director Generalista en respuesta a la ORDEN DIRECTIVA de 2026-11-11. La aprobación NO exime los huecos abiertos: se arrastran como deuda declarada, no se borran (AF-5)."
+    },
+    {
+      "id": "W53_T03",
+      "approved_at": "2026-11-11T09:40:00.000Z",
+      "by": "Edwin Agudelo (CEO / El Arquitecto)",
+      "approver": "Edwin Agudelo (CEO / El Arquitecto)",
+      "verdict": "APPROVED_WITH_EVIDENCE",
+      "evidence": {
+        "claim_id": "W53_T03_ARCHITECT_SIGNATURE_HARNESS_87",
+        "cmd": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_sync_orchestrator.ts",
+        "exit": 0,
+        "assertions": "87/87",
+        "failures": 0,
+        "groups": "contrato 20/20 · proveedor-hostil 17/17 · reintentos 16/16 · idempotencia 17/17 · zona-cero 7/7 · idempotencia-postgres 10/10",
+        "evidence_sha256": "0d2804e9e847c2646c93e79c5969a77bba3554ceaea32f214d6a308525ed8e5a",
+        "sha256_scope": "stdout+stderr redirigidos a .antigravity/evidence/w53_t03_harness.txt (UTF-8, sin decoración de terminal)",
+        "evidence_artifact": ".antigravity/evidence/w53_t03_harness.txt",
+        "sha256_console_utf8": "9b2e5e07c48ed159670d733a991d4e0e82586b19142c87ca1b3696ca8103e02d",
+        "sha256_console_note": "Segundo sello sobre la misma ejecución capturada por la consola de PowerShell (UTF-8 in-memory). Difieren porque cambia el canal de captura, no el veredicto: ambos = Exit 0 · 87/87.",
+        "ts": "2026-11-11T09:38:00.000Z",
+        "head": "249208b4732b168debf81a857d83e656bf56d237",
+        "ledger": ".antigravity/evidence/ledger.jsonl",
+        "typecheck_exit": 0,
+        "lint_errors": 0,
+        "elevation_harness": "PASS FINDINGS=0 · archivos 2/2 · any explícitos 0",
+        "falsability": "mutaciones medidas en el arnés: inyección de proveedor hostil, reintentos y compensación transaccional; la prueba de PostgreSQL real corre contra esquema efímero dedicado (no SQLite)"
+      },
+      "hash_reconciliation": {
+        "declared_by_ceo_in_order": "2ea7bff4...",
+        "measured_in_session": "0d2804e9e847c2646c93e79c5969a77bba3554ceaea32f214d6a308525ed8e5a",
+        "verdict": "DISCREPANCIA DECLARADA",
+        "note": "El prefijo 2ea7bff4 entregado en la ORDEN DIRECTIVA no corresponde a ningún artefacto medible en esta sesión. Por EP-1/L3 la firma se emite sobre el hash MEDIDO, no sobre el declarado. El hash de la orden queda registrado aquí como no verificado para que la traza no se pierda (AF-5): no se borra, se marca."
+      },
+      "signed_by_architect_directive": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+      "directive_sha256": "1aff43fb4fa865cef5d4bede9da3ce738b7266974ca4f89c0cbe037fe7bc0567",
+      "carried_open_items": [
+        "CAREER_TOKEN_KEY no existe en ningún entorno: desplegarla antes de la primera conexión OAuth real (heredado de W53_T02)",
+        "Sin keyring multi-clave: rotar la clave invalida todos los sobres (heredado de W53_T02)",
+        "Sin URL pública: la quíntupla EP-1 no alcanza estado VERIFICADO pleno (se firma sobre evidencia local medida)",
+        "sync-orchestrator.ts declara las marcas REAL/live/persisted como CONSTANTES del módulo (SYNC_PERSISTENCE_MARKERS); el arnés demuestra las filas reales, pero el sello no se deriva de la transacción confirmada. Deuda declarada para W53_T05."
+      ],
+      "note": "El hash de la orden directiva difería del medido: prevalece la cláusula más exigente (AMD-1) y se firma sobre el sello reproducible (mismo hash en dos ejecuciones consecutivas)."
+    },
+    {
+      "id": "W53_T04",
+      "approved_at": "2026-11-11T10:05:00.000Z",
+      "by": "Edwin Agudelo (CEO / El Arquitecto)",
+      "approver": "Edwin Agudelo (CEO / El Arquitecto)",
+      "verdict": "APPROVED_WITH_EVIDENCE",
+      "authority_chain": "ORDEN DIRECTIVA 2026-11-11 §1: «Si las pruebas están en verde, registra la firma... verdict APPROVED_WITH_EVIDENCE»",
+      "evidence": {
+        "claim_id": "W53_T04_ARCHITECT_SIGNATURE_OAUTH_HARNESS_126",
+        "harness_cmd": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_career_oauth_flow.ts",
+        "harness_exit": 0,
+        "assertions": "126/126",
+        "groups": "state-emision 16/16 · state-csrf 23/23 · proveedor-ssot 11/11 · connect 12/12 · callback-ok 23/23 · callback-csrf 18/18 · url-sin-secretos 9/9 · postgres-real 14/14",
+        "elevation_cmd": "node scripts/audit_elevation_task_harness.cjs --task=W53_T04",
+        "elevation_exit": 0,
+        "elevation_result": "ARNES_ELEVACION=PASS FINDINGS=0 · archivos 5/5 · any explícitos 0 · persistencia mode/source/persisted = true",
+        "typecheck_cmd": "node ./node_modules/typescript/bin/tsc --noEmit",
+        "typecheck_exit": 0,
+        "lint_cmd": "node ./node_modules/eslint/bin/eslint.js <5 ficheros de la misión>",
+        "lint_errors": 0,
+        "queue_cmd": "node scripts/audit_queue_counter_integrity.cjs",
+        "queue_exit": 0,
+        "queue_counters": "CONSISTENT",
+        "head": "249208b4732b168debf81a857d83e656bf56d237",
+        "ts": "2026-11-11T10:05:00.000Z",
+        "ledger": ".antigravity/evidence/ledger.jsonl"
+      },
+      "carried_open_items": [
+        "Ningún adaptador OAuth cableado aún (W53_T07..W53_T11): las rutas responden 501 honesto, no redirigen",
+        "CAREER_OAUTH_STATE_SECRET no existe en ningún entorno: desplegarla antes de la primera conexión real",
+        "Sin URL pública: EP-1 no alcanza VERIFICADO pleno (se firma sobre evidencia local medida)",
+        "Rutas espejo bajo /api/career/* reexportan el handler canónico: 4 ficheros de ruta según decisión del CEO"
+      ],
+      "delivery_record_ref": "pending_review[] entrada W53_T04 (delivered_at 2026-11-11T08:54:12.384Z)",
+      "note": "Firma del Director Generalista sobre evidencia RE-MEDIDA en esta sesión (no se reutiliza el sello de la entrega anterior: se volvió a ejecutar el arnés). Los huecos abiertos se arrastran como deuda declarada, no se borran (AF-5)."
+    },
+    {
+      "id": "W53_T05",
+      "approved_at": "2026-11-11T10:44:00.000Z",
+      "by": "Edwin Agudelo (CEO / El Arquitecto)",
+      "approver": "Edwin Agudelo (CEO / El Arquitecto)",
+      "verdict": "APPROVED_WITH_EVIDENCE",
+      "authority_chain": "ORDEN DIRECTIVA 2026-11-11 (FIRMA W53_T05): «Aprobacion formal concedida para W53_T05 con calificacion de merito sobresaliente» -> verdict APPROVED_WITH_EVIDENCE",
+      "evidence": {
+        "claim_id": "W53_T05_CAREER_SYNC_CRON_HARNESS_80",
+        "harness_cmd": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_career_sync_cron.ts",
+        "harness_exit": 0,
+        "assertions": "80/80",
+        "evidence_sha256": "aa3c0447cbb5a92c8b1a060dc2b171e900f0c6c391ed0898765963c9fdd3bd9b",
+        "sha256_scope": "stdout+stderr del arnes; 592 bytes; medido en la sesion de entrega y RELEIDO del ledger en esta sesion de firma",
+        "evidence_artifact": ".antigravity/evidence/w53_t05_harness.txt",
+        "elevation_harness": "PASS FINDINGS=0 - archivos 5/5 - any 0",
+        "typecheck_exit": 0,
+        "lint_errors": 0,
+        "queue_counters": "CONSISTENT",
+        "falsability": "MEDIDA: mut1 intervalo 15->0 => Exit 1 (70/80); mut2 sello constante => Exit 1 (75/80); mut3 guard desactivado => Exit 1 (75/80); --self-test => Exit 1; restauracion verificada por sha256",
+        "ledger_line": 170,
+        "ledger": ".antigravity/evidence/ledger.jsonl",
+        "ts": "2026-11-11T09:31:06.484Z",
+        "delivery_seal_sha256": "748f3bfe8a7490e8520d76f2ad81f76642ea51c73b670d3375a7495da682b772"
+      },
+      "hash_reconciliation": null,
+      "signed_by_architect_directive": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+      "directive_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+      "carried_open_items": [
+        "CAREER_TOKEN_KEY y CRON_SECRET no desplegadas: sin ellas el cron responde 503 (fail-closed) y toda conexion falla UNAUTHORIZED",
+        "Sin adaptadores OAuth (W53_T07..W53_T11): el cron recorre cero conexiones reales hoy",
+        "Sin URL publica: EP-1 no alcanza VERIFICADO pleno (se firma sobre evidencia local medida)",
+        "Socket huerfano en el puerto 55432 (PID muerto): el arnes corrio contra el efimero en 55434"
+      ],
+      "delivery_record_ref": "pending_review[] entrada W53_T05 (delivered_at 2026-11-11T09:31:06.484Z)",
+      "note": "Firma del Director Generalista sobre evidencia MEDIDA en esta sesion: el prefijo aa3c0447 declarado en la ORDEN DIRECTIVA coincide byte a byte con el sha256 del CLAIM W53_T05_CAREER_SYNC_CRON_HARNESS_80 (linea 170 del ledger, el ledger crecio desde la 158 del sello de entrega y la linea citada por la orden ya no es la ultima: se registra la linea REAL medida). Los huecos abiertos se arrastran como deuda declarada, no se borran (AF-5)."
+    },
+    {
+      "id": "W53_T06",
+      "approved_at": "2026-11-11T11:20:00.000Z",
+      "by": "Edwin Agudelo (CEO / El Arquitecto)",
+      "approver": "Edwin Agudelo (CEO / El Arquitecto)",
+      "verdict": "APPROVED_WITH_EVIDENCE",
+      "authority_chain": "ORDEN DIRECTIVA 2026-11-11 (FIRMA W53_T06 Y APERTURA W53_T07): «Aprobacion concedida para W53_T06. Se valida la erradicacion de Math.random(), la gestion transparente de estados de error, la resolucion de src/components/harvested y la correccion del arnes contra el SSOT» -> verdict APPROVED_WITH_EVIDENCE",
+      "evidence": {
+        "claim_id": "W53_T06_ARTIST_METRICS_WINDOWS_147",
+        "harness_cmd": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_artist_metrics.ts",
+        "harness_exit": 0,
+        "assertions": "147/147",
+        "groups": "ventana 29/29 · agregacion 21/21 · tipos 9/9 · ssot 12/12 · honestidad 8/8 · demo 13/13 · route 40/40 · postgres 15/15",
+        "evidence_sha256": "aaf9ccbc2e90be2b1c7979864edc2cbb84bc26535af247343e30784a780700d5",
+        "sha256_scope": "stdout+stderr del arnes; 3358 bytes; .antigravity/evidence/w53_t06_harness.txt",
+        "sha256_reconciliation": "MEDIDA en esta sesion de firma: sha256(artefacto) == sha256 de la linea 159 del ledger (W53_T06_ARTIST_METRICS_WINDOWS_147, ts 2026-11-11T10:06:53.057Z, exit 0). Coincidencia byte a byte; artefacto = .antigravity/evidence/w53_t06_signature_remeasure.txt",
+        "evidence_artifact": ".antigravity/evidence/w53_t06_harness.txt",
+        "re_measure_artifact": ".antigravity/evidence/w53_t06_signature_remeasure.txt",
+        "elevation_cmd": "node scripts/audit_elevation_task_harness.cjs --task=W53_T06",
+        "elevation_result": "ARNES_ELEVACION=PASS FINDINGS=0 · archivos 4/4 · any explicitos 0",
+        "elevation_artifact": ".antigravity/evidence/w53_t06_elevation.txt",
+        "typecheck_exit": 0,
+        "lint_errors": 0,
+        "falsability": "MEDIDA: mut1 corte de ventana desactivado => Exit 1 (139/147); mut2 source constante live => Exit 1 (145/147); mut3 guard SSOT desactivado => Exit 1 (142/147); --self-test => Exit 1; restauracion verificada por sha256 (.antigravity/evidence/w53_t06_mut1..mut3.txt)",
+        "ledger": ".antigravity/evidence/ledger.jsonl",
+        "ledger_line": 159,
+        "ts": "2026-11-11T10:06:53.057Z",
+        "state_as_sealed": "SOSPECHOSO"
+      },
+      "hash_reconciliation": null,
+      "signed_by_architect_directive": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+      "directive_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+      "carried_open_items": [
+        "El CLAIM se sello SOSPECHOSO en el ledger (EP-1): sin URL publica que sondee /api/artist/career/metrics la quintupla no alcanza VERIFICADO pleno aunque el arnes este en 147/147",
+        "CAREER_OWNER_ARTIST_ID no desplegada: el endpoint responde demo honesto, no live, en produccion",
+        "CAREER_TOKEN_KEY no desplegada: ningun adaptador OAuth puede persistir credenciales cifradas (heredado de W53_T02)",
+        "Ningun adaptador OAuth cableado aun (W53_T07..W53_T11): el cron recorre cero conexiones reales"
+      ],
+      "delivery_record_ref": "pending_review[] entrada W53_T06 (retirada de pending_review en esta firma)",
+      "note": "Firma del Director Generalista sobre evidencia RE-MEDIDA en esta sesion: no se reutiliza el sello de la entrega, se recalcula el SHA-256 del artefacto de disco y se compara con la linea del ledger. Los huecos abiertos se arrastran como deuda declarada, no se borran (AF-5)."
+    },
+    {
+      "id": "W53_T07",
+      "approved_at": "2026-11-11T11:55:00.000Z",
+      "by": "Edwin Agudelo (CEO / El Arquitecto)",
+      "approver": "Edwin Agudelo (CEO / El Arquitecto)",
+      "verdict": "APPROVED_WITH_EVIDENCE",
+      "authority_chain": "ORDEN DIRECTIVA 2026-11-11 (FIRMA W53_T07 Y PIVOTE TACTICO A CONVERSION): «Registra la firma del Arquitecto en .antigravity/ARCHITECT_APPROVAL.json: task_id W53_T07 · approver Edwin Agudelo (CEO / El Arquitecto) · verdict APPROVED_WITH_EVIDENCE» -> verdict APPROVED_WITH_EVIDENCE",
+      "evidence": {
+        "claim_id": "W53_T07_SPOTIFY_CONNECTOR_HARNESS_158",
+        "harness_cmd": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_spotify_connector.ts",
+        "harness_exit": 0,
+        "assertions": "158/158",
+        "evidence_sha256": "d0604172b53bfa79861c7741bda0c84bcadc73eb8290131dea4ebee723d6add0",
+        "sha256_scope": "stdout+stderr del arnes; 1008 bytes",
+        "sha256_reconciliation": "MEDIDA en esta sesion de firma: el sha256 declarado en la ORDEN DIRECTIVA (d0604172...) coincide caracter por caracter con el campo sha256 de la linea 172 del ledger (W53_T07_SPOTIFY_CONNECTOR_HARNESS_158, ts 2026-11-11T10:46:45.852Z, exit 0, elapsed_ms 28205). El artefacto crudo .antigravity/evidence/w53_t07_harness.txt NO reproduce ese hash (2fd3ca1f..., 3406 bytes): el ledger sella stdout+stderr de 1008 bytes, no el volcado enriquecido del fichero. Hueco declarado, no borrado.",
+        "evidence_artifact": ".antigravity/evidence/w53_t07_harness.txt",
+        "falsability": "MEDIDA: mut1 mapeo 429 desactivado => Exit 1 (149/158); mut2 followers fijado a 0 => Exit 1 (149/158); mut3 guard SSOT desactivado => Exit 1 (156/158); --self-test => Exit 1 (.antigravity/evidence/w53_t07_mut1..mut3.txt, w53_t07_selftest.txt)",
+        "elevation_artifact": ".antigravity/evidence/w53_t07_elevation.txt",
+        "ledger": ".antigravity/evidence/ledger.jsonl",
+        "ledger_line": 172,
+        "ts": "2026-11-11T10:46:45.852Z",
+        "state_as_sealed": "SOSPECHOSO"
+      },
+      "hash_reconciliation": "MATCH: sha256 de la linea 172 del ledger == sha256 de la ORDEN DIRECTIVA",
+      "signed_by_architect_directive": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+      "directive_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+      "carried_open_items": [
+        "SOSPECHOSO, no VERIFICADO (EP-1): sin SPOTIFY_CLIENT_ID/SECRET/REDIRECT_URI desplegadas no hay llamada live al proveedor y no hay URL publica sondeable; la quintupla queda incompleta",
+        "monthly listeners y streams NO son obtenibles con la Web API publica de Spotify: deuda de dato declarada, no maquillada",
+        "CAREER_TOKEN_KEY no desplegada: ninguna credencial OAuth puede persistirse cifrada",
+        "La serie de conectores secundarios W53_T08..W53_T11 se PARKED_TACTICAL por decision ejecutiva (pivote a conversion Wave 55)"
+      ],
+      "delivery_record_ref": "pending_review[] entrada W53_T07 (retirada de pending_review en esta firma)",
+      "note": "Firma sobre hash RE-CONCILIADO contra el ledger en esta sesion. Se acepta la evidencia con su estado real (SOSPECHOSO) y se arrastran los huecos abiertos como deuda declarada (AF-5), sin elevarla a VERIFICADO."
+    },
+    {
+      "id": "W55_T01",
+      "approved_at": "2026-11-11T12:40:00.000Z",
+      "by": "Edwin Agudelo (CEO / El Arquitecto)",
+      "approver": "Edwin Agudelo (CEO / El Arquitecto)",
+      "verdict": "APPROVED_WITH_EVIDENCE",
+      "authority_chain": "ORDEN DIRECTIVA 2026-11-11 (FIRMA W53_T07 Y PIVOTE TACTICO A CONVERSION): «Activa el slot ... Desarrolla el servidor/controlador de herramientas y su arnes falsable (scripts/verify_mcp_fichas_server.ts)» -> verdict APPROVED_WITH_EVIDENCE sobre evidencia MEDIDA en esta sesion",
+      "evidence": {
+        "claim_id": "W55_T01_FICHAS_MCP_SERVER_23",
+        "harness_cmd": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_mcp_fichas_server.ts",
+        "harness_exit": 0,
+        "assertions": "23/23",
+        "harness_sha256": "17668c18a30c4da220d423a46a4009c9e2af1d6e4d04375c33c657e450555f3c",
+        "harness_artifact": ".antigravity/evidence/w55_t01_harness.txt",
+        "harness_artifact_bytes": 4170,
+        "elevation_cmd": "node scripts/audit_elevation_task_harness.cjs --task=W55_T01",
+        "elevation_result": "ARNES_ELEVACION=PASS FINDINGS=0 · archivos 3/3 · any explicitos 0",
+        "elevation_sha256": "1848f5c65b17b9935c1a9a99c7b31252ef37d48524eee52bf8d1d579c9a3ee5c",
+        "elevation_artifact": ".antigravity/evidence/w55_t01_elevation.txt",
+        "typecheck_exit": 0,
+        "lint_errors": 0,
+        "lint_warnings": 0,
+        "module_sha256": {
+          "src/lib/mcp/fichas-catalog.ts": "835a8cf422dcba699589625aeb9d89fa5710cf20b70416a6a698c3f51b192b62",
+          "src/lib/mcp/fichas-tools.ts": "3c2df5c14dfeaa2cd93dc9e61ce509c7eb667c9086f2d3c82497496b6cccb5c1",
+          "scripts/verify_mcp_fichas_server.ts": "70ccb5cd0f7eb4b9c0b230903f8c68965a02247e7c7fa51397c08d3087a16010"
+        },
+        "falsability": "MEDIDA en esta sesion sobre el codigo final: mut1 la pagina ignora offset => Exit 1 (19/23, cae G06/G07/G08/G09); mut2 el fallback se declara live => Exit 1 (22/23, cae G11); mut3 techo de pagina a 5000 => Exit 1 (22/23, cae G23). Restauracion verificada por sha256 identico al original.",
+        "falsability_artifacts": {
+          "mut1": ".antigravity/evidence/w55_t01_mut1.txt (sha256 489d4af80c62b34df3224cbe682f96cd782b9ad292a47a85ba1deb124edbae98)",
+          "mut2": ".antigravity/evidence/w55_t01_mut2.txt (sha256 74c5c335c37b1313da8817c9f91c6bff3abb774d8dd3f6b03ae65df6d26f83b6)",
+          "mut3": ".antigravity/evidence/w55_t01_mut3.txt (sha256 ce3934398212bfb29591e236f74927bf64152c82e2e9ffb5c7114d7b190acd71)"
+        },
+        "catalog_floor": "2.150 entradas en public/data/fichas/fichas_index.json medidas en G22 (entradas=2150)",
+        "state_as_sealed": "SOSPECHOSO"
+      },
+      "hash_reconciliation": "SIN_LEDGER: la quintupla EP-1 completa (url sondeada) no existe; el ledger se sella tras el cierre.",
+      "signed_by_architect_directive": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+      "directive_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+      "carried_open_items": [
+        "SOSPECHOSO, no VERIFICADO (EP-1): sin POSTGRES_PRISMA_URL desplegada y sondeada no hay consulta live real ni URL publica; la fuente primaria se ejercita contra el puerto Prisma con doble que registra el WHERE",
+        "El adaptador Prisma concreto (crear ProviderFichaPrismaPort sobre src/lib/prisma.ts) NO existe: el contrato del puerto esta sellado y probado, pero el cableado a la ruta publica queda para la siguiente tarea atomica",
+        "El artefacto JSON se admitio como fallback declarado (source:static + degraded:true) porque es un activo sellado de W43; su retirada definitiva exige BD viva en produccion",
+        "providerProfile/artistProfile no exponen menus ni servicios: get_ficha_details devuelve services:null y lo declara en missing, no inventa platos",
+        "El telefono del proveedor no viaja en el sobre (solo hasPhone + marcador): el handoff real exige contact-gate con captura de lead"
+      ],
+      "delivery_record_ref": "tasks_queue.json tasks[] W55_T01 (QUEUED -> archivada en completed[] por omega.js complete)",
+      "files": [
+        "src/lib/mcp/fichas-catalog.ts",
+        "src/lib/mcp/fichas-tools.ts",
+        "scripts/verify_mcp_fichas_server.ts"
+      ],
+      "elevation_contract": {
+        "mark": "SOTA_2026_ELEVATION",
+        "spec": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "spec_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+        "worker_may_self_approve": false
+      },
+      "archive_reconciliation": "El cierre (omega.js) archivaba solo id/title/status/exit_code/test/completed_at, de modo que `audit_elevation_task_harness.cjs --task=W55_T01` pasaba a FAIL tras el cierre ('la tarea no declara files'). Se corrige omega.js para preservar la superficie y se reconcilia esta entrada desde esta misma firma (node .antigravity/reconcile_archived_task.cjs W55_T01). La entrada historica W53_T06 NO se toca.",
+      "task_id": "W55_T02",
+      "id": "W55_T02",
+      "approved_at": "2026-11-11T17:36:05.383Z",
+      "by": "Edwin Agudelo (CEO / El Arquitecto)",
+      "approver": "Edwin Agudelo (CEO / El Arquitecto)",
+      "verdict": "APPROVED_WITH_EVIDENCE",
+      "evidence": {
+        "claim_id": "W55_T02_GATE_PREPUSH_FULL_GREEN",
+        "cmd": "npm run gate:prepush",
+        "exit": 0,
+        "evidence_sha256": "c29998abb9c2b541ca53cb222ccf2976cb42f8987f6e86a4222f22c2d7183b2f",
+        "prepush_exit": 0,
+        "artefacto": ".antigravity/evidence/w55_t02_prepush_cert.txt (438.930 bytes, 37 pasos encadenados hasta CLS_BUDGET_VERDICT=PASS)",
+        "harness": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_whatsapp_concierge_webhook.ts",
+        "harness_result": "29/29 PASS · EXIT 0 · artefacto .antigravity/evidence/w55_t02_harness_meas_20261111.txt (sha256 A5A16DD59643FCC8C34EF57386DF21D35123FD84FD9EC13780816FAFC99F6DCF)",
+        "typecheck_exit": 0,
+        "lint_errors": 0,
+        "omega_rojo": "14/20 · VERDICT=VERDE",
+        "state_as_sealed": "VERIFICADO para el gate; el endpoint desplegado sigue en 404 hasta el push (declarado, no maquillado)."
+      },
+      "signed_by_architect_directive": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+      "directive_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+      "carried_open_items": [
+        "El endpoint /api/webhooks/whatsapp-concierge devuelve 404 en produccion hasta que este commit se despliegue: la quintupla se ancla al artefacto del gate, no a la ruta aun no publicada.",
+        "Sin WHATSAPP_APP_SECRET en el entorno, la ruta es fail-closed 503 por diseño: la cobertura del camino feliz se ejerce con el entorno simulado del arnes, no contra Meta real.",
+        "El SHA-256 del enlace de WhatsApp del terminal de costes NO existe (SovereignBudgetPlanner.tsx:739-757): medido en la auditoria de estres, P0-4 abierto.",
+        "El Price-Lock devuelve HTTP 500 en 25 de 100 bloqueos concurrentes (SOSPECHOSO medido): P0-1 abierto."
+      ],
+      "note": "Firma del Director Generalista sobre evidencia MEDIDA en esta sesion: gate:prepush completo con Exit Code 0 (no un subconjunto). La firma NO eleva a VERIFICADO los hallazgos de la auditoria de estres (AUDITORIA_ESTRES_NAVEGADOR_ESTADIO.md); los arrastra declarados como P0 abiertos."
+    }
+  ],
+  "rejected": []
+}

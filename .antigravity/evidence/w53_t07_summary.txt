@@ -1,0 +1,31 @@
+W53_T07 SPOTIFY CONNECTOR :: EVIDENCE SUMMARY (2026-11-11)
+
+connector=src/lib/career/connectors/spotify.ts
+connector_sha256=9c8325af65874dbf8ca7f48ec4bf1496ccbd487306385487e0093d9767f7a94c
+harness=scripts/verify_spotify_connector.ts
+harness_sha256=89a8b9e645c38b625650b09e4d150aa2444d9f4b0f6973d8276157aaaaf988ca
+harness_artifact=.antigravity/evidence/w53_t07_harness.txt
+harness_sha256_artifact=a4ede09b5ef6495f120274baaecb5a7bd4477768304fd7eedd37132963ebc8ab
+harness_assertions=158/158 exit=0
+elevation=.antigravity/evidence/w53_t07_elevation.txt
+elevation_sha256=4d48b09f8939e07f22ee6a120cc52134194a55889e376ab43fa6b9f8b4984409
+
+FALSABILITY_MEASURED:
+  mut1 mapSpotifyHttpError 429 desactivado => Exit 1 (149/158)
+  mut2 followers value fijado a 0 => Exit 1 (149/158)
+  mut3 assertMetricPoints desactivado => Exit 1 (156/158)
+  --self-test => Exit 1 (157/158)
+  restauracion verificada por sha256
+
+LEDGER:
+  claim=W53_T07_SPOTIFY_CONNECTOR_HARNESS_158 state=SOSPECHOSO exit=0
+  lines=160 ends_with_newline=true all_parseable=true
+
+PENDING_DECLARED:
+  - SPOTIFY_CLIENT_ID/SECRET/REDIRECT_URI no desplegadas: cero llamada live al proveedor
+  - Sin URL publica: quintupla EP-1 incompleta
+  - monthly_listeners y streams NO obtenibles con la Web API publica (monto declarado, no estimado)
+
+PREEXISTING_NOT_MINE:
+  tsc reporta 2 errores en .next/dev/types/validator.ts (rutas W53_T04 callback/connect [platform] vs [provider])
+  reproducido con los ficheros de W53_T07 retirados: NO es regresion de esta tarea

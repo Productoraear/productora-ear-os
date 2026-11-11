@@ -18,6 +18,27 @@ export interface PlatformDef {
 
 export type MetricKey = 'plays' | 'listeners' | 'followers' | 'views' | 'watch_minutes' | 'likes' | 'shares' | 'comments' | 'saves' | 'revenue_cents' | 'tickets_sold';
 
+/**
+ * Lista en TIEMPO DE EJECUCIÓN de las claves de métrica admitidas. Se deriva del
+ * tipo `MetricKey`, así que añadir una métrica al tipo sin añadirla aquí rompe la
+ * compilación (`METRIC_KEYS` no satisface `readonly MetricKey[]`). Los conectores
+ * validan contra esta lista en lugar de duplicar la unión a mano (SEC-4).
+ */
+export const METRIC_KEYS = [
+  'plays',
+  'listeners',
+  'followers',
+  'views',
+  'watch_minutes',
+  'likes',
+  'shares',
+  'comments',
+  'saves',
+  'revenue_cents',
+  'tickets_sold',
+] as const satisfies readonly MetricKey[];
+
+
 export const PLATFORMS: readonly PlatformDef[] = [
   { id: 'spotify', label: 'Spotify for Artists', category: 'streaming', syncMode: 'oauth_api', metrics: ['plays', 'listeners', 'followers', 'saves'], docs: 'https://developer.spotify.com/documentation/web-api' },
   { id: 'apple-music', label: 'Apple Music for Artists', category: 'streaming', syncMode: 'csv_import', metrics: ['plays', 'listeners', 'saves'], docs: 'https://developer.apple.com/documentation/applemusicapi' },

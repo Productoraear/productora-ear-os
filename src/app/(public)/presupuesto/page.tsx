@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Metadata } from 'next';
 import TinderMatcherClient from '@/app/components/public/TinderMatcherClient';
+import { CommercialEventCalculator } from '@/components/calculator/CommercialEventCalculator';
 import { Sparkles, SlidersHorizontal, ArrowRight } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -9,6 +10,15 @@ export const metadata: Metadata = {
   description: 'Sistema interactivo de cotización en tiempo real, perfilado de eventos y matching de artistas de alta gama.',
 };
 
+/**
+ * RUTA CANÓNICA DEL COTIZADOR (ORDEN 2026-11-11 §1).
+ *
+ * Antes: `/presupuesto` sólo servía el matcher y el conmutador enviaba a
+ * `/cotizador`, ruta que NO existía (enlace muerto = INV-09 roto). Ahora la
+ * canónica sirve los DOS flujos en la misma página, con el estado en un único
+ * formulario: el recomendador arriba y el terminal de costes debajo.
+ * `/calculadora` y `/cotizador` redirigen aquí con 301 (next.config.ts).
+ */
 export default function PresupuestoPage() {
   return (
     <main className="min-h-screen bg-[#050505] text-[#f5f1e8] pt-32 pb-24 px-4 md:px-8">
@@ -20,39 +30,37 @@ export default function PresupuestoPage() {
             MOTOR TÁCTICO DE COTIZACIÓN // EAR OS S-CLASS
           </div>
           <h1 className="text-4xl sm:text-6xl font-black uppercase italic tracking-tighter text-white font-syne leading-[0.95]">
-            DISEÑA TU <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] via-amber-200 to-white">PRESUPUESTO</span>
+            DISEÑA TU <span className="text-[#ecb613]">PRESUPUESTO</span>
           </h1>
           <p className="text-sm sm:text-base text-zinc-400 font-light leading-relaxed">
-            Descubre el formato escénico idóneo mediante nuestro recomendador interactivo o cambia a la calculadora técnica de costes para desglosar servicios y logística.
+            Perfila el formato con el recomendador y desglosa cada servicio en el terminal de
+            costes. Un solo estado: lo que marcas arriba se cotiza abajo, al céntimo.
           </p>
 
-          {/* Unified Flow Switcher */}
+          {/* Anclas internas: misma página, cero rutas competidoras */}
           <div className="flex items-center justify-center pt-2">
             <div className="inline-flex p-1.5 bg-white/5 border border-white/10 rounded-2xl gap-2">
-              <Link
-                href="/presupuesto"
-                className="px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20 flex items-center gap-2"
+              <a
+                href="#matcher"
+                className="px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all text-white/60 hover:text-white hover:bg-white/5 flex items-center gap-2"
               >
                 <Sparkles size={14} />
                 <span>Recomendador / Matcher</span>
-              </Link>
-              <Link
-                href="/cotizador"
-                className="px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all text-white/60 hover:text-white hover:bg-white/5 flex items-center gap-2"
+              </a>
+              <a
+                href="#terminal-costes"
+                className="px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20 flex items-center gap-2"
               >
                 <SlidersHorizontal size={14} />
                 <span>Calculadora de Costes</span>
-              </Link>
+              </a>
             </div>
           </div>
         </div>
 
-        {/* Dynamic Matcher Component & Unified Flow */}
-        <div className="bg-[#0a0a0a] border border-white/10 rounded-3xl p-6 md:p-10 shadow-2xl relative overflow-hidden space-y-8">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-[#ecb613]/5 rounded-full blur-3xl pointer-events-none" />
-          
-          {/* Banner de Salto Inmediato al Túnel Neural */}
-          <div className="p-6 rounded-2xl bg-gradient-to-r from-amber-500/10 via-yellow-500/5 to-transparent border border-[#ecb613]/30 flex flex-col md:flex-row items-center justify-between gap-4">
+        {/* 1 · Recomendador / Matcher */}
+        <section id="matcher" className="bg-[#0a0a0a] border border-white/10 rounded-3xl p-6 md:p-10 shadow-2xl space-y-8 scroll-mt-32">
+          <div className="p-6 rounded-2xl bg-[#ecb613]/5 border border-[#ecb613]/30 flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="space-y-1">
               <span className="text-[10px] font-mono text-[#ecb613] uppercase tracking-widest block">Inteligencia Conductual 50Q</span>
               <h3 className="text-xl font-black text-white uppercase font-syne">¿Prefieres que el Túnel Neural profile tu evento paso a paso?</h3>
@@ -60,14 +68,20 @@ export default function PresupuestoPage() {
             </div>
             <Link
               href="/servicios"
-              className="px-6 py-3 rounded-xl bg-[#ecb613] text-black font-black text-xs uppercase tracking-wider flex items-center gap-2 hover:scale-105 transition-all shadow-[0_0_25px_rgba(236,182,19,0.3)] whitespace-nowrap"
+              className="px-6 py-3 rounded-xl bg-[#ecb613] text-black font-black text-xs uppercase tracking-wider flex items-center gap-2 hover:scale-105 transition-all whitespace-nowrap"
             >
-              <span>Abrir Túnel Neural →</span>
+              <span>Abrir Túnel Neural</span>
+              <ArrowRight size={14} />
             </Link>
           </div>
 
           <TinderMatcherClient />
-        </div>
+        </section>
+
+        {/* 2 · Terminal de costes (mismo estado, misma página) */}
+        <section id="terminal-costes" className="scroll-mt-32">
+          <CommercialEventCalculator />
+        </section>
       </div>
     </main>
   );

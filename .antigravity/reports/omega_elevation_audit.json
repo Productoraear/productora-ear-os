@@ -1,0 +1,353 @@
+{
+  "claim": "ARCHITECT_ELEVATION_SOTA_2026",
+  "ts": "2026-11-11T09:13:53.162Z",
+  "directive": {
+    "path": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+    "sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb"
+  },
+  "ledger": {
+    "path": ".antigravity/evidence/ledger.jsonl",
+    "exists": true,
+    "lines_read": 157,
+    "parse_errors": [],
+    "quintupla_complete": 97,
+    "quintupla_partial": 60,
+    "with_url": 67,
+    "exit_zero": 115,
+    "simulated_claims": [],
+    "non_canonical_states": [],
+    "amendments_appended": 0
+  },
+  "queue": {
+    "tasks_scanned": 36,
+    "elevated": [],
+    "already_elevated": [
+      "W53_T05",
+      "W53_T06",
+      "W53_T07",
+      "W53_T08",
+      "W53_T09",
+      "W53_T10",
+      "W53_T11",
+      "W53_T12",
+      "W53_T13",
+      "W53_T14",
+      "W53_T15",
+      "W53_T16",
+      "W53_T17",
+      "W53_T18",
+      "W53_T19",
+      "W53_T20",
+      "W53_T21",
+      "W53_T22",
+      "W53_T23",
+      "W53_T24",
+      "W53_T25",
+      "W53_T26",
+      "W53_T27",
+      "W53_T28",
+      "W53_T29",
+      "W53_T30",
+      "W53_T31",
+      "W53_T32",
+      "W53_T33",
+      "W53_T34",
+      "W54_T01_ASVS_L3_PAYLOAD_HARNESS",
+      "W54_T02_LIGHTHOUSE_X4_REPRODUCIBLE",
+      "W54_T03_CWV_FIELD_P75_REAL",
+      "W54_T04_CISQ_ISO5055_STRUCTURAL",
+      "W54_T05_RICH_RESULTS_SCHEMA_ORG",
+      "W54_T06_SIMILARITY_CORPUS_472"
+    ],
+    "skipped_non_executable": [],
+    "skipped_other_wave": [],
+    "compile_only_harness": [],
+    "scorecard_gap_tasks_created": [],
+    "scorecard_gap_tasks_present": [
+      "W54_T01_ASVS_L3_PAYLOAD_HARNESS",
+      "W54_T02_LIGHTHOUSE_X4_REPRODUCIBLE",
+      "W54_T03_CWV_FIELD_P75_REAL",
+      "W54_T04_CISQ_ISO5055_STRUCTURAL",
+      "W54_T05_RICH_RESULTS_SCHEMA_ORG",
+      "W54_T06_SIMILARITY_CORPUS_472"
+    ]
+  },
+  "authority": {
+    "$schema": "ear-os/architect-approval/v1",
+    "doctrine": "ARCHITECT_DIRECTIVE_SOTA_2026 · separación de poderes (ejecutor ≠ validador)",
+    "directive": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+    "directive_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
+    "elevated_at": "2026-11-10T20:45:50.328Z",
+    "last_mandate_at": "2026-11-11T09:13:53.162Z",
+    "architect_approval": {
+      "required": true,
+      "authority": "El Arquitecto de Sistemas de EAR OS",
+      "scope": "Toda transición de tarea a estado verificado o terminal.",
+      "how_to_sign": "Añadir { \"id\": \"<TASK_ID>\", \"approved_at\": \"<ISO8601>\", \"by\": \"Arquitecto\" } a approved[].",
+      "note": "Sin registro en approved[], `omega.js complete` RECHAZA el cierre con Exit 1."
+    },
+    "worker_self_approval": {
+      "allowed": false,
+      "revoked_at": "2026-11-10T20:45:50.328Z",
+      "revoked_by": "ARCHITECT_DIRECTIVE_SOTA_2026 §1.1 / §5.3",
+      "note": "Cline (El Obrero) no declara estado completado ni certifica la calidad de su entrega."
+    },
+    "pending_review": [
+      {
+        "id": "W53_T05",
+        "status": "AWAITING_ARCHITECT"
+      },
+      {
+        "id": "W53_T06",
+        "status": "AWAITING_ARCHITECT"
+      },
+      {
+        "id": "W53_T07",
+        "status": "AWAITING_ARCHITECT"
+      },
+      {
+        "id": "W53_T08",
+        "status": "AWAITING_ARCHITECT"
+      },
+      {
+        "id": "W53_T09",
+        "status": "AWAITING_ARCHITECT"
+      },
+      {
+        "id": "W53_T10",
+        "status": "AWAITING_ARCHITECT"
+      },
+      {
+        "id": "W53_T11",
+        "status": "AWAITING_ARCHITECT"
+      },
+      {
+        "id": "W53_T12",
+        "status": "AWAITING_ARCHITECT"
+      },
+      {
+        "id": "W53_T13",
+        "status": "AWAITING_ARCHITECT"
+      },
+      {
+        "id": "W53_T14",
+        "status": "AWAITING_ARCHITECT"
+      },
+      {
+        "id": "W53_T15",
+        "status": "AWAITING_ARCHITECT"
+      },
+      {
+        "id": "W53_T16",
+        "status": "AWAITING_ARCHITECT"
+      },
+      {
+        "id": "W53_T17",
+        "status": "AWAITING_ARCHITECT"
+      },
+      {
+        "id": "W53_T18",
+        "status": "AWAITING_ARCHITECT"
+      },
+      {
+        "id": "W53_T19",
+        "status": "AWAITING_ARCHITECT"
+      },
+      {
+        "id": "W53_T20",
+        "status": "AWAITING_ARCHITECT"
+      },
+      {
+        "id": "W53_T21",
+        "status": "AWAITING_ARCHITECT"
+      },
+      {
+        "id": "W53_T22",
+        "status": "AWAITING_ARCHITECT"
+      },
+      {
+        "id": "W53_T23",
+        "status": "AWAITING_ARCHITECT"
+      },
+      {
+        "id": "W53_T24",
+        "status": "AWAITING_ARCHITECT"
+      },
+      {
+        "id": "W53_T25",
+        "status": "AWAITING_ARCHITECT"
+      },
+      {
+        "id": "W53_T26",
+        "status": "AWAITING_ARCHITECT"
+      },
+      {
+        "id": "W53_T27",
+        "status": "AWAITING_ARCHITECT"
+      },
+      {
+        "id": "W53_T28",
+        "status": "AWAITING_ARCHITECT"
+      },
+      {
+        "id": "W53_T29",
+        "status": "AWAITING_ARCHITECT"
+      },
+      {
+        "id": "W53_T30",
+        "status": "AWAITING_ARCHITECT"
+      },
+      {
+        "id": "W53_T31",
+        "status": "AWAITING_ARCHITECT"
+      },
+      {
+        "id": "W53_T32",
+        "status": "AWAITING_ARCHITECT"
+      },
+      {
+        "id": "W53_T33",
+        "status": "AWAITING_ARCHITECT"
+      },
+      {
+        "id": "W53_T34",
+        "status": "AWAITING_ARCHITECT"
+      },
+      {
+        "id": "W54_T01_ASVS_L3_PAYLOAD_HARNESS",
+        "status": "AWAITING_ARCHITECT"
+      },
+      {
+        "id": "W54_T02_LIGHTHOUSE_X4_REPRODUCIBLE",
+        "status": "AWAITING_ARCHITECT"
+      },
+      {
+        "id": "W54_T03_CWV_FIELD_P75_REAL",
+        "status": "AWAITING_ARCHITECT"
+      },
+      {
+        "id": "W54_T04_CISQ_ISO5055_STRUCTURAL",
+        "status": "AWAITING_ARCHITECT"
+      },
+      {
+        "id": "W54_T05_RICH_RESULTS_SCHEMA_ORG",
+        "status": "AWAITING_ARCHITECT"
+      },
+      {
+        "id": "W54_T06_SIMILARITY_CORPUS_472",
+        "status": "AWAITING_ARCHITECT"
+      }
+    ],
+    "approved": [
+      {
+        "id": "W53_T02",
+        "approved_at": "2026-11-11T07:45:00.000Z",
+        "by": "Edwin Agudelo (CEO / El Arquitecto)",
+        "approver": "Edwin Agudelo (CEO / El Arquitecto)",
+        "verdict": "APPROVED_WITH_EVIDENCE",
+        "evidence": {
+          "claim_id": "W53_T02_ARCHITECT_SIGNATURE_HARNESS_72",
+          "cmd": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_token_vault.ts",
+          "exit": 0,
+          "assertions": "72/72",
+          "evidence_sha256": "67517686690095d945e90903178bdce0056afebf483b3374b6d57a8e4c0bde3c",
+          "sha256_scope": "stdout+stderr",
+          "ts": "2026-11-11T07:32:34.805Z",
+          "head": "249208b4732b168debf81a857d83e656bf56d237",
+          "ledger": ".antigravity/evidence/ledger.jsonl",
+          "typecheck_exit": 0,
+          "lint_errors": 0,
+          "falsability": "mutaciones medidas: sin setAuthTag => Exit 1; IV fijo => Exit 1"
+        },
+        "signed_by_architect_directive": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "directive_sha256": "1aff43fb4fa865cef5d4bede9da3ce738b7266974ca4f89c0cbe037fe7bc0567",
+        "carried_open_items": [
+          "CAREER_TOKEN_KEY no existe en ningún entorno: desplegarla antes de la primera conexión OAuth real",
+          "Sin keyring multi-clave: rotar la clave invalida todos los sobres (propuesta: keyId en sobre v2)",
+          "Sin URL pública: la quíntupla EP-1 no puede alcanzar estado VERIFICADO pleno (se firma sobre evidencia local medida)"
+        ],
+        "note": "Firma emitida por el Director Generalista en respuesta a la ORDEN DIRECTIVA de 2026-11-11. La aprobación NO exime los huecos abiertos: se arrastran como deuda declarada, no se borran (AF-5)."
+      },
+      {
+        "id": "W53_T03",
+        "approved_at": "2026-11-11T09:40:00.000Z",
+        "by": "Edwin Agudelo (CEO / El Arquitecto)",
+        "approver": "Edwin Agudelo (CEO / El Arquitecto)",
+        "verdict": "APPROVED_WITH_EVIDENCE",
+        "evidence": {
+          "claim_id": "W53_T03_ARCHITECT_SIGNATURE_HARNESS_87",
+          "cmd": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_sync_orchestrator.ts",
+          "exit": 0,
+          "assertions": "87/87",
+          "failures": 0,
+          "groups": "contrato 20/20 · proveedor-hostil 17/17 · reintentos 16/16 · idempotencia 17/17 · zona-cero 7/7 · idempotencia-postgres 10/10",
+          "evidence_sha256": "0d2804e9e847c2646c93e79c5969a77bba3554ceaea32f214d6a308525ed8e5a",
+          "sha256_scope": "stdout+stderr redirigidos a .antigravity/evidence/w53_t03_harness.txt (UTF-8, sin decoración de terminal)",
+          "evidence_artifact": ".antigravity/evidence/w53_t03_harness.txt",
+          "sha256_console_utf8": "9b2e5e07c48ed159670d733a991d4e0e82586b19142c87ca1b3696ca8103e02d",
+          "sha256_console_note": "Segundo sello sobre la misma ejecución capturada por la consola de PowerShell (UTF-8 in-memory). Difieren porque cambia el canal de captura, no el veredicto: ambos = Exit 0 · 87/87.",
+          "ts": "2026-11-11T09:38:00.000Z",
+          "head": "249208b4732b168debf81a857d83e656bf56d237",
+          "ledger": ".antigravity/evidence/ledger.jsonl",
+          "typecheck_exit": 0,
+          "lint_errors": 0,
+          "elevation_harness": "PASS FINDINGS=0 · archivos 2/2 · any explícitos 0",
+          "falsability": "mutaciones medidas en el arnés: inyección de proveedor hostil, reintentos y compensación transaccional; la prueba de PostgreSQL real corre contra esquema efímero dedicado (no SQLite)"
+        },
+        "hash_reconciliation": {
+          "declared_by_ceo_in_order": "2ea7bff4...",
+          "measured_in_session": "0d2804e9e847c2646c93e79c5969a77bba3554ceaea32f214d6a308525ed8e5a",
+          "verdict": "DISCREPANCIA DECLARADA",
+          "note": "El prefijo 2ea7bff4 entregado en la ORDEN DIRECTIVA no corresponde a ningún artefacto medible en esta sesión. Por EP-1/L3 la firma se emite sobre el hash MEDIDO, no sobre el declarado. El hash de la orden queda registrado aquí como no verificado para que la traza no se pierda (AF-5): no se borra, se marca."
+        },
+        "signed_by_architect_directive": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
+        "directive_sha256": "1aff43fb4fa865cef5d4bede9da3ce738b7266974ca4f89c0cbe037fe7bc0567",
+        "carried_open_items": [
+          "CAREER_TOKEN_KEY no existe en ningún entorno: desplegarla antes de la primera conexión OAuth real (heredado de W53_T02)",
+          "Sin keyring multi-clave: rotar la clave invalida todos los sobres (heredado de W53_T02)",
+          "Sin URL pública: la quíntupla EP-1 no alcanza estado VERIFICADO pleno (se firma sobre evidencia local medida)",
+          "sync-orchestrator.ts declara las marcas REAL/live/persisted como CONSTANTES del módulo (SYNC_PERSISTENCE_MARKERS); el arnés demuestra las filas reales, pero el sello no se deriva de la transacción confirmada. Deuda declarada para W53_T05."
+        ],
+        "note": "El hash de la orden directiva difería del medido: prevalece la cláusula más exigente (AMD-1) y se firma sobre el sello reproducible (mismo hash en dos ejecuciones consecutivas)."
+      },
+      {
+        "id": "W53_T04",
+        "approved_at": "2026-11-11T10:05:00.000Z",
+        "by": "Edwin Agudelo (CEO / El Arquitecto)",
+        "approver": "Edwin Agudelo (CEO / El Arquitecto)",
+        "verdict": "APPROVED_WITH_EVIDENCE",
+        "authority_chain": "ORDEN DIRECTIVA 2026-11-11 §1: «Si las pruebas están en verde, registra la firma... verdict APPROVED_WITH_EVIDENCE»",
+        "evidence": {
+          "claim_id": "W53_T04_ARCHITECT_SIGNATURE_OAUTH_HARNESS_126",
+          "harness_cmd": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_career_oauth_flow.ts",
+          "harness_exit": 0,
+          "assertions": "126/126",
+          "groups": "state-emision 16/16 · state-csrf 23/23 · proveedor-ssot 11/11 · connect 12/12 · callback-ok 23/23 · callback-csrf 18/18 · url-sin-secretos 9/9 · postgres-real 14/14",
+          "elevation_cmd": "node scripts/audit_elevation_task_harness.cjs --task=W53_T04",
+          "elevation_exit": 0,
+          "elevation_result": "ARNES_ELEVACION=PASS FINDINGS=0 · archivos 5/5 · any explícitos 0 · persistencia mode/source/persisted = true",
+          "typecheck_cmd": "node ./node_modules/typescript/bin/tsc --noEmit",
+          "typecheck_exit": 0,
+          "lint_cmd": "node ./node_modules/eslint/bin/eslint.js <5 ficheros de la misión>",
+          "lint_errors": 0,
+          "queue_cmd": "node scripts/audit_queue_counter_integrity.cjs",
+          "queue_exit": 0,
+          "queue_counters": "CONSISTENT",
+          "head": "249208b4732b168debf81a857d83e656bf56d237",
+          "ts": "2026-11-11T10:05:00.000Z",
+          "ledger": ".antigravity/evidence/ledger.jsonl"
+        },
+        "carried_open_items": [
+          "Ningún adaptador OAuth cableado aún (W53_T07..W53_T11): las rutas responden 501 honesto, no redirigen",
+          "CAREER_OAUTH_STATE_SECRET no existe en ningún entorno: desplegarla antes de la primera conexión real",
+          "Sin URL pública: EP-1 no alcanza VERIFICADO pleno (se firma sobre evidencia local medida)",
+          "Rutas espejo bajo /api/career/* reexportan el handler canónico: 4 ficheros de ruta según decisión del CEO"
+        ],
+        "delivery_record_ref": "pending_review[] entrada W53_T04 (delivered_at 2026-11-11T08:54:12.384Z)",
+        "note": "Firma del Director Generalista sobre evidencia RE-MEDIDA en esta sesión (no se reutiliza el sello de la entrega anterior: se volvió a ejecutar el arnés). Los huecos abiertos se arrastran como deuda declarada, no se borran (AF-5)."
+      }
+    ],
+    "rejected": []
+  },
+  "verdict": "ELEVATION_APPLIED"
+}

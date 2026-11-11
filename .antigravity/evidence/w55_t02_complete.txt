@@ -1,0 +1,63 @@
+[OMEGA] Validando TypeScript...
+tsc --noEmit = Exit Code 0.
+[OMEGA] Validando ESLint...
+(node:9272) ESLintIgnoreWarning: The ".eslintignore" file is no longer supported. Switch to using the "ignores" property in "eslint.config.js": https://eslint.org/docs/latest/use/configure/migration-guide#ignore-files
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+D:\EAR_OS_V2\EAR_OS_V2\scripts\verify_whatsapp_concierge_webhook.ts
+  0:0  warning  File ignored because of a matching ignore pattern. Use "--no-ignore" to disable file ignore settings or use "--no-warn-ignored" to suppress this warning
+
+✖ 1 problem (0 errors, 1 warning)
+
+eslint = Exit Code 0.
+[OMEGA] Ejecutando prueba: node ./node_modules/typescript/bin/tsc --noEmit && node ./node_modules/tsx/dist/cli.mjs scripts/verify_whatsapp_concierge_webhook.ts && node scripts/audit_elevation_task_harness.cjs --task=W55_T02
+[n8n-dispatcher] call-center-intake no OK (404).
+[n8n-dispatcher] call-center-intake no OK (404).
+[n8n-dispatcher] call-center-intake no OK (404).
+[n8n-dispatcher] DLQ encolado para call-center-intake: HTTP 404
+PASS  W01_MANIFEST           verificacion + parseo + plan exportados
+PASS  W02_HANDSHAKE_OK       ok=true
+PASS  W03_HANDSHAKE_TOKEN    status=403
+PASS  W04_HANDSHAKE_MODE     status=400
+PASS  W05_HANDSHAKE_NOENV    status=503
+PASS  W06_SIGNATURE_OK       ok=true
+PASS  W07_SIGNATURE_MUTADA   status=403
+PASS  W09_PARSE_TEXT         kind=TEXT waRef=af24ac08...
+PASS  W10_PARSE_BUTTON       slug=v-10615
+PASS  W11_PARSE_N8N          id=evt-77
+PASS  W12_PARSE_BASURA       entry_vacia=rechazada
+PASS  W13_INTENT_PAX         con_unidad=120 suelto=null
+PASS  W14_INTENT_EUROS       cents=150050
+PASS  W15_SPLIT_80_10_10     artista=1200.40 earOs=150.05 vimume=150.05 suma=150050
+PASS  W16_DEPOSITO_100       deposito=100.00 resto=1400.50
+PASS  W17_PRICE_LOCK_LINK    href=/checkout/presupuesto?venue=Pontedeume%20(Santiago)&format=musica&base
+PASS  W18_NO_COBRA           plan=false ruta=true
+PASS  W19_SIN_FICHA_INVENTA  sugerencias=0
+PASS  W20_SIN_PII            telefono_en_respuesta=false waRef_len=24
+PASS  W21_TOOL_CALLS         tools=[calculate_quote, get_ficha_details, get_ficha_details, get_ficha_details]
+PASS  W22_IDEMPOTENCIA       sha256=52b944adc9fd...
+PASS  W23_ZERO_ANY           archivos=2 infracciones=0
+PASS  W24_RUTA_DENY          PUT=405 DELETE=405
+PASS  W25_RUTA_NO_AUTH       status=401 gate=origin
+PASS  W26_RUTA_SIN_SECRETO   status=503
+PASS  W27_RUTA_OK            status=200 delivered=false dlq=true split=true
+PASS  W28_MCP_ENDPOINT       mcp=https://www.productoraear.com/api/mcp/concierge
+PASS  W02B_RUTA_HANDSHAKE    status=200 challenge=987654
+PASS  W29_SSOT_BASE          tarifa_base=350.00
+
+29/29 verificaciones superadas
+WHATSAPP_CONCIERGE=PASS
+── ARNÉS FALSABLE DE ELEVACIÓN ────────────────────────────────
+tarea            : W55_T02 [QUEUED]
+contrato elevado : SOTA_2026_ELEVATION
+archivos         : 3/3 presentes
+any explícitos   : 0
+ARNES_ELEVACION=PASS FINDINGS=0
+prueba = Exit Code 0.
+
+W55_T02 -> COMPLETADA Y PURGADA.
+---
+PACTO ZTM: DETENTE. Cierra esta sesion de Cline.
+Abre Start New Task (+) y escribe: node .antigravity/omega.js next
+---
+

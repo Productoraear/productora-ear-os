@@ -53,6 +53,9 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 
+import { CANONICAL_QUOTE_PATH, type FormSnapshot, type FormSnapshotItem } from '@/lib/budget/form-bridge';
+import { useMcpConciergeBridge } from '@/hooks/useMcpConciergeBridge';
+
 // ── DEFINICIÓN DE TIPOS S-CLASS ──
 export interface BudgetCategory {
   id: string;
@@ -60,7 +63,8 @@ export interface BudgetCategory {
   allocated: number;
   isLocked: boolean;
   color: string;
-  icon: any;
+  /** Componente de icono de lucide-react: tipado, sin `any` (orden §4). */
+  icon: React.ComponentType<{ className?: string; size?: number | string; strokeWidth?: number | string }>;
   apiCategory?: string; // Para match en /api/profiles/search
   routeHref?: string;   // Enlace al catálogo
   lakeCountLabel?: string;
@@ -77,7 +81,8 @@ export interface OfficialPack {
   badge: string;
   description: string;
   features: string[];
-  icon: any;
+  /** Icono de lucide-react tipado: cero `any` (orden §4). */
+  icon: React.ComponentType<{ className?: string; size?: number | string; strokeWidth?: number | string }>;
   highlight?: boolean;
 }
 
@@ -412,16 +417,23 @@ export default function SovereignBudgetPlanner() {
           if (decoded.paxCount) setPaxCount(Number(decoded.paxCount));
           if (decoded.province) setProvince(decoded.province);
           if (Array.isArray(decoded.categories)) {
-            const hydrated = decoded.categories.map((c: any) => {
-              const base = INITIAL_CATEGORIES.find((b) => b.id === c.id);
+            const hydrated = (decoded.categories as Array<Partial<BudgetCategory>>).map((c) => {
+              const id: string = typeof c.id === 'string' ? c.id : '';
+              const base = INITIAL_CATEGORIES.find((b) => b.id === id);
               return {
-                ...c,
+                id,
+                name: typeof c.name === 'string' ? c.name : (base?.name ?? id),
+                allocated: Number(c.allocated) || 0,
+                isLocked: c.isLocked === true,
+                description: typeof c.description === 'string' ? c.description : (base?.description ?? ''),
                 color: base?.color || '#ecb613',
                 icon: base?.icon || Sparkles,
                 apiCategory: base?.apiCategory,
                 routeHref: base?.routeHref,
-                lakeCountLabel: base?.lakeCountLabel
-              };
+                lakeCountLabel: base?.lakeCountLabel,
+                benchmarkMinPerPax: base?.benchmarkMinPerPax,
+                benchmarkMinFixed: base?.benchmarkMinFixed
+              } satisfies BudgetCategory;
             });
             setCategories(hydrated);
           }
@@ -471,6 +483,39 @@ export default function SovereignBudgetPlanner() {
 
   const remainingBudget = totalBudget - totalAllocated;
   const allocationPercent = totalBudget > 0 ? Math.min(100, Math.round((totalAllocated / totalBudget) * 100)) : 0;
+
+  /**
+   * 📡 PUENTE MCP (orden §3): las casillas marcadas viajan al agente en
+   * CÉNTIMOS enteros. Antes el concierge respondía «no puedo ver las casillas»
+   * porque este estado nunca salía del componente.
+   */
+  const formSnapshot: FormSnapshot = useMemo(() => {
+    const items: FormSnapshotItem[] = categories.map((cat) => ({
+      id: cat.id,
+      label: cat.name,
+      category: cat.id,
+      unitPriceCents: Math.round((Number(cat.allocated) || 0) * 100),
+      quantity: 1,
+      selected: (Number(cat.allocated) || 0) > 0,
+      providerId: null,
+    }));
+    return {
+      totalCents: Math.round(Math.max(0, totalBudget) * 100),
+      selectedServices: items,
+      lockedCategories: categories.filter((cat) => cat.isLocked).map((cat) => cat.id),
+      providerId: null,
+    };
+  }, [categories, totalBudget]);
+
+  // Cotización del agente sobre el estado REAL del formulario.
+  const { quote: mcpQuote, error: mcpError } = useMcpConciergeBridge(formSnapshot);
+  /** El agente es la fuente del desglose; el local es la proyección inmediata. */
+  const agentChecked: string = useMemo(() => {
+    if (mcpQuote === null) return mcpError === null ? 'Sincronizando con el conserje…' : 'Conserje no disponible';
+    return mcpQuote.balanced ? 'Desglose verificado por el conserje' : 'Desglose con avisos del conserje';
+  }, [mcpQuote, mcpError]);
+
+
 
   // Split Soberano 80/10/10 Canónico
   const artistSplit = useMemo(() => totalAllocated * 0.80, [totalAllocated]);
@@ -682,7 +727,9 @@ export default function SovereignBudgetPlanner() {
     };
     const jsonStr = JSON.stringify(payload);
     const b64 = btoa(encodeURIComponent(jsonStr));
-    const fullUrl = `${window.location.origin}/calculadora#plan=${b64}`;
+    // Ruta CANÓNICA: `/calculadora` es un 301 desde la orden de unificación; un
+    // enlace compartido debe nacer ya en la canónica (cero redirección en vía).
+    const fullUrl = `${window.location.origin}${CANONICAL_QUOTE_PATH}#plan=${b64}`;
     navigator.clipboard.writeText(fullUrl);
     setCopiedLink(true);
     setTimeout(() => setCopiedLink(false), 3000);
@@ -972,6 +1019,12 @@ export default function SovereignBudgetPlanner() {
                 </span>
                 <span className="text-[10px] font-mono text-zinc-500 block mt-1">
                   Asignado: {totalAllocated.toLocaleString()} € ({allocationPercent}%)
+                </span>
+                {/* Estado REAL del desglose según el conserje MCP (orden §3). */}
+                <span
+                  className={`text-[10px] font-mono block mt-1 ${mcpQuote?.balanced === true ? 'text-emerald-400' : mcpQuote === null ? 'text-zinc-500' : 'text-amber-400'}`}
+                >
+                  {agentChecked}
                 </span>
               </div>
             </div>

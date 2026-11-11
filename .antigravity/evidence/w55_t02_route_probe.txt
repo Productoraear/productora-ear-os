@@ -1,0 +1,8 @@
+﻿/encargos -> 200 0.5s bytes=137855
+/reservar/solista -> 200 4.4s bytes=139764
+/vimume -> 200 0.6s bytes=176378
+/fincas -> 200 0.7s bytes=373553
+/directorio -> 200 1s bytes=304718
+/calculadora -> ERR 0s
+/artistas -> 200 0.8s bytes=215045
+/presupuesto -> 200 0.8s bytes=239529

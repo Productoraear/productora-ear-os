@@ -1,0 +1,33 @@
+[PREFLIGHT] http://127.0.0.1:3007 responde (TCP abierto) · probed=true · source=live · mode=REAL
+
+=== AUDITANDO http://127.0.0.1:3007/
+  HTTP 200 · nodos de texto: 232
+  FALLOS AA REALES: 0 · SOBRE IMAGEN/BLEND (dudoso): 0
+
+=== AUDITANDO http://127.0.0.1:3007/proveedores
+  HTTP 200 · nodos de texto: 146
+  FALLOS AA REALES: 0 · SOBRE IMAGEN/BLEND (dudoso): 0
+
+=== AUDITANDO http://127.0.0.1:3007/otzarreta
+  HTTP 200 · nodos de texto: 513
+  FALLOS AA REALES: 0 · SOBRE IMAGEN/BLEND (dudoso): 0
+
+=== AUDITANDO http://127.0.0.1:3007/encargos
+  HTTP 200 · nodos de texto: 143
+  FALLOS AA REALES: 0 · SOBRE IMAGEN/BLEND (dudoso): 0
+
+=== AUDITANDO http://127.0.0.1:3007/reservar/solista
+  HTTP 200 · nodos de texto: 235
+  FALLOS AA REALES: 0 · SOBRE IMAGEN/BLEND (dudoso): 0
+
+================ SUMMARY ================
+/ -> fallos: 0 (scan 232)
+/proveedores -> fallos: 0 (scan 146)
+/otzarreta -> fallos: 0 (scan 513)
+/encargos -> fallos: 0 (scan 143)
+/reservar/solista -> fallos: 0 (scan 235)
+TOTAL_FALLOS=0
+TOTAL_INDETERMINATE=0
+REPORT=reports/contrast/wcag_report.json
+ROUTES_SIN_EVIDENCIA=0
+VERDICT=PASS

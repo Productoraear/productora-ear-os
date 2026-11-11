@@ -1,0 +1,3 @@
+﻿ÔöÇÔöÇ ARN├ëS FALSABLE ┬À LEDGER APPEND-ONLY ┬À TERMINADOR \n ÔöÇÔöÇ
+aserciones: 27/27 ┬À fallos: 0
+LEDGER_NEWLINE=PASS

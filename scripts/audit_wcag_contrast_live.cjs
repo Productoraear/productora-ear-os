@@ -8,7 +8,7 @@
  * Uso:
  *   node scripts/audit_wcag_contrast_live.cjs
  *   node scripts/audit_wcag_contrast_live.cjs --routes=/,/proveedores
- *   node scripts/audit_wcag_contrast_live.cjs --base=http://localhost:3007 --shots=1
+ *   node scripts/audit_wcag_contrast_live.cjs --base=http://127.0.0.1:3007 --shots=1
  *
  * Salida:
  *   reports/contrast/wcag_report.json   (detalle por ruta)
@@ -33,7 +33,18 @@ const getArg = (name, fallback) => {
 
 // `let`, no `const`: el preflight puede repuntar el objetivo al servidor
 // standalone que arranca él mismo cuando el servidor objetivo está caído.
-let BASE = getArg('base', 'http://localhost:3007').replace(/\/$/, '');
+/**
+ * DEFECTO MEDIDO (2026-11-11 · BLOQUEO DE PREPUSH): el gate se detenía en este
+ * auditor con `ROUTES_SIN_EVIDENCIA=8 · VERDICT=BLOCKED` por "Navigation timeout
+ * of 90000 ms" en 8 de 10 rutas. Diagnóstico con sonda propia contra el MISMO
+ * servidor: cada ruta responde 200 en < 5 s y Chrome navega a ellas en < 3 s
+ * cuando se apunta a `http://127.0.0.1:3007`; contra `http://localhost:3007` la
+ * MISMA ruta tarda 205 s. El servidor escucha SOLO en `::` (IPv6 dual-stack) y
+ * el cliente de Chrome en este host se atasca resolviendo `localhost` por ruta.
+ * Medición: `/otzarreta` 205 s (FAIL) vs 40 s (PASS) — 5x, misma máquina,
+ * mismo binario, mismo commit. No es lentitud de la aplicación: es el destino.
+ */
+let BASE = getArg('base', 'http://127.0.0.1:3007').replace(/\/$/, '');
 const SHOTS = getArg('shots', '1') === '1';
 const ONLY_FAILING = getArg('failing', '0') === '1';
 const ROUTES = getArg('routes', '/,/proveedores,/otzarreta,/encargos,/reservar/solista')

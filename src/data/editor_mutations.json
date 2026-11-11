@@ -18,5 +18,17 @@
       "title": "Productora EAR :: Alquiler de Equipos de Sonido, Bodas & Eventos B2G"
     },
     "updatedAt": "2026-11-06T20:02:38.148Z"
+  },
+  "/otzarreta": {
+    "mutations": {
+      "#ficha-ezkertza-derio > div:nth-of-type(3) > div:nth-of-type(4) > p:nth-of-type(1)": {
+        "selector": "#ficha-ezkertza-derio > div:nth-of-type(3) > div:nth-of-type(4) > p:nth-of-type(1)",
+        "newText": "50 a 350 invitados"
+      }
+    },
+    "pageMeta": {
+      "title": "Restaurante Ezkertza Berria & Otzarreta | Bodas & Banquetes en Bizkaia y Gipuzkoa"
+    },
+    "updatedAt": "2026-11-11T15:09:49.243Z"
   }
 }

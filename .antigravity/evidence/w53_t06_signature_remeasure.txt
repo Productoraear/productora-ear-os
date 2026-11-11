@@ -1,0 +1,12 @@
+W53_T06 EVIDENCE RE-MEASURE (sesion de firma 2026-11-11)
+harness_artifact=.antigravity/evidence/w53_t06_harness.txt
+harness_bytes=3358
+harness_sha256=aaf9ccbc2e90be2b1c7979864edc2cbb84bc26535af247343e30784a780700d5
+harness_tail=ASSERTIONS 147/147 · ARTIST_METRICS=PASS
+ledger_lines=159
+ledger_last_claim=W53_T06_ARTIST_METRICS_WINDOWS_147
+ledger_last_exit=0
+ledger_last_sha256=aaf9ccbc2e90be2b1c7979864edc2cbb84bc26535af247343e30784a780700d5
+ledger_last_ts=2026-11-11T10:06:53.057Z
+match_artifact_vs_ledger=true
+ledger_ends_with_newline=true

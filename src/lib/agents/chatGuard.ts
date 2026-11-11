@@ -227,6 +227,11 @@ export interface HardenedSystemPromptInput {
   /** Ficha verificada de la entidad en pantalla (uso obligatorio). */
   pageContextBlock?: string;
   /**
+   * Hechos calculados por los MOTORES deterministas (herramientas MCP-shaped).
+   * Si viene, el modelo no puede recalcular ni estimar: solo redactar.
+   */
+  toolFactsBlock?: string;
+  /**
    * Tipo de entidad en pantalla, ya tipado server-side. Si se omite, se deduce
    * del bloque de ficha (fail-safe: sin dato fiable ⇒ `none`).
    */
@@ -282,6 +287,10 @@ export function buildHardenedSystemPrompt(ctx: HardenedSystemPromptInput): strin
   const entityBlock: string =
     typeof ctx.pageContextBlock === 'string' && ctx.pageContextBlock.trim().length > 0
       ? `\n${ctx.pageContextBlock.trim()}\n`
+      : '';
+  const toolFactsBlock: string =
+    typeof ctx.toolFactsBlock === 'string' && ctx.toolFactsBlock.trim().length > 0
+      ? `\n${ctx.toolFactsBlock.trim()}\n`
       : '';
   // ── Anclaje de entidad: quién está en pantalla y de qué gremio ──
   const entityKind: PageEntityKind = ctx.pageEntityKind ?? detectEntityKind(ctx.pageContextBlock);
@@ -389,7 +398,7 @@ ${objectionLine}
 ## FASE CONSULTIVA ACTIVA: ${phaseLabel}
 - El hilo avanza por fases: DESCUBRIMIENTO -> COTIZACION -> MANEJO_OBJECIONES -> CIERRE_STRIPE. No saltes fases ni repitas preguntas ya resueltas.
 - SIGUIENTE PREGUNTA DE MAYOR VALOR (úsala, o una variante natural): ${nextQuestion}
-${webBlock}
+${toolFactsBlock}${webBlock}
 
 ## DOCTRINA CONSULTIVA (NO ERES UN CATÁLOGO)
 1. Escucha, diagnostica y luego prescribe. Nunca sueltes un listado de datos que no te han pedido.

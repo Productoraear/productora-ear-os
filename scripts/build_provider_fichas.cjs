@@ -39,6 +39,22 @@ const GOLD_PATH = path.join(OUT_DIR, 'fichas_gold.json');
 const INDEX_PATH = path.join(OUT_DIR, 'fichas_index.json');
 const REPORT_PATH = path.join(OUT_DIR, 'fichas_audit_report.json');
 
+// ─── W43/W49 · Semilla de escaparate homologado (opt-in) ─────────────────────
+// El JSON canónico lo produce `scripts/ingest_competitor_showcase.cjs`. Sólo se
+// consume si existe: la puerta `--check` de HEAD no lo necesita y su ausencia no
+// puede romper el build (fail-open de entrada, fail-closed de contenido).
+const SHOWCASE_SEED_PATH = path.join(ROOT, 'public', 'data', 'providers', 'showcase_seed_canonical.json');
+/** Estándar mínimo de conversión: 6 claves con dato real para homologar. */
+const SHOWCASE_MIN_CONVERSION_KEYS = Object.freeze([
+  'ident.nombre_comercial',
+  'ident.descripcion_larga',
+  'ubic.direccion',
+  'esc.rating',
+  'rep.testimonios',
+  'faq.1.pregunta',
+]);
+
+
 const SCHEMA_VERSION = 'ear.fichas.v1';
 /** Umbral de ficha dorada: publicable (§4bis) + ficha comercialmente completa. */
 const GOLD_MIN_COMPLETENESS = 90;
@@ -428,6 +444,78 @@ function stableSort(fichas) {
   return fichas.slice().sort((a, b) => (a.key < b.key ? -1 : a.key > b.key ? 1 : 0));
 }
 
+// ─── W43/W49 · Homologación por semilla de escaparate ───────────────────────
+
+/**
+ * Lee la semilla canónica del escaparate y devuelve, o `null`, o un objeto con
+ * la valoración de conversión. NUNCA lanza: un JSON corrupto degrada a `null`
+ * y se declara en el reporte (AF-5: el build no puede morir por un dato opcional).
+ *
+ * REGLA DE ORO: aquí no se publica ni un teléfono. La semilla declara
+ * `exposePhone:false` por doctrina (contact-gate + depósito 100 € del SSOT) y
+ * este módulo lo verifica antes de aceptar nada.
+ */
+function readShowcaseSeed(seedPath = SHOWCASE_SEED_PATH) {
+  if (!fs.existsSync(seedPath)) {
+    return { present: false, reason: 'semilla ausente en disco', seed: null, conversion: null };
+  }
+  let seed;
+  try {
+    seed = JSON.parse(fs.readFileSync(seedPath, 'utf8'));
+  } catch (error) {
+    const detail = error && error.message ? error.message : String(error);
+    return { present: false, reason: `semilla ilegible: ${detail}`, seed: null, conversion: null };
+  }
+  if (seed === null || typeof seed !== 'object' || Array.isArray(seed)) {
+    return { present: false, reason: 'semilla sin estructura de objeto', seed: null, conversion: null };
+  }
+
+  const doctrine = seed.doctrine !== null && typeof seed.doctrine === 'object' ? seed.doctrine : {};
+  const values =
+    seed.providerFields !== null && typeof seed.providerFields === 'object' && seed.providerFields.values !== null && typeof seed.providerFields.values === 'object'
+      ? seed.providerFields.values
+      : {};
+
+  const presentKeys = SHOWCASE_MIN_CONVERSION_KEYS.filter(
+    (key) => typeof values[key] === 'string' && values[key].trim().length > 0,
+  );
+  const faqPairs = Array.isArray(seed.faq)
+    ? seed.faq.filter(
+        (pair) =>
+          pair !== null &&
+          typeof pair === 'object' &&
+          typeof pair.question === 'string' &&
+          pair.question.trim().length > 0 &&
+          typeof pair.answer === 'string' &&
+          pair.answer.trim().length > 0,
+      ).length
+    : 0;
+
+  const conversion = {
+    /** Estándar mínimo cumplido: las 6 claves de conversión con dato real. */
+    homologated: presentKeys.length === SHOWCASE_MIN_CONVERSION_KEYS.length,
+    requiredKeys: SHOWCASE_MIN_CONVERSION_KEYS.length,
+    presentKeys: presentKeys.length,
+    missingKeys: SHOWCASE_MIN_CONVERSION_KEYS.filter((key) => !presentKeys.includes(key)),
+    faqPairs,
+    /** Bloque de paquetes: el portal declara formatos; sin dato queda `null`. */
+    packagesDocumented: Array.isArray(seed.packages) && seed.packages.length > 0,
+    score: typeof seed.completeness === 'object' && seed.completeness !== null ? seed.completeness.score : null,
+    gaps: typeof seed.completeness === 'object' && seed.completeness !== null && Array.isArray(seed.completeness.gaps)
+      ? seed.completeness.gaps.map((gap) => (gap && typeof gap.bloque === 'string' ? gap.bloque : 'desconocido'))
+      : [],
+    exposePhone: doctrine.exposePhone === false,
+    contactGate: doctrine.contactGate === true,
+    selfHash: typeof seed.selfHash === 'string' ? seed.selfHash : null,
+    slug: typeof seed.identity === 'object' && seed.identity !== null && typeof seed.identity.nombre_comercial === 'string'
+      ? slugify(seed.identity.nombre_comercial)
+      : null,
+  };
+
+  return { present: true, reason: null, seed, conversion };
+}
+
+
 /**
  * Entrada compacta del índice (presupuesto < 1 MB): sólo lo que el Concierge
  * necesita para localizar y citar la ficha. El detalle completo vive en
@@ -549,6 +637,29 @@ function buildArtifacts(options = {}) {
   const gold = all.filter(isGold);
   const groundable = all.filter(isGroundable);
 
+  // W43/W49 · ESTÁNDAR MÍNIMO DE CONVERSIÓN (§4bis ampliado).
+  // La semilla del escaparate homologado describe la anatomía de conversión que
+  // debe alcanzar toda ficha. NO añade fichas ni altera su completitud: marca
+  // qué fichas cumplen ya ese estándar y deja el hueco declarado en el reporte.
+  const showcase = readShowcaseSeed();
+  const showcaseStandard = showcase.conversion;
+  const homologatedKeys = [];
+  const conversionGaps = [];
+  if (showcaseStandard !== null && showcaseStandard.slug !== null) {
+    for (const ficha of all) {
+      if (ficha.slug !== showcaseStandard.slug) continue;
+      if (showcaseStandard.homologated) homologatedKeys.push(ficha.key);
+      else {
+        conversionGaps.push({
+          key: ficha.key,
+          missing: showcaseStandard.missingKeys,
+          faqPairs: showcaseStandard.faqPairs,
+          packagesDocumented: showcaseStandard.packagesDocumented,
+        });
+      }
+    }
+  }
+
   const catalogoSource = {
     path: 'vault/proveedores_html_indexados/CATALOGO_PROVEEDORES_HTML_INDEX.json',
     sha256: sha256OfFile(CATALOG_PATH),
@@ -617,6 +728,27 @@ function buildArtifacts(options = {}) {
       junkCategories: all.filter((ficha) => ficha.category.length > 0 && !isCanonicalCategory(ficha.category)).length,
       nonCanonicalProvinces: all.filter((ficha) => ficha.province.length > 0 && !isCanonicalProvince(ficha.province)).length,
     },
+    // W43/W49 · Trazabilidad del estándar de conversión del escaparate.
+    // `present:false` declara que la semilla no está en disco: el build sigue
+    // siendo válido, pero el estándar no se aplica (no se finge homologación).
+    showcaseStandard: {
+      present: showcase.present,
+      reason: showcase.reason,
+      selfHash: showcaseStandard !== null ? showcaseStandard.selfHash : null,
+      exposePhone: showcaseStandard !== null ? showcaseStandard.exposePhone : null,
+      contactGate: showcaseStandard !== null ? showcaseStandard.contactGate : null,
+      homologated: showcaseStandard !== null ? showcaseStandard.homologated : false,
+      requiredKeys: SHOWCASE_MIN_CONVERSION_KEYS.slice(),
+      presentKeys: showcaseStandard !== null ? showcaseStandard.presentKeys : 0,
+      missingKeys: showcaseStandard !== null ? showcaseStandard.missingKeys : SHOWCASE_MIN_CONVERSION_KEYS.slice(),
+      faqPairs: showcaseStandard !== null ? showcaseStandard.faqPairs : 0,
+      packagesDocumented: showcaseStandard !== null ? showcaseStandard.packagesDocumented : false,
+      completenessScore: showcaseStandard !== null ? showcaseStandard.score : null,
+      completenessGaps: showcaseStandard !== null ? showcaseStandard.gaps : [],
+      matchedFichas: homologatedKeys.length + conversionGaps.length,
+      homologatedKeys,
+      conversionGaps,
+    },
   };
 
   return { goldFile, indexFile, report, fichas: all, sourceHtml };
@@ -646,6 +778,25 @@ function runCheck(goldFile, indexFile, report) {
   if (report.counts.groundable < 1) violations.push('Cero fichas citables: el Concierge seguiría ciego.');
   if (goldFile.fichas.length !== goldFile.counts.gold) violations.push('El array dorado no cuadra con counts.gold.');
   if (indexFile.entries.length !== goldFile.counts.fichas) violations.push('El índice no cubre todas las fichas construidas.');
+
+  // W43/W49 · Si la semilla del escaparate está presente, la doctrina es
+  // innegociable: `exposePhone:false` y contact-gate activo. Una semilla que
+  // abra el teléfono directo rompe la puerta (INV-06/INV-12).
+  const showcaseStandard = report.showcaseStandard;
+  if (showcaseStandard !== null && typeof showcaseStandard === 'object' && showcaseStandard.present === true) {
+    if (showcaseStandard.exposePhone !== true) {
+      violations.push('Semilla de escaparate con exposePhone distinto de false (INV-06/INV-12).');
+    }
+    if (showcaseStandard.contactGate !== true) {
+      violations.push('Semilla de escaparate sin contact-gate activo.');
+    }
+    if (typeof showcaseStandard.selfHash !== 'string' || showcaseStandard.selfHash.length !== 64) {
+      violations.push('Semilla de escaparate sin selfHash SHA-256 verificable (AF-3).');
+    }
+    if (showcaseStandard.homologated === true && showcaseStandard.faqPairs < 1) {
+      violations.push('Semilla homologada sin pares de FAQ reales: estándar de conversión vacío.');
+    }
+  }
 
   for (const ficha of goldFile.fichas) {
     if (computeProvenanceHash(ficha) !== ficha.provenanceHash) {
@@ -746,6 +897,10 @@ module.exports = {
   isCanonicalCategory,
   foldText,
   serialize,
+  // W43/W49 · estándar de conversión del escaparate homologado.
+  SHOWCASE_SEED_PATH,
+  SHOWCASE_MIN_CONVERSION_KEYS,
+  readShowcaseSeed,
 };
 
 function serialize(value) {

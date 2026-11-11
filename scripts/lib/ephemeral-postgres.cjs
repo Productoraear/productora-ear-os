@@ -20,13 +20,28 @@
  * porque `embedded-postgres` engancha `process.on('exit')` y no permite un
  * apagado limpio dentro del mismo proceso que ya usa Prisma.
  *
+ * Socket (Socket.v0): hay oyentes que sobreviven a `taskkill`/`Get-Process` (procesos
+ * que ya no están en la lista del SO pero conservan el socket abierto). Por eso el
+ * oráculo de disponibilidad consulta SQL y, si el puerto efímero está envenenado,
+ * el arnés levanta el clúster en `EAR_EPHEMERAL_PG_FALLBACK_PORT` (55433) en lugar
+ * de firmar SOSPECHOSO por un zombie del entorno.
+ *
  * Regla de honestidad: sin binario se devuelve `null` (SIN_EVIDENCIA).
  */
 const { spawn } = require('node:child_process');
+const fs = require('node:fs');
 const net = require('node:net');
 const path = require('node:path');
 
-const { ROOT, EPHEMERAL_PORT, EPHEMERAL_URL, VERIFY_DB } = require('./ephemeral-postgres-core.cjs');
+const {
+  ROOT,
+  EPHEMERAL_PORT,
+  EPHEMERAL_URL,
+  VERIFY_DB,
+  DDL_FILE,
+  DDL_TABLE,
+} = require('./ephemeral-postgres-core.cjs');
+
 
 const SERVER_SCRIPT = path.join(__dirname, 'ephemeral-pg-server.cjs');
 const RETENCION_MS = 4000;
@@ -50,6 +65,85 @@ function probeTcp(port = EPHEMERAL_PORT, timeoutMs = 700) {
   });
 }
 
+/** DDL de la migración 20261109190000 (idempotente), compartido con el servidor hijo. */
+function ddlStatements() {
+  return fs
+    .readFileSync(DDL_FILE, 'utf8')
+    .replace(/CREATE UNIQUE INDEX (?!IF NOT EXISTS)/g, 'CREATE UNIQUE INDEX IF NOT EXISTS')
+    .replace(/CREATE INDEX (?!IF NOT EXISTS)/g, 'CREATE INDEX IF NOT EXISTS')
+    .split(';')
+    .map((chunk) => chunk.trim())
+    .filter((chunk) => chunk.length > 0);
+}
+
+/**
+ * DDL aplicable SIN ventana de indisponibilidad: el servidor vivo puede estar
+ * atendiendo otros arneses, así que un `CREATE INDEX` sin `CONCURRENTLY` puede
+ * quedar en espera de un lock hasta que venza el TCP del padre y el oráculo
+ * (que sólo mira el socket) declare «alcanzable» un clúster que no responde SQL.
+ */
+function ddlStatementsConcurrent() {
+  return ddlStatements()
+    .map((statement) =>
+      statement.replace(/^CREATE UNIQUE INDEX IF NOT EXISTS/i, 'CREATE UNIQUE INDEX CONCURRENTLY IF NOT EXISTS')
+    )
+    .map((statement) =>
+      statement.replace(/^CREATE INDEX IF NOT EXISTS(?! CONCURRENTLY)/i, 'CREATE INDEX CONCURRENTLY IF NOT EXISTS')
+    );
+}
+
+/** Aplica el DDL sin Prisma, con timeout por sentencia. Devuelve true si responde. */
+async function applyDdl(url, { concurrent = false } = {}) {
+  let Client;
+  try {
+    ({ Client } = await import('pg'));
+  } catch {
+    return false;
+  }
+  const client = new Client({ connectionString: url, connectionTimeoutMillis: 3000, query_timeout: 15000 });
+  try {
+    await client.connect();
+    for (const statement of concurrent ? ddlStatementsConcurrent() : ddlStatements()) {
+      await client.query(statement);
+    }
+    return true;
+  } catch {
+    return false;
+  } finally {
+    await client.end().catch(() => undefined);
+  }
+}
+
+/**
+ * ¿La base NO declarada de `url` admite conexión SQL y tiene la tabla F-6?
+ * El TCP abierto no basta: un postmaster muerto o un `CREATE INDEX` bloqueado
+ * deja el socket escuchando mientras niega el handshake de PostgreSQL.
+ */
+async function probeSql(url) {
+  let Client;
+  try {
+    ({ Client } = await import('pg'));
+  } catch {
+    return false;
+  }
+  const client = new Client({
+    connectionString: url,
+    connectionTimeoutMillis: 3000,
+    statement_timeout: 5000,
+    query_timeout: 5000,
+  });
+  try {
+    await client.connect();
+    const exists = await client.query({ text: 'SELECT to_regclass($1) AS reg', values: [`public.${DDL_TABLE}`] });
+    if (exists.rows?.[0]?.reg) return true;
+    return await applyDdl(url, { concurrent: true });
+  } catch {
+    return false;
+  } finally {
+    await client.end().catch(() => undefined);
+  }
+}
+
 /** ¿Responde la base de datos de `url`? (SELECT 1 por TCP, sin Prisma). */
 function probeUrl(url) {
   let parsed;
@@ -66,10 +160,12 @@ function probeUrl(url) {
  * Devuelve `{ url, stop, detail }` o `null` si no se pudo levantar.
  */
 function startServerProcess() {
+  const port = EPHEMERAL_PORT;
+  const url = EPHEMERAL_URL;
   return new Promise((resolve) => {
     const child = spawn(process.execPath, [SERVER_SCRIPT], {
       cwd: ROOT,
-      env: { ...process.env, EAR_EPHEMERAL_PG_PORT: String(EPHEMERAL_PORT) },
+      env: { ...process.env, EAR_EPHEMERAL_PG_PORT: String(port), EAR_EPHEMERAL_PG_URL: url },
       stdio: ['pipe', 'pipe', 'inherit'],
     });
 
@@ -107,8 +203,8 @@ function startServerProcess() {
           clearTimeout(timer);
           let stopped = false;
           finish({
-            url: EPHEMERAL_URL,
-            detail: `PostgreSQL efímero en ${EPHEMERAL_URL.replace(/:[^:@/]+@/, ':***@')} · DDL 20261109190000 aplicado`,
+            url,
+            detail: `PostgreSQL efímero en ${url.replace(/:[^:@/]+@/, ':***@')} · DDL 20261109190000 aplicado`,
             stop: async () => {
               if (stopped) return;
               stopped = true;
@@ -153,12 +249,20 @@ async function resolveVerificationDatabase() {
     '';
 
   if (declared && (await probeUrl(declared))) {
-    return {
-      url: declared,
-      stop: async () => undefined,
-      detail: 'PostgreSQL declarado, alcanzable por TCP',
-      ephemeral: false,
-    };
+    const sqlReady = await probeSql(declared);
+    if (sqlReady) {
+      return {
+        url: declared,
+        stop: async () => undefined,
+        detail: 'PostgreSQL declarado, alcanzable por TCP y SQL (tabla F-6 presente)',
+        sqlReady: true,
+        ephemeral: false,
+      };
+    }
+    // Un socket abierto no es una base utilizable (postmaster zombie, lock o
+    // credenciales): se degrada al efímero en vez de firmar un FAIL del producto.
+    const masked = declared.replace(/\/\/[^@]*@/, '//***@');
+    log(`AVISO: la URL declarada acepta TCP pero no responde SQL (${masked.slice(0, 100)}). Se levanta PostgreSQL efímero.`);
   }
 
   if (declared) {
@@ -167,7 +271,24 @@ async function resolveVerificationDatabase() {
   }
 
   const started = await startServerProcess();
-  return started === null ? null : { ...started, ephemeral: true };
+  if (started !== null) return { ...started, ephemeral: true, sqlReady: true };
+
+  // Puerto principal envenenado por un oyente que no muere (Socket.v0): se
+  // reintenta en el puerto alternativo antes de declarar SIN_EVIDENCIA.
+  const fallbackPort = Number(process.env.EAR_EPHEMERAL_PG_FALLBACK_PORT ?? EPHEMERAL_PORT + 1);
+  if (fallbackPort !== EPHEMERAL_PORT) {
+    log(`AVISO: puerto ${EPHEMERAL_PORT} no utilizable; reintentando el efímero en ${fallbackPort}.`);
+    const previous = process.env.EAR_EPHEMERAL_PG_PORT;
+    process.env.EAR_EPHEMERAL_PG_PORT = String(fallbackPort);
+    try {
+      const retry = await startServerProcess();
+      if (retry !== null) return { ...retry, ephemeral: true, sqlReady: true };
+    } finally {
+      if (previous === undefined) delete process.env.EAR_EPHEMERAL_PG_PORT;
+      else process.env.EAR_EPHEMERAL_PG_PORT = previous;
+    }
+  }
+  return null;
 }
 
 module.exports = {

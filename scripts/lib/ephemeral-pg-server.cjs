@@ -18,10 +18,18 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const { CACHE_DIR, DDL_FILE, VERIFY_DB } = require('./ephemeral-postgres-core.cjs');
-const PORT = Number(process.env.EAR_EPHEMERAL_PG_PORT ?? 55_432);
+// El padre puede mover el puerto (fallback cuando el principal está envenenado):
+// se acepta EAR_EPHEMERAL_PG_URL y se usa su puerto para datadir/clúster.
+const URL_FROM_PARENT = process.env.EAR_EPHEMERAL_PG_URL || '';
+const PORT = Number(
+  (URL_FROM_PARENT ? Number(new URL(URL_FROM_PARENT).port) : 0) || process.env.EAR_EPHEMERAL_PG_PORT || 55_432,
+);
 const USER = 'ear_verify';
 const PASSWORD = 'ear_verify_local_only';
-const DATA_DIR = path.join(CACHE_DIR, 'data');
+// Cada puerto usa SU propio datadir: un clúster vivo en 55432 no puede compartir
+// directorio con el de 55433 (dos postmasters del mismo datadir se bloquean).
+const DATA_DIR = path.join(CACHE_DIR, PORT === 55_432 ? 'data' : `data-${PORT}`);
+
 
 function emit(line) {
   process.stdout.write(`${line}\n`);

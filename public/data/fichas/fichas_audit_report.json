@@ -8,7 +8,7 @@
     },
     "canonical": {
       "path": "public/data/providers/providers_canonical.json",
-      "sha256": "3f24f5dec2ad8e95078dc216556c3dae0f2a00226b26e6748408a1cc8000bf01",
+      "sha256": "8294e62a1fc9482c592eddf14139467a621263e9057afb3830e0afc961f56f1e",
       "entries": 310
     }
   },
@@ -121,5 +121,30 @@
     "duplicateKeys": 0,
     "junkCategories": 0,
     "nonCanonicalProvinces": 0
+  },
+  "showcaseStandard": {
+    "present": true,
+    "reason": null,
+    "selfHash": "10f6c21bf6757453bdc900c62d4607bbd35f7635e9223e38a100120efcbc1355",
+    "exposePhone": true,
+    "contactGate": true,
+    "homologated": true,
+    "requiredKeys": [
+      "ident.nombre_comercial",
+      "ident.descripcion_larga",
+      "ubic.direccion",
+      "esc.rating",
+      "rep.testimonios",
+      "faq.1.pregunta"
+    ],
+    "presentKeys": 6,
+    "missingKeys": [],
+    "faqPairs": 24,
+    "packagesDocumented": false,
+    "completenessScore": 100,
+    "completenessGaps": [],
+    "matchedFichas": 0,
+    "homologatedKeys": [],
+    "conversionGaps": []
   }
 }

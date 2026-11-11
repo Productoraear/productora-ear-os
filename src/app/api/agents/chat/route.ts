@@ -43,6 +43,14 @@ import {
   stripUrls,
   type PageContext,
 } from '@/lib/agents/pageContext';
+import {
+  buildPlannerPrompt,
+  executeToolPlan,
+  parseToolPlan,
+  type ToolExecution,
+} from '@/lib/mcp/concierge-tools';
+import { evaluateHumanHandoff, type HandoffVerdict } from '@/lib/mcp/concierge-policy';
+
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -136,8 +144,55 @@ export async function POST(req: Request): Promise<NextResponse> {
     const memorySlots: ConsultationSlots = collectSlots(history, message);
     const consultation: ConsultationSnapshot = resolveConsultationState(memorySlots, history, message);
 
+    // 🔌 HERRAMIENTAS DETERMINISTAS (patrón Supervisor).
+    // El planificador propone qué motores consultar; el MOTOR devuelve la cifra
+    // exacta y el modelo solo redacta. Si no hay LLM o no hay plan válido, esta
+    // etapa no aporta nada y el turno sigue su curso determinista de siempre.
+    let toolExecution: ToolExecution | null = null;
+    let plannedTools: readonly string[] = [];
+    if (isDeepSeekConfigured()) {
+      try {
+        const plannerRes = await runDeepSeekChat({
+          model: 'deepseek-chat',
+          prompt: buildPlannerPrompt(message, buildPageContextBlock(pageContext)),
+          temperature: 0,
+          json: true,
+        });
+        if (plannerRes.available) {
+          const plan = parseToolPlan(plannerRes.content);
+          if (plan.length > 0) {
+            toolExecution = await executeToolPlan(plan);
+            plannedTools = plan.map((call) => call.name);
+          }
+        }
+      } catch (toolErr: unknown) {
+        // Fail-open: un fallo del planificador no puede tumbar la atención.
+        console.warn('⚠️ [CONCIERGE_TOOLS_FALLBACK]:', toolErr);
+      }
+    }
+
     const traces: TraceEntry[] = [];
     const lower = message.toLowerCase();
+
+    // Deja constancia en la traza de qué motores calcularon cifras en este turno.
+    if (plannedTools.length > 0) {
+      traces.push({
+        message: {
+          id: `trace-tools-${Date.now()}`,
+          traceId: `trace-tools-${Date.now()}`,
+          from: 'supervisor',
+          to: 'sales-closer',
+          intent: 'mcp_tools_executed',
+          payload: { tools: plannedTools.join(','), failed: toolExecution?.anyFailure === true },
+          depth: 1,
+          createdAt: new Date().toISOString(),
+        },
+        reply: {
+          ok: toolExecution?.anyFailure !== true,
+          summary: `Herramientas ejecutadas: ${plannedTools.join(', ')}`,
+        },
+      });
+    }
 
     // 0. Detección de Finca activa o consultada (fichas verificadas + red real)
     //    Prioridad: entidad resuelta por ruta > entidad del cliente > nombre en texto > memoria.
@@ -442,6 +497,8 @@ export async function POST(req: Request): Promise<NextResponse> {
       objectionLabel: consultation.objection ? OBJECTION_LABEL[consultation.objection] : '',
       webGrounding: grounding?.block ?? '',
       pageContextBlock: buildPageContextBlock(pageContext),
+      // Hechos deterministas de los motores (si el planificador los invocó).
+      toolFactsBlock: toolExecution?.promptBlock ?? '',
       // Anclaje tipado de la entidad en pantalla (anti-sesgo del roster).
       pageEntityKind: pageContext.kind,
       pageEntityName: pageContext.name,
@@ -588,6 +645,20 @@ export async function POST(req: Request): Promise<NextResponse> {
 
     const safeReply: string = sanitizeAiOutput(aiReply);
 
+    // Escalado humano fail-closed: si el importe en juego supera la política o
+    // el motor rechazó un dato crítico, el turno se cierra con persona.
+    const handoff: HandoffVerdict = evaluateHumanHandoff({
+      amountEur: toolExecution?.anyFailure === true
+        ? null
+        : calculatedQuote?.total ?? memorySlots.budgetTotal ?? null,
+      acousticRejected: toolExecution?.results.some((result) => {
+        const data = result.envelope.data as { exceedsPublicHealthLimit?: unknown };
+        return result.envelope.ok && data.exceedsPublicHealthLimit === true;
+      }) ?? false,
+      engineFailed: toolExecution?.anyFailure ?? false,
+      contextSummary: summarizeSlots(memorySlots),
+    });
+
     return NextResponse.json({
       reply: safeReply,
       agentUsed: agent || (traces.length > 0 ? traces[0].message.to : 'omni-supervisor-daemon'),
@@ -599,6 +670,18 @@ export async function POST(req: Request): Promise<NextResponse> {
       consultation,
       // 🌐 Fuentes web citadas (transparencia y trazabilidad del dato verificado).
       webSources: grounding?.sources ?? [],
+      // 🔌 Trazabilidad de las herramientas: qué motor calculó qué cifra.
+      toolCalls: toolExecution?.results.map((result) => ({
+        tool: result.tool,
+        ok: result.envelope.ok,
+        source: result.envelope.source,
+        mode: result.envelope.mode,
+        evidenceSha256: result.envelope.evidenceSha256,
+      })) ?? [],
+      // 🔗 Enlaces accionables YA calculados por el motor (nunca por el modelo).
+      actionLinks: toolExecution?.actionLinks ?? [],
+      // ☎️ Veredicto de escalado humano (fail-closed).
+      handoff,
     });
 
   } catch (error: unknown) {

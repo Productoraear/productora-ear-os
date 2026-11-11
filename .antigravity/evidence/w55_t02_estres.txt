@@ -1,0 +1,12 @@
+[BASE] http://127.0.0.1:3007/api/health -> 200 (157 ms)
+[BROWSER] chrome · C:\Program Files\Google\Chrome\Application\chrome.exe
+[V1] locks={"200":75,"500":25} quotes={"200":100} wall=15959ms
+[V2] INP=1184ms CLS=0 clics=56/59 estado=SOSPECHOSO
+[V3] 6/12 rechazados con error estructurado · 500s=[]
+[V4] clics=5 wa=419 chars estado=SOSPECHOSO
+
+VEREDICTO avalancha = SOSPECHOSO
+VEREDICTO experienciaFan = SOSPECHOSO
+VEREDICTO payloads = SOSPECHOSO
+VEREDICTO conversion = SOSPECHOSO
+VEREDICTO_ESTRES=SOSPECHOSO

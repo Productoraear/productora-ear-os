@@ -1,6 +1,6 @@
 {
   "schema": "ear-os/omega-rojo-scorecard/1.0",
-  "generated_at": "2026-11-07T21:40:43.074Z",
+  "generated_at": "2026-11-11T17:34:13.903Z",
   "root": "D:\\EAR_OS_V2\\EAR_OS_V2",
   "score": "14/20",
   "verdict": "VERDE",
@@ -78,7 +78,7 @@
       "p0": true,
       "label": "0 secreto alcanzable desde cliente (INV-07)",
       "status": "VERIFICADO",
-      "detail": "823 ficheros \"use client\" escaneados, 0 secreto de servidor"
+      "detail": "830 ficheros \"use client\" escaneados, 0 secreto de servidor"
     },
     {
       "n": 9,

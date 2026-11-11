@@ -19,8 +19,12 @@
  *   5. GET desde OTRO PROCESO → el dato no vive en `globalThis`
  *   6. Limpieza de filas sintéticas (0 datos de cliente tocados)
  *
- * Base de datos: la declarada en el entorno si responde; si no, PostgreSQL
- * EFÍMERO (`scripts/lib/ephemeral-postgres.mjs`). Nunca SQLite (ver AF-5).
+ * Base de datos: la declarada en el entorno si responde SQL; si no, PostgreSQL
+ * EFÍMERO (`scripts/lib/ephemeral-postgres.cjs`). Nunca SQLite (ver AF-5).
+ * Un socket TCP abierto NO es un oráculo suficiente (postmaster muerto o
+ * `CREATE INDEX` esperando lock): por eso `resolveVerificationDatabase` devuelve
+ * `sqlReady = false` y el arnés firma SIN_EVIDENCIA en vez de un FAIL a ciegas
+ * contra una base que nunca respondió.
  *
  * Uso:
  *   node --import ./scripts/lib/ts-alias-loader.mjs scripts/verify_telemetry_ingestor_contract.mjs
@@ -117,6 +121,12 @@ async function main() {
   }
 
   log(`BASE DE DATOS: ${database.detail}`);
+  if (database.sqlReady === false) {
+    log('SIN_EVIDENCIA: la base declarada no admite SQL utilizable (postmaster muerto, lock o credenciales).');
+    log('Diagnóstico: verificar el puerto (netstat) antes de firmar un FAIL del producto.');
+    await database.stop();
+    return 2;
+  }
 
   // El handler importa `prisma` del singleton, que resuelve la URL del entorno:
   // se apunta al clúster bajo prueba ANTES de importar el módulo.

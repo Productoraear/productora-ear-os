@@ -16,5 +16,12 @@ const DDL_FILE = path.join(
 const VERIFY_DB = 'ear_os_verify';
 const EPHEMERAL_PORT = Number(process.env.EAR_EPHEMERAL_PG_PORT ?? 55_432);
 const EPHEMERAL_URL = `postgresql://ear_verify:ear_verify_local_only@127.0.0.1:${EPHEMERAL_PORT}/${VERIFY_DB}`;
+/**
+ * Tabla que el arnés F-6 necesita. El oráculo de disponibilidad comprueba su
+ * existencia (`to_regclass`) y no sólo que el puerto acepte conexiones: un
+ * socket vivo con un postmaster muerto también acepta TCP.
+ */
+const DDL_TABLE = 'LiveTelemetryPing';
 
-module.exports = { ROOT, CACHE_DIR, DDL_FILE, VERIFY_DB, EPHEMERAL_PORT, EPHEMERAL_URL };
+module.exports = { ROOT, CACHE_DIR, DDL_FILE, DDL_TABLE, VERIFY_DB, EPHEMERAL_PORT, EPHEMERAL_URL };
+
