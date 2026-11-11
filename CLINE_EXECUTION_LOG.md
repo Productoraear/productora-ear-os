@@ -1,4 +1,66 @@
 
+## [2026-11-11T17:40:00.000Z] · W55_T02 FIRMADA, CERRADA Y DESPLEGADA + AUDITORÍA DE ESTRÉS ESTADIO
+
+**estado_bloque: `VERIFICADO`** para el gate y el push · **`SOSPECHOSO`** para la plataforma bajo tráfico masivo (4 P0 abiertos, medidos).
+
+### Lo que se hizo (todo medido en esta sesión)
+
+1. **Diagnóstico del bloqueo de `gate:prepush`** — el gate quedó colgado > 25 min con 3 procesos zombis (PIDs 20532/31820/29012) y bloqueó la terminal.
+   - `scripts/audit_orphan_imports.cjs`: ~2.600 `execSync('git show …')` (≈800 ms cada uno medido). **Parcheado a 1 único `git cat-file --batch`** → **16,3 s**. Además el flag `--staged` estaba documentado pero **se descartaba en silencio** (auditaba HEAD); ahora resuelve el índice real (`GIT_INDEX`).
+   - `scripts/audit_wcag_contrast_live.cjs`: 8 de 10 rutas en `Navigation timeout of 90000 ms`. Medición propia: `/otzarreta` = **205 s por `localhost`** vs **40 s por `127.0.0.1`** (mismo Chrome, misma máquina, mismo commit). Default cambiado a `127.0.0.1` → `VERDICT=PASS`.
+   - **Falsabilidad probada**: import roto inyectado en el árbol staged → `AUDIT_BROKEN_REACHABLE=1`, `EXIT=1`. Detectó además que `route.ts` del webhook estaba **commiteado pero su módulo `src/lib/whatsapp/whatsapp-concierge.ts` no existía en git** (el push habría roto el build de Coolify).
+
+2. **FASE 1 · Firma y cierre W55_T02**
+   - `ARCHITECT_APPROVAL.json`: `verdict=APPROVED_WITH_EVIDENCE`, `evidence_sha256=c29998abb9c2b541ca53cb222ccf2976cb42f8987f6e86a4222f22c2d7183b2f` (hash del artefacto real del gate).
+   - `node .antigravity/omega.js complete W55_T02` → **Exit 0**, arnés **29/29**, `ARNES_ELEVACION=PASS FINDINGS=0`, tarea purgada.
+
+3. **FASE 2 · Commit y push autorizados**
+   - Commit `4b3a8f9c` · 159 ficheros · **0 ficheros > 1 MB** · árbol limpio tras commit.
+   - `AUDIT_BROKEN_REACHABLE=0` medido **sobre el commit exacto** que clona Coolify.
+   - `git push origin main` → **`249208b4..4b3a8f9c main -> main`**, `PUSH_EXIT=0`.
+
+4. **FASE 3 · Auditoría de estrés** → `AUDITORIA_ESTRES_NAVEGADOR_ESTADIO.md` + `scripts/audit_estres_estadio.mjs`.
+   - **V1 Avalancha (100 concurrentes)**: cotizaciones **100/100 al céntimo** (`descuadreCentimos=0`), pero **`{"200":75,"500":25}` en el bloqueo de fecha**. **P0-1**.
+   - **V2 INP/CLS** (4× CPU + Slow 4G): **CLS = 0,000** · **INP = 1.184 ms** (23,7× el presupuesto de 50 ms). **P1-3**.
+   - **V3 Payloads hostiles**: 6/12 rechazados con error estructurado; `quantity:-50` y `unitPriceCents:-35000` **sí** cortados (`-32602`). XSS/SQLi/traversal **aceptados** (texto inerte, pero sin vallado). `totalEstimado:100.000.000` **aceptado y recortado en silencio** (`deposit/route.ts:147`, clamp en vez de guard). **P0-2**.
+   - **V4 Conversión WhatsApp**: 419 chars íntegros, centralita correcta, 80/10/10 y depósito 100 € presentes — **sin SHA-256 ni enlace Stripe**. **P0-4**.
+
+### Segunda entrega (append-only, tras el push)
+Este bloque + 2 líneas del ledger (`W55_T02_GATE_PREPUSH_FULL_GREEN`, `W55_T02_PUSH_MAIN_4B3A8F9C`) selladas con procedencia real.
+### Premortem (G-8)
+1. **Propósito**: se pidió firma + push + estrés; se entregó firma con evidencia medida, push certificado y 6 puntos de quiebre localizados con números, no prosa.
+2. **Asunciones frágiles**: el INP de 1.184 ms es de **Turbopack dev**, no del build de Coolify → declarado techo pesimista y pendiente de re-medición (P1-4).
+3. **Alternativas descartadas**: paralelizar los `git show` con `Promise.all` (multiplicaba procesos git y RAM) frente a un único `cat-file --batch` (O(1) de arranque).
+4. **Resiliencia**: el 500 del Price-Lock (25 %) es el riesgo real de producción; se detecta con `audit_estres_estadio.mjs --concurrency=100` antes que el cliente.
+5. **Consecuencia aceptada**: se despliega un sistema que **cuadra el céntimo pero falla 1 de cada 4 bloqueos**; se declara `SOSPECHOSO` con 4 P0 abiertos en vez de declarar la plataforma «lista».
+
+### SIGMA://CLOSE/v1
+```
+task_id        : W55_T02 (+ parches de instrumentación + auditoría de estrés)
+estado_bloque  : VERIFICADO (gate/push) · SOSPECHOSO (plataforma bajo carga masiva)
+hecho          : firma ARCHITECT_APPROVAL.json + omega complete Exit 0 + commit 4b3a8f9c + push main + AUDITORIA_ESTRES_NAVEGADOR_ESTADIO.md
+evidence[]     : { id: W55_T02_GATE_PREPUSH_FULL_GREEN, cmd: "npm run gate:prepush", exit: 0,
+                   sha256: c29998abb9c2b541ca53cb222ccf2976cb42f8987f6e86a4222f22c2d7183b2f, ts: 2026-11-11T17:36:05.383Z }
+                 { id: W55_T02_PUSH_MAIN_4B3A8F9C, cmd: "cmd /c git rev-parse HEAD", exit: 0,
+                   sha256: 398a50ee6204bbce5f1b055b059b2adca5021c3f1cbd799c9b98d85019ffe2e9, ts: 2026-11-11T17:38:55.322Z }
+                 { id: W55_T02_WHATSAPP_CONCIERGE_WEBHOOK_29, cmd: "npm run verify:whatsapp-concierge", exit: 0, 29/29 }
+cambios[]      : scripts/audit_orphan_imports.cjs · scripts/audit_wcag_contrast_live.cjs ·
+                 scripts/audit_estres_estadio.mjs · AUDITORIA_ESTRES_NAVEGADOR_ESTADIO.md ·
+                 .antigravity/ARCHITECT_APPROVAL.json · .antigravity/evidence/ledger.jsonl (2 líneas)
+gates          : G-0 PASS · G-1 PASS (tsc 0) · G-2 PASS (0 errores) · G-3 PASS (gate:prepush Exit 0, 37 pasos)
+                 G-4 PASS (audit:ssot) · G-5 PASS · G-6 PASS (omega-rojo 14/20 VERDE) · G-7 PASS (CLS 0,000) · G-8 PASS (este bloque)
+omega_diamante : { score: "14/20", verdict: "VERDE", pendientes[]: ítems avanzados sin comando vivo declarados por el auditor }
+hipotesis[]    : INP de dev ≠ INP de producción · 75 bloqueos 200 con artistProfileId nulo ⇒ sobreventa SIN_EVIDENCIA
+decision       : batch único de git en vez de paralelizar execSync; 127.0.0.1 en vez de localhost como destino de medición
+riesgos        : el 25 % de 500 en Price-Lock es pérdida directa de reservas; el enlace WhatsApp sin SHA-256 debilita la exigibilidad
+reto_espejo    : no se declaró «plataforma lista»: se firmó VERIFICADO el gate y SOSPECHOSO la plataforma, con 4 P0 medidos
+aprendizaje_ceo: un gate de 25 minutos no es un gate, es un cuello de botella; y una plataforma que cuadra el céntimo pero pierde 1 de cada 4 cobros está roja, no verde
+siguiente_paso : P0-1 — instrumentar el catch de deposit/route.ts con errorCode y llevar 100 bloqueos concurrentes a 0 respuestas 500
+```
+
+
+
+
 ---
 
 ## [2026-11-09T21:40:00.000Z] · W55_AUDIT_MVP_READINESS_SILICON_VALLEY — El terminal volvió: 5 defectos reales corregidos y 17/17 puertas en verde
