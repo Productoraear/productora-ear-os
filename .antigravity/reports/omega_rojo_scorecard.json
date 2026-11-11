@@ -1,14 +1,14 @@
 {
   "schema": "ear-os/omega-rojo-scorecard/1.0",
-  "generated_at": "2026-11-11T20:09:00.914Z",
+  "generated_at": "2026-11-11T23:36:53.109Z",
   "root": "D:\\EAR_OS_V2\\EAR_OS_V2",
-  "score": "14/20",
+  "score": "19/20",
   "verdict": "VERDE",
   "summary": {
     "items": 20,
-    "verificado": 14,
+    "verificado": 19,
     "parcial": 0,
-    "sin_evidencia": 6,
+    "sin_evidencia": 1,
     "p0_bloqueantes": []
   },
   "money_path": {
@@ -78,28 +78,28 @@
       "p0": true,
       "label": "0 secreto alcanzable desde cliente (INV-07)",
       "status": "VERIFICADO",
-      "detail": "830 ficheros \"use client\" escaneados, 0 secreto de servidor"
+      "detail": "832 ficheros \"use client\" escaneados, 0 secreto de servidor"
     },
     {
       "n": 9,
       "p0": false,
       "label": "ISO/IEC 25010 documentada",
-      "status": "SIN_EVIDENCIA",
-      "detail": "falta crear: .antigravity/reports/ISO_25010_QUALITY_MAP.md"
+      "status": "VERIFICADO",
+      "detail": ".antigravity/reports/ISO_25010_QUALITY_MAP.md"
     },
     {
       "n": 10,
       "p0": false,
       "label": "ISO/IEC 5055 (CISQ) estructural",
-      "status": "SIN_EVIDENCIA",
-      "detail": "falta crear: scripts/audit_cisq_structural.cjs"
+      "status": "VERIFICADO",
+      "detail": "scripts/audit_cisq_structural.cjs"
     },
     {
       "n": 11,
       "p0": false,
       "label": "OWASP ASVS L3 con payloads",
-      "status": "SIN_EVIDENCIA",
-      "detail": "falta crear: scripts/audit_asvs_l3_payloads.cjs"
+      "status": "VERIFICADO",
+      "detail": "scripts/audit_asvs_l3_payloads.cjs"
     },
     {
       "n": 12,
@@ -126,15 +126,15 @@
       "n": 15,
       "p0": false,
       "label": "Rich Results schema.org en CI",
-      "status": "SIN_EVIDENCIA",
-      "detail": "falta crear: scripts/audit_rich_results.cjs"
+      "status": "VERIFICADO",
+      "detail": "scripts/audit_rich_results.cjs"
     },
     {
       "n": 16,
       "p0": false,
       "label": "Jaccard/TF-IDF sobre corpus completo",
-      "status": "SIN_EVIDENCIA",
-      "detail": "falta crear: scripts/audit_similarity_corpus.cjs"
+      "status": "VERIFICADO",
+      "detail": "scripts/audit_similarity_corpus.cjs"
     },
     {
       "n": 17,
