@@ -30,7 +30,26 @@ export const runtime = 'nodejs';
  */
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
+    // ASVS L3 §5.1: el body es input NO confiable. Sin este control propio, un
+    // JSON malformado escapaba al catch genérico y respondía 500 (excepción no
+    // controlada). Aquí se declara 400 antes de tocar nada más.
+    let body: unknown;
+    try {
+      body = await req.json();
+    } catch {
+      return NextResponse.json(
+        { error: 'INVALID_JSON', detail: 'El body debe ser JSON válido.' },
+        { status: 400 },
+      );
+    }
+
+    if (typeof body !== 'object' || body === null) {
+      return NextResponse.json(
+        { error: 'INVALID_BODY', detail: 'El body debe ser un objeto JSON.' },
+        { status: 400 },
+      );
+    }
+
     const {
       formatId,
       distanceKm,
@@ -41,7 +60,12 @@ export async function POST(req: Request) {
       distanceKm: number;
       eventDate: string;
       endHour?: number;
-    } = body;
+    } = body as {
+      formatId: string;
+      distanceKm: number;
+      eventDate: string;
+      endHour?: number;
+    };
 
     // 1. Validación SSOT de formato (fuente única de verdad).
     const currentFormat = ACG_ARTIST_OFFERS.find((f) => f.id === formatId);
