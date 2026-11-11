@@ -16,9 +16,15 @@
  */
 import type { NextResponse } from 'next/server';
 
-import { GET as canonicalGET, POST as canonicalPOST, dynamic, runtime } from '@/app/api/artist/career/connect/[provider]/route';
+import { GET as canonicalGET, POST as canonicalPOST } from '@/app/api/artist/career/connect/[provider]/route';
 
-export { dynamic, runtime };
+// Next 16 analiza el route-segment-config de forma ESTÁTICA en compilación:
+// un `export { dynamic, runtime }` desde otro módulo es ilegal y aborta
+// `next build` ("The exported configuration object in a source file needs to
+// have a very specific format"). Se declaran los mismos literales que el
+// canónico (`connect/[provider]/route.ts:26-27`) en lugar de reexportarlos.
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 /** Adaptador de segmento: `platform` (contrato de la cola) → `provider` (motor). */
 export function GET(

@@ -1,0 +1,289 @@
+{
+  "auditoria": "ESTRES_ESTADIO",
+  "base": "http://127.0.0.1:3007",
+  "startedAt": "2026-11-11T18:25:33.164Z",
+  "concurrency": 20,
+  "peakDate": "2027-09-18",
+  "vectors": {
+    "avalancha": {
+      "estado": "VERIFICADO",
+      "concurrencia": 20,
+      "fechaPico": "2027-09-18",
+      "artistProfileId": "edwin-agudelo",
+      "wallMs": 1263,
+      "bloqueos": {
+        "porStatus": {
+          "200": 1,
+          "409": 19
+        },
+        "aceptados": 1,
+        "conflictos": 19,
+        "contendidos429": 0,
+        "error500": 0,
+        "red": 0,
+        "urlsCheckoutDistintas": 1,
+        "sobreventaDetectada": false,
+        "rechazosEstructurados": 19,
+        "contratoP03": "CUMPLE",
+        "muestraVerdad": [
+          {
+            "i": 0,
+            "status": 409,
+            "ok": false,
+            "lock": null,
+            "error": "La fecha solicitada ya está comprometida por una reserva activa. Selecciona otro día o contacta por WhatsApp para la lista de espera prioritaria.",
+            "hasCheckout": false
+          },
+          {
+            "i": 1,
+            "status": 200,
+            "ok": null,
+            "lock": null,
+            "error": null,
+            "hasCheckout": true
+          },
+          {
+            "i": 2,
+            "status": 409,
+            "ok": false,
+            "lock": null,
+            "error": "La fecha solicitada ya está comprometida por una reserva activa. Selecciona otro día o contacta por WhatsApp para la lista de espera prioritaria.",
+            "hasCheckout": false
+          },
+          {
+            "i": 3,
+            "status": 409,
+            "ok": false,
+            "lock": null,
+            "error": "La fecha solicitada ya está comprometida por una reserva activa. Selecciona otro día o contacta por WhatsApp para la lista de espera prioritaria.",
+            "hasCheckout": false
+          },
+          {
+            "i": 4,
+            "status": 409,
+            "ok": false,
+            "lock": null,
+            "error": "La fecha solicitada ya está comprometida por una reserva activa. Selecciona otro día o contacta por WhatsApp para la lista de espera prioritaria.",
+            "hasCheckout": false
+          }
+        ]
+      },
+      "cotizaciones": {
+        "porStatus": {
+          "200": 20
+        },
+        "ok": 20,
+        "error500": 0,
+        "invalidas": 0,
+        "descuadreCentimos": 0,
+        "splitNoSuma": 0,
+        "totalesDistintosObservados": 20,
+        "latenciaMs": {
+          "p50": 552,
+          "p95": 644,
+          "p99": 652,
+          "max": 652
+        }
+      },
+      "hallazgo": "Aislamiento con artista fijo (edwin-agudelo): 1 aceptado(s) · 19 conflicto(s) 409 · 0 contención 429 · 0 error(es) 5xx."
+    },
+    "experienciaFan": {
+      "estado": "SOSPECHOSO",
+      "presupuesto": {
+        "inpMs": 50,
+        "cls": 0.05
+      },
+      "clics": 56,
+      "interactivosDetectados": 59,
+      "clickBurstMs": 8922,
+      "htmlStatus": 200,
+      "metricas": {
+        "inpMs": 576,
+        "inpEvento": "pointerout",
+        "interaccionesObservadas": 985,
+        "cls": 0,
+        "lcpMs": null,
+        "ttfbMs": 615,
+        "domContentLoadedMs": 3300,
+        "loadMs": 11443,
+        "navegacionTotalMs": 3310
+      },
+      "excedeInp": true,
+      "excedeCls": false
+    },
+    "payloads": {
+      "estado": "SOSPECHOSO",
+      "casos": {
+        "desorbitado_100M": {
+          "status": 200,
+          "ms": 20,
+          "rejectedAsExpected": true,
+          "rpcCode": -32602,
+          "rpcMessage": "PRESUPUESTO_EXCEDE_MAXIMO_LEGAL: el presupuesto supera el máximo legal de 1.000.000,00 €.",
+          "machineCode": null,
+          "bodyBytes": 245,
+          "serverError": false
+        },
+        "pax_negativo": {
+          "status": 200,
+          "ms": 16,
+          "rejectedAsExpected": true,
+          "rpcCode": -32602,
+          "rpcMessage": "Argumentos inválidos para calculate_quote.",
+          "machineCode": null,
+          "bodyBytes": 205,
+          "serverError": false
+        },
+        "precio_negativo": {
+          "status": 200,
+          "ms": 13,
+          "rejectedAsExpected": true,
+          "rpcCode": -32602,
+          "rpcMessage": "Argumentos inválidos para calculate_quote.",
+          "machineCode": null,
+          "bodyBytes": 211,
+          "serverError": false
+        },
+        "rider_30k": {
+          "status": 200,
+          "ms": 17,
+          "rejectedAsExpected": true,
+          "rpcCode": -32602,
+          "rpcMessage": "Argumentos inválidos para calculate_quote.",
+          "machineCode": null,
+          "bodyBytes": 215,
+          "serverError": false,
+          "payloadBytes": 240000
+        },
+        "xss": {
+          "status": 200,
+          "ms": 14,
+          "rejectedAsExpected": false,
+          "rpcCode": null,
+          "rpcMessage": null,
+          "machineCode": null,
+          "bodyBytes": 1970,
+          "serverError": false
+        },
+        "sqli": {
+          "status": 200,
+          "ms": 9,
+          "rejectedAsExpected": false,
+          "rpcCode": null,
+          "rpcMessage": null,
+          "machineCode": null,
+          "bodyBytes": 1714,
+          "serverError": false
+        },
+        "traversal": {
+          "status": 200,
+          "ms": 13,
+          "rejectedAsExpected": false,
+          "rpcCode": null,
+          "rpcMessage": null,
+          "machineCode": null,
+          "bodyBytes": 1489,
+          "serverError": false
+        },
+        "herramienta_inexistente": {
+          "status": 200,
+          "ms": 12,
+          "rejectedAsExpected": true,
+          "rpcCode": -32601,
+          "rpcMessage": "Herramienta desconocida: rm_rf_everything",
+          "machineCode": null,
+          "bodyBytes": 102,
+          "serverError": false
+        },
+        "json_basura": {
+          "status": 400,
+          "ms": 9,
+          "rejectedAsExpected": true,
+          "rpcCode": -32600,
+          "rpcMessage": "Petición JSON-RPC 2.0 inválida.",
+          "machineCode": null,
+          "bodyBytes": 95,
+          "serverError": false
+        },
+        "flood_2mb": {
+          "status": 400,
+          "ms": 36,
+          "rejectedAsExpected": true,
+          "rpcCode": -32600,
+          "rpcMessage": "Petición JSON-RPC 2.0 inválida.",
+          "machineCode": null,
+          "bodyBytes": 95,
+          "serverError": false,
+          "payloadBytes": 2097152
+        },
+        "webhook_whatsapp_sin_firma": {
+          "status": 413,
+          "ms": 18,
+          "rejectedAsExpected": false,
+          "rpcCode": null,
+          "rpcMessage": null,
+          "machineCode": null,
+          "bodyBytes": 176,
+          "serverError": false
+        },
+        "bloqueo_100M": {
+          "status": 400,
+          "ms": 23,
+          "rejectedAsExpected": true,
+          "rpcCode": null,
+          "rpcMessage": "",
+          "machineCode": "PRESUPUESTO_EXCEDE_MAXIMO_LEGAL",
+          "bodyBytes": 149,
+          "serverError": false
+        }
+      },
+      "resumen": {
+        "total": 12,
+        "rechazadosEstructuralmente": 8,
+        "aceptadosIndebidamente": 4,
+        "error500": []
+      }
+    },
+    "conversion": {
+      "estado": "VERIFICADO",
+      "intentos": 5,
+      "detalle": {
+        "wa": "https://wa.me/34693693048?text=%F0%9F%8F%9B%EF%B8%8F%20*Plan%20Maestro%20de%20Evento%20S-Class%20%C2%B7%20Productora%20EAR*%0ADemarcaci%C3%B3n%3A%20Madrid%20%7C%20Invitados%3A%20100%20pax%0APresupuesto%20Objetivo%3A%200%20%E2%82%AC%0ATotal%20Asignado%3A%200%20%E2%82%AC%0A%0A*Desglose%20por%20Partidas%3A*%0A%0A%0A*Split%20Soberano%20%C3%89tico%2080%2F10%2F10%3A*%0A%E2%80%A2%20Proveedores%20(80%25)%3A%200%20%E2%82%AC%0A%E2%80%A2%20EAR%20OS%20(10%25)%3A%200%20%E2%82%AC%0A%E2%80%A2%20VIMUME%20Retorno%20Social%20(10%25)%3A%200%20%E2%82%AC%20(Deducci%C3%B3n%20fiscal%20IRPF%2FSoc.%20hasta%200%20%E2%82%AC)%0A%0A*Sello%20inmutable%20del%20presupuesto%20(SHA-256)%3A*%0Asha256%3A0fbccd544ed607edf008517a200fb467106d3e53107ae332c625f800d22283c2%0A*Dep%C3%B3sito%20Price-Lock%20100%20%E2%82%AC%20(100%25%20deducible)%3A*%0Ahttps%3A%2F%2Fbuy.stripe.com%2F5kQ5kF2Ryh03fCT3Et4Vy0f%0A%0AQuiero%20verificar%20disponibilidad%20con%20este%20presupuesto%20cerrado%20y%20coordinar%20los%20100%20%E2%82%AC%20de%20Price-Lock.",
+        "waLinks": 4,
+        "totalAsignado": null,
+        "proveedores80": null,
+        "earos10": null,
+        "vimume10": null,
+        "hashMencionado": true,
+        "stripeHref": "https://wa.me/34693693048?text=%F0%9F%8F%9B%EF%B8%8F%20*Plan%20Maestro%20de%20Evento%20S-Class%20%C2%B7%20Productora%20EAR*%0ADemarcaci%C3%B3n%3A%20Madrid%20%7C%20Invitados%3A%20100%20pax%0APresupuesto%20Objetivo%3A%200%20%E2%82%AC%0ATotal%20Asignado%3A%200%20%E2%82%AC%0A%0A*Desglose%20por%20Partidas%3A*%0A%0A%0A*Split%20Soberano%20%C3%89tico%2080%2F10%2F10%3A*%0A%E2%80%A2%20Proveedores%20(80%25)%3A%200%20%E2%82%AC%0A%E2%80%A2%20EAR%20OS%20(10%25)%3A%200%20%E2%82%AC%0A%E2%80%A2%20VIMUME%20Retorno%20Social%20(10%25)%3A%200%20%E2%82%AC%20(Deducci%C3%B3n%20fiscal%20IRPF%2FSoc.%20hasta%200%20%E2%82%AC)%0A%0A*Sello%20inmutable%20del%20presupuesto%20(SHA-256)%3A*%0Asha256%3A0fbccd544ed607edf008517a200fb467106d3e53107ae332c625f800d22283c2%0A*Dep%C3%B3sito%20Price-Lock%20100%20%E2%82%AC%20(100%25%20deducible)%3A*%0Ahttps%3A%2F%2Fbuy.stripe.com%2F5kQ5kF2Ryh03fCT3Et4Vy0f%0A%0AQuiero%20verificar%20disponibilidad%20con%20este%20presupuesto%20cerrado%20y%20coordinar%20los%20100%20%E2%82%AC%20de%20Price-Lock.",
+        "partyRows": 16
+      },
+      "url": {
+        "phone": "34693693048",
+        "textLength": 630
+      },
+      "desglose": "🏛️ *Plan Maestro de Evento S-Class · Productora EAR*\nDemarcación: Madrid | Invitados: 100 pax\nPresupuesto Objetivo: 0 €\nTotal Asignado: 0 €\n\n*Desglose por Partidas:*\n\n\n*Split Soberano Ético 80/10/10:*\n• Proveedores (80%): 0 €\n• EAR OS (10%): 0 €\n• VIMUME Retorno Social (10%): 0 € (Deducción fiscal IRPF/Soc. hasta 0 €)\n\n*Sello inmutable del presupuesto (SHA-256):*\nsha256:0fbccd544ed607edf008517a200fb467106d3e53107ae332c625f800d22283c2\n*Depósito Price-Lock 100 € (100% deducible):*\nhttps://buy.stripe.com/5kQ5kF2Ryh03fCT3Et4Vy0f\n\nQuiero verificar disponibilidad con este presupuesto cerrado y coordinar los 100 € de Price-Lock.",
+      "checks": {
+        "telefonoCentralita": true,
+        "desglose80_10_10": true,
+        "deposito100": true,
+        "textoNoTruncado": true,
+        "sha256Presente": true,
+        "sha256Sellado64Hex": true,
+        "checkoutStripePresente": true
+      },
+      "sha256": "0fbccd544ed607edf008517a200fb467106d3e53107ae332c625f800d22283c2",
+      "checkoutStripe": "https://buy.stripe.com/5kQ5kF2Ryh03fCT3Et4Vy0f"
+    }
+  },
+  "sondaBase": {
+    "status": 200,
+    "ms": 111.13560000000001
+  },
+  "browser": {
+    "motor": "chrome",
+    "executablePath": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+  },
+  "finishedAt": "2026-11-11T18:25:59.592Z",
+  "veredicto": "SOSPECHOSO"
+}

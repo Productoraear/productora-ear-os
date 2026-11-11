@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import crypto from 'crypto';
-import { checkDateAvailability } from '@/lib/availability/atomicDateLockEngine';
+import { checkDateAvailability, lockDateAtomically, unlockDateAtomically } from '@/lib/availability/atomicDateLockEngine';
 import { fireAndForgetN8n } from '@/lib/services/n8n-dispatcher';
-import { DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
+import { DEPOSITO_STRIPE_EUR, MAX_TOTAL_ESTIMADO_EUR } from '@/lib/constants/ear-os-ssot';
+import { classifyDbFailure } from '@/lib/db/dbFailureClassifier';
 import { LANDING_CLUSTERS, sanitizeLandingSlug } from '@/lib/reservar/landing-attribution';
 
 export const runtime = 'nodejs';
@@ -19,7 +20,10 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://productoraear.com'
 // Infinity, negativos y valores absurdos que corromperían la telemetría.
 const MAX_DISTANCIA_KM = 5000;
 // Techo anti-desbordamiento del presupuesto declarado por el cliente.
-const MAX_TOTAL_ESTIMADO_EUR = 1_000_000;
+// P0-2: único valor canónico y compartido con el MCP Concierge (SSOT).
+// Prohibido recortar en silencio con `Math.min`: un presupuesto que excede el
+// techo se RECHAZA con 400 explícito, jamás se maquilla.
+const MAX_TOTAL_ESTIMADO_INPUT_EUR = MAX_TOTAL_ESTIMADO_EUR;
 const MAX_FORMATO_CHARS = 120;
 
 interface DepositRequestBody {
@@ -101,10 +105,19 @@ function parseFiniteNumber(value: unknown): number | null {
 }
 
 /**
+ * Error tipado de validación. `code` viaja al cuerpo HTTP para que el cliente
+ * (y la telemetría) distingan la causa sin leer prosa.
+ */
+interface DepositRequestError {
+  error: string;
+  code?: string;
+}
+
+/**
  * Narrowing tipado y sanitización del payload. Cero `any`: `req.json()` es
  * `unknown` hasta que este guardián lo convierte en un contrato verificable.
  */
-function parseDepositRequest(rawBody: unknown): SanitizedDepositRequest | { error: string } {
+function parseDepositRequest(rawBody: unknown): SanitizedDepositRequest | DepositRequestError {
   if (typeof rawBody !== 'object' || rawBody === null || Array.isArray(rawBody)) {
     return { error: 'Payload inválido: se espera un objeto JSON de reserva.' };
   }
@@ -126,6 +139,17 @@ function parseDepositRequest(rawBody: unknown): SanitizedDepositRequest | { erro
   const formatoSanitized = typeof body.formato === 'string' ? sanitizeText(body.formato, MAX_FORMATO_CHARS) : '';
   const totalEstimado = parseFiniteNumber(body.totalEstimado) ?? 0;
 
+  // ── P0-2 · GUARD, NO CLAMP ──────────────────────────────────────────────────
+  // Un importe negativo o por encima del techo SSOT no se «ajusta»: se rechaza
+  // con 400 explícito. El recorte silencioso convertía 100.000.000 € en
+  // 1.000.000 € y el cliente recibía un checkout con un número que no pidió.
+  if (totalEstimado < 0 || totalEstimado > MAX_TOTAL_ESTIMADO_INPUT_EUR) {
+    return {
+      error: `PRESUPUESTO_EXCEDE_MAXIMO_LEGAL: el importe debe estar entre 0,00 € y ${MAX_TOTAL_ESTIMADO_INPUT_EUR.toLocaleString('es-ES')},00 €.`,
+      code: 'PRESUPUESTO_EXCEDE_MAXIMO_LEGAL',
+    };
+  }
+
   // ── ATRIBUCIÓN (P1): procedencia de la landing ────────────────────────────
   // El clúster NUNCA se acepta como texto libre: allow-list cerrada o vacío.
   // El slug se valida con el mismo contrato que usa el configurador cliente.
@@ -144,7 +168,7 @@ function parseDepositRequest(rawBody: unknown): SanitizedDepositRequest | { erro
     formato: formatoSanitized.length > 0 ? formatoSanitized : 'solista',
     distanciaKm,
     horaFin: parseHoraFin(body.horaFin),
-    totalEstimado: Math.min(Math.max(totalEstimado, 0), MAX_TOTAL_ESTIMADO_EUR),
+    totalEstimado,
     artistProfileId: sanitizeToken(body.artistProfileId, 1, 64),
     idempotencyKey: sanitizeToken(body.idempotencyKey, 8, 128),
     landingSlug,
@@ -153,7 +177,30 @@ function parseDepositRequest(rawBody: unknown): SanitizedDepositRequest | { erro
   };
 }
 
+/**
+ * Vista tipada de un error de Stripe v22 sin `any`: el discriminante fiable es
+ * `type` (`StripeRateLimitError`, `StripeConnectionError`, `StripeAPIError`…)
+ * y `code` sólo cuando es un string (`rate_limit`, `idempotency_error`…).
+ */
+interface StripeErrorView {
+  readonly type: string;
+  readonly code: string;
+}
+
+/** Extrae la vista tipada de un error de Stripe; `null` si no lo es. */
+function asStripeError(error: unknown): StripeErrorView | null {
+  if (typeof error !== 'object' || error === null) return null;
+  const record = error as Record<string, unknown>;
+  const type = record.type;
+  if (typeof type !== 'string' || !type.startsWith('Stripe')) return null;
+  const code = record.code;
+  return { type, code: typeof code === 'string' ? code : '' };
+}
+
 export async function POST(req: NextRequest) {
+  // Declarado fuera del `try` para que el clasificador del `catch` disponga de
+  // la misma referencia tipada (cero `any`, cero `TS18046`).
+  let stripe: Stripe | null = null;
   try {
     const stripeSecret = process.env.STRIPE_SECRET_KEY;
     if (!stripeSecret) {
@@ -169,7 +216,7 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    const stripe = new Stripe(stripeSecret, {
+    stripe = new Stripe(stripeSecret, {
       apiVersion: '2025-01-27.acacia' as never,
     });
 
@@ -178,7 +225,14 @@ export async function POST(req: NextRequest) {
     const parsed = parseDepositRequest(rawBody);
 
     if ('error' in parsed) {
-      return NextResponse.json({ error: parsed.error }, { status: 400 });
+      // P0-2: el motivo viaja con código de máquina (`PRESUPUESTO_EXCEDE_MAXIMO_LEGAL`),
+      // no como prosa suelta imposible de auditar.
+      return NextResponse.json(
+        parsed.code === undefined
+          ? { ok: false, error: parsed.error }
+          : { ok: false, error: parsed.error, code: parsed.code },
+        { status: 400, headers: { 'Cache-Control': 'no-store' } }
+      );
     }
 
     const {
@@ -215,22 +269,70 @@ export async function POST(req: NextRequest) {
       if (availability.reason === 'INVALID_DATE') {
         return NextResponse.json(
           {
+            ok: false,
             error: 'Fecha inválida: el motor de disponibilidad no pudo interpretar el día solicitado.',
             reason: availability.reason,
           },
-          { status: 400 }
+          { status: 400, headers: { 'Cache-Control': 'no-store' } }
         );
       }
 
       return NextResponse.json(
         {
+          ok: false,
+          code: 'DATE_LOCK_CONTENTION',
           error:
             'La fecha solicitada ya está comprometida por una reserva activa. Selecciona otro día o contacta por WhatsApp para la lista de espera prioritaria.',
           reason: availability.reason,
           conflictingBlockId: availability.conflictingBlockId,
           conflictingProductionId: availability.conflictingProductionId,
         },
-        { status: 409 }
+        { status: 409, headers: { 'Cache-Control': 'no-store' } }
+      );
+    }
+
+    // ── P0-3 · ESCRITURA DEL CANDADO (reserva pesimista, no sólo lectura) ───
+    // La comprobación anterior es un `SELECT`: con 100 compradores simultáneos,
+    // todos ven la fecha libre y reciben checkout (sobreventa MEDIDA: 82/100).
+    // El candado se MATERIALIZA aquí: el primero que escribe gana y los demás
+    // reciben 409. El writer es serializable (cola en proceso + transacción
+    // interactiva en PostgreSQL), de ahí la exclusión mutua.
+    const lockHolder = artistProfileId ?? 'edwin-agudelo';
+    const lockTicket = `${idempotencyKey ?? crypto.randomUUID()}-${Date.now()}`;
+    const lockSha256 = crypto
+      .createHash('sha256')
+      .update(`${lockHolder}::${fecha}::${lockTicket}`)
+      .digest('hex');
+
+    const dateLock = await lockDateAtomically({
+      eventDate: fecha,
+      artistProfileId: lockHolder,
+      entityKind: 'artista',
+      entitySlug: lockHolder,
+      // Sin franja declarada, la agenda es exclusiva: un evento por artista/día.
+      clientName: 'Depósito Price-Lock pendiente',
+      stripeSessionId: lockTicket,
+      priceLockSha256: lockSha256,
+      totalAmountEur: totalEstimado > 0 ? totalEstimado : undefined,
+      depositAmountEur: DEPOSITO_STRIPE_EUR,
+      status: 'PENDING_DEPOSIT',
+      location: `Reserva ${formato} · ${distanciaKm} km`,
+    });
+
+    if (!dateLock.success) {
+      const isInvalidDate = dateLock.reason === 'INVALID_DATE';
+      return NextResponse.json(
+        {
+          ok: false,
+          code: 'DATE_LOCK_CONTENTION',
+          reason: dateLock.reason,
+          error: isInvalidDate
+            ? 'Fecha inválida: el motor de bloqueo no pudo interpretar el día solicitado.'
+            : 'Otro comprador acaba de bloquear ese día con este artista. Selecciona otra fecha o entra en la lista de espera por WhatsApp en el +34 693 693 048.',
+          conflictingProductionId: dateLock.productionId,
+          conflictingBlockId: dateLock.blockId,
+        },
+        { status: isInvalidDate ? 400 : 409, headers: { 'Cache-Control': 'no-store' } }
       );
     }
 
@@ -243,7 +345,25 @@ export async function POST(req: NextRequest) {
       .update(`${orderId}-${DEPOSIT_CENTS}-${fecha}-${stripeSecret}`)
       .digest('hex');
 
-    const session = await stripe.checkout.sessions.create({
+    // Si Stripe no emite enlace de pago, el candado se LIBERA: una caída de la
+    // pasarela no puede congelar la agenda del artista (compensación explícita).
+    const releaseDateLock = async (): Promise<void> => {
+      try {
+        await unlockDateAtomically({
+          stripeSessionId: lockTicket,
+          eventDate: fecha,
+          artistProfileId: lockHolder,
+          entityKind: 'artista',
+          entitySlug: lockHolder,
+        });
+      } catch (unlockError: unknown) {
+        console.error('[SOLISTA DEPOSIT] No se pudo liberar el candado de fecha', classifyDbFailure(unlockError));
+      }
+    };
+
+    let session: Stripe.Checkout.Session;
+    try {
+      session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
       success_url: `${BASE_URL}/reservar/solista?deposit=confirmado&order_id=${orderId}&lock=${priceLockHash.slice(0, 16)}&session_id={CHECKOUT_SESSION_ID}${attributionSlug ? `&landing=${encodeURIComponent(attributionSlug)}&cluster=${encodeURIComponent(attributionCluster)}` : ''}`,
@@ -279,6 +399,10 @@ export async function POST(req: NextRequest) {
         priceLockHash,
       },
     }, idempotencyKey ? { idempotencyKey: priceLockHash } : undefined);
+    } catch (stripeFailure: unknown) {
+      await releaseDateLock();
+      throw stripeFailure;
+    }
 
     // Despacho asíncrono al workflow n8n de Stripe Price-Lock (no bloqueante).
     // `fireAndForgetN8n` delega en `dispatchToN8n`, que reintenta con backoff y
@@ -306,14 +430,17 @@ export async function POST(req: NextRequest) {
     // Sin URL de checkout no hay pago posible: fallar explícito, nunca devolver null.
     if (!session.url) {
       console.error('[SOLISTA DEPOSIT] Stripe devolvió una sesión sin URL de checkout', session.id);
+      await releaseDateLock();
       return NextResponse.json(
         {
+          ok: false,
+          code: 'STRIPE_NO_CHECKOUT_URL',
           error:
             'Stripe no generó el enlace de pago. Reintenta en unos segundos o contacta por WhatsApp al +34 693 693 048.',
           orderId,
           priceLockHash,
         },
-        { status: 502 }
+        { status: 502, headers: { 'Cache-Control': 'no-store' } }
       );
     }
 
@@ -330,10 +457,93 @@ export async function POST(req: NextRequest) {
       { headers: { 'Cache-Control': 'no-store' } }
     );
   } catch (error: unknown) {
-    console.error('[SOLISTA DEPOSIT ERROR]', error);
+    // ════════════════════════════════════════════════════════════════════════
+    // P0-1 · CLASIFICADOR DE FALLO (cero 500 mudo en la ruta del dinero)
+    // ════════════════════════════════════════════════════════════════════════
+    // Causa raíz MEDIDA en la auditoría de estrés (100 bloqueos concurrentes):
+    //   StripeRateLimitError → «Request rate limit exceeded» → 500 genérico
+    //   (25 de 100 compradores perdían la reserva en el último paso).
+    // Aquí todo fallo se traduce a un código HTTP estructurado y accionable.
+    const report = classifyDbFailure(error);
+    const stripeError = asStripeError(error);
+    const stripeType: string = stripeError?.type ?? '';
+    const stripeCode: string = stripeError?.code ?? '';
+
+    console.error('[SOLISTA DEPOSIT ERROR]', {
+      errorCode: report.code,
+      dbKind: report.kind,
+      stripeType: stripeType || null,
+      stripeCode: stripeCode || null,
+    });
+
+    // 1 · Saturación de Stripe: el fan debe REINTENTAR, no perder la reserva.
+    if (
+      stripeType === 'StripeRateLimitError' ||
+      stripeCode === 'rate_limit' ||
+      stripeType === 'StripeConnectionError'
+    ) {
+      return NextResponse.json(
+        {
+          ok: false,
+          code: 'DATE_LOCK_CONTENTION',
+          reason: 'STRIPE_RATE_LIMIT',
+          error:
+            'Estamos recibiendo una punta de reservas simultáneas. Reintenta en 30 segundos: tu fecha no se ha perdido. También puedes cerrarla por WhatsApp en el +34 693 693 048.',
+          retryAfterSeconds: 30,
+        },
+        { status: 429, headers: { 'Cache-Control': 'no-store', 'Retry-After': '30' } }
+      );
+    }
+
+    // 2 · Motor de bloqueo / base de datos saturada o inalcanzable.
+    if (
+      report.kind === 'DB_POOL_TIMEOUT' ||
+      report.kind === 'DB_CONNECTION_CLOSED' ||
+      report.kind === 'DB_UNREACHABLE' ||
+      report.code === 'P2034' ||
+      report.code === 'P2024' ||
+      report.code === '40001' ||
+      report.code === '40P01'
+    ) {
+      return NextResponse.json(
+        {
+          ok: false,
+          code: 'DATE_LOCK_CONTENTION',
+          reason: report.kind,
+          error:
+            'El candado de fecha está bajo contención en este instante. Reintenta en unos segundos o cierra la reserva por WhatsApp en el +34 693 693 048.',
+          retryAfterSeconds: 10,
+        },
+        { status: 409, headers: { 'Cache-Control': 'no-store', 'Retry-After': '10' } }
+      );
+    }
+
+    // 3 · Stripe rechazó la petición (validación, clave revocada…): 422 explícito.
+    if (stripeType !== '') {
+      return NextResponse.json(
+        {
+          ok: false,
+          code: 'STRIPE_SESSION_REJECTED',
+          reason: stripeType,
+          error:
+            'Stripe no pudo crear el enlace de pago. Inténtalo de nuevo o contacta por WhatsApp al +34 693 693 048.',
+        },
+        { status: 422, headers: { 'Cache-Control': 'no-store' } }
+      );
+    }
+
+    // 4 · Último recurso: 503 declarado, nunca un 500 mudo.
+    // AF-1: `SIN_EVIDENCIA` de causa exacta ⇒ se declara y se pide reintento.
     return NextResponse.json(
-      { error: 'Error al crear el depósito de reserva' },
-      { status: 500 }
+      {
+        ok: false,
+        code: 'DEPOSIT_UNAVAILABLE',
+        reason: report.kind,
+        error:
+          'El servicio de reservas no está disponible en este momento. Reintenta en un minuto o contacta por WhatsApp al +34 693 693 048.',
+        retryAfterSeconds: 60,
+      },
+      { status: 503, headers: { 'Cache-Control': 'no-store', 'Retry-After': '60' } }
     );
   }
 }

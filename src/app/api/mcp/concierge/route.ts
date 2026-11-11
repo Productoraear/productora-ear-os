@@ -32,7 +32,7 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 
-import { DEPOSITO_STRIPE_EUR, TARIFA_BASE_SOLISTA_EUR } from '@/lib/constants/ear-os-ssot';
+import { DEPOSITO_STRIPE_EUR, MAX_TOTAL_ESTIMADO_EUR, TARIFA_BASE_SOLISTA_EUR } from '@/lib/constants/ear-os-ssot';
 import { computeSplit, type SplitBreakdown } from '@/lib/agents/pricing';
 import {
   BUDGET_CATEGORIES,
@@ -55,6 +55,31 @@ export const runtime = 'nodejs';
 /* ──────────────────────────────────────────────────────────────────────────── */
 /* Esquemas Zod estrictos (SEC-4): el cliente no cuela campos                  */
 /* ──────────────────────────────────────────────────────────────────────────── */
+
+/**
+ * Techo presupuestario en CÉNTIMOS enteros, derivado del SSOT y compartido con
+ * la ruta de depósito (P0-2). Un único número en toda la casa.
+ */
+const MAX_TOTAL_FORM_CENTS: number = Math.round(MAX_TOTAL_ESTIMADO_EUR * 100);
+
+/** Código de rechazo por desbordamiento (mismo literal que la ruta de depósito). */
+const CODE_PRESUPUESTO_EXCEDE_MAXIMO = 'PRESUPUESTO_EXCEDE_MAXIMO_LEGAL';
+
+/**
+ * Guard anti-desbordamiento (P0-2). Sustituye al recorte silencioso: si el
+ * importe tecleado supera el techo SSOT se RECHAZA con `-32602` y código
+ * explícito, nunca se entrega un presupuesto «maquillado» al cliente.
+ * `totalCents` recibe el importe efectivo a validar (tecleado o suma marcada).
+ */
+function overBudgetIssues(form: FormSnapshot, totalCents: number = form.totalCents): ReadonlyArray<string> {
+  const issues: string[] = [];
+  if (totalCents > MAX_TOTAL_FORM_CENTS) issues.push('form.totalCents');
+  form.selectedServices.forEach((item, index) => {
+    const lineCents: number = item.unitPriceCents * item.quantity;
+    if (lineCents > MAX_TOTAL_FORM_CENTS) issues.push(`form.selectedServices.${index}`);
+  });
+  return issues;
+}
 
 const formItemSchema = z
   .object({
@@ -264,6 +289,17 @@ export async function callConciergeTool(
           },
         };
       }
+      // P0-2 · Guard (no clamp): 100.000.000 € ⇒ -32602 explícito.
+      const overflow = overBudgetIssues(parsed.data.form);
+      if (overflow.length > 0) {
+        return {
+          error: {
+            code: JSON_RPC_ERRORS.INVALID_PARAMS,
+            message: `${CODE_PRESUPUESTO_EXCEDE_MAXIMO}: el presupuesto supera el máximo legal de ${MAX_TOTAL_ESTIMADO_EUR.toLocaleString('es-ES')},00 €.`,
+            data: { code: CODE_PRESUPUESTO_EXCEDE_MAXIMO, maxEur: MAX_TOTAL_ESTIMADO_EUR, paths: overflow },
+          },
+        };
+      }
       return { result: { tool: name, quote: envelope(quoteForm(parsed.data.form)) } };
     }
 
@@ -279,6 +315,20 @@ export async function callConciergeTool(
         };
       }
       const next: FormSnapshot = applySelection(parsed.data.form, parsed.data.mark, parsed.data.unmark);
+      // P0-2 · Mismo guard tras aplicar marcas: la suma marcada no puede desbordar.
+      const overflowAfterMark = overBudgetIssues(
+        next,
+        Math.max(next.totalCents, selectedServicesCents(next)),
+      );
+      if (overflowAfterMark.length > 0) {
+        return {
+          error: {
+            code: JSON_RPC_ERRORS.INVALID_PARAMS,
+            message: `${CODE_PRESUPUESTO_EXCEDE_MAXIMO}: el presupuesto supera el máximo legal de ${MAX_TOTAL_ESTIMADO_EUR.toLocaleString('es-ES')},00 €.`,
+            data: { code: CODE_PRESUPUESTO_EXCEDE_MAXIMO, maxEur: MAX_TOTAL_ESTIMADO_EUR, paths: overflowAfterMark },
+          },
+        };
+      }
       return {
         result: {
           tool: name,

@@ -48,6 +48,14 @@ export const AJUSTE_PREVENTIVO_B2G_EUR: number = 14250.0;
 /** Alias canónico del techo preventivo de Contrato Menor (Art. 118 LCSP). */
 export const SAFE_LCSP_CEILING_EUR: number = AJUSTE_PREVENTIVO_B2G_EUR;
 
+/**
+ * Techo anti-desbordamiento del presupuesto declarado por el cliente
+ * (1.000.000,00 €). Se aplica como GUARD explícito → `400`
+ * `PRESUPUESTO_EXCEDE_MAXIMO_LEGAL`, nunca como recorte silencioso (`clamp`).
+ * Consumido por la ruta de depósito y por el MCP Concierge: un único número.
+ */
+export const MAX_TOTAL_ESTIMADO_EUR: number = 1_000_000.0;
+
 /** Presión sonora de salud pública (límite máximo). */
 export const LIMITE_SPL_DB: number = 75;
 
@@ -83,6 +91,7 @@ export const EAR_OS_SSOT = Object.freeze({
     LIMITE_B2G_LCSP_EUR,
     AJUSTE_PREVENTIVO_B2G_EUR,
     SAFE_LCSP_CEILING_EUR,
+    MAX_TOTAL_ESTIMADO_EUR,
     LIMITE_SPL_DB,
     WATTS_PER_PAX,
     CENTRALITA_EAR_OS,

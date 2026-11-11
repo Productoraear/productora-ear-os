@@ -12,9 +12,13 @@
  */
 import type { NextResponse } from 'next/server';
 
-import { GET as canonicalGET, POST as canonicalPOST, dynamic, runtime } from '@/app/api/artist/career/callback/[provider]/route';
+import { GET as canonicalGET, POST as canonicalPOST } from '@/app/api/artist/career/callback/[provider]/route';
 
-export { dynamic, runtime };
+// Next 16 exige route-segment-config estático (analizable en compilación). Un
+// `export { dynamic, runtime }` desestabiliza `next build`. Se replican los
+// literales del canónico (`callback/[provider]/route.ts:28-29`).
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 /** Adaptador de segmento: `platform` (contrato de la cola) → `provider` (motor). */
 export function GET(

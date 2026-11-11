@@ -46,6 +46,15 @@ const BASE = ARGS.get('base') ?? 'http://localhost:3007';
 const CONCURRENCY = Number.parseInt(ARGS.get('concurrency') ?? '100', 10);
 const JSON_OUT = ARGS.get('json') ?? null;
 const SKIP_BROWSER = ARGS.get('skip-browser') === 'true';
+const ONLY_AVALANCHE = ARGS.get('only-avalanche') === 'true';
+
+/**
+ * P0-3 · ARTISTA FIJO. Si se pasa `--artist=<id>`, las 100 peticiones pelean
+ * por la MISMA fecha Y el MISMO artista: el aislamiento serializable del lock
+ * debe aceptar exactamente 1 y rechazar 99 con 409 (cero sobreventa).
+ */
+const ARTIST_PROFILE_ID = ARGS.get('artist') ?? '';
+const SKIP_QUOTES = ARGS.get('skip-quotes') === 'true';
 
 const PEPPER = 'estres-estadio-audit-2026-11-11';
 
@@ -151,6 +160,8 @@ async function requestDateLock(context) {
       horaFin: '02:00',
       totalEstimado: context.totalEstimado,
       idempotencyKey: context.idempotencyKey,
+      // P0-3: MISMO artista para todos los contendientes (aislamiento real).
+      ...(ARTIST_PROFILE_ID ? { artistProfileId: ARTIST_PROFILE_ID } : {}),
     },
     { timeoutMs: 25000 }
   );
@@ -201,10 +212,11 @@ function percentile(values, p) {
 async function runAvalanche() {
   const contexts = Array.from({ length: CONCURRENCY }, (_, i) => fanContext(i));
   const t0 = performance.now();
-  const [locks, quotes] = await Promise.all([
+  const [locks, quoteResponses] = await Promise.all([
     Promise.all(contexts.map((c) => requestDateLock(c))),
-    Promise.all(contexts.map((c) => requestQuote(c))),
+    SKIP_QUOTES ? Promise.resolve([]) : Promise.all(contexts.map((c) => requestQuote(c))),
   ]);
+  const quotes = quoteResponses;
   const wallMs = performance.now() - t0;
 
   const lockStatus = {};
@@ -242,6 +254,19 @@ async function runAvalanche() {
   let centMismatches = 0;
   let splitMismatches = 0;
   const observedTotals = new Set();
+  // ── Contrato P0-3: aislamiento con artista fijo ──────────────────────────
+  // `200` aceptados · `409` conflictos · `429` contención (Stripe/DB) · `>=500` fallo.
+  const contentionResponses = locks.filter((r) => r.status === 429 || r.status === 409);
+  const structuredRejections = contentionResponses.filter((r) => {
+    const body = r.json;
+    return body !== null && typeof body === 'object' && body.ok === false && typeof body.code === 'string';
+  }).length;
+  const acceptedExactlyOne = ARTIST_PROFILE_ID !== '' && lockAccepted === 1;
+  const conflictFloor =
+    ARTIST_PROFILE_ID !== ''
+      ? locks.length - 1 // 1 aceptado + 99 rechazados = 100 verificables
+      : 0;
+  const rejectionOk = contentionResponses.length >= conflictFloor;
   for (const r of quotes) {
     quoteStatus[r.status] = (quoteStatus[r.status] ?? 0) + 1;
     quoteLatencies.push(r.ms);
@@ -268,18 +293,27 @@ async function runAvalanche() {
   }
 
   results.vectors.avalancha = {
-    estado: lockNetwork > 0 || lockServerError > 0 || quoteServerError > 0 ? 'SOSPECHOSO' : 'VERIFICADO',
+    estado:
+      lockNetwork > 0 || lockServerError > 0 || quoteServerError > 0 || !rejectionOk
+        ? 'SOSPECHOSO'
+        : ARTIST_PROFILE_ID !== '' && !acceptedExactlyOne
+          ? 'SOSPECHOSO'
+          : 'VERIFICADO',
     concurrencia: CONCURRENCY,
     fechaPico: PEAK_DATE,
+    artistProfileId: ARTIST_PROFILE_ID || null,
     wallMs: Math.round(wallMs),
     bloqueos: {
       porStatus: lockStatus,
       aceptados: lockAccepted,
       conflictos: lockConflict,
+      contendidos429: lockStatus['429'] ?? 0,
       error500: lockServerError,
       red: lockNetwork,
       urlsCheckoutDistintas: lockSessions.size,
       sobreventaDetectada: lockAccepted > 1,
+      rechazosEstructurados: structuredRejections,
+      contratoP03: ARTIST_PROFILE_ID === '' ? 'SIN_ARTISTA_FIJO' : acceptedExactlyOne ? 'CUMPLE' : 'FALLA',
       muestraVerdad: lockTruth.slice(0, 5),
     },
     cotizaciones: {
@@ -302,9 +336,13 @@ async function runAvalanche() {
         ? `SOBREVENTA: ${lockAccepted} bloqueos aceptados sobre la MISMA fecha (${PEAK_DATE}).`
         : lockAccepted === 0 && lockConflict === 0 && lockServerError === 0 && lockNetwork === 0
           ? `El endpoint no acepta ni rechaza: ${JSON.stringify(lockStatus)}.`
-          : 'Ningún bloqueo duplicado aceptado sobre la fecha pico.',
+          : ARTIST_PROFILE_ID !== ''
+            ? `Aislamiento con artista fijo (${ARTIST_PROFILE_ID}): ${lockAccepted} aceptado(s) · ${lockConflict} conflicto(s) 409 · ${lockStatus['429'] ?? 0} contención 429 · ${lockServerError} error(es) 5xx.`
+            : 'Ningún bloqueo duplicado aceptado sobre la fecha pico.',
   };
-  log(`[V1] locks=${JSON.stringify(lockStatus)} quotes=${JSON.stringify(quoteStatus)} wall=${Math.round(wallMs)}ms`);
+  log(
+    `[V1] locks=${JSON.stringify(lockStatus)} quotes=${JSON.stringify(quoteStatus)} artist=${ARTIST_PROFILE_ID || '(none)'} wall=${Math.round(wallMs)}ms`
+  );
 }
 
 
@@ -348,13 +386,17 @@ function serviceItem(overrides = {}) {
 /** Un caso hostil sólo es correcto si el error es ESTRUCTURADO, nunca un 500. */
 function verdictOfCase(r, expectReject) {
   const rpcError = r.json && typeof r.json === 'object' ? (r.json.error ?? null) : null;
-  const rejected = expectReject ? Boolean(rpcError) : r.status === 200;
+  // P0-1/P0-2: 400 con código de máquina o 429 de contención también son
+  // rechazos ESTRUCTURADOS (el cliente sabe qué hacer), nunca 500 mudo.
+  const machineCode = r.json && typeof r.json === 'object' && typeof r.json.code === 'string' ? r.json.code : null;
+  const rejected = expectReject ? Boolean(rpcError) || machineCode !== null || r.status === 429 : r.status === 200;
   return {
     status: r.status,
     ms: Math.round(r.ms),
     rejectedAsExpected: rejected,
     rpcCode: rpcError ? (rpcError.code ?? null) : null,
     rpcMessage: rpcError ? String(rpcError.message ?? '').slice(0, 160) : null,
+    machineCode,
     bodyBytes: r.text.length,
     serverError: r.status >= 500,
   };
@@ -622,16 +664,25 @@ async function runConversion(browser) {
     } else {
       const hasSplit = /80\/10\/10/i.test(decoded.text) || /Proveedores \(80%\)/i.test(decoded.text);
       const hasDeposit = /100\s*€/.test(decoded.text);
+      // P0-4: la huella debe ser REAL (64 hex) y el checkout debe viajar íntegro.
+      const hashMatch = decoded.text.match(/sha256:([a-f0-9]{64})/i);
+      const checkoutMatch = decoded.text.match(/https:\/\/(?:buy\.)?stripe\.com\/[A-Za-z0-9_\-/?=&.]+/);
       out.checks = {
         telefonoCentralita: decoded.phone === '34693693048',
         desglose80_10_10: hasSplit,
         deposito100: hasDeposit,
         textoNoTruncado: decoded.text.length > 120,
         sha256Presente: /sha-?256/i.test(decoded.text),
+        sha256Sellado64Hex: hashMatch !== null,
+        checkoutStripePresente: checkoutMatch !== null,
       };
+      out.sha256 = hashMatch ? hashMatch[1] : null;
+      out.checkoutStripe = checkoutMatch ? checkoutMatch[0] : null;
       out.estado = Object.values(out.checks).every(Boolean) ? 'VERIFICADO' : 'SOSPECHOSO';
     }
-    log(`[V4] clics=${clicked} wa=${decoded ? decoded.textLength + ' chars' : 'NO ENCONTRADO'} estado=${out.estado}`);
+    log(
+      `[V4] clics=${clicked} wa=${decoded ? decoded.textLength + ' chars' : 'NO ENCONTRADO'} sha256=${out.sha256 ? 'SELLADO' : 'AUSENTE'} checkout=${out.checkoutStripe ? 'PRESENTE' : 'AUSENTE'} estado=${out.estado}`
+    );
   } catch (error) {
     out.estado = 'SIN_EVIDENCIA';
     out.motivo = error instanceof Error ? error.message : String(error);
@@ -800,9 +851,11 @@ async function main() {
 
   try {
     await runAvalanche();
-    await runFanExperience(browser);
-    await runHostilePayloads();
-    await runConversion(browser);
+    if (!ONLY_AVALANCHE) {
+      await runFanExperience(browser);
+      await runHostilePayloads();
+      await runConversion(browser);
+    }
   } finally {
     if (browser) await browser.close().catch(() => {});
   }

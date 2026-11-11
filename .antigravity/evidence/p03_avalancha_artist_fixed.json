@@ -1,0 +1,99 @@
+{
+  "auditoria": "ESTRES_ESTADIO",
+  "base": "http://127.0.0.1:3007",
+  "startedAt": "2026-11-11T18:26:12.057Z",
+  "concurrency": 100,
+  "peakDate": "2027-10-16",
+  "vectors": {
+    "avalancha": {
+      "estado": "VERIFICADO",
+      "concurrencia": 100,
+      "fechaPico": "2027-10-16",
+      "artistProfileId": "edwin-agudelo",
+      "wallMs": 3422,
+      "bloqueos": {
+        "porStatus": {
+          "200": 1,
+          "409": 99
+        },
+        "aceptados": 1,
+        "conflictos": 99,
+        "contendidos429": 0,
+        "error500": 0,
+        "red": 0,
+        "urlsCheckoutDistintas": 1,
+        "sobreventaDetectada": false,
+        "rechazosEstructurados": 99,
+        "contratoP03": "CUMPLE",
+        "muestraVerdad": [
+          {
+            "i": 0,
+            "status": 409,
+            "ok": false,
+            "lock": null,
+            "error": "La fecha solicitada ya está comprometida por una reserva activa. Selecciona otro día o contacta por WhatsApp para la lista de espera prioritaria.",
+            "hasCheckout": false
+          },
+          {
+            "i": 1,
+            "status": 200,
+            "ok": null,
+            "lock": null,
+            "error": null,
+            "hasCheckout": true
+          },
+          {
+            "i": 2,
+            "status": 409,
+            "ok": false,
+            "lock": null,
+            "error": "La fecha solicitada ya está comprometida por una reserva activa. Selecciona otro día o contacta por WhatsApp para la lista de espera prioritaria.",
+            "hasCheckout": false
+          },
+          {
+            "i": 3,
+            "status": 409,
+            "ok": false,
+            "lock": null,
+            "error": "La fecha solicitada ya está comprometida por una reserva activa. Selecciona otro día o contacta por WhatsApp para la lista de espera prioritaria.",
+            "hasCheckout": false
+          },
+          {
+            "i": 4,
+            "status": 409,
+            "ok": false,
+            "lock": null,
+            "error": "La fecha solicitada ya está comprometida por una reserva activa. Selecciona otro día o contacta por WhatsApp para la lista de espera prioritaria.",
+            "hasCheckout": false
+          }
+        ]
+      },
+      "cotizaciones": {
+        "porStatus": {},
+        "ok": 0,
+        "error500": 0,
+        "invalidas": 0,
+        "descuadreCentimos": 0,
+        "splitNoSuma": 0,
+        "totalesDistintosObservados": 0,
+        "latenciaMs": {
+          "p50": 0,
+          "p95": 0,
+          "p99": 0,
+          "max": null
+        }
+      },
+      "hallazgo": "Aislamiento con artista fijo (edwin-agudelo): 1 aceptado(s) · 99 conflicto(s) 409 · 0 contención 429 · 0 error(es) 5xx."
+    }
+  },
+  "sondaBase": {
+    "status": 200,
+    "ms": 239.10629999999998
+  },
+  "browser": {
+    "motor": "chrome",
+    "executablePath": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+  },
+  "finishedAt": "2026-11-11T18:26:18.803Z",
+  "veredicto": "VERIFICADO"
+}
