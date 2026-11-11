@@ -1,10 +1,10 @@
-'use client';
+﻿'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import type * as THREE from 'three';
 import Link from 'next/link';
 import { ArrowUpRight, Activity, ShieldCheck, Compass } from 'lucide-react';
 import { useWebglLifecycle } from '@/lib/hooks/useWebglLifecycle';
+import type { WorkerInbound, WorkerOutbound } from './prismaDiamondScene.worker';
 
 interface PrismaDiamondHero3DProps {
   onSelectRole?: (role: string) => void;
@@ -18,9 +18,31 @@ const AXIS_NODES = [
   { id: 'vimume', label: 'VIMUME', color: '#8B5CF6', angle: (8 * Math.PI) / 5, tag: '40 Hz Gamma', href: '/vimume' },
 ];
 
+/**
+ * Geometría estática del hero (INV-18 · ley del skeleton anti-CLS).
+ *
+ * El contenedor fija ALTO y ANCHO antes de que exista un solo píxel de WebGL:
+ * el canvas es hijo `absolute inset-0`, así que su llegada no desplaza ni un
+ * nodo del flujo. `contain: layout paint style` aísla el hero para que ninguna
+ * animación interna pueda invalidar el layout de la página.
+ */
+const HERO_GEOMETRY_CLASS =
+  'relative w-full h-[clamp(580px,100svh,760px)] min-h-[580px] ' +
+  'flex items-center justify-center overflow-hidden bg-[#030305] select-none [contain:layout_paint_style]';
+
+/** Contrato de transporte: el worker se activa sólo si el navegador lo soporta. */
+interface OffscreenCapability {
+  readonly supported: boolean;
+  readonly reason: 'offscreen-canvas+worker' | 'no-offscreen-canvas' | 'no-worker' | 'ssr';
+}
+
 export default React.memo(function PrismaDiamondHero3D({ onSelectRole }: PrismaDiamondHero3DProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const cleanupRef = useRef<(() => void) | null>(null);
   const [activeAxis, setActiveAxis] = useState<string | null>(null);
+  const [capability, setCapability] = useState<OffscreenCapability>({ supported: false, reason: 'ssr' });
+  /** `true` cuando el worker confirmó un contexto WebGL real (mensaje `ready`). */
+  const [sceneLive, setSceneLive] = useState(false);
 
   // F-4 (viewport + accesibilidad 3D): la escena NO se inicializa por inercia.
   //   · prefers-reduced-motion / SSR / sin GPU / save-data → 'static': el canvas
@@ -40,332 +62,147 @@ export default React.memo(function PrismaDiamondHero3D({ onSelectRole }: PrismaD
   const targetFps = decision.animateBudget.fps;
   const particleBudget = Math.max(1, decision.animateBudget.maxParticles);
 
-  // El bucle rAF vive dentro de un efecto de larga vida: leer el estado por ref
-  // evita destruir y reconstruir la escena (y su contexto WebGL) en cada scroll.
-  const shouldAnimateRef = useRef<boolean>(shouldAnimate);
-  /** Handle de reanudación publicado por el efecto; `null` si no hay escena. */
-  const resumeLoopRef = useRef<(() => void) | null>(null);
+  // El bucle vive en el WORKER: aquí sólo se guarda la señal de pausa. Leerla
+  // por ref evita reconstruir la escena en cada scroll (cero frames perdidos).
+  const animateRef = useRef<boolean>(shouldAnimate);
+  const workerHandleRef = useRef<Worker | null>(null);
 
   useEffect(() => {
-    shouldAnimateRef.current = shouldAnimate;
-    // Reanudar es pedir OTRO frame, no reconstruir: 0 coste de contexto.
-    if (shouldAnimate) resumeLoopRef.current?.();
+    const supported =
+      typeof window !== 'undefined' &&
+      typeof Worker !== 'undefined' &&
+      'transferControlToOffscreen' in HTMLCanvasElement.prototype;
+    setCapability({
+      supported,
+      reason: supported ? 'offscreen-canvas+worker' : typeof Worker === 'undefined' ? 'no-worker' : 'no-offscreen-canvas',
+    });
+  }, []);
+
+  // Pausa/reanudación: un mensaje de ~30 bytes. Nada se reconstruye.
+  useEffect(() => {
+    animateRef.current = shouldAnimate;
+    workerHandleRef.current?.postMessage({ type: 'animate', running: shouldAnimate } satisfies WorkerInbound);
   }, [shouldAnimate]);
 
   useEffect(() => {
-    // Sin canvas no hay contexto: este efecto jamás crea un renderer WebGL.
-    if (!shouldMountCanvas) return;
+    // Sin canvas autorizado no existe worker ni contexto WebGL.
+    if (!shouldMountCanvas || !capability.supported) return;
 
     const canvas = canvasRef.current;
     const container = containerRef.current;
     if (!canvas || !container) return;
 
     let cancelled = false;
-    let animationFrameId = 0;
-    let cleanup: (() => void) | null = null;
 
-    (async () => {
-      const THREE = await import('three');
-      if (cancelled) return;
-
-      // 1. Escena, Cámara y Renderer
-      const scene = new THREE.Scene();
-      scene.fog = new THREE.FogExp2(0x030305, 0.04);
-
-      const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
-      camera.position.z = 13;
-
-      const renderer = new THREE.WebGLRenderer({
-        canvas,
-        alpha: true,
-        antialias: true,
-        powerPreference: 'high-performance',
+    {
+      // El chunk del worker (y con él three.js) se emite como ASSET aparte.
+      // `new Worker(new URL('./x.worker.ts', import.meta.url))` es la forma
+      // estática que reconoce el bundler de Next.js: si se usa un `import()`
+      // dinámico de la clase, el módulo se evalúa en el HILO PRINCIPAL y el
+      // offload sería cosmético (fachada). Sólo el `OffscreenCanvas` cruza la
+      // frontera (`postMessage(init, [offscreen])`).
+      const offscreen = canvas.transferControlToOffscreen();
+      const sceneWorker = new Worker(new URL('./prismaDiamondScene.worker.ts', import.meta.url), {
+        type: 'module',
       });
-      renderer.setSize(container.clientWidth, container.clientHeight);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      workerHandleRef.current = sceneWorker;
 
-      // 2. Luces Prismáticas
-      const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-      scene.add(ambientLight);
+      sceneWorker.onmessage = (event: MessageEvent<WorkerOutbound>) => {
+        if (cancelled) return;
+        // `ready` sólo se emite si el worker obtuvo un contexto WebGL real.
+        if (event.data.type === 'ready') setSceneLive(true);
+        // `unsupported`/`error` → se apaga la capa 3D y manda la 2D (AF-1).
+        else setSceneLive(false);
+      };
+      sceneWorker.onerror = () => setSceneLive(false);
 
-      const rubyLight = new THREE.PointLight(0xff2b44, 3.5, 30);
-      rubyLight.position.set(-6, 4, 6);
-      scene.add(rubyLight);
+      const box = container.getBoundingClientRect();
+      sceneWorker.postMessage(
+        {
+          type: 'init',
+          canvas: offscreen,
+          width: Math.max(1, Math.round(box.width)),
+          height: Math.max(1, Math.round(box.height)),
+          devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
+          maxParticles: particleBudget,
+          targetFps: targetFps > 0 ? targetFps : 30,
+          axes: AXIS_NODES.map((node) => ({ id: node.id, color: node.color, angle: node.angle })),
+        } satisfies WorkerInbound,
+        [offscreen],
+      );
+      sceneWorker.postMessage({ type: 'animate', running: animateRef.current } satisfies WorkerInbound);
 
-      const cyanLight = new THREE.PointLight(0x00e5ff, 3.5, 30);
-      cyanLight.position.set(6, -4, 6);
-      scene.add(cyanLight);
-
-      const goldLight = new THREE.PointLight(0xecb613, 2.5, 25);
-      goldLight.position.set(0, 7, -3);
-      scene.add(goldLight);
-
-      // 3. Diamante central
-      const diamondGroup = new THREE.Group();
-      scene.add(diamondGroup);
-
-      const diamondGeometry = new THREE.OctahedronGeometry(2.4, 0);
-      const diamondMaterial = new THREE.MeshPhysicalMaterial({
-        color: 0x050508,
-        emissive: 0x110204,
-        roughness: 0.08,
-        metalness: 0.2,
-        transmission: 0.88,
-        ior: 2.417,
-        reflectivity: 0.9,
-        clearcoat: 1.0,
-        clearcoatRoughness: 0.1,
-        wireframe: false,
-      });
-      const diamondMesh = new THREE.Mesh(diamondGeometry, diamondMaterial);
-      diamondGroup.add(diamondMesh);
-
-      const edgesGeometry = new THREE.EdgesGeometry(diamondGeometry);
-      const edgesMaterial = new THREE.LineBasicMaterial({
-        color: 0xff2b44,
-        linewidth: 2,
-        transparent: true,
-        opacity: 0.85,
-      });
-      const diamondEdges = new THREE.LineSegments(edgesGeometry, edgesMaterial);
-      diamondGroup.add(diamondEdges);
-
-      const textureLoader = new THREE.TextureLoader();
-      textureLoader.load('/images/brand/ear_logo_official_diamond.png', (texture: THREE.Texture) => {
-        const spriteMaterial = new THREE.SpriteMaterial({
-          map: texture,
-          transparent: true,
-          opacity: 0.95,
-          blending: THREE.AdditiveBlending,
-        });
-        const logoSprite = new THREE.Sprite(spriteMaterial);
-        logoSprite.scale.set(1.9, 1.9, 1);
-        diamondGroup.add(logoSprite);
-      });
-
-      // 4. Anillos orbitales y nodos
-      const nexoGroup = new THREE.Group();
-      scene.add(nexoGroup);
-
-      const orbitRingGeometry = new THREE.RingGeometry(5.2, 5.25, 64);
-      const orbitRingMaterial = new THREE.MeshBasicMaterial({
-        color: 0xffffff,
-        side: THREE.DoubleSide,
-        transparent: true,
-        opacity: 0.08,
-      });
-      const orbitRing = new THREE.Mesh(orbitRingGeometry, orbitRingMaterial);
-      orbitRing.rotation.x = Math.PI / 2.6;
-      nexoGroup.add(orbitRing);
-
-      const lineGeometries: THREE.BufferGeometry[] = [];
-      const radius = 5.2;
-
-      AXIS_NODES.forEach((axis) => {
-        const x = Math.cos(axis.angle) * radius;
-        const z = Math.sin(axis.angle) * radius;
-        const y = Math.sin(axis.angle * 2) * 0.7;
-
-        const nodeGeom = new THREE.SphereGeometry(0.35, 16, 16);
-        const nodeMat = new THREE.MeshStandardMaterial({
-          color: new THREE.Color(axis.color),
-          emissive: new THREE.Color(axis.color),
-          emissiveIntensity: 0.8,
-          roughness: 0.2,
-        });
-        const nodeMesh = new THREE.Mesh(nodeGeom, nodeMat);
-        nodeMesh.position.set(x, y, z);
-        nexoGroup.add(nodeMesh);
-
-        const lineGeom = new THREE.BufferGeometry().setFromPoints([
-          new THREE.Vector3(0, 0, 0),
-          new THREE.Vector3(x, y, z),
-        ]);
-        const lineMat = new THREE.LineBasicMaterial({
-          color: new THREE.Color(axis.color),
-          transparent: true,
-          opacity: 0.25,
-        });
-        const line = new THREE.Line(lineGeom, lineMat);
-        nexoGroup.add(line);
-        lineGeometries.push(lineGeom);
-      });
-
-      // 5. Nube de partículas (presupuesto gobernado, no un número mágico)
-      const particleCount = particleBudget;
-      const particlePositions = new Float32Array(particleCount * 3);
-      const particleColors = new Float32Array(particleCount * 3);
-      const pColor1 = new THREE.Color(0xff2b44);
-      const pColor2 = new THREE.Color(0x00e5ff);
-      const pColor3 = new THREE.Color(0xecb613);
-
-      for (let i = 0; i < particleCount; i++) {
-        const r = 3.5 + Math.random() * 8.5;
-        const theta = Math.random() * Math.PI * 2;
-        const phi = (Math.random() - 0.5) * Math.PI;
-        particlePositions[i * 3] = r * Math.cos(phi) * Math.cos(theta);
-        particlePositions[i * 3 + 1] = r * Math.sin(phi);
-        particlePositions[i * 3 + 2] = r * Math.cos(phi) * Math.sin(theta);
-        const chosenColor = i % 3 === 0 ? pColor1 : i % 3 === 1 ? pColor2 : pColor3;
-        particleColors[i * 3] = chosenColor.r;
-        particleColors[i * 3 + 1] = chosenColor.g;
-        particleColors[i * 3 + 2] = chosenColor.b;
-      }
-
-      const particleGeometry = new THREE.BufferGeometry();
-      particleGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
-      particleGeometry.setAttribute('color', new THREE.BufferAttribute(particleColors, 3));
-
-      const particleMaterial = new THREE.PointsMaterial({
-        size: 0.08,
-        vertexColors: true,
-        transparent: true,
-        opacity: 0.7,
-        blending: THREE.AdditiveBlending,
-      });
-      const particles = new THREE.Points(particleGeometry, particleMaterial);
-      scene.add(particles);
-
-      // 6. Interacción con ratón y táctil
-      let targetRotX = 0;
-      let targetRotY = 0;
-      let currentRotX = 0;
-      let currentRotY = 0;
-
-      const handleMouseMove = (e: MouseEvent) => {
+      // Resize: el observer corre aquí pero sólo emite números al worker.
+      const resizeObserver = new ResizeObserver(() => {
         const rect = container.getBoundingClientRect();
-        targetRotY = ((e.clientX - rect.left) / rect.width - 0.5) * 1.3;
-        targetRotX = ((e.clientY - rect.top) / rect.height - 0.5) * 0.9;
-      };
-
-      const handleTouchMove = (e: TouchEvent) => {
-        if (e.touches.length > 0) {
-          const touch = e.touches[0];
-          const rect = container.getBoundingClientRect();
-          targetRotY = ((touch.clientX - rect.left) / rect.width - 0.5) * 1.1;
-          targetRotX = ((touch.clientY - rect.top) / rect.height - 0.5) * 0.7;
-        }
-      };
-
-      window.addEventListener('mousemove', handleMouseMove);
-      window.addEventListener('touchmove', handleTouchMove, { passive: true });
-
-      // 7. Resize responsive
-      const handleResize = () => {
-        if (!container || !camera || !renderer) return;
-        const w = container.clientWidth;
-        const h = container.clientHeight;
-        camera.aspect = w / h;
-        camera.position.z = w < 768 ? 16 : 13;
-        camera.updateProjectionMatrix();
-        renderer.setSize(w, h);
-      };
-
-      const resizeObserver = new ResizeObserver(() => handleResize());
+        sceneWorker.postMessage({
+          type: 'resize',
+          width: Math.max(1, Math.round(rect.width)),
+          height: Math.max(1, Math.round(rect.height)),
+          devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
+        } satisfies WorkerInbound);
+      });
       resizeObserver.observe(container);
-      handleResize();
 
-      // 8. Bucle de animación GOBERNADO POR VIEWPORT (hallazgo F-4)
-      // El bucle NO se auto-invoca: sólo se pide el siguiente frame si el
-      // lifecycle dice 'running'. Al salir del viewport se cancela el rAF y el
-      // coste de CPU/GPU baja a 0% sin destruir el contexto WebGL.
-      const clock = new THREE.Clock();
-      let lastFrameMs = 0;
-      const minFrameMs = targetFps > 0 ? 1000 / targetFps : 1000 / 30;
-
-      const renderFrame = (): void => {
-        const elapsedTime = clock.getElapsedTime();
-
-        currentRotX += (targetRotX - currentRotX) * 0.05;
-        currentRotY += (targetRotY - currentRotY) * 0.05;
-
-        diamondGroup.rotation.y = elapsedTime * 0.35 + currentRotY;
-        diamondGroup.rotation.x = Math.sin(elapsedTime * 0.5) * 0.15 + currentRotX;
-        diamondGroup.position.y = Math.sin(elapsedTime * 1.2) * 0.22;
-
-        nexoGroup.rotation.y = -elapsedTime * 0.18 + currentRotY * 0.4;
-        nexoGroup.rotation.z = Math.sin(elapsedTime * 0.3) * 0.08;
-
-        particles.rotation.y = elapsedTime * 0.06;
-        particles.rotation.x = Math.sin(elapsedTime * 0.1) * 0.05;
-
-        rubyLight.position.x = Math.sin(elapsedTime * 0.8) * 7;
-        cyanLight.position.x = -Math.sin(elapsedTime * 0.8) * 7;
-
-        renderer.render(scene, camera);
+      // Puntero normalizado a [-0.5, 0.5]: una rect por evento, no por frame.
+      const sendPointer = (clientX: number, clientY: number): void => {
+        const rect = container.getBoundingClientRect();
+        sceneWorker.postMessage({
+          type: 'pointer',
+          x: (clientX - rect.left) / rect.width - 0.5,
+          y: (clientY - rect.top) / rect.height - 0.5,
+        } satisfies WorkerInbound);
+      };
+      const handleMouseMove = (event: MouseEvent): void => sendPointer(event.clientX, event.clientY);
+      const handleTouchMove = (event: TouchEvent): void => {
+        const touch = event.touches[0];
+        if (touch !== undefined) sendPointer(touch.clientX, touch.clientY);
       };
 
-      const animate = (timestamp?: number): void => {
-        // Re-verificación por frame: entre dos frames el usuario puede haber
-        // scrolleado fuera de pantalla o cambiado de pestaña.
-        if (!shouldAnimateRef.current) {
-          animationFrameId = 0;
-          return;
-        }
+      container.addEventListener('mousemove', handleMouseMove);
+      container.addEventListener('touchmove', handleTouchMove, { passive: true });
 
-        animationFrameId = requestAnimationFrame(animate);
-
-        const now = typeof timestamp === 'number' ? timestamp : performance.now();
-        if (now - lastFrameMs < minFrameMs) return;
-        lastFrameMs = now;
-
-        renderFrame();
-      };
-
-      // Primer frame pintado de inmediato: el póster ya cubre el hueco, así que
-      // no hay parpadeo, y el usuario ve la escena en el mismo tick del montaje.
-      renderFrame();
-      animate();
-
-      // Handle de reanudación: si el lifecycle pasó a 'paused' el bucle se
-      // detuvo; volver a 'running' reengancha sin reconstruir la escena.
-      resumeLoopRef.current = () => {
-        if (animationFrameId === 0 && shouldAnimateRef.current) {
-          animate();
-        }
-      };
-
-      cleanup = () => {
-        resumeLoopRef.current = null;
-        cancelAnimationFrame(animationFrameId);
-        animationFrameId = 0;
-        window.removeEventListener('mousemove', handleMouseMove);
-        window.removeEventListener('touchmove', handleTouchMove);
+      cleanupRef.current = () => {
         resizeObserver.disconnect();
-        diamondGeometry.dispose();
-        diamondMaterial.dispose();
-        edgesGeometry.dispose();
-        edgesMaterial.dispose();
-        orbitRingGeometry.dispose();
-        orbitRingMaterial.dispose();
-        particleGeometry.dispose();
-        particleMaterial.dispose();
-        renderer.dispose();
+        container.removeEventListener('mousemove', handleMouseMove);
+        container.removeEventListener('touchmove', handleTouchMove);
+        sceneWorker.postMessage({ type: 'dispose' } satisfies WorkerInbound);
+        sceneWorker.terminate();
+        workerHandleRef.current = null;
       };
-    })();
+    }
 
     return () => {
       cancelled = true;
-      if (cleanup) cleanup();
+      setSceneLive(false);
+      cleanupRef.current?.();
+      cleanupRef.current = null;
     };
-  }, [shouldMountCanvas, containerRef, particleBudget, targetFps]);
+  }, [shouldMountCanvas, capability.supported, containerRef, particleBudget, targetFps]);
+
+  // Alternativa 2D: accesibilidad, navegadores sin OffscreenCanvas y cualquier
+  // fallo del worker. Misma geometría CSS → el cambio no mueve un píxel.
+  const showStaticAlternative =
+    shouldRenderStaticAlternative || !capability.supported || (shouldMountCanvas && !sceneLive);
 
   return (
     <div
       ref={containerRef}
       data-webgl-state={webglStateLabel}
       data-webgl-tier={decision.reason}
-      className="relative w-full min-h-[580px] sm:min-h-[660px] lg:min-h-[760px] flex items-center justify-center overflow-hidden bg-[#030305] select-none"
+      data-offscreen={capability.reason}
+      className={HERO_GEOMETRY_CLASS}
     >
-      {/* Canvas WebGL: SÓLO existe si el lifecycle lo autoriza. En 'static' no se
-          crea ni un contexto (batería y accesibilidad), y manda la capa 2D. */}
-      {shouldMountCanvas ? (
+      {/* Canvas 3D: SÓLO existe si el lifecycle lo autoriza. El control se
+          transfiere al worker (`transferControlToOffscreen`), así que aquí no
+          se ejecuta ni un draw call. En 'static' no se crea contexto alguno. */}
+      {shouldMountCanvas && capability.supported ? (
         <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-10" />
       ) : null}
 
       {/* Alternativa 2D estática de alta fidelidad: mismo encuadre, mismos ejes,
           cero movimiento. Se pinta con CSS puro (sin three, sin shaders). */}
-      {shouldRenderStaticAlternative ? (
+      {showStaticAlternative ? (
         <div
           className="absolute inset-0 z-10 pointer-events-none flex items-center justify-center"
           aria-hidden="true"
