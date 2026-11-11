@@ -3953,6 +3953,20 @@ gates          : G0 PASS (todos los citados existen) · G1 PASS (tsc --noEmit Ex
                  G5 SIN_EVIDENCIA (sim:event Stripe no ejecutado) · G6 SIN_EVIDENCIA · G7 SIN_EVIDENCIA
 omega_diamante : { score: "3/8 P0 medidos", verdict: "ROJO", pendientes: [G3 17 puertas, G5 sim:event, G6 scorecard, G7 CLS] }
 hipotesis[]    : · MetricSnapshot NO tiene @@unique(artistId,platformId,metric,capturedAt): el upsert por
+
+### 2026-11-11T20:09:31Z · W56_RESELLO_QUINTUPLA_4P0 — gate:prepush completo en Exit 0 (verificado=20, degradadas=0)
+- ARCHIVOS: `scripts/reseal_4p0_quintuple.cjs` (nuevo) · `.antigravity/evidence/ledger.jsonl` (3 filas APPEND) · `.antigravity/evidence/p03_avalancha_reseal.json` (evidencia)
+- HECHO:
+  - `gate:prepush` falló en `verify:confianza` → `[FAIL] QUINTUPLA`: `REPARACION_4P0_P01/P02/P03` tenían `sha256:null`, y `url` sobre `http://127.0.0.1:3007`. Regla real en `src/lib/evidence/evidence-ledger.ts:175-187` (cmd+exit+url https+sha256 hex64+ts ISO). La degradación era **correcta**: una fila sin cuerpo medible no es prueba.
+  - `scripts/reseal_4p0_quintuple.cjs:85-151` recalcula dos digests reales (`sha256` de `porStatus+muestraVerdad` del probe re-ejecutado; hash canónico del SSOT) y **anexa** 3 filas con `order:APPEND` + `supersedes`. No reescribe ninguna línea previa (EP-4).
+  - Sonda re-ejecutada en esta sesión: `--fecha=2027-10-17` → `[V1] locks={"200":1,"409":99}` `VEREDICTO avalancha = VERIFICADO` (2027-10-16 ya estaba bloqueada por el propio P0-3 previo: `{"409":100}`).
+- COMANDOS: `node scripts/reseal_4p0_quintuple.cjs` → Exit 0 (`RESEAL_PROBE_SHA256=b5d9ad99…`, `RESEAL_SSOT_SHA256=ebc011a0…`) · `npm run verify:confianza` → **Exit 0** (10/10 checks, VERIFICADO=20, SOSPECHOSO=57, degraded=0) · `npm run gate:prepush` → **Exit 0** (29 scripts npm + 8 scripts node, 0 fallos; `AUDIT_ORPHAN_HTTP=0`; SSOT `ebc011a0…55bb29dd` == referencia; Ω-Diamante 14/20 VERDE; CLS PASS).
+- HALLAZGO (❌ cerrado): la quíntupla de las 3 filas 4-P0 estaba incompleta y **bloqueaba el arnés**. Cerrada con medición nueva, no con un relleno.
+- HALLAZGO (⚠️ abierto): P01/P03 declaran `url` de producción pero la medición fue en loopback (realojada en `measured.probeBase`); P02 sella el hash del SSOT, no un cuerpo HTTP. Elevarlo a quíntupla HTTP pura exige re-sondear contra `productoraear.com` (G-6). Dueño: Arquitecto.
+- Ω-DIAMANTE: { score: "14/20", verdict: "VERDE", pendientes: ["6 ítems P1 SIN_EVIDENCIA (scorecard oficial)", "quíntupla HTTP en producción para P01/P02/P03"] }
+- PREMORTEM: el riesgo aceptado es que el hash certifique el cuerpo capturado y no el de producción; por eso el `note` de cada fila dice literalmente dónde se midió.
+- SIGUIENTE PASO: `git add scripts/reseal_4p0_quintuple.cjs .antigravity/evidence/ledger.jsonl CLINE_EXECUTION_LOG.md` + commit del re-sello.
+
                    clave natural es INEXPRESABLE en el cliente generado (medido en index.d.ts:102276) y se
                    sustituyó por lectura+escritura dentro de una transacción interactiva.
                  · El clúster PostgreSQL efímero de la estación queda zombie tras cada ejecución (socket
