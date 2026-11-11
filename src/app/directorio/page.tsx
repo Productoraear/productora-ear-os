@@ -59,7 +59,7 @@ const SCLASS_PRIORITY_NODES: CultDirectoryItem[] = [
     province: 'Madrid / Toledo',
     municipality: 'Hub Méntrida (Km 0)',
     description:
-      'Show musical en vivo de 1 hora (2 pases de 30 min), microfonía Shure Beta 87A, sonido Bose F1 812 / S1 Pro, ramo de flores en vivo, canción personalizada y sesión de fotos con sombreros temáticos. Artista Solista S-Class prioritario.',
+      'Ficha del directorio con filtro por provincia y categoría: 2 pases de 30 min con Shure Beta 87A, Bose F1 812 / S1 Pro, ramo de flores en vivo, canción personalizada y sesión fotográfica. Perfil prioritario S-Class.',
     price: '350,00 €',
     rating: 5.0,
     reviewsCount: 128,

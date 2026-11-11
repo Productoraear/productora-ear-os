@@ -35,8 +35,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (/chofer|conductor|transfer|coche|transporte-vip/.test(fullPath)) {
     return {
-      title: `Alquiler de Vehículos de Lujo con Conductor & Chófer VIP en ${cityName} | Productora EAR`,
-      description: `Flota oficial Mercedes-Benz Clase S, Clase V y Maybach en ${cityName}. Servicios de representación, transfers aeropuerto Barajas FBO, bodas y eventos VIP.`,
+      // OMEGA-16 (unicidad léxica): este árbol es el hub canónico de la
+      // intención «chófer VIP». Su título no puede repetir el de la ruta de
+      // 2 niveles (`[servicio]/[provincia]`), que compite por la misma SERP.
+      title: `Chófer VIP y Vehículos de Representación en ${cityName} | Hub S-Class`,
+      description: `Hub de la flota Mercedes-Benz Clase S, Clase V y Maybach. Un solo expediente para transfers FBO Barajas, representation y cobertura de bodas en ${cityName}, con producción técnica propia.`,
       alternates: {
         canonical: isDoorway
           ? `https://productoraear.com/servicios/${slug[0]}`

@@ -1657,6 +1657,7 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
               '@context': 'https://schema.org',
               '@type': 'LocalBusiness',
               name: displayName,
+              url: `https://productoraear.com/proveedores/${slug}`,
               description: description || `Proveedor homologado por Productora EAR para bodas y eventos en ${location}.`,
               image: isBlacklisted || galleryReal.length === 0 ? undefined : galleryReal,
               telephone: CENTRALITA_EAR_OS,
