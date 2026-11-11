@@ -45,6 +45,14 @@ const nextConfig: NextConfig = {
   },
   serverExternalPackages: ["sharp", "@prisma/client", "bcryptjs"],
   experimental: {
+    // P0 OOM COOLIFY (1 vCPU / 4 GB): el VPS aplica `--max-old-space-size=2048`
+    // en el Dockerfile, pero Next levanta por defecto un worker de webpack por
+    // nucleo y agota el heap al prerenderizar. Estos dos flags fueron borrados
+    // sin querer en el commit 56ee94a2 (regresion medida con `git log -S`) y su
+    // ausencia es la causa del `exit code: 1` de la linea 60 del Dockerfile.
+    // `cpus: 1` + `workerThreads: false` fijan un unico proceso de compilacion.
+    cpus: 1,
+    workerThreads: false,
     webpackMemoryOptimizations: true,
     optimizePackageImports: [
       "lucide-react",

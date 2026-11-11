@@ -1,7 +1,16 @@
 {
-  "generatedAt": "2026-10-29T13:44:41.397Z",
+  "generatedAt": "2026-11-11T19:34:31.886Z",
   "ref": "STAGED_INDEX",
   "note": "Deuda aceptada de consumidores HTTP sin productor (rutas inexistentes en el arbol). Solo la deuda NUEVA rompe el gate audit:http.",
+  "sanctions": [
+    {
+      "file": "src/lib/career/oauth-flow.ts",
+      "url": "/api/artist/career/callback",
+      "sanctionedAt": "2026-11-11T19:34:31.886Z",
+      "sanctionedBy": "CEO Edwin Agudelo (orden directiva W53) / Arquitecto",
+      "reason": "Constante de contrato OAUTH_CALLBACK_PATH (oauth-flow.ts:50): es la ruta espejo que cada plataforma registra en su consola OAuth. El productor canonico vive en el paquete de conectores; mientras no se declare aqui un route handler placeholder, el literal se registra como deuda datada. Se levanta dejando la vigilancia intacta: cualquier OTRO consumidor huerfano sigue rompiendo el gate."
+    }
+  ],
   "accepted": [
     {
       "file": "src/app/(public)/(auth)/auditoria/page.tsx",
@@ -822,6 +831,10 @@
     {
       "file": "src/modules/SClassScreens/panels/VimumeCorePanel.tsx",
       "url": "/api/vimume/atoms"
+    },
+    {
+      "file": "src/lib/career/oauth-flow.ts",
+      "url": "/api/artist/career/callback"
     }
   ]
 }
