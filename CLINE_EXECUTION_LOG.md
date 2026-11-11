@@ -4695,3 +4695,160 @@ siguiente_paso : recibir el payload real de marketingskills-main (ruta absoluta)
                  aislamiento; en paralelo, correr `gate:prepush` completo antes del push
 ```
 
+
+---
+
+# GUARDIA NOCTURNA 2026-11-11/12 · MVP EAR OS v14.0 (FASES 1-3)
+
+**Base**: `11ea6619` (deploy certificado) · **Ejecutor**: Cline (Obrero)
+**Directiva**: orden nocturna desatendida + resolución CEO FASE 2 (HÍBRIDO sin BD).
+
+## Resumen en 5 líneas (CEO-1)
+
+1. **Qué cambió**: el hero 3D ya no bloquea el hilo principal (worker +
+   OffscreenCanvas), existe la ruta pública `/seating-planner` con anclaje de valor
+   190 €, y siete instrumentos nuevos miden lo que antes era promesa.
+2. **Qué riesgo desaparece**: el INP degradado del canvas, la promesa sin URL (EP-3)
+   del lead magnet y tres pares de páginas con copy idéntico compitiendo en Google.
+3. **Comando que lo prueba**: `npm run gate:prepush` → **Exit 0** ·
+   `npm run audit:omega-rojo` → **19/20 VERDE** con núcleo P0 8/8.
+4. **Qué NO está probado**: Lighthouse 100×4 (dependencia ausente) y CLS p75 de campo
+   (sin RUM). El hero con worker está verificado por contrato en disco, no por
+   medición en navegador de producción.
+5. **Decisión que necesito**: autorizar `lighthouse` como devDependency para cerrar Ω-12.
+
+## FASE 1 · Zero-CLS + OffscreenCanvas 3D — `VERIFICADO`
+
+- `prismaDiamondScene.worker.ts` (nuevo): escena completa dentro de un Web Worker;
+  el contexto WebGL se crea sobre el `OffscreenCanvas` transferido.
+- `PrismaDiamondHero3D.tsx`: el hilo principal sólo envía
+  `init / resize / pointer / animate / dispose`. Geometría fija
+  `h-[clamp(580px,100svh,760px)]` + `[contain:layout_paint_style]`.
+- **Hallazgo que hizo real el offload**: el primer intento usaba `import()` dinámico
+  de la clase Worker; el bundler no lo reconoce y el módulo (con three) se habría
+  evaluado en el hilo principal. Se sustituyó por
+  `new Worker(new URL('./prismaDiamondScene.worker.ts', import.meta.url))`.
+- `node scripts/audit_offscreen_hero.cjs` → **12/12 PASS**.
+- `node scripts/audit_cls_budget.cjs` → `VIOLATIONS=0 · PASS`.
+
+## FASE 2 · Seating Planner Pro (`/seating-planner`) — `VERIFICADO`
+
+- `src/lib/seating/seating-plan.ts`: motor puro y determinista (rejilla por aforo,
+  capacidad por tipología con paso de 60 cm, validación contra el aforo del espacio).
+- `src/lib/seating/seating-codec.ts`: autoguardado `localStorage` + enlace
+  compartible en el hash (`#plan=`). El hash **no** viaja al servidor (INV-14).
+- `SeatingPlanner.tsx` + `SeatingBoard.tsx`: arrastre con Pointer Events, alta/baja de
+  mesas, tres tipologías, asientos por mesa, exportación SVG desde el mismo estado e
+  impresión.
+- `app/(public)/seating-planner/page.tsx`: ancla 190 € de catálogo + depósito 100 €
+  del SSOT, deducible. La cortesía **no** crea un segundo cobro (INV-03).
+- `npm run verify:seating-planner` → **29/29 aserciones PASS**.
+- **Defecto cazado por el arnés antes del commit**: el separador `.` partía las
+  coordenadas decimales (`String(1.5)`) y el plano no se podía reabrir. Corregido a
+  `,` con caso de regresión permanente.
+
+
+## FASE 3 · Wave 54 — `PARCIAL` (19/20, no 20/20)
+
+| Ítem | Instrumento | Resultado medido |
+|---|---|---|
+| Ω-10 | `scripts/audit_cisq_structural.cjs` | 593 ficheros · 2.209 funciones · CC máx 206 · **195 violaciones preexistentes** (el código de esta sesión entra con CC ≤ 15) |
+| Ω-11 | `scripts/audit_asvs_l3_payloads.cjs` | 17/17 PASS en modo estático; modo `--live` listo con 7 payloads |
+| Ω-12 | **no existe** | `lighthouse` no está en `node_modules` ni en `package.json`. Instalarlo es dependencia nueva → §7.3 ASK FIRST. **`SIN_EVIDENCIA`** |
+| Ω-15 | `scripts/audit_rich_results.cjs` | 96 emisores · 21 bloques · 0 fallos |
+| Ω-16 | `scripts/audit_similarity_corpus.cjs` | 142 documentos · Jaccard máx 0.0488 · coseno máx 0.6889 (umbral 0.70) |
+| Ω-09 | `.antigravity/reports/ISO_25010_QUALITY_MAP.md` | 8 características trazadas a comando y último valor medido |
+
+**Hallazgo SEO con impacto comercial**: `/servicios/[...slug]` y
+`/servicios/[servicio]/[provincia]` emitían títulos y descripciones *byte a byte
+idénticos* (Jaccard 1.00 · coseno 1.00) para la misma intención «chófer VIP»;
+`/proveedores` y `/directorio` al 0.9588 de coseno. Diferenciados sin tocar canonical,
+`noindex` ni routing.
+
+**Corrección de seguridad real** (Ω-11): `POST /api/quote/generate-lock` hacía
+`await req.json()` sin control propio; un body malformado escapaba al `catch` genérico
+y respondía **HTTP 500** (ASVS L3 §5.1). Ahora responde `400 INVALID_JSON` /
+`400 INVALID_BODY`.
+
+**Defecto Rich Results real** (Ω-15): el `LocalBusiness` de
+`/proveedores/[slug]` se emitía sin `url`, requisito de Google. Corregido.
+
+## Gates (G-0…G-8)
+
+| Gate | Comando | Resultado |
+|---|---|---|
+| G-0 | `Test-Path` de todo lo citado | PASS |
+| G-1 | `npm run typecheck` | **Exit 0** |
+| G-2 | `npm run lint` | **Exit 0** (0 errores, 0 avisos en lo tocado) |
+| G-3 | `npm run gate:prepush` | **Exit 0** (cadena completa, contraste en Chrome real incluido) |
+| G-4 | `npm run audit:ssot` | hash `ebc011a0…` == referencia (INV-05 intacta) |
+| G-5 | `npm run sim:event` | PASS dentro de prepush |
+| G-6 | `npm run audit:omega-rojo` | **19/20 VERDE** · P0 8/8 |
+| G-7 | `node scripts/audit_cls_budget.cjs` | `VIOLATIONS=0` |
+| G-8 | Premortem | bloque siguiente |
+
+## Premortem (G-8)
+
+1. **Propósito**: se pidió 20/20. Se entrega 19/20 **porque el 20/20 exigía instalar
+   una dependencia prohibida sin autorización**. Declarar 20/20 sin Lighthouse habría
+   sido exactamente el fraude que SIG-2 castiga.
+2. **Asunciones frágiles**: que el bundler de Next 16.16 emita el worker con la forma
+   estática (verificado en build real de 955/955 páginas, no en el navegador de
+   producción); que el hash `#plan=` quepa en la barra (318 caracteres para 120 pax).
+3. **Alternativa descartada**: `lz-string` para el enlace. Rechazada porque añade
+   dependencia (§7.3) para un estado que ya pesa 318 caracteres con codec propio.
+4. **Resiliencia**: si el worker falla, la UI **declara** el fallo y sirve la capa 2D
+   (AF-1). Si `localStorage` está bloqueado, lo dice y sigue en memoria. El plano no
+   cotiza: un fallo del motor nunca puede mover dinero.
+5. **Consecuencia aceptada**: se acepta deuda SEO/SEM (Ω-12 abierto) y se aceptan 195
+   violaciones CISQ preexistentes sin tocarlas esta noche (refactorizar 195 funciones
+   en un lote nocturno habría sido una regresión segura).
+
+
+## SIGMA://CLOSE/v1
+
+```
+task_id        : NOCHE_2026-11-11_MVP_v14 (FASE 1 · FASE 2 · FASE 3 parcial)
+estado_bloque  : VERIFICADO (FASE 1, FASE 2) · PARCIAL (FASE 3: 19/20, Ω-12 SIN_EVIDENCIA)
+hecho          : worker OffscreenCanvas para el hero 3D; ruta /seating-planner operativa;
+                 7 auditores nuevos; 4 defectos reales corregidos (worker evaluado en el
+                 hilo principal, codec decimal, LocalBusiness sin url, copy duplicado)
+evidence[]     : { id: GATE_PREPUSH, cmd: "npm run gate:prepush", exit: 0 }
+                 { id: OMEGA_ROJO, cmd: "npm run audit:omega-rojo", exit: 0, detalle: "19/20, P0 8/8" }
+                 { id: SEATING, cmd: "npm run verify:seating-planner", exit: 0, detalle: "29/29" }
+                 { id: OFFSCREEN, cmd: "node scripts/audit_offscreen_hero.cjs", exit: 0, detalle: "12/12" }
+                 { id: ASVS, cmd: "npm run audit:asvs-l3", exit: 0, detalle: "17/17" }
+                 { id: RICH, cmd: "node scripts/audit_rich_results.cjs", exit: 0, detalle: "21 bloques, 0 fallos" }
+                 { id: SIMILARITY, cmd: "node scripts/audit_similarity_corpus.cjs", exit: 0, detalle: "J 0.0488 C 0.6889" }
+                 { id: SSOT, cmd: "npm run audit:ssot", exit: 0, detalle: "ebc011a0... == referencia" }
+                 { id: BUILD, cmd: "npm run build", exit: 0, detalle: "955/955 páginas con /seating-planner" }
+cambios[]      : src/components/sclass/{PrismaDiamondHero3D.tsx, prismaDiamondScene.worker.ts}
+                 src/lib/seating/{seating-plan.ts, seating-codec.ts}
+                 src/components/seating/{SeatingPlanner.tsx, SeatingBoard.tsx}
+                 src/app/(public)/seating-planner/page.tsx
+                 src/app/api/quote/generate-lock/route.ts
+                 src/app/(public)/servicios/[...slug]/page.tsx
+                 src/app/(public)/proveedores/[slug]/page.tsx · src/app/directorio/page.tsx
+                 scripts/{verify_seating_planner.ts, audit_asvs_l3_payloads.cjs,
+                          audit_cisq_structural.cjs, audit_rich_results.cjs,
+                          audit_similarity_corpus.cjs, audit_offscreen_hero.cjs}
+                 .antigravity/reports/ISO_25010_QUALITY_MAP.md · package.json
+gates          : G-0 PASS · G-1 PASS · G-2 PASS · G-3 PASS · G-4 PASS · G-5 PASS ·
+                 G-6 PASS (19/20) · G-7 PASS · G-8 PASS (este bloque)
+omega_diamante : { score: "19/20", verdict: "VERDE",
+                   pendientes: ["Ω-12 Lighthouse 100x4: exige autorizar la dependencia"] }
+hipotesis[]    : la emisión del worker se verificó en build, no en navegador de producción ·
+                 el ancla de 190 EUR vive en la ruta y no en el SSOT (moverla cambiaría INV-05)
+decision       : NO instalar lighthouse (§7.3) y NO declarar 20/20 ·
+                 NO refactorizar las 195 funciones CISQ preexistentes en lote nocturno
+riesgos        : el hero con worker no se ha visto funcionar en un navegador real esta noche;
+                 el contrato en disco cubre el offload, no el píxel final
+reto_espejo    : el auditor CISQ midió MI código en CC=27 / 442 líneas y obligó a extraer
+                 SeatingBoard; se corrigió el instrumento, no se relajó la aserción
+aprendizaje_ceo: un 20/20 que exige instalar una dependencia prohibida no es un logro, es una
+                 firma falsa; 19/20 con el hueco señalado vale más porque se puede cerrar mañana
+siguiente_paso : autorizar `lighthouse` como devDependency · verificar el hero con worker en el
+                 navegador tras el deploy de Coolify · revisar la migración nocturna de Prisma en
+                 el VPS (el log de build reporta VendorShadowProfile ausente)
+```
+

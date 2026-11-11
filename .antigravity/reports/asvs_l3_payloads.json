@@ -1,0 +1,97 @@
+{
+  "probed": false,
+  "source": "static",
+  "mode": "SIMULADO",
+  "disclaimer": "Inspección estática de boundaries; los payloads NO se han disparado (usa --live=<base>).",
+  "checkedAt": "2026-11-11T23:24:19.932Z",
+  "checks": 17,
+  "failed": 0,
+  "verdict": "PASS",
+  "results": [
+    {
+      "id": "/api/quote/generate-lock:existe",
+      "ok": true,
+      "detail": "src/app/api/quote/generate-lock/route.ts"
+    },
+    {
+      "id": "/api/quote/generate-lock:validación del formato contra SSOT",
+      "ok": true,
+      "detail": "src/app/api/quote/generate-lock/route.ts"
+    },
+    {
+      "id": "/api/quote/generate-lock:validación numérica de distancia",
+      "ok": true,
+      "detail": "src/app/api/quote/generate-lock/route.ts"
+    },
+    {
+      "id": "/api/quote/generate-lock:firma HMAC del lock",
+      "ok": true,
+      "detail": "src/app/api/quote/generate-lock/route.ts"
+    },
+    {
+      "id": "/api/quote/generate-lock:sin secreto no hay firma (503)",
+      "ok": true,
+      "detail": "src/app/api/quote/generate-lock/route.ts"
+    },
+    {
+      "id": "/api/quote/generate-lock:cero-any",
+      "ok": true,
+      "detail": "sin `any`"
+    },
+    {
+      "id": "/api/quote/generate-lock:body-malformado-no-500",
+      "ok": true,
+      "detail": "req.json() con try/catch propio que responde 4xx"
+    },
+    {
+      "id": "/api/telemetry/[id]:existe",
+      "ok": true,
+      "detail": "src/app/api/telemetry/[id]/route.ts"
+    },
+    {
+      "id": "/api/telemetry/[id]:params resueltos como promesa",
+      "ok": true,
+      "detail": "src/app/api/telemetry/[id]/route.ts"
+    },
+    {
+      "id": "/api/telemetry/[id]:validación del id",
+      "ok": true,
+      "detail": "src/app/api/telemetry/[id]/route.ts"
+    },
+    {
+      "id": "/api/telemetry/[id]:cero-any",
+      "ok": true,
+      "detail": "sin `any`"
+    },
+    {
+      "id": "/api/artist/career/connect/[provider]:existe",
+      "ok": true,
+      "detail": "src/app/api/artist/career/connect/[provider]/route.ts"
+    },
+    {
+      "id": "/api/artist/career/connect/[provider]:params resueltos como promesa",
+      "ok": true,
+      "detail": "src/app/api/artist/career/connect/[provider]/route.ts"
+    },
+    {
+      "id": "/api/artist/career/connect/[provider]:allowlist/registro de proveedor",
+      "ok": true,
+      "detail": "src/app/api/artist/career/connect/[provider]/route.ts"
+    },
+    {
+      "id": "/api/artist/career/connect/[provider]:respuesta a método no permitido",
+      "ok": true,
+      "detail": "src/app/api/artist/career/connect/[provider]/route.ts"
+    },
+    {
+      "id": "/api/artist/career/connect/[provider]:cero-any",
+      "ok": true,
+      "detail": "sin `any`"
+    },
+    {
+      "id": "inventario-payloads",
+      "ok": true,
+      "detail": "7 payloads definidos"
+    }
+  ]
+}

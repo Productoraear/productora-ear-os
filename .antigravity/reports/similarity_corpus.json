@@ -1,0 +1,19 @@
+{
+  "probed": false,
+  "source": "static",
+  "mode": "SIMULADO",
+  "disclaimer": "Mide el copy declarado en código (metadata). No mide el HTML renderizado ni la autoridad editorial; un verde aquí no certifica SEO.",
+  "checkedAt": "2026-11-11T23:35:43.690Z",
+  "thresholds": {
+    "jaccardMax": 0.35,
+    "cosineMax": 0.7,
+    "ngram": 5
+  },
+  "documents": 142,
+  "maxJaccard": 0.0488,
+  "maxCosine": 0.6889,
+  "jaccardFails": 0,
+  "cosineFails": 0,
+  "pairs": [],
+  "verdict": "PASS"
+}

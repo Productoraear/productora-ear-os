@@ -1,0 +1,1188 @@
+{
+  "probed": false,
+  "source": "static",
+  "mode": "SIMULADO",
+  "disclaimer": "Complejidad ciclomática aproximada por densidad de ramificación. No sustituye a un certificado CISQ: mide el presupuesto que exige la directiva §5.4.",
+  "checkedAt": "2026-11-11T23:28:49.869Z",
+  "thresholds": {
+    "maxCyclomaticComplexity": 15,
+    "maxFunctionLines": 200
+  },
+  "files": 593,
+  "functions": 2209,
+  "maxComplexity": 206,
+  "worstFunction": "src/app/api/agents/chat/route.ts:85 POST",
+  "violations": [
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/academy/achievement-ledger.ts",
+      "line": 379,
+      "detail": "recordAchievement CC=19"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/actions/claim-actions.ts",
+      "line": 15,
+      "detail": "claimProfile CC=17"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/agents/chatGuard.ts",
+      "line": 262,
+      "detail": "buildHardenedSystemPrompt CC=41"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/agents/pageContext.ts",
+      "line": 325,
+      "detail": "resolvePageContext CC=24"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/agents/webGrounding.ts",
+      "line": 62,
+      "detail": "isPublicHttpUrl CC=18"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/ai/astra/predictive-engine (2).ts",
+      "line": 65,
+      "detail": "runAnalyticalFallback CC=19"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/ai/astra/predictive-engine.ts",
+      "line": 66,
+      "detail": "runAnalyticalFallback CC=19"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/ai/sovereignReasoningRouter.ts",
+      "line": 256,
+      "detail": "runSovereignReasoning CC=22"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/astra/astra-conversation-engine.ts",
+      "line": 414,
+      "detail": "runAstraDiagnostics CC=22"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/audio/symphonicRiderEngine.ts",
+      "line": 377,
+      "detail": "generateOrchestra CC=20"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/availability/atomicDateLockEngine.ts",
+      "line": 398,
+      "detail": "checkDateAvailabilityOffline CC=24"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/availability/atomicDateLockEngine.ts",
+      "line": 506,
+      "detail": "checkDateAvailability CC=27"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/availability/atomicDateLockEngine.ts",
+      "line": 657,
+      "detail": "lockDateAtomicallyOffline CC=29"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/availability/atomicDateLockEngine.ts",
+      "line": 790,
+      "detail": "lockDateAtomically CC=44"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/availability/atomicDateLockEngine.ts",
+      "line": 969,
+      "detail": "unlockDateAtomically CC=40"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/availability/findNextDate.ts",
+      "line": 24,
+      "detail": "parseExplicitDate CC=24"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/availability/findNextDate.ts",
+      "line": 149,
+      "detail": "findNextAvailableDate CC=17"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/b2g/b2gLiveTenderRadar.ts",
+      "line": 94,
+      "detail": "scanLiveMunicipalTenders CC=17"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/booking/acceptance-token.ts",
+      "line": 35,
+      "detail": "verifyAcceptanceToken CC=18"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/booking/provider-service-brief.ts",
+      "line": 308,
+      "detail": "collectMissing CC=19"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/booking/provider-service-brief.ts",
+      "line": 539,
+      "detail": "buildContractSeed CC=24"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/booking/provider-service-brief.ts",
+      "line": 719,
+      "detail": "buildProviderPing CC=17"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/calendar/entity-calendar-store.ts",
+      "line": 110,
+      "detail": "loadFromDisk CC=21"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/career/artist-metrics.ts",
+      "line": 186,
+      "detail": "aggregateMetric CC=22"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/career/connectors/spotify.ts",
+      "line": 657,
+      "detail": "createSpotifyConnector CC=25"
+    },
+    {
+      "code": "FUNCTION_TOO_LONG",
+      "file": "src/lib/career/connectors/spotify.ts",
+      "line": 657,
+      "detail": "createSpotifyConnector 270 líneas"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/career/oauth-flow.ts",
+      "line": 222,
+      "detail": "verifyOAuthState CC=19"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/compiler/deepseek-inference.ts",
+      "line": 82,
+      "detail": "runDeepSeekChat CC=20"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/compiler/deepseek-inference.ts",
+      "line": 327,
+      "detail": "searchWebDeepSeek CC=17"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/compiler/master-guide.ts",
+      "line": 664,
+      "detail": "resolveMasterGuide CC=22"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/compiler/omega-intent-compiler.ts",
+      "line": 153,
+      "detail": "resolveSemanticFiles CC=71"
+    },
+    {
+      "code": "FUNCTION_TOO_LONG",
+      "file": "src/lib/compiler/omega-intent-compiler.ts",
+      "line": 153,
+      "detail": "resolveSemanticFiles 270 líneas"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/compiler/omega-intent-compiler.ts",
+      "line": 491,
+      "detail": "compileIntentToDAG CC=22"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/compiler/prompt-maestro-forge.ts",
+      "line": 162,
+      "detail": "resolveDomainProfile CC=25"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/compiler/prompt-maestro-forge.ts",
+      "line": 709,
+      "detail": "detectDomainLabel CC=16"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/compiler/prompt-maestro-forge.ts",
+      "line": 721,
+      "detail": "inferFiles CC=26"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/compiler/prompt-maestro-forge.ts",
+      "line": 840,
+      "detail": "forgeMasterPrompt CC=19"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/compiler/qwen-gpu-inference.ts",
+      "line": 208,
+      "detail": "runGpuChat CC=17"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/constants/spain-regions-and-categories.ts",
+      "line": 469,
+      "detail": "normalizeBodasNetCategory CC=75"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/engines/semantic-intent-matrix.ts",
+      "line": 199,
+      "detail": "evaluateIntent CC=18"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/evidence/evidence-ledger.ts",
+      "line": 134,
+      "detail": "parseLine CC=25"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/evidence/evidence-ledger.ts",
+      "line": 216,
+      "detail": "buildLedger CC=23"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/founders/founders-parity-engine.ts",
+      "line": 154,
+      "detail": "calculateFoundersParity CC=20"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/infrastructure/hostinger-dual-engine.ts",
+      "line": 104,
+      "detail": "getVpsTelemetry CC=16"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/matching/artistMatcher.ts",
+      "line": 38,
+      "detail": "matchDimensionValues CC=25"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/matching/artistMatcher.ts",
+      "line": 92,
+      "detail": "calculateArtistMatch CC=32"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/matching/calibratorPresets.ts",
+      "line": 288,
+      "detail": "detectPresetByTypology CC=40"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/matching/neuralFincaMatcher.ts",
+      "line": 144,
+      "detail": "calculateNeuralMatchScore CC=30"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/matching/neuralFincaMatcher.ts",
+      "line": 274,
+      "detail": "matchDimensionValues CC=27"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/matching/neuralFincaMatcher.ts",
+      "line": 343,
+      "detail": "calculateBilateralMatch CC=45"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/matching/providerServiceMatcher.ts",
+      "line": 35,
+      "detail": "matchDimensionValues CC=25"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/matching/providerServiceMatcher.ts",
+      "line": 89,
+      "detail": "calculateProviderServiceMatch CC=34"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/mcp/concierge-tools.ts",
+      "line": 871,
+      "detail": "handleJsonRpc CC=16"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/mcp/concierge-tools.ts",
+      "line": 983,
+      "detail": "describeToolCall CC=23"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/mcp/fichas-catalog.ts",
+      "line": 465,
+      "detail": "searchProvidersInIndex CC=25"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/mcp/fichas-tools.ts",
+      "line": 502,
+      "detail": "handleFichasJsonRpc CC=16"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/proposals/ear-pricing-bank.ts",
+      "line": 502,
+      "detail": "buscarEnBancoPrecios CC=127"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/proposals/ear-voice-assistant.ts",
+      "line": 23,
+      "detail": "deducirFase CC=35"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/proposals/ear-voice-assistant.ts",
+      "line": 38,
+      "detail": "procesarDictadoVisita CC=31"
+    },
+    {
+      "code": "FUNCTION_TOO_LONG",
+      "file": "src/lib/proposals/ear-voice-assistant.ts",
+      "line": 38,
+      "detail": "procesarDictadoVisita 213 líneas"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/providers/fichaProvider.ts",
+      "line": 78,
+      "detail": "loadStore CC=17"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/providers/fichaProvider.ts",
+      "line": 216,
+      "detail": "searchFichasInMemory CC=23"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/providers/provider-media-engine.ts",
+      "line": 230,
+      "detail": "collectProviderMedia CC=19"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/providers/provider-profile-store.ts",
+      "line": 477,
+      "detail": "loadPublicProviderProfile CC=17"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/providers/semantic-slug.ts",
+      "line": 54,
+      "detail": "buildCanonicalProviderSlug CC=22"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/providers/universal-provider-simulator.ts",
+      "line": 104,
+      "detail": "isHubMentridaProvider CC=25"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/providers/universal-provider-simulator.ts",
+      "line": 344,
+      "detail": "simulateUniversalProviderQuote CC=72"
+    },
+    {
+      "code": "FUNCTION_TOO_LONG",
+      "file": "src/lib/providers/universal-provider-simulator.ts",
+      "line": 344,
+      "detail": "simulateUniversalProviderQuote 257 líneas"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/providers/universal-provider-simulator.ts",
+      "line": 637,
+      "detail": "calculateProviderLogistics CC=51"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/providers/visibility.ts",
+      "line": 45,
+      "detail": "isProviderBlacklisted CC=24"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/providers/visibility.ts",
+      "line": 103,
+      "detail": "getProviderTier CC=19"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/scoring/leadScoreEngine.ts",
+      "line": 32,
+      "detail": "calculateLeadScore CC=25"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/security/adminGuard.ts",
+      "line": 32,
+      "detail": "requireAdmin CC=22"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/seo/arsenalPoblacionesEngine.ts",
+      "line": 144,
+      "detail": "resolveHighwayAndTransit CC=42"
+    },
+    {
+      "code": "FUNCTION_TOO_LONG",
+      "file": "src/lib/seo/arsenalPoblacionesEngine.ts",
+      "line": 185,
+      "detail": "buildUniqueNarratives 413 líneas"
+    },
+    {
+      "code": "FUNCTION_TOO_LONG",
+      "file": "src/lib/seo/arsenalPoblacionesEngine.ts",
+      "line": 602,
+      "detail": "buildLocalizedHardware 767 líneas"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/seo/arsenalPoblacionesEngine.ts",
+      "line": 1373,
+      "detail": "buildLocalizedFaqs CC=101"
+    },
+    {
+      "code": "FUNCTION_TOO_LONG",
+      "file": "src/lib/seo/arsenalPoblacionesEngine.ts",
+      "line": 1373,
+      "detail": "buildLocalizedFaqs 262 líneas"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/seo/centralita-mariachis-dominance-engine.ts",
+      "line": 1185,
+      "detail": "buildFaqs CC=28"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/seo/ear-eventos-dominance-engine.ts",
+      "line": 809,
+      "detail": "buildFaqs CC=26"
+    },
+    {
+      "code": "FUNCTION_TOO_LONG",
+      "file": "src/lib/seo/intent-70-30-composer.ts",
+      "line": 94,
+      "detail": "composeIntentLanding 333 líneas"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/seo/otzarreta-dominance-engine.ts",
+      "line": 1003,
+      "detail": "buildFaqs CC=22"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/seo/sitemapGenerator.ts",
+      "line": 106,
+      "detail": "generateSitemapPartition CC=49"
+    },
+    {
+      "code": "FUNCTION_TOO_LONG",
+      "file": "src/lib/seo/sitemapGenerator.ts",
+      "line": 106,
+      "detail": "generateSitemapPartition 300 líneas"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/seo/spainMunicipalityCoverage.ts",
+      "line": 170,
+      "detail": "buildCoverage CC=16"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/services/opportunity-radar/classifier.ts",
+      "line": 156,
+      "detail": "classifyOpportunity CC=18"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/services/opportunity-radar/opportunity-radar.ts",
+      "line": 48,
+      "detail": "parseFeedConfigs CC=30"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/services/pricing/quote-calculator.ts",
+      "line": 134,
+      "detail": "calculateTacticalQuote CC=19"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/services/scrapers/cazador_fantasma.ts",
+      "line": 10,
+      "detail": "runCazadorFantasma CC=27"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/services/ted-connector.ts",
+      "line": 81,
+      "detail": "extractMultilingualString CC=18"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/services/ted-connector.ts",
+      "line": 96,
+      "detail": "extractNoticeUrl CC=21"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/spatial/gpuCapability.ts",
+      "line": 155,
+      "detail": "resolveSpatialBudget CC=17"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/venues/venueLiveAuditor.ts",
+      "line": 50,
+      "detail": "auditVenueLive CC=32"
+    },
+    {
+      "code": "FUNCTION_TOO_LONG",
+      "file": "src/lib/vimume/b2g-tender-engine.ts",
+      "line": 285,
+      "detail": "generateVimumeTender 206 líneas"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/vimume/b2g-tender-engine.ts",
+      "line": 1445,
+      "detail": "composeCertificate CC=26"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/vimume/b2g-tender-engine.ts",
+      "line": 2034,
+      "detail": "runVimumeRscDiagnostics CC=46"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/voice/speechNormalizer.ts",
+      "line": 19,
+      "detail": "normalizeCurrencyAndNumbers CC=20"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/voice/voiceEngine.ts",
+      "line": 163,
+      "detail": "synthesizeSpeech CC=18"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/whatsapp/whatsapp-concierge.ts",
+      "line": 212,
+      "detail": "parseInboundEvent CC=31"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/whatsapp/whatsapp-concierge.ts",
+      "line": 343,
+      "detail": "extractIntent CC=16"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/lib/whatsapp/whatsapp-concierge.ts",
+      "line": 585,
+      "detail": "renderWhatsAppReply CC=18"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/admin/affiliates/route.ts",
+      "line": 427,
+      "detail": "PATCH CC=26"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/admin/affiliates/route.ts",
+      "line": 537,
+      "detail": "POST CC=28"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/admin/compile-intent/route.ts",
+      "line": 97,
+      "detail": "POST CC=25"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/admin/dispatch/lock/route.ts",
+      "line": 28,
+      "detail": "POST CC=23"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/admin/fleet/route.ts",
+      "line": 340,
+      "detail": "POST CC=18"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/admin/managed-vendors/route.ts",
+      "line": 215,
+      "detail": "POST CC=23"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/admin/oraculo/approve/route.ts",
+      "line": 91,
+      "detail": "POST CC=17"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/admin/providers/route.ts",
+      "line": 83,
+      "detail": "loadDiskProviders CC=17"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/admin/providers/route.ts",
+      "line": 113,
+      "detail": "GET CC=22"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/admin/sysinfo/route.ts",
+      "line": 177,
+      "detail": "GET CC=23"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/admin/tasks/inject/route.ts",
+      "line": 210,
+      "detail": "normalizeTask CC=16"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/admin/tasks/inject/route.ts",
+      "line": 348,
+      "detail": "POST CC=16"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/admin/treasury/route.ts",
+      "line": 323,
+      "detail": "GET CC=16"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/admin/treasury/route.ts",
+      "line": 470,
+      "detail": "POST CC=17"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/admin/vampire-telemetry/route.ts",
+      "line": 150,
+      "detail": "GET CC=37"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/admin/video-factory/fasth3/generate/route.ts",
+      "line": 139,
+      "detail": "POST CC=25"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/admin/video-factory/local-audio/route.ts",
+      "line": 65,
+      "detail": "classifyAudio CC=19"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/admin/video-factory/local-audio/route.ts",
+      "line": 80,
+      "detail": "GET CC=20"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/admin/video-factory/media/stream/route.ts",
+      "line": 35,
+      "detail": "GET CC=23"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/agents/chat/route.ts",
+      "line": 85,
+      "detail": "POST CC=206"
+    },
+    {
+      "code": "FUNCTION_TOO_LONG",
+      "file": "src/app/api/agents/chat/route.ts",
+      "line": 85,
+      "detail": "POST 611 líneas"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/agents/dispatch/route.ts",
+      "line": 40,
+      "detail": "POST CC=16"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/artist/achievements/route.ts",
+      "line": 82,
+      "detail": "resolveAuthContext CC=37"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/artist/achievements/route.ts",
+      "line": 331,
+      "detail": "POST CC=27"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/artist/career/metrics/route.ts",
+      "line": 241,
+      "detail": "GET CC=16"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/astra/route.ts",
+      "line": 13,
+      "detail": "POST CC=16"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/auth/admin-verify/route.ts",
+      "line": 15,
+      "detail": "POST CC=43"
+    },
+    {
+      "code": "FUNCTION_TOO_LONG",
+      "file": "src/app/api/auth/admin-verify/route.ts",
+      "line": 15,
+      "detail": "POST 215 líneas"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/auth/recovery-3phase/route.ts",
+      "line": 61,
+      "detail": "POST CC=43"
+    },
+    {
+      "code": "FUNCTION_TOO_LONG",
+      "file": "src/app/api/auth/recovery-3phase/route.ts",
+      "line": 61,
+      "detail": "POST 274 líneas"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/b2b/homologacion/route.ts",
+      "line": 125,
+      "detail": "POST CC=44"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/booking/accept/route.ts",
+      "line": 103,
+      "detail": "POST CC=17"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/booking/provider-brief/route.ts",
+      "line": 127,
+      "detail": "parseFicha CC=19"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/booking/provider-brief/route.ts",
+      "line": 227,
+      "detail": "resolvePayment CC=16"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/booking/provider-brief/route.ts",
+      "line": 332,
+      "detail": "POST CC=23"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/booking/request/route.ts",
+      "line": 56,
+      "detail": "validateBookingRequest CC=37"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/booking/settlement/route.ts",
+      "line": 34,
+      "detail": "POST CC=23"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/calendar/[kind]/[slug]/route.ts",
+      "line": 143,
+      "detail": "parseMutation CC=20"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/calendar/[kind]/[slug]/route.ts",
+      "line": 171,
+      "detail": "POST CC=20"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/chat/concierge/route.ts",
+      "line": 96,
+      "detail": "POST CC=41"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/checkout/digital/route.ts",
+      "line": 34,
+      "detail": "POST CC=19"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/checkout/orchestrate/route.ts",
+      "line": 23,
+      "detail": "POST CC=18"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/contracts/generate/route.ts",
+      "line": 46,
+      "detail": "POST CC=20"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/cron/b2g-telegram-hunter/route.ts",
+      "line": 15,
+      "detail": "GET CC=16"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/dossier/pdf/route.ts",
+      "line": 9,
+      "detail": "GET CC=41"
+    },
+    {
+      "code": "FUNCTION_TOO_LONG",
+      "file": "src/app/api/dossier/pdf/route.ts",
+      "line": 9,
+      "detail": "GET 446 líneas"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/events/deposit/route.ts",
+      "line": 142,
+      "detail": "POST CC=23"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/fincas/visit-lock/route.ts",
+      "line": 200,
+      "detail": "POST CC=33"
+    },
+    {
+      "code": "FUNCTION_TOO_LONG",
+      "file": "src/app/api/fincas/visit-lock/route.ts",
+      "line": 200,
+      "detail": "POST 244 líneas"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/geo/acoustic-calculate/route.ts",
+      "line": 18,
+      "detail": "isVenueAcousticInput CC=19"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/geo/autocomplete/route.ts",
+      "line": 46,
+      "detail": "GET CC=31"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/leads/bodasnet/route.ts",
+      "line": 300,
+      "detail": "POST CC=20"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/neural/telemetry/route.ts",
+      "line": 9,
+      "detail": "GET CC=19"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/opportunity-radar/route.ts",
+      "line": 64,
+      "detail": "POST CC=16"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/oracle/chat/route.ts",
+      "line": 66,
+      "detail": "buildDeterministicExecutiveReply CC=22"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/oracle/chat/route.ts",
+      "line": 125,
+      "detail": "POST CC=26"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/outreach/intake/route.ts",
+      "line": 242,
+      "detail": "POST CC=24"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/profiles/search/route.ts",
+      "line": 402,
+      "detail": "queryStaticProviders CC=141"
+    },
+    {
+      "code": "FUNCTION_TOO_LONG",
+      "file": "src/app/api/profiles/search/route.ts",
+      "line": 402,
+      "detail": "queryStaticProviders 283 líneas"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/profiles/search/route.ts",
+      "line": 686,
+      "detail": "GET CC=45"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/profiles/verify-claim/route.ts",
+      "line": 30,
+      "detail": "GET CC=25"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/providers/opt-out/route.ts",
+      "line": 37,
+      "detail": "findProviderInfo CC=18"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/providers/opt-out/route.ts",
+      "line": 72,
+      "detail": "GET CC=16"
+    },
+    {
+      "code": "FUNCTION_TOO_LONG",
+      "file": "src/app/api/providers/opt-out/route.ts",
+      "line": 72,
+      "detail": "GET 462 líneas"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/rag/query/route.ts",
+      "line": 15,
+      "detail": "sanitizeRagNode CC=18"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/reservar/artist-deposit/route.ts",
+      "line": 13,
+      "detail": "POST CC=22"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/reservar/solista/confirm/route.ts",
+      "line": 31,
+      "detail": "GET CC=29"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/reservar/solista/deposit/route.ts",
+      "line": 120,
+      "detail": "parseDepositRequest CC=16"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/reservar/solista/deposit/route.ts",
+      "line": 200,
+      "detail": "POST CC=48"
+    },
+    {
+      "code": "FUNCTION_TOO_LONG",
+      "file": "src/app/api/reservar/solista/deposit/route.ts",
+      "line": 200,
+      "detail": "POST 350 líneas"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/rider/audit/route.ts",
+      "line": 12,
+      "detail": "POST CC=16"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/stripe/webhook/route.ts",
+      "line": 41,
+      "detail": "POST CC=48"
+    },
+    {
+      "code": "FUNCTION_TOO_LONG",
+      "file": "src/app/api/stripe/webhook/route.ts",
+      "line": 41,
+      "detail": "POST 246 líneas"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/telegram/webhook/route.ts",
+      "line": 11,
+      "detail": "POST CC=16"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/telemetry/funnel/route.ts",
+      "line": 83,
+      "detail": "POST CC=20"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/telemetry/marketplace/route.ts",
+      "line": 12,
+      "detail": "POST CC=21"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/telemetry/mission/[id]/route.ts",
+      "line": 72,
+      "detail": "GET CC=40"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/telemetry/[id]/route.ts",
+      "line": 94,
+      "detail": "parsePing CC=17"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/vault/mirror/[...path]/route.ts",
+      "line": 26,
+      "detail": "GET CC=30"
+    },
+    {
+      "code": "FUNCTION_TOO_LONG",
+      "file": "src/app/api/vault/mirror/[...path]/route.ts",
+      "line": 26,
+      "detail": "GET 225 líneas"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/vault/mirror/[category]/[slug]/route.ts",
+      "line": 23,
+      "detail": "GET CC=54"
+    },
+    {
+      "code": "FUNCTION_TOO_LONG",
+      "file": "src/app/api/vault/mirror/[category]/[slug]/route.ts",
+      "line": 23,
+      "detail": "GET 249 líneas"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/vendor/crm/clients/route.ts",
+      "line": 129,
+      "detail": "PUT CC=16"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/vendor/crm/leads/route.ts",
+      "line": 167,
+      "detail": "POST CC=16"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/vendor/profile/route.ts",
+      "line": 35,
+      "detail": "GET CC=27"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/vendor/profile/route.ts",
+      "line": 176,
+      "detail": "PUT CC=21"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/villas/villa-escorial/availability/route.ts",
+      "line": 41,
+      "detail": "POST CC=16"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/vimume/rsc-certificate/route.ts",
+      "line": 117,
+      "detail": "statusForEngineError CC=18"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/vimume/rsc-certificate/route.ts",
+      "line": 224,
+      "detail": "POST CC=23"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/voices/route.ts",
+      "line": 118,
+      "detail": "POST CC=23"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/webhooks/call-center-intake/route.ts",
+      "line": 206,
+      "detail": "POST CC=16"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/app/api/webhooks/whatsapp-concierge/route.ts",
+      "line": 129,
+      "detail": "POST CC=19"
+    },
+    {
+      "code": "CC_EXCEEDED",
+      "file": "src/components/seating/SeatingPlanner.tsx",
+      "line": 83,
+      "detail": "SeatingPlanner CC=20"
+    },
+    {
+      "code": "FUNCTION_TOO_LONG",
+      "file": "src/components/seating/SeatingPlanner.tsx",
+      "line": 83,
+      "detail": "SeatingPlanner 297 líneas"
+    }
+  ],
+  "verdict": "FAIL"
+}
