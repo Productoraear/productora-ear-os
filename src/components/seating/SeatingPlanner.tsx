@@ -23,11 +23,13 @@
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import {
   AlertTriangle,
   Check,
   Download,
   Link2,
+  Lock,
   Plus,
   Printer,
   RotateCcw,
@@ -45,11 +47,13 @@ import {
 } from '@/lib/seating/seating-plan';
 import {
   STORAGE_KEY,
+  buildBudgetHrefWithPlan,
   buildShareUrl,
   decodePlan,
   encodePlan,
   readTokenFromHash,
 } from '@/lib/seating/seating-codec';
+
 import SeatingBoard from './SeatingBoard';
 
 export interface SeatingPlannerProps {
@@ -89,6 +93,7 @@ export default function SeatingPlanner({
   depositEur,
   phoneE164,
 }: SeatingPlannerProps) {
+  const router = useRouter();
   const [plan, setPlan] = useState<SeatingPlan>(() =>
     buildDefaultPlan({
       pax: initialPax,
@@ -100,6 +105,9 @@ export default function SeatingPlanner({
   const [storageState, setStorageState] = useState<'pending' | 'saved' | 'unavailable'>('pending');
   const [shareState, setShareState] = useState<'idle' | 'copied' | 'error'>('idle');
   const [hydrateNotice, setHydrateNotice] = useState<string | null>(null);
+  /** Estado del botón principal: confirma el bloqueo mientras navega. */
+  const [lockState, setLockState] = useState<'idle' | 'blocked'>('idle');
+
 
   // Hidratación: primero el enlace compartido (manda), después el autoguardado.
   useEffect(() => {
@@ -239,6 +247,21 @@ export default function SeatingPlanner({
     'Quiero vincular mi plano de mesas a la fecha del evento',
   )}`;
 
+  /**
+   * ── SUTURA TRANSACCIONAL (BLOQUE 3) ──────────────────────────────────────
+   * Acción principal: captura el hash serializado del plano actual y aterriza
+   * en el cotizador canónico con `?seatingPlan=<hash>&leadMagnet=true`.
+   *
+   * El hash lo calcula el codec (misma función que valida el enlace
+   * compartible), así que lo que el cliente ve, comparte y bloquea no puede
+   * divergir. `router.push` en lugar de `<a href>` para no recargar la página
+   * y conservar el estado del plano en memoria.
+   */
+  const blockAndReserve = useCallback(() => {
+    setLockState('blocked');
+    router.push(buildBudgetHrefWithPlan(plan));
+  }, [plan, router]);
+
   return (
     <div className="space-y-6">
       {/* Anclaje de valor: las DOS cifras vienen del SSOT por props. */}
@@ -259,9 +282,18 @@ export default function SeatingPlanner({
           vinculado a tu fecha exige el depósito: es lo que lo incorpora a tu expediente.
         </p>
         <div className="mt-3 flex flex-wrap gap-2">
+          {/* ACCIÓN PRINCIPAL (BLOQUE 3): hash del plano → cotizador con banner de cortesía. */}
+          <button
+            type="button"
+            onClick={blockAndReserve}
+            className="inline-flex items-center gap-2 rounded-xl bg-[#ecb613] px-4 py-2 text-xs font-bold uppercase tracking-wider text-black transition-colors hover:bg-[#f5c94a] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
+          >
+            <Lock size={13} aria-hidden="true" />
+            {lockState === 'blocked' ? 'Abriendo presupuesto…' : 'Bloquear este plano y formalizar reserva'}
+          </button>
           <Link
             href="/presupuesto"
-            className="inline-flex items-center gap-2 rounded-xl bg-[#ecb613] px-4 py-2 text-xs font-bold uppercase tracking-wider text-black transition-colors hover:bg-[#f5c94a]"
+            className="inline-flex items-center gap-2 rounded-xl border border-white/15 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white transition-colors hover:border-white/40"
           >
             Vincular al depósito
           </Link>

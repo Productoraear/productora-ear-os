@@ -4,6 +4,7 @@ import { runDeepSeekChat, isDeepSeekConfigured } from '@/lib/compiler/deepseek-i
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { normalizeCurrencyAndNumbers } from '@/lib/voice/speechNormalizer';
 import { resolvePageContext } from '@/lib/agents/pageContext';
+import { resolveTaxonomyMatch, TAXONOMY_QUOTE_HREF, type TaxonomyMatch } from '@/lib/search/taxonomy-index';
 import {
   TARIFA_BASE_SOLISTA_EUR,
   DEPOSITO_STRIPE_EUR,
@@ -13,6 +14,7 @@ import {
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
+
 
 // In-Memory Sliding Window Rate Limiter (20 req/min por IP)
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
@@ -224,6 +226,23 @@ export async function POST(request: Request) {
     let reply = '';
     const providersList = providers.map((p) => `${p.name} (${p.category || 'Proveedor'})`).join(', ');
 
+    // ── ENRUTAMIENTO TAXONÓMICO (BLOQUE 4) ──────────────────────────────────
+    // El motor determinista —y no el modelo— decide a qué URL se despacha una
+    // consulta de género/precio. El modelo sólo redacta sobre ese destino ya
+    // resuelto: así es imposible inventar una ruta que no exista (AF-1).
+    const taxonomy: TaxonomyMatch = resolveTaxonomyMatch(message);
+    const taxonomyBlock: string = taxonomy.facet !== null
+      ? `
+5. ENRUTAMIENTO TAXONÓMICO YA RESUELTO POR EL MOTOR (PROHIBIDO INVENTAR OTRA RUTA):
+   - Género/forma detectado: ${taxonomy.label} (familia: ${taxonomy.family?.label ?? 'música'}).
+   - Enlace exacto de catálogo: ${taxonomy.href}
+   - Enlace exacto de cotización: /presupuesto
+   - Cierra SIEMPRE invitando al presupuesto y al WhatsApp oficial ${CENTRALITA_EAR_OS}.`
+      : `
+5. ENRUTAMIENTO SIN GÉNERO DETECTADO:
+   - Si el cliente menciona un género o formato musical, oriéntale a /proveedores?categoria=musica o a /presupuesto.
+   - Cierra SIEMPRE invitando al presupuesto y al WhatsApp oficial ${CENTRALITA_EAR_OS}.`;
+
     const systemPrompt = `Eres el Concierge Inteligente de Productora EAR para Edwin Agudelo y la Red de Fincas y Proveedores de Gala.
 DIRECTIVA INMUTABLE (HUMANO, EMPÁTICO Y RESOLUTIVO — CERO LORO):
 0. HILO CONDUCTOR (OBLIGATORIO):
@@ -245,7 +264,8 @@ ${priceRule}
    - Categoría consultada: ${catName}
    - Proveedores encontrados en la base de datos: ${providersList || 'Búsqueda personalizada en curso'}
    - Turnos previos en este hilo: ${history.length}
-   - Teléfono / WhatsApp oficial: ${CENTRALITA_EAR_OS}${providerBlock}`;
+   - Teléfono / WhatsApp oficial: ${CENTRALITA_EAR_OS}${providerBlock}${taxonomyBlock}`;
+
 
     if (isDeepSeekConfigured()) {
       try {
@@ -315,16 +335,37 @@ ${priceRule}
       },
       // En ficha de proveedor NO se inyecta la tarjeta del roster (sesgo).
       rosterRecommendation: isProviderFicha ? undefined : rosterRecommendation,
+      // 🧭 ENRUTAMIENTO TAXONÓMICO (BLOQUE 4): el destino lo decide el MOTOR,
+      // nunca el modelo. El cliente sólo pinta los enlaces ya validados.
+      taxonomy: {
+        matched: taxonomy.facet !== null,
+        facetId: taxonomy.facet?.id ?? null,
+        label: taxonomy.label,
+        familyLabel: taxonomy.family?.label ?? '',
+        catalogHref: taxonomy.href,
+        quoteHref: TAXONOMY_QUOTE_HREF,
+        whatsappHref: `https://wa.me/${CENTRALITA_EAR_OS.replace(/\D/g, '')}?text=${encodeURIComponent(
+          taxonomy.label.length > 0
+            ? `Quiero presupuesto para ${taxonomy.label}`
+            : 'Quiero presupuesto para mi evento',
+        )}`,
+      },
       suggestedChips: isProviderFicha
         ? [
             `Más datos de ${pageContext.name}`,
             'Verificar disponibilidad de fecha',
           ]
-        : [
-            `Fincas rústicas en ${provName}`,
-            `Mariachi y Solista en ${provName}`,
-          ],
+        : taxonomy.facet !== null
+          ? [
+              `Ver ${taxonomy.label} en el catálogo`,
+              'Calcular mi presupuesto',
+            ]
+          : [
+              `Fincas rústicas en ${provName}`,
+              `Mariachi y Solista en ${provName}`,
+            ],
     });
+
   } catch (error: unknown) {
     console.error('[CONCIERGE_CHAT_ERROR]', error);
     return NextResponse.json(

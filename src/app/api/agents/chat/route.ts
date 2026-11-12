@@ -50,6 +50,12 @@ import {
   type ToolExecution,
 } from '@/lib/mcp/concierge-tools';
 import { evaluateHumanHandoff, type HandoffVerdict } from '@/lib/mcp/concierge-policy';
+import {
+  resolveTaxonomyMatch,
+  TAXONOMY_QUOTE_HREF,
+  type TaxonomyMatch,
+} from '@/lib/search/taxonomy-index';
+
 
 
 export const runtime = 'nodejs';
@@ -173,6 +179,10 @@ export async function POST(req: Request): Promise<NextResponse> {
 
     const traces: TraceEntry[] = [];
     const lower = message.toLowerCase();
+
+    // 🎼 TAXONOMÍA (BLOQUE 4): el MOTOR resuelve el género/formato de la consulta
+    // y su ruta exacta. El modelo redacta; nunca inventa la URL de destino.
+    const taxonomy: TaxonomyMatch = resolveTaxonomyMatch(message);
 
     // Deja constancia en la traza de qué motores calcularon cifras en este turno.
     if (plannedTools.length > 0) {
@@ -632,7 +642,19 @@ export async function POST(req: Request): Promise<NextResponse> {
       } else if (lower.includes('ruido') || lower.includes('decibel') || lower.includes('sonido') || lower.includes('bose')) {
         aiReply = `Trabajamos con arreglos acústicos calibrados por debajo de ${LIMITE_SPL_DB} dB SPL, conforme a la Ley 37/2003 del Ruido y a la ordenanza municipal aplicable. El límite exacto y el punto de medida los fijamos en la visita técnica con la dirección del recinto: no prometemos viabilidad acústica sin verificar la normativa local.\n\n` +
           `[💬 Hablar con producción por WhatsApp (+34 693 693 048) ➔](${waUrl})`;
+      } else if (taxonomy.facet !== null) {
+        // 🎼 ENRUTAMIENTO TAXONÓMICO (BLOQUE 4): la consulta nombra un género o
+        // formato concreto. El motor ya resolvió la ruta; el texto la cita tal
+        // cual y empuja al cierre por presupuesto + WhatsApp (cero invención).
+        const remembered: string = summarizeSlots(memorySlots);
+        aiReply =
+          `${remembered.length > 0 ? `Perfecto, tomo nota (${remembered}). ` : ''}` +
+          `Para **${taxonomy.label}** (${taxonomy.family?.label ?? 'música en vivo'}) tienes dos vías directas: el catálogo filtrado o el presupuesto al céntimo, con el depósito de ${DEPOSITO_STRIPE_EUR} € deducible del total.\n\n` +
+          `[🎼 Ver ${taxonomy.label} en el catálogo ➔](${taxonomy.href})\n\n` +
+          `[🔒 Calcular presupuesto de ${taxonomy.label} ➔](${TAXONOMY_QUOTE_HREF})\n\n` +
+          `[💬 Confirmar por WhatsApp (+34 693 693 048) ➔](${waUrl})`;
       } else {
+
         // Fallback con memoria: nunca reinicia la conversación desde cero.
         const remembered: string = summarizeSlots(memorySlots);
         const contextLine: string = remembered.length > 0
@@ -679,7 +701,34 @@ export async function POST(req: Request): Promise<NextResponse> {
         evidenceSha256: result.envelope.evidenceSha256,
       })) ?? [],
       // 🔗 Enlaces accionables YA calculados por el motor (nunca por el modelo).
-      actionLinks: toolExecution?.actionLinks ?? [],
+      // Se añade el destino taxonómico cuando la consulta nombra un género.
+      actionLinks: [
+        ...(toolExecution?.actionLinks ?? []),
+        ...(taxonomy.facet !== null
+          ? [
+              {
+                label: `Ver ${taxonomy.label} en el catálogo`,
+                href: taxonomy.href,
+                kind: 'taxonomy_catalog' as const,
+              },
+              {
+                label: `Presupuesto de ${taxonomy.label}`,
+                href: TAXONOMY_QUOTE_HREF,
+                kind: 'taxonomy_quote' as const,
+              },
+            ]
+          : []),
+      ],
+      // 🎼 Trazabilidad de la taxonomía resuelta en este turno.
+      taxonomy: {
+        matched: taxonomy.facet !== null,
+        facetId: taxonomy.facet?.id ?? null,
+        label: taxonomy.label,
+        familyLabel: taxonomy.family?.label ?? '',
+        catalogHref: taxonomy.href,
+        quoteHref: TAXONOMY_QUOTE_HREF,
+      },
+
       // ☎️ Veredicto de escalado humano (fail-closed).
       handoff,
     });

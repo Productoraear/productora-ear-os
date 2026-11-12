@@ -31,6 +31,8 @@ import {
   type ConciergeQuickAction,
   type ConciergeQuickActionIcon,
 } from '@/lib/concierge/quick-actions';
+import { resolveTaxonomyMatch } from '@/lib/search/taxonomy-index';
+
 import {
   speakNatural,
   stopSpeaking,
@@ -57,6 +59,11 @@ interface ChatMessage {
   suggestedChips?: string[];
   /** Acciones rápidas contextuales: navegan a una URL real o inyectan una consulta. */
   quickActions?: ConciergeQuickAction[];
+  /**
+   * Enlaces de cierre calculados por el MOTOR (catálogo del género resuelto +
+   * presupuesto). Nunca los inventa el modelo (BLOQUE 4).
+   */
+  actionLinks?: ConciergeActionLink[];
   timestamp: string;
 }
 
@@ -89,15 +96,83 @@ interface OutboundTurn {
   content: string;
 }
 
+/**
+ * MEMORIA ÍNTEGRA DE SESIÓN (BLOQUE 4).
+ *
+ * El array de mensajes previos viaja COMPLETO en cada petición (hasta el techo
+ * `MAX_HISTORY` que también aplica el servidor): se eliminan únicamente los
+ * turnos vacíos y se acota cada turno a 2.000 caracteres. Antes se recortaba un
+ * turno de más (`MAX_HISTORY - 1`) y el último intercambio se perdía del hilo.
+ */
 function toOutboundHistory(messages: readonly ChatMessage[]): OutboundTurn[] {
   return messages
-    .slice(-(MAX_HISTORY - 1))
     .filter((msg) => msg.text.trim().length > 0)
+    .slice(-MAX_HISTORY)
     .map((msg) => ({
       role: msg.sender === 'user' ? 'user' : 'assistant',
       content: msg.text.slice(0, 2000),
     }));
 }
+
+/** Enlace accionable calculado por el motor (nunca por el modelo). */
+interface ConciergeActionLink {
+  readonly label: string;
+  readonly href: string;
+}
+
+/** Rutas oficiales del cierre comercial (existen en disco). */
+const QUOTE_HREF = '/presupuesto';
+const CATALOG_MUSIC_HREF = '/proveedores?categoria=musica';
+
+/**
+ * Calcula los enlaces de cierre del turno.
+ * Prioridad: lo que devuelve el servidor; si no llega nada, la taxonomía local
+ * resuelve el género y, en último término, se ofrece presupuesto + catálogo.
+ */
+function buildActionLinks(
+  serverLinks: unknown,
+  serverTaxonomy: unknown,
+  query: string
+): ConciergeActionLink[] {
+  if (Array.isArray(serverLinks)) {
+    const fromServer = serverLinks
+      .filter((entry): entry is { label: string; href: string } =>
+        typeof entry === 'object' &&
+        entry !== null &&
+        typeof (entry as { label?: unknown }).label === 'string' &&
+        typeof (entry as { href?: unknown }).href === 'string' &&
+        (entry as { href: string }).href.startsWith('/')
+      )
+      .map((entry) => ({ label: entry.label, href: entry.href }));
+    if (fromServer.length > 0) return fromServer.slice(0, 3);
+  }
+
+  if (typeof serverTaxonomy === 'object' && serverTaxonomy !== null) {
+    const record = serverTaxonomy as { matched?: unknown; label?: unknown; catalogHref?: unknown };
+    if (record.matched === true && typeof record.catalogHref === 'string') {
+      const label = typeof record.label === 'string' && record.label.length > 0 ? record.label : 'el catálogo';
+      return [
+        { label: `Ver ${label} en el catálogo`, href: record.catalogHref },
+        { label: 'Calcular presupuesto', href: QUOTE_HREF },
+      ];
+    }
+  }
+
+  // Red de seguridad local: misma taxonomía que usa el servidor.
+  const local = resolveTaxonomyMatch(query);
+  if (local.facet !== null) {
+    return [
+      { label: `Ver ${local.label} en el catálogo`, href: local.href },
+      { label: 'Calcular presupuesto', href: QUOTE_HREF },
+    ];
+  }
+
+  return [
+    { label: 'Ver música en directo', href: CATALOG_MUSIC_HREF },
+    { label: 'Calcular presupuesto', href: QUOTE_HREF },
+  ];
+}
+
 
 
 export function AIConciergeDock() {
@@ -228,6 +303,9 @@ export function AIConciergeDock() {
           providers: data.providers,
           rosterRecommendation: data.rosterRecommendation,
           suggestedChips: data.suggestedChips,
+          // 🧭 ENRUTAMIENTO (BLOQUE 4): el motor devuelve los enlaces exactos a
+          // catálogo/presupuesto; si no llegan, la taxonomía local los resuelve.
+          actionLinks: buildActionLinks(data.actionLinks, data.taxonomy, query),
           quickActions: resolveWelcomeActions(activePath),
           timestamp: formatTimestamp(),
         };
@@ -649,6 +727,29 @@ export function AIConciergeDock() {
                         </button>
                       );
                     })}
+                  </div>
+                )}
+
+                {/* 🧭 ENLACES DE CIERRE (BLOQUE 4): catálogo del género resuelto y
+                    presupuesto. Los rutas las calcula el motor, nunca el modelo. */}
+                {msg.actionLinks && msg.actionLinks.length > 0 && (
+                  <div
+                    className="flex flex-wrap gap-1.5 pt-1"
+                    role="group"
+                    aria-label="Enlaces de cierre al catálogo y al presupuesto"
+                  >
+                    {msg.actionLinks.slice(0, 2).map((link) => (
+                      <Link
+                        key={`${link.href}-${link.label}`}
+                        href={link.href}
+                        onClick={() => setIsOpen(false)}
+                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#ecb613]/10 hover:bg-[#ecb613]/20 text-[#ecb613] border border-[#ecb613]/40 hover:border-[#ecb613] text-[10px] font-mono transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613]"
+                        aria-label={`Abrir ${link.label}`}
+                      >
+                        <ArrowRight className="w-3 h-3 text-[#ecb613]" strokeWidth={1.75} aria-hidden="true" />
+                        <span>{link.label}</span>
+                      </Link>
+                    ))}
                   </div>
                 )}
 

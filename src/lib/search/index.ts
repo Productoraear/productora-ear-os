@@ -4,3 +4,5 @@
  * para que exista un único punto de verdad (cero buscadores duplicados).
  */
 export * from './unified-search-kernel';
+export * from './taxonomy-index';
+

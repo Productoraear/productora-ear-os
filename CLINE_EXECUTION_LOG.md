@@ -4913,3 +4913,130 @@ texto_despues   : 'Presupuesto de Solista (350 €)' -> /presupuesto#terminal-co
 siguiente_paso : abrir una sesión nueva y, si se quiere cerrar el hueco declarado, ejecutar el
                  concierge en navegador con DEEPSEEK_API_KEY real para verificar el multi-turno
                  end-to-end (sonda pendiente, estado SOSPECHOSO hasta entonces)
+
+
+## 2026-11-12 · CERT-01 · Certificación final 2 pasos: gates locales + despliegue FRESH (MVP CONGELADO)
+
+SIGMA://CLOSE/v1
+task_id        : CERT-01-FINAL-CERTIFICATION-DEPLOY
+estado_bloque  : VERIFICADO
+hecho          : 1) `npm run gate:prepush` ejecutado en esta sesión: todas las puertas devolvieron
+                 Exit 0, sin un solo FAIL. Confirmación independiente de las 3 puertas que la
+                 doctrina nombra: G-1 `tsc --noEmit` Exit 0, G-2 `eslint src/` Exit 0 (0 errores),
+                 G-4 `audit:ssot` hash ebc011a0…55bb29dd == referencia KNOWN_GOOD (Zona Cero intacta).
+                 2) Commit atómico 6871518e `fix(ux): index mariachi formats in search and bind
+                 concierge session memory` (6 ficheros, +554 / −38) y push a origin/main
+                 (6027572f..6871518e, Exit 0).
+                 3) Coolify aceptó el deploy: COOLIFY_HTTP=200, deployment_uuid=5afs2ubut4tpzmyio6tksncb.
+                 4) Sonda FINAL `prod_deploy_freshness.cjs --expect=6871518e…`: VERDICT=FRESH,
+                 buildSha vivo == HEAD. Sondas de capacidad: `/mariachis` HTTP 200 con contenido del
+                 clúster; `/api/chat/concierge` con `history` basura responde HTTP 200 (el sanitizador
+                 SEC-4 no rompe el canal).
+cambios[]      : src/lib/search/mariachi-search-index.ts (nuevo · 171 líneas)
+                 src/lib/concierge/quick-actions.ts (nuevo · 124 líneas)
+                 src/data/global-search-index.ts · src/components/chat/AIConciergeDock.tsx
+                 src/app/api/chat/concierge/route.ts · CLINE_EXECUTION_LOG.md
+gates          : G-0 PASS (6 rutas del commit + sonda /api/health comprobadas en disco/red)
+                 G-1 PASS (tsc --noEmit Exit 0)
+                 G-2 PASS (eslint src/ → 0 errors; 3457 warnings preexistentes, no del diff)
+                 G-3 PASS (arnés `run_sv_protocol_15_gates.cjs` → 17/17 Exit Code 0)
+                 G-4 PASS (SSOT ebc011a07ea56e1f196d4b890ad1228142bc74ba0e56dae8e38d29cf55bb29dd)
+                 G-6 PASS (omega_rojo 20/20 · VERDE)
+                 G-8 PASS (premortem de 5 preguntas cumplimentado abajo)
+omega_diamante : { score: "20/20", verdict: "VERDE", pendientes: [] }
+hipotesis[]    : el job `production-smoke` del CI midió el estado PRE-deploy (corrió 90 s después
+                 del push, con el contenedor aún sirviendo 6027572f) y quedó marcado FAILED en
+                 GitHub. El veredicto real de frescura es FRESH, medido contra el contenedor vivo
+                 tras completarse el deployment. El run no se ha re-ejecutado sobre el mismo sha.
+decision       : commit atómico sin arrastrar los artefactos regenerados de `.antigravity/*`
+                 (scorecards, matrices), que se quedan fuera del cambio lógico. Se descartó
+                 `--expect` con sha corto: la sonda exige coincidencia de sha completo para no
+                 dar un falso FRESH por prefijo.
+riesgos        : si Coolify redeployase desde otra rama, el sello EAR_BUILD_SHA apuntaría a otro
+                 commit y la sonda devolvería exit 4 (STALE) en lugar de maquillar el verde.
+reto_espejo    : la primera sonda STALE parecía un fallo de deploy; el log del job probaba que
+                 Coolify SÍ había encolado (HTTP 200). Se esperó el ciclo real (~13 min) en vez de
+                 declarar FACHADA o forzar un veredicto que no estaba medido.
+aprendizaje_ceo: un STALE a los 90 segundos de un push no dice "deploy roto", dice "deploy en
+                 curso". El veredicto se firma con el contenedor vivo, nunca con la primera sonda.
+siguiente_paso : sesión cerrada por Pacto ZTM (WF-4). Plataforma en fase de explotación comercial.
+
+---
+
+## W56 · Búsqueda dinámica de proveedores, taxonomía facetada y sutura seating → presupuesto
+
+**Fecha:** 2026-11-12 · **Ejecutor:** Cline (El Obrero) · **Directiva:** CEO Edwin Agudelo
+**Ámbito:** MVP transaccional SOTA — 4 correcciones atómicas, cero DDL, ZONA CERO intacta.
+
+### Hecho (ruta:línea)
+
+| Bloque | Fichero | Qué escribe de verdad |
+|---|---|---|
+| 1 · Búsqueda viva | `src/app/api/search/providers/route.ts` | `GET` que sondea PostgreSQL vía Prisma sobre `vendorProfile` (`status=ACTIVE`) y `artistProfile` (`status in PUBLISHED/ACTIVE/VERIFIED`) con `mode:'insensitive'` sobre `stageName`/`displayName`/`bio` y `genres.has`. Sólo lectura, `select` quirúrgico (INV-20), techo de 8 s (INV-17), contrato AF-1 (`probed/source/mode/checkedAt`). |
+| 1 · Autocompletado | `src/components/search/UnifiedSearch.tsx` | Estado `liveProviders` + `useEffect` con debounce **250 ms** (INV-19) y `AbortController` que consulta `/api/search/providers?q=…&limit=6`; grupo de resultados propio con estado `consultando…` / `BD no alcanzable` (AF-1). |
+| 2 · Taxonomía | `src/lib/search/taxonomy-index.ts` | 6 familias canónicas + 17 facetas (latina/tropical, clásica, pop-rock & versiones, flamenco & rumbas, jazz & soul, tradicional-mariachis) y `resolveTaxonomyMatch`. |
+| 2 · Integración | `src/lib/search/index.ts`, buscador global, `/api/chat/concierge`, `/api/agents/chat` | La faceta resuelta despacha a `
+/proveedores?categoria=…` o `/mariachis`; toda ruta emitida existe en disco (INV-09). `/catalogo` NO existe, por eso el destino real es el directorio con clúster `categoria`. |
+| 3 · Sutura | `src/lib/seating/seating-codec.ts` | `hashSeatingPlan` (FNV-1a 2×32 bits, determinista), `isSeatingPlanHash`, `buildBudgetHrefWithPlan` → `/presupuesto?seatingPlan=<hash>&leadMagnet=true`. |
+| 3 · CTA | `src/components/seating/SeatingPlanner.tsx` | Botón «Bloquear este plano y formalizar reserva» (`blockAndReserve`) + import `Lock`, `useRouter`. |
+| 3 · Banner | `src/app/(public)/presupuesto/page.tsx` | `searchParams` como promesa (Next 16), `SeatingPlanningBanner` con «Seating Planner Pro (190,00 €) incluido de cortesía con tu depósito de 100,00 €» (depósito desde el SSOT). |
+| 4 · Memoria | `src/components/chat/AIConciergeDock.tsx` | `toOutboundHistory` envía el hilo COMPLETO (antes perdía 1 turno por `MAX_HISTORY - 1`); persistencia en `localStorage` mantenida. |
+| 4 · Enrutamiento | `AIConciergeDock.tsx` + ambas rutas de chat | `buildActionLinks` pinta chips a catálogo/presupuesto; el servidor devuelve `taxonomy` y `actionLinks` ya calculados; el cierre empuja siempre al WhatsApp +34 693 693 048. |
+| Evidencia | `scripts/verify_w56_core_suture.ts` (`npm run verify:w56`) | 22 chequeos ejecutables + 1 SIN_EVIDENCIA declarado. |
+
+### Evidencia ejecutada en esta sesión
+
+```
+npm run typecheck        → Exit 0 (0 errores)
+npm run lint             → 0 errores (3457 warnings preexistentes, ninguno en el diff)
+npm run audit:ssot       → hash ebc011a07ea56e1f196d4b890ad1228142bc74ba0e56dae8e38d29cf55bb29dd == referencia · invariantes OK
+npm run verify:w56       → 22/22 PASS · 1 SIN_EVIDENCIA · Exit 0
+```
+
+### Premortem obligatorio (G-8)
+
+1. **Propósito original:** ¿Cumple el objetivo exacto o es un primo cosmético?
+   Cumple los 4 bloques con sustancia real: la API interroga PostgreSQL (no un índice
+   estático), la taxonomía resuelve cola larga verificada por 13 casos, la sutura genera
+   un hash determinista y el cotizador lo detecta en servidor, y el chat conserva memoria
+   íntegra y devuelve enlaces calculados por el motor.
+   *Desviación declarada:* la directiva nombraba `/catalogo?categoria=…`; esa ruta **no
+   existe en disco**, así que el destino canónico es `/proveedores?categoria=…` +
+   `/mariachis`. Inventar `/catalogo` habría creado un clic muerto (INV-09).
+
+2. **Datos y asunciones frágiles:**
+   · El modelo `Provider` **no existe**; se usan los reales `vendorProfile` y
+   `artistProfile`. Si un futuro renombrado cambia esos modelos, la API falla en compilación
+   (protección por tipos), no en silencio.
+   · El directorio consume `categoria` como clúster (`normalizeBodasNetCategory`), por eso
+   las facetas usan `musica`/`animacion`/`servicios`.
+   · El hash FNV-1a es de 64 bits: colisión despreciable, no criptográfica. Es un
+   identificador de plano, no una firma de integridad legal.
+
+3. **Alternativas descartadas:**
+   · Reutilizar `/api/profiles/search` (lee data lake estático, precisa fallback a JSON):
+   se descarta porque el requisito es BD viva.
+   · Hash con `crypto.subtle.digest`: API asíncrona; obligaría a `await` en el handler del
+   clic (parpadeo de estado). FNV-1a es síncrono y determinista.
+   · `data-lake-only` con `contains` en los JSON: no certifica PostgreSQL (falso verde AF-5).
+
+4. **Premortem de producción (qué se rompería y cómo lo detectamos):**
+   · **Carga:** `contains` sin índice trigram hace `seq scan` sobre `artistProfile`. Hoy el
+   volumen es bajo y el `take` está acotado (≤ 20), pero un catálogo grande degradaría.
+   Mitigación futura declarada: índice GIN/pg_trgm (requiere DDL, **prohibido en esta
+   directiva**).
+   · **BD caída:** el endpoint degrada con `source:'unreachable'`, `mode:'SIMULADO'` y cero
+   filas inventadas; el buscador pinta «BD no alcanzable» en lugar de fingir resultados.
+   Verificado en vivo (API-02).
+   · **Query manipulada:** `?seatingPlan=<script>` no activa el banner (`isSeatingPlanHash`).
+   Verificado (SEAT-04).
+
+5. **Consecuencia aceptada:**
+   Se acepta que la búsqueda depende de que `POSTGRES_PRISMA_URL` esté presente en el runtime
+   de producción (Coolify). Sin esa variable el bloque de proveedores aparece vacío y
+   declarado, mientras la taxonomía y el catálogo siguen operativos: degradación honesta,
+   nunca un catálogo falso.
+
+**estado_bloque:** VERIFICADO (22/22 PASS, Exit 0) · **hueco declarado:** DB-01
+SIN_EVIDENCIA (PostgreSQL efímero no arrancable en esta estación Windows; verificado en
+cambio el camino de degradación honesta).

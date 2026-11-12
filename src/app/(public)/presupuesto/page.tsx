@@ -3,12 +3,83 @@ import Link from 'next/link';
 import { Metadata } from 'next';
 import TinderMatcherClient from '@/app/components/public/TinderMatcherClient';
 import { CommercialEventCalculator } from '@/components/calculator/CommercialEventCalculator';
-import { Sparkles, SlidersHorizontal, ArrowRight } from 'lucide-react';
+import { Sparkles, SlidersHorizontal, ArrowRight, LayoutList, ShieldCheck } from 'lucide-react';
+import { DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
+import { isSeatingPlanHash } from '@/lib/seating/seating-codec';
 
 export const metadata: Metadata = {
   title: 'Diseña tu Presupuesto & Matcher S-Class | Productora EAR',
   description: 'Sistema interactivo de cotización en tiempo real, perfilado de eventos y matching de artistas de alta gama.',
 };
+
+/**
+ * VALOR DE CATÁLOGO DEL SEATING PLANNER (ancla del lead magnet).
+ * Mismo criterio que `src/app/(public)/seating-planner/page.tsx`: la cifra vive
+ * en la RUTA (marketing), nunca en la Zona Cero `ear-os-ssot.ts` (INV-05).
+ * INV-03: la cortesía NO altera el depósito — sigue siendo `DEPOSITO_STRIPE_EUR`
+ * y 100 % deducible; no existe un segundo cobro.
+ */
+const SEATING_PLANNER_CATALOG_VALUE_EUR = 190;
+
+const EUR_FORMAT = new Intl.NumberFormat('es-ES', {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+});
+
+/** Next.js 16: `searchParams` es una promesa (resolución obligatoria). */
+type SearchParams = Promise<Record<string, string | string[] | undefined>>;
+
+function firstValue(value: string | string[] | undefined): string | null {
+  if (typeof value === 'string') return value;
+  if (Array.isArray(value) && typeof value[0] === 'string') return value[0];
+  return null;
+}
+
+/**
+ * ── SUTURA SEATING PLANNER → PRESUPUESTO (BLOQUE 3) ─────────────────────────
+ * Detecta `?seatingPlan=<hash>` (con `leadMagnet=true`) y devuelve el banner de
+ * valor. Sólo se pinta cuando el hash tiene forma válida: una query manipulada
+ * (`?seatingPlan=<script>`) NO activa el banner (cero confianza en la URL).
+ */
+function SeatingPlanningBanner({ planHash }: { readonly planHash: string }) {
+  return (
+    <section
+      aria-labelledby="seating-courtesy-title"
+      className="rounded-2xl border border-[#ecb613]/40 bg-[#ecb613]/5 p-5"
+    >
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div className="min-w-0 space-y-1.5">
+          <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.25em] text-[#ecb613]">
+            <LayoutList size={12} aria-hidden="true" /> Plano de mesas vinculado
+          </p>
+          <h2
+            id="seating-courtesy-title"
+            className="font-syne text-lg font-black uppercase leading-tight text-white sm:text-xl"
+          >
+            Seating Planner Pro ({EUR_FORMAT.format(SEATING_PLANNER_CATALOG_VALUE_EUR)} €) incluido de
+            cortesía con tu depósito de {EUR_FORMAT.format(DEPOSITO_STRIPE_EUR)} €
+          </h2>
+          <p className="max-w-3xl text-xs leading-relaxed text-zinc-400">
+            Tu plano viaja con este presupuesto (referencia{' '}
+            <span className="font-mono text-[#00E5FF]">{planHash}</span>). El depósito de{' '}
+            <span className="font-mono text-white">{EUR_FORMAT.format(DEPOSITO_STRIPE_EUR)} €</span> es
+            100 % deducible del importe total del evento: no hay un segundo cobro por el plano.
+          </p>
+        </div>
+        <a
+          href="#terminal-costes"
+          className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-[#ecb613] px-4 py-2 text-xs font-bold uppercase tracking-wider text-black transition-colors hover:bg-[#f5c94a]"
+        >
+          Cotizar ahora <ArrowRight size={14} aria-hidden="true" />
+        </a>
+      </div>
+      <p className="mt-3 flex items-center gap-2 text-[11px] text-zinc-500">
+        <ShieldCheck size={13} className="text-emerald-400" aria-hidden="true" />
+        El plano organiza la sala; el importe del evento nace siempre del presupuesto sellado.
+      </p>
+    </section>
+  );
+}
 
 /**
  * RUTA CANÓNICA DEL COTIZADOR (ORDEN 2026-11-11 §1).
@@ -19,7 +90,11 @@ export const metadata: Metadata = {
  * formulario: el recomendador arriba y el terminal de costes debajo.
  * `/calculadora` y `/cotizador` redirigen aquí con 301 (next.config.ts).
  */
-export default function PresupuestoPage() {
+export default async function PresupuestoPage({ searchParams }: { searchParams: SearchParams }) {
+  const params = await searchParams;
+  const seatingPlanHash = firstValue(params.seatingPlan);
+  const showSeatingBanner = seatingPlanHash !== null && isSeatingPlanHash(seatingPlanHash);
+
   return (
     <main className="min-h-screen bg-[#050505] text-[#f5f1e8] pt-32 pb-24 px-4 md:px-8">
       <div className="max-w-7xl mx-auto space-y-10">
@@ -57,6 +132,11 @@ export default function PresupuestoPage() {
             </div>
           </div>
         </div>
+
+        {/* 0 · Banner de cortesía del Seating Planner (sólo si llega un plano válido) */}
+        {showSeatingBanner && seatingPlanHash !== null ? (
+          <SeatingPlanningBanner planHash={seatingPlanHash} />
+        ) : null}
 
         {/* 1 · Recomendador / Matcher */}
         <section id="matcher" className="bg-[#0a0a0a] border border-white/10 rounded-3xl p-6 md:p-10 shadow-2xl space-y-8 scroll-mt-32">

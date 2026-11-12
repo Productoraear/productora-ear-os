@@ -199,6 +199,65 @@ export function readPaxFromQuery(value: string | null): number | null {
   return parsed;
 }
 
+/**
+ * ── HASH DETERMINISTA DEL PLANO (SUTURA SEATING → PRESUPUESTO) ──────────────
+ *
+ * El plano viaja al cotizador como `?seatingPlan=<hash>`. Ese hash debe ser:
+ *   · ESTABLE: el mismo plano produce siempre el mismo token (idempotencia).
+ *   · COMPACTO: cabe cómodamente en una URL y no revienta límites de proxy.
+ *   · SIN DATOS PERSONALES: `eventName` es tipo de celebración, nunca nombre
+ *     de cliente (INV-14); aun así el token es opaco, no legible.
+ *
+ * Implementación: FNV-1a de 32 bits con mezcla final (avalancha) sobre el token
+ * canónico de `encodePlan`. Sin `crypto.subtle` porque ese API es asíncrono y
+ * obligaría a `await` en el handler del clic; FNV-1a es síncrono y determinista.
+ *
+ * Se emiten DOS palabras de 32 bits (64 bits de espacio) en base36 para que la
+ * colisión sea despreciable: `"<hi><lo>"` en minúsculas.
+ */
+function fnv1a32(input: string, seed: number): number {
+  let hash = seed >>> 0;
+  for (let index = 0; index < input.length; index += 1) {
+    hash ^= input.charCodeAt(index);
+    // Multiplicación FNV prime (16777619) con aritmética de 32 bits segura.
+    hash = Math.imul(hash, 0x01000193) >>> 0;
+  }
+  // Mezcla final (avalancha) para repartir diferencias de 1 bit.
+  hash ^= hash >>> 16;
+  hash = Math.imul(hash, 0x21f0aaad) >>> 0;
+  hash ^= hash >>> 15;
+  hash = Math.imul(hash, 0x735a2d97) >>> 0;
+  hash ^= hash >>> 15;
+  return hash >>> 0;
+}
+
+/**
+ * Hash serializado del plano para la sutura transaccional.
+ * Determinista: mismo `SeatingPlan` ⇒ mismo hash, en cualquier ejecución.
+ */
+export function hashSeatingPlan(plan: SeatingPlan): string {
+  const canonical = encodePlan(plan);
+  const high = fnv1a32(canonical, 0x811c9dc5);
+  const low = fnv1a32(canonical, 0x01000193);
+  return `${high.toString(36)}${low.toString(36)}`;
+}
+
+/** `true` si el valor tiene la forma de un hash emitido por `hashSeatingPlan`. */
+export function isSeatingPlanHash(value: string | null): boolean {
+  if (value === null) return false;
+  return /^[0-9a-z]{1,14}$/.test(value);
+}
+
+/** Ruta de aterrizaje en el cotizador con el plano adjunto (sutura Bloque 3). */
+export function buildBudgetHrefWithPlan(plan: SeatingPlan): string {
+  const params = new URLSearchParams();
+  params.set('seatingPlan', hashSeatingPlan(plan));
+  params.set('leadMagnet', 'true');
+  params.set('pax', String(plan.pax));
+  return `/presupuesto?${params.toString()}`;
+}
+
+
 /** Guarda de tipo pública: la query `?tipo=` no puede colar un valor ajeno. */
 export function isTableShapeValue(value: string): value is TableShape {
   return (SHAPES as readonly string[]).includes(value);

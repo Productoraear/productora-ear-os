@@ -142,6 +142,7 @@
     "audit:queue-counters:sync": "node scripts/audit_queue_counter_integrity.cjs --sync",
     "ledger:claim": "node scripts/ledger_append_claim.cjs",
     "verify:showcase": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_showcase_ingest.ts",
+    "verify:w56": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_w56_core_suture.ts",
     "ingest:showcase": "node scripts/ingest_competitor_showcase.cjs"
   },
   "dependencies": {

@@ -42,6 +42,7 @@ import {
   SEARCH_PILLARS,
   detectSearchIntent,
   queryOracleRag,
+  resolveTaxonomyMatch,
   searchCatalog,
   searchCommands,
   type OracleRagHit,
@@ -51,13 +52,76 @@ import {
 } from '@/lib/search';
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// AUTOCOMPLETADO VIVO (BLOQUE 1) — /api/search/providers SOBRE POSTGRESQL
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+/** Debounce del autocompletado de proveedores (INV-19: 200-300 ms). */
+export const PROVIDERS_DEBOUNCE_MS = 250;
+
+/** Timeout duro de la consulta de proveedores (INV-17: ≤ 8.000 ms). */
+export const PROVIDERS_TIMEOUT_MS = 8000;
+
+/** Mínimo de caracteres para interrogar la BD. */
+const PROVIDERS_MIN_CHARS = 2;
+
+/** Proveedor vivo devuelto por `/api/search/providers`. */
+interface LiveProviderHit {
+  id: string;
+  name: string;
+  category: string;
+  href: string;
+  kind: 'vendor' | 'artist';
+}
+
+interface LiveProvidersState {
+  hits: LiveProviderHit[];
+  loading: boolean;
+  /** `true` cuando la BD no respondió: se declara, no se finge (AF-1). */
+  degraded: boolean;
+}
+
+const EMPTY_LIVE_PROVIDERS: LiveProvidersState = {
+  hits: [],
+  loading: false,
+  degraded: false,
+};
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null;
+}
+
+/** Saneado por tipo de la respuesta (frontera externa, SEC-4): cero `any`. */
+function parseLiveProviders(payload: unknown): LiveProviderHit[] {
+  if (!isRecord(payload) || !Array.isArray(payload.providers)) return [];
+  const hits: LiveProviderHit[] = [];
+  for (const entry of payload.providers) {
+    if (!isRecord(entry)) continue;
+    const name = typeof entry.name === 'string' ? entry.name : '';
+    const href = typeof entry.href === 'string' ? entry.href : '';
+    if (name.length === 0 || !href.startsWith('/')) continue;
+    hits.push({
+      id: typeof entry.id === 'string' ? entry.id : name,
+      name,
+      category: typeof entry.category === 'string' ? entry.category : 'Proveedor',
+      href,
+      kind: entry.kind === 'artist' ? 'artist' : 'vendor',
+    });
+  }
+  return hits;
+}
+
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // MODELO DE FILAS NAVEGABLES (↑ ↓ ↵)
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 type NavigableRow =
   | { kind: 'intent'; key: string; href: string }
+  | { kind: 'taxonomy'; key: string; href: string }
+  | { kind: 'provider'; key: string; href: string; provider: LiveProviderHit }
   | { kind: 'catalog'; key: string; href: string; hit: ScoredSearchHit }
   | { kind: 'command'; key: string; href: string; command: SearchCommand };
+
 
 interface OraclePanelState {
   hits: OracleRagHit[];
@@ -108,6 +172,9 @@ export const UnifiedSearch: React.FC = () => {
   const [pillar, setPillar] = useState<SearchPillarId>('all');
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [oracle, setOracle] = useState<OraclePanelState>(EMPTY_ORACLE);
+  /** Proveedores VIVOS de PostgreSQL (autocompletado, Bloque 1). */
+  const [liveProviders, setLiveProviders] = useState<LiveProvidersState>(EMPTY_LIVE_PROVIDERS);
+
 
   const inputRef = useRef<HTMLInputElement>(null);
   const baseId = useId();
@@ -185,9 +252,58 @@ export const UnifiedSearch: React.FC = () => {
   }, [query, isSearchOpen]);
 
 
+  // ── Autocompletado VIVO de proveedores (debounce 250 ms + AbortController) ─
+  useEffect(() => {
+    if (!isSearchOpen) return;
+
+    const trimmed = query.trim();
+    if (trimmed.length < PROVIDERS_MIN_CHARS) {
+      setLiveProviders(EMPTY_LIVE_PROVIDERS);
+      return;
+    }
+
+    const controller = new AbortController();
+    const timeoutTimer = window.setTimeout(() => controller.abort(), PROVIDERS_TIMEOUT_MS);
+    let cancelled = false;
+    setLiveProviders((previous) => ({ ...previous, loading: true }));
+
+    const debounceTimer = window.setTimeout(() => {
+      void fetch(`/api/search/providers?q=${encodeURIComponent(trimmed)}&limit=6`, {
+        signal: controller.signal,
+        headers: { Accept: 'application/json' },
+      })
+        .then(async (response) => {
+          if (!response.ok) throw new Error(`HTTP_${response.status}`);
+          const payload: unknown = await response.json();
+          if (cancelled) return;
+          const degraded = isRecord(payload) && payload.source === 'unreachable';
+          setLiveProviders({
+            hits: parseLiveProviders(payload),
+            loading: false,
+            degraded,
+          });
+        })
+        .catch(() => {
+          // Fail-open honesto: sin datos de BD, el catálogo y la taxonomía siguen.
+          if (cancelled) return;
+          setLiveProviders({ hits: [], loading: false, degraded: true });
+        })
+        .finally(() => window.clearTimeout(timeoutTimer));
+    }, PROVIDERS_DEBOUNCE_MS);
+
+    return () => {
+      cancelled = true;
+      controller.abort();
+      window.clearTimeout(debounceTimer);
+      window.clearTimeout(timeoutTimer);
+    };
+  }, [query, isSearchOpen]);
+
   // ── Resultados: un único kernel alimenta las tres capas ─────────────────
   const intentMatch = useMemo(() => detectSearchIntent(query), [query]);
+  const taxonomyMatch = useMemo(() => resolveTaxonomyMatch(query), [query]);
   const catalogHits = useMemo(() => searchCatalog(query, { pillar }), [query, pillar]);
+
   const commandHits = useMemo(
     () => searchCommands(query, COMMAND_RESULT_LIMIT),
     [query]
@@ -198,6 +314,21 @@ export const UnifiedSearch: React.FC = () => {
 
     if (intentMatch) {
       next.push({ kind: 'intent', key: 'intent', href: intentMatch.targetUrl });
+    }
+
+    // 🎼 TAXONOMÍA (Bloque 2): un género de cola larga resuelto por el motor.
+    if (taxonomyMatch.facet !== null) {
+      next.push({ kind: 'taxonomy', key: `taxonomy-${taxonomyMatch.facet.id}`, href: taxonomyMatch.href });
+    }
+
+    // 🗄️ PROVEEDORES VIVOS (Bloque 1): filas reales de PostgreSQL.
+    for (const provider of liveProviders.hits) {
+      next.push({
+        kind: 'provider',
+        key: `provider-${provider.kind}-${provider.id}`,
+        href: provider.href,
+        provider,
+      });
     }
 
     for (const hit of catalogHits) {
@@ -219,7 +350,8 @@ export const UnifiedSearch: React.FC = () => {
     }
 
     return next;
-  }, [intentMatch, catalogHits, commandHits]);
+  }, [intentMatch, taxonomyMatch, liveProviders.hits, catalogHits, commandHits]);
+
 
   useEffect(() => {
     setSelectedIndex(0);
@@ -230,10 +362,23 @@ export const UnifiedSearch: React.FC = () => {
     [rows]
   );
 
+  /** Filas de proveedores vivos (PostgreSQL) para pintar su grupo propio. */
+  const providerRows = useMemo(
+    () => rows.map((row, index) => ({ row, index })).filter((entry) => entry.row.kind === 'provider'),
+    [rows]
+  );
+
+  /** Fila única de taxonomía (género de cola larga resuelto por el motor). */
+  const taxonomyRow = useMemo(() => {
+    const index = rows.findIndex((row) => row.kind === 'taxonomy');
+    return index === -1 ? null : { row: rows[index], index };
+  }, [rows]);
+
   const intentRow = useMemo(() => {
     const index = rows.findIndex((row) => row.kind === 'intent');
     return index === -1 ? null : { row: rows[index], index };
   }, [rows]);
+
 
   const commandGroups = useMemo(() => {
     const groups: Array<{
@@ -507,6 +652,91 @@ export const UnifiedSearch: React.FC = () => {
                       </button>
                     </div>
                   )}
+                  {/* 🎼 Género / formato de cola larga (taxonomía facetada, Bloque 2) */}
+                  {taxonomyRow && taxonomyMatch.facet !== null && (
+                    <div role="group" aria-label="Género musical resuelto">
+                      <button
+                        type="button"
+                        id={optionId(taxonomyRow.index)}
+                        role="option"
+                        aria-selected={selectedIndex === taxonomyRow.index}
+                        onMouseEnter={() => setSelectedIndex(taxonomyRow.index)}
+                        onClick={() => navigate(taxonomyRow.row.href)}
+                        className={`flex w-full items-center justify-between gap-3 rounded-2xl border p-3.5 text-left transition-all duration-300 ease-out ${
+                          selectedIndex === taxonomyRow.index
+                            ? 'border-[#00E5FF]/70 bg-[#00E5FF]/10'
+                            : 'border-[#00E5FF]/25 bg-[#00E5FF]/[0.03] hover:border-[#00E5FF]/50'
+                        }`}
+                      >
+                        <span className="flex min-w-0 items-center gap-3">
+                          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-[#00E5FF]/30 bg-black/60">
+                            <Music className="h-4 w-4 text-[#00E5FF]" aria-hidden="true" />
+                          </span>
+                          <span className="min-w-0">
+                            <span className="block font-mono text-[10px] uppercase tracking-wider text-[#00E5FF]">
+                              {taxonomyMatch.family?.label ?? 'Género'} · formato resuelto
+                            </span>
+                            <span className="block truncate text-sm font-bold text-white">
+                              {taxonomyMatch.label}
+                            </span>
+                            <span className="block truncate text-xs text-neutral-400">
+                              {taxonomyMatch.facet.formats.join(' · ')}
+                            </span>
+                          </span>
+                        </span>
+                        <ArrowRight className="h-4 w-4 shrink-0 text-[#00E5FF]" aria-hidden="true" />
+                      </button>
+                    </div>
+                  )}
+
+                  {/* 🗄️ Proveedores VIVOS de PostgreSQL (autocompletado real, Bloque 1) */}
+                  {(providerRows.length > 0 || liveProviders.loading || liveProviders.degraded) && (
+                    <div role="group" aria-label="Proveedores vivos en base de datos">
+                      <div
+                        aria-hidden="true"
+                        className="flex items-center justify-between px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-white/40"
+                      >
+                        <span>Proveedores en base de datos ({providerRows.length})</span>
+                        {liveProviders.loading && <span className="text-[#ecb613]">consultando…</span>}
+                        {liveProviders.degraded && !liveProviders.loading && (
+                          <span className="text-[#FF2B44]">BD no alcanzable</span>
+                        )}
+                      </div>
+                      {providerRows.map(({ row, index }) =>
+                        row.kind === 'provider' ? (
+                          <button
+                            key={row.key}
+                            type="button"
+                            id={optionId(index)}
+                            role="option"
+                            aria-selected={selectedIndex === index}
+                            onMouseEnter={() => setSelectedIndex(index)}
+                            onClick={() => navigate(row.href)}
+                            className={`mb-1.5 flex w-full items-center justify-between gap-3 rounded-2xl border p-3 text-left transition-all duration-300 ease-out ${
+                              selectedIndex === index
+                                ? 'border-emerald-400/60 bg-emerald-400/10'
+                                : 'border-white/5 bg-white/[0.02] hover:border-white/20'
+                            }`}
+                          >
+                            <span className="flex min-w-0 items-center gap-3">
+                              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-black/60">
+                                <Building2 className="h-3.5 w-3.5 text-emerald-400" aria-hidden="true" />
+                              </span>
+                              <span className="min-w-0">
+                                <span className="block truncate text-sm font-bold text-white">{row.provider.name}</span>
+                                <span className="block truncate font-mono text-[11px] text-neutral-400">
+                                  {row.provider.category}
+                                </span>
+                              </span>
+                            </span>
+                            <ArrowRight className="h-4 w-4 shrink-0 text-emerald-400" aria-hidden="true" />
+                          </button>
+                        ) : null
+                      )}
+                    </div>
+                  )}
+
+
 
                   {/* Catálogo global rankeado */}
                   {catalogRows.length > 0 && (
