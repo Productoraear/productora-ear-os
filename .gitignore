@@ -247,3 +247,29 @@ src/data/*_raw.txt
 # Copias de seguridad locales de agentes: pueden contener .env.local con credenciales
 # reales (INV-07 / SEC-3). JAMAS deben entrar al arbol de Git.
 .antigravity/backups/
+
+# ============================================================================
+# [W57_SEC3 · 2026-11-12] BARRERA PERIMETRAL DE SECRETOS (INV-07 / SEC-3)
+# Alerta Google Cloud Security sobre credenciales en volcados de contexto.
+# Un volcado de "cerebro" historico es una mina de claves: no se versiona jamas.
+# ============================================================================
+BASE_DE_CONOCIMIENTO/archive/
+# Red de seguridad: si algun dia el directorio entra al arbol, el archivo queda fuera.
+BASE_DE_CONOCIMIENTO/**/archive/
+
+# Claves privadas y material criptografico (nunca viajan al repositorio)
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+id_rsa
+id_rsa.*
+id_ed25519
+id_ed25519.*
+
+# Objetivos de campana con datos de contacto reales (captacion B2B/B2G)
+*_targets*.json
+*_targets*.csv
+

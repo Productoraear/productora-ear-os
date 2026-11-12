@@ -5126,3 +5126,86 @@ gates          : { G0..G8: PASS }
 - **Siguiente paso atómico:** cablear `afiliados` desde un Server Component en `/reservar/solista` para que
   el cupón del afiliado se valide contra el padrón real en producción (hoy el motor es fail-closed).
 
+
+---
+
+## [W57_SEC3 · 2026-11-12] PURGA DE SECRETOS Y BARRERA PERIMETRAL (INV-07 / SEC-3)
+
+**Directiva:** Alerta Google Cloud Security (`boreal-weaver-gplv2`) sobre credenciales en
+`BASE_DE_CONOCIMIENTO/archive/`. Protocolo de defensa en profundidad, tolerancia cero.
+
+### G-0 · Verificación de existencia previa (L2 / EP-2: no se cita lo que no se comprobó)
+
+| Elemento citado en la directiva | Comprobación | Resultado |
+|---|---|---|
+| `BASE_DE_CONOCIMIENTO/archive/legacy_brain_dump/EAR_OS_MAESTRO_PROMPTS_PARTE_90.md` | `Test-Path` | **False** → el fichero NO existe en esta sesión |
+| `BASE_DE_CONOCIMIENTO/` (directorio completo) | `Test-Path` + `git ls-files` | **False** / **0 ficheros trackeados** |
+| Clave `AQ.Ab8RN6K4…` en el árbol versionado | `git grep -n -I -l "AQ\.Ab8RN6K4"` | **0 coincidencias** (Exit 1 = sin match) |
+
+Conclusión honesta: la ruta de la alerta **no es alcanzable desde este repositorio**. El
+volcado vive fuera del árbol de trabajo (o en el historial remoto de otra máquina). No se
+puede redactar un fichero inexistente sin inventar evidencia, y este contrato prohíbe
+informar `VERIFICADO` sobre un `Test-Path = False`.
+
+### Fuga REAL encontrada (la alerta apuntaba al síntoma, no a la causa)
+
+El guard canónico `npm run audit:public-secrets` devolvía **`PUBLIC_SECRET_LEAKS=3` · Exit 1**
+(estado `SOSPECHOSO`, release bloqueado). Origen: `.env.local` — fichero **ignorado por git**
+(`.gitignore:21`), por tanto nunca viajó en un push; pero sus **nombres de variable** con
+prefijo público delataban credenciales de servidor y, en un build local/Docker, se inlinearían
+en el bundle del navegador:
+
+| Línea | Variable original (prefijo peligroso) | Acción | Variable resultante |
+|---|---|---|---|
+| 62 | `NEXT_PUBLIC_TELEGRAM_ADMIN_ID` | prefijo público retirado | `TELEGRAM_ADMIN_ID` |
+| 64 | `VITE_FIREBASE_API_KEY` | prefijo público retirado | `FIREBASE_API_KEY` |
+| 66 | `VITE_GEMINI_API_KEY` | prefijo público retirado | `GEMINI_API_KEY` |
+| 65 | `VITE_FIREBASE_PROJECT_ID` | normalizado (sin fuga real) | `FIREBASE_PROJECT_ID` |
+
+Los **valores no se han borrado**: el servidor sigue funcionando. Solo se ha retirado el
+prefijo que los exponía al cliente. Verificado con `git grep` que **ninguna** de las tres
+variables era consumida por `src/` (0 referencias), por lo que el renombrado no rompe código.
+**Ningún valor de clave se ha impreso en el log ni en la consola** (cumple la barrera
+"PROHIBIDO volcar claves privadas").
+
+### FASE 2 · Barrera perimetral `.gitignore`
+
+Añadidas reglas irrevocables (`:.gitignore:251-275`): `BASE_DE_CONOCIMIENTO/archive/`,
+`BASE_DE_CONOCIMIENTO/**/archive/`, `*.pem`, `*.key`, `*.p12`, `*.pfx`, `*.jks`, `*.keystore`,
+`id_rsa*`, `id_ed25519*`, `*_targets*.json`, `*_targets*.csv`.
+`git rm -r --cached` **no fue necesario ni ejecutado**: `git ls-files BASE_DE_CONOCIMIENTO` = 0.
+Control de daños colaterales: de 253 ficheros históricamente trackeados-ignorados, **0**
+coinciden con las nuevas reglas → ninguna ruta legítima queda fuera del repo.
+
+### Evidence quintuple (EP-1)
+
+```
+CLAIM{W57_SEC3-01} :: cmd="npm run audit:public-secrets" :: exit=0
+  stdout="PUBLIC_SECRET_LEAKS=0" :: ts=2026-11-12
+CLAIM{W57_SEC3-02} :: cmd="npm run typecheck" :: exit=0  (tsc --noEmit, 0 errores)
+CLAIM{W57_SEC3-03} :: cmd="npm run lint" :: exit=0  (3441 problems → 0 errors, 3441 warnings preexistentes)
+CLAIM{W57_SEC3-04} :: cmd="git check-ignore -q BASE_DE_CONOCIMIENTO/archive/legacy_brain_dump/x.md" :: exit=0 (ignorado)
+CLAIM{W57_SEC3-05} :: cmd="git grep -l AQ\.Ab8RN6K4" :: exit=1 (0 coincidencias) → SIN_EVIDENCIA de la clave citada
+```
+
+### Premortem G-8
+
+1. **Propósito:** ¿Se ha purgado el secreto de la alerta? **No del todo** — el fichero citado no
+   existe aquí. Se ha purgado la fuga real medible (3 fugas de prefijo público) y se ha puesto
+   la barrera para que esa ruta no pueda entrar nunca. No se declara cierre cosmético.
+2. **Asunciones:** que `.env.local` no está versionado (probado con `git check-ignore` y
+   `git ls-files`) y que las 3 variables renombradas no tenían consumidores (probado con `git grep`).
+3. **Alternativas descartadas:** borrar las líneas de `.env.local` — rechazado, rompería Gemini/Telegram
+   en producción; y añadir las variables a la allow-list del auditor — rechazado, blanquearía el guard.
+4. **Resiliencia:** si Coolify inyectaba `NEXT_PUBLIC_TELEGRAM_ADMIN_ID` o `VITE_GEMINI_API_KEY`
+   directamente en el panel (no en el repo), el renombrado local no basta. **Pendiente de rotación
+   en Google Cloud / BotFather** — lo detecta el propio panel de alertas de Google.
+5. **Consecuencia aceptada:** commit solo de `.gitignore` (el `.env.local` es invisible a git por diseño).
+
+### Riesgo residual detectado (NO resuelto, se declara)
+
+`.env.local:61` contiene `TELEGRAM_BOT_TOKEN=<valor real>` y `:64/:66` claves de Google en claro.
+El fichero está ignorado, pero mientras exista en disco y las claves no se **roten** en Google
+Cloud, la alerta `boreal-weaver-gplv2` sigue viva. **Acción del CEO:** rotar esas 3 claves y
+actualizar Coolify.
+
