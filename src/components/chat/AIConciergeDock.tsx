@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import {
   Sparkles,
   MessageSquare,
@@ -19,8 +20,17 @@ import {
   VolumeX,
   Mic,
   MicOff,
+  Music,
+  LayoutList,
+  CalendarClock,
+  type LucideIcon,
 } from 'lucide-react';
 import { ProviderRecord } from '@/lib/data/vampire-service';
+import {
+  resolveWelcomeActions,
+  type ConciergeQuickAction,
+  type ConciergeQuickActionIcon,
+} from '@/lib/concierge/quick-actions';
 import {
   speakNatural,
   stopSpeaking,
@@ -43,7 +53,10 @@ interface ChatMessage {
     holdDeposit: number;
     claimText: string;
   };
+  /** Consultas sugeridas devueltas por el motor (texto libre, se envían tal cual). */
   suggestedChips?: string[];
+  /** Acciones rápidas contextuales: navegan a una URL real o inyectan una consulta. */
+  quickActions?: ConciergeQuickAction[];
   timestamp: string;
 }
 
@@ -54,11 +67,41 @@ interface ProviderWithPrice extends ProviderRecord {
 const STORAGE_KEY = 'ear_concierge_history';
 const MAX_HISTORY = 15;
 
+/** Icono por familia de acción (lucide-react, sin emojis — INV-21). */
+const QUICK_ACTION_ICONS: Readonly<Record<ConciergeQuickActionIcon, LucideIcon>> = {
+  music: Music,
+  mic: Mic,
+  layout: LayoutList,
+  calendar: CalendarClock,
+};
+
 function formatTimestamp(): string {
   return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 }
 
+/**
+ * Turnos que viajan al servidor para mantener el hilo conductor.
+ * `providers`/`rosterRecommendation`/`suggestedChips` son estado de UI: al
+ * backend sólo van el rol y el texto (cero payload bloat, INV-20).
+ */
+interface OutboundTurn {
+  role: 'user' | 'assistant';
+  content: string;
+}
+
+function toOutboundHistory(messages: readonly ChatMessage[]): OutboundTurn[] {
+  return messages
+    .slice(-(MAX_HISTORY - 1))
+    .filter((msg) => msg.text.trim().length > 0)
+    .map((msg) => ({
+      role: msg.sender === 'user' ? 'user' : 'assistant',
+      content: msg.text.slice(0, 2000),
+    }));
+}
+
+
 export function AIConciergeDock() {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [inputMessage, setInputMessage] = useState('');
@@ -68,6 +111,21 @@ export function AIConciergeDock() {
   const [activeSpeakingId, setActiveSpeakingId] = useState<string | null>(null);
   const stopMicRef = useRef<(() => void) | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  /**
+   * Ancla de página en estado, refrescada en cliente. Se usa `usePathname()`
+   * (SSR-safe) y `window.location.pathname` como refuerzo: el servidor debe
+   * saber en qué página está el usuario para no venderle el roster equivocado.
+   */
+  const activePath = pathname || (typeof window !== 'undefined' ? window.location.pathname : '');
+
+  const buildWelcomeMessage = (): ChatMessage => ({
+    id: `welcome-${Date.now()}`,
+    sender: 'concierge',
+    text: '¡Hola! Soy el **Concierge Ejecutivo de Productora EAR**. Dime qué evento estás organizando (tipo, fecha y provincia) y te doy el formato exacto con precio cerrado y disponibilidad real.',
+    quickActions: resolveWelcomeActions(activePath),
+    timestamp: formatTimestamp(),
+  });
+
 
   useEffect(() => {
     return () => {
@@ -88,25 +146,15 @@ export function AIConciergeDock() {
       if (saved) {
         setMessages(JSON.parse(saved) as ChatMessage[]);
       } else {
-        setMessages([
-          {
-            id: 'welcome-1',
-            sender: 'concierge',
-            text: '¡Hola! Soy el **Concierge Ejecutivo de Productora EAR**. Indícame qué tipo de producción o evento estás coordinando (ej. *Gala corporativa con sonorización y música en vivo* o *Espacios para eventos exclusivos*) y te seleccionaré las mejores opciones disponibles con garantía de precio.',
-            suggestedChips: [
-              'Producción & Gala Corporativa',
-              'Fincas y Espacios Exclusivos',
-              'Garantía Price-Lock 100 € Deducible',
-              'Rider Acústico & Sonido Bose',
-            ],
-            timestamp: formatTimestamp(),
-          },
-        ]);
+        setMessages([buildWelcomeMessage()]);
       }
     } catch {
       // Silently ignore storage read errors
     }
+    // Sólo en el montaje: los chips se re-anclan a la ruta tras hidratar.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
 
   useEffect(() => {
     if (messages.length > 0) {
@@ -131,21 +179,9 @@ export function AIConciergeDock() {
     } catch {
       // Ignore
     }
-    setMessages([
-      {
-        id: `welcome-${Date.now()}`,
-        sender: 'concierge',
-        text: '¡Hola! Soy el **Concierge Ejecutivo de Productora EAR**. Indícame qué tipo de producción o evento estás coordinando (ej. *Gala corporativa con sonorización y música en vivo* o *Espacios para eventos exclusivos*) y te seleccionaré las mejores opciones disponibles con garantía de precio.',
-        suggestedChips: [
-          'Producción & Gala Corporativa',
-          'Fincas y Espacios Exclusivos',
-          'Garantía Price-Lock 100 € Deducible',
-          'Rider Acústico & Sonido Bose',
-        ],
-        timestamp: formatTimestamp(),
-      },
-    ]);
+    setMessages([buildWelcomeMessage()]);
   };
+
 
   const handleSendMessage = async (textToSend?: string) => {
     const query = (textToSend || inputMessage).trim();
@@ -158,6 +194,12 @@ export function AIConciergeDock() {
       timestamp: formatTimestamp(),
     };
 
+    // 🧵 HILO CONDUCTOR (P0): el historial previo viaja al servidor en cada turno.
+    // Sin esto, el motor trataba cada mensaje como un turno aislado y el usuario
+    // percibía amnesia total ("responde sin hilo conductor"). Se captura ANTES
+    // de mutar el estado para no reenviar el propio turno dos veces.
+    const history = toOutboundHistory(messages);
+
     setMessages((prev) => [...prev, userMsg]);
     setInputMessage('');
     setIsLoading(true);
@@ -168,10 +210,11 @@ export function AIConciergeDock() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message: query,
+          history,
           // ── ANCLAJE DE PÁGINA (P0): sin la ruta activa, el concierge no sabe
           // que el usuario está en la ficha de un proveedor de terceros y le
-          // vende el roster del solista. `window` no existe en SSR: se protege.
-          pathname: typeof window !== 'undefined' ? window.location.pathname : '',
+          // vende el roster del solista.
+          pathname: activePath,
         }),
       });
 
@@ -185,10 +228,12 @@ export function AIConciergeDock() {
           providers: data.providers,
           rosterRecommendation: data.rosterRecommendation,
           suggestedChips: data.suggestedChips,
+          quickActions: resolveWelcomeActions(activePath),
           timestamp: formatTimestamp(),
         };
         setMessages((prev) => [...prev, botMsg]);
       } else {
+
         const errorMsg: ChatMessage = {
           id: `bot-err-${Date.now()}`,
           sender: 'concierge',
@@ -564,18 +609,63 @@ export function AIConciergeDock() {
                   </div>
                 </div>
 
+                {/*
+                  QUICK ACTIONS CONTEXTUALES (máximo 3, cero ruido):
+                  o navegan a una ruta real en disco o inyectan una consulta
+                  concreta. `next/link` para que la navegación sea cliente.
+                */}
+                {msg.quickActions && msg.quickActions.length > 0 && (
+                  <div
+                    className="flex flex-wrap gap-1.5 pt-1"
+                    role="group"
+                    aria-label="Acciones rápidas"
+                  >
+                    {msg.quickActions.map((action) => {
+                      const Icon = QUICK_ACTION_ICONS[action.icon];
+                      const baseClass =
+                        'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#12121e] hover:bg-[#1a1a2c] text-zinc-300 hover:text-white border border-white/10 hover:border-[#ecb613]/50 text-[10px] font-mono transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613]';
+                      return action.href ? (
+                        <Link
+                          key={action.id}
+                          href={action.href}
+                          onClick={() => setIsOpen(false)}
+                          className={baseClass}
+                          aria-label={`Ir a ${action.label}`}
+                        >
+                          <Icon className="w-3 h-3 text-[#ecb613]" strokeWidth={1.75} aria-hidden="true" />
+                          <span>{action.label}</span>
+                        </Link>
+                      ) : (
+                        <button
+                          key={action.id}
+                          type="button"
+                          onClick={() => handleSendMessage(action.prompt ?? action.label)}
+                          disabled={isLoading}
+                          className={baseClass}
+                          aria-label={`Consultar: ${action.label}`}
+                        >
+                          <Icon className="w-3 h-3 text-[#ecb613]" strokeWidth={1.75} aria-hidden="true" />
+                          <span>{action.label}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+
+                {/* Sugerencias libres del motor: máximo 2 para no saturar de texto. */}
                 {msg.suggestedChips && msg.suggestedChips.length > 0 && (
                   <div
                     className="flex flex-wrap gap-1.5 pt-1"
                     role="group"
                     aria-label="Sugerencias de consulta"
                   >
-                    {msg.suggestedChips.map((chip, idx) => (
+                    {msg.suggestedChips.slice(0, 2).map((chip) => (
                       <button
-                        key={idx}
+                        key={chip}
                         type="button"
                         onClick={() => handleSendMessage(chip)}
-                        className="px-2.5 py-1 rounded-full bg-[#12121e] hover:bg-[#1a1a2c] text-zinc-300 hover:text-white border border-white/10 text-[10px] font-mono transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613]"
+                        disabled={isLoading}
+                        className="px-2.5 py-1 rounded-full bg-transparent hover:bg-white/5 text-zinc-400 hover:text-zinc-200 border border-white/10 text-[10px] font-mono transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613]"
                         aria-label={`Enviar sugerencia: ${chip}`}
                       >
                         {chip}
@@ -583,6 +673,7 @@ export function AIConciergeDock() {
                     ))}
                   </div>
                 )}
+
               </div>
             ))}
 

@@ -93,6 +93,41 @@ const CATEGORY_KEYWORDS: Record<string, string> = {
   animacion: 'Animación',
 };
 
+/** Turno del hilo conversacional tal y como viaja por la red. */
+interface ConciergeHistorTurn {
+  role: 'user' | 'assistant';
+  content: string;
+}
+
+/** Máximo de turnos aceptados desde el cliente (ventana de memoria). */
+const MAX_HISTORY_TURNS = 14;
+
+/** Longitud máxima por turno: corta payload bloat y ataques de contexto. */
+const MAX_TURN_CHARS = 2000;
+
+/**
+ * Sanea el historial recibido del navegador (SEC-4 · frontera externa).
+ * Descarta todo lo que no sea `{ role: 'user'|'assistant', content: string }`
+ * con texto no vacío. Nunca lanza: ante basura devuelve `[]` y el motor
+ * responde en modo sin memoria en lugar de romper el canal.
+ */
+function sanitizeConciergeHistory(raw: unknown): ConciergeHistorTurn[] {
+  if (!Array.isArray(raw)) return [];
+
+  const turns: ConciergeHistorTurn[] = [];
+  for (const entry of raw) {
+    if (typeof entry !== 'object' || entry === null) continue;
+    const record = entry as { role?: unknown; content?: unknown };
+    if (record.role !== 'user' && record.role !== 'assistant') continue;
+    if (typeof record.content !== 'string') continue;
+    const content = record.content.trim();
+    if (content.length === 0) continue;
+    turns.push({ role: record.role, content: content.slice(0, MAX_TURN_CHARS) });
+  }
+
+  return turns.slice(-MAX_HISTORY_TURNS);
+}
+
 export async function POST(request: Request) {
   try {
     const ip = request.headers.get('x-forwarded-for')?.split(',')[0] || '127.0.0.1';
@@ -109,6 +144,12 @@ export async function POST(request: Request) {
     if (!message || typeof message !== 'string') {
       return NextResponse.json({ error: 'Mensaje inválido' }, { status: 400 });
     }
+
+    // ── HILO CONDUCTOR (P0 · anti-alucinación): el historial de sesión que
+    // envía el cliente se sanea y se inyecta en el prompt. Antes se ignoraba y
+    // cada turno se respondía a ciegas (el agente "olvidaba" lo hablado dos
+    // segundos antes). SEC-4: esquema estricto en frontera externa.
+    const history = sanitizeConciergeHistory(body.history);
 
     // ── ANTI-SESGO DEL ROSTER (P0): si el usuario está en la ficha de un
     // proveedor de terceros, el concierge habla de ESE proveedor y de su gremio.
@@ -185,17 +226,25 @@ export async function POST(request: Request) {
 
     const systemPrompt = `Eres el Concierge Inteligente de Productora EAR para Edwin Agudelo y la Red de Fincas y Proveedores de Gala.
 DIRECTIVA INMUTABLE (HUMANO, EMPÁTICO Y RESOLUTIVO — CERO LORO):
+0. HILO CONDUCTOR (OBLIGATORIO):
+   - Recibes el historial de la conversación. Úsalo: si el cliente ya dijo fecha, provincia o tipo de evento, NO se lo vuelvas a preguntar.
+   - Continúa la conversación donde se quedó. PROHIBIDO reiniciar el saludo o repetir la bienvenida.
+   - Si detectas un dato ya aportado, confírmalo en una sola frase y avanza al siguiente paso.
 1. REGLA DE ORO ANTI-LORO Y SUCINTO (MÁXIMO 40 PALABRAS):
    - Responde ESTRICTAMENTE a la duda del usuario con empatía y cercanía.
    - PROHIBIDO soltar párrafos largos o discursos. Máximo 1 o 2 oraciones breves y directas (máximo 40 palabras en total).
    - Bebe la información exclusivamente de la ficha del proveedor o artista en pantalla si está disponible.
    - PROHIBIDO mencionar leyes acústicas (Ley 37/2003), decibelios, homologaciones o el reparto del split (80/10/10) a menos que el usuario pregunte expresamente por acústica o finanzas.
+1bis. ORIENTACIÓN AL CIERRE (SIEMPRE):
+   - Toda respuesta debe terminar acercando al cliente al cierre: o bien pedir el dato que falta (fecha, provincia, número de invitados), o bien invitar a confirmar por WhatsApp oficial o a generar el presupuesto.
+   - PROHIBIDO divagar sobre temas ajenos a eventos, ocio, política, opiniones personales o cualquier asunto que no sea organizar el evento del cliente. Si el cliente cambia de tema, reconduce en una frase a su evento.
 2. PRECIOS Y NÚMEROS LIMPIOS:
 ${priceRule}
 3. CONTEXTO DISPONIBLE:
    - Ubicación detectada: ${provName}
    - Categoría consultada: ${catName}
    - Proveedores encontrados en la base de datos: ${providersList || 'Búsqueda personalizada en curso'}
+   - Turnos previos en este hilo: ${history.length}
    - Teléfono / WhatsApp oficial: ${CENTRALITA_EAR_OS}${providerBlock}`;
 
     if (isDeepSeekConfigured()) {
@@ -204,6 +253,8 @@ ${priceRule}
           model: 'deepseek-chat',
           system: systemPrompt,
           prompt: `Mensaje del cliente: "${message}"`,
+          // 🧵 Memoria de sesión real: el modelo recibe los turnos previos.
+          history,
           temperature: 0.3,
         });
         if (dsRes.available && dsRes.content.trim()) {
@@ -219,7 +270,20 @@ ${priceRule}
       try {
         const genAI = new GoogleGenerativeAI(geminiKey);
         const model = genAI.getGenerativeModel({ model: 'gemini-flash-latest' });
-        const result = await model.generateContent([systemPrompt, `Cliente: ${message}`]);
+        // Gemini usa roles 'user' | 'model': el system prompt viaja como primer
+        // turno y el historial se traduce a su vocabulario (multi-turno real).
+        const geminiHistory: Array<{ role: 'user' | 'model'; parts: Array<{ text: string }> }> = [
+          { role: 'user', parts: [{ text: systemPrompt }] },
+          { role: 'model', parts: [{ text: 'Entendido. Respondo con ese contrato.' }] },
+        ];
+        for (const turn of history) {
+          geminiHistory.push({
+            role: turn.role === 'user' ? 'user' : 'model',
+            parts: [{ text: turn.content }],
+          });
+        }
+        const chat = model.startChat({ history: geminiHistory });
+        const result = await chat.sendMessage(`Mensaje del cliente: "${message}"`);
         reply = result.response.text();
       } catch (err: unknown) {
         console.warn('⚠️ [CONCIERGE_GEMINI_FALLBACK]:', err);
@@ -255,14 +319,10 @@ ${priceRule}
         ? [
             `Más datos de ${pageContext.name}`,
             'Verificar disponibilidad de fecha',
-            'Presupuesto para mi evento',
-            'Hablar con la Conserjería',
           ]
         : [
             `Fincas rústicas en ${provName}`,
-            `Catering a las brasas en ${provName}`,
             `Mariachi y Solista en ${provName}`,
-            `Discomóvil Bose F1 en ${provName}`,
           ],
     });
   } catch (error: unknown) {

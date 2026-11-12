@@ -4852,3 +4852,64 @@ siguiente_paso : autorizar `lighthouse` como devDependency · verificar el hero 
                  el VPS (el log de build reporta VendorShadowProfile ausente)
 ```
 
+
+
+## 2026-11-12 · UX-01 · Saneamiento de buscador global, chips y memoria del concierge
+
+SIGMA://CLOSE/v1
+task_id        : UX-01-SEARCH-CONCIERGE-POLISH
+estado_bloque  : VERIFICADO
+hecho          : 1) `src/lib/search/mariachi-search-index.ts` (nuevo) deriva 16 items del clúster
+                 mariachi (hub `/mariachis`, 4 escalones de MARIACHI_FORMATS, 10 sub-landings,
+                 ficha del roster) y se concatena en `GLOBAL_SEARCH_INDEX:24`. Antes de esto,
+                 'mariachi' devolvía 0 resultados: promesa comercial sin URL (EP-3).
+                 2) `src/lib/concierge/quick-actions.ts` (nuevo) sustituye los 4 chips genéricos
+                 por <=3 acciones contextuales por ruta, con precio leído del SSOT.
+                 3) `AIConciergeDock.tsx` envía ahora `history` real al servidor (antes el motor
+                 respondía a ciegas: amnesia de sesión) y ancla los chips a `usePathname()`.
+                 4) `api/chat/concierge/route.ts` sanea el historial (SEC-4), lo inyecta en DeepSeek
+                 y Gemini (multi-turno) y refuerza el system prompt: hilo conductor, <=40 palabras
+                 y orientación al cierre.
+cambios[]      : src/lib/search/mariachi-search-index.ts (nuevo)
+                 src/lib/concierge/quick-actions.ts (nuevo)
+                 src/data/global-search-index.ts
+                 src/components/chat/AIConciergeDock.tsx
+                 src/app/api/chat/concierge/route.ts
+gates          : G-0 PASS (10 rutas + 4 destinos de chip comprobados en disco)
+                 G-1 PASS (tsc --noEmit Exit 0)
+                 G-2 PASS (eslint src/ -> 0 errors)
+                 G-4 PASS (SSOT hash ebc011a0... == referencia)
+                 G-6 PASS (omega_rojo 20/20 VERDE)
+                 G-9 PASS (audit:cta-matrix VEREDICTO PASS, 0 clics rotos)
+                 G-10 PASS (audit:tariff-copy 0 deriva en los ficheros tocados)
+omega_diamante : { score: "20/20", verdict: "VERDE", pendientes: [] }
+hipotesis[]    : la memoria multi-turno se validó por contrato de tipos y sonda de kernel, no en
+                 navegador con clave DeepSeek/Gemini real (no hay clave en el entorno de esta sesión)
+                 · 'mariachi' gana en el catúlogo, pero el ranking depende de searchCatalog
+                 (capa pura), no del motor RAG, que sigue degradando si /api/rag/query no responde
+                 · /bodas/[provincia]/mariachis se resuelve en runtime: no existe page.tsx física
+                 para esa hoja, la cubre la ruta dinámica [servicio]
+decision       : indexar los mariachis DERIVANDO de MARIACHI_FORMATS/MARIACHI_LANDINGS en vez de
+                 teclear entradas a mano: así, añadir una formación al católogo canónico la indexa
+                 sola y no se puede olvidar. Se descartó duplicar los 4 precios en el índice (INV-10)
+                 y se descartó meter los mariachis en GLOBAL_SEARCH_INDEX a mano (deriva garantizada)
+riesgos        : la memoria del hilo vive en localStorage bajo `ear_concierge_history` (MAX_HISTORY
+                 = 15 turnos): si el cliente limpia el navegador, el hilo se pierde; no hay
+                 persistencia en base de datos. Bajo carga, el sanitizador limita a 14 turnos x 2000
+                 caracteres para no inflar el prompt
+reto_espejo    : el chip de presupuesto apuntaba a `/presupuesto?servicio=solista&base=350`, pero
+                 `presupuesto/page.tsx` IGNORA searchParams: era un clic muerto disfrazado (INV-09).
+                 Se reescribió a `/presupuesto#terminal-costes`, el ancla real del motor de costes
+aprendizaje_ceo: el buscador no estaba 'roto': estaba CIEGO. El clúster mariachi existía con
+                 precios, 10 landings y 52 corredores, pero nadie lo había enchufado al índice
+                 global. Un negocio entero invisible por una línea que faltaba en un array
+texto_antes     : el chip 'Presupuesto de Solista' enviaba 'Producción & Gala Corporativa' como
+                 prompt de conversación, no como navegación: el usuario pedía presupuesto y el
+                 agente le respondía con otra categoría. Ahora hay `href` (navega) y `prompt`
+                 (conversa) como campos mutuamente excluyentes
+texto_despues   : 'Presupuesto de Solista (350 €)' -> /presupuesto#terminal-costes ·
+                 'Mariachis en mi zona' -> /mariachis · 'Organizar mesas del evento' ->
+                 /seating-planner, y en /mariachis el tercer chip pasa a ser la acción de cierre
+siguiente_paso : abrir una sesión nueva y, si se quiere cerrar el hueco declarado, ejecutar el
+                 concierge en navegador con DEEPSEEK_API_KEY real para verificar el multi-turno
+                 end-to-end (sonda pendiente, estado SOSPECHOSO hasta entonces)

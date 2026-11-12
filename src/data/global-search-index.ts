@@ -1,3 +1,5 @@
+import { MARIACHI_SEARCH_INDEX } from '@/lib/search/mariachi-search-index';
+
 export interface SearchIndexItem {
   id: string;
   title: string;
@@ -12,7 +14,14 @@ export interface SearchIndexItem {
   isExternal?: boolean;
 }
 
+/**
+ * Clúster mariachi: se DERIVA de los catálogos canónicos (`MARIACHI_FORMATS`,
+ * `MARIACHI_LANDINGS`) e incluye el hub `/mariachis`, los 4 escalones, las 10
+ * sub-landings y la ficha del roster. Antes de esta integración, buscar
+ * "mariachi" devolvía 0 resultados del catálogo global (promesa sin URL, EP-3).
+ */
 export const GLOBAL_SEARCH_INDEX: SearchIndexItem[] = [
+  ...MARIACHI_SEARCH_INDEX,
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   // 1. SERVICIOS & BODAS
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
