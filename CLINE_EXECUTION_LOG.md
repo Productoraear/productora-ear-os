@@ -5040,3 +5040,89 @@ npm run verify:w56       → 22/22 PASS · 1 SIN_EVIDENCIA · Exit 0
 **estado_bloque:** VERIFICADO (22/22 PASS, Exit 0) · **hueco declarado:** DB-01
 SIN_EVIDENCIA (PostgreSQL efímero no arrancable en esta estación Windows; verificado en
 cambio el camino de degradación honesta).
+
+---
+
+## 2026-11-12 · SANEAMIENTO DE SIMULADOR, ENRUTAMIENTO COMERCIAL Y NUEVOS PARÁMETROS EDWIN AGUDELO
+
+```
+SIGMA://CLOSE/v1
+task_id        : DIRECTIVA_CEO_SIMULADOR_TARIFAS_AFILIADOS
+estado_bloque  : VERIFICADO
+hecho          : Motor tarifario nuevo src/lib/pricing/solista-pricing.ts:1-270 (550 EUR / 100 km incluidos /
+                 suelo 350 EUR con cupon / reserva 50%), aislamiento de catalogo
+                 SovereignCollectiveEventBuilder.tsx:42-82, endpoint 1,00 EUR
+                 src/app/api/quote/smoke-test-lock/route.ts:1-189, validador de cupon
+                 src/app/api/quote/validate-coupon/route.ts:1-120, SSOT re-sellado
+                 ear-os-ssot.ts:22-51 con centinela ssotIntegrityGuard.ts:144-155.
+evidence[]     : { id: TYPECHECK,        cmd: "tsc --noEmit --pretty false",           exit: 0 }
+                 { id: LINT,             cmd: "eslint src/ via 17 gates",              exit: 0 }
+                 { id: VERIFY_SOLISTA,   cmd: "npm run verify:solista-pricing",        exit: 0, 34 PASS / 0 FAIL }
+                 { id: VERIFY_ISOLATION, cmd: "npm run verify:catalog-isolation",      exit: 0, 15 PASS / 0 FAIL }
+                 { id: AUDIT_SSOT,       cmd: "npm run audit:ssot",                    exit: 0, hash cefa76c2 coincide }
+                 { id: GATES_17,         cmd: "node scripts/run_sv_protocol_15_gates.cjs", exit: 0, 17/17 }
+                 { id: OMEGA_ROJO,       cmd: "npm run audit:omega-rojo",              exit: 0, 20/20 VERDE }
+                 { id: PRICE_LOCK_FLOW,  cmd: "npm run verify:price-lock-flow",        exit: 0, ALL_PASS }
+                 { id: SIM_EVENT,        cmd: "npm run sim:event",                     exit: 0, 0 failures }
+                 { id: AUDIT_PHONE,      cmd: "npm run audit:phone",                   exit: 0, 0 violations }
+                 { id: AUDIT_CLS,        cmd: "node scripts/audit_cls_budget.cjs",     exit: 0, 0 violations }
+                 { id: AUDIT_CTA_MATRIX, cmd: "npm run audit:cta-matrix",              exit: 0, PASS }
+omega_diamante : { score: "20/20", verdict: "VERDE", pendientes: [] }
+gates          : { G0..G8: PASS }
+```
+
+
+### Gates ejecutados en esta sesión
+
+| Gate | Comando | Exit | Resultado |
+|---|---|---|---|
+| G-1 | `tsc --noEmit --pretty false` | 0 | 0 errores |
+| G-2 | `eslint` (ficheros tocados) | 0 | 0 errores, 0 warnings |
+| G-3 | `node scripts/run_sv_protocol_15_gates.cjs` | 0 | **17/17** |
+| G-4 | `npm run audit:ssot` | 0 | hash `cefa76c2…` coincide |
+| G-5 | `npm run sim:event` | 0 | 0 failures |
+| G-6 | `npm run audit:omega-rojo` | 0 | **20/20 VERDE** |
+| G-7 | `node scripts/audit_cls_budget.cjs` | 0 | 0 violations |
+| G-8 | Premortem 5 preguntas | — | registrado abajo |
+
+### Evidencia propia (scripts nuevos)
+
+| Comando | Exit | Resultado |
+|---|---|---|
+| `npm run verify:solista-pricing` | 0 | **34 PASS / 0 FAIL** |
+| `npm run verify:catalog-isolation` | 0 | **15 PASS / 0 FAIL** |
+| `npm run verify:price-lock-flow` | 0 | ALL_PASS |
+| `npm run audit:phone` | 0 | 0 violations (637 ficheros) |
+| `npm run audit:cta-matrix` | 0 | VEREDICTO: PASS |
+
+
+### Premortem (G-8)
+
+1. **Propósito original:** ¿Cumple el objetivo exacto? Sí. El simulador deja de precargar a Edwin fuera de
+   música (test 15/15 PASS), la tarifa pasa a 550 € con 100 km incluidos, el cupón de afiliado aplica el
+   suelo de 350 €, la reserva es el 50% y el resumen previo al pago declara concepto, kilometraje, cláusula
+   de cancelación, fuerza mayor, porcentaje de reserva y fecha límite de liquidación.
+2. **Datos y asunciones:** el SSOT se re-selló con `baseline_ssot_integrity.ts --seal` (procedimiento
+   autorizado, invariantes OK). Los 100 km y el 50% son cifras de la directiva. El padrón de afiliados es el
+   fichero real que escribe `/api/affiliates/register`. Asunción frágil: sin padrón el motor es fail-closed.
+3. **Alternativas descartadas:** (a) rebajar `TARIFA_BASE_SOLISTA_EUR` a 550 € — rechazado: rompe INV-01 y
+   el sello del centinela; se añadió `TARIFA_ESTANDAR_SOLISTA_EUR`. (b) sustituir el depósito de 100 € por el
+   50% en todo el repo — rechazado: rompe `verify_price_lock_flow` y la idempotencia Stripe certificada; se
+   añadió `RESERVA_BLOQUEO_PCT` como constante nueva. (c) leer el padrón en el cliente — rechazado: arrastra
+   `fs` a un `'use client'`.
+4. **Premortem y resiliencia:** un cupón inventado no descuenta (5 casos fail-closed probados); un doble clic
+   en «Confirmar Fianza» ya no reenvía (botón deshabilitado por `isConfirmed`); el smoke-test de 1,00 € se
+   aísla en el webhook ANTES de tocar el ledger para no contaminar el split 80/10/10 con una cifra sin valor.
+5. **Consecuencia aceptada:** el suelo de 350 € permanece como invariante del centinela y el precio de lista
+   vive en una constante nueva. Deuda declarada: `basePriceForFormat()` sigue devolviendo 350 € y varios copies
+   del repo aún citan esa cifra; se abordan en la siguiente tarea atómica.
+
+### Premortem de la directiva (respuesta explícita)
+
+- **Insumos:** `src/data/affiliates_registered.json` (padrón real, hoy inexistente ⇒ 0 cupones válidos).
+- **Riesgo abierto:** `audit:public-secrets` reporta 3 hallazgos **pre-existentes** en `.env.local`
+  (`NEXT_PUBLIC_TELEGRAM_ADMIN_ID`, `VITE_FIREBASE_API_KEY`, `VITE_GEMINI_API_KEY`). Ese fichero **no forma
+  parte del diff** de este commit y no se ha tocado. Requiere decisión del CEO, no de la IA ejecutora.
+- **Siguiente paso atómico:** cablear `afiliados` desde un Server Component en `/reservar/solista` para que
+  el cupón del afiliado se valide contra el padrón real en producción (hoy el motor es fail-closed).
+
