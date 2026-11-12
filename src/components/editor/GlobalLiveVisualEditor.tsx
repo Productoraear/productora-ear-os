@@ -725,11 +725,11 @@ export function GlobalLiveVisualEditor() {
         </div>
       )}
 
-      {/* 🎛️ PANEL PRINCIPAL DEL CONSTRUCTOR S-CLASS (DOCK FIJO INFERIOR DERECHO)
+      {/* 🎛️ PANEL PRINCIPAL DEL CONSTRUCTOR S-CLASS (DOCK FIJO INFERIOR IZQUIERDO)
           DOCTRINA SUPERFICIE ÚNICA: en móvil el borde inferior pertenece en exclusiva
-          al SovereignMobileHUD (z-80). Este dock de administración se sirve sólo en
-          escritorio para no solapar el dock táctil ni tapar los CTAs de reserva. */}
-      <div id="ear-global-builder-dock" className="hidden lg:block fixed bottom-6 right-6 z-[99999] font-sans">
+          al SovereignMobileHUD (z-80). En escritorio se ancla en `bottom-6 left-6`
+          para no solapar jamás el `OracleAmbientInterface` (`bottom-6 right-6`). */}
+      <div id="ear-global-builder-dock" className="hidden lg:block fixed bottom-6 left-6 z-[99999] font-sans">
         <div className="bg-[#08080c]/95 border-2 border-[#ecb613]/70 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.9)] backdrop-blur-2xl text-white p-3 flex flex-col gap-2.5 max-w-sm transition-all duration-300">
 
           {/* CABECERA */}

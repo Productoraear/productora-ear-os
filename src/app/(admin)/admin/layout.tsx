@@ -45,7 +45,7 @@ const SPLIT_LABEL = [
 ].join('/');
 
 const KPI_METRICS: AdminMetric[] = [
-  staticMetric('tarifa-solista', 'Tarifa Base Solista', TARIFA_BASE_SOLISTA_EUR, 'SSOT · ear-os-ssot.ts', '€'),
+  staticMetric('tarifa-solista', 'Tarifa Solista (Exclusiva Edwin)', TARIFA_BASE_SOLISTA_EUR, 'SSOT · Hub Méntrida', '€'),
   staticMetric('deposito-price-lock', 'Depósito Price-Lock', DEPOSITO_STRIPE_EUR, 'SSOT · ear-os-ssot.ts', '€'),
   staticMetric('techo-b2g', 'Techo B2G · Art. 118 LCSP', AJUSTE_PREVENTIVO_B2G_EUR, 'SSOT · ear-os-ssot.ts', '€'),
   staticMetric('split-soberano', 'Split Soberano', 100, 'SSOT · ear-os-ssot.ts', '', undefined, SPLIT_LABEL),
@@ -281,10 +281,10 @@ export default function CatminAdminMasterLayout({ children }: { children: React.
           />
         )}
 
-        {/* SIDEBAR CATMÍN RESPONSIVE */}
+        {/* SIDEBAR CATMÍN RESPONSIVE (Oculto en escritorio cuando está colapsado para evitar doble menú junto al Top Ribbon) */}
         <aside
           className={`fixed lg:sticky top-28 h-[calc(100vh-7rem)] bg-[#050508] border-r border-[#1a1a24] z-40 transition-all duration-300 flex flex-col justify-between overflow-hidden ${mobileOpen ? 'left-0 w-72 shadow-2xl' : '-left-72 lg:left-0'
-            } ${collapsed ? 'lg:w-16' : 'lg:w-64'}`}
+            } ${collapsed ? 'lg:hidden' : 'lg:w-64'}`}
         >
           {/* Header del Sidebar con Marca */}
           <div className="p-3 border-b border-[#1a1a24] flex items-center justify-between">

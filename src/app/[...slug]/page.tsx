@@ -382,9 +382,12 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
     );
   }
 
-  // 5.B. RUTAS DIRECTAS ULTRA-AMIGABLES POR INTENCIÓN DE BÚSQUEDA PURA
+  // 5.B. RUTAS DIRECTAS ULTRA-AMIGABLES POR INTENCIÓN DE BÚSQUEDA PURA (PACIENTE CERO EDWIN AGUDELO & ARSENAL)
   const directFriendlyPrefixes = new Set([
     'mariachis', 'mariachi', 'serenatas', 'serenata',
+    'edwin-agudelo', 'cantante-solista', 'mariachis-cumpleanos', 'mariachis-bodas',
+    'cumpleanos', 'dia-de-la-madre', 'dia-del-padre', 'dia-del-abuelo', 'dia-de-la-mujer',
+    'bodas-de-oro', 'bodas-de-plata', 'pedida-de-mano', 'aniversarios', 'fiestas-patronales',
     'alquiler-pantalla-led', 'pantallas-led', 'pantalla-led',
     'alquiler-tv-monitor-led-madrid', 'alquilar-equipos-de-sonido-en-madrid',
     'alquiler-iluminacion-eventos', 'alquiler-camaras-profesionales',

@@ -288,7 +288,7 @@ export default function AdminMailerfindProspectingPage() {
             disabled={loading}
             className="px-3 py-1.5 bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 text-black font-mono font-black text-xs rounded-xl shadow-md flex items-center gap-1.5 transition-all cursor-pointer"
           >
-            <span>🌐 UNIVERSO COMPLETO</span>
+            <span>UNIVERSO COMPLETO</span>
           </button>
 
           <button
@@ -300,7 +300,7 @@ export default function AdminMailerfindProspectingPage() {
             disabled={loading}
             className="px-2.5 py-1.5 bg-neutral-800 hover:bg-neutral-700 text-neutral-200 font-mono text-xs rounded-xl border border-neutral-700 flex items-center gap-1 transition-all"
           >
-            <span>🎺 Música &amp; Mariachis</span>
+            <span>Música &amp; Mariachis</span>
           </button>
 
           <button
@@ -312,7 +312,7 @@ export default function AdminMailerfindProspectingPage() {
             disabled={loading}
             className="px-2.5 py-1.5 bg-neutral-800 hover:bg-neutral-700 text-neutral-200 font-mono text-xs rounded-xl border border-neutral-700 flex items-center gap-1 transition-all"
           >
-            <span>🏰 Fincas</span>
+            <span>Fincas</span>
           </button>
 
           <button
@@ -324,7 +324,7 @@ export default function AdminMailerfindProspectingPage() {
             disabled={loading}
             className="px-2.5 py-1.5 bg-neutral-800 hover:bg-neutral-700 text-neutral-200 font-mono text-xs rounded-xl border border-neutral-700 flex items-center gap-1 transition-all"
           >
-            <span>🥘 Catering</span>
+            <span>Catering</span>
           </button>
 
           <button
@@ -336,7 +336,7 @@ export default function AdminMailerfindProspectingPage() {
             disabled={loading}
             className="px-2.5 py-1.5 bg-neutral-800 hover:bg-neutral-700 text-neutral-200 font-mono text-xs rounded-xl border border-neutral-700 flex items-center gap-1 transition-all"
           >
-            <span>⚡ Sonido &amp; Luces</span>
+            <span>Sonido &amp; Luces</span>
           </button>
 
           <button
@@ -348,7 +348,7 @@ export default function AdminMailerfindProspectingPage() {
             disabled={loading}
             className="px-2.5 py-1.5 bg-neutral-800 hover:bg-neutral-700 text-neutral-200 font-mono text-xs rounded-xl border border-neutral-700 flex items-center gap-1 transition-all"
           >
-            <span>📸 Fotografía</span>
+            <span>Fotografía</span>
           </button>
 
           <button
@@ -360,7 +360,7 @@ export default function AdminMailerfindProspectingPage() {
             disabled={loading}
             className="px-2.5 py-1.5 bg-neutral-800 hover:bg-neutral-700 text-neutral-200 font-mono text-xs rounded-xl border border-neutral-700 flex items-center gap-1 transition-all"
           >
-            <span>💍 Planners</span>
+            <span>Planners</span>
           </button>
 
           <button
@@ -372,7 +372,7 @@ export default function AdminMailerfindProspectingPage() {
             disabled={loading}
             className="px-2.5 py-1.5 bg-neutral-800 hover:bg-neutral-700 text-neutral-200 font-mono text-xs rounded-xl border border-neutral-700 flex items-center gap-1 transition-all"
           >
-            <span>🚌 Transporte</span>
+            <span>Transporte</span>
           </button>
         </div>
       </div>
@@ -406,21 +406,21 @@ export default function AdminMailerfindProspectingPage() {
             onChange={(e) => setNiche(e.target.value)}
             className="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-3 py-2 text-white outline-none focus:border-[#ecb613]"
           >
-            <option value="todos">🌐 TODOS LOS GREMIOS ({grandTotal > 0 ? grandTotal.toLocaleString('es-ES') : 'sin sonda'})</option>
+            <option value="todos">TODOS LOS GREMIOS ({grandTotal > 0 ? grandTotal.toLocaleString('es-ES') : 'sin sonda'})</option>
             {(gremios.length > 0
               ? gremios
               : [
-                { id: 'musica', label: '🎺 Mariachis & Música', total: 0 },
-                { id: 'finca', label: '🏰 Fincas & Espacios', total: 0 },
-                { id: 'catering', label: '🥘 Catering & Asados', total: 0 },
-                { id: 'sonido', label: '⚡ Sonido & Luces', total: 0 },
-                { id: 'foto', label: '📸 Fotografía & Cine', total: 0 },
-                { id: 'wedding', label: '💍 Wedding Planners', total: 0 },
-                { id: 'transporte', label: '🚌 Transporte & Coches', total: 0 },
-                { id: 'decoracion', label: '🌸 Decoración & Carpas', total: 0 },
-                { id: 'moda', label: '👔 Moda Nupcial & Trajes', total: 0 },
-                { id: 'servicios', label: '🎪 Animación & Auxiliares', total: 0 },
-                { id: 'senior_care', label: '🧠 Centros Senior VIMUME', total: 0 },
+                { id: 'musica', label: 'Mariachis & Música', total: 0 },
+                { id: 'finca', label: 'Fincas & Espacios', total: 0 },
+                { id: 'catering', label: 'Catering & Asados', total: 0 },
+                { id: 'sonido', label: 'Sonido & Luces', total: 0 },
+                { id: 'foto', label: 'Fotografía & Cine', total: 0 },
+                { id: 'wedding', label: 'Wedding Planners', total: 0 },
+                { id: 'transporte', label: 'Transporte & Coches', total: 0 },
+                { id: 'decoracion', label: 'Decoración & Carpas', total: 0 },
+                { id: 'moda', label: 'Moda Nupcial & Trajes', total: 0 },
+                { id: 'servicios', label: 'Animación & Auxiliares', total: 0 },
+                { id: 'senior_care', label: 'Centros Senior VIMUME', total: 0 },
               ]
             ).map((g) => (
               <option key={g.id} value={g.id}>
@@ -438,7 +438,7 @@ export default function AdminMailerfindProspectingPage() {
             onChange={(e) => setProvince(e.target.value)}
             className="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-3 py-2 text-white outline-none focus:border-[#ecb613]"
           >
-            <option value="todas">🌍 Todas las Provincias de España (52)</option>
+            <option value="todas">Todas las Provincias de España (52)</option>
             <option value="A Coruña">A Coruña</option>
             <option value="Álava">Álava</option>
             <option value="Albacete">Albacete</option>
@@ -652,17 +652,17 @@ export default function AdminMailerfindProspectingPage() {
                       <span className="font-bold text-white text-sm">{lead.name}</span>
                       {lead.phoneVerifiedType === 'DIRECT_VENDOR' && (
                         <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-950/80 text-emerald-400 border border-emerald-800/70">
-                          ✅ Verificado Directo
+                          Verificado Directo
                         </span>
                       )}
                       {lead.phoneVerifiedType === 'SOVEREIGN_CENTRALITA' && (
                         <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-950/80 text-[#ecb613] border border-amber-800/70">
-                          👑 Centralita Matriz EAR
+                          Centralita Matriz EAR
                         </span>
                       )}
                       {lead.phoneVerifiedType === 'MAPS_IDENTIFIED' && (
                         <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-sky-950/80 text-sky-400 border border-sky-800/70">
-                          📡 Ficha localizada · contacto sin acreditar
+                          Ficha localizada · contacto sin acreditar
                         </span>
                       )}
                     </div>

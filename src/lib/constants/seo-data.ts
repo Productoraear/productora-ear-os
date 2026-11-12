@@ -83,10 +83,19 @@ export const SERVICIOS = [
 ];
 
 export const OCASIONES = [
-  { slug: 'bodas', nombre: 'Bodas de Lujo', descripcion: 'Planificación y música para bodas premium.' },
-  { slug: 'corporativo', nombre: 'Eventos Corporativos', descripcion: 'Soluciones B2B para convenciones y galas.' },
-  { slug: 'ayuntamientos', nombre: 'Institucional B2G', descripcion: 'Protocolos para entidades públicas y festejos.' },
-  { slug: 'ferias', nombre: 'Ferias y Fiestas', descripcion: 'Gran formato para recintos feriales.' }
+  { slug: 'bodas', nombre: 'Bodas de Lujo', descripcion: 'Planificación y música en directo de Edwin Agudelo para bodas premium.' },
+  { slug: 'cumpleanos', nombre: 'Cumpleaños y Aniversarios', descripcion: 'Serenatas y conciertos exclusivos de Edwin Agudelo para cumpleaños y sorpresas familiares.' },
+  { slug: 'dia-de-la-madre', nombre: 'Día de la Madre', descripcion: 'Homenaje musical emotivo con Edwin Agudelo y mariachis en el Día de la Madre.' },
+  { slug: 'dia-del-padre', nombre: 'Día del Padre', descripcion: 'Repertorio clásico, boleros y rancheras con Edwin Agudelo para el Día del Padre.' },
+  { slug: 'dia-del-abuelo', nombre: 'Día de los Abuelos & VIMUME', descripcion: 'Música de la memoria y serenatas intergeneracionales con impacto social VIMUME.' },
+  { slug: 'dia-de-la-mujer', nombre: 'Día Internacional de la Mujer', descripcion: 'Recitales y galas institucionales con repertorio en positivo de Edwin Agudelo.' },
+  { slug: 'bodas-de-oro', nombre: 'Bodas de Oro (50 Años)', descripcion: 'Celebración solemne y emotiva para 50 aniversarios matrimoniales.' },
+  { slug: 'bodas-de-plata', nombre: 'Bodas de Plata (25 Años)', descripcion: 'Producción musical y serenata de gala para 25 aniversarios.' },
+  { slug: 'pedida-de-mano', nombre: 'Pedida de Mano & Sorpresas', descripcion: 'Formato íntimo solista o mariachi de gala para pedidas de mano inolvidables.' },
+  { slug: 'serenatas', nombre: 'Serenatas a Domicilio', descripcion: 'Serenatas reales con sonido Bose F1 autónomo desde el Hub Méntrida.' },
+  { slug: 'corporativo', nombre: 'Eventos Corporativos', descripcion: 'Soluciones B2B para convenciones, cenas de gala y entregas de premios.' },
+  { slug: 'ayuntamientos', nombre: 'Institucional B2G', descripcion: 'Protocolos LCSP Art. 118 para entidades públicas y festejos populares.' },
+  { slug: 'ferias', nombre: 'Ferias y Fiestas Patronales', descripcion: 'Gran formato musical y sonorización homologada Ley 37/2003 para recintos feriales.' }
 ];
 
 export const GUIAS = [
