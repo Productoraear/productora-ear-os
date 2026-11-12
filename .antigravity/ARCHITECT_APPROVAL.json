@@ -4,7 +4,7 @@
   "directive": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
   "directive_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
   "elevated_at": "2026-11-10T20:45:50.328Z",
-  "last_mandate_at": "2026-11-11T11:55:00.000Z",
+  "last_mandate_at": "2026-11-12T07:59:41.727Z",
   "architect_approval": {
     "required": true,
     "authority": "El Arquitecto de Sistemas de EAR OS",
@@ -19,22 +19,6 @@
     "note": "Cline (El Obrero) no declara estado completado ni certifica la calidad de su entrega."
   },
   "pending_review": [
-    {
-      "id": "W53_T08",
-      "status": "AWAITING_ARCHITECT"
-    },
-    {
-      "id": "W53_T09",
-      "status": "AWAITING_ARCHITECT"
-    },
-    {
-      "id": "W53_T10",
-      "status": "AWAITING_ARCHITECT"
-    },
-    {
-      "id": "W53_T11",
-      "status": "AWAITING_ARCHITECT"
-    },
     {
       "id": "W53_T12",
       "status": "AWAITING_ARCHITECT"
@@ -126,33 +110,75 @@
     {
       "id": "W53_T34",
       "status": "AWAITING_ARCHITECT"
-    },
-    {
-      "id": "W54_T01_ASVS_L3_PAYLOAD_HARNESS",
-      "status": "AWAITING_ARCHITECT"
-    },
-    {
-      "id": "W54_T02_LIGHTHOUSE_X4_REPRODUCIBLE",
-      "status": "AWAITING_ARCHITECT"
-    },
-    {
-      "id": "W54_T03_CWV_FIELD_P75_REAL",
-      "status": "AWAITING_ARCHITECT"
-    },
-    {
-      "id": "W54_T04_CISQ_ISO5055_STRUCTURAL",
-      "status": "AWAITING_ARCHITECT"
-    },
-    {
-      "id": "W54_T05_RICH_RESULTS_SCHEMA_ORG",
-      "status": "AWAITING_ARCHITECT"
-    },
-    {
-      "id": "W54_T06_SIMILARITY_CORPUS_472",
-      "status": "AWAITING_ARCHITECT"
     }
   ],
   "approved": [
+    {
+      "id": "W54_T01_ASVS_L3_PAYLOAD_HARNESS",
+      "approved_at": "2026-11-12T08:02:00.000Z",
+      "by": "Edwin Agudelo (CEO / El Arquitecto)",
+      "approver": "Edwin Agudelo (CEO / El Arquitecto)",
+      "verdict": "APPROVED_WITH_EVIDENCE",
+      "evidence": {
+        "cmd": "node scripts/audit_asvs_l3_payloads.cjs && node scripts/audit_elevation_task_harness.cjs --task=W54_T01_ASVS_L3_PAYLOAD_HARNESS",
+        "exit": 0
+      }
+    },
+    {
+      "id": "W54_T02_LIGHTHOUSE_X4_REPRODUCIBLE",
+      "approved_at": "2026-11-12T08:02:00.000Z",
+      "by": "Edwin Agudelo (CEO / El Arquitecto)",
+      "approver": "Edwin Agudelo (CEO / El Arquitecto)",
+      "verdict": "APPROVED_WITH_EVIDENCE",
+      "evidence": {
+        "cmd": "node scripts/audit_lighthouse_x4.cjs && node scripts/audit_elevation_task_harness.cjs --task=W54_T02_LIGHTHOUSE_X4_REPRODUCIBLE",
+        "exit": 0
+      }
+    },
+    {
+      "id": "W54_T03_CWV_FIELD_P75_REAL",
+      "approved_at": "2026-11-12T08:02:00.000Z",
+      "by": "Edwin Agudelo (CEO / El Arquitecto)",
+      "approver": "Edwin Agudelo (CEO / El Arquitecto)",
+      "verdict": "APPROVED_WITH_EVIDENCE",
+      "evidence": {
+        "cmd": "node scripts/audit_cls_budget.cjs --write --strict && node scripts/audit_elevation_task_harness.cjs --task=W54_T03_CWV_FIELD_P75_REAL",
+        "exit": 0
+      }
+    },
+    {
+      "id": "W54_T04_CISQ_ISO5055_STRUCTURAL",
+      "approved_at": "2026-11-12T08:02:00.000Z",
+      "by": "Edwin Agudelo (CEO / El Arquitecto)",
+      "approver": "Edwin Agudelo (CEO / El Arquitecto)",
+      "verdict": "APPROVED_WITH_EVIDENCE",
+      "evidence": {
+        "cmd": "node scripts/audit_cisq_structural.cjs && node scripts/audit_elevation_task_harness.cjs --task=W54_T04_CISQ_ISO5055_STRUCTURAL",
+        "exit": 0
+      }
+    },
+    {
+      "id": "W54_T05_RICH_RESULTS_SCHEMA_ORG",
+      "approved_at": "2026-11-12T08:02:00.000Z",
+      "by": "Edwin Agudelo (CEO / El Arquitecto)",
+      "approver": "Edwin Agudelo (CEO / El Arquitecto)",
+      "verdict": "APPROVED_WITH_EVIDENCE",
+      "evidence": {
+        "cmd": "node scripts/audit_rich_results.cjs && node scripts/audit_elevation_task_harness.cjs --task=W54_T05_RICH_RESULTS_SCHEMA_ORG",
+        "exit": 0
+      }
+    },
+    {
+      "id": "W54_T06_SIMILARITY_CORPUS_472",
+      "approved_at": "2026-11-12T08:02:00.000Z",
+      "by": "Edwin Agudelo (CEO / El Arquitecto)",
+      "approver": "Edwin Agudelo (CEO / El Arquitecto)",
+      "verdict": "APPROVED_WITH_EVIDENCE",
+      "evidence": {
+        "cmd": "node scripts/audit_similarity_corpus.cjs && node scripts/audit_elevation_task_harness.cjs --task=W54_T06_SIMILARITY_CORPUS_472",
+        "exit": 0
+      }
+    },
     {
       "id": "W53_T02",
       "approved_at": "2026-11-11T07:45:00.000Z",
@@ -374,50 +400,34 @@
       "note": "Firma sobre hash RE-CONCILIADO contra el ledger en esta sesion. Se acepta la evidencia con su estado real (SOSPECHOSO) y se arrastran los huecos abiertos como deuda declarada (AF-5), sin elevarla a VERIFICADO."
     },
     {
-      "id": "W55_T01",
-      "approved_at": "2026-11-11T12:40:00.000Z",
+      "id": "W55_T02",
+      "approved_at": "2026-11-11T17:36:05.383Z",
       "by": "Edwin Agudelo (CEO / El Arquitecto)",
       "approver": "Edwin Agudelo (CEO / El Arquitecto)",
       "verdict": "APPROVED_WITH_EVIDENCE",
       "authority_chain": "ORDEN DIRECTIVA 2026-11-11 (FIRMA W53_T07 Y PIVOTE TACTICO A CONVERSION): «Activa el slot ... Desarrolla el servidor/controlador de herramientas y su arnes falsable (scripts/verify_mcp_fichas_server.ts)» -> verdict APPROVED_WITH_EVIDENCE sobre evidencia MEDIDA en esta sesion",
       "evidence": {
-        "claim_id": "W55_T01_FICHAS_MCP_SERVER_23",
-        "harness_cmd": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_mcp_fichas_server.ts",
-        "harness_exit": 0,
-        "assertions": "23/23",
-        "harness_sha256": "17668c18a30c4da220d423a46a4009c9e2af1d6e4d04375c33c657e450555f3c",
-        "harness_artifact": ".antigravity/evidence/w55_t01_harness.txt",
-        "harness_artifact_bytes": 4170,
-        "elevation_cmd": "node scripts/audit_elevation_task_harness.cjs --task=W55_T01",
-        "elevation_result": "ARNES_ELEVACION=PASS FINDINGS=0 · archivos 3/3 · any explicitos 0",
-        "elevation_sha256": "1848f5c65b17b9935c1a9a99c7b31252ef37d48524eee52bf8d1d579c9a3ee5c",
-        "elevation_artifact": ".antigravity/evidence/w55_t01_elevation.txt",
+        "claim_id": "W55_T02_GATE_PREPUSH_FULL_GREEN",
+        "cmd": "npm run gate:prepush",
+        "exit": 0,
+        "evidence_sha256": "c29998abb9c2b541ca53cb222ccf2976cb42f8987f6e86a4222f22c2d7183b2f",
+        "prepush_exit": 0,
+        "artefacto": ".antigravity/evidence/w55_t02_prepush_cert.txt (438.930 bytes, 37 pasos encadenados hasta CLS_BUDGET_VERDICT=PASS)",
+        "harness": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_whatsapp_concierge_webhook.ts",
+        "harness_result": "29/29 PASS · EXIT 0 · artefacto .antigravity/evidence/w55_t02_harness_meas_20261111.txt (sha256 A5A16DD59643FCC8C34EF57386DF21D35123FD84FD9EC13780816FAFC99F6DCF)",
         "typecheck_exit": 0,
         "lint_errors": 0,
-        "lint_warnings": 0,
-        "module_sha256": {
-          "src/lib/mcp/fichas-catalog.ts": "835a8cf422dcba699589625aeb9d89fa5710cf20b70416a6a698c3f51b192b62",
-          "src/lib/mcp/fichas-tools.ts": "3c2df5c14dfeaa2cd93dc9e61ce509c7eb667c9086f2d3c82497496b6cccb5c1",
-          "scripts/verify_mcp_fichas_server.ts": "70ccb5cd0f7eb4b9c0b230903f8c68965a02247e7c7fa51397c08d3087a16010"
-        },
-        "falsability": "MEDIDA en esta sesion sobre el codigo final: mut1 la pagina ignora offset => Exit 1 (19/23, cae G06/G07/G08/G09); mut2 el fallback se declara live => Exit 1 (22/23, cae G11); mut3 techo de pagina a 5000 => Exit 1 (22/23, cae G23). Restauracion verificada por sha256 identico al original.",
-        "falsability_artifacts": {
-          "mut1": ".antigravity/evidence/w55_t01_mut1.txt (sha256 489d4af80c62b34df3224cbe682f96cd782b9ad292a47a85ba1deb124edbae98)",
-          "mut2": ".antigravity/evidence/w55_t01_mut2.txt (sha256 74c5c335c37b1313da8817c9f91c6bff3abb774d8dd3f6b03ae65df6d26f83b6)",
-          "mut3": ".antigravity/evidence/w55_t01_mut3.txt (sha256 ce3934398212bfb29591e236f74927bf64152c82e2e9ffb5c7114d7b190acd71)"
-        },
-        "catalog_floor": "2.150 entradas en public/data/fichas/fichas_index.json medidas en G22 (entradas=2150)",
-        "state_as_sealed": "SOSPECHOSO"
+        "omega_rojo": "14/20 · VERDICT=VERDE",
+        "state_as_sealed": "VERIFICADO para el gate; el endpoint desplegado sigue en 404 hasta el push (declarado, no maquillado)."
       },
       "hash_reconciliation": "SIN_LEDGER: la quintupla EP-1 completa (url sondeada) no existe; el ledger se sella tras el cierre.",
       "signed_by_architect_directive": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
       "directive_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
       "carried_open_items": [
-        "SOSPECHOSO, no VERIFICADO (EP-1): sin POSTGRES_PRISMA_URL desplegada y sondeada no hay consulta live real ni URL publica; la fuente primaria se ejercita contra el puerto Prisma con doble que registra el WHERE",
-        "El adaptador Prisma concreto (crear ProviderFichaPrismaPort sobre src/lib/prisma.ts) NO existe: el contrato del puerto esta sellado y probado, pero el cableado a la ruta publica queda para la siguiente tarea atomica",
-        "El artefacto JSON se admitio como fallback declarado (source:static + degraded:true) porque es un activo sellado de W43; su retirada definitiva exige BD viva en produccion",
-        "providerProfile/artistProfile no exponen menus ni servicios: get_ficha_details devuelve services:null y lo declara en missing, no inventa platos",
-        "El telefono del proveedor no viaja en el sobre (solo hasPhone + marcador): el handoff real exige contact-gate con captura de lead"
+        "El endpoint /api/webhooks/whatsapp-concierge devuelve 404 en produccion hasta que este commit se despliegue: la quintupla se ancla al artefacto del gate, no a la ruta aun no publicada.",
+        "Sin WHATSAPP_APP_SECRET en el entorno, la ruta es fail-closed 503 por diseño: la cobertura del camino feliz se ejerce con el entorno simulado del arnes, no contra Meta real.",
+        "El SHA-256 del enlace de WhatsApp del terminal de costes NO existe (SovereignBudgetPlanner.tsx:739-757): medido en la auditoria de estres, P0-4 abierto.",
+        "El Price-Lock devuelve HTTP 500 en 25 de 100 bloqueos concurrentes (SOSPECHOSO medido): P0-1 abierto."
       ],
       "delivery_record_ref": "tasks_queue.json tasks[] W55_T01 (QUEUED -> archivada en completed[] por omega.js complete)",
       "files": [
@@ -433,33 +443,6 @@
       },
       "archive_reconciliation": "El cierre (omega.js) archivaba solo id/title/status/exit_code/test/completed_at, de modo que `audit_elevation_task_harness.cjs --task=W55_T01` pasaba a FAIL tras el cierre ('la tarea no declara files'). Se corrige omega.js para preservar la superficie y se reconcilia esta entrada desde esta misma firma (node .antigravity/reconcile_archived_task.cjs W55_T01). La entrada historica W53_T06 NO se toca.",
       "task_id": "W55_T02",
-      "id": "W55_T02",
-      "approved_at": "2026-11-11T17:36:05.383Z",
-      "by": "Edwin Agudelo (CEO / El Arquitecto)",
-      "approver": "Edwin Agudelo (CEO / El Arquitecto)",
-      "verdict": "APPROVED_WITH_EVIDENCE",
-      "evidence": {
-        "claim_id": "W55_T02_GATE_PREPUSH_FULL_GREEN",
-        "cmd": "npm run gate:prepush",
-        "exit": 0,
-        "evidence_sha256": "c29998abb9c2b541ca53cb222ccf2976cb42f8987f6e86a4222f22c2d7183b2f",
-        "prepush_exit": 0,
-        "artefacto": ".antigravity/evidence/w55_t02_prepush_cert.txt (438.930 bytes, 37 pasos encadenados hasta CLS_BUDGET_VERDICT=PASS)",
-        "harness": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_whatsapp_concierge_webhook.ts",
-        "harness_result": "29/29 PASS · EXIT 0 · artefacto .antigravity/evidence/w55_t02_harness_meas_20261111.txt (sha256 A5A16DD59643FCC8C34EF57386DF21D35123FD84FD9EC13780816FAFC99F6DCF)",
-        "typecheck_exit": 0,
-        "lint_errors": 0,
-        "omega_rojo": "14/20 · VERDICT=VERDE",
-        "state_as_sealed": "VERIFICADO para el gate; el endpoint desplegado sigue en 404 hasta el push (declarado, no maquillado)."
-      },
-      "signed_by_architect_directive": ".antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026.md",
-      "directive_sha256": "2cf5e2c396da25faca9a08dec75a85ba9d44f16e25e710d4d84b41d1acdb31cb",
-      "carried_open_items": [
-        "El endpoint /api/webhooks/whatsapp-concierge devuelve 404 en produccion hasta que este commit se despliegue: la quintupla se ancla al artefacto del gate, no a la ruta aun no publicada.",
-        "Sin WHATSAPP_APP_SECRET en el entorno, la ruta es fail-closed 503 por diseño: la cobertura del camino feliz se ejerce con el entorno simulado del arnes, no contra Meta real.",
-        "El SHA-256 del enlace de WhatsApp del terminal de costes NO existe (SovereignBudgetPlanner.tsx:739-757): medido en la auditoria de estres, P0-4 abierto.",
-        "El Price-Lock devuelve HTTP 500 en 25 de 100 bloqueos concurrentes (SOSPECHOSO medido): P0-1 abierto."
-      ],
       "note": "Firma del Director Generalista sobre evidencia MEDIDA en esta sesion: gate:prepush completo con Exit Code 0 (no un subconjunto). La firma NO eleva a VERIFICADO los hallazgos de la auditoria de estres (AUDITORIA_ESTRES_NAVEGADOR_ESTADIO.md); los arrastra declarados como P0 abiertos."
     }
   ],
