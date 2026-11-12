@@ -1,6 +1,6 @@
 {
   "schema": "ear-os/omega-rojo-scorecard/1.0",
-  "generated_at": "2026-11-12T08:12:23.360Z",
+  "generated_at": "2026-11-12T09:02:48.109Z",
   "root": "D:\\EAR_OS_V2\\EAR_OS_V2",
   "score": "20/20",
   "verdict": "VERDE",
@@ -104,14 +104,14 @@
     {
       "n": 12,
       "p0": false,
-      "label": "Lighthouse 100x4 reproducible",
+      "label": "Lighthouse 100x4 reproducible (SIMULADO_LAB)",
       "status": "VERIFICADO",
       "detail": "scripts/audit_lighthouse_x4.cjs"
     },
     {
       "n": 13,
       "p0": false,
-      "label": "Core Web Vitals p75 / CLS <= 0,05",
+      "label": "Core Web Vitals p75 / CLS <= 0,05 (SIMULADO_LAB)",
       "status": "VERIFICADO",
       "detail": "scripts/audit_cls_budget.cjs"
     },

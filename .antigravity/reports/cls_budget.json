@@ -1,18 +1,52 @@
 {
   "probed": false,
   "source": "static",
-  "mode": "SIMULADO",
+  "mode": "SIMULADO_LAB",
   "estimatedCls": null,
-  "disclaimer": "Presupuesto estático de layout-shift; el CLS p75 real exige RUM/CrUX con datos de campo.",
+  "disclaimer": "Presupuesto estático de layout-shift (SIMULADO_LAB); el CLS p75 real de campo exige sonda RUM sobre PostgreSQL.",
   "rulesCount": 8,
   "totalViolations": 0,
-  "checkedAt": "2026-11-05T09:10:09.593Z",
+  "checkedAt": "2026-11-12T09:02:47.126Z",
   "routes": [
     {
       "route": "/experiencia",
       "filesChecked": [
         "src/app/experiencia/page.tsx",
         "src/components/portal/OmniChannelHub360.tsx"
+      ],
+      "violationsCount": 0,
+      "violations": [],
+      "budget": 0.05,
+      "verdict": "PASS"
+    },
+    {
+      "route": "/seating-planner",
+      "filesChecked": [
+        "src/app/(public)/seating-planner/page.tsx",
+        "src/components/seating/SeatingPlanner.tsx",
+        "src/components/seating/SeatingBoard.tsx"
+      ],
+      "violationsCount": 0,
+      "violations": [],
+      "budget": 0.05,
+      "verdict": "PASS"
+    },
+    {
+      "route": "/",
+      "filesChecked": [
+        "src/app/page.tsx",
+        "src/components/sclass/PrismaDiamondHero3D.tsx",
+        "src/components/home/SovereignHomeHeroNodes.tsx"
+      ],
+      "violationsCount": 0,
+      "violations": [],
+      "budget": 0.05,
+      "verdict": "PASS"
+    },
+    {
+      "route": "/reservar/solista",
+      "filesChecked": [
+        "src/app/reservar/solista/page.tsx"
       ],
       "violationsCount": 0,
       "violations": [],

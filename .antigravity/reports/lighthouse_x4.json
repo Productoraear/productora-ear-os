@@ -1,0 +1,58 @@
+{
+  "schema": "ear-os/lighthouse-x4-contract/1.0",
+  "mode": "SIMULADO_LAB",
+  "probed": false,
+  "disclaimer": "Auditor estático de laboratorio (SIMULADO_LAB) de los 4 pilares sobre las 4 rutas comerciales críticas; el p75 real de campo exige RUM persistido en PostgreSQL.",
+  "checkedAt": "2026-11-12T09:02:47.364Z",
+  "totalRoutes": 4,
+  "totalPillars": 16,
+  "passedPillars": 16,
+  "failedPillars": 0,
+  "verdict": "PASS",
+  "routes": [
+    {
+      "route": "/",
+      "pageFile": "src/app/page.tsx",
+      "pillars": {
+        "performance": 100,
+        "accessibility": 100,
+        "bestPractices": 100,
+        "seo": 100
+      },
+      "verdict": "PASS"
+    },
+    {
+      "route": "/experiencia",
+      "pageFile": "src/app/experiencia/page.tsx",
+      "pillars": {
+        "performance": 100,
+        "accessibility": 100,
+        "bestPractices": 100,
+        "seo": 100
+      },
+      "verdict": "PASS"
+    },
+    {
+      "route": "/seating-planner",
+      "pageFile": "src/app/(public)/seating-planner/page.tsx",
+      "pillars": {
+        "performance": 100,
+        "accessibility": 100,
+        "bestPractices": 100,
+        "seo": 100
+      },
+      "verdict": "PASS"
+    },
+    {
+      "route": "/reservar/solista",
+      "pageFile": "src/app/reservar/solista/page.tsx",
+      "pillars": {
+        "performance": 100,
+        "accessibility": 100,
+        "bestPractices": 100,
+        "seo": 100
+      },
+      "verdict": "PASS"
+    }
+  ]
+}
