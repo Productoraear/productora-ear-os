@@ -1176,4 +1176,56 @@ p {
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.9), 0 0 35px rgba(236, 182, 19, 0.16);
 }
 
+/* ═══════════════════════════════════════════════════════════════════════
+   🖨️ HOJA A4 DEL SEATING PLANNER (Ley de impresión limpia)
+   ───────────────────────────────────────────────────────────────────────
+   El botón "Descargar plano / tarjetas de sitio" abre el diálogo nativo de
+   impresión. En pantalla la hoja está oculta (`hidden print:block`); aquí se
+   define el TAMAÑO de papel y el color de fondo, porque un plano OLED en A4
+   saldría como un rectángulo de tóner negro ilegible.
+
+   `print-color-adjust: exact` fuerza al navegador a respetar el blanco de la
+   hoja (evita el "modo ahorro de tinta" que invertiría las mesas a negro).
+   ═══════════════════════════════════════════════════════════════════════ */
+@page {
+  size: A4 portrait;
+  margin: 12mm;
+}
+
+@media print {
+  html,
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  /* La hoja del plano es lo único que debe llegar al papel. */
+  .seating-print-sheet,
+  .seating-print-sheet * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* El tablero interactivo, la toolbar y el panel de invitados nunca imprimen. */
+  [data-testid='seating-board'] {
+    display: none !important;
+  }
+
+  /* Evitar que una tabla de mesas se corte entre dos páginas. */
+  .seating-print-sheet table {
+    page-break-inside: auto;
+  }
+
+  .seating-print-sheet tr {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .seating-print-sheet h1,
+  .seating-print-sheet h2 {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+}
+
 

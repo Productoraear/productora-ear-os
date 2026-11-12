@@ -1,53 +1,62 @@
-﻿'use client';
+'use client';
 
 /**
  * ════════════════════════════════════════════════════════════════════════════
- * SEATING PLANNER PRO — ORGANIZADOR DE MESAS TRANSACCIONAL (LEAD MAGNET)
+ * SEATING PLANNER PRO — ORQUESTADOR DEL LEAD MAGNET (T1)
  * ════════════════════════════════════════════════════════════════════════════
- * Skill rectora: `.antigravity/skills/marketing-leadmagnet-seating.md` (T1).
+ * Skill rectora: `.antigravity/skills/marketing-leadmagnet-seating.md`.
  * Resolución CEO 2026-11-11: HÍBRIDO SIN BD → `localStorage` + hash `#plan=`.
  *
- * Lo que hace de verdad (y lo que NO):
- *   · Crea mesas (redonda / rectangular / presidencial) y las MUEVE arrastrando.
- *   · Valida el aforo contra `?pax=` y el aforo declarado del espacio.
- *   · Autoguarda en `localStorage` y genera un enlace compartible por hash.
- *   · Exporta: imprimir (CSS `@media print`) y descargar `.svg`.
- *   · NO cotiza: aquí no hay ni un importe de servicio. Las dos cifras de dinero
- *     que aparecen (valor de catálogo y depósito) llegan del SSOT por props.
+ * Este componente NO calcula nada: es el pegamento entre el estado y el motor
+ * puro `src/lib/seating/seating-plan.ts`. Toda mutación pasa por una función
+ * del motor, así que la UI no puede inventarse un plano que el motor no valide.
  *
- * Anti-fachada (AF-1): si `localStorage` no está disponible (modo privado de
- * algunos navegadores), la UI lo declara y sigue en memoria. No se simula
- * "guardado en la nube": la nube se ofrece como acción comercial explícita.
+ * Piezas:
+ *   · SeatingHeaderActions — las DOS acciones de cabecera (descarga / bloqueo).
+ *   · Toolbar de alta       — mesas por tipología y zonas de evento.
+ *   · SeatingBoard          — lienzo interactivo (drag + snap + sillas).
+ *   · SeatToolbar           — rotación, escala, plazas y etiqueta del elemento.
+ *   · SeatingGuestPanel     — lista retráctil con etiquetas y RSVP en vivo.
+ *   · SeatingPrintSheet     — hoja A4 (plano + lista alfabética), sólo al imprimir.
+ *
+ * Anti-fachada (AF-1): si `localStorage` no está disponible, la UI lo declara y
+ * sigue en memoria. No se simula "guardado en la nube".
  * ════════════════════════════════════════════════════════════════════════════
  */
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { AlertTriangle, Check, CircleDot, Copy, Link2, Plus, RotateCcw, Users } from 'lucide-react';
 import {
-  AlertTriangle,
-  Check,
-  Download,
-  Link2,
-  Lock,
-  Plus,
-  Printer,
-  RotateCcw,
-  Users,
-} from 'lucide-react';
-import {
-  TABLE_METRICS,
+  FIXTURE_KINDS,
+  FIXTURE_SPEC,
+  addFixture,
+  addGuest,
+  addTable,
+  autoSeatGuests,
   buildDefaultPlan,
-  seatCapacity,
-  totalSeats,
+  moveElement,
+  nudgeTableSeats,
+  removeFixture,
+  removeGuest,
+  removeTable,
+  renameTable,
+  rotateElement,
+  scaleElement,
+  seatGuest,
+  setTableShape,
+  tallyGuests,
+  unseatGuest,
+  updateGuest,
   validatePlan,
+  type FixtureKind,
+  type GuestTag,
   type SeatingPlan,
   type SeatingTable,
   type TableShape,
 } from '@/lib/seating/seating-plan';
 import {
   STORAGE_KEY,
-  buildBudgetHrefWithPlan,
+  LEGACY_STORAGE_KEY,
   buildShareUrl,
   decodePlan,
   encodePlan,
@@ -55,6 +64,10 @@ import {
 } from '@/lib/seating/seating-codec';
 
 import SeatingBoard from './SeatingBoard';
+import SeatingGuestPanel from './SeatingGuestPanel';
+import SeatingHeaderActions from './SeatingHeaderActions';
+import SeatingPrintSheet from './SeatingPrintSheet';
+import SeatToolbar, { type SelectionDescriptor } from './SeatToolbar';
 
 export interface SeatingPlannerProps {
   /** Aforo pre-rellenado desde el presupuesto sellado (`?pax=`). */
@@ -65,7 +78,7 @@ export interface SeatingPlannerProps {
   readonly initialShape: TableShape;
   /** Nombre del evento: tipo de celebración, nunca dato personal (INV-14). */
   readonly initialEventName: string;
-  /** Valor de catálogo de la herramienta, formateado desde el SSOT. */
+  /** Valor de catálogo de la herramienta, formateado desde la ruta. */
   readonly catalogValueEur: string;
   /** Depósito canónico del SSOT, formateado. */
   readonly depositEur: string;
@@ -79,10 +92,44 @@ const SHAPE_LABEL: Readonly<Record<TableShape, string>> = Object.freeze({
   presidential: 'Presidencial',
 });
 
-const METERS_TO_PX = 46;
-const PADDING_M = 1.2;
-/** Techo de seguridad por mesa en la UI (el motor admite hasta 24). */
-const MAX_SEATS_SOFT_LIMIT = 24;
+const SHAPE_HINT: Readonly<Record<TableShape, string>> = Object.freeze({
+  round: 'Banquete clásico, conversación cerrada',
+  rectangular: 'Mesas largas de amigos y primos',
+  presidential: 'Novios y familia directa, cara al salón',
+});
+
+/**
+ * Hidratación: enlace compartido (`#plan=`) manda; si no, autoguardado; si no,
+ * migración desde la clave v1. Devuelve el plano y el aviso que la UI declara.
+ */
+function hydrateFromBrowser(fallback: SeatingPlan): { plan: SeatingPlan; notice: string | null } {
+  try {
+    const token = readTokenFromHash(window.location.hash);
+    if (token !== null) {
+      return { plan: decodePlan(token), notice: 'Plano cargado desde el enlace compartido.' };
+    }
+  } catch {
+    return { plan: fallback, notice: 'El enlace traía un plano ilegible: se ha abierto el plano base.' };
+  }
+
+  try {
+    const stored = window.localStorage.getItem(STORAGE_KEY);
+    if (stored !== null) {
+      return { plan: decodePlan(stored), notice: 'Plano restaurado de este navegador.' };
+    }
+    // Migración silenciosa desde v1: el cliente conserva su trabajo anterior.
+    const legacy = window.localStorage.getItem(LEGACY_STORAGE_KEY);
+    if (legacy !== null) {
+      const migrated = decodePlan(legacy);
+      window.localStorage.removeItem(LEGACY_STORAGE_KEY);
+      return { plan: migrated, notice: 'Plano restaurado y actualizado al nuevo formato.' };
+    }
+  } catch {
+    return { plan: fallback, notice: null };
+  }
+
+  return { plan: fallback, notice: null };
+}
 
 export default function SeatingPlanner({
   initialPax,
@@ -93,7 +140,6 @@ export default function SeatingPlanner({
   depositEur,
   phoneE164,
 }: SeatingPlannerProps) {
-  const router = useRouter();
   const [plan, setPlan] = useState<SeatingPlan>(() =>
     buildDefaultPlan({
       pax: initialPax,
@@ -102,34 +148,19 @@ export default function SeatingPlanner({
       shape: initialShape,
     }),
   );
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [guestPanelOpen, setGuestPanelOpen] = useState(true);
   const [storageState, setStorageState] = useState<'pending' | 'saved' | 'unavailable'>('pending');
   const [shareState, setShareState] = useState<'idle' | 'copied' | 'error'>('idle');
   const [hydrateNotice, setHydrateNotice] = useState<string | null>(null);
-  /** Estado del botón principal: confirma el bloqueo mientras navega. */
-  const [lockState, setLockState] = useState<'idle' | 'blocked'>('idle');
 
-
-  // Hidratación: primero el enlace compartido (manda), después el autoguardado.
+  // Hidratación en el cliente: el SSR no puede leer el hash ni localStorage.
   useEffect(() => {
-    try {
-      const token = readTokenFromHash(window.location.hash);
-      if (token !== null) {
-        setPlan(decodePlan(token));
-        setHydrateNotice('Plano cargado desde el enlace compartido.');
-        return;
-      }
-    } catch {
-      setHydrateNotice('El enlace traía un plano ilegible: se ha abierto el plano base.');
-    }
-
-    try {
-      const stored = window.localStorage.getItem(STORAGE_KEY);
-      if (stored === null) return;
-      setPlan(decodePlan(stored));
-      setHydrateNotice('Plano restaurado de este navegador.');
-    } catch {
-      setStorageState('unavailable');
-    }
+    const hydrated = hydrateFromBrowser(plan);
+    setPlan(hydrated.plan);
+    if (hydrated.notice !== null) setHydrateNotice(hydrated.notice);
+    // Se ejecuta UNA vez: `plan` es sólo el respaldo inicial.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Autoguardado: cada cambio se persiste sin tocar la red.
@@ -143,59 +174,149 @@ export default function SeatingPlanner({
   }, [plan]);
 
   const validation = useMemo(() => validatePlan(plan), [plan]);
-  const seats = useMemo(() => totalSeats(plan), [plan]);
+  const tally = useMemo(() => tallyGuests(plan), [plan]);
 
-  const updatePlan = useCallback((mutate: (current: SeatingPlan) => SeatingPlan) => {
+  /** Aplica una función PURA del motor al plano actual. */
+  const apply = useCallback((mutate: (current: SeatingPlan) => SeatingPlan) => {
     setPlan((current) => mutate(current));
   }, []);
 
-  const addTable = useCallback(
-    (shape: TableShape) => {
-      updatePlan((current) => {
-        const index = current.tables.length;
-        const next: SeatingTable = {
-          id: `mesa-${index + 1}`,
-          label: shape === 'presidential' ? 'Mesa presidencial' : `Mesa ${index + 1}`,
-          shape,
-          seats: seatCapacity(shape),
-          x: Number((1.5 + (index % 4) * 3.2).toFixed(2)),
-          y: Number((1.5 + Math.floor(index / 4) * 3.2).toFixed(2)),
-        };
-        return { ...current, tables: [...current.tables, next] };
+  const selection = useMemo<SelectionDescriptor | null>(() => {
+    if (selectedId === null) return null;
+    const table = plan.tables.find((candidate) => candidate.id === selectedId);
+    if (table !== undefined) {
+      return { kind: 'table', id: table.id, label: table.label, rotation: table.rotation, scale: table.scale };
+    }
+    const fixture = plan.fixtures.find((candidate) => candidate.id === selectedId);
+    if (fixture !== undefined) {
+      return {
+        kind: 'fixture',
+        id: fixture.id,
+        label: fixture.label,
+        rotation: fixture.rotation,
+        scale: fixture.scale,
+      };
+    }
+    return null;
+  }, [plan.fixtures, plan.tables, selectedId]);
+
+  const selectedTable = useMemo<SeatingTable | null>(
+    () => (selection?.kind === 'table' ? (plan.tables.find((t) => t.id === selection.id) ?? null) : null),
+    [plan.tables, selection],
+  );
+  const selectedFixture = useMemo(
+    () => (selection?.kind === 'fixture' ? (plan.fixtures.find((f) => f.id === selection.id) ?? null) : null),
+    [plan.fixtures, selection],
+  );
+
+  /* ── Handlers de elemento (todos delegan en el motor puro) ─────────────── */
+
+  const handleAddTable = useCallback((shape: TableShape) => apply((current) => addTable(current, shape)), [apply]);
+  const handleAddFixture = useCallback((kind: FixtureKind) => apply((current) => addFixture(current, kind)), [apply]);
+  const handleMove = useCallback(
+    (id: string, x: number, y: number) => apply((current) => moveElement(current, id, x, y)),
+    [apply],
+  );
+  const handleRotate = useCallback(
+    (id: string, deg: number) => apply((current) => rotateElement(current, id, deg)),
+    [apply],
+  );
+  const handleScale = useCallback(
+    (id: string, scale: number) => apply((current) => scaleElement(current, id, scale)),
+    [apply],
+  );
+  const handleChangeSeats = useCallback(
+    (id: string, delta: number) => apply((current) => nudgeTableSeats(current, id, delta)),
+    [apply],
+  );
+  const handleChangeShape = useCallback(
+    (id: string, shape: TableShape) => apply((current) => setTableShape(current, id, shape)),
+    [apply],
+  );
+  const handleRename = useCallback(
+    (id: string, label: string) => apply((current) => renameTable(current, id, label)),
+    [apply],
+  );
+
+  /**
+   * Giro relativo: se lee la rotación VIGENTE del plano (no de una copia
+   * capturada en el render) para que dos clics seguidos sumen 90° y no 45°.
+   */
+  const handleRotateBy = useCallback(
+    (id: string, delta: number) => {
+      apply((current) => {
+        const element =
+          current.tables.find((table) => table.id === id) ?? current.fixtures.find((fixture) => fixture.id === id);
+        if (element === undefined) return current;
+        return rotateElement(current, id, element.rotation + delta);
       });
     },
-    [updatePlan],
+    [apply],
   );
 
-  const removeTable = useCallback(
-    (id: string) => {
-      updatePlan((current) => ({ ...current, tables: current.tables.filter((table) => table.id !== id) }));
+  const handleRemoveSelected = useCallback(() => {
+    if (selectedId === null) return;
+    apply((current) =>
+      current.tables.some((table) => table.id === selectedId)
+        ? removeTable(current, selectedId)
+        : removeFixture(current, selectedId),
+    );
+    setSelectedId(null);
+  }, [apply, selectedId]);
+
+  /* ── Handlers de invitados ─────────────────────────────────────────────── */
+
+  const handleAddGuest = useCallback(
+    (name: string, tag: GuestTag) => apply((current) => addGuest(current, { name, tag })),
+    [apply],
+  );
+  const handleRemoveGuest = useCallback((id: string) => apply((current) => removeGuest(current, id)), [apply]);
+  const handleToggleRsvp = useCallback(
+    (guest: { readonly id: string; readonly rsvp: 'pending' | 'confirmed' }) =>
+      apply((current) => updateGuest(current, guest.id, { rsvp: guest.rsvp === 'confirmed' ? 'pending' : 'confirmed' })),
+    [apply],
+  );
+  const handleUnseat = useCallback((id: string) => apply((current) => unseatGuest(current, id)), [apply]);
+  const handleAutoSeat = useCallback(() => apply((current) => autoSeatGuests(current)), [apply]);
+  const handleSeatInFirstFree = useCallback(
+    (guestId: string, tableId: string) => {
+      apply((current) => {
+        const table = current.tables.find((candidate) => candidate.id === tableId);
+        if (table === undefined) return current;
+        for (let seat = 0; seat < table.seats; seat += 1) {
+          const occupied = current.guests.some(
+            (guest) => guest.tableId === tableId && guest.seatIndex === seat,
+          );
+          if (!occupied) return seatGuest(current, guestId, tableId, seat);
+        }
+        return current;
+      });
     },
-    [updatePlan],
+    [apply],
+  );
+  const handleDropGuest = useCallback(
+    (guestId: string, tableId: string, seatIndex: number) =>
+      apply((current) => seatGuest(current, guestId, tableId, seatIndex)),
+    [apply],
   );
 
-  const changeSeats = useCallback(
-    (id: string, delta: number) => {
-      updatePlan((current) => ({
-        ...current,
-        tables: current.tables.map((table) =>
-          table.id === id
-            ? { ...table, seats: Math.max(0, Math.min(MAX_SEATS_SOFT_LIMIT, table.seats + delta)) }
-            : table,
-        ),
-      }));
+  /**
+   * Clic en una silla: si está ocupada se libera al invitado; si está libre se
+   * sienta al primero de la lista que no tenga mesa (el orden de alta manda).
+   */
+  const handleSeatClick = useCallback(
+    (tableId: string, seatIndex: number) => {
+      apply((current) => {
+        const occupant = current.guests.find(
+          (guest) => guest.tableId === tableId && guest.seatIndex === seatIndex,
+        );
+        if (occupant !== undefined) return unseatGuest(current, occupant.id);
+        const pending = current.guests.find((guest) => guest.tableId === null);
+        if (pending === undefined) return current;
+        return seatGuest(current, pending.id, tableId, seatIndex);
+      });
     },
-    [updatePlan],
-  );
-
-  const changeShape = useCallback(
-    (id: string, shape: TableShape) => {
-      updatePlan((current) => ({
-        ...current,
-        tables: current.tables.map((table) => (table.id === id ? { ...table, shape } : table)),
-      }));
-    },
-    [updatePlan],
+    [apply],
   );
 
   const resetPlan = useCallback(() => {
@@ -207,17 +328,8 @@ export default function SeatingPlanner({
         shape: initialShape,
       }),
     );
+    setSelectedId(null);
   }, [initialShape, plan.eventName, plan.pax, plan.venueCapacity]);
-
-  const moveTable = useCallback(
-    (id: string, x: number, y: number) => {
-      updatePlan((current) => ({
-        ...current,
-        tables: current.tables.map((table) => (table.id === id ? { ...table, x, y } : table)),
-      }));
-    },
-    [updatePlan],
-  );
 
   const share = useCallback(async () => {
     try {
@@ -227,112 +339,71 @@ export default function SeatingPlanner({
       setShareState('copied');
       window.setTimeout(() => setShareState('idle'), 4000);
     } catch {
-      // Sin portapapeles (permiso denegado / contexto no seguro) el usuario
+      // Sin portapapeles (permiso denegado o contexto no seguro) el usuario
       // copia desde la barra: se declara, no se finge haber copiado.
       setShareState('error');
     }
-  }, [plan]);
-
-  const downloadSvg = useCallback(() => {
-    const blob = new Blob([renderPlanSvg(plan)], { type: 'image/svg+xml;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const anchor = document.createElement('a');
-    anchor.href = url;
-    anchor.download = `plano-mesas-${plan.pax}-pax.svg`;
-    anchor.click();
-    URL.revokeObjectURL(url);
   }, [plan]);
 
   const whatsappHref = `https://wa.me/${phoneE164.replace(/\D/g, '')}?text=${encodeURIComponent(
     'Quiero vincular mi plano de mesas a la fecha del evento',
   )}`;
 
-  /**
-   * ── SUTURA TRANSACCIONAL (BLOQUE 3) ──────────────────────────────────────
-   * Acción principal: captura el hash serializado del plano actual y aterriza
-   * en el cotizador canónico con `?seatingPlan=<hash>&leadMagnet=true`.
-   *
-   * El hash lo calcula el codec (misma función que valida el enlace
-   * compartible), así que lo que el cliente ve, comparte y bloquea no puede
-   * divergir. `router.push` en lugar de `<a href>` para no recargar la página
-   * y conservar el estado del plano en memoria.
-   */
-  const blockAndReserve = useCallback(() => {
-    setLockState('blocked');
-    router.push(buildBudgetHrefWithPlan(plan));
-  }, [plan, router]);
+  const downloadBaseName = `plano-mesas-${plan.pax}-pax`;
 
   return (
-    <div className="space-y-6">
-      {/* Anclaje de valor: las DOS cifras vienen del SSOT por props. */}
-      <section className="rounded-2xl border border-[#ecb613]/30 bg-[#ecb613]/5 p-5 print:hidden">
-        <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#ecb613]">
-          Valor de catálogo de esta herramienta
-        </p>
-        <div className="mt-2 flex flex-wrap items-baseline gap-3">
-          <span className="font-mono text-2xl font-bold text-white">{catalogValueEur} €</span>
-          <span className="text-sm text-zinc-400">
-            Incluida sin coste adicional al formalizar el depósito de{' '}
-            <span className="font-mono text-[#ecb613]">{depositEur} €</span> de tu presupuesto, deducible del total
-            del evento.
-          </span>
-        </div>
-        <p className="mt-2 max-w-3xl text-xs leading-relaxed text-zinc-500">
-          Este plano vive en tu navegador y en el enlace compartible que generes. Guardarlo de forma permanente y
-          vinculado a tu fecha exige el depósito: es lo que lo incorpora a tu expediente.
-        </p>
-        <div className="mt-3 flex flex-wrap gap-2">
-          {/* ACCIÓN PRINCIPAL (BLOQUE 3): hash del plano → cotizador con banner de cortesía. */}
-          <button
-            type="button"
-            onClick={blockAndReserve}
-            className="inline-flex items-center gap-2 rounded-xl bg-[#ecb613] px-4 py-2 text-xs font-bold uppercase tracking-wider text-black transition-colors hover:bg-[#f5c94a] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
-          >
-            <Lock size={13} aria-hidden="true" />
-            {lockState === 'blocked' ? 'Abriendo presupuesto…' : 'Bloquear este plano y formalizar reserva'}
-          </button>
-          <Link
-            href="/presupuesto"
-            className="inline-flex items-center gap-2 rounded-xl border border-white/15 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white transition-colors hover:border-white/40"
-          >
-            Vincular al depósito
-          </Link>
-          <a
-            href={whatsappHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-xl border border-white/15 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white transition-colors hover:border-white/40"
-          >
-            Consultar por WhatsApp
-          </a>
-        </div>
-      </section>
+    <div className="space-y-5">
+      {/* ── CABECERA: las DOS acciones + cortesía declarada al lado del CTA ── */}
+      <SeatingHeaderActions
+        plan={plan}
+        toolValueEur={catalogValueEur}
+        depositEur={depositEur}
+        downloadBaseName={downloadBaseName}
+      />
 
-      {/* Barra de estado: aforo real contra aforo pedido y aforo del espacio. */}
+      {/* ── Barra de aforo en vivo: asientos montados vs pedido vs RSVP ────── */}
       <section
         aria-live="polite"
-        className={`flex flex-wrap items-center gap-4 rounded-2xl border p-4 text-xs font-mono ${
+        className={`flex flex-wrap items-center gap-x-5 gap-y-2 rounded-2xl border p-4 font-mono text-xs ${
           validation.ok ? 'border-emerald-500/30 bg-emerald-500/5' : 'border-[#FF2B44]/40 bg-[#FF2B44]/5'
         }`}
       >
         <span className="flex items-center gap-1.5 text-white">
-          <Users size={14} className="text-[#00E5FF]" />
-          {seats} asientos · objetivo {plan.pax} pax
+          <Users size={14} className="text-[#00E5FF]" aria-hidden="true" />
+          {validation.seats} asientos · objetivo {plan.pax} pax
         </span>
+        <span className="flex items-center gap-1.5 text-[#00E5FF]">
+          <CircleDot size={13} aria-hidden="true" />
+          {tally.seated} sentados · {tally.freeSeats} libres
+        </span>
+        <span className="flex items-center gap-1.5 text-[#57d99a]">
+          <Check size={13} aria-hidden="true" />
+          {tally.confirmed} RSVP confirmados ({tally.confirmedSeated} ya sentados)
+        </span>
+
         {validation.missingSeats > 0 ? (
           <span className="flex items-center gap-1.5 text-[#FF2B44]">
-            <AlertTriangle size={14} /> faltan {validation.missingSeats} asientos
+            <AlertTriangle size={14} aria-hidden="true" /> faltan {validation.missingSeats} asientos
           </span>
         ) : (
           <span className="flex items-center gap-1.5 text-emerald-400">
-            <Check size={14} /> aforo cubierto
+            <Check size={14} aria-hidden="true" /> aforo cubierto
           </span>
         )}
-        {validation.exceedsVenue ? (
-          <span className="flex items-center gap-1.5 text-[#FF2B44]">
-            <AlertTriangle size={14} /> el espacio admite {plan.venueCapacity} · sobran {validation.overflow}
+
+        {validation.unseatedGuests > 0 ? (
+          <span className="flex items-center gap-1.5 text-[#ecb613]">
+            <AlertTriangle size={14} aria-hidden="true" /> {validation.unseatedGuests} invitados sin asiento
           </span>
         ) : null}
+
+        {validation.exceedsVenue ? (
+          <span className="flex items-center gap-1.5 text-[#FF2B44]">
+            <AlertTriangle size={14} aria-hidden="true" /> el espacio admite {plan.venueCapacity} · sobran{' '}
+            {validation.overflow}
+          </span>
+        ) : null}
+
         <span className="ml-auto text-zinc-500">
           {storageState === 'saved'
             ? 'Autoguardado en este navegador'
@@ -342,115 +413,119 @@ export default function SeatingPlanner({
         </span>
       </section>
 
-      {hydrateNotice !== null ? (
-        <p className="text-xs text-zinc-500 print:hidden">{hydrateNotice}</p>
-      ) : null}
+      {hydrateNotice !== null ? <p className="text-xs text-zinc-500 print:hidden">{hydrateNotice}</p> : null}
 
-      {/* Herramientas */}
+      {/* ── CAJA DE HERRAMIENTAS: mesas y zonas de evento ─────────────────── */}
       <section className="flex flex-wrap items-center gap-2 print:hidden">
         {(['round', 'rectangular', 'presidential'] as const).map((shape) => (
           <button
             key={shape}
             type="button"
-            onClick={() => addTable(shape)}
+            onClick={() => handleAddTable(shape)}
+            title={SHAPE_HINT[shape]}
             className="inline-flex items-center gap-1.5 rounded-xl border border-white/15 bg-white/5 px-3 py-2 text-xs font-bold uppercase tracking-wider text-white transition-colors hover:border-[#00E5FF]/60"
           >
-            <Plus size={13} /> {SHAPE_LABEL[shape]}
+            <Plus size={13} strokeWidth={2} aria-hidden="true" /> {SHAPE_LABEL[shape]}
           </button>
         ))}
-        <span className="mx-1 h-6 w-px bg-white/10" />
+
+        <span className="mx-1 h-6 w-px bg-white/10" aria-hidden="true" />
+
+        {FIXTURE_KINDS.map((kind) => (
+          <button
+            key={kind}
+            type="button"
+            onClick={() => handleAddFixture(kind)}
+            className="inline-flex items-center gap-1.5 rounded-xl border border-white/10 px-2.5 py-2 text-[10px] font-bold uppercase tracking-wider text-zinc-300 transition-colors hover:border-[#ecb613]/60 hover:text-white"
+          >
+            <Plus size={11} strokeWidth={2} aria-hidden="true" /> {FIXTURE_SPEC[kind].label}
+          </button>
+        ))}
+
+        <span className="mx-1 h-6 w-px bg-white/10" aria-hidden="true" />
+
         <button
           type="button"
           onClick={resetPlan}
           className="inline-flex items-center gap-1.5 rounded-xl border border-white/15 px-3 py-2 text-xs font-bold uppercase tracking-wider text-zinc-300 transition-colors hover:border-white/40"
         >
-          <RotateCcw size={13} /> Recalcular
+          <RotateCcw size={13} strokeWidth={1.75} aria-hidden="true" /> Recalcular
         </button>
         <button
           type="button"
           onClick={share}
           className="inline-flex items-center gap-1.5 rounded-xl border border-[#00E5FF]/40 px-3 py-2 text-xs font-bold uppercase tracking-wider text-[#00E5FF] transition-colors hover:border-[#00E5FF]"
         >
-          <Link2 size={13} /> {shareState === 'copied' ? 'Enlace copiado' : 'Compartir plano'}
-        </button>
-        <button
-          type="button"
-          onClick={downloadSvg}
-          className="inline-flex items-center gap-1.5 rounded-xl border border-white/15 px-3 py-2 text-xs font-bold uppercase tracking-wider text-zinc-300 transition-colors hover:border-white/40"
-        >
-          <Download size={13} /> Descargar SVG
-        </button>
-        <button
-          type="button"
-          onClick={() => window.print()}
-          className="inline-flex items-center gap-1.5 rounded-xl border border-white/15 px-3 py-2 text-xs font-bold uppercase tracking-wider text-zinc-300 transition-colors hover:border-white/40"
-        >
-          <Printer size={13} /> Imprimir
+          <Link2 size={13} strokeWidth={1.75} aria-hidden="true" />
+          {shareState === 'copied' ? 'Enlace copiado' : 'Compartir plano'}
         </button>
         {shareState === 'error' ? (
-          <span className="text-xs text-[#FF2B44]">
-            El navegador bloqueó el portapapeles: copia la barra de direcciones.
+          <span className="inline-flex items-center gap-1.5 text-xs text-[#FF2B44]">
+            <Copy size={12} aria-hidden="true" /> El navegador bloqueó el portapapeles: copia la barra de direcciones.
           </span>
         ) : null}
       </section>
 
-      {/* Plano interactivo + edición precisa: componente aislado para respetar
-          el presupuesto estructural §5.4 (CC ≤ 15 por función). */}
-      <SeatingBoard
-        plan={plan}
-        metersToPx={METERS_TO_PX}
-        paddingM={PADDING_M}
-        shapeLabel={SHAPE_LABEL}
-        onMove={moveTable}
-        onChangeSeats={changeSeats}
-        onChangeShape={changeShape}
-        onRemove={removeTable}
-      />
+      {/* ── LIENZO + PANEL DE INVITADOS ───────────────────────────────────── */}
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-start print:hidden">
+        <div className="min-w-0 flex-1 space-y-4">
+          <SeatingBoard
+            plan={plan}
+            selectedId={selectedId}
+            onSelect={setSelectedId}
+            onMove={handleMove}
+            onSeatClick={handleSeatClick}
+            onDropGuest={handleDropGuest}
+          />
+
+          <SeatToolbar
+            selection={selection}
+            table={selectedTable}
+            fixture={selectedFixture}
+            shapeLabel={SHAPE_LABEL}
+            onRotate={handleRotate}
+            onRotateBy={handleRotateBy}
+            onScale={handleScale}
+            onChangeSeats={handleChangeSeats}
+            onChangeShape={handleChangeShape}
+            onRename={handleRename}
+            onRemove={handleRemoveSelected}
+            onDeselect={() => setSelectedId(null)}
+          />
+        </div>
+
+        <SeatingGuestPanel
+          plan={plan}
+          tally={tally}
+          open={guestPanelOpen}
+          onToggle={() => setGuestPanelOpen((open) => !open)}
+          onAddGuest={handleAddGuest}
+          onRemoveGuest={handleRemoveGuest}
+          onToggleRsvp={handleToggleRsvp}
+          onUnseat={handleUnseat}
+          onAutoSeat={handleAutoSeat}
+          onSeatInFirstFree={handleSeatInFirstFree}
+        />
+      </div>
+
+      {/* ── Pie comercial: canal directo sin barrera económica ─────────────── */}
+      <section className="flex flex-wrap items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.02] p-4 print:hidden">
+        <p className="text-xs text-zinc-400">
+          El plano vive en tu navegador y en el enlace que generes. Guardarlo vinculado a tu fecha exige el depósito
+          de <span className="font-mono text-white">{depositEur} €</span>, deducible del total del evento.
+        </p>
+        <a
+          href={whatsappHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="ml-auto inline-flex items-center gap-2 rounded-xl border border-white/15 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white transition-colors hover:border-white/40"
+        >
+          Consultar por WhatsApp
+        </a>
+      </section>
+
+      {/* ── HOJA A4: sólo existe al imprimir (plano + lista alfabética) ────── */}
+      <SeatingPrintSheet plan={plan} shapeLabel={SHAPE_LABEL} />
     </div>
   );
-}
-
-/**
- * Render vectorial del plano (sin DOM, sin canvas).
- *
- * Sirve para dos entregables reales del lead magnet: la descarga `.svg` y la
- * impresión en papel. Se genera desde el MISMO estado que el tablero, así que
- * lo que el cliente ve, lo que descarga y lo que imprime no puede divergir.
- */
-function renderPlanSvg(plan: SeatingPlan): string {
-  const scale = METERS_TO_PX;
-  const width = Math.max(8, ...plan.tables.map((table) => table.x + TABLE_METRICS[table.shape].width)) + 2;
-  const height = Math.max(6, ...plan.tables.map((table) => table.y + TABLE_METRICS[table.shape].height)) + 2;
-  const svgWidth = Math.round(width * scale);
-  const svgHeight = Math.round(height * scale);
-
-  const escape = (value: string): string =>
-    value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-
-  const shapes = plan.tables
-    .map((table) => {
-      const metrics = TABLE_METRICS[table.shape];
-      const x = table.x * scale;
-      const y = table.y * scale;
-      const w = metrics.width * scale;
-      const h = metrics.height * scale;
-      const geometry =
-        table.shape === 'round'
-          ? `<ellipse cx="${x + w / 2}" cy="${y + h / 2}" rx="${w / 2}" ry="${h / 2}" fill="#00E5FF22" stroke="#00E5FF" stroke-width="1.5"/>`
-          : `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="6" fill="#00E5FF22" stroke="#00E5FF" stroke-width="1.5"/>`;
-      const label = `<text x="${x + w / 2}" y="${y + h / 2}" fill="#ffffff" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle" dominant-baseline="middle">${escape(
-        table.label,
-      )}</text>`;
-      const seats = `<text x="${x + w / 2}" y="${y + h / 2 + 14}" fill="#00E5FF" font-family="monospace" font-size="9" text-anchor="middle" dominant-baseline="middle">${table.seats} asientos</text>`;
-      return geometry + label + seats;
-    })
-    .join('');
-
-  return [
-    `<svg xmlns="http://www.w3.org/2000/svg" width="${svgWidth}" height="${svgHeight}" viewBox="0 0 ${svgWidth} ${svgHeight}" role="img" aria-label="Plano de mesas ${escape(plan.eventName || 'evento')}">`,
-    `<rect width="100%" height="100%" fill="#030305"/>`,
-    `<text x="12" y="20" fill="#ffffff" font-family="monospace" font-size="11" font-weight="bold">${escape(plan.eventName || 'Plano de mesas')} · ${plan.pax} pax · ${plan.tables.length} mesas</text>`,
-    shapes,
-    `</svg>`,
-  ].join('');
 }
