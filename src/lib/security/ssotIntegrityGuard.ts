@@ -23,6 +23,9 @@ import { createHash } from 'crypto';
 import {
     EAR_OS_SSOT,
     TARIFA_BASE_SOLISTA_EUR,
+    TARIFA_ESTANDAR_SOLISTA_EUR,
+    SOLISTA_KM_INCLUIDOS,
+    RESERVA_BLOQUEO_PCT,
     DEPOSITO_STRIPE_EUR,
     LIMITE_B2G_LCSP_EUR,
     SAFE_LCSP_CEILING_EUR,
@@ -61,6 +64,9 @@ interface CanonicalString {
 function canonicalizeSsot(): Record<string, CanonicalNumber | CanonicalString | Record<string, number>> {
     const ordered: Record<string, CanonicalNumber | CanonicalString | Record<string, number>> = {
         TARIFA_BASE_SOLISTA_EUR: { value: TARIFA_BASE_SOLISTA_EUR },
+        TARIFA_ESTANDAR_SOLISTA_EUR: { value: TARIFA_ESTANDAR_SOLISTA_EUR },
+        SOLISTA_KM_INCLUIDOS: { value: SOLISTA_KM_INCLUIDOS },
+        RESERVA_BLOQUEO_PCT: { value: RESERVA_BLOQUEO_PCT },
         LOGISTICA_EUR_PER_KM: { value: LOGISTICA_EUR_PER_KM },
         LOGISTICA_KM_EXENTOS: { value: LOGISTICA_KM_EXENTOS },
         LOGISTICA_KM_HOTEL: { value: LOGISTICA_KM_HOTEL },
@@ -135,6 +141,18 @@ export function validateSsotInvariants(): string[] {
         violations.push('TARIFA_BASE_SOLISTA_EUR ha sido alterado (debe ser 350,00 €).');
     }
 
+    if (TARIFA_ESTANDAR_SOLISTA_EUR !== 550 || TARIFA_ESTANDAR_SOLISTA_EUR <= TARIFA_BASE_SOLISTA_EUR) {
+        violations.push('TARIFA_ESTANDAR_SOLISTA_EUR alterada (debe ser 550,00 € y superar el suelo de 350,00 €).');
+    }
+
+    if (SOLISTA_KM_INCLUIDOS !== 100) {
+        violations.push('SOLISTA_KM_INCLUIDOS alterado (la tarifa estándar incluye 100 km).');
+    }
+
+    if (RESERVA_BLOQUEO_PCT !== 0.5) {
+        violations.push('RESERVA_BLOQUEO_PCT alterado (la reserva de bloqueo es el 50% del total).');
+    }
+
     if (LIMITE_SPL_DB !== 75 || WATTS_PER_PAX !== 12) {
         violations.push('Rider acústico alterado (75 dB SPL / 12 W-pax).');
     }
@@ -182,6 +200,6 @@ export function verifySsotIntegrity(): SsotIntegrityReport {
     };
 }
 
-export const KNOWN_GOOD_SSOT_HASH = 'ebc011a07ea56e1f196d4b890ad1228142bc74ba0e56dae8e38d29cf55bb29dd';
+export const KNOWN_GOOD_SSOT_HASH = 'cefa76c2c6a3f92f57acf74f654932c02bf66774502102cb4f932520aaa64b2b';
 
 export { EAR_OS_SSOT };

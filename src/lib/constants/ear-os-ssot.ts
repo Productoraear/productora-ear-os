@@ -7,7 +7,8 @@
  * exclusivamente estas constantes. Queda prohibido duplicar valores.
  *
  * Reglas SSOT (Protocolo Omega · AGENTS.md):
- *  - Tarifa Base Solista (Edwin Agudelo): 350,00 €.
+ *  - Tarifa estándar mínima oficial Solista (Edwin Agudelo): 550,00 €
+ *    (incluye 100 km de desplazamiento). Suelo inviolable: 350,00 €.
  *  - Logística S-Class: 1,50 €/km a partir del km 50 de Méntrida
  *    (+120 € Hotel si hora fin >= 3:00 AM o distancia > 200 km).
  *  - Split Soberano: 80% Artista / 10% EAR OS / 10% VIMUME.
@@ -18,8 +19,36 @@
  * ════════════════════════════════════════════════════════════════════════════
  */
 
-/** Tarifa base innegociable del Solista Premium (Edwin Agudelo). */
+/**
+ * SUELO TARIFARIO SOLISTA (innegociable, sanción CEO).
+ * Es el mínimo absoluto del Solista Premium: ningún cupón, descuento de
+ * afiliado ni promoción puede cotizar por debajo de esta cifra.
+ */
 export const TARIFA_BASE_SOLISTA_EUR: number = 350.0;
+
+/**
+ * TARIFA ESTÁNDAR MÍNIMA OFICIAL del Solista (Edwin Agudelo).
+ * Vigente desde la directiva comercial del CEO: 550,00 € con
+ * `SOLISTA_KM_INCLUIDOS` (100 km) de desplazamiento ya incluidos en el precio.
+ * El suelo de 350,00 € solo es alcanzable con cupón de afiliado válido.
+ */
+export const TARIFA_ESTANDAR_SOLISTA_EUR: number = 550.0;
+
+/**
+ * Kilómetros de desplazamiento incluidos en la tarifa estándar de 550,00 €.
+ * Por encima de esta franquicia se factura `LOGISTICA_EUR_PER_KM`.
+ */
+export const SOLISTA_KM_INCLUIDOS: number = 100;
+
+/**
+ * Porcentaje de reserva para el bloqueo de fecha (50% del total presupuestado),
+ * directiva comercial del CEO. Sustituye al depósito simbólico de 100,00 €
+ * únicamente en las transacciones que lo declaren explícitamente.
+ */
+export const RESERVA_BLOQUEO_PCT: number = 0.5;
+
+/** Etiqueta canónica de la tarifa estándar Solista (copy comercial). */
+export const SOLISTA_TARIFA_ETIQUETA: string = 'Tarifa estándar mínima';
 
 /** Precio por kilómetro logístico a partir del km exento. */
 export const LOGISTICA_EUR_PER_KM: number = 1.5;
@@ -82,6 +111,9 @@ export const SPLIT_SOBERANO = Object.freeze({
  */
 export const EAR_OS_SSOT = Object.freeze({
     TARIFA_BASE_SOLISTA_EUR,
+    TARIFA_ESTANDAR_SOLISTA_EUR,
+    SOLISTA_KM_INCLUIDOS,
+    RESERVA_BLOQUEO_PCT,
     LOGISTICA_EUR_PER_KM,
     LOGISTICA_KM_EXENTOS,
     LOGISTICA_KM_HOTEL,

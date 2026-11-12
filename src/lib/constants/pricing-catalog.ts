@@ -1,5 +1,7 @@
 // src/lib/constants/pricing-catalog.ts
 
+import { TARIFA_ESTANDAR_SOLISTA_EUR, SOLISTA_KM_INCLUIDOS } from '@/lib/constants/ear-os-ssot';
+
 export interface FormatPricing {
   id: string;
   name: string;
@@ -22,10 +24,10 @@ export const SCLASS_ROSTER_14_FORMATS: FormatPricing[] = [
   {
     id: 'solista-edwin-agudelo',
     name: 'Show Solista Premium (Edwin Agudelo)',
-    basePrice: 350,
+    basePrice: TARIFA_ESTANDAR_SOLISTA_EUR,
     duration: '60 min (2 salidas de 30 min)',
     members: 1,
-    description: 'Cantante y compositor en directo con pistas profesionales de máxima calidad y sonido Bose 2.000W. Incluye pack experiencial de complementos: photocall temático con sombreros charros, sesión de fotos de recuerdo en las mesas, ramo de flores de cortesía y dedicatoria personalizada.',
+    description: `Cantante y compositor en directo con pistas profesionales de máxima calidad y sonido Bose 2.000W. Tarifa estándar mínima de ${TARIFA_ESTANDAR_SOLISTA_EUR} € con ${SOLISTA_KM_INCLUIDOS} km incluidos. Incluye pack experiencial de complementos: photocall temático con sombreros charros, sesión de fotos de recuerdo en las mesas, ramo de flores de cortesía y dedicatoria personalizada.`,
     category: 'SOLISTA',
     rider: 'Bose F1 Model 812 / Bose S1 Pro (2.000W) + Shure Beta 87A + Pistas Master',
     wattsPerPax: 12,

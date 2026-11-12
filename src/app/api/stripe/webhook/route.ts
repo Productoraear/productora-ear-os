@@ -100,6 +100,23 @@ export async function POST(req: NextRequest) {
 
       const tasks: Array<Promise<unknown>> = [];
 
+      // 0. PRUEBA PRIVADA DE PASARELA (1,00 €): se registra y se aísla.
+      // Sin este corte, un smoke-test de 1,00 € entraría en el ledger de
+      // comisiones como si fuera un depósito real y contaminaría el Split
+      // 80/10/10 con una cifra sin valor comercial.
+      if (metadata.mode === 'SMOKE_TEST' || metadata.tipo === 'SMOKE_TEST_LOCK') {
+        console.log(
+          `🧪 [STRIPE WEBHOOK] Smoke-test privado confirmado | id=${session.id} | ${amountTotal.toFixed(2)} € | fecha=${metadata.fecha ?? 'sin fecha'}`,
+        );
+        return NextResponse.json({
+          received: true,
+          mode: 'SMOKE_TEST',
+          isolatedFromLedger: true,
+          sessionId: session.id,
+          amountCents,
+        });
+      }
+
       // 1. FLUJO SMARTLOCK (Price-Lock 72h)
       if (metadata.intentSlug || metadata.vertical) {
         const lockedAt = new Date();

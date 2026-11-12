@@ -11,17 +11,33 @@ import {
   ShieldCheck,
   ChevronRight,
   ArrowLeft,
-  Calendar,
   Sparkles,
-  Truck,
-  Plus,
-  HelpCircle,
 } from 'lucide-react';
 import {
   DEPOSITO_STRIPE_EUR,
-  TARIFA_BASE_SOLISTA_EUR,
   CENTRALITA_EAR_OS,
 } from '@/lib/constants/ear-os-ssot';
+import { CONDICIONES_CONTRATO_SOLISTA } from '@/lib/pricing/solista-pricing';
+
+/**
+ * Cláusulas contractuales que el resumen previo al pago declara SIEMPRE.
+ * Una sola fuente (motor de precios) para que copy y cálculo no diverjan.
+ */
+const CLAUSULAS_RESUMEN: ReadonlyArray<{ titulo: string; texto: string }> = [
+  { titulo: 'Kilometraje', texto: `${CONDICIONES_CONTRATO_SOLISTA.kmIncluidos} ${CONDICIONES_CONTRATO_SOLISTA.costeKmAdicional}` },
+  { titulo: 'Reserva y liquidación', texto: `${CONDICIONES_CONTRATO_SOLISTA.reserva} ${CONDICIONES_CONTRATO_SOLISTA.liquidacion}` },
+  { titulo: 'Cancelación', texto: CONDICIONES_CONTRATO_SOLISTA.cancelacion },
+  { titulo: 'Fuerza mayor', texto: CONDICIONES_CONTRATO_SOLISTA.fuerzaMayor },
+];
+
+/**
+ * Nota de pasarela: el depósito histórico de 100,00 € sigue vigente para los
+ * packs cerrados; la reserva del 50% aplica al Solista bajo la directiva del
+ * CEO. Se declara el importe mínimo de pasarela para que el cliente sepa que
+ * ningún cargo puede quedar por debajo de esa cifra.
+ */
+const NOTA_PASARELA = `Depósito mínimo de pasarela: ${DEPOSITO_STRIPE_EUR.toFixed(2).replace('.', ',')} €. Los cargos por debajo de esa cifra corresponden únicamente a pruebas privadas de pasarela.`;
+
 
 export function SovereignFullCheckoutExperience() {
   const { items, subtotalEur, fianzaStripeEur, liquidacionEventoEur } = useCart();
@@ -270,10 +286,20 @@ export function SovereignFullCheckoutExperience() {
                   <button
                     type="button"
                     onClick={handleNextStep}
-                    className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 text-zinc-950 font-bold text-xs font-mono uppercase tracking-wider transition-all shadow-[0_0_20px_rgba(236,182,19,0.3)] hover:scale-105 active:scale-95 cursor-pointer"
+                    disabled={isConfirmed}
+                    aria-disabled={isConfirmed}
+                    className={`inline-flex items-center gap-2 px-8 py-3.5 rounded-xl font-bold text-xs font-mono uppercase tracking-wider transition-all ${
+                      isConfirmed
+                        ? 'bg-zinc-800 text-zinc-500 cursor-not-allowed'
+                        : 'bg-gradient-to-r from-amber-400 to-amber-500 text-zinc-950 shadow-[0_0_20px_rgba(236,182,19,0.3)] hover:scale-105 active:scale-95 cursor-pointer'
+                    }`}
                   >
                     <Lock className="w-4 h-4" />
-                    <span>Confirmar Fianza ({fianzaStripeEur.toFixed(2)} €)</span>
+                    <span>
+                      {isConfirmed
+                        ? 'Reserva Confirmada'
+                        : `Confirmar Fianza (${fianzaStripeEur.toFixed(2)} €)`}
+                    </span>
                   </button>
                 </div>
               </div>
@@ -315,7 +341,7 @@ export function SovereignFullCheckoutExperience() {
                     <span className="text-white">{clientData.localidad}</span>
                   </div>
                   <div className="flex justify-between text-emerald-400 pt-2 border-t border-white/5 font-bold">
-                    <span>Depósito Pagado:</span>
+                    <span>Reserva Pagada (50%):</span>
                     <span>{fianzaStripeEur.toFixed(2)} € Deducible</span>
                   </div>
                 </div>
@@ -369,6 +395,7 @@ export function SovereignFullCheckoutExperience() {
                   <SovereignCollectiveEventBuilder
                     title="Añadir a Este Evento"
                     subtitle="Selecciona servicios complementarios y se sumarán automáticamente a esta misma reserva."
+                    activeCategory={null}
                   />
                 </div>
               </details>
@@ -380,13 +407,46 @@ export function SovereignFullCheckoutExperience() {
                 <span>{(subtotalEur + (hasAddedUpsell ? 90 : 0)).toFixed(2)} €</span>
               </div>
               <div className="flex justify-between text-emerald-400 font-bold">
-                <span>Depósito Deducible Stripe:</span>
+                <span>Reserva de fecha (50%):</span>
                 <span>-{fianzaStripeEur.toFixed(2)} €</span>
               </div>
               <div className="flex justify-between text-white text-sm font-bold pt-2 border-t border-white/5">
                 <span>Restante en Evento:</span>
                 <span>{(liquidacionEventoEur + (hasAddedUpsell ? 90 : 0)).toFixed(2)} €</span>
               </div>
+            </div>
+
+            {/* DESGLOSE TRANSACCIONAL COMPLETO (100% de las condiciones) */}
+            <div className="pt-4 border-t border-white/10 space-y-3">
+              <h5 className="text-[11px] font-mono font-bold text-white uppercase tracking-wider">
+                Condiciones completas del contrato
+              </h5>
+              <dl className="space-y-2.5 text-[11px] font-mono">
+                <div>
+                  <dt className="text-zinc-500 uppercase tracking-wider text-[10px]">Concepto</dt>
+                  <dd className="text-zinc-300 leading-relaxed">{CONDICIONES_CONTRATO_SOLISTA.concepto}</dd>
+                </div>
+                {CLAUSULAS_RESUMEN.map((clausula) => (
+                  <div key={clausula.titulo}>
+                    <dt className="text-zinc-500 uppercase tracking-wider text-[10px]">
+                      {clausula.titulo}
+                    </dt>
+                    <dd className="text-zinc-300 leading-relaxed">{clausula.texto}</dd>
+                  </div>
+                ))}
+                <div>
+                  <dt className="text-zinc-500 uppercase tracking-wider text-[10px]">
+                    Fecha límite de liquidación
+                  </dt>
+                  <dd className="text-zinc-300 leading-relaxed">
+                    72 horas antes del evento ({clientData.fechaEvento}).
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-zinc-500 uppercase tracking-wider text-[10px]">Pasarela</dt>
+                  <dd className="text-zinc-300 leading-relaxed">{NOTA_PASARELA}</dd>
+                </div>
+              </dl>
             </div>
           </div>
         </div>

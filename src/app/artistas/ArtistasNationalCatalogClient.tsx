@@ -622,7 +622,7 @@ export default function ArtistasNationalCatalogClient() {
                   Edwin Agudelo · <span className="text-[#ecb613]">Voz Lírica, Tradición y Emoción Pura</span>
                 </h2>
                 <p className="text-xs sm:text-sm text-slate-300 mt-1 font-light leading-relaxed">
-                  Cantante, tenor lírico y compositor con más de 25 años de oficio escénico. Show Solista Premium (350€) con acústica Bose de alta fidelidad, repertorio charro, boleros de gala y reserva directa con 100€ de depósito en Stripe.
+                  Cantante, tenor lírico y compositor con más de 25 años de oficio escénico. Show Solista Premium (550 €, 100 km incluidos) con acústica Bose de alta fidelidad, repertorio charro, boleros de gala y reserva del 50% para bloqueo de fecha.
                 </p>
               </div>
 
@@ -631,10 +631,10 @@ export default function ArtistasNationalCatalogClient() {
                 <a
                   href="/reservar/solista"
                   className="p-2.5 rounded-xl bg-black/60 border border-[#ecb613]/50 hover:border-[#ecb613] transition block group"
-                  title="Reservar Show Solista Edwin Agudelo (350 €)"
+                  title="Reservar Show Solista Edwin Agudelo (550 € · 100 km incluidos)"
                 >
                   <span className="text-[10px] text-slate-400 group-hover:text-amber-300 uppercase block">1. Solista Premium</span>
-                  <span className="text-xs font-black text-[#ecb613]">350 €</span>
+                  <span className="text-xs font-black text-[#ecb613]">550 €</span>
                 </a>
                 <a
                   href="/mariachis#packs"

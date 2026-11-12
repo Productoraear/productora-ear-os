@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Building2,
   Mic2,
@@ -13,17 +13,12 @@ import {
   Camera,
   Video,
   CheckCircle2,
-  Plus,
-  Trash2,
   ArrowRight,
   ShieldCheck,
-  CreditCard,
-  Phone,
-  HelpCircle,
-  SlidersHorizontal,
 } from 'lucide-react';
 import { useCart, EventServiceCategory } from '@/components/checkout/CartContext';
-import { TARIFA_BASE_SOLISTA_EUR, DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
+import { DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
+import { TARIFA_SOLISTA_EUR, KM_INCLUIDOS } from '@/lib/pricing/solista-pricing';
 
 export interface EventServicePill {
   id: string;
@@ -37,6 +32,54 @@ export interface EventServicePill {
   badge?: string;
   popular?: boolean;
 }
+
+/**
+ * AISLAMIENTO DE CATÁLOGO (directiva CEO · cero contaminación del simulador).
+ *
+ * Edwin Agudelo es Paciente Cero de la vertical MÚSICA y JAMÁS debe aparecer
+ * cuando la categoría seleccionada no es musical (fincas, restaurantes,
+ * catering, floristería, transporte...). Esta función es la única autoridad
+ * que decide si su casilla se renderiza.
+ */
+export function isMusicCategory(category: EventServiceCategory | 'ALL' | null | undefined): boolean {
+  return category === 'artista';
+}
+
+/**
+ * Filtra el catálogo aplicando el aislamiento por categoría:
+ *  · sin categoría (`null`/`undefined`) ⇒ catálogo completo (modo escaparate),
+ *  · categoría MÚSICA (`artista`) ⇒ todo el catálogo, con Edwin visible,
+ *  · cualquier otra categoría concreta ⇒ solo sus casillas y NUNCA Edwin,
+ *  · categoría `ALL` (búsqueda general) ⇒ todo el catálogo salvo Edwin.
+ */
+export function selectVisibleServices(
+  services: readonly EventServicePill[],
+  category: EventServiceCategory | 'ALL' | null | undefined,
+): EventServicePill[] {
+  // Modo escaparate: sin categoría declarada no se aísla nada.
+  if (category === null || category === undefined) {
+    return [...services];
+  }
+
+  const musicAllowed = isMusicCategory(category);
+
+  return services.filter((service) => {
+    const isSovereignArtist = SOVEREIGN_ARTIST_PROVIDER_IDS.has(service.id);
+
+    // Un artista de la casa jamás aparece fuera de la vertical de música.
+    if (isSovereignArtist && !musicAllowed) return false;
+
+    // `ALL` = búsqueda general: se muestra todo el catálogo restante.
+    if (category === 'ALL') return true;
+
+    // Categoría concreta: solo las casillas de esa categoría.
+    return service.category === category;
+  });
+}
+
+/** Identificadores canónicos del solista de la casa (Paciente Cero). */
+const SOVEREIGN_ARTIST_PROVIDER_IDS: ReadonlySet<string> = new Set(['edwin-agudelo-solista']);
+
 
 const DEFAULT_COLLECTIVE_SERVICES: EventServicePill[] = [
   {
@@ -56,11 +99,11 @@ const DEFAULT_COLLECTIVE_SERVICES: EventServicePill[] = [
     category: 'artista',
     title: 'Edwin Agudelo · Tenor Solista S-Class',
     providerName: 'Edwin Agudelo (Tenor)',
-    description: 'Voz lírica en directo para ceremonia y cóctel de gala. Calibración < 75 dB SPL.',
+    description: `Voz lírica en directo para ceremonia y cóctel de gala. Calibración < 75 dB SPL. ${KM_INCLUIDOS} km incluidos.`,
     icon: Mic2,
-    priceEur: TARIFA_BASE_SOLISTA_EUR,
-    horquilla: '350,00 € Canónico',
-    badge: 'Suelo Inviolable',
+    priceEur: TARIFA_SOLISTA_EUR,
+    horquilla: `${TARIFA_SOLISTA_EUR.toFixed(2).replace('.', ',')} € Tarifa estándar`,
+    badge: 'Solista de la Casa',
     popular: true,
   },
   {
@@ -177,6 +220,12 @@ interface SovereignCollectiveEventBuilderProps {
   title?: string;
   subtitle?: string;
   venueName?: string;
+  /**
+   * Categoría de servicio seleccionada por el cliente. Es el interruptor del
+   * aislamiento: si NO es música, Edwin Agudelo nunca se renderiza.
+   * `undefined`/`'ALL'` deja el catálogo completo como escaparate.
+   */
+  activeCategory?: EventServiceCategory | 'ALL' | null;
 }
 
 export function SovereignCollectiveEventBuilder({
@@ -184,9 +233,18 @@ export function SovereignCollectiveEventBuilder({
   title = 'Configura el Banquete Perfecto sin Fuga de Tiempo',
   subtitle = 'Selecciona las necesidades de tu celebración. EAR OS calcula la horquilla real, suma los proveedores en un solo expediente y bloquea la fecha con un único depósito Stripe deducible.',
   venueName,
+  activeCategory = null,
 }: SovereignCollectiveEventBuilderProps) {
   const { items, addItem, removeItem, setIsOpen, subtotalEur, fianzaStripeEur, totalProvidersCount } = useCart();
-  const services = customServices && customServices.length > 0 ? customServices : DEFAULT_COLLECTIVE_SERVICES;
+  const catalog = customServices && customServices.length > 0 ? customServices : DEFAULT_COLLECTIVE_SERVICES;
+
+  // AISLAMIENTO DE ESTADO: el catálogo visible se deriva de la categoría.
+  // Ningún artista se precarga por defecto: si la categoría no es música,
+  // la casilla de Edwin Agudelo no existe en el DOM.
+  const services = selectVisibleServices(catalog, activeCategory);
+
+  // Alcance declarado del expediente (finca/espacio anfitrión, si lo hay).
+  const scopeLabel = venueName ? `Expediente vinculado a ${venueName}` : 'Expediente multi-proveedor';
 
   const isSelected = (id: string) => items.some((i) => i.id === id);
 
@@ -216,6 +274,7 @@ export function SovereignCollectiveEventBuilder({
             <Sparkles className="w-3.5 h-3.5 text-[#ecb613]" />
             <span>ARQUITECTURA DE EVENTO MULTI-PROVEEDOR · {services.length} CASILLAS INTELIGENTES</span>
           </div>
+          <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider">{scopeLabel}</p>
           <h2 className="text-2xl sm:text-4xl font-extrabold font-display text-white tracking-tight">
             {title}
           </h2>
@@ -321,10 +380,10 @@ export function SovereignCollectiveEventBuilder({
             <span>UN SOLO CONTRATO · EXPEDIENTE CENTRALIZADO</span>
           </div>
           <h4 className="text-lg font-bold text-white">
-            {items.length} Servicios Seleccionados · Depósito Único de {DEPOSITO_STRIPE_EUR} €
+            {items.length} Servicios Seleccionados · Reserva de {fianzaStripeEur.toFixed(2)} €
           </h4>
           <p className="text-xs text-zinc-400">
-            No tienes que pagar fianzas sueltas a múltiples empresas. El depósito Stripe de {DEPOSITO_STRIPE_EUR} € sella la fecha de forma simultánea.
+            No tienes que pagar fianzas sueltas a múltiples empresas. La reserva de {fianzaStripeEur.toFixed(2)} € sella la fecha de forma simultánea (deducible del importe final).
           </p>
         </div>
 

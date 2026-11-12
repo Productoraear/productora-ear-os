@@ -18,7 +18,10 @@ import {
   DEPOSITO_STRIPE,
   SPLIT_SOBERANO,
   SUPLEMENTO_RIDER_ELITE,
+  TARIFA_ESTANDAR_SOLISTA,
+  KM_INCLUIDOS_SOLISTA,
   basePriceForFormat,
+  standardPriceForFormat,
   computeSovereignLogistics,
   type FormatType,
   type SoundRiderType,
@@ -101,3 +104,15 @@ export function calculateSovereignQuote(input: SovereignQuoteInput): SovereignQu
 
 /** Base canónica re-exportada para consumidores de la API histórica. */
 export const SOVEREIGN_BASE_EUR: number = BASE_SOLISTA;
+
+/** Tarifa estándar mínima oficial del Solista (550,00 € con 100 km incluidos). */
+export const SOVEREIGN_STANDARD_SOLISTA_EUR: number = TARIFA_ESTANDAR_SOLISTA;
+
+/** Kilómetros incluidos en la tarifa estándar del Solista. */
+export const SOVEREIGN_SOLISTA_KM_INCLUDED: number = KM_INCLUIDOS_SOLISTA;
+
+/**
+ * Precio de tarifa de un formato SIN descuentos (Solista = 550,00 €).
+ * Re-exportado para los consumidores que ya importan este módulo.
+ */
+export { standardPriceForFormat, basePriceForFormat };

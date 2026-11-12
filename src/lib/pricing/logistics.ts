@@ -18,6 +18,8 @@
 
 import {
   TARIFA_BASE_SOLISTA_EUR,
+  TARIFA_ESTANDAR_SOLISTA_EUR,
+  SOLISTA_KM_INCLUIDOS,
   LOGISTICA_EUR_PER_KM,
   LOGISTICA_KM_EXENTOS,
   LOGISTICA_KM_HOTEL,
@@ -27,7 +29,22 @@ import {
   SPLIT_SOBERANO as SSOT_SPLIT_RATIOS,
 } from '@/lib/constants/ear-os-ssot';
 
+/**
+ * SUELO TARIFARIO del Solista (350,00 €). Solo alcanzable con cupón de
+ * afiliado válido: ningún formato cotiza por debajo de esta cifra.
+ */
 export const BASE_SOLISTA = TARIFA_BASE_SOLISTA_EUR;
+
+/**
+ * TARIFA ESTÁNDAR MÍNIMA OFICIAL del Solista (550,00 €).
+ * Incluye `KM_INCLUIDOS_SOLISTA` (100 km) de desplazamiento en el precio.
+ * Es el importe que se cotiza SIN cupón y el que ven los cupones de afiliado
+ * como base antes de aplicar el descuento promocional.
+ */
+export const TARIFA_ESTANDAR_SOLISTA = TARIFA_ESTANDAR_SOLISTA_EUR;
+
+/** Kilómetros ya incluidos en la tarifa estándar de 550,00 €. */
+export const KM_INCLUIDOS_SOLISTA = SOLISTA_KM_INCLUIDOS;
 
 /** €/km FACTURABLE (aplica solo al tramo posterior a la franquicia de 50 km). */
 export const COSTE_KM = LOGISTICA_EUR_PER_KM;
@@ -174,4 +191,16 @@ export function basePriceForFormat(format: FormatType): number {
   if (format === 'trio') return BASE_SOLISTA + SUPLEMENTO_TRIO;
   if (format === 'quinteto') return BASE_SOLISTA + SUPLEMENTO_QUINTETO;
   return BASE_SOLISTA;
+}
+
+/**
+ * Precio de tarifa de un formato SIN descuentos:
+ *  - Solista: `TARIFA_ESTANDAR_SOLISTA` (550,00 € con 100 km incluidos).
+ *  - Trío / Quinteto: se derivan del suelo del Solista + suplemento de formato.
+ * Es la base sobre la que el afiliado aplica su descuento promocional. Nunca
+ * devuelve una cifra por debajo del suelo del SSOT.
+ */
+export function standardPriceForFormat(format: FormatType): number {
+  if (format === 'solista') return TARIFA_ESTANDAR_SOLISTA;
+  return basePriceForFormat(format);
 }

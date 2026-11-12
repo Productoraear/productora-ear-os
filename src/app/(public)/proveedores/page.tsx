@@ -40,7 +40,7 @@ import { AirbnbNeuralBookingBar } from '@/features/search/AirbnbNeuralBookingBar
 import { buildEntityCalendarHref } from '@/lib/calendar/entity-calendar-engine';
 import { inferCalendarKindFromCategory } from '@/lib/calendar/entity-calendar-types';
 import { PROVIDERS_MANIFEST_TOTALS, PROVIDERS_B2C_TOTAL, B2C_DIRECTORY_GREMIO_TOTALS, PROVIDERS_GRAND_TOTAL } from '@/lib/constants/providers-manifest';
-import { DEPOSITO_STRIPE_EUR, TARIFA_BASE_SOLISTA_EUR } from '@/lib/constants/ear-os-ssot';
+import { DEPOSITO_STRIPE_EUR, TARIFA_ESTANDAR_SOLISTA_EUR } from '@/lib/constants/ear-os-ssot';
 import { ALL_SPANISH_PROVINCES, isProvinceMatch, findCanonicalProvinceName, normalizeBodasNetCategory, ALL_VENUE_TYPOLOGIES } from '@/lib/constants/spain-regions-and-categories';
 import { OTZARRETA_ENTITY } from '@/lib/constants/otzarreta-entity';
 
@@ -75,6 +75,7 @@ function normalizeSearchText(value: string): string {
  * venga del Data Lake, del fallback estático o del catálogo curado).
  * Corrige de una sola vez: sellos VERIFICADO sin teléfono, ratings inventados,
  * provincias en minúsculas, precios vacíos y badges de homologación sin prueba.
+ * PROHIBIDO: rellenar el hueco de precio con la tarifa del solista (350 €).
  */
 function normalizeDirectoryProvider(provider: ProviderItem): ProviderItem {
   const verified = provider.verified === true && hasVerifiablePhone(provider);
@@ -87,11 +88,13 @@ function normalizeDirectoryProvider(provider: ProviderItem): ProviderItem {
     findCanonicalProvinceName(provider.province || '') || (provider.province || '');
   const rawBadge = (provider.badge || '').trim();
   const badgeClaimsVerification = /verificad|homologad/i.test(rawBadge);
+  const hasPrice = rawPrice.length > 0 || (typeof provider.basePrice === 'number' && provider.basePrice > 0);
 
   return {
     ...provider,
     province,
-    price: rawPrice.length > 0 ? rawPrice : undefined,
+    price: hasPrice ? rawPrice : CUSTOM_QUOTE_LABEL,
+    priceLabel: hasPrice ? provider.priceLabel : SECTOR_RANGE_LABEL,
     rating:
       reviewTotal > 0 && typeof provider.rating === 'number' ? provider.rating : undefined,
     reviews: reviewTotal > 0 ? reviewTotal : undefined,
@@ -137,6 +140,20 @@ const STATIC_CATEGORY_TOTALS: Record<string, number> = {
 };
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// ETIQUETA CANÓNICA DE PROVEEDOR SIN PRECIO (directiva CEO)
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+/**
+ * PROHIBIDO asignar la tarifa del solista (350 €) a un proveedor del directorio
+ * que no ha publicado precio. Un proveedor sin tarifa se rotula "Cotización
+ * personalizada" y, si aporta rango de sector, el rango se acompaña del split
+ * 80/10/10 para que el cliente sepa cómo se reparte el importe.
+ */
+const CUSTOM_QUOTE_LABEL = 'Cotización personalizada';
+
+/** Rango estimado honesto del sector cuando no hay tarifa cerrada. */
+const SECTOR_RANGE_LABEL = 'Rango estimado del sector';
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // ARTISTA SOBERANO S-CLASS: EDWIN AGUDELO (PRIORIDAD PERMANENTE #1)
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 const SOVEREIGN_EDWIN_AGUDELO: ProviderItem = {
@@ -146,8 +163,9 @@ const SOVEREIGN_EDWIN_AGUDELO: ProviderItem = {
   category: 'musica',
   province: 'Madrid',
   description: 'Show musical en vivo de 1 hora (2 pases de 30 min), sonido profesional Bose F1 812 / S1 Pro, microfonía Shure Beta 87A, ramo de flores en vivo, canción personalizada y sesión de fotos con sombreros temáticos. Artista Solista S-Class.',
-  price: formatEuro(TARIFA_BASE_SOLISTA_EUR),
-  basePrice: TARIFA_BASE_SOLISTA_EUR,
+  price: formatEuro(TARIFA_ESTANDAR_SOLISTA_EUR),
+  priceLabel: 'Tarifa estándar',
+  basePrice: TARIFA_ESTANDAR_SOLISTA_EUR,
   rating: 5.0,
   reviews: 128,
   img: '/assets/shadow_vendors/c6831218af2e78b8.jpg',
@@ -775,7 +793,10 @@ function ProveedoresDirectoryContent() {
     if (isBasqueProvince && (selectedCategory === 'ALL' || selectedCategory === 'finca' || selectedCategory === 'catering')) {
       list.push(SOVEREIGN_OTZARRETA);
     }
-    if (selectedCategory !== 'finca') {
+    // AISLAMIENTO DE CATÁLOGO: Edwin Agudelo solo existe en la vertical de música.
+    // En fincas, catering, floristería o transporte JAMÁS debe aparecer.
+    const musicAxis = selectedCategory === 'musica';
+    if (musicAxis) {
       list.push(SOVEREIGN_EDWIN_AGUDELO);
     }
     list.push(...cleanApi);
@@ -905,6 +926,10 @@ function ProveedoresDirectoryContent() {
 
       return true;
     }).sort((a, b) => {
+      // RANKING SOBERANO: el solista de la casa es SIEMPRE el #1 fijo.
+      const aSovereign = a.id === SOVEREIGN_EDWIN_AGUDELO.id;
+      const bSovereign = b.id === SOVEREIGN_EDWIN_AGUDELO.id;
+      if (aSovereign !== bSovereign) return aSovereign ? -1 : 1;
       if (a.isPreferred && !b.isPreferred) return -1;
       if (!a.isPreferred && b.isPreferred) return 1;
       return 0;
@@ -1391,7 +1416,7 @@ function ProveedoresDirectoryContent() {
                     <PremiumPacksCarousel
                       providerSlug={String(activeModalProvider.slug || activeModalProvider.id)}
                       providerName={activeModalProvider.name}
-                      basePrice={activeModalProvider.basePrice || (activeModalProvider.price ? parseFloat(String(activeModalProvider.price).replace(/[^\d.-]/g, '')) : undefined) || TARIFA_BASE_SOLISTA_EUR}
+                      basePrice={activeModalProvider.basePrice || (activeModalProvider.price ? parseFloat(String(activeModalProvider.price).replace(/[^\d.-]/g, '')) : undefined) || TARIFA_ESTANDAR_SOLISTA_EUR}
                       servicesList={activeModalProvider.services_list || []}
                     />
                   )}

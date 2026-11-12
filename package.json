@@ -46,6 +46,8 @@
     "verify:consultation": "npx tsx scripts/verify_consultation_memory.ts",
     "verify:grounding": "npx tsx scripts/verify_web_grounding.ts",
     "verify:pricing": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_pricing_ssot_unification.ts",
+    "verify:solista-pricing": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_solista_pricing.ts",
+    "verify:catalog-isolation": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_catalog_isolation.ts",
     "verify:founders": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_founders_parity.ts",
     "verify:context": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_page_context.ts",
     "build:fichas": "node scripts/build_provider_fichas.cjs",
