@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { lockDateAtomically } from '@/lib/availability/atomicDateLockEngine';
+import {
+  lockDateAtomically,
+  unlockDateAtomically,
+  releaseStalePendingLocks,
+} from '@/lib/availability/atomicDateLockEngine';
 import { fireAndForgetN8n } from '@/lib/services/n8n-dispatcher';
 import { DEPOSITO_STRIPE_EUR, SPLIT_SOBERANO } from '@/lib/constants/ear-os-ssot';
 
@@ -109,6 +113,99 @@ export async function POST(req: NextRequest) {
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : String(error);
     console.error('[DispatchLockAPI] Error al sellar fecha atómicamente:', message);
+    return NextResponse.json({ success: false, error: message }, { status: 500 });
+  }
+}
+
+interface HitlUnlockBody {
+  action?: unknown;
+  lockId?: unknown;
+  productionId?: unknown;
+  stripeSessionId?: unknown;
+  eventDate?: unknown;
+  artistProfileId?: unknown;
+  entityKind?: unknown;
+  entitySlug?: unknown;
+  timeSlot?: unknown;
+  operatorReason?: unknown;
+}
+
+/**
+ * 🛡️ PROTOCOLO HITL DE REVISIÓN Y DESBLOQUEO EN 1 CLIC (BRECHA 4 SOTA)
+ * Permite al operador humano (CEO / Call Center / Admin) liberar en 1 clic un
+ * bloqueo de calendario en disputa o purgar retenes expirados sin intervención
+ * autónoma destructiva de ningún agente.
+ */
+export async function DELETE(req: NextRequest) {
+  try {
+    let body: HitlUnlockBody = {};
+    try {
+      body = await req.json();
+    } catch {
+      // body opcional
+    }
+
+    const action = typeof body.action === 'string' ? body.action.trim() : 'unlock_disputed';
+
+    if (action === 'release_stale') {
+      const released = await releaseStalePendingLocks(45);
+      return NextResponse.json({
+        success: released.success,
+        hitlAction: 'release_stale',
+        releasedCount: released.releasedCount,
+        reason: released.reason,
+        storageMode: released.storageMode,
+      });
+    }
+
+    const lockId = typeof body.lockId === 'string' ? body.lockId.trim() : undefined;
+    const productionId = typeof body.productionId === 'string' ? body.productionId.trim() : undefined;
+    const stripeSessionId = typeof body.stripeSessionId === 'string' ? body.stripeSessionId.trim() : undefined;
+    const eventDate = typeof body.eventDate === 'string' ? body.eventDate.trim() : undefined;
+    const artistProfileId = typeof body.artistProfileId === 'string' ? body.artistProfileId.trim() : undefined;
+    const entityKind = typeof body.entityKind === 'string' ? body.entityKind.trim() : undefined;
+    const entitySlug = typeof body.entitySlug === 'string' ? body.entitySlug.trim() : undefined;
+    const timeSlot = typeof body.timeSlot === 'string' ? body.timeSlot.trim() : undefined;
+    const operatorReason =
+      typeof body.operatorReason === 'string' && body.operatorReason.trim().length > 0
+        ? body.operatorReason.trim()
+        : 'HITL_MANUAL_OPERATOR_OVERRIDE';
+
+    const unlocked = await unlockDateAtomically({
+      lockId,
+      productionId,
+      stripeSessionId,
+      eventDate,
+      artistProfileId,
+      entityKind,
+      entitySlug,
+      timeSlot,
+    });
+
+    fireAndForgetN8n('autonomous-escalation', {
+      event: 'hitl_calendar_unlock_1click',
+      success: unlocked.success,
+      releasedLockId: unlocked.releasedLockId ?? null,
+      reason: unlocked.reason,
+      operatorReason,
+      eventDate: eventDate ?? null,
+      entitySlug: entitySlug ?? null,
+      resolvedAt: new Date().toISOString(),
+    });
+
+    return NextResponse.json(
+      {
+        success: unlocked.success,
+        hitlAction: 'unlock_disputed',
+        releasedLockId: unlocked.releasedLockId ?? null,
+        reason: unlocked.reason,
+        storageMode: unlocked.storageMode,
+        operatorReason,
+      },
+      { status: unlocked.success ? 200 : 404 },
+    );
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : String(error);
     return NextResponse.json({ success: false, error: message }, { status: 500 });
   }
 }

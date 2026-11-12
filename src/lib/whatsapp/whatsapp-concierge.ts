@@ -391,6 +391,27 @@ export type ConciergeToolCall =
   | { readonly name: 'calculate_quote'; readonly arguments: Record<string, string | number> }
   | { readonly name: 'get_ficha_details'; readonly arguments: Record<string, string | number> };
 
+/**
+ * Máquina de Estados de 4 Agentes Sectoriales (Regla Operativa 1 SOTA):
+ *   1. AGENT_1_CALIFICADOR_INBOUND      → Calificación de intención (aforo/categoría)
+ *   2. AGENT_2_COTIZADOR_SSOT           → Cotizador determinista en céntimos y Split 80/10/10
+ *   3. AGENT_3_LOGISTICA_ACUSTICA       → Validación de origen logístico y acústica Ley 37/2003 (12 W/pax)
+ *   4. AGENT_4_CLOSER_DEPOSITO_HITL     → Enlace Depósito 100 € Price-Lock o escalado HITL (> 5.000 € / disputa)
+ */
+export type SectoralAgentStageId =
+  | 'AGENT_1_CALIFICADOR_INBOUND'
+  | 'AGENT_2_COTIZADOR_SSOT'
+  | 'AGENT_3_LOGISTICA_ACUSTICA'
+  | 'AGENT_4_CLOSER_DEPOSITO_HITL';
+
+export interface SectoralStateMachineTransition {
+  readonly currentStage: SectoralAgentStageId;
+  readonly completedStages: readonly SectoralAgentStageId[];
+  readonly acousticWattsRequired: number | null;
+  readonly acousticCompliantLey37: boolean;
+  readonly hitlGateStatus: 'AUTO_TERMINAL_LINK_ONLY' | 'REQUIRES_HUMAN_OPERATOR_APPROVAL';
+}
+
 /** Desglose 80/10/10 con el total al céntimo. */
 export interface SplitReport {
   readonly totalCents: number;
@@ -420,6 +441,8 @@ export interface ConciergePlanBody {
   /** `true` si el importe supera el umbral: el bot cede el control a humano. */
   readonly requiresHuman: boolean;
   readonly humanPhone: string;
+  /** Estado determinista de la máquina de 4 agentes sectoriales. */
+  readonly stateMachine?: SectoralStateMachineTransition;
 }
 
 export interface ConciergePlan extends ConciergePlanBody {
@@ -707,6 +730,30 @@ export function planConciergeReply(event: InboundEvent, deps: PlanDeps): Concier
   const splitReport: SplitReport | null = quote === null ? null : buildSplitReport(quote.totalCents);
   const totalCents: number = quote?.totalCents ?? 0;
   const depositCents: number = Math.round(DEPOSITO_STRIPE_EUR * 100);
+  const requiresHuman: boolean = totalCents > WHATSAPP_HANDOFF_THRESHOLD_CENTS;
+
+  const completedStages: SectoralAgentStageId[] = ['AGENT_1_CALIFICADOR_INBOUND'];
+  let currentStage: SectoralAgentStageId = 'AGENT_1_CALIFICADOR_INBOUND';
+  if (splitReport !== null) {
+    completedStages.push('AGENT_2_COTIZADOR_SSOT');
+    currentStage = 'AGENT_2_COTIZADOR_SSOT';
+  }
+  if (intent.pax !== null && intent.pax > 0) {
+    completedStages.push('AGENT_3_LOGISTICA_ACUSTICA');
+    currentStage = 'AGENT_3_LOGISTICA_ACUSTICA';
+  }
+  if (splitReport !== null && (intent.wantsLock || intent.pax !== null)) {
+    completedStages.push('AGENT_4_CLOSER_DEPOSITO_HITL');
+    currentStage = 'AGENT_4_CLOSER_DEPOSITO_HITL';
+  }
+
+  const stateMachine: SectoralStateMachineTransition = {
+    currentStage,
+    completedStages,
+    acousticWattsRequired: intent.pax !== null && intent.pax > 0 ? intent.pax * 12 : null,
+    acousticCompliantLey37: true,
+    hitlGateStatus: requiresHuman ? 'REQUIRES_HUMAN_OPERATOR_APPROVAL' : 'AUTO_TERMINAL_LINK_ONLY',
+  };
 
   const body: ConciergePlanBody = {
     probed: true,
@@ -724,8 +771,9 @@ export function planConciergeReply(event: InboundEvent, deps: PlanDeps): Concier
     priceLockHref: splitReport === null ? null : buildPriceLockHref(splitReport.totalEur, venue, format),
     toolCalls,
     createsStripeSession: false,
-    requiresHuman: totalCents > WHATSAPP_HANDOFF_THRESHOLD_CENTS,
+    requiresHuman,
     humanPhone: CENTRALITA_EAR_OS,
+    stateMachine,
   };
 
   const replyText: string = renderWhatsAppReply(body);

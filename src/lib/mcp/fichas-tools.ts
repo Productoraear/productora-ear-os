@@ -354,12 +354,64 @@ export function runCalculateQuote(
 /* Registro de herramientas (el LLM sólo puede llamar a lo declarado aquí)      */
 /* ──────────────────────────────────────────────────────────────────────────── */
 
-export const FICHAS_TOOL_NAMES = ['search_fichas', 'get_ficha_details', 'calculate_quote'] as const;
+export const FICHAS_TOOL_NAMES = [
+  'search_fichas',
+  'get_ficha_details',
+  'calculate_quote',
+  'search_catalog',
+  'validate_inventory',
+  'create_checkout_lock',
+] as const;
 
 export type FichasToolName = (typeof FICHAS_TOOL_NAMES)[number];
 
 export function isFichasToolName(value: string): value is FichasToolName {
   return (FICHAS_TOOL_NAMES as readonly string[]).includes(value);
+}
+
+export const validateInventoryInputSchema = z
+  .object({
+    key: z.string().trim().min(2).max(160),
+    pax: z.number().int().min(1).max(10_000).default(100),
+    eventDateIso: z.string().trim().min(8).max(32).default('2026-09-19'),
+  })
+  .strict();
+
+export type ValidateInventoryInput = z.infer<typeof validateInventoryInputSchema>;
+
+export interface ValidateInventoryResult {
+  readonly key: string;
+  readonly available: boolean;
+  readonly pax: number;
+  readonly requiredWattsRms: number;
+  readonly maxAllowedDba: number;
+  readonly eventDateIso: string;
+  readonly hitlPolicy: 'NO_AUTONOMOUS_LOCK';
+}
+
+export async function runValidateInventory(
+  input: ValidateInventoryInput,
+  deps: FichasServerDeps,
+): Promise<ToolEnvelope<ValidateInventoryResult>> {
+  const detailsEnv = await runGetFichaDetails({ key: input.key }, deps);
+  const existsInCatalog = detailsEnv.ok && detailsEnv.data !== null;
+  const result: ValidateInventoryResult = {
+    key: input.key,
+    available: existsInCatalog,
+    pax: input.pax,
+    requiredWattsRms: input.pax * 12,
+    maxAllowedDba: 90,
+    eventDateIso: input.eventDateIso,
+    hitlPolicy: 'NO_AUTONOMOUS_LOCK',
+  };
+  if (!existsInCatalog) {
+    return envelopeFail(
+      `INVENTARIO_NO_ENCONTRADO: ficha ${input.key} no localizada en el catálogo sellado.`,
+      { source: detailsEnv.source, now: deps.now() },
+      result,
+    );
+  }
+  return envelopeOk(result, { source: detailsEnv.source, now: deps.now() });
 }
 
 /** Descriptor legible por máquina (base de `tools/list`). */
@@ -393,6 +445,27 @@ export const FICHAS_TOOL_MANIFEST: readonly FichasToolDescriptor[] = Object.free
     engine: 'src/lib/agents/pricing.ts#computeSplit + src/lib/constants/ear-os-ssot.ts',
     sideEffects: 'none',
   },
+  {
+    name: 'search_catalog',
+    description:
+      'Alias estándar MCP/A2A de búsqueda facetada en el catálogo soberano de proveedores y fincas (JSON-RPC 2.0).',
+    engine: 'src/lib/mcp/fichas-catalog.ts#searchProvidersInDb',
+    sideEffects: 'read-only',
+  },
+  {
+    name: 'validate_inventory',
+    description:
+      'Valida disponibilidad de catálogo y requisitos acústicos Ley 37/2003 (12 W/pax) sin bloquear fechas de forma autónoma.',
+    engine: 'src/lib/mcp/fichas-tools.ts#runValidateInventory',
+    sideEffects: 'read-only',
+  },
+  {
+    name: 'create_checkout_lock',
+    description:
+      'Prepara el enlace determinista de Price-Lock (100 € deducibles, Split 80/10/10) bajo supervisión HITL sin ejecutar cobro autónomo.',
+    engine: 'src/lib/mcp/fichas-tools.ts#runCalculateQuote',
+    sideEffects: 'none',
+  },
 ]);
 
 /** `tools/list`: descriptor + JSON Schema generado del MISMO Zod que valida. */
@@ -403,6 +476,9 @@ export function listFichasTools(): {
     search_fichas: searchFichasInputSchema,
     get_ficha_details: getFichaDetailsInputSchema,
     calculate_quote: calculateQuoteInputSchema,
+    search_catalog: searchFichasInputSchema,
+    validate_inventory: validateInventoryInputSchema,
+    create_checkout_lock: calculateQuoteInputSchema,
   };
   return {
     tools: FICHAS_TOOL_MANIFEST.map((descriptor: FichasToolDescriptor) => ({
@@ -459,7 +535,8 @@ export async function callFichasTool(
 
   try {
     switch (name) {
-      case 'search_fichas': {
+      case 'search_fichas':
+      case 'search_catalog': {
         const parsed = searchFichasInputSchema.safeParse(args);
         if (!parsed.success) return invalidParams(parsed.error);
         return {
@@ -475,7 +552,16 @@ export async function callFichasTool(
           result: { tool: name, envelope: await runGetFichaDetails(parsed.data, deps) },
         };
       }
-      case 'calculate_quote': {
+      case 'validate_inventory': {
+        const parsed = validateInventoryInputSchema.safeParse(args);
+        if (!parsed.success) return invalidParams(parsed.error);
+        return {
+          ok: true,
+          result: { tool: name, envelope: await runValidateInventory(parsed.data, deps) },
+        };
+      }
+      case 'calculate_quote':
+      case 'create_checkout_lock': {
         const parsed = calculateQuoteInputSchema.safeParse(args);
         if (!parsed.success) return invalidParams(parsed.error);
         return { ok: true, result: { tool: name, envelope: runCalculateQuote(parsed.data, deps) } };

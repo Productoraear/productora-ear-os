@@ -76,6 +76,14 @@ SISTEMA EN PRODUCCIÓN REAL: productoraear.com · Bare-Metal Coolify (82.29.179.
 - Centralita Única & Blindaje Anti-Picaresca:
   * Teléfono oficial EAR OS: **+34 693 693 048**.
   * Datos de contacto directo de proveedores protegidos bajo contact-gate (`maskedPhone` en UI pública hasta confirmación y fianza).
+- Ley del Paciente Cero (Aislamiento Estricto de Catálogos, Tarifas y Media):
+  * **Edwin Agudelo (Paciente Cero Artistas — `e78903`):** La tarifa base solista de **350,00 €** y la logística desde el Hub Méntrida (50 km exentos + 1,50 €/km) aplican **EXCLUSIVAMENTE** a Edwin Agudelo. El resto de artistas de cualquier categoría editan su propia tarifa y origen desde su ficha interna (`/admin/proveedores`).
+  * **Eduardo Martínez (Paciente Cero Hostelería/Fincas — Ezkertza Berria & Otzarreta):** Los menús de temporada 2026 (`FINCA_BODA_MENUS_2026`, `FINCA_COMUNION_MENUS_2026`, `FINCA_GRUPO_MENUS_2026`) pertenecen **EXCLUSIVAMENTE** a la ficha de Eduardo Martínez (`/otzarreta` / `ezkertza-berria`). Ninguna otra finca o catering hereda ni mezcla sus menús.
+  * **Extracción 100% de Fotos y Vídeos + Gate de Despacho por Membresía (`evaluateProviderMediaDeliveryPolicy`):** Se extrae y preserva el 100% de las fotos y vídeos de cada HTML de origen. El 100% es visible internamente para Admin, Call Center, Comercial de EAR OS, CEO y el propio proveedor. Ante la solicitud de un cliente público, el agente o la plataforma solo despacha el dossier multimedia vía n8n si el proveedor es de **PAGO** (`SOVEREIGN` o `CLAIMED`); si es `DIRECTORY_UNCLAIMED` (no de pago), se retiene el envío público/automático y solo lo gestiona internamente el Comercial / Call Center.
+- 3 Reglas Operativas SOTA (Capa de Atención Agéntica Autónoma & Gobernanza MCP/HITL):
+  * **Regla Operativa 1 (Máquina de Estados de 4 Agentes Sectoriales):** Sustitución de chatbots conversacionales abiertos por la transición determinista de 4 etapas (`AGENT_1_CALIFICADOR_INBOUND` → `AGENT_2_COTIZADOR_SSOT` → `AGENT_3_LOGISTICA_ACUSTICA` → `AGENT_4_CLOSER_DEPOSITO_HITL`).
+  * **Regla Operativa 2 (Estandarización MCP / A2A JSON-RPC 2.0):** Exposición formal de `search_catalog`, `validate_inventory` y `create_checkout_lock` con esquemas Zod estrictos.
+  * **Regla Operativa 3 (Telemetría de Campo `SIMULADO_LAB` vs RUM Real + HITL 1-Clic):** Toda métrica estática de laboratorio (`audit_cls_budget.cjs`, `audit_lighthouse_x4.cjs`) se etiqueta obligatoriamente como `SIMULADO_LAB` hasta contar con sonda RUM de campo sobre PostgreSQL; y ningún agente bloquea o cancela fechas sin revisión HITL (`DELETE /api/admin/dispatch/lock` para desbloqueo de disputas en 1 clic).
 
 ━━ 5. PROTECCIÓN DE MOTORES Y NORMAS NEXT.JS 16 / APP ROUTER ━━━━━━━━━━━━━━━━━━━━━━━
 - ZONA CERO (Inmutables — Prohibido modificar sin sanción explícita del CEO):
