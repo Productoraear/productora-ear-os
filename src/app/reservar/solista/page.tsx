@@ -22,7 +22,6 @@ import {
   Filter,
   Sparkles
 } from 'lucide-react';
-import StripeSmartLockCta from '@/components/programmatic/StripeSmartLockCta';
 import { DEPOSITO_STRIPE_EUR, LOGISTICA_EUR_PER_KM, LOGISTICA_KM_EXENTOS, LOGISTICA_KM_HOTEL, SUPLEMENTO_HOTEL_EUR } from '@/lib/constants/ear-os-ssot';
 
 import { ARTIST_FORMATS, DEFAULT_ARTIST_PROFILE_ID } from '@/lib/reservar/solista-catalog';
@@ -664,15 +663,15 @@ export default function SolistaReservationPage() {
               </div>
 
               {/* BLOCKED DATE ALERT BANNER */}
-              {blockedAlert && (
-                <div className="mb-6 p-4 rounded-xl bg-[#FF455B]/10 border border-[#FF455B]/30 flex items-start gap-3 animate-in fade-in slide-in-from-top-2">
+              <div className="min-h-[0px]">
+                {blockedAlert && <div className="min-h-[68px] mb-6 p-4 rounded-xl bg-[#FF455B]/10 border border-[#FF455B]/30 flex items-start gap-3 animate-in fade-in slide-in-from-top-2">
                   <AlertCircle className="text-[#FF455B] shrink-0 mt-0.5" size={18} />
                   <div className="text-xs">
                     <strong className="block text-[#FF455B] font-bold mb-0.5">FECHA NO DISPONIBLE</strong>
                     <span className="text-zinc-300">{blockedAlert}</span>
                   </div>
-                </div>
-              )}
+                </div>}
+              </div>
 
               {/* CALENDAR WEEKDAYS HEADER */}
               <div className="grid grid-cols-7 gap-2 mb-2 text-center text-[11px] font-mono font-bold text-zinc-500">
@@ -1105,25 +1104,22 @@ export default function SolistaReservationPage() {
 
               {/* HESITATION ENGINE BANNER */}
               <AnimatePresence>
-                {showHesitationBanner && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0, y: 10 }}
-                    animate={{ opacity: 1, height: 'auto', y: 0 }}
-                    exit={{ opacity: 0, height: 0, y: -10 }}
+                {showHesitationBanner && <motion.div className="min-h-[68px] mb-4 overflow-hidden"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
                     transition={{ ease: [0.16, 1, 0.3, 1], duration: 0.5 }}
-                    className="mb-4 overflow-hidden"
                   >
                     <div className="bg-[#258DCD]/10 border border-[#258DCD]/30 p-4 rounded-xl">
                       <div className="flex items-start gap-3">
                         <ShieldCheck className="text-[#258DCD] shrink-0 mt-0.5" size={18} />
                         <div className="text-xs">
-                          <strong className="block text-[#258DCD] font-bold mb-0.5 uppercase tracking-widest">Aviso de Auditoría</strong>
-                          <span className="text-zinc-300">El 85% de las fincas en esta zona exigen limitación acústica. Nuestro Rider S-Class garantiza 0 multas.</span>
+                          <strong className="block text-[#258DCD] font-bold mb-0.5 uppercase tracking-widest">Garantía de Match Bilateral</strong>
+                          <span className="text-zinc-300">El 85% de las fincas en esta zona exigen limitación acústica. Nuestro Rider S-Class asegura el cumplimiento normativo.</span>
                         </div>
                       </div>
                     </div>
-                  </motion.div>
-                )}
+                  </motion.div>}
               </AnimatePresence>
 
               {/* STRIPE PAYMENT BUTTON */}
@@ -1147,9 +1143,7 @@ export default function SolistaReservationPage() {
                 </button>
               </div>
 
-              {depositError && (
-                <p className="mb-4 text-xs text-[#FF455B] font-mono">{depositError}</p>
-              )}
+              {depositError && <p className="min-h-[20px] mb-4 text-xs text-[#FF455B] font-mono">{depositError}</p>}
 
               {/* DIRECT CONTACT BUTTONS */}
               <div className="grid grid-cols-2 gap-3">

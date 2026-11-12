@@ -49,6 +49,8 @@ const path = require('node:path');
 const ROOT = process.cwd();
 const REPORT_DIR = path.join(ROOT, '.antigravity', 'reports');
 const REPORT_JSON = path.join(REPORT_DIR, 'omega_rojo_scorecard.json');
+const EVIDENCE_DIR = path.join(ROOT, '.antigravity', 'evidence');
+const EVIDENCE_SCORECARD_JSON = path.join(EVIDENCE_DIR, 'scorecard_omega_diamante.json');
 
 const ARGV = process.argv.slice(2);
 const JSON_ONLY = ARGV.includes('--json');
@@ -345,7 +347,9 @@ if (JSON_ONLY) {
 try {
   fs.mkdirSync(REPORT_DIR, { recursive: true });
   fs.writeFileSync(REPORT_JSON, JSON.stringify(report, null, 2), 'utf8');
-  if (!JSON_ONLY) console.log('Reporte: .antigravity/reports/omega_rojo_scorecard.json');
+  fs.mkdirSync(EVIDENCE_DIR, { recursive: true });
+  fs.writeFileSync(EVIDENCE_SCORECARD_JSON, JSON.stringify(report, null, 2), 'utf8');
+  if (!JSON_ONLY) console.log('Reporte: .antigravity/reports/omega_rojo_scorecard.json · .antigravity/evidence/scorecard_omega_diamante.json');
 } catch (err) {
   console.error('AVISO: no se pudo escribir el reporte (' + err.message + '). La medicion sigue siendo valida.');
 }

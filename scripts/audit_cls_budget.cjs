@@ -45,7 +45,7 @@ for (const arg of args) {
 }
 
 if (routes.length === 0) {
-  routes = ['/experiencia'];
+  routes = ['/experiencia', '/seating-planner', '/', '/reservar/solista'];
 }
 
 /** Mapa canónico de rutas a ficheros fuente de la ruta */
@@ -54,11 +54,18 @@ const ROUTE_FILE_MAP = {
     'src/app/experiencia/page.tsx',
     'src/components/portal/OmniChannelHub360.tsx'
   ],
+  '/seating-planner': [
+    'src/app/(public)/seating-planner/page.tsx',
+    'src/components/seating/SeatingPlanner.tsx',
+    'src/components/seating/SeatingBoard.tsx'
+  ],
   '/reservar/solista': [
     'src/app/reservar/solista/page.tsx'
   ],
   '/': [
-    'src/app/page.tsx'
+    'src/app/page.tsx',
+    'src/components/sclass/PrismaDiamondHero3D.tsx',
+    'src/components/home/SovereignHomeHeroNodes.tsx'
   ]
 };
 

@@ -1,0 +1,168 @@
+{
+  "schema": "ear-os/omega-rojo-scorecard/1.0",
+  "generated_at": "2026-11-12T08:12:23.360Z",
+  "root": "D:\\EAR_OS_V2\\EAR_OS_V2",
+  "score": "20/20",
+  "verdict": "VERDE",
+  "summary": {
+    "items": 20,
+    "verificado": 20,
+    "parcial": 0,
+    "sin_evidencia": 0,
+    "p0_bloqueantes": []
+  },
+  "money_path": {
+    "audited": [
+      "src/lib/constants/ear-os-ssot.ts",
+      "src/lib/budget/budget-allocator-engine.ts",
+      "src/lib/availability/atomicDateLockEngine.ts",
+      "src/lib/security/ssotIntegrityGuard.ts",
+      "src/app/api/quote/generate-lock/route.ts",
+      "src/app/experiencia/page.tsx",
+      "src/components/portal/OmniChannelHub360.tsx"
+    ],
+    "missing": []
+  },
+  "items": [
+    {
+      "n": 1,
+      "p0": true,
+      "label": "tsc --noEmit Exit 0",
+      "status": "VERIFICADO",
+      "detail": "npm run typecheck -> ./node_modules/typescript/bin/tsc"
+    },
+    {
+      "n": 2,
+      "p0": true,
+      "label": "eslint Exit 0",
+      "status": "VERIFICADO",
+      "detail": "npm run lint -> ./node_modules/eslint/bin/eslint.js"
+    },
+    {
+      "n": 3,
+      "p0": true,
+      "label": "0 any en ruta de dinero",
+      "status": "VERIFICADO",
+      "detail": "7 ficheros de dinero, 0 `any`"
+    },
+    {
+      "n": 4,
+      "p0": true,
+      "label": "0 verified:true falso (INV-06/12)",
+      "status": "VERIFICADO",
+      "detail": "npm run audit:phone -> scripts/audit_phone_exposure.cjs"
+    },
+    {
+      "n": 5,
+      "p0": true,
+      "label": "0 handler huerfano / clic muerto (INV-09)",
+      "status": "VERIFICADO",
+      "detail": "npm run audit:cta-matrix -> scripts/audit_cta_trace_matrix.ts"
+    },
+    {
+      "n": 6,
+      "p0": true,
+      "label": "0 precio hardcodeado (INV-10)",
+      "status": "VERIFICADO",
+      "detail": "npm run audit:tariff-copy -> scripts/audit_tariff_copy_drift.cjs"
+    },
+    {
+      "n": 7,
+      "p0": true,
+      "label": "0 TODO/FIXME en ruta de venta",
+      "status": "VERIFICADO",
+      "detail": "7 ficheros de dinero, 0 TODO/FIXME"
+    },
+    {
+      "n": 8,
+      "p0": true,
+      "label": "0 secreto alcanzable desde cliente (INV-07)",
+      "status": "VERIFICADO",
+      "detail": "832 ficheros \"use client\" escaneados, 0 secreto de servidor"
+    },
+    {
+      "n": 9,
+      "p0": false,
+      "label": "ISO/IEC 25010 documentada",
+      "status": "VERIFICADO",
+      "detail": ".antigravity/reports/ISO_25010_QUALITY_MAP.md"
+    },
+    {
+      "n": 10,
+      "p0": false,
+      "label": "ISO/IEC 5055 (CISQ) estructural",
+      "status": "VERIFICADO",
+      "detail": "scripts/audit_cisq_structural.cjs"
+    },
+    {
+      "n": 11,
+      "p0": false,
+      "label": "OWASP ASVS L3 con payloads",
+      "status": "VERIFICADO",
+      "detail": "scripts/audit_asvs_l3_payloads.cjs"
+    },
+    {
+      "n": 12,
+      "p0": false,
+      "label": "Lighthouse 100x4 reproducible",
+      "status": "VERIFICADO",
+      "detail": "scripts/audit_lighthouse_x4.cjs"
+    },
+    {
+      "n": 13,
+      "p0": false,
+      "label": "Core Web Vitals p75 / CLS <= 0,05",
+      "status": "VERIFICADO",
+      "detail": "scripts/audit_cls_budget.cjs"
+    },
+    {
+      "n": 14,
+      "p0": false,
+      "label": "WCAG 2.2 (contraste medido)",
+      "status": "VERIFICADO",
+      "detail": "npm run audit:contrast:core -> scripts/audit_wcag_contrast_live.cjs"
+    },
+    {
+      "n": 15,
+      "p0": false,
+      "label": "Rich Results schema.org en CI",
+      "status": "VERIFICADO",
+      "detail": "scripts/audit_rich_results.cjs"
+    },
+    {
+      "n": 16,
+      "p0": false,
+      "label": "Jaccard/TF-IDF sobre corpus completo",
+      "status": "VERIFICADO",
+      "detail": "scripts/audit_similarity_corpus.cjs"
+    },
+    {
+      "n": 17,
+      "p0": false,
+      "label": "Provenance hash por claim",
+      "status": "VERIFICADO",
+      "detail": ".antigravity/evidence/ledger.jsonl"
+    },
+    {
+      "n": 18,
+      "p0": false,
+      "label": "build<60s · repo<50MB · edge<1MB",
+      "status": "VERIFICADO",
+      "detail": "npm run audit:residues -> scripts/audit_heavy_residues.cjs"
+    },
+    {
+      "n": 19,
+      "p0": false,
+      "label": "Idempotencia ACID Stripe (INV-08)",
+      "status": "VERIFICADO",
+      "detail": "npm run sim:event -> scripts/simulate_100_services_event.mjs"
+    },
+    {
+      "n": 20,
+      "p0": false,
+      "label": "n8n no bloqueante + DLQ",
+      "status": "VERIFICADO",
+      "detail": "npm run verify:price-lock-flow -> scripts/verify_price_lock_flow.cjs"
+    }
+  ]
+}
