@@ -35,6 +35,8 @@ export interface ProviderMediaSource {
   readonly video?: unknown;
   readonly media?: unknown;
   readonly atomic_specs?: unknown;
+  readonly raw_html?: unknown;
+  readonly scraped_content?: unknown;
 }
 
 export type ProviderMediaSourceLike = ProviderMediaSource | null | undefined;
@@ -50,8 +52,95 @@ export type ProviderVideoSource =
   | { readonly kind: 'file'; readonly src: string }
   | { readonly kind: 'embed'; readonly src: string };
 
-const MAX_IMAGES_DEFAULT = 24;
-const MAX_VIDEOS_DEFAULT = 12;
+/** Roles operativos del sistema para evaluación de entrega de media (Ley del Paciente Cero). */
+export type MediaRequesterRole =
+  | 'CEO'
+  | 'ADMIN'
+  | 'CALL_CENTER'
+  | 'SALES_REP'
+  | 'PROVIDER_SELF'
+  | 'PUBLIC_CLIENT';
+
+export type ProviderMembershipTier =
+  | 'SOVEREIGN'
+  | 'CLAIMED'
+  | 'DIRECTORY_UNCLAIMED'
+  | 'BLACKLISTED';
+
+export interface MediaDeliveryPolicyResult {
+  readonly allowFullMediaToRequester: boolean;
+  readonly canDispatchToClientViaN8n: boolean;
+  readonly publicPreviewLimit: number;
+  readonly exposeVideosPublicly: boolean;
+  readonly policyReason: string;
+}
+
+/**
+ * Evalúa la política de visibilidad y despacho n8n del 100% de media extraída:
+ * - Roles internos (CEO, Admin, Call Center, Comercial EAR OS, propio proveedor): ven el 100% siempre.
+ * - Cliente público / Agente ante solicitud de cliente:
+ *   · Si el proveedor es de PAGO (`SOVEREIGN` o `CLAIMED`), se autoriza el envío del 100% vía n8n.
+ *   · Si NO es proveedor de pago (`DIRECTORY_UNCLAIMED`), se retiene la entrega pública/automática
+ *     para proteger contra picaresca y reclamaciones; solo el comercial/Call Center lo ve en cabina.
+ */
+export function evaluateProviderMediaDeliveryPolicy(params: {
+  readonly tier: ProviderMembershipTier;
+  readonly role: MediaRequesterRole;
+}): MediaDeliveryPolicyResult {
+  const { tier, role } = params;
+  if (tier === 'BLACKLISTED') {
+    return {
+      allowFullMediaToRequester: false,
+      canDispatchToClientViaN8n: false,
+      publicPreviewLimit: 0,
+      exposeVideosPublicly: false,
+      policyReason: 'BLACKLISTED_OPTOUT: proveedor en lista de exclusión; cero exposición de media.',
+    };
+  }
+
+  const isInternalRole =
+    role === 'CEO' ||
+    role === 'ADMIN' ||
+    role === 'CALL_CENTER' ||
+    role === 'SALES_REP' ||
+    role === 'PROVIDER_SELF';
+
+  const isPaidTier = tier === 'SOVEREIGN' || tier === 'CLAIMED';
+
+  if (isInternalRole) {
+    return {
+      allowFullMediaToRequester: true,
+      canDispatchToClientViaN8n: isPaidTier,
+      publicPreviewLimit: 250,
+      exposeVideosPublicly: true,
+      policyReason: isPaidTier
+        ? 'INTERNAL_FULL_ACCESS_AND_PAID_N8N_READY: 100% visible en cabina y apto para despacho n8n al cliente.'
+        : 'INTERNAL_FULL_ACCESS_UNPAID_HOLD: 100% visible para Comercial/Call Center/CEO/Proveedor; retenido al público hasta alta de pago.',
+    };
+  }
+
+  if (isPaidTier) {
+    return {
+      allowFullMediaToRequester: true,
+      canDispatchToClientViaN8n: true,
+      publicPreviewLimit: 250,
+      exposeVideosPublicly: true,
+      policyReason: 'PAID_PROVIDER_FULL_DELIVERY: proveedor activo/reclamado; 100% de media disponible y despachable vía n8n.',
+    };
+  }
+
+  return {
+    allowFullMediaToRequester: false,
+    canDispatchToClientViaN8n: false,
+    publicPreviewLimit: 3,
+    exposeVideosPublicly: false,
+    policyReason:
+      'UNPAID_DIRECTORY_SHIELD: proveedor sin plan de pago activo; 100% extraído en bóveda interna (Admin/Call Center/Comercial), entrega pública retenida.',
+  };
+}
+
+const MAX_IMAGES_DEFAULT = 250;
+const MAX_VIDEOS_DEFAULT = 60;
 
 const FILE_VIDEO_EXT = /\.(mp4|webm|ogg|m4v)(?:[?#]|$)/i;
 
@@ -268,6 +357,45 @@ export function collectProviderMedia(
         seenVideos.add(dedupeKey);
         videos.push(resolved.src);
       }
+    }
+  }
+
+  // Extracción directa desde HTML cosechado (`raw_html` / `scraped_content`) para conservar el 100% real
+  const htmlSources: string[] = [];
+  for (const container of containers) {
+    const rawHtml = readField(container, 'raw_html');
+    const scraped = readField(container, 'scraped_content');
+    if (typeof rawHtml === 'string' && rawHtml.length > 0) htmlSources.push(rawHtml);
+    if (typeof scraped === 'string' && scraped.length > 0) htmlSources.push(scraped);
+  }
+
+  for (const html of htmlSources) {
+    // Extraer imágenes de atributos src / data-src / data-lazy-src en <img>
+    const imgRegex = /<img\b[^>]*?\b(?:src|data-src|data-lazy-src)=["']([^"']+)["'][^>]*>/gi;
+    let imgMatch: RegExpExecArray | null;
+    while ((imgMatch = imgRegex.exec(html)) !== null) {
+      if (images.length >= maxImages) break;
+      const candidateUrl = normalizeProviderMediaUrl(imgMatch[1]);
+      if (!candidateUrl) continue;
+      if (/\.svg(?:[?#]|$)/i.test(candidateUrl)) continue;
+      if (!allowStock && isStockMediaUrl(candidateUrl)) continue;
+      const dedupeKey = candidateUrl.toLowerCase();
+      if (seenImages.has(dedupeKey)) continue;
+      seenImages.add(dedupeKey);
+      images.push(candidateUrl);
+    }
+
+    // Extraer vídeos o embeds de <video>, <source> e <iframe>
+    const mediaRegex = /<(?:video|source|iframe)\b[^>]*?\b(?:src|data-src)=["']([^"']+)["'][^>]*>/gi;
+    let vidMatch: RegExpExecArray | null;
+    while ((vidMatch = mediaRegex.exec(html)) !== null) {
+      if (videos.length >= maxVideos) break;
+      const resolved = classifyProviderVideo(vidMatch[1]);
+      if (!resolved) continue;
+      const dedupeKey = resolved.src.toLowerCase();
+      if (seenVideos.has(dedupeKey)) continue;
+      seenVideos.add(dedupeKey);
+      videos.push(resolved.src);
     }
   }
 

@@ -47,7 +47,10 @@ import {
   evaluateProviderContactAccess,
   verifySupplierUnlockSession,
 } from '@/lib/providers/contact-gate-server';
-import { collectProviderMedia } from '@/lib/providers/provider-media-engine';
+import {
+  collectProviderMedia,
+  evaluateProviderMediaDeliveryPolicy,
+} from '@/lib/providers/provider-media-engine';
 import { ProviderProfileSections } from '@/components/providers/ProviderProfileSections';
 import { ProviderPaymentRequestPanel } from '@/components/providers/ProviderPaymentRequestPanel';
 import { UniversalProviderSimulatorCard } from '@/components/providers/UniversalProviderSimulatorCard';
@@ -516,60 +519,21 @@ function findInStaticPartitions(slugNorm: string) {
         });
 
         if (found) {
-          const imageSet = new Set<string>();
-          if (found.img && typeof found.img === 'string') imageSet.add(found.img);
-          if (Array.isArray(found.imageUrls)) found.imageUrls.forEach((u: any) => typeof u === 'string' && u.length > 5 && !u.includes('.svg') && imageSet.add(u));
-          if (Array.isArray(found.gallery)) found.gallery.forEach((u: any) => typeof u === 'string' && u.length > 5 && !u.includes('.svg') && imageSet.add(u));
-          if (Array.isArray(found.photos)) found.photos.forEach((u: any) => typeof u === 'string' && u.length > 5 && !u.includes('.svg') && imageSet.add(u));
-          
-          const cleanImages = Array.from(imageSet);
-
-          // Pool de enriquecimiento visual temático para asegurar mínimo 6 imágenes por proveedor
-          const CATEGORY_VISUAL_POOLS: Record<string, string[]> = {
-            finca: [
-              "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=1200&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1200&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1200&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=1200&auto=format&fit=crop"
-            ],
-            catering: [
-              "https://images.unsplash.com/photo-1555244162-803834f70033?q=80&w=1200&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1200&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=1200&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=1200&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?q=80&w=1200&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=1200&auto=format&fit=crop"
-            ],
-            musica: [
-              "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1200&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1200&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1511192336575-5a79af67a629?q=80&w=1200&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1465847899084-d164df4dedc6?q=80&w=1200&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1525994886773-080587e161c2?q=80&w=1200&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1507838153414-b4b713384a76?q=80&w=1200&auto=format&fit=crop"
-            ],
-            foto: [
-              "https://images.unsplash.com/photo-1537633552985-df8429e8048b?q=80&w=1200&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=1200&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=1200&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=1200&auto=format&fit=crop"
-            ]
-          };
-
-          const pool = CATEGORY_VISUAL_POOLS[found.category] || CATEGORY_VISUAL_POOLS.finca;
-          let poolIdx = 0;
-          while (cleanImages.length < 6 && poolIdx < pool.length) {
-            if (!cleanImages.includes(pool[poolIdx])) {
-              cleanImages.push(pool[poolIdx]);
-            }
-            poolIdx++;
-          }
-
-          const coverImg = cleanImages[0] || pool[0];
-          const finalGallery = cleanImages.length > 0 ? cleanImages : pool;
+          const extractedMedia = collectProviderMedia({
+            gallery: found.gallery,
+            imageUrls: found.imageUrls,
+            images: found.images,
+            photos: found.photos,
+            img: found.img,
+            video_url: found.video_url,
+            videoUrl: found.videoUrl,
+            videos: found.videos,
+            raw_html: found.raw_html,
+            scraped_content: found.scraped_content,
+          });
+          const cleanImages = [...extractedMedia.images];
+          const coverImg = cleanImages[0] || (typeof found.img === 'string' ? found.img : '');
+          const finalGallery = cleanImages;
 
           return {
             id: found.id || slugNorm,
@@ -585,6 +549,7 @@ function findInStaticPartitions(slugNorm: string) {
             description_full: found.description_full || found.description,
             gallery: finalGallery,
             img: coverImg,
+            videos: [...extractedMedia.videos],
             basePrice: found.basePrice || (typeof found.price === 'number' ? found.price : 95),
             price: found.price || `${found.basePrice || 95} €`,
             capacidadMaxPax: found.capacidadMaxPax || 350,
@@ -830,13 +795,15 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
     : cleanText(rawProvider.atomic_specs?.description || rawProvider.description_full || rawProvider.description);
 
   /**
-   * 📸 DOCTRINA DE MEDIA VERIFICADA (W48) — todas las capas, cero relleno.
-   * Antes: se leía UN solo campo (`gallery` o `imageUrls`) y los huecos se
-   * tapaban con un pool de fotos de banco de imágenes (`images.unsplash.com`),
-   * de modo que un proveedor con 2 fotos reales mostraba 6 (4 falsas) y CERO
-   * vídeos aunque su ficha tuviera varios. Ahora se unifican raíz +
-   * `atomic_specs` + `media` + `atomic_specs.media`, el stock se descarta y el
-   * vídeo se clasifica (player oficial ⇒ `iframe`, fichero ⇒ `<video>`).
+   * 📸 DOCTRINA DE MEDIA VERIFICADA (W48 + Ley del Paciente Cero):
+   * Se extrae el 100% de fotos y vídeos del HTML/JSON cosechado.
+   * - Para Admin / Call Center / Comercial EAR OS / CEO / Proveedor: 100% accesible.
+   * - En la vista pública del cliente:
+   *   · Si el proveedor es de PAGO (`SOVEREIGN` o `CLAIMED`), se muestra el 100% de fotos
+   *     y vídeos y se habilita el envío automático por n8n.
+   *   · Si NO es proveedor de pago (`DIRECTORY_UNCLAIMED`), se protege con vista previa
+   *     limitada (máx. 3 imágenes, 0 vídeos públicos) y el resto queda reservado en bóveda
+   *     interna para gestión del Comercial / Call Center (+34 693 693 048).
    */
   const providerMedia = isBlacklisted
     ? { images: [] as readonly string[], videos: [] as readonly string[] }
@@ -844,6 +811,7 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
         gallery: rawProvider.gallery,
         imageUrls: rawProvider.imageUrls,
         images: rawProvider.images,
+        photos: rawProvider.photos,
         img: rawProvider.img,
         coverImage: rawProvider.atomic_specs?.media?.coverImage,
         video_url: rawProvider.video_url,
@@ -851,7 +819,14 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
         videos: rawProvider.videos,
         media: rawProvider.atomic_specs?.media,
         atomic_specs: rawProvider.atomic_specs,
+        raw_html: rawProvider.raw_html,
+        scraped_content: rawProvider.scraped_content,
       });
+
+  const mediaPolicy = evaluateProviderMediaDeliveryPolicy({
+    tier,
+    role: 'PUBLIC_CLIENT',
+  });
 
   // Marco editorial neutro: SOLO para fichas blacklisted/protegidas (nunca para
   // rellenar huecos de un proveedor con material propio insuficiente).
@@ -867,59 +842,23 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
       ]
     : (providerMedia.images.length > 0 ? [...providerMedia.images] : [coverImg]);
 
-  const SLUG_VISUAL_POOLS: Record<string, string[]> = {
-    finca: [
-      'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=1200&auto=format&fit=crop'
-    ],
-    catering: [
-      'https://images.unsplash.com/photo-1555244162-803834f70033?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=1200&auto=format&fit=crop'
-    ],
-    musica: [
-      'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1511192336575-5a79af67a629?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1465847899084-d164df4dedc6?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1525994886773-080587e161c2?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1507838153414-b4b713384a76?q=80&w=1200&auto=format&fit=crop'
-    ],
-    foto: [
-      'https://images.unsplash.com/photo-1537633552985-df8429e8048b?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=1200&auto=format&fit=crop'
-    ]
-  };
-  const rawCatStr = (rawProvider.category || '').toLowerCase();
-  const catKey = rawCatStr.includes('finca') ? 'finca' : rawCatStr.includes('cater') ? 'catering' : rawCatStr.includes('foto') ? 'foto' : 'musica';
-  const slugPool = SLUG_VISUAL_POOLS[catKey] || SLUG_VISUAL_POOLS.finca;
-
   const totalPrivatePhotosCount = rawGallery.length;
-  // Blindaje Legal (JUR-4): En web pública mostramos portada + hasta 3 vistas previas.
-  // El resto del dossier gráfico se entrega bajo solicitud directa a la Centralita (+34 693 693 048).
-  const PUBLIC_GALLERY_PREVIEW_LIMIT = 3;
+  const totalExtractedVideosCount = providerMedia.videos.length;
+  const publicPreviewLimit = mediaPolicy.publicPreviewLimit;
   const gallery: string[] = rawGallery
-    .slice(0, PUBLIC_GALLERY_PREVIEW_LIMIT)
+    .slice(0, publicPreviewLimit)
     .map((g: string) => getProxiedImage(g));
-  const vaultedPhotosCount = Math.max(0, totalPrivatePhotosCount - PUBLIC_GALLERY_PREVIEW_LIMIT);
+  const publicVideos: string[] = mediaPolicy.exposeVideosPublicly
+    ? [...providerMedia.videos]
+    : [];
+  const vaultedPhotosCount = Math.max(0, totalPrivatePhotosCount - publicPreviewLimit);
 
   // `galleryReal`: únicamente tomas atribuibles al proveedor. Se calcula sobre
   // `rawGallery` (URLs absolutas) ANTES del proxy `/api/media`, para que JSON-LD
   // / Rich Results nunca declare stock como fotografía propia del negocio.
   const galleryReal = rawGallery
-    .slice(0, PUBLIC_GALLERY_PREVIEW_LIMIT)
-    .filter((g: string) => /^https?:\/\//.test(g) && !slugPool.includes(g));
+    .slice(0, publicPreviewLimit)
+    .filter((g: string) => /^https?:\/\//.test(g) && g !== NEUTRAL_COVER);
 
   // FAQs
   const faqs = getCategoryFAQs(rawProvider, category, location);
@@ -1066,19 +1005,28 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
               providerName={displayName}
               featuredImage={coverImg}
               galleryImages={gallery}
-              videoUrls={[...providerMedia.videos]}
+              videoUrls={publicVideos}
             />
 
             {/* BLINDAJE GRÁFICO Y DOSSIER BAJO DEMANDA (+34 693 693 048) */}
             <div className="p-4 rounded-2xl bg-[#09090d]/90 border border-[#ecb613]/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="space-y-1">
                 <div className="text-xs font-mono uppercase tracking-wider text-[#ecb613] font-bold">
-                  Dossier Gráfico Protegido · Anti-Picaresca
+                  {mediaPolicy.canDispatchToClientViaN8n
+                    ? 'Dossier Multimedia Completo Activo · Despacho Automático n8n'
+                    : 'Dossier Gráfico en Bóveda Interna · Anti-Picaresca'}
                 </div>
                 <p className="text-xs text-zinc-300 leading-relaxed">
-                  Por protección de derechos de imagen y privacidad del proveedor, se muestran hasta 3 vistas previas públicas
-                  {vaultedPhotosCount > 0 ? ` (${vaultedPhotosCount} fotografías adicionales en bóveda privada)` : ''}.
-                  Solicita el reportaje gráfico completo y tarifas verificadas por WhatsApp oficial.
+                  {mediaPolicy.canDispatchToClientViaN8n ? (
+                    <>
+                      Proveedor verificado con membresía activa: tienes acceso al 100% de su reportaje ({totalPrivatePhotosCount} fotografías y {totalExtractedVideosCount} vídeos) y envío directo automatizado vía n8n.
+                    </>
+                  ) : (
+                    <>
+                      Se ha extraído el 100% del material de origen ({totalPrivatePhotosCount} fotos{totalExtractedVideosCount > 0 ? ` y ${totalExtractedVideosCount} vídeos` : ''}) para uso interno de Admin / Call Center / Comercial EAR OS.
+                      {vaultedPhotosCount > 0 ? ` En la vista pública se muestran ${publicPreviewLimit} vistas previas (${vaultedPhotosCount} en bóveda privada) hasta que el proveedor active su cuenta.` : ''}
+                    </>
+                  )}
                 </p>
               </div>
               <a
@@ -1414,7 +1362,9 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
                   </span>
                 </div>
                 <span className="text-[10px] font-mono text-[#ecb613]/80 tracking-wide">
-                  Roster SSOT · Solista desde {TARIFA_BASE_SOLISTA_EUR} € · Split {Math.round(SPLIT_SOBERANO.artista * 100)}/{Math.round(SPLIT_SOBERANO.earOs * 100)}/{Math.round(SPLIT_SOBERANO.vimume * 100)}
+                  {tier === 'SOVEREIGN'
+                    ? `Tarifa Solista Edwin Agudelo: ${TARIFA_BASE_SOLISTA_EUR} € (Hub Méntrida) · Split ${Math.round(SPLIT_SOBERANO.artista * 100)}/${Math.round(SPLIT_SOBERANO.earOs * 100)}/${Math.round(SPLIT_SOBERANO.vimume * 100)}`
+                    : `Tarifa propia editable por el proveedor desde su ficha interna · Split ${Math.round(SPLIT_SOBERANO.artista * 100)}/${Math.round(SPLIT_SOBERANO.earOs * 100)}/${Math.round(SPLIT_SOBERANO.vimume * 100)}`}
                 </span>
               </div>
 
@@ -1699,26 +1649,28 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
           }}
         />
 
-        {/* 📦 ETIQUETA SCHEMA.ORG JSON-LD — OFFER ROSTER SOLISTA (TARIFA SSOT 350 €) */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'Product',
-              name: 'Roster Solista Oficial · Edwin Agudelo',
-              description: 'Actuación solista premium con rider acústico calibrado 70-80 dBA (Bose F1) y reserva con Price-Lock.',
-              brand: { '@type': 'Brand', name: 'Productora EAR' },
-              offers: {
-                '@type': 'Offer',
-                price: TARIFA_BASE_SOLISTA_EUR,
-                priceCurrency: 'EUR',
-                availability: 'https://schema.org/InStock',
-                url: 'https://www.productoraear.com/reservar/solista',
-              },
-            }),
-          }}
-        />
+        {/* 📦 ETIQUETA SCHEMA.ORG JSON-LD — OFFER ROSTER SOLISTA (EXCLUSIVO EDWIN AGUDELO) */}
+        {tier === 'SOVEREIGN' && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                '@context': 'https://schema.org',
+                '@type': 'Product',
+                name: 'Roster Solista Oficial · Edwin Agudelo',
+                description: 'Actuación solista premium con rider acústico calibrado 70-80 dBA (Bose F1) y reserva con Price-Lock.',
+                brand: { '@type': 'Brand', name: 'Productora EAR' },
+                offers: {
+                  '@type': 'Offer',
+                  price: TARIFA_BASE_SOLISTA_EUR,
+                  priceCurrency: 'EUR',
+                  availability: 'https://schema.org/InStock',
+                  url: 'https://www.productoraear.com/reservar/solista',
+                },
+              }),
+            }}
+          />
+        )}
 
       </div>
     </div>

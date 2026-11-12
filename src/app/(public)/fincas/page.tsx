@@ -166,14 +166,14 @@ export default function FincasB2BPage() {
             <section id="simulador-2026" className="scroll-mt-24 w-full px-4 sm:px-6 lg:px-8 py-16 max-w-7xl mx-auto space-y-8">
                 <div className="text-center space-y-3 max-w-3xl mx-auto">
                     <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] font-mono text-xs uppercase tracking-widest">
-                        <Sparkles size={14} /> Temporada Oficial 2026
+                        <Sparkles size={14} /> Paciente Cero Hostelería · Eduardo Martínez (Ezkertza Berria &amp; Otzarreta)
                     </span>
                     <h2 className="text-3xl sm:text-4xl font-black font-syne text-white tracking-tight">
-                        Simulador de Menús, Logística y Comisiones de Afiliado
+                        Simulador Gastronómico (Caso Real Ezkertza Berria) &amp; Logística B2B
                     </h2>
                     <p className="text-sm sm:text-base text-zinc-400 leading-relaxed font-sans">
-                        Configura aforo, selección de platos de gala, complementos oficiales y distancia logística a Méntrida Hub. 
-                        Cálculo determinista en céntimos enteros con liquidación de comisión de afiliado para la finca y encargo en 1-clic a Productora EAR.
+                        Demostración interactiva con la carta oficial 2026 de <strong className="text-white">Eduardo Martínez (Restaurante Ezkertza Berria &amp; Otzarreta)</strong>.
+                        Cada finca o restaurante adherido dispone de su propio catálogo editable en su ficha interna sin mezclar cartas ni tarifas.
                     </p>
                 </div>
 

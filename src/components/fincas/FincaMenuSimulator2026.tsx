@@ -101,8 +101,14 @@ export default function FincaMenuSimulator2026({
 
   // ── ESTADOS DE LA ORDEN TRANSACCIONAL 1-CLIC ───────────────────────────────
   const [selectedFincaId, setSelectedFincaId] = useState<string>(
-    initialFincaId || SCLASS_12_FINCAS_HOMOLOGADAS[0]?.id || 'villa-escorial-park'
+    initialFincaId || 'ezkertza-berria-otzarreta'
   );
+  const [customMenuPricePerPaxEur, setCustomMenuPricePerPaxEur] = useState<number>(115);
+
+  const isEduardoEzkertzaExclusive =
+    selectedFincaId === 'ezkertza-berria-otzarreta' ||
+    selectedFincaId === 'otzarreta' ||
+    selectedFincaId === 'restaurante-otzarreta';
   const [contactName, setContactName] = useState<string>('');
   const [contactEmail, setContactEmail] = useState<string>('');
   const [contactPhone, setContactPhone] = useState<string>('');
@@ -322,27 +328,70 @@ export default function FincaMenuSimulator2026({
                 onChange={(e) => handleSelectFinca(e.target.value)}
                 className="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:border-[#ecb613] outline-none font-sans cursor-pointer"
               >
+                <option value="ezkertza-berria-otzarreta">
+                  Restaurante Ezkertza Berria &amp; Otzarreta — Eduardo Martínez (Paciente Cero · Menús Oficiales 2026)
+                </option>
                 {SCLASS_12_FINCAS_HOMOLOGADAS.map((finca) => (
                   <option key={finca.id} value={finca.id}>
-                    {finca.name} ({finca.provincia} • {finca.distanciaHubMentridaKm} km del Hub Méntrida)
+                    {finca.name} ({finca.provincia} • Sede propia del espacio)
                   </option>
                 ))}
               </select>
+              <p className="text-[11px] font-mono text-[#ecb613]/90 pt-1">
+                {isEduardoEzkertzaExclusive
+                  ? 'Ley del Paciente Cero activa: Los 7 menús de boda, comunión y grupos aquí desglosados pertenecen en exclusiva a Eduardo Martínez (Restaurante Ezkertza Berria & Otzarreta).'
+                  : 'Ley del Paciente Cero activa: Los menús de Eduardo Martínez (Ezkertza Berria) NO se atribuyen a otras fincas. Cada espacio edita y cotiza sus propios menús desde su ficha interna.'}
+              </p>
             </div>
           </section>
 
-          {/* 2. CATÁLOGO DE MENÚS (SELECTOR DE PAQUETE 2026) */}
+          {/* 2. CATÁLOGO DE MENÚS (EXCLUSIVO EDUARDO MARTÍNEZ O TARIFA PROPIA DE LA FINCA) */}
           <section className="rounded-3xl border border-white/10 bg-[#09090d]/80 backdrop-blur-md p-6 space-y-6">
             <div className="border-b border-white/10 pb-4">
               <h3 className="font-syne text-lg font-bold uppercase text-white flex items-center gap-2">
                 <Utensils size={18} className="text-[#ecb613]" />
-                <span>2. Menús Canónicos de Temporada 2026 ({categoryMenus.length} Disponibles)</span>
+                <span>
+                  {isEduardoEzkertzaExclusive
+                    ? `2. Menús Oficiales 2026 de Eduardo Martínez · Ezkertza Berria (${categoryMenus.length} Disponibles)`
+                    : `2. Propuesta Gastronómica Propia de ${currentFinca?.name || 'la Finca'}`}
+                </span>
               </h3>
               <p className="font-mono text-xs text-white/50">
-                Precios por persona en céntimos enteros con desglose de bodega, marisco y platos principales
+                {isEduardoEzkertzaExclusive
+                  ? 'Carta gastronómica exclusiva de Eduardo Martínez (Ezkertza Berria & Otzarreta) en céntimos enteros'
+                  : 'Cada finca o catering gestiona sus propios menús y precios desde su ficha interna (/admin/proveedores)'}
               </p>
             </div>
 
+            {!isEduardoEzkertzaExclusive ? (
+              <div className="rounded-2xl border border-[#ecb613]/30 bg-black/60 p-5 space-y-4 font-mono text-xs">
+                <div className="text-[#ecb613] font-bold uppercase">
+                  Separación Estricta de Catálogos (Ley del Paciente Cero)
+                </div>
+                <p className="text-white/80 font-sans leading-relaxed">
+                  Los menús <em>Cantábrico, Paloma, Imperial, Ezkertza y Caserío Beko</em> son propiedad exclusiva de{' '}
+                  <strong className="text-white">Eduardo Martínez (Restaurante Ezkertza Berria &amp; Otzarreta)</strong>.
+                  Para <strong className="text-white">{currentFinca?.name}</strong>, el responsable del espacio configura su
+                  propia carta y tarifas directamente desde su panel interno o ficha homologada.
+                </p>
+                <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t border-white/10">
+                  <label className="text-white/70">
+                    Tarifa base de menú declarada en ficha ({currentFinca?.name}):
+                  </label>
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="number"
+                      min="40"
+                      max="450"
+                      value={customMenuPricePerPaxEur}
+                      onChange={(e) => setCustomMenuPricePerPaxEur(Math.max(40, Number(e.target.value) || 100))}
+                      className="w-28 bg-black border border-white/20 rounded-xl px-3 py-1.5 text-right text-white font-bold"
+                    />
+                    <span className="text-white/50">€ / pax</span>
+                  </div>
+                </div>
+              </div>
+            ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
               {categoryMenus.map((menu) => {
                 const isSelected = menu.id === selectedMenuId;
@@ -384,9 +433,10 @@ export default function FincaMenuSimulator2026({
                 );
               })}
             </div>
+            )}
 
-            {/* Ficha Desplegable del Menú Seleccionado */}
-            {selectedMenu && (
+            {/* Ficha Desplegable del Menú Seleccionado (Exclusivo Eduardo Martínez) */}
+            {isEduardoEzkertzaExclusive && selectedMenu && (
               <div className="rounded-2xl border border-white/10 bg-black/60 p-5 space-y-4 font-sans text-xs">
                 <div className="flex items-center justify-between border-b border-white/10 pb-3">
                   <div className="flex items-center gap-2">
