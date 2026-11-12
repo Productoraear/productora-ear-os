@@ -131,9 +131,9 @@ const checkedAt = new Date().toISOString();
 
 const report = {
   schema: 'ear-os/lighthouse-x4-contract/1.0',
-  mode: 'STATIC_CONTRACT',
+  mode: 'SIMULADO_LAB',
   probed: false,
-  disclaimer: 'Auditor estático de los 4 pilares (Performance, Accessibility, Best Practices, SEO) sobre las 4 rutas comerciales críticas.',
+  disclaimer: 'Auditor estático de laboratorio (SIMULADO_LAB) de los 4 pilares sobre las 4 rutas comerciales críticas; el p75 real de campo exige RUM persistido en PostgreSQL.',
   checkedAt,
   totalRoutes: COMMERCIAL_ROUTES.length,
   totalPillars,

@@ -260,9 +260,9 @@ const allPassed = totalViolations === 0;
 const outputPayload = {
   probed: false,
   source: 'static',
-  mode: 'SIMULADO',
+  mode: 'SIMULADO_LAB',
   estimatedCls: null,
-  disclaimer: 'Presupuesto estático de layout-shift; el CLS p75 real exige RUM/CrUX con datos de campo.',
+  disclaimer: 'Presupuesto estático de layout-shift (SIMULADO_LAB); el CLS p75 real de campo exige sonda RUM sobre PostgreSQL.',
   rulesCount: RULES.length,
   totalViolations,
   checkedAt,
@@ -285,7 +285,7 @@ if (jsonOnly) {
 } else {
   for (const r of results) {
     console.log(
-      `CLS_BUDGET_ROUTE=${r.route} RULES=${RULES.length} VIOLATIONS=${r.violationsCount} BUDGET=0.05 MODE=SIMULADO SOURCE=static PROBED=false CHECKED_AT=${checkedAt}`
+      `CLS_BUDGET_ROUTE=${r.route} RULES=${RULES.length} VIOLATIONS=${r.violationsCount} BUDGET=0.05 MODE=SIMULADO_LAB SOURCE=static PROBED=false CHECKED_AT=${checkedAt}`
     );
     console.log(`CLS_BUDGET_VERDICT=${r.verdict}`);
     if (r.violations.length > 0) {
