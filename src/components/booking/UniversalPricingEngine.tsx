@@ -6,9 +6,7 @@ import CharroHatIcon from "@/components/ui/icons/CharroHatIcon";
 import InternationalFlightBadge from "@/components/booking/InternationalFlightBadge";
 import { EVENT_OCCASIONS } from "@/lib/taxonomy/eventsAndGeo";
 import { createSecureMariachiBooking } from "@/app/actions/mariachiLeadActions";
-import { createStripeBookingCheckoutSession } from "@/app/actions/stripeBookingActions";
 
-// Formatos Artísticos Oficiales con Espacio Visual y Transparencia
 interface EnsambleFormat {
   id: string;
   musicians: number;
@@ -17,7 +15,6 @@ interface EnsambleFormat {
   price: number;
   recommended?: boolean;
   idealFor: string;
-  youtubeId?: string;
   features: string[];
 }
 
@@ -30,7 +27,6 @@ const ENSAMBLE_FORMATS: EnsambleFormat[] = [
     price: 550,
     recommended: true,
     idealFor: "Serenatas íntimas, aniversarios, pedidas de mano y sorpresas de alto impacto",
-    youtubeId: "dQw4w9WgXcQ", // Vídeo oficial de muestra
     features: [
       "Voz líder en directo con repertorio clásico y ranchero",
       "Sonido autónomo inalámbrico sin necesidad de cables ni enchufes",
@@ -79,27 +75,32 @@ const ENSAMBLE_FORMATS: EnsambleFormat[] = [
   },
 ];
 
-interface Props {
+export interface Props {
   municipio?: string;
+  initialMunicipio?: string;
+  categorySlug?: string;
+  title?: string;
   initialTemp?: string;
 }
 
 export default function UniversalPricingEngine({
   municipio = "Madrid",
+  initialMunicipio,
   initialTemp = "hot",
 }: Props) {
+  const effectiveCity = initialMunicipio || municipio;
   const searchParams = useSearchParams();
   const temp = (searchParams.get("temp") || initialTemp).toLowerCase();
 
-  // Estados de Configuración del Evento
-  const [selectedFormat, setSelectedFormat] = useState<EnsambleFormat>(ENSAMBLE_FORMATS[0]);
-  const [selectedOccasion, setSelectedOccasion] = useState(EVENT_OCCASIONS[0].slug);
-  const [isInternational, setIsInternational] = useState(false);
-  const [targetCity, setTargetCity] = useState(municipio);
+  // Ocasión inicial segura (usando id o fallback)
+  const defaultOccasionId = (EVENT_OCCASIONS[0] as any)?.id || (EVENT_OCCASIONS[0] as any)?.slug || "cumpleanos";
 
-  // Datos de Contacto y Reserva
+  const [selectedFormat, setSelectedFormat] = useState<EnsambleFormat>(ENSAMBLE_FORMATS[0]);
+  const [selectedOccasion, setSelectedOccasion] = useState<string>(defaultOccasionId);
+  const [isInternational, setIsInternational] = useState(false);
+  const [targetCity, setTargetCity] = useState(effectiveCity);
+
   const [clientName, setClientName] = useState("");
-  const [clientEmail, setClientEmail] = useState("");
   const [clientPhone, setClientPhone] = useState("");
   const [address, setAddress] = useState("");
   const [eventDate, setEventDate] = useState("2026-11-28");
@@ -109,7 +110,6 @@ export default function UniversalPricingEngine({
   const [loading, setLoading] = useState(false);
   const [bookingSuccess, setBookingSuccess] = useState<any>(null);
 
-  // Detección automática si la ciudad es europea/internacional
   useEffect(() => {
     const intlCities = ["bruselas", "paris", "londres", "ginebra", "roma"];
     if (intlCities.includes(targetCity.toLowerCase())) {
@@ -117,11 +117,9 @@ export default function UniversalPricingEngine({
     }
   }, [targetCity]);
 
-  // Cálculos Económicos
   const totalPrice = selectedFormat.price;
   const depositPrice = Math.round(totalPrice * 0.5);
 
-  // Adaptación de Textos de Conversión según la Temperatura del Lead
   const getCtaLabel = () => {
     switch (temp) {
       case "cold":
@@ -141,12 +139,12 @@ export default function UniversalPricingEngine({
     setLoading(true);
 
     try {
-      const activeOccasionObj = EVENT_OCCASIONS.find((o) => o.slug === selectedOccasion);
+      const activeOccasionObj = (EVENT_OCCASIONS as any[]).find(
+        (o) => (o.id || o.slug) === selectedOccasion
+      );
 
-      // 1. Guardar Lead Seguro
       const res = await createSecureMariachiBooking({
         clientName,
-        clientEmail,
         clientPhone,
         address,
         municipio: targetCity,
@@ -155,31 +153,19 @@ export default function UniversalPricingEngine({
         formatId: selectedFormat.id,
         formatLabel: selectedFormat.name,
         ocasionSlug: selectedOccasion,
-        ocasionLabel: activeOccasionObj?.name || "Celebración",
+        ocasionLabel: activeOccasionObj?.name || activeOccasionObj?.label || "Celebración",
         calculatedPrice: totalPrice,
         depositAmount: depositPrice,
         arrivalInstructions: arrivalNotes,
       });
 
       if (res.success) {
-        // 2. Redirigir a Pasarela Oficial de Pago
-        const stripeRes = await createStripeBookingCheckoutSession({
-          leadId: res.leadHash,
-          clientEmail,
-          clientName,
-          eventName: `${selectedFormat.name} · ${activeOccasionObj?.name}`,
-          depositAmountEUR: depositPrice,
-          totalEventPriceEUR: totalPrice,
-          city: targetCity,
-          eventDate,
-        });
-
-        if (stripeRes?.url) {
-          window.location.href = stripeRes.url;
-          return;
-        }
-
         setBookingSuccess(res);
+        // Redirección inmediata a WhatsApp de Centralita Gold con el lead registrado
+        const textMsg = encodeURIComponent(
+          `Hola, he solicitado la reserva oficial de ${selectedFormat.name} para ${targetCity} el ${eventDate} a las ${eventTime}. Ref: ${res.leadHash}`
+        );
+        window.location.href = `[suspicious link removed]{textMsg}`;
       }
     } catch (err) {
       console.error(err);
@@ -190,9 +176,7 @@ export default function UniversalPricingEngine({
 
   return (
     <div className="w-full max-w-5xl mx-auto space-y-16 py-8 px-4 sm:px-6">
-      {/* =========================================================================
-          ACTO I: CABECERA DE GALA Y SELECCIÓN DE OCASIÓN (RESPIRACIÓN VISUAL)
-          ========================================================================= */}
+      {/* ACTO I: CABECERA Y SELECCIÓN DE OCASIÓN */}
       <section className="text-center space-y-4">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-300 text-xs font-semibold tracking-wide uppercase">
           <CharroHatIcon className="w-4 h-4 text-amber-400" />
@@ -210,7 +194,6 @@ export default function UniversalPricingEngine({
           Sin intermediarios, sin cobros en efectivo sobre la marcha y con puntualidad garantizada por contrato.
         </p>
 
-        {/* Selector de Ocasión Espacioso */}
         <div className="pt-4 max-w-md mx-auto">
           <label className="block text-xs font-bold uppercase tracking-wider text-zinc-400 mb-2">
             ¿Qué motivo celebramos?
@@ -220,16 +203,20 @@ export default function UniversalPricingEngine({
             onChange={(e) => setSelectedOccasion(e.target.value)}
             className="w-full py-3.5 px-4 rounded-2xl bg-zinc-900 border border-zinc-800 text-white font-medium text-sm focus:border-amber-400 focus:outline-none transition shadow-inner"
           >
-            {EVENT_OCCASIONS.map((oc) => (
-              <option key={oc.slug} value={oc.slug}>
-                {oc.name}
-              </option>
-            ))}
+            {EVENT_OCCASIONS.map((oc: any) => {
+              const val = oc.id || oc.slug || oc.name;
+              const label = oc.name || oc.label || val;
+              return (
+                <option key={val} value={val}>
+                  {label}
+                </option>
+              );
+            })}
           </select>
         </div>
       </section>
 
-      {/* Si es Destino Europeo/Internacional: Desglose Aéreo Resuelto */}
+      {/* RUTA INTERNACIONAL / LOGÍSTICA AÉREA */}
       {isInternational && (
         <section>
           <InternationalFlightBadge
@@ -241,9 +228,7 @@ export default function UniversalPricingEngine({
         </section>
       )}
 
-      {/* =========================================================================
-          ACTO II: CATÁLOGO DE FORMATOS (TARJETAS INDEPENDIENTES CON AIRE)
-          ========================================================================= */}
+      {/* ACTO II: FORMATOS */}
       <section className="space-y-6">
         <div className="text-center sm:text-left">
           <h2 className="text-xl sm:text-2xl font-black text-white">
@@ -308,9 +293,7 @@ export default function UniversalPricingEngine({
         </div>
       </section>
 
-      {/* =========================================================================
-          ACTO III: ESCAPARATE DE REGALOS Y CORTESÍAS INCLUIDAS (VALOR TANGIBLE)
-          ========================================================================= */}
+      {/* ACTO III: CORTESÍAS DESGLOSADAS */}
       <section className="p-8 sm:p-10 rounded-3xl bg-zinc-950 border border-zinc-800 space-y-6 shadow-xl">
         <div className="text-center max-w-xl mx-auto space-y-2">
           <span className="text-[10px] font-black uppercase tracking-widest text-amber-400">
@@ -357,9 +340,7 @@ export default function UniversalPricingEngine({
         </div>
       </section>
 
-      {/* =========================================================================
-          ACTO IV: FORMULARIO DE BLOQUEO DE FECHA Y PAGO PROTEGIDO
-          ========================================================================= */}
+      {/* ACTO IV: CIERRE Y DESPACHO GOLD */}
       <section className="p-8 sm:p-12 rounded-3xl bg-zinc-950 border border-amber-500/40 space-y-8 shadow-2xl relative">
         <div className="text-center max-w-xl mx-auto space-y-2">
           <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
@@ -369,7 +350,7 @@ export default function UniversalPricingEngine({
             2. Coordenadas y Aseguramiento de Agenda
           </h2>
           <p className="text-xs text-zinc-400">
-            Introduce los datos del lugar y abona el depósito seguro para bloquear a los artistas.
+            Introduce los datos del lugar para coordinar la llegada con la Centralita Gold.
           </p>
         </div>
 
@@ -394,30 +375,6 @@ export default function UniversalPricingEngine({
                 value={clientPhone}
                 onChange={(e) => setClientPhone(e.target.value)}
                 placeholder="+34 600 000 000"
-                className="w-full py-3 px-4 rounded-xl bg-zinc-900 border border-zinc-800 text-white text-sm focus:border-amber-400 focus:outline-none"
-              />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-xs font-bold uppercase text-zinc-400 mb-1">Correo Electrónico (Para Factura y Fotos)</label>
-              <input
-                type="email"
-                required
-                value={clientEmail}
-                onChange={(e) => setClientEmail(e.target.value)}
-                placeholder="carmen@ejemplo.com"
-                className="w-full py-3 px-4 rounded-xl bg-zinc-900 border border-zinc-800 text-white text-sm focus:border-amber-400 focus:outline-none"
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-bold uppercase text-zinc-400 mb-1">Municipio / Población</label>
-              <input
-                type="text"
-                required
-                value={targetCity}
-                onChange={(e) => setTargetCity(e.target.value)}
                 className="w-full py-3 px-4 rounded-xl bg-zinc-900 border border-zinc-800 text-white text-sm focus:border-amber-400 focus:outline-none"
               />
             </div>
@@ -455,12 +412,11 @@ export default function UniversalPricingEngine({
               rows={2}
               value={arrivalNotes}
               onChange={(e) => setArrivalNotes(e.target.value)}
-              placeholder="Ej. Entrar por el jardín trasero cuando suene la tarta, preguntar por Carmen..."
+              placeholder="Ej. Entrar por el jardín trasero cuando suene la tarta..."
               className="w-full py-2.5 px-4 rounded-xl bg-zinc-900 border border-zinc-800 text-white text-xs focus:border-amber-400 focus:outline-none"
             />
           </div>
 
-          {/* Caja Resumen de Liquidación */}
           <div className="p-4 rounded-2xl bg-zinc-900/80 border border-zinc-800 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs">
             <div>
               <span className="text-zinc-400 block">Formato seleccionado:</span>
@@ -469,22 +425,21 @@ export default function UniversalPricingEngine({
             <div className="text-right">
               <span className="text-zinc-400 block">Tarifa Oficial: {totalPrice} €</span>
               <span className="text-amber-400 font-bold text-sm">
-                Anticipo a Pagar Hoy: {depositPrice} €
+                Anticipo Requerido (50%): {depositPrice} €
               </span>
             </div>
           </div>
 
-          {/* Botón Principal Adaptado a la Temperatura */}
           <button
             type="submit"
             disabled={loading}
             className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-black font-black uppercase tracking-wider text-sm transition shadow-2xl flex items-center justify-center gap-2 disabled:opacity-50"
           >
-            {loading ? "Generando Enlace Seguro..." : getCtaLabel()}
+            {loading ? "Procesando con Centralita Gold..." : getCtaLabel()}
           </button>
 
           <p className="text-[11px] text-zinc-500 text-center">
-            🔒 <strong>Pago 100% Protegido:</strong> Tu depósito queda custodiado en garantía. El 50% restante se abona únicamente tras la realización satisfactoria de la actuación. Cero pagos en mano a pie de calle.
+            🔒 <strong>Garantía Oficial EAR OS:</strong> Coordinación directa por la Centralita Gold (+34 693 693 048).
           </p>
         </form>
       </section>
