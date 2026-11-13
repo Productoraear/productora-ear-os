@@ -28,7 +28,7 @@
 | cockpit/route.ts | GET | SIN GUARD | no | no |
 | compile-intent/route.ts | POST+GET | requireAdmin | sí | no |
 | demand-map/route.ts | GET | requireAdmin | sí | no |
-| dispatch/lock/route.ts | POST | SIN GUARD | no | no |
+| dispatch/lock/route.ts | POST+DELETE | SIN GUARD | no | no |
 | dispatch/route.ts | GET | SIN GUARD | no | no |
 | fleet/route.ts | GET+PATCH+POST | requireAdmin | sí | sí |
 | gpu-status/route.ts | GET+POST | requireAdmin | sí | no |

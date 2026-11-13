@@ -5,7 +5,9 @@ import TinderMatcherClient from '@/app/components/public/TinderMatcherClient';
 import { CommercialEventCalculator } from '@/components/calculator/CommercialEventCalculator';
 import { Sparkles, SlidersHorizontal, ArrowRight, LayoutList, ShieldCheck } from 'lucide-react';
 import { DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
-import { isSeatingPlanHash } from '@/lib/seating/seating-codec';
+import { isSeatingPlanHash, readPaxFromQuery } from '@/lib/seating/seating-codec';
+import { buildDefaultPlan } from '@/lib/seating/seating-plan';
+import SeatingValuePanel from '@/components/seating/SeatingValuePanel';
 
 export const metadata: Metadata = {
   title: 'Diseña tu Presupuesto & Matcher S-Class | Productora EAR',
@@ -82,6 +84,54 @@ function SeatingPlanningBanner({ planHash }: { readonly planHash: string }) {
 }
 
 /**
+ * ── VALORACIÓN REPRODUCIBLE DEL PLANO ───────────────────────────────────────
+ * El enlace del planner llega con `?seatingPlan=<hash>&pax=<n>`. El hash es
+ * OPACO por diseño (no reconoce geometría), así que reconstruir la colocación
+ * exacta aquí sería inventársela. Lo que SÍ es reproducible desde la URL es el
+ * plano normativo para ese aforo (`buildDefaultPlan` es determinista), y sobre
+ * él se expone el desglose de cobro elemento a elemento.
+ *
+ * AF-2: la referencia del plano original se muestra en pantalla, de modo que el
+ * cliente distingue "lo que he dibujado" de "lo que este presupuesto valora".
+ */
+function SeatingValuationPanel({
+  pax,
+  venueCapacity,
+  planHash,
+}: {
+  readonly pax: number;
+  readonly venueCapacity: number;
+  readonly planHash: string;
+}) {
+  const plan = buildDefaultPlan({ pax, venueCapacity, eventName: 'Evento' });
+  return (
+    <section aria-labelledby="seating-valuation-title" className="scroll-mt-32 space-y-3">
+      <div className="flex flex-wrap items-baseline justify-between gap-2">
+        <h2
+          id="seating-valuation-title"
+          className="font-syne text-lg font-black uppercase leading-tight text-white sm:text-xl"
+        >
+          Coste del plano para {pax} comensales
+        </h2>
+        <span className="font-mono text-[10px] uppercase tracking-wider text-zinc-500">
+          plano referenciado <span className="text-[#00E5FF]">{planHash}</span>
+        </span>
+      </div>
+      <p className="max-w-3xl text-xs leading-relaxed text-zinc-400">
+        Cada concepto del montaje se cobra por separado y se puede quitar: mesas, etiquetas de sitio, carteles e
+        incluso la gestión de comensales por encima del aforo del espacio. Nada se agrupa en una cifra opaca.
+      </p>
+      <SeatingValuePanel
+        plan={plan}
+        print={{ seatCards: false, tableCards: true }}
+        payer="included"
+        depositEur={EUR_FORMAT.format(DEPOSITO_STRIPE_EUR)}
+      />
+    </section>
+  );
+}
+
+/**
  * RUTA CANÓNICA DEL COTIZADOR (ORDEN 2026-11-11 §1).
  *
  * Antes: `/presupuesto` sólo servía el matcher y el conmutador enviaba a
@@ -94,6 +144,11 @@ export default async function PresupuestoPage({ searchParams }: { searchParams: 
   const params = await searchParams;
   const seatingPlanHash = firstValue(params.seatingPlan);
   const showSeatingBanner = seatingPlanHash !== null && isSeatingPlanHash(seatingPlanHash);
+  // Aforo y aforo del espacio: la MISMA guarda que usa el planner en origen.
+  // Una query manipulada (`?pax=abc`, `?pax=99999`) devuelve `null` y se usa el
+  // aforo de respaldo; nunca se propaga basura al motor de valor.
+  const seatingPax = readPaxFromQuery(firstValue(params.pax)) ?? 0;
+  const seatingVenueCapacity = readPaxFromQuery(firstValue(params.aforo)) ?? 0;
 
   return (
     <main className="min-h-screen bg-[#050505] text-[#f5f1e8] pt-32 pb-24 px-4 md:px-8">
@@ -136,6 +191,15 @@ export default async function PresupuestoPage({ searchParams }: { searchParams: 
         {/* 0 · Banner de cortesía del Seating Planner (sólo si llega un plano válido) */}
         {showSeatingBanner && seatingPlanHash !== null ? (
           <SeatingPlanningBanner planHash={seatingPlanHash} />
+        ) : null}
+
+        {/* 0b · Desglose de cobro del plano (sólo si llega aforo válido) */}
+        {showSeatingBanner && seatingPlanHash !== null && seatingPax > 0 ? (
+          <SeatingValuationPanel
+            pax={seatingPax}
+            venueCapacity={seatingVenueCapacity}
+            planHash={seatingPlanHash}
+          />
         ) : null}
 
         {/* 1 · Recomendador / Matcher */}
