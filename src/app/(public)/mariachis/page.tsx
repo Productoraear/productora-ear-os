@@ -528,6 +528,15 @@ export default function MariachisPage() {
 
       {/* GUARDIÁN VECTORIAL S-CLASS: EL COLIBRÍ CUÁNTICO */}
       <QuantumColibri primaryAccent="#ecb613" />
-    </main>
+    <div className="fixed bottom-4 left-4 right-4 z-50 flex gap-3 md:hidden">
+          <a href="tel:+34693693048" className="flex-1 bg-amber-600 text-white text-center py-3 rounded-xl font-bold shadow-lg">
+            📞 Llamar Centralita
+          </a>
+          <a href="https://wa.me/34693693048?text=Hola,%20deseo%20consultar%20disponibilidad%20inmediata%20de%20mariachis" className="flex-1 bg-emerald-600 text-white text-center py-3 rounded-xl font-bold shadow-lg">
+            💬 WhatsApp Express
+          </a>
+        </div>
+      <div className="fixed bottom-4 left-4 right-4 z-50 flex gap-3 md:hidden"><a href="tel:+34693693048" className="flex-1 bg-amber-600 hover:bg-amber-700 text-white text-center py-3.5 px-4 rounded-xl font-bold shadow-2xl flex items-center justify-center gap-2 text-sm">?? Llamar Centralita</a><a href="[suspicious link removed]" target="_blank" rel="noopener noreferrer" className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white text-center py-3.5 px-4 rounded-xl font-bold shadow-2xl flex items-center justify-center gap-2 text-sm">?? WhatsApp Express</a></div><div className="fixed bottom-4 left-4 right-4 z-50 flex gap-3 md:hidden"><a href="tel:+34693693048" className="flex-1 bg-amber-600 hover:bg-amber-700 text-white text-center py-3.5 px-4 rounded-xl font-bold shadow-2xl flex items-center justify-center gap-2 text-sm">?? Llamar Centralita</a><a href="[suspicious link removed]" target="_blank" rel="noopener noreferrer" className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white text-center py-3.5 px-4 rounded-xl font-bold shadow-2xl flex items-center justify-center gap-2 text-sm">?? WhatsApp Express</a></div></main>
   );
 }
+
