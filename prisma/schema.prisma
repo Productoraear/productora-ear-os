@@ -1768,3 +1768,35 @@ model ContentPost {
   @@index([mediaId], name: "idx_post_media")
 }
 
+// ==========================================
+// 🎺 CENTRALITA MARIACHIS S-CLASS — LEADS CALL-TO-CASH (DIRECTIVA v5 PASO 3)
+// ==========================================
+// Registro determinista en PostgreSQL (`leads_mariachi`) con timestamp,
+// teléfono, municipio, formato y desglose 80/10/10 en céntimos enteros.
+model MariachiLead {
+  id               String   @id @default(cuid())
+  leadHash         String   @unique
+  phone            String
+  municipality     String
+  format           String
+  eventDate        String?
+  eventTime        String?
+  channel          String   @default("WHATSAPP")
+  isEdwinSoloist   Boolean  @default(false)
+  hasClosedPrice   Boolean  @default(true)
+  totalCents       Int      @default(0)
+  depositCents     Int      @default(0)
+  splitArtistCents Int      @default(0)
+  splitEarOsCents  Int      @default(0)
+  splitVimumeCents Int      @default(0)
+  couponCode       String?
+  alertDispatched  Boolean  @default(false)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([municipality, format], name: "idx_mariachi_lead_muni_format")
+  @@index([createdAt], name: "idx_mariachi_lead_created")
+  @@map("leads_mariachi")
+}
+
+
