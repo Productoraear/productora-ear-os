@@ -146,17 +146,18 @@ export default function UniversalPricingEngine({
       const res = await createSecureMariachiBooking({
         clientName,
         clientPhone,
-        address,
-        municipio: targetCity,
+        userEmail: clientPhone ? ("lead-" + clientPhone + "@ear-os.local") : "cliente@ear-os.local",
         eventDate,
-        eventTime,
-        formatId: selectedFormat.id,
-        formatLabel: selectedFormat.name,
-        ocasionSlug: selectedOccasion,
-        ocasionLabel: activeOccasionObj?.name || activeOccasionObj?.label || "Celebración",
-        calculatedPrice: totalPrice,
-        depositAmount: depositPrice,
-        arrivalInstructions: arrivalNotes,
+        startTime: "18:00",
+        durationHours: 1,
+        format: selectedFormat.id,
+        acceptsAntiFraudPolicy: true,
+        eventAddress: {
+          street: address || "No especificada",
+          city: targetCity || "Bilbao",
+          postalCode: "48000",
+          notes: arrivalNotes || undefined,
+        },
       });
 
       if (res.success) {
