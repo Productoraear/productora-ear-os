@@ -1,3 +1,4 @@
+﻿import CotizadorMariachiUber from '@/components/mariachi/CotizadorMariachiUber';
 import type { Metadata } from 'next';
 import React from 'react';
 import Link from 'next/link';
@@ -130,7 +131,7 @@ export default function MariachisPage() {
               DESPACHO ACTIVO 24/7 EN TODA ESPAÑA
             </span>
             <span className="hidden md:inline text-white/30">|</span>
-            <a href="#cotizador-uber" className="hidden md:inline text-white/70 hover:text-white transition-colors">
+            <a href="/mariachis/precios" className="hidden md:inline text-white/70 hover:text-white transition-colors">
               Cotizador Uber &rarr;
             </a>
             <a href="#precios" className="hidden md:inline text-white/70 hover:text-white transition-colors">
@@ -244,7 +245,7 @@ export default function MariachisPage() {
 
           <div className="flex flex-wrap items-center gap-4 pt-4">
             <a
-              href="#cotizador-uber"
+              href="/mariachis/precios"
               className="inline-flex items-center gap-3 px-10 py-5 rounded-2xl bg-gradient-to-r from-[#ecb613] via-amber-300 to-[#ecb613] hover:brightness-110 text-black font-syne text-xs uppercase font-black tracking-widest transition-all duration-300 shadow-2xl shadow-[#ecb613]/30 hover:scale-[1.02] active:scale-[0.98]"
             >
               <span>Calcular Presupuesto Inmediato</span>
@@ -295,7 +296,7 @@ export default function MariachisPage() {
 
             <div className="lg:col-span-4 flex flex-col gap-3">
               <a
-                href="#cotizador-uber"
+                href="/mariachis/precios"
                 className="w-full py-4 px-6 rounded-2xl bg-[#ecb613] hover:bg-amber-300 text-black font-black font-syne text-xs uppercase tracking-wider text-center transition-all shadow-xl shadow-[#ecb613]/20 flex items-center justify-center gap-2"
               >
                 <span>Contratar Mariachi (Desde 350€)</span>
@@ -539,4 +540,7 @@ export default function MariachisPage() {
       <div className="fixed bottom-4 left-4 right-4 z-50 flex gap-3 md:hidden"><a href="tel:+34693693048" className="flex-1 bg-amber-600 hover:bg-amber-700 text-white text-center py-3.5 px-4 rounded-xl font-bold shadow-2xl flex items-center justify-center gap-2 text-sm">?? Llamar Centralita</a><a href="[suspicious link removed]" target="_blank" rel="noopener noreferrer" className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white text-center py-3.5 px-4 rounded-xl font-bold shadow-2xl flex items-center justify-center gap-2 text-sm">?? WhatsApp Express</a></div><div className="fixed bottom-4 left-4 right-4 z-50 flex gap-3 md:hidden"><a href="tel:+34693693048" className="flex-1 bg-amber-600 hover:bg-amber-700 text-white text-center py-3.5 px-4 rounded-xl font-bold shadow-2xl flex items-center justify-center gap-2 text-sm">?? Llamar Centralita</a><a href="[suspicious link removed]" target="_blank" rel="noopener noreferrer" className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white text-center py-3.5 px-4 rounded-xl font-bold shadow-2xl flex items-center justify-center gap-2 text-sm">?? WhatsApp Express</a></div></main>
   );
 }
+
+
+
 
