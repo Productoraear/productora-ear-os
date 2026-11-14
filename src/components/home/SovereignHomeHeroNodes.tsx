@@ -71,22 +71,22 @@ const SOVEREIGN_NODES: SovereignNode[] = [
     description: 'Catálogo soberano de espacios en 52 provincias. Directo sin comisiones opacas de agencias ni secuestro de presupuestos.',
     metrics: [
       { label: 'Provincias', value: '52 Activas' },
-      { label: 'Garantía Acústica', value: 'Ley 37/2003' },
+      { label: 'Control de Sonido', value: 'Dimensionado' },
       { label: 'Fianza Deducible', value: `${DEPOSITO_STRIPE_EUR} €` },
     ],
     subnodes: [
       {
         id: 'fincas-toledo-madrid',
         title: 'Fincas Madrid & Toledo Hub',
-        desc: 'Espacios emblemáticos con calibración acústica a medida desde Hub Méntrida.',
+        desc: 'Espacios seleccionados para celebraciones y eventos con equipamiento técnico a medida.',
         tag: 'Exclusivas',
         route: '/fincas',
       },
       {
         id: 'fincas-acustica-libre',
-        title: 'Espacios Sin Censura Acústica',
-        desc: 'Fincas con limitador telemático legal para fiesta sin cortes a las 2:00 AM.',
-        tag: 'Sonido Legal',
+        title: 'Espacios Adaptados para Directos',
+        desc: 'Recintos preparados para música en vivo y sonido profesional según normativa local.',
+        tag: 'Sonido en Vivo',
         route: '/protocolo-acustico',
       },
       {
