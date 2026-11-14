@@ -365,8 +365,11 @@ export function resolvePageContext(input: { pathname?: unknown; message?: unknow
     }
 
     // 2. Búsqueda de fichas verificadas en memoria por municipio, provincia o nombre.
+    //    Solo se activa con un SUSTANTIVO de recinto/proveedor explícito. Términos
+    //    genéricos de servicio ("música", "gala", "evento", "proveedor") NO bastan:
+    //    emparejaban "gala corporativa" con "Gala Peluquería" (incoherencia de intención).
     const asksForProviderOrVenue: boolean =
-      /\b(restaurante|restaurantes|resturante|finca|fincas|catering|fotografo|fotografia|musica|mariachi|proveedor|proveedores|salon|salones|bodega|hotel|masia|casona|pazo|castillo)\b/.test(
+      /\b(restaurante|restaurantes|resturante|finca|fincas|catering|fotografo|fotografia|salon|salones|bodega|hotel|masia|casona|pazo|castillo)\b/.test(
         lowerMsg,
       );
     if (asksForProviderOrVenue) {

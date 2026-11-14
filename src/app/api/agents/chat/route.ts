@@ -642,6 +642,15 @@ export async function POST(req: Request): Promise<NextResponse> {
       } else if (lower.includes('ruido') || lower.includes('decibel') || lower.includes('sonido') || lower.includes('bose')) {
         aiReply = `Trabajamos con arreglos acústicos calibrados por debajo de ${LIMITE_SPL_DB} dB SPL, conforme a la Ley 37/2003 del Ruido y a la ordenanza municipal aplicable. El límite exacto y el punto de medida los fijamos en la visita técnica con la dirección del recinto: no prometemos viabilidad acústica sin verificar la normativa local.\n\n` +
           `[💬 Hablar con producción por WhatsApp (+34 693 693 048) ➔](${waUrl})`;
+      } else if (/dep[oó]sito|price-?lock|fianza|se[ñn]al/i.test(lower)) {
+        // Pregunta sobre el depósito: se responde con el SSOT, sin reciclar la pregunta de localidad.
+        aiReply = `El depósito de **${DEPOSITO_STRIPE_EUR} €** bloquea tu fecha y es **100% deducible** del importe total: se resta íntegro en la liquidación final. El servicio se abona al completo antes del evento. Se paga de forma segura con Stripe una vez confirmada la disponibilidad.\n\n` +
+          `[💬 Consultar disponibilidad por WhatsApp (+34 693 693 048) ➔](${waUrl})`;
+      } else if (/\b(mesas?|sillas?|barra libre|barra|catering|c[oó]ctel|cocktail|decoraci[oó]n|carpa|mobiliario|fot[oó]grafo|v[ií]deo)\b/i.test(lower)) {
+        // Servicios complementarios: no se inventa catálogo ni precio; se canaliza a presupuesto/WhatsApp.
+        aiReply = `Podemos coordinar servicios complementarios (mobiliario, barra, catering y similares) a través de nuestra red de proveedores verificados. No publico precios que no estén en ficha: te los confirma la Conserjería según tu fecha, lugar y número de invitados.\n\n` +
+          `[🔒 Calcular presupuesto del evento ➔](${TAXONOMY_QUOTE_HREF})\n\n` +
+          `[💬 Consultar por WhatsApp (+34 693 693 048) ➔](${waUrl})`;
       } else if (taxonomy.facet !== null) {
         // 🎼 ENRUTAMIENTO TAXONÓMICO (BLOQUE 4): la consulta nombra un género o
         // formato concreto. El motor ya resolvió la ruta; el texto la cita tal
@@ -655,13 +664,22 @@ export async function POST(req: Request): Promise<NextResponse> {
           `[💬 Confirmar por WhatsApp (+34 693 693 048) ➔](${waUrl})`;
       } else {
 
-        // Fallback con memoria: nunca reinicia la conversación desde cero.
+        // Fallback con memoria: nunca reinicia la conversación desde cero ni repite el mismo saludo.
         const remembered: string = summarizeSlots(memorySlots);
-        const contextLine: string = remembered.length > 0
+        const lastAssistant: string =
+          [...history].reverse().find((turn: ConversationTurn) => turn.role === 'assistant')?.content ?? '';
+        const alreadyAcknowledged: boolean = lastAssistant.startsWith('Perfecto, tomo nota');
+        const questionRepeated: boolean = lastAssistant.includes(consultation.nextQuestion);
+        const contextLine: string = remembered.length > 0 && !alreadyAcknowledged
           ? `Perfecto, tomo nota de lo que me has contado (${remembered}). `
-          : 'Hola, soy el Concierge de EAR OS. ';
-        aiReply = `${contextLine}${consultation.nextQuestion}\n\n` +
-          `[💬 Hablar con producción por WhatsApp (+34 693 693 048) ➔](${waUrl})`;
+          : remembered.length > 0
+            ? ''
+            : 'Hola, soy el Concierge de EAR OS. ';
+        aiReply = questionRepeated
+          ? `Para ayudarte mejor con esa consulta, la Conserjería lo revisa contigo directamente.\n\n` +
+            `[💬 Hablar con producción por WhatsApp (+34 693 693 048) ➔](${waUrl})`
+          : `${contextLine}${consultation.nextQuestion}\n\n` +
+            `[💬 Hablar con producción por WhatsApp (+34 693 693 048) ➔](${waUrl})`;
       }
     }
 
