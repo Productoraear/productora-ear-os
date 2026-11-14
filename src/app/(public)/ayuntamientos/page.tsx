@@ -1,8 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { B2GMemoryGenerator } from '@/features/b2g/ui/B2GMemoryGenerator';
-import TownhallInstitutionalFastTrack from '@/components/b2g/TownhallInstitutionalFastTrack';
+import { B2GMunicipalFastTrackPortal } from '@/components/b2g/B2GMunicipalFastTrackPortal';
 import {
   Building2,
   ShieldCheck,
@@ -14,15 +13,13 @@ import {
   Users2,
   ArrowRight,
   PhoneCall,
-  Sliders
+  Scale,
+  HeartHandshake
 } from 'lucide-react';
 import Link from 'next/link';
 import { useNeuralTunnelStore } from '@/store/useNeuralTunnelStore';
 import {
-  TARIFA_BASE_SOLISTA_EUR,
-  DEPOSITO_STRIPE_EUR,
   CENTRALITA_EAR_OS,
-  SPLIT_SOBERANO,
   AJUSTE_PREVENTIVO_B2G_EUR,
   LIMITE_B2G_LCSP_EUR
 } from '@/lib/constants/ear-os-ssot';
@@ -32,7 +29,9 @@ type InstType = 'gobiernos' | 'ayuntamientos' | 'fundaciones';
 export default function AyuntamientosB2GPage() {
   const [selectedInst, setSelectedInst] = useState<InstType>('ayuntamientos');
   const { openTunnel } = useNeuralTunnelStore();
-  const whatsappHref = `https://wa.me/${CENTRALITA_EAR_OS.replace(/\D/g, '')}?text=Hola%20Productora%20EAR%2C%20solicito%20pliego%20t%C3%A9cnico%20y%20presupuesto%20menor%20para%20fiestas%20patronales%20%2F%20acto%20institucional.`;
+  const whatsappHref = `https://wa.me/${CENTRALITA_EAR_OS.replace(/\D/g, '')}?text=${encodeURIComponent(
+    'Hola Productora EAR, solicito pliego técnico y propuesta de contrato menor Art. 118 LCSP para nuestro municipio.'
+  )}`;
 
   return (
     <main className="min-h-screen w-full overflow-x-hidden bg-[#030305] text-white pt-24 pb-40 px-4 md:px-8 selection:bg-[#06b6d4] selection:text-black">
@@ -62,18 +61,18 @@ export default function AyuntamientosB2GPage() {
       <div className="max-w-7xl mx-auto space-y-12">
 
         {/* HERO SECTION INSTITUCIONAL */}
-        <div className="text-center space-y-4 max-w-3xl mx-auto">
+        <div className="text-center space-y-4 max-w-4xl mx-auto">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#06b6d4]/10 border border-[#06b6d4]/30 rounded-full text-[#06b6d4] text-[10px] font-mono uppercase tracking-[0.3em]">
             <Building2 size={12} />
-            PORTAL INSTITUCIONAL B2G // GOBIERNO, MUNICIPIOS & TERCER SECTOR
+            PORTAL INSTITUCIONAL B2G // GOBIERNOS, AYUNTAMIENTOS & TERCER SECTOR
           </div>
 
           <h1 className="text-4xl sm:text-6xl md:text-7xl font-black uppercase tracking-tight text-white font-syne leading-[1.02]">
-            Instituciones & <span className="text-[#06b6d4] italic">Sector Público</span>
+            Contratación Menor <span className="text-[#06b6d4] italic">Art. 118 LCSP</span>
           </h1>
 
-          <p className="text-sm sm:text-base text-zinc-300 font-light leading-relaxed">
-            Pliegos técnicos homologados, cobertura acústica calibrada a 12 W/pax, seguros de RC por 1.000.000 € y facturación electrónica FacturaE (DIR3) para Administraciones Públicas y Fundaciones.
+          <p className="text-sm sm:text-base text-zinc-300 font-light leading-relaxed max-w-2xl mx-auto">
+            Ventanilla oficial para Alcaldías, Secretarías e Intervención: memorias justificativas al 95% del techo preventivo (&lt; 14.250 €), facturación electrónica Facturae v3.2.2 (DIR3), póliza de RC de 1.000.000 € y Pacto Dual con el programa social VIMUME.
           </p>
 
           <div className="flex flex-wrap justify-center gap-3 pt-2">
@@ -82,14 +81,7 @@ export default function AyuntamientosB2GPage() {
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#06b6d4] to-[#0891b2] text-black font-bold text-xs font-mono uppercase tracking-wider shadow-[0_0_30px_rgba(6,182,212,0.35)] hover:scale-105 transition-all cursor-pointer"
             >
               <Zap size={15} />
-              <span>Tramitar en 1 clic · Fast-Track</span>
-            </a>
-            <a
-              href="#compilador"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/5 hover:bg-white/10 text-zinc-300 border border-white/10 text-xs font-mono uppercase tracking-wider transition-all cursor-pointer"
-            >
-              <FileText size={14} />
-              <span>Generar Memoria Art. 118</span>
+              <span>Configurar Municipio en 1 Clic</span>
             </a>
             <a
               href={whatsappHref}
@@ -105,7 +97,7 @@ export default function AyuntamientosB2GPage() {
               className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/5 hover:bg-white/10 text-zinc-300 border border-white/10 text-xs font-mono uppercase tracking-wider transition-all"
             >
               <Users2 size={14} className="text-[#06b6d4]" />
-              <span>Alta Proveedor Homologado</span>
+              <span>Catálogo de Artistas Homologados</span>
             </Link>
           </div>
         </div>
@@ -193,7 +185,7 @@ export default function AyuntamientosB2GPage() {
                     Ayuntamientos & Concejalías de Festejos
                   </h3>
                   <p className="text-xs text-zinc-400">
-                    Contratos menores Art. 118 LCSP (&lt; 15.000 €). Presupuesto sugerido preventivo al 95% (14.250 €).
+                    Contratos menores Art. 118 LCSP (&lt; 15.000 €). Presupuesto sugerido preventivo al 95% ({AJUSTE_PREVENTIVO_B2G_EUR.toLocaleString('es-ES')} €).
                   </p>
                 </div>
               </div>
@@ -207,8 +199,8 @@ export default function AyuntamientosB2GPage() {
                   <p>Emisión y despacho inmediato en plataforma FACe conforme a la normativa tributaria local.</p>
                 </div>
                 <div className="p-4 bg-white/5 rounded-2xl border border-white/5 space-y-2">
-                  <div className="font-bold text-white uppercase font-mono text-[#06b6d4]">Día del Mayor Municipal</div>
-                  <p>Espectáculos de música del recuerdo especialmente diseñados para plazas de pueblos y centros cívicos.</p>
+                  <div className="font-bold text-white uppercase font-mono text-[#06b6d4]">Pacto Dual Social VIMUME</div>
+                  <p>Jornada gratuita de estimulación cognitiva para la residencia municipal de mayores con cada festejo.</p>
                 </div>
               </div>
             </div>
@@ -247,39 +239,9 @@ export default function AyuntamientosB2GPage() {
           )}
         </div>
 
-        {/* TRAMITADOR FAST-TRACK INSTITUCIONAL */}
-        <section id="fast-track" className="space-y-6 pt-4 scroll-mt-24">
-          <div className="text-center space-y-2 max-w-2xl mx-auto">
-            <span className="text-[10px] font-mono text-[#06b6d4] uppercase tracking-[0.3em] font-bold">
-              TRAMITADOR INSTANTÁNEO // ALCALDES & CONCEJALÍAS
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-black uppercase text-white font-syne">
-              Fast-Track <span className="text-[#06b6d4]">Contrato Menor</span> en 1 clic
-            </h2>
-            <p className="text-xs text-zinc-400">
-              Presupuesto preventivo blindado &lt; 14.250 €, seguro de RC de 1.000.000 €,
-              módulo social VIMUME y despacho inmediato al cluster n8n.
-            </p>
-          </div>
-
-          <TownhallInstitutionalFastTrack />
-        </section>
-
-        {/* COMPILADOR DE MEMORIAS B2G ART. 118 LCSP */}
-        <section className="space-y-6 pt-4">
-          <div className="text-center space-y-2 max-w-2xl mx-auto">
-            <span className="text-[10px] font-mono text-[#06b6d4] uppercase tracking-[0.3em] font-bold">
-              MOTOR DE DESPACHO INMEDIATO // TENDER COMPILER
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-black uppercase text-white font-syne">
-              Generador de Memoria <span className="text-[#06b6d4]">Art. 118 LCSP</span>
-            </h2>
-            <p className="text-xs text-zinc-400">
-              Compila en 1 clic el informe de necesidad, código DIR3, desglose económico al 95% del techo y certificación técnica para tu expediente.
-            </p>
-          </div>
-
-          <B2GMemoryGenerator />
+        {/* COMPONENTE PRINCIPAL UNIFICADO: FAST-TRACK B2G & GENERADOR DE MEMORIAS */}
+        <section id="fast-track" className="scroll-mt-24">
+          <B2GMunicipalFastTrackPortal />
         </section>
 
       </div>
