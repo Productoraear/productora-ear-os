@@ -486,36 +486,49 @@ export default function SovereignBudgetPlanner() {
   useEffect(() => {
     if (typeof window !== 'undefined' && window.location.hash) {
       try {
-        const rawHash = window.location.hash.replace('#plan=', '');
-        if (rawHash) {
-          const decoded = JSON.parse(decodeURIComponent(atob(rawHash)));
-          if (decoded.totalBudget) setTotalBudget(Number(decoded.totalBudget));
-          if (decoded.paxCount) setPaxCount(Number(decoded.paxCount));
-          if (decoded.province) setProvince(decoded.province);
-          if (Array.isArray(decoded.categories)) {
-            const hydrated = (decoded.categories as Array<Partial<BudgetCategory>>).map((c) => {
-              const id: string = typeof c.id === 'string' ? c.id : '';
-              const base = INITIAL_CATEGORIES.find((b) => b.id === id);
-              return {
-                id,
-                name: typeof c.name === 'string' ? c.name : (base?.name ?? id),
-                allocated: Number(c.allocated) || 0,
-                isLocked: c.isLocked === true,
-                description: typeof c.description === 'string' ? c.description : (base?.description ?? ''),
-                color: base?.color || '#ecb613',
-                icon: base?.icon || Sparkles,
-                apiCategory: base?.apiCategory,
-                routeHref: base?.routeHref,
-                lakeCountLabel: base?.lakeCountLabel,
-                benchmarkMinPerPax: base?.benchmarkMinPerPax,
-                benchmarkMinFixed: base?.benchmarkMinFixed
-              } satisfies BudgetCategory;
-            });
-            setCategories(hydrated);
+        const hash = window.location.hash;
+        if (hash.startsWith('#plan=')) {
+          const rawHash = hash.replace('#plan=', '').trim();
+          if (rawHash) {
+            let jsonString = '';
+            try {
+              jsonString = decodeURIComponent(atob(rawHash));
+            } catch {
+              try {
+                jsonString = decodeURIComponent(rawHash);
+              } catch {
+                jsonString = rawHash;
+              }
+            }
+            const decoded = JSON.parse(jsonString);
+            if (decoded.totalBudget) setTotalBudget(Number(decoded.totalBudget));
+            if (decoded.paxCount) setPaxCount(Number(decoded.paxCount));
+            if (decoded.province) setProvince(decoded.province);
+            if (Array.isArray(decoded.categories)) {
+              const hydrated = (decoded.categories as Array<Partial<BudgetCategory>>).map((c) => {
+                const id: string = typeof c.id === 'string' ? c.id : '';
+                const base = INITIAL_CATEGORIES.find((b) => b.id === id);
+                return {
+                  id,
+                  name: typeof c.name === 'string' ? c.name : (base?.name ?? id),
+                  allocated: Number(c.allocated) || 0,
+                  isLocked: c.isLocked === true,
+                  description: typeof c.description === 'string' ? c.description : (base?.description ?? ''),
+                  color: base?.color || '#ecb613',
+                  icon: base?.icon || Sparkles,
+                  apiCategory: base?.apiCategory,
+                  routeHref: base?.routeHref,
+                  lakeCountLabel: base?.lakeCountLabel,
+                  benchmarkMinPerPax: base?.benchmarkMinPerPax,
+                  benchmarkMinFixed: base?.benchmarkMinFixed
+                } satisfies BudgetCategory;
+              });
+              setCategories(hydrated);
+            }
           }
         }
       } catch (e) {
-        console.error('Error restaurando plan desde URL:', e);
+        console.warn('Plan hash omitido por formato no reconocido:', e);
       }
     }
   }, []);
