@@ -1,4 +1,44 @@
 
+## [2026-11-14T15:38:00.000Z] · W52_T04 COCKPIT DE PLATAFORMAS DEL ARTISTA + SSO SOBERANO UNIFICADO
+
+**estado_bloque: `VERIFICADO`** (14/14 puertas del cockpit + 17/17 puertas arnés global Exit 0).
+
+### Lo que se implementó y auditó (medido en disco)
+
+1. **Unificación SSO en `/login` (`src/app/login/page.tsx` & `src/app/api/auth/session/route.ts`)**:
+   - Centralización del flujo de sesión en `/login` mediante intercambio de ID token con `POST /api/auth/session`.
+   - Consulta de rol RBAC en PostgreSQL (Prisma) y emisión de cookies HttpOnly seguras (`__session` y `ear_role`).
+   - Redirección automática por rol:
+     - `ADMIN / COMMANDER / ARQUITECTO` -> `/admin/control`
+     - `ARTIST` -> `/portal/artista`
+     - `PROVIDER` -> `/proveedores/dashboard`
+   - Validación de 0 conflictos de ruta en Next.js (`scripts/audit_route_conflicts.cjs` -> 516 rutas, 0 conflictos).
+   - Verificación de 0 endpoints huérfanos (`npm run audit:http` -> Exit 0).
+
+2. **Centro de Mando Unificado del Artista (`src/app/(portal)/portal/artista/page.tsx`)**:
+   - Montaje del Cockpit de Plataformas (`ArtistPlatformCockpit.tsx`) con matriz de capacidades de denegación por defecto (`platform-capabilities.ts`).
+   - Integración de Preferencias de Notificación accesibles (`ArtistNotificationPreferences.tsx`).
+   - Sincronización de Agenda Soberana iCal con bloqueo atómico y depósito Price-Lock de 100 €.
+   - Transparencia financiera: desglose del Split Soberano 80/10/10 frente a 0% de comisión para suscriptores Pro / Club Fundadores.
+
+3. **Verificación Contractual y Arnés Completo**:
+   - `node ./node_modules/tsx/dist/cli.mjs scripts/verify_artist_cockpit_platforms.ts` -> **14/14 PASS (Exit 0)**.
+   - `node scripts/run_sv_protocol_15_gates.cjs` -> **17/17 PASS (Exit 0)**.
+   - `npm run typecheck` (`tsc --noEmit`) -> **Exit 0**.
+   - `npm run lint` -> **Exit 0**.
+
+### SIGMA://CLOSE/v1
+```
+task_id        : W52_T04 (Cockpit de Plataformas del Artista & SSO Soberano)
+estado_bloque  : VERIFICADO
+hecho          : POST /api/auth/session + SSO /login RBAC + /portal/artista + 14/14 verify_artist_cockpit_platforms + 17/17 gates Exit 0
+evidence[]     : { id: W52_T04_COCKPIT_PLATFORMS_14, cmd: "node ./node_modules/tsx/dist/cli.mjs scripts/verify_artist_cockpit_platforms.ts", exit: 0, 14/14 }
+                 { id: W52_T04_GLOBAL_17_GATES, cmd: "node scripts/run_sv_protocol_15_gates.cjs", exit: 0, 17/17 }
+                 { id: W52_T04_ROUTE_AUDIT, cmd: "node scripts/audit_route_conflicts.cjs", exit: 0, 516/516 }
+cambios[]      : src/app/login/page.tsx · src/app/api/auth/session/route.ts · src/app/(portal)/portal/artista/page.tsx · CLINE_EXECUTION_LOG.md
+gates          : G-0 PASS · G-1 PASS (tsc 0) · G-2 PASS (0 errores lint) · G-3 PASS (17/17 gates Exit 0)
+```
+
 ## [2026-11-11T17:40:00.000Z] · W55_T02 FIRMADA, CERRADA Y DESPLEGADA + AUDITORÍA DE ESTRÉS ESTADIO
 
 **estado_bloque: `VERIFICADO`** para el gate y el push · **`SOSPECHOSO`** para la plataforma bajo tráfico masivo (4 P0 abiertos, medidos).
