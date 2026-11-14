@@ -266,26 +266,52 @@ export function SovereignHomeHeroNodes() {
         {/* Portal WebGL Cinemático reactivo al Viaje del Cliente (HorizonX Vigil Style) */}
         <VigilCinematicWebGLLogoPortal activeVertical={activeNode.id} verticalColor={activeNode.color} />
 
-        <div className="inline-flex items-center gap-2 mb-3 px-3 py-1 rounded-full border border-white/10 bg-black/40 backdrop-blur-md z-10">
-          <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: activeNode.color }} />
-          <span className="text-[11px] font-mono tracking-widest uppercase text-zinc-300">
-            Viaje del Cliente · {activeNode.name}
+        <div className="inline-flex items-center gap-2 mb-3 px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-950/40 backdrop-blur-md z-10">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="text-[11px] font-mono tracking-widest uppercase text-emerald-300">
+            Respuesta por WhatsApp &lt; 5 min · +34 693 693 048
           </span>
         </div>
 
-        <h1 className="text-[20px] font-bold font-syne text-white tracking-tight max-w-2xl mb-2 leading-snug z-10">
-          El Núcleo Soberano de{' '}
+        <h1 className="text-[22px] sm:text-4xl font-extrabold font-syne text-white tracking-tight max-w-3xl mb-3 leading-snug z-10">
+          Música en Vivo, Sonido e Iluminación para{' '}
           <span className="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-500 bg-clip-text text-transparent">
-            Producción, Artistas & Espacios
+            Bodas, Eventos y Fiestas
           </span>
         </h1>
 
-        <p className="text-[13px] text-zinc-400 max-w-xl mx-auto font-montserrat z-10 leading-relaxed">
-          Cada vertical es una puerta de entrada directa, auditada en céntimos enteros y sin intermediarios.
+        <p className="text-[14px] sm:text-base text-zinc-300 max-w-2xl mx-auto font-sans z-10 leading-relaxed mb-6">
+          Artistas profesionales contrastados, sonido de alta fidelidad adaptado a tu espacio y reserva blindada de fecha con fianza de 100 € deducible.
         </p>
+
+        {/* 3 LLAMADAS A LA ACCIÓN PRINCIPALES (EMBUDO DIRECTO EN MENOS DE 60s) */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full max-w-xl mx-auto z-10 mb-8">
+          <a
+            href={`https://wa.me/${formattedPhone}?text=${encodeURIComponent('Hola, deseo consultar disponibilidad y presupuesto para un evento. ¿Podéis orientarme?')}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black text-sm font-bold shadow-[0_0_25px_rgba(16,185,129,0.4)] transition-all cursor-pointer font-sans"
+          >
+            <span>💬 Consultar Disponibilidad por WhatsApp</span>
+          </a>
+
+          <Link
+            href="/artistas"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl border border-white/20 bg-zinc-900/80 hover:bg-zinc-800 text-white text-sm font-semibold transition-all cursor-pointer font-sans"
+          >
+            <span>Ver Artistas & Formatos</span>
+          </Link>
+
+          <Link
+            href="/presupuesto"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl border border-amber-500/30 bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 text-sm font-semibold transition-all cursor-pointer font-sans"
+          >
+            <span>Cotizador en 1 min</span>
+          </Link>
+        </div>
       </div>
 
-      {/* 2. SELECTOR SOBERANO DE VERTICALES (HorizonX Minimal, sin chips invasivos) */}
+      {/* 2. PUERTAS DE ENTRADA POR TIPO DE CLIENTE */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3 mb-8">
         {SOVEREIGN_NODES.map((node) => {
           const isSelected = node.id === activeNodeId;
