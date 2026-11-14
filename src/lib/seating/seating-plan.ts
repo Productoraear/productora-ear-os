@@ -98,6 +98,50 @@ export const GUEST_TAG_STYLE: Readonly<Record<GuestTag, GuestTagStyle>> = Object
 /** Estado RSVP de un invitado. `pending` = invitado sin confirmar. */
 export type RsvpState = 'pending' | 'confirmed';
 
+/**
+ * Restricciones dietéticas y alérgenos alimentarios para banquetería y cocina.
+ * Estándar Pulpetti para fincas, salones y catering de alta gama.
+ */
+export type DietaryTag =
+  | 'celiaco'
+  | 'vegano'
+  | 'vegetariano'
+  | 'sin-lactosa'
+  | 'alergia-marisco'
+  | 'alergia-frutos-secos'
+  | 'embarazada'
+  | 'infantil'
+  | 'otro';
+
+export const DIETARY_TAGS: readonly DietaryTag[] = Object.freeze([
+  'celiaco',
+  'vegano',
+  'vegetariano',
+  'sin-lactosa',
+  'alergia-marisco',
+  'alergia-frutos-secos',
+  'embarazada',
+  'infantil',
+  'otro',
+]);
+
+export interface DietaryTagInfo {
+  readonly label: string;
+  readonly badge: string;
+}
+
+export const DIETARY_INFO: Readonly<Record<DietaryTag, DietaryTagInfo>> = Object.freeze({
+  celiaco: { label: 'Celíaco (Sin Gluten)', badge: 'GF' },
+  vegano: { label: 'Vegano', badge: 'VG' },
+  vegetariano: { label: 'Vegetariano', badge: 'VT' },
+  'sin-lactosa': { label: 'Sin Lactosa', badge: 'LF' },
+  'alergia-marisco': { label: 'Alergia Marisco', badge: 'MS' },
+  'alergia-frutos-secos': { label: 'Frutos Secos', badge: 'FS' },
+  embarazada: { label: 'Embarazada / Inmuno', badge: 'EM' },
+  infantil: { label: 'Menú Infantil', badge: 'INF' },
+  otro: { label: 'Otra Intolerancia', badge: 'OTR' },
+});
+
 export interface SeatingGuest {
   readonly id: string;
   readonly name: string;
@@ -107,6 +151,10 @@ export interface SeatingGuest {
   readonly tableId: string | null;
   /** Índice de asiento dentro de la mesa (0..seats-1). */
   readonly seatIndex: number | null;
+  /** Restricciones dietéticas o alérgenos alimentarios (Pulpetti banqueting standard). */
+  readonly dietary?: readonly DietaryTag[];
+  /** Indicaciones adicionales de cocina para el comensal. */
+  readonly dietaryNotes?: string;
 }
 
 /** `true` si el invitado ya está sentado en una mesa concreta. */
@@ -141,6 +189,9 @@ export const FIXTURE_SPEC: Readonly<Record<FixtureKind, FixtureSpec>> = Object.f
   stage: { label: 'Escenario / música en vivo', width: 5.0, height: 2.4 },
 });
 
+/** Zonas espaciales del recinto para clasificación de mesas y montaje. */
+export type SeatingZone = 'interior' | 'exterior' | 'terraza' | 'jardin' | 'pista';
+
 /** Un objeto de mobiliario: mismas coordenadas y rotación que una mesa. */
 export interface SeatingFixture {
   readonly id: string;
@@ -150,6 +201,7 @@ export interface SeatingFixture {
   readonly y: number;
   readonly rotation: number;
   readonly scale: number;
+  readonly zone?: SeatingZone;
 }
 
 /** Ancho de servicio por comensal en metros (estándar de banquete). */
@@ -183,6 +235,7 @@ export interface SeatingTable {
   readonly rotation: number;
   /** Factor de tamaño sobre la geometría nominal (0,60–1,80). */
   readonly scale: number;
+  readonly zone?: SeatingZone;
 }
 
 export interface SeatingPlan {
@@ -192,6 +245,8 @@ export interface SeatingPlan {
   readonly pax: number;
   /** Aforo declarado del espacio (0 = sin aforo declarado, sin validación). */
   readonly venueCapacity: number;
+  /** Dimensiones físicas de la sala en metros (ancho x largo). */
+  readonly roomDimensions?: { readonly widthM: number; readonly lengthM: number };
   readonly tables: readonly SeatingTable[];
   /** Mobiliario y zonas de evento (pista, tarta, barra, escenario). */
   readonly fixtures: readonly SeatingFixture[];
@@ -220,13 +275,14 @@ export class SeatingPlanError extends Error {
 /** Asientos que caben en una mesa según su tipología y sus metros útiles. */
 export function seatCapacity(shape: TableShape): number {
   const metrics = TABLE_METRICS[shape];
+  const range = tableSeatRange(shape);
   // Mesa redonda: comensales alrededor de la circunferencia.
   // Mesa rectangular/presidencial: largo por los dos lados largos + una cabecera.
   const seats =
     shape === 'round'
       ? Math.floor((Math.PI * metrics.width) / GUEST_PITCH_M)
       : Math.floor(metrics.width / GUEST_PITCH_M) * 2 + 2;
-  return Math.min(MAX_SEATS_BY_SHAPE[shape], Math.max(2, seats));
+  return Math.min(range.max, Math.max(range.min, seats));
 }
 
 /**
@@ -563,7 +619,13 @@ function nextGuestId(plan: SeatingPlan): string {
  */
 export function addGuest(
   plan: SeatingPlan,
-  input: { readonly name: string; readonly tag: GuestTag; readonly rsvp?: RsvpState },
+  input: {
+    readonly name: string;
+    readonly tag: GuestTag;
+    readonly rsvp?: RsvpState;
+    readonly dietary?: readonly DietaryTag[];
+    readonly dietaryNotes?: string;
+  },
 ): SeatingPlan {
   const name = input.name.replace(/\s+/g, ' ').trim().slice(0, MAX_GUEST_NAME);
   if (name.length === 0 || plan.guests.length >= MAX_GUESTS) return plan;
@@ -575,6 +637,8 @@ export function addGuest(
     rsvp: input.rsvp ?? 'pending',
     tableId: null,
     seatIndex: null,
+    ...(input.dietary ? { dietary: input.dietary } : {}),
+    ...(input.dietaryNotes ? { dietaryNotes: input.dietaryNotes } : {}),
   };
   return { ...plan, guests: [...plan.guests, next] };
 }
@@ -585,20 +649,44 @@ export function removeGuest(plan: SeatingPlan, id: string): SeatingPlan {
   return { ...plan, guests: plan.guests.filter((guest) => guest.id !== id) };
 }
 
-/** Cambia etiqueta y/o RSVP de un invitado. */
+/** Cambia etiqueta, RSVP y/o preferencias dietéticas de un invitado. */
 export function updateGuest(
   plan: SeatingPlan,
   id: string,
-  patch: { readonly tag?: GuestTag; readonly rsvp?: RsvpState },
+  patch: {
+    readonly tag?: GuestTag;
+    readonly rsvp?: RsvpState;
+    readonly dietary?: readonly DietaryTag[];
+    readonly dietaryNotes?: string;
+  },
 ): SeatingPlan {
   const guest = plan.guests.find((candidate) => candidate.id === id);
   if (guest === undefined) return plan;
   const tag = patch.tag ?? guest.tag;
   const rsvp = patch.rsvp ?? guest.rsvp;
-  if (tag === guest.tag && rsvp === guest.rsvp) return plan;
+  const dietary = patch.dietary !== undefined ? patch.dietary : guest.dietary;
+  const dietaryNotes = patch.dietaryNotes !== undefined ? patch.dietaryNotes : guest.dietaryNotes;
+  if (
+    tag === guest.tag &&
+    rsvp === guest.rsvp &&
+    dietary === guest.dietary &&
+    dietaryNotes === guest.dietaryNotes
+  ) {
+    return plan;
+  }
   return {
     ...plan,
-    guests: plan.guests.map((candidate) => (candidate.id === id ? { ...candidate, tag, rsvp } : candidate)),
+    guests: plan.guests.map((candidate) =>
+      candidate.id === id
+        ? {
+            ...candidate,
+            tag,
+            rsvp,
+            ...(dietary !== undefined ? { dietary } : {}),
+            ...(dietaryNotes !== undefined ? { dietaryNotes } : {}),
+          }
+        : candidate,
+    ),
   };
 }
 
@@ -738,6 +826,71 @@ export function guestsOfTable(plan: SeatingPlan, tableId: string): readonly Seat
 /** Invitados sin asiento. */
 export function unseatedGuests(plan: SeatingPlan): readonly SeatingGuest[] {
   return plan.guests.filter((guest) => !isGuestSeated(guest));
+}
+
+export function isDietaryTag(candidate: unknown): candidate is DietaryTag {
+  return typeof candidate === 'string' && DIETARY_TAGS.includes(candidate as DietaryTag);
+}
+
+/**
+ * Conteo total de menús especiales y restricciones dietéticas para cocina.
+ * Garantiza que las 9 categorías devuelven siempre un entero no negativo.
+ */
+export function tallyDietary(plan: SeatingPlan): Record<DietaryTag, number> {
+  const result: Record<DietaryTag, number> = {
+    celiaco: 0,
+    vegano: 0,
+    vegetariano: 0,
+    'sin-lactosa': 0,
+    'alergia-marisco': 0,
+    'alergia-frutos-secos': 0,
+    embarazada: 0,
+    infantil: 0,
+    otro: 0,
+  };
+  for (const guest of plan.guests) {
+    if (guest.dietary && Array.isArray(guest.dietary)) {
+      for (const tag of guest.dietary) {
+        if (isDietaryTag(tag)) {
+          result[tag] += 1;
+        }
+      }
+    }
+  }
+  return result;
+}
+
+/**
+ * Conteo de menús especiales desglosado por mesa para el servicio de sala y cocina.
+ */
+export function tallyDietaryByTable(plan: SeatingPlan): Record<string, Record<DietaryTag, number>> {
+  const byTable: Record<string, Record<DietaryTag, number>> = {};
+  for (const table of plan.tables) {
+    byTable[table.id] = {
+      celiaco: 0,
+      vegano: 0,
+      vegetariano: 0,
+      'sin-lactosa': 0,
+      'alergia-marisco': 0,
+      'alergia-frutos-secos': 0,
+      embarazada: 0,
+      infantil: 0,
+      otro: 0,
+    };
+  }
+  for (const guest of plan.guests) {
+    if (guest.tableId && byTable[guest.tableId] && guest.dietary && Array.isArray(guest.dietary)) {
+      const tableRecord = byTable[guest.tableId];
+      if (tableRecord) {
+        for (const tag of guest.dietary) {
+          if (isDietaryTag(tag)) {
+            tableRecord[tag] += 1;
+          }
+        }
+      }
+    }
+  }
+  return byTable;
 }
 
 function round2(value: number): number {

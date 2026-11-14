@@ -19,10 +19,14 @@
  */
 
 import React, { useState } from 'react';
-import { Check, ChevronLeft, ChevronRight, Plus, Trash2, Users, Wand2, X } from 'lucide-react';
+import { Check, ChevronLeft, ChevronRight, Plus, Trash2, Users, Wand2, X, UtensilsCrossed } from 'lucide-react';
 import {
   GUEST_TAGS,
   GUEST_TAG_STYLE,
+  DIETARY_INFO,
+  DIETARY_TAGS,
+  tallyDietary,
+  type DietaryTag,
   type GuestTag,
   type SeatingGuest,
   type SeatingPlan,
@@ -164,6 +168,20 @@ function GuestRow({
       <TagDot tag={guest.tag} />
       <span className="min-w-0 flex-1 truncate text-[11px] text-white">{guest.name}</span>
 
+      {guest.dietary && guest.dietary.length > 0 && (
+        <span className="inline-flex items-center gap-0.5">
+          {guest.dietary.map((dTag) => (
+            <span
+              key={dTag}
+              title={DIETARY_INFO[dTag].label}
+              className="rounded border border-[#ecb613]/40 bg-[#ecb613]/10 px-1 py-0.2 font-mono text-[8px] font-bold text-[#ecb613]"
+            >
+              {DIETARY_INFO[dTag].badge}
+            </span>
+          ))}
+        </span>
+      )}
+
       <button
         type="button"
         onClick={() => onToggleRsvp(guest)}
@@ -221,10 +239,44 @@ function PanelBody(props: SeatingGuestPanelProps) {
   const { plan, tally } = props;
   const sorted = [...plan.guests].sort((left, right) => left.name.localeCompare(right.name, 'es'));
   const pending = plan.guests.filter((guest) => guest.tableId === null).length;
+  const dietaryTally = tallyDietary(plan);
+  const dietaryTotal = (Object.values(dietaryTally) as number[]).reduce((acc, count) => acc + count, 0);
 
   return (
     <div className="space-y-3">
       <TallyBar tally={tally} />
+
+      {/* Resumen de Cocina: Alergias e Intolerancias */}
+      <div className="rounded-xl border border-white/10 bg-black/40 p-2.5 space-y-1.5">
+        <div className="flex items-center justify-between text-[10px]">
+          <span className="flex items-center gap-1.5 font-mono uppercase tracking-wider text-zinc-400">
+            <UtensilsCrossed size={11} className="text-[#ecb613]" />
+            Cocina & Alergias
+          </span>
+          <span className="font-mono font-bold text-[#ecb613]">{dietaryTotal} dietas especiales</span>
+        </div>
+        {dietaryTotal > 0 ? (
+          <div className="flex flex-wrap gap-1 pt-1">
+            {DIETARY_TAGS.map((tag) => {
+              const count = dietaryTally[tag];
+              if (count === 0) return null;
+              return (
+                <span
+                  key={tag}
+                  title={DIETARY_INFO[tag].label}
+                  className="inline-flex items-center gap-1 rounded bg-white/5 border border-white/10 px-1.5 py-0.5 font-mono text-[9px] text-zinc-300"
+                >
+                  <span className="text-[#ecb613] font-bold">{count}x</span>
+                  <span>{DIETARY_INFO[tag].badge}</span>
+                </span>
+              );
+            })}
+          </div>
+        ) : (
+          <p className="font-mono text-[9px] text-zinc-600">0 restricciones declaradas</p>
+        )}
+      </div>
+
       <QuickAddForm onAddGuest={props.onAddGuest} />
 
       <div className="flex flex-wrap items-center gap-1.5">

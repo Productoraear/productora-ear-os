@@ -83,6 +83,7 @@
     "verify:build-memory": "node scripts/verify_build_memory_budget.cjs",
     "verify:route-segment-config": "node scripts/verify_route_segment_config.cjs",
     "verify:seating-planner": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_seating_planner.ts",
+    "verify:trojan-schemas": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_trojan_horse_schemas.ts",
     "audit:asvs-l3": "node scripts/audit_asvs_l3_payloads.cjs",
     "audit:cisq": "node scripts/audit_cisq_structural.cjs",
     "audit:rich-results": "node scripts/audit_rich_results.cjs",

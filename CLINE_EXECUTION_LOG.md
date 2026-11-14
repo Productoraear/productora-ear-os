@@ -1,4 +1,75 @@
 
+
+## [2026-11-14T16:38:00.000Z] · W54_T01 PACK CABALLO DE TROYA: FICHA UNIVERSAL (380 CAMPOS ZOD) & CENTRO DE MANDO SOBERANO S-CLASS EN /portal/proveedor
+
+**estado_bloque: `VERIFICADO`** (17/17 puertas arnés global Exit 0 + tsc Exit 0 + lint Exit 0 + audit:ssot Exit 0).
+
+### Lo que se implementó y auditó (medido en disco)
+
+1. **Esquemas Zod & Validaciones Matemáticas Formales (`src/lib/providers/trojan-horse-schema.ts`)**:
+   - `ProviderProfileCategoryEnum` con las 8 categorías del Caballo de Troya (`FINCA_ALQUILER`, `RESTAURANTE_BODA`, `CATERING_BODA`, `MUSICA_DIRECTO`, `FOTOGRAFIA_VIDEO`, `FLORISTERIA_DECORACION`, `WEDDING_PLANNER`, `SERVICIOS_COMPLEMENTARIOS`).
+   - `ProviderProfileFieldSchema` y `ProviderTrojanOnboardingSchema` con `acceptsAntiFraudPolicy: z.literal(true)` inmutable.
+   - Algoritmos matemáticos canónicos:
+     * `validateCifNif(val)`: Módulo 23 para DNI/NIE (`TRWAGMYFPDXBNJZSQVHLCKE`) y cálculo formal de dígito/letra de control para CIF societario.
+     * `validateIbanIso13616(val)`: Norma bancaria internacional ISO 13616 (MOD-97-10) implementada con aritmética `BigInt` para prevenir fallos por precisión de punto flotante.
+     * `formatContactGatePhone(phone, tier)`: Doctrina del Contact-Gate forzando Centralita Oficial (`+34 693 693 048`) en `DIRECTORY_UNCLAIMED`.
+     * `mapTrojanCategoryToCatalog` y `getCategoryFields`: Conexión directa con el catálogo de 380 campos tipados de `provider-field-catalog.ts`.
+
+2. **Enriquecimiento del Seating Planner Pulpetti (`src/lib/seating/seating-plan.ts`)**:
+   - `DietaryTag`: Vocabulario tipado para 9 restricciones (`celiaco`, `vegano`, `vegetariano`, `sin-lactosa`, `alergia-marisco`, `alergia-frutos-secos`, `embarazada`, `infantil`, `otro`).
+   - Extensión de `SeatingGuest` con `dietary?: readonly DietaryTag[]` y `dietaryNotes?: string`.
+   - Motor de cocina: `tallyDietary(plan)` y `tallyDietaryByTable(plan)` con conteos globales y por mesa.
+   - Geometría espacial: `roomDimensions?: { widthM: number; lengthM: number }` en `SeatingPlan` y `zone?: 'interior' | 'exterior' | 'terraza' | 'jardin' | 'pista'` en mesas y mobiliario.
+   - Inviolabilidad del rango de aforo: estrictamente 2 a 12 comensales por mesa (`tableSeatRange`).
+
+3. **Interfaz de Usuario del Seating Planner (`SeatingGuestPanel.tsx` & `SeatingPrintSheet.tsx`)**:
+   - `SeatingGuestPanel.tsx`: Insignias de dietas/alérgenos en la lista de comensales y desglose de cocina ("Cocina & Alergias") en vivo.
+   - `SeatingPrintSheet.tsx`: Ficha de impresión A4 con códigos de dieta en la lista alfabética de mesas y tabla dedicada de Cocina para staff de sala y banquetes.
+
+4. **Centro de Mando Soberano S-Class (`src/components/providers/ProviderUniversalCockpit.tsx`)**:
+   - Master OLED S-Class: Fondos `#030305`, `#050507`, acento oro `#ecb613`, Syne, Inter, JetBrains Mono, estrictamente sin `w-screen`, 0 emojis.
+   - Selector interactivo de las 8 categorías del Caballo de Troya.
+   - Inspector/Editor de 380 campos agrupados por secciones con búsqueda en vivo y seguimiento de dirty state.
+   - Seating Planner Pulpetti embebido para espacios y catering (`FINCA_ALQUILER`, `RESTAURANTE_BODA`, `CATERING_BODA`) con presets para Eduardo Martínez: Ezkertza Berria (350 pax, mesas redondas) y Otzarreta (220 pax).
+   - Matriz de Capacidades de Plataforma estilo Spotify for Artists bajo principio de Default-Deny (`Google Business`, `Bodas.net`, `Instagram`, `WhatsApp`, `Webhooks`).
+   - Agenda Soberana con feed iCal (`/api/calendar/proveedor/[slug]/ical`), depósito Price-Lock de 100 € y 0% comisión en membresías de pago frente al split 80/10/10 en el directorio gratuito.
+   - Indicador de política de Handoff Humano agéntico (5% a 90%, cierre HITL obligatorio).
+   - CTA oficial a Centralita: `+34 693 693 048`.
+
+5. **Punto de Entrada Server Component (`src/app/(portal)/portal/proveedor/page.tsx`)**:
+   - Ruta `/portal/proveedor` con carga de datos en servidor desde `provider-profile-store.ts`, metadatos y montaje del cockpit.
+   - Server Action dedicada en `src/app/actions/portal-provider-actions.ts`.
+
+6. **Arnés de Verificación (`scripts/verify_trojan_horse_schemas.ts`) & Remediación Iteración 2**:
+   - Verificaciones automáticas de DNI/NIE/CIF, IBAN ISO 13616 BigInt con soporte alfanumérico internacional (validación estricta de RIB francés `FR1420041010050500013M02606` y rechazo de checksum inconsistente `FR1420041010050500013M02699`).
+   - Paridad exacta de 380 campos en las 8 categorías sin duplicados (3.207 aserciones ejecutadas y certificadas).
+   - Inviolabilidad del aforo de mesas: `seatCapacity('presidential')` acotado constitucionalmente a `tableSeatRange('presidential').max` (12 plazas exactas), eliminando desalojos bruscos en la UI.
+   - Corrección de firma en `buildDefaultPlan({ pax: 80, eventName: 'Banquete Test Alérgenos' })`.
+   - Cláusula anti-fraude con `acceptsAntiFraudPolicy: z.literal(true)` inmutable.
+
+7. **Certificación del Arnés Global de Calidad (Remediación Iteración 2)**:
+   - `npm run verify:trojan-schemas` -> **PASS (Exit 0, 3207 aserciones, 5/5 bloques)**.
+   - `npm run verify:seating-planner` -> **PASS (Exit 0, 149 aserciones)**.
+   - `npm run audit:ssot` (`baseline_ssot_integrity.ts`) -> **Exit 0 (Invariantes OK, Hash OK)**.
+   - `npm run typecheck` (`tsc --noEmit`) -> **Exit 0 (0 errores)**.
+   - `npm run lint` (`eslint`) -> **Exit 0 (0 errores)**.
+   - `node scripts/run_sv_protocol_15_gates.cjs` -> **17/17 PASS (Exit 0)**.
+
+### SIGMA://CLOSE/v1
+```
+task_id        : W54_T01 (Pack Caballo de Troya: Ficha Universal 380 Campos & Centro de Mando Soberano /portal/proveedor)
+estado_bloque  : VERIFICADO
+hecho          : trojan-horse-schema.ts + Seating Planner dietas & zonas + SeatingGuestPanel/PrintSheet + ProviderUniversalCockpit S-Class + /portal/proveedor + Remediación seatCapacity 12 pax + IBAN ISO 13616 BigInt fix + 17/17 gates Exit 0
+evidence[]     : { id: W54_T01_TROJAN_SCHEMAS, cmd: "npm run verify:trojan-schemas", exit: 0, assertions: 3207, blocks: "5/5" }
+                 { id: W54_T01_SEATING_PLANNER, cmd: "npm run verify:seating-planner", exit: 0, assertions: 149 }
+                 { id: W54_T01_AUDIT_SSOT, cmd: "npm run audit:ssot", exit: 0, hash: "cefa76c2c6a3f92f57acf74f654932c02bf66774502102cb4f932520aaa64b2b" }
+                 { id: W54_T01_TYPECHECK, cmd: "npm run typecheck", exit: 0 }
+                 { id: W54_T01_LINT, cmd: "npm run lint", exit: 0, errors: 0 }
+                 { id: W54_T01_GLOBAL_17_GATES, cmd: "node scripts/run_sv_protocol_15_gates.cjs", exit: 0, gates: "17/17" }
+cambios[]      : src/lib/providers/trojan-horse-schema.ts · src/lib/seating/seating-plan.ts · src/components/seating/SeatingGuestPanel.tsx · src/components/seating/SeatingPrintSheet.tsx · src/components/providers/ProviderUniversalCockpit.tsx · src/app/(portal)/portal/proveedor/page.tsx · src/app/actions/portal-provider-actions.ts · scripts/verify_trojan_horse_schemas.ts · package.json · CLINE_EXECUTION_LOG.md
+gates          : G-0 PASS · G-1 PASS (tsc 0) · G-2 PASS (0 errores lint) · G-3 PASS (17/17 gates Exit 0) · G-4 PASS (verify:trojan-schemas Exit 0) · G-5 PASS (verify:seating-planner Exit 0)
+```
+
 ## [2026-11-14T15:38:00.000Z] · W52_T04 COCKPIT DE PLATAFORMAS DEL ARTISTA + SSO SOBERANO UNIFICADO
 
 **estado_bloque: `VERIFICADO`** (14/14 puertas del cockpit + 17/17 puertas arnés global Exit 0).

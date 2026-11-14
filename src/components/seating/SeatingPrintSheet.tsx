@@ -20,12 +20,17 @@
 
 import React from 'react';
 import {
+  DIETARY_INFO,
+  DIETARY_TAGS,
   FIXTURE_SPEC,
   GUEST_TAG_STYLE,
   TABLE_METRICS,
   effectiveMetrics,
   guestsOfTable,
   rotatedBounds,
+  tallyDietary,
+  tallyDietaryByTable,
+  type DietaryTag,
   type SeatingPlan,
   type TableShape,
 } from '@/lib/seating/seating-plan';
@@ -181,7 +186,14 @@ function TableIndex({ plan, shapeLabel }: SeatingPrintSheetProps) {
                   <span className="italic text-neutral-500">sin asignar</span>
                 ) : (
                   guests
-                    .map((guest) => `${(guest.seatIndex ?? 0) + 1}. ${guest.name}${guest.rsvp === 'confirmed' ? '' : ' (p)'}`)
+                    .map((guest) => {
+                      const rsvp = guest.rsvp === 'confirmed' ? '' : ' (p)';
+                      const diet =
+                        guest.dietary && guest.dietary.length > 0
+                          ? ` [${guest.dietary.map((d) => DIETARY_INFO[d].badge).join(',')}]`
+                          : '';
+                      return `${(guest.seatIndex ?? 0) + 1}. ${guest.name}${rsvp}${diet}`;
+                    })
                     .join(' · ')
                 )}
               </td>
@@ -197,6 +209,54 @@ function TableIndex({ plan, shapeLabel }: SeatingPrintSheetProps) {
         ) : null}
       </tbody>
     </table>
+  );
+}
+
+/** Resumen de cocina: desglose de alergias e intolerancias para equipo de sala y banquetes. */
+function KitchenDietaryTable({ plan }: { readonly plan: SeatingPlan }) {
+  const dietaryTally = tallyDietary(plan);
+  const totalSpecial = (Object.values(dietaryTally) as number[]).reduce((acc, count) => acc + count, 0);
+  if (totalSpecial === 0) return null;
+
+  const byTable = tallyDietaryByTable(plan);
+
+  return (
+    <section className="mt-6 border-t border-black pt-4">
+      <h2 className="mb-2 text-[11px] font-bold uppercase tracking-wider text-black">
+        Resumen de Cocina · Alergias, Intolerancias y Menús Especiales ({totalSpecial})
+      </h2>
+      <table className="w-full border-collapse text-[9px] leading-snug text-black">
+        <thead>
+          <tr className="border-b border-black text-left">
+            <th className="py-1 pr-2 font-bold uppercase tracking-wider">Tipo de Menú</th>
+            <th className="py-1 pr-2 font-bold uppercase tracking-wider">Código</th>
+            <th className="py-1 pr-2 text-right font-bold uppercase tracking-wider">Total</th>
+            <th className="py-1 font-bold uppercase tracking-wider">Distribución por Mesa</th>
+          </tr>
+        </thead>
+        <tbody>
+          {DIETARY_TAGS.map((tag) => {
+            const count = dietaryTally[tag];
+            if (count === 0) return null;
+            const tableList: string[] = [];
+            for (const table of plan.tables) {
+              const tableCount = byTable[table.id]?.[tag] ?? 0;
+              if (tableCount > 0) {
+                tableList.push(`${table.label} (${tableCount})`);
+              }
+            }
+            return (
+              <tr key={tag} className="border-b border-neutral-300">
+                <td className="py-1 pr-2 font-bold">{DIETARY_INFO[tag].label}</td>
+                <td className="py-1 pr-2 font-mono font-bold">[{DIETARY_INFO[tag].badge}]</td>
+                <td className="py-1 pr-2 text-right font-mono font-bold">{count}</td>
+                <td className="py-1">{tableList.length > 0 ? tableList.join(' · ') : 'Sin mesa asignada'}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </section>
   );
 }
 
@@ -244,6 +304,8 @@ export default function SeatingPrintSheet({ plan, shapeLabel }: SeatingPrintShee
         </h2>
         <TableIndex plan={plan} shapeLabel={shapeLabel} />
       </section>
+
+      <KitchenDietaryTable plan={plan} />
 
       <UnseatedList plan={plan} />
 
