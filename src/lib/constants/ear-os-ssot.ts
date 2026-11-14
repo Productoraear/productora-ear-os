@@ -1,28 +1,35 @@
 /**
  * ════════════════════════════════════════════════════════════════════════════
- * EAR OS — SSOT CENTRALIZADO E INMUTABLE (SINGLE SOURCE OF TRUTH)
+ * EAR OS — SSOT CENTRALIZADO E INMUTABLE (SINGLE SOURCE OF TRUTH) v14.0
  * ════════════════════════════════════════════════════════════════════════════
  * Fuente única y canónica de las constantes de negocio S-CLASS.
  * Todo motor financiero, checkout, licitación y rider acústico DEBE consumir
  * exclusivamente estas constantes. Queda prohibido duplicar valores.
  *
- * Reglas SSOT (Protocolo Omega · AGENTS.md):
+ * Reglas SSOT (Protocolo Omega · AGENTS.md v12.0):
  *  - Tarifa estándar mínima oficial Solista (Edwin Agudelo): 550,00 €
  *    (incluye 100 km de desplazamiento). Suelo inviolable: 350,00 €.
  *  - Logística S-Class: 1,50 €/km a partir del km 50 de Méntrida
  *    (+120 € Hotel si hora fin >= 3:00 AM o distancia > 200 km).
  *  - Split Soberano: 80% Artista / 10% EAR OS / 10% VIMUME.
- *  - Depósito Stripe: 100,00 € (Price-Lock SHA-256).
- *  - Límite B2G (Art. 118 LCSP): < 15.000,00 € (ajuste preventivo 14.250,00 €).
+ *  - Depósito de Reserva y Bloqueo de Fecha: 100,00 € fijo (Price-Lock SHA-256).
+ *    Siempre deducible del importe total en la liquidación final.
+ *  - Cobro del servicio: 100% del total previo a la ejecución del evento.
+ *  - Límite B2G (Art. 118 LCSP): < 15.000,00 € (techo preventivo 14.250,00 €).
+ *    El techo preventivo B2G incluye una sesión VIMUME de impacto social.
  *  - Rider acústico: 12 W/pax, límite de salud pública < 75 dB SPL.
- *  - Centralita: +34 693 693 048 (Solo CEO Edwin Agudelo).
+ *    AVISO LEGAL: El calculador acústico es una herramienta técnica voluntaria
+ *    a demanda. No constituye promesa contractual de indemnidad legal ni
+ *    sustituto de un técnico acústico homologado (Ley 37/2003).
+ *  - Centralita: +34 693 693 048 (Único canal oficial, CEO Edwin Agudelo).
  * ════════════════════════════════════════════════════════════════════════════
  */
 
 /**
  * SUELO TARIFARIO SOLISTA (innegociable, sanción CEO).
- * Es el mínimo absoluto del Solista Premium: ningún cupón, descuento de
- * afiliado ni promoción puede cotizar por debajo de esta cifra.
+ * Es el mínimo absoluto del Solista Premium Edwin Agudelo: ningún cupón,
+ * descuento de afiliado ni promoción puede cotizar por debajo de esta cifra.
+ * Aplica EXCLUSIVAMENTE a Edwin Agudelo (`e78903`).
  */
 export const TARIFA_BASE_SOLISTA_EUR: number = 350.0;
 
@@ -41,9 +48,33 @@ export const TARIFA_ESTANDAR_SOLISTA_EUR: number = 550.0;
 export const SOLISTA_KM_INCLUIDOS: number = 100;
 
 /**
- * Porcentaje de reserva para el bloqueo de fecha (50% del total presupuestado),
- * directiva comercial del CEO. Sustituye al depósito simbólico de 100,00 €
- * únicamente en las transacciones que lo declaren explícitamente.
+ * DEPÓSITO DE RESERVA Y BLOQUEO DE FECHA (FIJO, INMUTABLE).
+ * Importe fijo de 100,00 € Stripe Price-Lock SHA-256.
+ * Siempre deducible al 100% del importe total en la liquidación final.
+ * Este es el único depósito autorizado; NO se aceptan porcentajes variables
+ * como depósito de reserva salvo aprobación explícita del CEO.
+ */
+export const DEPOSITO_RESERVA_EUR: number = 100.0;
+
+/**
+ * Depósito de cierre en Stripe (Price-Lock SHA-256), inmutable.
+ * Alias legacy mantenido por compatibilidad con motores existentes.
+ */
+export const DEPOSITO_STRIPE_EUR: number = DEPOSITO_RESERVA_EUR;
+
+/**
+ * POLÍTICA DE COBRO DEL SERVICIO.
+ * El 100% del importe total se cobra PREVIO a la ejecución del evento.
+ * Solo el depósito de reserva (100 €) se cobra en el momento de la contratación.
+ * No se ejecuta ningún evento sin haber recibido el 100% del pago.
+ */
+export const COBRO_PREVIO_AL_EVENTO_PCT: number = 1.0; // 100%
+
+/**
+ * @deprecated RESERVA_BLOQUEO_PCT: El depósito es un importe fijo de 100 €
+ * (DEPOSITO_RESERVA_EUR), no un porcentaje del total. Esta constante se
+ * conserva únicamente para backward-compatibility y NO debe usarse en
+ * nuevos motores de cotización.
  */
 export const RESERVA_BLOQUEO_PCT: number = 0.5;
 
@@ -65,13 +96,14 @@ export const SUPLEMENTO_HOTEL_EUR: number = 120;
 /** Hora de cierre que activa el suplemento hotelero (3:00 AM). */
 export const HORA_FIN_HOTEL: number = 3;
 
-/** Depósito de cierre en Stripe (Price-Lock SHA-256), inmutable. */
-export const DEPOSITO_STRIPE_EUR: number = 100.0;
-
 /** Techo legal de contrato menor (Art. 118 LCSP). */
 export const LIMITE_B2G_LCSP_EUR: number = 15000.0;
 
-/** Ajuste preventivo del 95% para blindar reparos de intervención. */
+/**
+ * Ajuste preventivo anti-fraccionamiento (95% del techo legal).
+ * El contrato menor B2G incluye sesión VIMUME de impacto social.
+ * Ningún expediente B2G puede superar esta cifra sin licitación ordinaria.
+ */
 export const AJUSTE_PREVENTIVO_B2G_EUR: number = 14250.0;
 
 /** Alias canónico del techo preventivo de Contrato Menor (Art. 118 LCSP). */
@@ -85,10 +117,15 @@ export const SAFE_LCSP_CEILING_EUR: number = AJUSTE_PREVENTIVO_B2G_EUR;
  */
 export const MAX_TOTAL_ESTIMADO_EUR: number = 1_000_000.0;
 
-/** Presión sonora de salud pública (límite máximo). */
+/**
+ * Presión sonora de salud pública (límite máximo legal Ley 37/2003).
+ * AVISO: El calculador acústico de EAR OS es una herramienta técnica
+ * voluntaria a demanda. No constituye promesa contractual de indemnidad
+ * legal ni sustituto de un técnico acústico homologado.
+ */
 export const LIMITE_SPL_DB: number = 75;
 
-/** Potencia acústica por asistente (W/pax). */
+/** Potencia acústica por asistente (W/pax) — referencia técnica informativa. */
 export const WATTS_PER_PAX: number = 12;
 
 /** Centralita oficial (Solo CEO Edwin Agudelo). */
@@ -113,13 +150,15 @@ export const EAR_OS_SSOT = Object.freeze({
     TARIFA_BASE_SOLISTA_EUR,
     TARIFA_ESTANDAR_SOLISTA_EUR,
     SOLISTA_KM_INCLUIDOS,
+    DEPOSITO_RESERVA_EUR,
+    DEPOSITO_STRIPE_EUR,
+    COBRO_PREVIO_AL_EVENTO_PCT,
     RESERVA_BLOQUEO_PCT,
     LOGISTICA_EUR_PER_KM,
     LOGISTICA_KM_EXENTOS,
     LOGISTICA_KM_HOTEL,
     SUPLEMENTO_HOTEL_EUR,
     HORA_FIN_HOTEL,
-    DEPOSITO_STRIPE_EUR,
     LIMITE_B2G_LCSP_EUR,
     AJUSTE_PREVENTIVO_B2G_EUR,
     SAFE_LCSP_CEILING_EUR,

@@ -1,13 +1,15 @@
 # ════════════════════════════════════════════════════════════════════════════════
-# DESIGN.md — EAR OS v13.0 · CAPA 3: ESTÁNDAR DE DISEÑO, TASTE ENGINE & GPU
+# DESIGN.md — EAR OS v14.0 · CAPA 3: ESTÁNDAR DE DISEÑO, TASTE ENGINE & CANVAS
 # GOBERNANZA VISUAL · RENDIMIENTO OFF-MAIN-THREAD · CONVERSIÓN S-CLASS
-# NORMA VIVA: Vinculada a AGENTS.md v11.0 y .clinerules V11_SIGMA_AI_FLUENCY
+# NORMA VIVA: Vinculada a AGENTS.md v12.0 y .clinerules V12_OMEGA_DIAMANTE
+# FASE: REFINAMIENTO — Solo se documenta lo que el código renderiza con solvencia.
 # ════════════════════════════════════════════════════════════════════════════════
 
 ## 1. PROPÓSITO SUPREMO: CONVERSIÓN & JUSTIFICACIÓN DE PRECIO
 Todo fotograma renderizado en EAR OS cumple una única función de negocio: **cerrar ventas, eliminar fricción visual y justificar el pricing soberano**.
 - Prohibido el 3D o diseño puramente decorativo sin impacto en la conversión (AF-4: cifra o elemento sin fuente se retira).
-- Objetivo de telemetría: Reducir el rebote (detectado en 99.95% en Clarity) transformando el recorrido del usuario en una experiencia cinematográfica fluida, accesible y de alta confianza.
+- Objetivo de telemetría: Reducir el rebote transformando el recorrido del usuario en una experiencia institucional fluida, accesible y de alta confianza.
+- **Principio de Fase de Refinamiento:** Se documenta únicamente lo que el código implementa en disco con solvencia y verifica Exit 0. Las aspiraciones arquitectónicas pendientes van a `.antigravity/specs/`, no a esta norma viva.
 
 ---
 
@@ -57,19 +59,26 @@ Uso obligatorio de `next/font` para garantizar carga asíncrona optimizada y **C
 
 ---
 
-## 5. PROTOCOLO GRÁFICO HÍBRIDO (WEBGPU / WEBGL2 OFFSCREEN)
-- **Stack Técnico:** Three.js 0.186.0 + `@react-three/fiber` 9.7 + `@react-three/drei` 10.7.
-- **Detección Automática:** Detección de WebGPU en `navigator.gpu`; fallback transparente e instantáneo a WebGL2 si no está soportado.
-- **Hilo Principal Liberado (Zero-Main-Thread CPU):**
-  * Uso de Web Worker dedicado con `canvas.transferControlToOffscreen()`.
-  * El hilo principal de Next.js se mantiene al 100% libre para eventos de usuario e interactividad.
-  * Presupuesto de interactividad: **INP < 50 ms (target < 20 ms)**, 60–120 FPS estables.
-- **Optimización de Activos 3D:**
-  * Compresión Draco en geometrías y texturas KTX2/Basis.
-  * Límite de carga: payload total de activos 3D ≤ 5 MB.
-  * Carga on-demand: componentes GPU cargados vía `next/dynamic(..., { ssr: false })`.
-  * Pausa inteligente: `IntersectionObserver` envía `{ type: 'PAUSE' }` al Worker cuando el canvas sale del viewport.
-- **Fallback Accesible:** Alternativa estática 2D obligatoria para usuarios con `prefers-reduced-motion` o sin GPU disponible.
+## 5. PROTOCOLO GRÁFICO (THREE.JS + CANVAS SVG/2D — STACK VERIFICADO EN DISCO)
+- **Stack Técnico Verificado:** `three@^0.186.0` + `@react-three/fiber@^9.7.0` + `@react-three/drei@^10.7.9`.
+  Estos paquetes existen en `package.json` y son los únicos autorizados para efectos 3D.
+- **Uso de GPU Declarado como Aspiracional (Pendiente RUM):**
+  * Los componentes `AuraMatrixCanvas.tsx`, `prismaDiamondScene.worker.ts` y `LatticeColibriHero3D.tsx`
+    implementan Three.js con canvas DOM estándar (`WebGLRenderer`).
+  * La arquitectura `OffscreenCanvas + Worker` está especificada en
+    `.antigravity/specs/ARCHITECT_DIRECTIVE_SOTA_2026_v6.md` como objetivo de Fase 3.
+    **No se documenta aquí como estándar de producción hasta que el RUM de campo valide INP < 50 ms.**
+  * Prohibido referenciar `navigator.gpu`, `WebGPU` o `GPUAdapter` en código de producción
+    hasta que el hito esté cerrado con evidencia de arnés ejecutable (Exit 0).
+- **Lienzos SVG/Canvas Puros (Nube de Boda / Seating Planner):**
+  * El Seating Planner (`/seating-planner`) y la "Nube de Boda" usan canvas 2D con
+    `requestAnimationFrame` nativo. Sin dependencias externas de animación.
+  * Prohibido saturar el hilo principal con `setInterval` o bloqueos síncronos en canvas.
+  * Presupuesto de interactividad: INP < 100 ms objetivo; < 50 ms meta.
+- **Fallback Accesible:** Alternativa estática 2D obligatoria para usuarios con
+  `prefers-reduced-motion` o sin GPU compatible.
+- **Carga On-Demand:** Todo componente con Three.js usa `next/dynamic(..., { ssr: false })`.
+- **Pausa Inteligente:** `IntersectionObserver` pausa la animación cuando el canvas sale del viewport.
 
 ---
 
@@ -77,10 +86,10 @@ Uso obligatorio de `next/font` para garantizar carga asíncrona optimizada y **C
 
 | # | Ruta Canónica | Experiencia Visual S-Class | Retorno de Negocio / Marco Legal |
 |---|---|---|---|
-| **1** | `/experiencia` | Simulador Acústico 3D con mapa de calor SPL interactivo del recinto. | Cumplimiento Ley 37/2003 (< 75 dB SPL, 12 W/pax) y limitador homologado. |
-| **2** | `/reservar/solista` | Escenario 360° gala Edwin Agudelo (OLED + destellos Oro). | Cierre de reserva solista 350 € + depósito 100 € Stripe Price-Lock SHA-256. |
-| **3** | `/licitaciones` | Visualizador territorial 3D de plazas municipales y festivales B2G. | Justificación de contratos menores Art. 118 LCSP (< 14.250 €) + SROI 4.85x. |
-| **4** | `artistaseuropa.com` | Bóveda holográfica de artistas con espectro de audio WebAudio. | Distribución ISRC ISO-3901 + Liquidación instantánea Split Soberano 80/10/10. |
+| **1** | `/experiencia` | Simulador Acústico 2D/SVG con tabla de presión SPL por formato y aforo. | Herramienta técnica voluntaria. Referencia Ley 37/2003 (< 75 dB SPL, 12 W/pax) sin promesas contractuales de indemnidad legal. |
+| **2** | `/reservar/solista` | CTA primario con precio desglosado en JetBrains Mono (350 € suelo / 550 € tarifa estándar) + depósito Stripe. | Cierre de reserva solista Edwin Agudelo con depósito 100 € Price-Lock SHA-256, deducible del total. |
+| **3** | `/licitaciones` | Tablero territorial de municipios B2G con CPVs canónicos y ficha de SROI. | Contratos menores Art. 118 LCSP (< 14.250 € techo preventivo) + SROI 4.85x + sesión VIMUME incluida. |
+| **4** | `/seating-planner` | Lienzo canvas 2D de disposición de mesas (Nube de Boda) con geometría fija y skeleton anti-CLS. | Venta cruzada de servicios de coordinación y catering Eduardo Martínez (Ezkertza Berria / Otzarreta). |
 
 ---
 
@@ -109,7 +118,10 @@ Uso obligatorio de `next/font` para garantizar carga asíncrona optimizada y **C
 ---
 
 ## 10. PRESUPUESTO DE RENDIMIENTO (CORE WEB VITALS)
-- **CLS (Cumulative Layout Shift):** ≤ 0,05 (auditable vía `scripts/audit_cls_budget.cjs`).
-- **INP (Interaction to Next Paint):** ≤ 50 ms en navegación interactiva.
+- **CLS (Cumulative Layout Shift):** Objetivo 0,000 en rutas de pago y conversión. Máximo absoluto 0,05 (auditable vía `scripts/audit_cls_budget.cjs`).
+  * **Ley del Skeleton Anti-CLS:** Todo card, catálogo, lista o canvas asíncrono reserva geometría exacta (ancho/alto fijo) con skeletons pulsantes durante la carga. Prohibidos spinners vacíos que provoquen salto de layout.
+  * Lenis (`@studio-freight/react-lenis@^0.0.47`) está en `package.json` con clases CSS en `globals.css`. Su uso es opcional y cosmético; no afecta al CLS si se inicializa post-hidratación.
+- **INP (Interaction to Next Paint):** ≤ 100 ms objetivo; ≤ 50 ms meta en dispositivos con GPU compatible.
 - **LCP (Largest Contentful Paint):** ≤ 2,5 s en redes 4G estándar.
 - **0 Clics Muertos:** Todo botón, selector o enlace interactivo ejecuta una acción real (href, Server Action, modal enlazado o llamada a centralita).
+- **Ley del Debounce Reactivo:** Inputs de búsqueda, autocompletado y sliders continuos (pax, km, precio) deben filtrar con debounce de 200-300 ms.
