@@ -66,14 +66,14 @@ export const FloatingWhatsAppCta: React.FC = React.memo(function FloatingWhatsAp
   // `useRef` (no `useState`): un guard anti doble-clic no debe re-renderizar.
   const lastDispatchRef = useRef(0);
 
-  const handleClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
+  const handleClick = useCallback(() => {
+    // El cliente se atiende por WhatsApp real: se registra el lead y se deja
+    // que el enlace abra la conversación. Sin consola interna.
     const now = Date.now();
     if (now - lastDispatchRef.current >= DOUBLE_CLICK_GUARD_MS) {
       lastDispatchRef.current = now;
       dispatchLeadIntake(window.location.pathname || '/');
     }
-    window.dispatchEvent(new CustomEvent('ear:open-agent'));
   }, []);
 
   // Las zonas privadas no muestran superficie comercial (misma regla que
