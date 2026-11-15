@@ -77,19 +77,15 @@ export function resolveB2GInfo(name: string, province: string, provinceCode: str
 
   // Generación determinista legal de formato estándar DIR3 Administración Local
   // L01 = Administración Local, seguido de código INE de 6 dígitos normalizado a 9 caracteres
-  const munSuffix = ineCode.replace(/\D/g, '').slice(-3).padStart(4, '0');
-  const syntheticDir3 = `L01${provinceCode.padStart(2, '0')}${munSuffix}`;
-  
-  // CIF Corporación Local: P + 2 dígitos provincia + 5 dígitos secuenciales + dígito control
-  const syntheticCif = `P${provinceCode.padStart(2, '0')}${munSuffix}A`;
-
+  // POLITICA NO-FICTICIO: fuera de la tabla verificada NO se inventan CIF ni DIR3.
+  // Se devuelven vacios y el usuario los introduce desde el Directorio Comun DIR3 / FACe.
   return {
     name: cleanName,
     province,
     provinceCode,
     ineCode,
-    cif: syntheticCif,
-    dir3: syntheticDir3,
+    cif: '',
+    dir3: '',
     isVerified: false
   };
 }

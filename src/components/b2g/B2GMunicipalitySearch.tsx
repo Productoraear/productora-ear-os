@@ -144,8 +144,8 @@ export function B2GMunicipalitySearch({
                   </div>
 
                   <div className="text-right shrink-0 font-mono text-[10px]">
-                    <div className="text-[#06b6d4] font-bold">{entry.dir3}</div>
-                    <div className="text-zinc-500 text-[9px]">{entry.cif}</div>
+                    <div className="text-[#06b6d4] font-bold">{entry.dir3 || 'DIR3 por verificar'}</div>
+                    <div className="text-zinc-500 text-[9px]">{entry.cif || 'CIF por verificar'}</div>
                   </div>
                 </button>
               );

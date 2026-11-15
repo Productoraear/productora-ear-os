@@ -17,6 +17,7 @@ import {
   PhoneCall
 } from 'lucide-react';
 import { B2GMunicipalitySearch } from './B2GMunicipalitySearch';
+import { SovereignWhatsAppButton } from '@/components/shared/SovereignWhatsAppButton';
 import { B2GMunicipalityEntry, resolveB2GInfo } from '@/lib/geo/b2g-municipal-resolver';
 import {
   AJUSTE_PREVENTIVO_B2G_EUR,
@@ -260,9 +261,7 @@ Expedido a petición del Ayuntamiento de ${municipio} a fecha ${new Date().toLoc
     URL.revokeObjectURL(url);
   };
 
-  const whatsappInquiryUrl = `https://wa.me/${CENTRALITA_EAR_OS.replace(/\D/g, '')}?text=${encodeURIComponent(
-    `Hola Productora EAR, desde el Ayuntamiento de ${municipio} (DIR3: ${dir3}) solicitamos validación de fecha para el paquete "${selectedPkg.title}" (${baseImponible.toLocaleString('es-ES')} € + IVA) con el módulo social VIMUME incluido.`
-  )}`;
+  const whatsappInquiryText = `Hola Productora EAR, desde el Ayuntamiento de ${municipio}${dir3 ? ` (DIR3: ${dir3})` : ''} solicitamos validación de fecha para el paquete "${selectedPkg.title}" (${baseImponible.toLocaleString('es-ES')} € + IVA) con el módulo social VIMUME incluido.`;
 
   return (
     <div className="space-y-10">
@@ -594,15 +593,16 @@ Expedido a petición del Ayuntamiento de ${municipio} a fecha ${new Date().toLoc
               <span>Gabinete Técnico: {CENTRALITA_EAR_OS}</span>
             </a>
 
-            <a
-              href={whatsappInquiryUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <SovereignWhatsAppButton
+              message={whatsappInquiryText}
+              providerName={`Ayuntamiento de ${municipio}`}
+              category="Contratacion Menor B2G"
+              estimatedTotal={baseImponible}
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-black font-bold text-xs font-mono uppercase tracking-wider transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)]"
             >
               <Sparkles size={14} />
               <span>Bloquear Fecha para {municipio}</span>
-            </a>
+            </SovereignWhatsAppButton>
           </div>
         </div>
 

@@ -17,6 +17,7 @@ import {
   HeartHandshake
 } from 'lucide-react';
 import Link from 'next/link';
+import { SovereignWhatsAppButton } from '@/components/shared/SovereignWhatsAppButton';
 import { useNeuralTunnelStore } from '@/store/useNeuralTunnelStore';
 import {
   CENTRALITA_EAR_OS,
@@ -29,9 +30,7 @@ type InstType = 'gobiernos' | 'ayuntamientos' | 'fundaciones';
 export default function AyuntamientosB2GPage() {
   const [selectedInst, setSelectedInst] = useState<InstType>('ayuntamientos');
   const { openTunnel } = useNeuralTunnelStore();
-  const whatsappHref = `https://wa.me/${CENTRALITA_EAR_OS.replace(/\D/g, '')}?text=${encodeURIComponent(
-    'Hola Productora EAR, solicito pliego técnico y propuesta de contrato menor Art. 118 LCSP para nuestro municipio.'
-  )}`;
+  const whatsappText = 'Hola Productora EAR, solicito pliego técnico y propuesta de contrato menor Art. 118 LCSP para nuestro municipio.';
 
   return (
     <main className="min-h-screen w-full overflow-x-hidden bg-[#030305] text-white pt-24 pb-40 px-4 md:px-8 selection:bg-[#06b6d4] selection:text-black">
@@ -83,15 +82,10 @@ export default function AyuntamientosB2GPage() {
               <Zap size={15} />
               <span>Configurar Municipio en 1 Clic</span>
             </a>
-            <a
-              href={whatsappHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-mono uppercase tracking-wider hover:bg-emerald-500/25 transition-all"
-            >
+            <SovereignWhatsAppButton message={whatsappText} providerName="Portal B2G Ayuntamientos" category="Contratacion Menor B2G" estimatedTotal={AJUSTE_PREVENTIVO_B2G_EUR} className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-mono uppercase tracking-wider hover:bg-emerald-500/25 transition-all">
               <PhoneCall size={14} />
               <span>Gabinete Técnico B2G: {CENTRALITA_EAR_OS}</span>
-            </a>
+            </SovereignWhatsAppButton>
             <Link
               href="/proveedores?cat=musica"
               className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/5 hover:bg-white/10 text-zinc-300 border border-white/10 text-xs font-mono uppercase tracking-wider transition-all"

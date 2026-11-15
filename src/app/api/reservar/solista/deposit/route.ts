@@ -495,6 +495,19 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // 1b · Colision de unicidad (Prisma P2002): bloqueo ya existente para esa fecha/cliente.
+    if (report.code === 'P2002') {
+      return NextResponse.json(
+        {
+          ok: false,
+          code: 'DATE_ALREADY_LOCKED',
+          error:
+            'Ya existe un bloqueo en curso para esta fecha. Si eres tu, revisa tu correo; si necesitas ayuda, escribe al +34 693 693 048.',
+        },
+        { status: 409, headers: { 'Cache-Control': 'no-store' } }
+      );
+    }
+
     // 2 · Motor de bloqueo / base de datos saturada o inalcanzable.
     if (
       report.kind === 'DB_POOL_TIMEOUT' ||
