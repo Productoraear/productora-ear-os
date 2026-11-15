@@ -218,6 +218,29 @@ export function SovereignConciergeWidget() {
     }, 1200);
   }, [scraperUrl, notifyWebhook]);
 
+  const handlePatientZeroPreset = useCallback((preset: 'edwin' | 'otzarreta') => {
+    setIsScraping(false);
+    if (preset === 'edwin') {
+      setScraperUrl('https://productoraear.com/artistas/e78903');
+      setScrapeResult({
+        name: 'Edwin Agudelo (Paciente Cero · Solista Exclusivo)',
+        photos: 18,
+        menuPrice: 550,
+        capacity: 250,
+      });
+      notifyWebhook('patient_zero_preset', { preset: 'edwin_agudelo' });
+    } else {
+      setScraperUrl('https://productoraear.com/otzarreta');
+      setScrapeResult({
+        name: 'Eduardo Martínez (Otzarreta / Ezkertza Berria · Derio)',
+        photos: 32,
+        menuPrice: 145,
+        capacity: 350,
+      });
+      notifyWebhook('patient_zero_preset', { preset: 'otzarreta_derio' });
+    }
+  }, [notifyWebhook]);
+
   // Exclude from admin back-office routes
   if (!mounted || pathname.startsWith('/admin') || pathname.startsWith('/panel')) {
     return null;
@@ -286,10 +309,31 @@ export function SovereignConciergeWidget() {
             {/* Trojan Scraper Input (Si aplica o en ficha de proveedores) */}
             {routeContext.showScraper && (
               <div className="p-3 bg-black/60 border border-zinc-800 rounded-xl space-y-2">
-                <div className="flex items-center gap-1.5 text-zinc-300 font-semibold text-[11px]">
-                  <Link2 size={13} className="text-[#ecb613]" />
-                  <span>Pega tu escaparate (Bodas.net o web):</span>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1.5 text-zinc-300 font-semibold text-[11px]">
+                    <Link2 size={13} className="text-[#ecb613]" />
+                    <span>Pega tu escaparate (Bodas.net o web):</span>
+                  </div>
                 </div>
+
+                {/* Quick Presets Pacientes Cero */}
+                <div className="flex gap-1.5">
+                  <button
+                    type="button"
+                    onClick={() => handlePatientZeroPreset('edwin')}
+                    className="px-2 py-1 rounded bg-zinc-800 hover:bg-zinc-700 text-[#ecb613] font-mono text-[9px] border border-amber-500/20 transition-colors"
+                  >
+                    🎵 Edwin Agudelo
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handlePatientZeroPreset('otzarreta')}
+                    className="px-2 py-1 rounded bg-zinc-800 hover:bg-zinc-700 text-[#ecb613] font-mono text-[9px] border border-amber-500/20 transition-colors"
+                  >
+                    🏰 Eduardo Martínez
+                  </button>
+                </div>
+
                 <div className="flex gap-2">
                   <input
                     type="url"
@@ -312,10 +356,14 @@ export function SovereignConciergeWidget() {
                   <div className="p-2.5 bg-emerald-950/40 border border-emerald-500/30 rounded-lg text-emerald-300 space-y-1 text-[11px] animate-in fade-in">
                     <div className="font-bold flex items-center gap-1 text-emerald-400">
                       <CheckCircle2 size={13} />
-                      <span>Escaparate analizado con éxito</span>
+                      <span>{scrapeResult.name}</span>
                     </div>
                     <p className="text-zinc-300">
-                      Detectadas {scrapeResult.photos} fotos, menú desde {scrapeResult.menuPrice} € y aforo para {scrapeResult.capacity} invitados.
+                      {scrapeResult.name.includes('Edwin')
+                        ? 'Hub Méntrida · Tarifa estándar 550 € con 100 km incluidos (Suelo 350 €). Km extra a 0,50 € y hotel a 80 €.'
+                        : scrapeResult.name.includes('Eduardo')
+                        ? 'Finca Singular Derio · Menús de temporada 2026 desde 145 €, aforo 50-350 pax, acústica ≤ 75 dB SPL.'
+                        : `Detectadas ${scrapeResult.photos} fotos, menú desde ${scrapeResult.menuPrice} € y aforo para ${scrapeResult.capacity} invitados.`}
                     </p>
                     <p className="text-[#ecb613] font-mono font-bold">
                       Ficha preliminar lista para homologación oficial gratuita.

@@ -1,5 +1,25 @@
 
 
+## [2026-11-15T22:05:00.000Z] · DESPLIEGUE AGENTE CONCIERGE INTERACTIVO VISIBLE & TROJAN PRESETS (W55_T03)
+
+**estado_bloque: `SELLADO_Y_CERTIFICADO_AL_100%`** (17/17 puertas arnés global Exit 0 + tsc Exit 0 + lint Exit 0 + audit:ssot Exit 0).
+
+### Acta Formal de Cierre y Verificación
+- **Acta de Cierre:** `SIGMA://CLOSE/v1`
+- **Tarea:** `W55_T03_SOVEREIGN_CONCIERGE_WIDGET_VISIBLE`
+- **Componentes Creados/Actualizados:**
+  * `src/components/concierge/SovereignConciergeWidget.tsx`: Burbuja flotante OLED en esquina inferior derecha (`right-4 sm:right-6`), indicador en vivo de pulso verde ("Agente EAR OS en línea · Respuesta < 1 min"), popover contextual con saludo dinámico según la ruta.
+  * Presets Pacientes Cero: 🎵 Edwin Agudelo (Hub Méntrida · 550 € con 100 km, km extra 0,50 € y hotel 80 €) y 🏰 Eduardo Martínez (Otzarreta / Ezkertza Berria en Derio · menús 2026, aforo 50-350 pax, acústica ≤ 75 dB).
+  * 3 Acciones de 1 Clic: WhatsApp directo con telemetría no bloqueante hacia `/api/concierge/webhook`, Dossier A4 Print nativo, y Selector Interactivo de Fecha/Franja horaria.
+  * Inyección en `src/app/layout.tsx`.
+- **Integridad SSOT:** Hash SHA-256 intacto (`cefa76c2c6a3f92f57acf74f654932c02bf66774502102cb4f932520aaa64b2b`).
+- **Arnés de Liberación:** 17/17 PASS (`node scripts/run_sv_protocol_15_gates.cjs` -> Exit 0).
+- **TypeScript:** Exit 0 (`tsc --noEmit`).
+- **ESLint:** 0 errores.
+- **Estado del Árbol de Trabajo:** `CLEAN`.
+
+---
+
 ## [2026-11-15T15:35:00.000Z] · AUDITORIA FORENSE 100% SOTA & CIERRE FORMAL DEL ARNES OMEGA DIAMANTE
 
 **estado_bloque: `SELLADO_Y_CERTIFICADO_AL_100%`** (17/17 puertas arnés global Exit 0 + Scorecard 20/20 VERDE + tsc Exit 0 + lint Exit 0 + audit:ssot Exit 0).
