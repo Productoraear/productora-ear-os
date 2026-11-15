@@ -1,5 +1,6 @@
 'use client';
 
+import { SovereignWhatsAppButton } from '@/components/shared/SovereignWhatsAppButton';
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import {
   Calculator,
@@ -1055,15 +1056,10 @@ export default function SovereignBudgetPlanner() {
                 <span className="font-bold">PDF / Imprimir</span>
               </button>
 
-              <a
-                href={whatsappBudgetShare}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-5 py-3 rounded-2xl bg-[#25D366] hover:bg-emerald-400 text-black font-black uppercase text-xs flex items-center gap-2 transition shadow-[0_0_25px_rgba(37,211,102,0.3)] active:scale-95"
-              >
+              <SovereignWhatsAppButton url={whatsappBudgetShare} category="Calculadora de Presupuesto" className="px-5 py-3 rounded-2xl bg-[#25D366] hover:bg-emerald-400 text-black font-black uppercase text-xs flex items-center gap-2 transition shadow-[0_0_25px_rgba(37,211,102,0.3)] active:scale-95">
                 <MessageSquare size={14} className="fill-black" />
                 <span>Enviar a Concierge</span>
-              </a>
+              </SovereignWhatsAppButton>
             </div>
           </div>
 
@@ -1817,15 +1813,10 @@ export default function SovereignBudgetPlanner() {
               <span>{depositLoading ? 'Conectando con Stripe…' : 'Bloquear Fecha con 100,00 € deducibles'}</span>
             </button>
 
-            <a
-              href={whatsappBudgetShare}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-6 py-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/15 text-white font-bold uppercase text-xs font-mono transition flex items-center justify-center gap-2"
-            >
+            <SovereignWhatsAppButton url={whatsappBudgetShare} category="Calculadora de Presupuesto" className="px-6 py-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/15 text-white font-bold uppercase text-xs font-mono transition flex items-center justify-center gap-2">
               <MessageSquare size={16} className="text-[#ecb613]" />
               <span>Consultar Fecha por WhatsApp (sin coste)</span>
-            </a>
+            </SovereignWhatsAppButton>
           </div>
 
           <div className="text-right text-[11px] font-mono text-zinc-400">

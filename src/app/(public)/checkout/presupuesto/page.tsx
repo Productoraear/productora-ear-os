@@ -1,5 +1,6 @@
 'use client';
 
+import { SovereignWhatsAppButton } from '@/components/shared/SovereignWhatsAppButton';
 import React, { useState, useMemo, Suspense, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { 
@@ -338,15 +339,10 @@ function ExternalVendorEscrowCheckout({
                 {isProcessingStripe ? 'Conectando con Stripe...' : 'Bloquear Fecha con Fianza (100,00 €)'}
               </button>
 
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full py-3.5 px-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold text-xs flex items-center justify-center gap-2 transition-colors text-center"
-              >
+              <SovereignWhatsAppButton url={whatsappUrl} category="Checkout Presupuesto" className="w-full py-3.5 px-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold text-xs flex items-center justify-center gap-2 transition-colors text-center">
                 <Phone className="w-4 h-4 text-emerald-400" />
                 <span>Centralita Productora EAR (+34 693 693 048)</span>
-              </a>
+              </SovereignWhatsAppButton>
             </div>
 
             {/* Garantía Reembolsable */}
@@ -812,17 +808,12 @@ function EdwinAgudeloGalaCheckout() {
                     </div>
                   </button>
 
-                  <a
-                    href={whatsappUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full py-4 px-6 rounded-xl bg-transparent border border-white/20 hover:border-white/40 hover:bg-white/5 text-white font-bold text-xs flex items-center justify-center gap-3 transition-all text-center group"
-                  >
+                  <SovereignWhatsAppButton url={whatsappUrl} category="Checkout Presupuesto" className="w-full py-4 px-6 rounded-xl bg-transparent border border-white/20 hover:border-white/40 hover:bg-white/5 text-white font-bold text-xs flex items-center justify-center gap-3 transition-all text-center group">
                     <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center group-hover:bg-emerald-500/40 transition-colors">
                       <Phone className="w-4 h-4 text-emerald-400" />
                     </div>
                     <span className="tracking-wide">CONSULTA DIRECTA (+34 693 693 048)</span>
-                  </a>
+                  </SovereignWhatsAppButton>
                 </div>
                 
                 <div className="flex items-center justify-center gap-2 pt-2">

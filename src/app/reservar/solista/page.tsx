@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic';
 
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { SovereignWhatsAppButton } from '@/components/shared/SovereignWhatsAppButton';
 import {
   Calculator,
   MapPin,
@@ -1147,14 +1148,9 @@ export default function SolistaReservationPage() {
 
               {/* DIRECT CONTACT BUTTONS */}
               <div className="grid grid-cols-2 gap-3">
-                <a
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 bg-[#25D366]/10 hover:bg-[#25D366]/20 text-[#25D366] border border-[#25D366]/30 text-xs font-bold py-3 rounded-xl transition-colors"
-                >
+                <SovereignWhatsAppButton url={whatsappUrl} providerName="Edwin Agudelo" category="Solista" estimatedTotal={totalCost} className="flex items-center justify-center gap-2 bg-[#25D366]/10 hover:bg-[#25D366]/20 text-[#25D366] border border-[#25D366]/30 text-xs font-bold py-3 rounded-xl transition-colors">
                   <MessageCircle size={14} /> WhatsApp
-                </a>
+                </SovereignWhatsAppButton>
                 <a
                   href="tel:+34693693048"
                   className="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/10 text-xs font-bold py-3 rounded-xl transition-colors"

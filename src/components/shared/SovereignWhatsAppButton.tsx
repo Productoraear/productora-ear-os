@@ -7,6 +7,8 @@ import { CENTRALITA_EAR_OS } from '@/lib/constants/ear-os-ssot';
 export interface SovereignWhatsAppButtonProps {
   /** Texto precargado en el chat. Si falta, se genera uno contextual por ruta. */
   message?: string;
+  /** URL wa.me ya construida (p. ej. mensaje firmado con huella). Tiene prioridad sobre `message`. */
+  url?: string;
   providerName?: string;
   category?: string;
   estimatedTotal?: number;
@@ -23,6 +25,7 @@ const CLEAN_PHONE: string = CENTRALITA_EAR_OS.replace(/\D/g, '');
  */
 export function SovereignWhatsAppButton({
   message,
+  url,
   providerName,
   category,
   estimatedTotal,
@@ -39,7 +42,7 @@ export function SovereignWhatsAppButton({
     return `Hola Productora EAR, escribo desde productoraear.com${pathname} y necesito asistencia.`;
   }, [message, providerName, category, pathname]);
 
-  const href = `https://wa.me/${CLEAN_PHONE}?text=${encodeURIComponent(text)}`;
+  const href = url && url.startsWith('https://wa.me/') ? url : `https://wa.me/${CLEAN_PHONE}?text=${encodeURIComponent(text)}`;
 
   const notifyConcierge = useCallback((): void => {
     try {
