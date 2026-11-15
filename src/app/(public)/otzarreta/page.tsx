@@ -26,6 +26,7 @@ import {
   supplierLineMask
 } from '@/lib/providers/sovereign-lead-gate';
 import { EzkertzaVenueLanding as EzkertzaVenueListing } from '@/components/otzarreta/EzkertzaVenueLanding';
+import { SovereignWhatsAppButton } from '@/components/shared/SovereignWhatsAppButton';
 import {
   AudioReactiveVisualizer,
   HorizonXGlow
@@ -205,15 +206,15 @@ export default async function OtzarretaFlagshipPage({
               <span>Bloquear Fecha con {DEPOSITO_STRIPE_EUR} € (Deducible)</span>
             </a>
 
-            <a
-              href={whatsappConciergeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <SovereignWhatsAppButton
+              url={whatsappConciergeUrl}
+              providerName="Ezkertza Berria & Otzarreta"
+              category="Finca y Banquetes"
               className="px-6 py-4 rounded-2xl bg-[#09090d]/80 text-white font-semibold text-sm sm:text-base hover:bg-white/10 transition-all border border-white/15 flex items-center gap-2.5 backdrop-blur-md"
             >
               <Phone className="w-5 h-5 text-emerald-400" />
               <span>Hablar con Conserjería VIP</span>
-            </a>
+            </SovereignWhatsAppButton>
 
             <a
               href={calendarVisitHref}
@@ -411,15 +412,15 @@ export default async function OtzarretaFlagshipPage({
                 <div className="text-xs font-mono text-[#ecb613]">
                   Tarifa equiparada a un directorio convencional · Leads filtrados y visibilidad medida
                 </div>
-                <a
-                  href={whatsappConciergeUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <SovereignWhatsAppButton
+                  url={whatsappConciergeUrl}
+                  providerName="Ezkertza Berria & Otzarreta"
+                  category="Finca y Banquetes"
                   className="px-5 py-2.5 rounded-xl bg-[#ecb613] text-black font-extrabold text-xs hover:bg-[#ffe066] transition-all flex items-center gap-2 shadow-md shadow-[#ecb613]/20"
                 >
                   <span>Firmar Alianza Directa</span>
                   <ArrowRight className="w-3.5 h-3.5" />
-                </a>
+                </SovereignWhatsAppButton>
               </div>
             </div>
           </div>
@@ -690,15 +691,15 @@ export default async function OtzarretaFlagshipPage({
               Bloquear Fecha en Exclusiva ({DEPOSITO_STRIPE_EUR} €)
             </a>
 
-            <a
-              href={whatsappConciergeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <SovereignWhatsAppButton
+              url={whatsappConciergeUrl}
+              providerName="Ezkertza Berria & Otzarreta"
+              category="Finca y Banquetes"
               className="px-6 py-4 rounded-xl bg-[#25D366] text-black font-bold text-sm hover:brightness-110 transition-all flex items-center gap-2 shadow-lg"
             >
               <Phone className="w-4 h-4" />
               Hablar con Conserjería VIP
-            </a>
+            </SovereignWhatsAppButton>
           </div>
 
             <div className="pt-4 text-xs text-gray-500 font-mono">

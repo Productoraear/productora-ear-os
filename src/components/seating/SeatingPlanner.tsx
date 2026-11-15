@@ -24,6 +24,7 @@
  * ════════════════════════════════════════════════════════════════════════════
  */
 
+import { SovereignWhatsAppButton } from '@/components/shared/SovereignWhatsAppButton';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { AlertTriangle, Check, CircleDot, Copy, Link2, Plus, RotateCcw, Users } from 'lucide-react';
 import {
@@ -514,14 +515,13 @@ export default function SeatingPlanner({
           El plano vive en tu navegador y en el enlace que generes. Guardarlo vinculado a tu fecha exige el depósito
           de <span className="font-mono text-white">{depositEur} €</span>, deducible del total del evento.
         </p>
-        <a
-          href={whatsappHref}
-          target="_blank"
-          rel="noopener noreferrer"
+        <SovereignWhatsAppButton
+          url={whatsappHref}
+          category="Planificador de Mesas"
           className="ml-auto inline-flex items-center gap-2 rounded-xl border border-white/15 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white transition-colors hover:border-white/40"
         >
           Consultar por WhatsApp
-        </a>
+        </SovereignWhatsAppButton>
       </section>
 
       {/* ── HOJA A4: sólo existe al imprimir (plano + lista alfabética) ────── */}

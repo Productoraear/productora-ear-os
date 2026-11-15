@@ -2,6 +2,7 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { SovereignWhatsAppButton } from '@/components/shared/SovereignWhatsAppButton';
 import {
   ShieldCheck,
   MapPin,
@@ -151,15 +152,15 @@ export default async function OtzarretaDynamicLandingPage({ params }: Props): Pr
               <CreditCard className="w-4 h-4" />
               Bloquear Fecha con {DEPOSITO_STRIPE_EUR} € (Deducible)
             </a>
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <SovereignWhatsAppButton
+              url={whatsappUrl}
+              providerName="Ezkertza Berria & Otzarreta"
+              category="Finca y Banquetes"
               className="px-6 py-3.5 rounded-xl bg-[#25D366] text-black font-bold text-sm hover:brightness-110 transition-all flex items-center gap-2 shadow-lg"
             >
               <Phone className="w-4 h-4" />
               Consultar Vía WhatsApp
-            </a>
+            </SovereignWhatsAppButton>
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-6 pt-4 text-xs text-gray-400 font-mono">

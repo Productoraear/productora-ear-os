@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { CENTRALITA_EAR_OS, DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
 import { resolveProviderCalendarHref } from '@/lib/providers/provider-cta-engine';
+import { SovereignWhatsAppButton } from '@/components/shared/SovereignWhatsAppButton';
 
 export interface MenuItem {
   name: string;
@@ -848,15 +849,16 @@ export function OtzarretaExperienceExplorer(): React.JSX.Element {
                 <span>Bloqueo oficial con depósito garantizado de {DEPOSITO_STRIPE_EUR} € (Deducible al 100%)</span>
               </div>
               <div className="flex flex-wrap items-center gap-3">
-                <a
-                  href={`https://wa.me/${CENTRALITA_EAR_OS.replace(/\D/g, '')}?text=${whatsappMessage}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <SovereignWhatsAppButton
+                  url={`https://wa.me/${CENTRALITA_EAR_OS.replace(/\D/g, '')}?text=${whatsappMessage}`}
+                  providerName="Ezkertza Berria & Otzarreta"
+                  category="Finca y Banquetes"
+                  estimatedTotal={totalEstimated}
                   className="px-5 py-2.5 rounded-xl bg-[#25D366] text-black font-bold text-xs hover:brightness-110 transition-all flex items-center gap-2 shadow-lg"
                 >
                   <Phone className="w-4 h-4" />
                   Consultar Disponibilidad
-                </a>
+                </SovereignWhatsAppButton>
                 <a
                   href={resolveProviderCalendarHref({ slug: 'restaurante-otzarreta', category: 'catering' }, { intent: 'bloquear' })}
                   className="px-5 py-2.5 rounded-xl bg-[#ecb613] text-black font-extrabold text-xs hover:bg-[#ffe066] transition-all flex items-center gap-2 shadow-lg shadow-[#ecb613]/20"
@@ -1034,15 +1036,16 @@ export function OtzarretaExperienceExplorer(): React.JSX.Element {
                     <CreditCard className="w-4 h-4" />
                     Bloquear Fecha ({DEPOSITO_STRIPE_EUR} €)
                   </a>
-                  <a
-                    href={`https://wa.me/${CENTRALITA_EAR_OS.replace(/\D/g, '')}?text=${whatsappMessage}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <SovereignWhatsAppButton
+                    url={`https://wa.me/${CENTRALITA_EAR_OS.replace(/\D/g, '')}?text=${whatsappMessage}`}
+                    providerName="Ezkertza Berria & Otzarreta"
+                    category="Finca y Banquetes"
+                    estimatedTotal={totalEstimated}
                     className="w-full py-3 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-200 hover:text-white hover:border-[#25D366] text-xs font-mono font-bold transition-all flex items-center justify-center gap-2"
                   >
                     <Phone className="w-3.5 h-3.5 text-[#25D366]" />
                     Consultar por WhatsApp
-                  </a>
+                  </SovereignWhatsAppButton>
                 </div>
               </div>
             </div>
