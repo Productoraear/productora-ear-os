@@ -51,6 +51,7 @@ import {
   Sparkles,
   UtensilsCrossed,
   Wand2,
+  UserPlus,
 } from 'lucide-react';
 import {
   CENTRALITA_EAR_OS,
@@ -70,6 +71,8 @@ import {
 } from '@/lib/providers/trojan-horse-schema';
 import { savePortalProviderProfileAction } from '@/app/actions/portal-provider-actions';
 import SeatingPlanner from '@/components/seating/SeatingPlanner';
+import { SovereignWhatsAppButton } from '@/components/shared/SovereignWhatsAppButton';
+import { TrojanOnboardingModal } from './TrojanOnboardingModal';
 
 export interface ProviderUniversalCockpitProps {
   readonly initialSlug?: string;
@@ -201,8 +204,9 @@ export function ProviderUniversalCockpit({
 }: ProviderUniversalCockpitProps) {
   const [activeTab, setActiveTab] = useState<'cockpit' | 'campos' | 'seating' | 'agenda' | 'capacidades'>('cockpit');
   const [selectedCategory, setSelectedCategory] = useState<ProviderProfileCategory>(initialCategory);
-  const [providerSlug] = useState<string>(initialSlug);
-  const [businessName] = useState<string>(initialBusinessName);
+  const [providerSlug, setProviderSlug] = useState<string>(initialSlug);
+  const [businessName, setBusinessName] = useState<string>(initialBusinessName);
+  const [isOnboardingOpen, setIsOnboardingOpen] = useState(false);
   const [membershipTier] = useState<string>(initialTier);
 
   // Catálogo SSOT de campos tipados
@@ -321,15 +325,23 @@ export function ProviderUniversalCockpit({
                 <span className="text-zinc-400">Nivel:</span>
                 <span className="text-[#ecb613] font-bold uppercase">{membershipTier}</span>
               </div>
-              <a
-                href={whatsappHref}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                type="button"
+                onClick={() => setIsOnboardingOpen(true)}
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500/20 to-[#ecb613]/20 hover:from-amber-500/30 hover:to-[#ecb613]/30 text-[#ecb613] border border-[#ecb613]/40 text-xs font-mono uppercase tracking-wider transition-all shadow-[0_0_15px_rgba(236,182,19,0.15)]"
+              >
+                <UserPlus size={14} />
+                <span>Alta Caballo de Troya</span>
+              </button>
+              <SovereignWhatsAppButton
+                url={whatsappHref}
+                category="Soporte Centro de Mando Proveedores"
+                providerName={businessName}
                 className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-zinc-300 border border-white/10 text-xs font-mono uppercase tracking-wider transition-all"
               >
                 <PhoneCall size={14} className="text-[#ecb613]" />
                 <span>Centralita {CENTRALITA_EAR_OS}</span>
-              </a>
+              </SovereignWhatsAppButton>
               <Link
                 href={`/proveedores/${providerSlug}`}
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#ecb613] hover:bg-[#ffd24d] text-black font-bold text-xs font-mono uppercase tracking-wider transition-all shadow-[0_0_20px_rgba(236,182,19,0.3)]"
@@ -970,6 +982,17 @@ export function ProviderUniversalCockpit({
         )}
 
       </div>
+
+      <TrojanOnboardingModal
+        isOpen={isOnboardingOpen}
+        onClose={() => setIsOnboardingOpen(false)}
+        onRegistered={(newSlug, newName, newCategory) => {
+          setProviderSlug(newSlug);
+          setBusinessName(newName);
+          setSelectedCategory(newCategory);
+          setSaveFeedback(`Proveedor ${newName} registrado con éxito en modo Caballo de Troya.`);
+        }}
+      />
     </div>
   );
 }

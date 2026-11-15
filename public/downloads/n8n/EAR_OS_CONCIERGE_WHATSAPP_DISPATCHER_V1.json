@@ -1,0 +1,109 @@
+{
+  "name": "EAR_OS_CONCIERGE_WHATSAPP_DISPATCHER_V1",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ear-os-concierge",
+        "options": {}
+      },
+      "id": "node-webhook-inbound",
+      "name": "Webhook Concierge Inbound",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [100, 300],
+      "webhookId": "ear-os-concierge-entry"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Normalización y Enrutamiento por Temperatura y Rol\nconst item = $input.first().json.body || $input.first().json;\n\nconst pathname = item.pathname || '/';\nconst providerName = item.providerName || null;\nconst category = item.category || 'General';\nconst estimatedTotal = Number(item.estimatedTotal) || 0;\nconst timestamp = item.timestamp || new Date().toISOString();\n\nlet intent = 'GENERAL_INQUIRY';\nlet requiresHITL = false;\nlet priority = 'NORMAL';\n\nif (pathname.includes('/ayuntamientos') || category.includes('B2G')) {\n  intent = 'B2G_MUNICIPAL_CONTRACT';\n  priority = 'HIGH';\n  // Ley 5% HITL: Contratos públicos > 5.000 € requieren supervisión humana obligatoria\n  if (estimatedTotal >= 5000) requiresHITL = true;\n} else if (pathname.includes('/reservar/solista') || providerName === 'Edwin Agudelo') {\n  intent = 'SOLISTA_RESERVATION_PRICE_LOCK';\n  priority = 'HIGH';\n  requiresHITL = true; // El cierre de agenda de Edwin siempre avisa al CEO\n} else if (pathname.includes('/otzarreta') || category.includes('Finca')) {\n  intent = 'VENUE_EXPERIENCE_EXPEDITION';\n  priority = 'MEDIUM';\n}\n\nreturn [{\n  json: {\n    intent,\n    priority,\n    requiresHITL,\n    pathname,\n    providerName,\n    category,\n    estimatedTotal,\n    timestamp,\n    rawPayload: item\n  }\n}];"
+      },
+      "id": "node-payload-router",
+      "name": "Clasificador por Rol & HITL",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [320, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.requiresHITL }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "node-hitl-gate",
+      "name": "¿Requiere Escalado HITL?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [540, 300]
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "chatId": "34693693048@c.us",
+        "text": "=🚨 *EAR OS · ALERTA EJECUTIVA CEO (HITL REQUERIDO)*\n\n• *Intención:* {{ $json.intent }}\n• *Ruta Origen:* {{ $json.pathname }}\n• *Proveedor/Entidad:* {{ $json.providerName || 'N/A' }}\n• *Importe Estimado:* {{ $json.estimatedTotal }} €\n• *Prioridad:* {{ $json.priority }}\n• *Timestamp:* {{ $json.timestamp }}\n\n_Acción sugerida: El usuario ha hecho clic en el Concierge. Verificar entrada en WhatsApp centralita._"
+      },
+      "id": "node-notify-ceo",
+      "name": "Alerta WhatsApp CEO (+34 693 693 048)",
+      "type": "n8n-nodes-base.whatsapp",
+      "typeVersion": 1,
+      "position": [780, 200]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Log de Auditoría en Servidor (Telemetry Append)\nreturn [{\n  json: {\n    status: 'LOGGED_AUTONOMOUS',\n    recordedAt: new Date().toISOString(),\n    data: $input.first().json\n  }\n}];"
+      },
+      "id": "node-auto-log",
+      "name": "Auditoría Autónoma (90% Flow)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [780, 420]
+    }
+  ],
+  "connections": {
+    "Webhook Concierge Inbound": {
+      "main": [
+        [
+          {
+            "node": "Clasificador por Rol & HITL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Clasificador por Rol & HITL": {
+      "main": [
+        [
+          {
+            "node": "¿Requiere Escalado HITL?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Requiere Escalado HITL?": {
+      "main": [
+        [
+          {
+            "node": "Alerta WhatsApp CEO (+34 693 693 048)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Auditoría Autónoma (90% Flow)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}
