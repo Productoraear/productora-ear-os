@@ -1193,6 +1193,32 @@ p {
 }
 
 @media print {
+  /* ==========================================================================
+     CSS PRINT MEDIA RULES (A4 S-CLASS CLEAN EXPORT)
+     ========================================================================== */
+  @page {
+    size: A4 portrait;
+    margin: 12mm 10mm 12mm 10mm;
+  }
+
+  /* Evitar saltos de página indeseados en bloques clave */
+  .dossier-page {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .dossier-page h1,
+  .dossier-page h2,
+  .dossier-page h3 {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  .dossier-page section {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
   html,
   body {
     background: #ffffff !important;

@@ -29,6 +29,8 @@ import React, { useCallback, useMemo, useState } from 'react';
 import Link from 'next/link';
 import {
   AlertCircle,
+  Printer,
+  FileText,
   Building2,
   Calendar,
   Camera,
@@ -73,6 +75,7 @@ import { savePortalProviderProfileAction } from '@/app/actions/portal-provider-a
 import SeatingPlanner from '@/components/seating/SeatingPlanner';
 import { SovereignWhatsAppButton } from '@/components/shared/SovereignWhatsAppButton';
 import { TrojanOnboardingModal } from './TrojanOnboardingModal';
+import { ProviderDossierPrintable, type ProviderDossierData } from './ProviderDossierPrintable';
 
 export interface ProviderUniversalCockpitProps {
   readonly initialSlug?: string;
@@ -207,6 +210,7 @@ export function ProviderUniversalCockpit({
   const [providerSlug, setProviderSlug] = useState<string>(initialSlug);
   const [businessName, setBusinessName] = useState<string>(initialBusinessName);
   const [isOnboardingOpen, setIsOnboardingOpen] = useState(false);
+  const [isDossierView, setIsDossierView] = useState(false);
   const [membershipTier] = useState<string>(initialTier);
 
   // Catálogo SSOT de campos tipados
@@ -325,6 +329,14 @@ export function ProviderUniversalCockpit({
                 <span className="text-zinc-400">Nivel:</span>
                 <span className="text-[#ecb613] font-bold uppercase">{membershipTier}</span>
               </div>
+              <button
+                type="button"
+                onClick={() => setIsDossierView(true)}
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-zinc-300 border border-white/15 text-xs font-mono uppercase tracking-wider transition-all cursor-pointer"
+              >
+                <Printer size={14} className="text-[#ecb613]" />
+                <span>Dossier A4</span>
+              </button>
               <button
                 type="button"
                 onClick={() => setIsOnboardingOpen(true)}
