@@ -1,6 +1,7 @@
 import React from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
+import { SovereignWhatsAppButton } from '@/components/shared/SovereignWhatsAppButton';
 import { 
   Landmark, 
   FileText, 
@@ -159,15 +160,14 @@ export default function VimumeB2GPage() {
           </div>
 
           <div className="flex flex-wrap gap-4">
-            <a
-              href={`https://wa.me/34693693048?text=${encodeURIComponent('Hola, necesito asistencia técnica para formalizar un contrato menor Art. 118 LCSP para VIMUME en mi Ayuntamiento.')}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-8 py-4 bg-[#ecb613] text-black text-xs font-mono font-bold uppercase tracking-widest hover:bg-white transition-colors flex items-center gap-2 rounded-2xl shadow-[0_0_25px_rgba(236,182,19,0.3)]"
-            >
+            <SovereignWhatsAppButton
+                message="Hola, necesito asistencia técnica para formalizar un contrato menor Art. 118 LCSP para VIMUME en mi Ayuntamiento."
+                category="Contratación Menor B2G VIMUME"
+                className="px-8 py-4 bg-[#ecb613] text-black text-xs font-mono font-bold uppercase tracking-widest hover:bg-white transition-colors flex items-center gap-2 rounded-2xl shadow-[0_0_25px_rgba(236,182,19,0.3)]"
+              >
               <Phone size={16} />
               <span>Centralita WhatsApp B2G</span>
-            </a>
+            </SovereignWhatsAppButton>
             <a
               href="mailto:b2g@productoraear.com"
               className="px-8 py-4 bg-white/10 text-white text-xs font-mono font-bold uppercase tracking-widest hover:bg-white/20 transition-colors flex items-center gap-2 rounded-2xl border border-white/10"

@@ -19,6 +19,7 @@ import {
   Landmark
 } from 'lucide-react';
 import { CENTRALITA_EAR_OS } from '@/lib/constants/ear-os-ssot';
+import { SovereignWhatsAppButton } from '@/components/shared/SovereignWhatsAppButton';
 import { VimumeBovedaEvidencia } from '@/components/vimume/VimumeBovedaEvidencia';
 import type {
   DonorType,
@@ -349,17 +350,16 @@ export default function VimumePortalPage() {
                   </div>
                 </div>
 
-                <a
-                  href={`https://wa.me/34693693048?text=${encodeURIComponent(
+                <SovereignWhatsAppButton
+      url={`https://wa.me/34693693048?text=${encodeURIComponent(
                     'Hola Edwin, soy director de centro y deseo solicitar información para una sesión piloto VIMUME subvencionada.'
                   )}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-mono font-bold text-xs transition-all shadow-lg hover:scale-105"
-                >
+      category="VIMUME Neuroacústica"
+      className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-mono font-bold text-xs transition-all shadow-lg hover:scale-105"
+    >
                   <Sparkles size={14} />
                   <span>Solicitar Sesión Piloto para Residencia</span>
-                </a>
+                </SovereignWhatsAppButton>
               </div>
             )}
 
@@ -391,16 +391,15 @@ export default function VimumePortalPage() {
                   </div>
                 </div>
 
-                <a
-                  href={`https://wa.me/34693693048?text=${encodeURIComponent(
+                <SovereignWhatsAppButton
+      url={`https://wa.me/34693693048?text=${encodeURIComponent(
                     'Hola Edwin, soy terapeuta y deseo conocer las herramientas y guías clínicas de VIMUME.'
                   )}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-mono font-bold text-xs transition-all shadow-lg hover:scale-105"
-                >
+      category="VIMUME Neuroacústica"
+      className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-mono font-bold text-xs transition-all shadow-lg hover:scale-105"
+    >
                   <span>Conectar como Terapeuta Colaborador</span>
-                </a>
+                </SovereignWhatsAppButton>
               </div>
             )}
 
@@ -416,16 +415,15 @@ export default function VimumePortalPage() {
                 <p className="text-xs text-zinc-300 leading-relaxed">
                   Si tienes a tu padre, madre o abuelo en casa o en una residencia y deseas regalarle una sesión personalizada de música evocadora, VIMUME te acompaña para que experimente momentos de paz, sonrisas y complicidad.
                 </p>
-                <a
-                  href={`https://wa.me/34693693048?text=${encodeURIComponent(
+                <SovereignWhatsAppButton
+      url={`https://wa.me/34693693048?text=${encodeURIComponent(
                     'Hola Edwin, deseo consultar cómo llevar una sesión VIMUME para mi familiar.'
                   )}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-mono font-bold text-xs transition-all shadow-lg hover:scale-105"
-                >
+      category="VIMUME Neuroacústica"
+      className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-mono font-bold text-xs transition-all shadow-lg hover:scale-105"
+    >
                   <span>Consultar Sesión para un Familiar</span>
-                </a>
+                </SovereignWhatsAppButton>
               </div>
             )}
 
@@ -441,16 +439,15 @@ export default function VimumePortalPage() {
                 <p className="text-xs text-zinc-300 leading-relaxed">
                   Tu empresa puede patrocinar sesiones completas para centros sin recursos económicos o pabellones con pacientes de deterioro severo. Certificado oficial de mecenazgo y reporte de impacto social garantizado.
                 </p>
-                <a
-                  href={`https://wa.me/34693693048?text=${encodeURIComponent(
+                <SovereignWhatsAppButton
+      url={`https://wa.me/34693693048?text=${encodeURIComponent(
                     'Hola Edwin, represento a una empresa interesada en patrocinar sesiones sociales VIMUME.'
                   )}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-mono font-bold text-xs transition-all shadow-lg hover:scale-105"
-                >
+      category="VIMUME Neuroacústica"
+      className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-mono font-bold text-xs transition-all shadow-lg hover:scale-105"
+    >
                   <span>Patrocinar Sesiones Corporativas</span>
-                </a>
+                </SovereignWhatsAppButton>
               </div>
             )}
 
@@ -466,16 +463,15 @@ export default function VimumePortalPage() {
                 <p className="text-xs text-zinc-300 leading-relaxed">
                   Acceso a las bases bibliográficas internacionales sobre frecuencias Gamma (40 Hz), protocolos de estimulación auditiva y estudios clínicos de bienestar en demencia (OMS ICOPE y literatura indexada).
                 </p>
-                <a
-                  href={`https://wa.me/34693693048?text=${encodeURIComponent(
+                <SovereignWhatsAppButton
+      url={`https://wa.me/34693693048?text=${encodeURIComponent(
                     'Hola Edwin, soy investigador / periodista y deseo consultar el dossier científico de VIMUME.'
                   )}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-mono font-bold text-xs transition-all shadow-lg hover:scale-105"
-                >
+      category="VIMUME Neuroacústica"
+      className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-mono font-bold text-xs transition-all shadow-lg hover:scale-105"
+    >
                   <span>Solicitar Dossier Científico</span>
-                </a>
+                </SovereignWhatsAppButton>
               </div>
             )}
           </div>

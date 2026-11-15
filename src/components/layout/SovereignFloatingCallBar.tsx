@@ -3,6 +3,7 @@
 import React from 'react';
 import { usePathname } from 'next/navigation';
 import { Phone, MessageCircle } from 'lucide-react';
+import { SovereignWhatsAppButton } from '@/components/shared/SovereignWhatsAppButton';
 
 export function SovereignFloatingCallBar() {
   const pathname = usePathname();
@@ -44,16 +45,13 @@ export function SovereignFloatingCallBar() {
           <Phone size={16} className="fill-current" aria-hidden="true" />
         </a>
 
-        <a
-          href={whatsappUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Contactar por WhatsApp"
+        <SovereignWhatsAppButton
+          url={whatsappUrl}
+          category="Gabinete Técnico 24/7"
           className="p-3 bg-[#25D366] hover:bg-emerald-400 text-black rounded-full transition-transform hover:scale-105 active:scale-95 shadow-md shadow-[#25D366]/30"
-          title="Enviar WhatsApp"
         >
-          <MessageCircle size={16} className="fill-current" aria-hidden="true" />
-        </a>
+          <MessageCircle size={18} className="fill-current" />
+        </SovereignWhatsAppButton>
       </aside>
   );
 }

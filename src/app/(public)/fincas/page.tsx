@@ -1,3 +1,4 @@
+import { SovereignWhatsAppButton } from '@/components/shared/SovereignWhatsAppButton';
 import type { Metadata } from 'next';
 import {
     ShieldCheck,
@@ -145,17 +146,14 @@ export default function FincasB2BPage() {
                             <Building2 size={16} />
                             Ver Catálogo Homologado
                         </a>
-                        <a
-                            href={`https://wa.me/${CENTRALITA_EAR_OS.replace(/\D/g, '')}?text=${encodeURIComponent(
-                                'Hola Edwin, soy propietario de finca y deseo consultar el Pacto de los 100 Fundadores con Price-Match.'
-                            )}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#00E5FF]/10 border border-[#00E5FF]/30 text-[#00E5FF] hover:bg-[#00E5FF]/20 px-6 py-3.5 text-xs font-bold font-mono uppercase tracking-wider transition-all duration-300 ml-auto"
-                        >
+                        <SovereignWhatsAppButton
+                              message="Hola Edwin, soy propietario de finca y deseo consultar el Pacto de los 100 Fundadores con Price-Match."
+                              category="Fincas Fundadores"
+                              className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#00E5FF]/10 border border-[#00E5FF]/30 text-[#00E5FF] hover:bg-[#00E5FF]/20 px-6 py-3.5 text-xs font-bold font-mono uppercase tracking-wider transition-all duration-300 ml-auto"
+                            >
                             <Phone size={14} />
                             Centralita B2B: {CENTRALITA_EAR_OS}
-                        </a>
+                        </SovereignWhatsAppButton>
                     </div>
                 </div>
             </section>

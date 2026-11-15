@@ -1,4 +1,5 @@
 'use client';
+import { SovereignWhatsAppButton } from '@/components/shared/SovereignWhatsAppButton';
 
 import React, { useState, useEffect, useMemo, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
@@ -1355,14 +1356,14 @@ function ProveedoresDirectoryContent() {
                             Se retiró el atajo "Buscar Teléfono en Google", que burlaba el
                             candado de 1,00 € y regalaba el contacto del proveedor.
                           */}
-                          <a
-                            href={makeCentralitaWaLink(activeModalProvider.name, activeModalProvider.category, activeModalProvider.province)}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-emerald-400 font-bold text-lg hover:text-emerald-300 transition-colors"
-                          >
+                          <SovereignWhatsAppButton
+      url={makeCentralitaWaLink(activeModalProvider.name, activeModalProvider.category, activeModalProvider.province)}
+      providerName={activeModalProvider.name}
+      category={activeModalProvider.category || 'Proveedor Homologado'}
+      className="text-emerald-400 font-bold text-lg hover:text-emerald-300 transition-colors"
+    >
                             🔒 Contacto protegido · Centralita EAR
-                          </a>
+                          </SovereignWhatsAppButton>
                           <span className="block text-[10px] text-neutral-500 mt-1 leading-relaxed">
                             El teléfono directo se libera con el desbloqueo de 1,00 € (descontable)
                             o si el proveedor reclama su ficha.
@@ -1462,38 +1463,38 @@ function ProveedoresDirectoryContent() {
                     if (hasDirect) {
                       return (
                         <>
-                          <a
-                            href={makeCentralitaWaLink(activeModalProvider.name, activeModalProvider.category, activeModalProvider.province)}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="px-4 py-3 sm:px-5 sm:py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all shadow-md"
-                          >
+                          <SovereignWhatsAppButton
+      url={makeCentralitaWaLink(activeModalProvider.name, activeModalProvider.category, activeModalProvider.province)}
+      providerName={activeModalProvider.name}
+      category={activeModalProvider.category || 'Proveedor Homologado'}
+      className="px-4 py-3 sm:px-5 sm:py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all shadow-md"
+    >
                             <MessageCircle size={15} />
                             <span>Coordinar vía Centralita VIP</span>
-                          </a>
-                          <a
-                            href={makeCentralitaWaLink(activeModalProvider.name, activeModalProvider.category, activeModalProvider.province)}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="px-4 py-3 sm:px-5 sm:py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-[#ecb613] hover:text-white font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all border border-[#ecb613]/40"
-                          >
+                          </SovereignWhatsAppButton>
+                          <SovereignWhatsAppButton
+      url={makeCentralitaWaLink(activeModalProvider.name, activeModalProvider.category, activeModalProvider.province)}
+      providerName={activeModalProvider.name}
+      category={activeModalProvider.category || 'Proveedor Homologado'}
+      className="px-4 py-3 sm:px-5 sm:py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-[#ecb613] hover:text-white font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all border border-[#ecb613]/40"
+    >
                             <PhoneCall size={14} />
                             <span>Centralita EAR VIP</span>
-                          </a>
+                          </SovereignWhatsAppButton>
                         </>
                       );
                     }
                     return (
                       <>
-                        <a
-                          href={makeCentralitaWaLink(activeModalProvider.name, activeModalProvider.category, activeModalProvider.province)}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="px-4 py-3 sm:px-5 sm:py-3.5 rounded-xl bg-gradient-to-r from-[#E61E4D] to-[#D70466] text-white font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all shadow-md"
-                        >
+                        <SovereignWhatsAppButton
+      url={makeCentralitaWaLink(activeModalProvider.name, activeModalProvider.category, activeModalProvider.province)}
+      providerName={activeModalProvider.name}
+      category={activeModalProvider.category || 'Proveedor Homologado'}
+      className="px-4 py-3 sm:px-5 sm:py-3.5 rounded-xl bg-gradient-to-r from-[#E61E4D] to-[#D70466] text-white font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all shadow-md"
+    >
                           <PhoneCall size={14} />
                           <span>Localizar vía Centralita</span>
-                        </a>
+                        </SovereignWhatsAppButton>
                         <a
                           href={`/proveedores/${encodeURIComponent(String(activeModalProvider.slug || activeModalProvider.id))}#contacto`}
                           className="px-3.5 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all"

@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Phone, MessageCircle, AlertCircle, X } from 'lucide-react';
 import { CENTRALITA_EAR_OS } from '@/lib/constants/ear-os-ssot';
+import { SovereignWhatsAppButton } from '@/components/shared/SovereignWhatsAppButton';
 
 export default function SovereignUrgentFloatBar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,15 +41,15 @@ export default function SovereignUrgentFloatBar() {
           </p>
 
           <div className="space-y-2">
-            <a
-              href={`https://wa.me/34693693048?text=${urgentWaText}`}
-              target="_blank"
-              rel="noopener noreferrer"
+            <SovereignWhatsAppButton
+              url={`https://wa.me/34693693048?text=${urgentWaText}`}
+              providerName="Edwin Agudelo"
+              category="Urgencias < 7 Días"
               className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-mono text-xs font-bold transition-all shadow-md"
             >
               <MessageCircle size={15} />
               <span>WhatsApp Prioritario 24h</span>
-            </a>
+            </SovereignWhatsAppButton>
 
             <a
               href={telHref}
