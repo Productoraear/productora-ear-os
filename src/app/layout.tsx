@@ -54,6 +54,7 @@ import { SovereignMobileHUD } from "@/components/sclass/SovereignMobileHUD";
 // `hidden lg:flex`: sólo escritorio, no colisiona con el dock móvil) y el
 // propio componente se autoexcluye de /admin y /panel.
 import { FloatingWhatsAppCta } from "@/components/ui/FloatingWhatsAppCta";
+import { SovereignConciergeWidget } from "@/components/concierge/SovereignConciergeWidget";
 import { AdminOnlyOmniConsole } from "@/components/agents/AdminOnlyOmniConsole";
 import { GeoStructuredData } from "@/components/seo/GeoStructuredData";
 import { VimumeThemeInjector } from "@/components/theme/VimumeThemeInjector";
@@ -171,6 +172,7 @@ export default function RootLayout({
                               <SovereignFooter />
                               <SovereignMobileHUD />
                               <FloatingWhatsAppCta />
+                              <SovereignConciergeWidget />
                               <React.Suspense fallback={null}>
                                 <AdminOnlyOmniConsole />
                               </React.Suspense>
