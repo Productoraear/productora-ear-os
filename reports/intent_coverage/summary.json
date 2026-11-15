@@ -1,0 +1,10 @@
+{
+  "base": "http://127.0.0.1:3007",
+  "at": "2026-11-15T08:55:44.604Z",
+  "total": 5,
+  "http_error": 0,
+  "avg_score": 72,
+  "thin": 2,
+  "no_cta": 0,
+  "weak_urls": []
+}
