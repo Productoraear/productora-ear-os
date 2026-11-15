@@ -273,3 +273,6 @@ id_ed25519.*
 *_targets*.json
 *_targets*.csv
 
+
+# Secretos locales de acceso (nunca versionar)
+.antigravity/local/
