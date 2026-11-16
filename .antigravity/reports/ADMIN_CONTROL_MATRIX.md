@@ -8,6 +8,7 @@
 | --- | --- | --- | --- | --- | --- |
 | src/app/(admin)/admin/control/ControlDashboard.tsx | /api/admin/affiliates | GET+PATCH+POST+DELETE | requireAdmin | SÍ | ✅ VERIFICADO |
 | src/app/(admin)/admin/control/ControlDashboard.tsx | /api/admin/artists | GET | requireAdmin | SÍ | ✅ VERIFICADO |
+| src/app/(admin)/admin/control/ControlDashboard.tsx | /api/admin/automation-config | GET+PATCH | SIN GUARD | SÍ | ✅ VERIFICADO |
 | src/app/(admin)/admin/control/ControlDashboard.tsx | /api/admin/fleet | GET+PATCH+POST | requireAdmin | SÍ | ✅ VERIFICADO |
 | src/app/(admin)/admin/control/ControlDashboard.tsx | /api/admin/providers | GET | requireAdmin | SÍ | ✅ VERIFICADO |
 | src/app/(admin)/admin/control/ControlDashboard.tsx | /api/admin/therapists | GET+PATCH+POST | requireAdmin | SÍ | ✅ VERIFICADO |
@@ -25,6 +26,7 @@
 | --- | --- | --- | --- | --- |
 | affiliates/route.ts | GET+PATCH+POST+DELETE | requireAdmin | sí | sí |
 | artists/route.ts | GET | requireAdmin | sí | no |
+| automation-config/route.ts | GET+PATCH | SIN GUARD | no | no |
 | cockpit/route.ts | GET | SIN GUARD | no | no |
 | compile-intent/route.ts | POST+GET | requireAdmin | sí | no |
 | demand-map/route.ts | GET | requireAdmin | sí | no |
@@ -71,4 +73,4 @@
 | stripeConnectActions.ts | SIN GUARD | sí |
 | vendorAuthActions.ts | SIN GUARD | sí |
 
-**RESUMEN**: 12 enlaces UI→API en /admin/control · 0 fachadas/401 · 31 endpoints mapeados.
+**RESUMEN**: 13 enlaces UI→API en /admin/control · 0 fachadas/401 · 32 endpoints mapeados.

@@ -1799,4 +1799,24 @@ model MariachiLead {
   @@map("leads_mariachi")
 }
 
+// ==========================================
+// 🏛️ GOBERNANZA RUNTIME — AUTOMATIZACIONES Y CONTROL CEO
+// ==========================================
+model SystemAutomationConfig {
+  id                  String   @id @default(cuid())
+  key                 String   @unique
+  department          String
+  enabled             Boolean  @default(true)
+  hitlAutonomyLevel   Int      @default(85)
+  hotLeadThresholdEur Int      @default(1500)
+  notificationTarget  String   @default("+34693693048")
+  parametersJson      Json?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@index([department], name: "idx_system_automation_dept")
+  @@map("system_automation_configs")
+}
+
+
 

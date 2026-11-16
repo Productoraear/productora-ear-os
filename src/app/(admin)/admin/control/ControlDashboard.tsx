@@ -19,6 +19,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import {
     AlertTriangle,
+    Cpu,
     HeartPulse,
     Music2,
     Search,
@@ -34,8 +35,9 @@ import { TerapeutasTab, type TherapistRow } from './tabs/TerapeutasTab';
 import { FlotaTab, type FleetRow } from './tabs/FlotaTab';
 import { AfiliadosTab, type AffiliateRow } from './tabs/AfiliadosTab';
 import { TesoreriaTab, type TreasuryPayload } from './tabs/TesoreriaTab';
+import { CEOAutomationCockpit } from '@/components/admin/CEOAutomationCockpit';
 
-type TabId = 'artistas' | 'proveedores' | 'terapeutas' | 'flota' | 'afiliados' | 'tesoreria';
+type TabId = 'artistas' | 'proveedores' | 'terapeutas' | 'flota' | 'afiliados' | 'tesoreria' | 'gobernanza';
 
 const TABS: ReadonlyArray<{
     id: TabId;
@@ -49,6 +51,7 @@ const TABS: ReadonlyArray<{
     { id: 'flota', label: 'Flota', icon: Truck, path: '/api/admin/fleet' },
     { id: 'afiliados', label: 'Afiliados', icon: Users, path: '/api/admin/affiliates' },
     { id: 'tesoreria', label: 'Tesorería', icon: Wallet, path: '/api/admin/treasury' },
+    { id: 'gobernanza', label: 'Gobernanza CEO', icon: Cpu, path: '/api/admin/automation-config' },
 ];
 
 const LOGIN_HREF = '/login?from=/admin/control';
@@ -213,6 +216,7 @@ export default function ControlDashboard() {
                 {activeTab === 'flota' && <FlotaTab query={query} />}
                 {activeTab === 'afiliados' && <AfiliadosTab query={query} />}
                 {activeTab === 'tesoreria' && <TesoreriaTab query={query} />}
+                {activeTab === 'gobernanza' && <CEOAutomationCockpit />}
             </div>
         </div>
     );

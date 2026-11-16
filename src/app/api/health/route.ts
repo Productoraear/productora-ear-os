@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 
 import { cronSecretHealth } from '@/lib/security/cronSecretGuard';
+import { runSreIntegrityAudit } from '@/lib/sre/watchdog-self-heal';
 
 export const runtime = 'nodejs';
 
@@ -50,5 +51,6 @@ export async function GET() {
      * Diagnóstico máquina: `npm run probe:cron`.
      */
     cron: cronSecretHealth(),
+    sre: runSreIntegrityAudit(),
   });
 }
