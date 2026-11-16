@@ -570,7 +570,7 @@ https://productoraear.com/checkout?amount=100`;
                 >
                   <div className="border-b border-zinc-800/60 pb-6">
                     <div className="text-[11px] font-mono text-rose-400 uppercase tracking-widest">
-                      EL CABALLO DE TROYA B2B
+                      EL TRASLADO SOBERANO B2B
                     </div>
                     <h2 className="text-2xl sm:text-3xl font-black font-syne uppercase mt-1">
                       Propuesta Irresistible para Fincas & Espacios

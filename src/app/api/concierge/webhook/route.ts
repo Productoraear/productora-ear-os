@@ -38,6 +38,9 @@ export async function POST(req: NextRequest) {
       category: cleanStr(b.category, 80),
       estimatedTotal: total,
       timestamp: cleanStr(b.timestamp, 40),
+      action: cleanStr(b.action, 80),
+      showcaseUrl: cleanStr(b.showcaseUrl, 300),
+      providerId: cleanStr(b.providerId, 60),
     };
 
     const url = process.env.N8N_WHATSAPP_WEBHOOK_URL;

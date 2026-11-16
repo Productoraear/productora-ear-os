@@ -60,7 +60,7 @@ const SOVEREIGN_NODES: SovereignNode[] = [
     id: 'fincasparaboda',
     name: 'fincasparaboda.com',
     domain: 'fincasparaboda.com',
-    badge: 'Caballo de Troya · Red Territorial',
+    badge: 'Traslado Soberano · Red Territorial',
     color: '#10b981', // Emerald
     accentBg: 'rgba(16, 185, 129, 0.1)',
     borderColor: 'rgba(16, 185, 129, 0.3)',

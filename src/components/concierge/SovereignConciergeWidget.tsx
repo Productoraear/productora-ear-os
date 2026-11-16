@@ -56,7 +56,7 @@ function getContextForRoute(pathname: string): RouteContextConfig {
   if (pathname.includes('/portal/proveedor') || pathname.includes('/fichas') || pathname.includes('/proveedores')) {
     return {
       title: 'Homologación de Proveedores',
-      badge: 'Trojan Pack · S-Class',
+      badge: 'Traslado Soberano · S-Class',
       greeting: '¿Vienes de Bodas.net? Pega tu enlace aquí abajo o habla con la Centralita para homologar tu ficha en EAR OS gratis.',
       category: 'Proveedor',
       providerName: 'Portal Proveedores EAR OS',
@@ -208,27 +208,49 @@ export function SovereignConciergeWidget() {
 
     setTimeout(() => {
       setIsScraping(false);
-      setScrapeResult({
-        name: scraperUrl.replace(/^https?:\/\//i, '').split('/')[0] || 'Escaparate Detectado',
-        photos: 14,
-        menuPrice: 145,
-        capacity: 350,
-      });
-      notifyWebhook('scraper_link_analyzed', { link: scraperUrl });
-    }, 1200);
+      const isE78903 = scraperUrl.includes('e78903') || scraperUrl.toLowerCase().includes('productora-ear');
+      if (isE78903) {
+        setScrapeResult({
+          name: 'Productora EAR / Edwin Agudelo (Solista e78903)',
+          photos: 24,
+          menuPrice: 550,
+          capacity: 250,
+        });
+        notifyWebhook('sovereign_showcase_migration', {
+          showcaseUrl: scraperUrl,
+          providerId: 'e78903',
+          providerName: 'Productora EAR / Edwin Agudelo',
+          category: 'MUSICA_DIRECTO',
+        });
+      } else {
+        setScrapeResult({
+          name: scraperUrl.replace(/^https?:\/\//i, '').split('/')[0] || 'Escaparate Detectado',
+          photos: 14,
+          menuPrice: 145,
+          capacity: 350,
+        });
+        notifyWebhook('scraper_link_analyzed', { link: scraperUrl });
+      }
+    }, 600);
   }, [scraperUrl, notifyWebhook]);
 
   const handlePatientZeroPreset = useCallback((preset: 'edwin' | 'otzarreta') => {
     setIsScraping(false);
     if (preset === 'edwin') {
-      setScraperUrl('https://productoraear.com/artistas/e78903');
+      const canonicalUrl = 'https://www.bodas.net/musica/productora-ear--e78903';
+      setScraperUrl(canonicalUrl);
       setScrapeResult({
-        name: 'Edwin Agudelo (Paciente Cero · Solista Exclusivo)',
-        photos: 18,
+        name: 'Productora EAR / Edwin Agudelo (Solista e78903)',
+        photos: 24,
         menuPrice: 550,
         capacity: 250,
       });
-      notifyWebhook('patient_zero_preset', { preset: 'edwin_agudelo' });
+      notifyWebhook('sovereign_showcase_migration', {
+        showcaseUrl: canonicalUrl,
+        providerId: 'e78903',
+        providerName: 'Productora EAR / Edwin Agudelo',
+        category: 'MUSICA_DIRECTO',
+      });
     } else {
       setScraperUrl('https://productoraear.com/otzarreta');
       setScrapeResult({

@@ -313,7 +313,7 @@ export function ProviderUniversalCockpit({
             <div className="space-y-2">
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#ecb613]/10 border border-[#ecb613]/30 rounded-full text-[#ecb613] text-[10px] font-mono uppercase tracking-[0.2em] font-bold">
                 <Sparkles size={12} className="text-[#ecb613]" />
-                PACK CABALLO DE TROYA · CENTRO DE MANDO SOBERANO
+                TRASLADO SOBERANO DE ESCAPARATE · CENTRO DE MANDO SOBERANO
               </div>
               <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-white font-syne">
                 {businessName}
@@ -343,7 +343,7 @@ export function ProviderUniversalCockpit({
                 className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500/20 to-[#ecb613]/20 hover:from-amber-500/30 hover:to-[#ecb613]/30 text-[#ecb613] border border-[#ecb613]/40 text-xs font-mono uppercase tracking-wider transition-all shadow-[0_0_15px_rgba(236,182,19,0.15)]"
               >
                 <UserPlus size={14} />
-                <span>Alta Caballo de Troya</span>
+                <span>Traslado Soberano (1-Clic)</span>
               </button>
               <SovereignWhatsAppButton
                 url={whatsappHref}
@@ -364,10 +364,10 @@ export function ProviderUniversalCockpit({
             </div>
           </div>
 
-          {/* SELECTOR DE LAS 8 CATEGORÍAS DEL CABALLO DE TROYA */}
+          {/* SELECTOR DE LAS 8 CATEGORÍAS DEL TRASLADO SOBERANO */}
           <div className="border-t border-white/10 pt-6 space-y-3">
             <div className="flex items-center justify-between text-xs font-mono text-zinc-400 uppercase tracking-wider">
-              <span>Gremio y Especialidad (8 Categorías Caballo de Troya)</span>
+              <span>Gremio y Especialidad (8 Categorías de Catálogo)</span>
               <span className="text-[#ecb613] font-bold">380 Campos Tipados</span>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2">
@@ -1002,7 +1002,7 @@ export function ProviderUniversalCockpit({
           setProviderSlug(newSlug);
           setBusinessName(newName);
           setSelectedCategory(newCategory);
-          setSaveFeedback(`Proveedor ${newName} registrado con éxito en modo Caballo de Troya.`);
+          setSaveFeedback(`Proveedor ${newName} registrado con éxito en modo Traslado Soberano.`);
         }}
       />
     </div>
