@@ -239,6 +239,35 @@ export function ProviderUniversalCockpit({
     capacity: 220,
   });
 
+  // Umbral HITL (Human-in-the-Loop 5% ↔ 90% según AGENTS.md § 2)
+  const [hitlThreshold, setHitlThreshold] = useState<number>(25);
+
+  const handleHitlChange = useCallback((threshold: number) => {
+    setHitlThreshold(threshold);
+    try {
+      const payload = JSON.stringify({
+        source: 'productoraear.com',
+        pathname: '/portal/proveedor',
+        action: 'hitl_threshold_update',
+        providerSlug,
+        hitlThreshold: threshold,
+        timestamp: new Date().toISOString(),
+      });
+      if (typeof navigator !== 'undefined' && typeof navigator.sendBeacon === 'function') {
+        navigator.sendBeacon('/api/concierge/webhook', new Blob([payload], { type: 'application/json' }));
+      } else {
+        void fetch('/api/concierge/webhook', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: payload,
+          keepalive: true,
+        }).catch(() => {});
+      }
+    } catch {
+      /* silencio */
+    }
+  }, [providerSlug]);
+
   // Claves modificadas (dirty state)
   const dirtyKeys = useMemo(() => {
     const dirty: string[] = [];
@@ -399,6 +428,96 @@ export function ProviderUniversalCockpit({
             </div>
           </div>
         </header>
+
+        {/* 1.1 DESLIZADOR HITL (HUMAN-IN-THE-LOOP · DOCTRINA 5% ↔ 90% AGENTS.MD § 2) */}
+        <div className="rounded-2xl border border-white/10 bg-[#09090d]/80 p-4 md:p-5 backdrop-blur-md space-y-3 shadow-xl">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div
+                className={`h-3 w-3 rounded-full ${
+                  hitlThreshold <= 10
+                    ? 'bg-red-500 shadow-[0_0_10px_#ef4444]'
+                    : hitlThreshold <= 30
+                    ? 'bg-amber-500 shadow-[0_0_10px_#f59e0b]'
+                    : hitlThreshold <= 70
+                    ? 'bg-cyan-500 shadow-[0_0_10px_#06b6d4]'
+                    : 'bg-emerald-500 shadow-[0_0_10px_#10b981]'
+                } animate-pulse`}
+              />
+              <div>
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-xs font-mono font-bold uppercase tracking-wider text-white">
+                    Gobernanza Concierge IA · Deslizador HITL
+                  </span>
+                  <span
+                    className={`text-[10px] font-mono font-black px-2 py-0.5 rounded-full ${
+                      hitlThreshold <= 10
+                        ? 'bg-red-500/20 text-red-400 border border-red-500/40'
+                        : hitlThreshold <= 30
+                        ? 'bg-amber-500/20 text-amber-400 border border-amber-500/40'
+                        : hitlThreshold <= 70
+                        ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/40'
+                        : 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
+                    }`}
+                  >
+                    {hitlThreshold}% Automatización / {100 - hitlThreshold}% Supervisión
+                  </span>
+                </div>
+                <p className="text-[11px] text-zinc-400 mt-0.5">
+                  Control estricto de autonomía y escalado a Centralita según doctrina constitucional AGENTS.md § 2.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-1.5 self-end sm:self-auto">
+              {[5, 25, 60, 90].map((preset) => (
+                <button
+                  key={preset}
+                  type="button"
+                  onClick={() => handleHitlChange(preset)}
+                  className={`px-2.5 py-1 rounded-lg text-[10px] font-mono uppercase font-bold border transition-all ${
+                    hitlThreshold === preset
+                      ? 'bg-[#ecb613] text-black border-[#ecb613] shadow-[0_0_10px_rgba(236,182,19,0.4)]'
+                      : 'bg-white/5 text-zinc-400 border-white/10 hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  {preset}%
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="space-y-1.5 pt-1">
+            <input
+              type="range"
+              min={5}
+              max={90}
+              step={1}
+              value={hitlThreshold}
+              onChange={(e) => handleHitlChange(Number(e.target.value))}
+              className="w-full h-2 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-[#ecb613]"
+            />
+            <div className="flex justify-between text-[10px] font-mono text-zinc-500">
+              <span>5% · HITL Total (Litigios, B2G &gt;5k€)</span>
+              <span>25% · Depósitos Stripe Price-Lock</span>
+              <span>60% · Cotizaciones Express</span>
+              <span>90% · FAQ & Disponibilidad</span>
+            </div>
+          </div>
+
+          <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 text-xs font-mono text-zinc-300 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
+            <span className="text-zinc-400 shrink-0">Política de Despacho:</span>
+            <span className="font-semibold text-white text-right">
+              {hitlThreshold <= 10
+                ? '5% (HITL Total): Intervención humana obligatoria en contratos, cancelaciones y VIMUME.'
+                : hitlThreshold <= 30
+                ? '25% (Revisión Humana Obligatoria): Depósitos Stripe y logística > 300 km requieren confirmación CEO.'
+                : hitlThreshold <= 70
+                ? '60% (Semi-Autónomo): Emisión de cotizaciones express y envío de dossiers de catálogo.'
+                : '90% (Autónomo Supervisado): Respuestas FAQ, aforos, calendarios y tarifas estándar automáticas.'}
+            </span>
+          </div>
+        </div>
 
         {/* 2. BARRA DE NAVEGACIÓN PRINCIPAL */}
         <nav aria-label="Secciones del Centro de Mando" className="p-1.5 bg-[#0b0c13] border border-white/10 rounded-2xl shadow-xl">

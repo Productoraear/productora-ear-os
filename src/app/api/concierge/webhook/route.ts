@@ -30,6 +30,7 @@ export async function POST(req: NextRequest) {
     }
     const b = parsed as Record<string, unknown>;
     const total = typeof b.estimatedTotal === 'number' && Number.isFinite(b.estimatedTotal) ? b.estimatedTotal : null;
+    const hitl = typeof b.hitlThreshold === 'number' && Number.isFinite(b.hitlThreshold) ? b.hitlThreshold : null;
 
     const context = {
       source: 'productoraear.com',
@@ -41,6 +42,7 @@ export async function POST(req: NextRequest) {
       action: cleanStr(b.action, 80),
       showcaseUrl: cleanStr(b.showcaseUrl, 300),
       providerId: cleanStr(b.providerId, 60),
+      hitlThreshold: hitl,
     };
 
     const url = process.env.N8N_WHATSAPP_WEBHOOK_URL;

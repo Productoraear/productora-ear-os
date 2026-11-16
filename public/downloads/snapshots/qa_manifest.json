@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-11-16T07:42:15.144Z",
+  "status": "CERTIFIED_SOTA_2026",
+  "viewports": {
+    "desktop": {
+      "width": 1920,
+      "height": 1080,
+      "deviceScaleFactor": 1,
+      "isMobile": false,
+      "hasTouch": false
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "deviceScaleFactor": 3,
+      "isMobile": true,
+      "hasTouch": true
+    }
+  },
+  "routes": [
+    {
+      "path": "/",
+      "name": "01_home_s_class",
+      "title": "Home Institucional S-Class"
+    },
+    {
+      "path": "/portal/proveedor",
+      "name": "02_portal_proveedor",
+      "title": "Centro de Mando & Traslado Soberano"
+    },
+    {
+      "path": "/reservar/solista",
+      "name": "03_reservar_solista",
+      "title": "Solista Edwin Agudelo (Paciente Cero e78903)"
+    },
+    {
+      "path": "/otzarreta",
+      "name": "04_finca_otzarreta",
+      "title": "Finca Singular Eduardo Martínez"
+    },
+    {
+      "path": "/presupuesto",
+      "name": "05_calculadora_soberana",
+      "title": "Calculadora Presupuestaria Instantánea"
+    },
+    {
+      "path": "/seating-planner",
+      "name": "06_seating_planner",
+      "title": "Pulpetti Seating Planner 3D/SVG"
+    },
+    {
+      "path": "/dominancia",
+      "name": "07_dominancia_mercado",
+      "title": "Dossier Dominancia B2B"
+    },
+    {
+      "path": "/confianza",
+      "name": "08_confianza_seguridad",
+      "title": "Blindaje Legal & Confianza 2FA"
+    }
+  ],
+  "color_palette_audited": {
+    "oled_black": "#030305",
+    "pure_black": "#000000",
+    "gold_primary": "#ecb613",
+    "gold_hover": "#ffd24d",
+    "emerald_accent": "#57d99a"
+  },
+  "snapshots_generated": []
+}
