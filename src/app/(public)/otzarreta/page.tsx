@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import {
@@ -51,14 +51,14 @@ const OTZARRETA_CTA_SOURCE = {
 } as const;
 
 export const metadata: Metadata = {
-  title: 'Restaurante Ezkertza Berria & Otzarreta | Bodas & Banquetes en Bizkaia y Gipuzkoa',
+  title: 'Restaurante Ezkertza Berria & Otzarreta | Bodas & Banquetes en Derio (Bizkaia)',
   description:
     'Banquetes nupciales exclusivos para hasta 350 comensales en caserío tradicional con jardines, carpa para ceremonias civiles y parrilla al carbón de encina. Valoración 4,8/5 sobre 23 opiniones (el 96% de las parejas lo recomienda). Menús oficiales 2026 desde 100 € + IVA y sonorización homologada Bose S-Class.',
   alternates: {
     canonical: 'https://productoraear.com/otzarreta'
   },
   openGraph: {
-    title: 'Ezkertza Berria & Otzarreta | Bodas & Banquetes de Gala',
+    title: 'Ezkertza Berria & Otzarreta | Bodas & Banquetes de Gala en Derio',
     description:
       'Caserío vasco con capacidad para 350 comensales, parking privado 150 plazas, jardines y alta parrilla al carbón. Menús de boda oficiales desde 100 €.',
     url: 'https://productoraear.com/otzarreta',
@@ -127,9 +127,18 @@ export default async function OtzarretaFlagshipPage({
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://productoraear.com/' },
-          { '@type': 'ListItem', position: 2, name: 'País Vasco', item: 'https://productoraear.com/bodas/guipuzcoa' },
-          { '@type': 'ListItem', position: 3, name: 'Ezkertza Berria & Otzarreta', item: 'https://productoraear.com/otzarreta' }
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Bizkaia',
+            item: 'https://productoraear.com/otzarreta',
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'Ezkertza Berria & Otzarreta',
+            item: 'https://productoraear.com/otzarreta',
+          },
         ]
       }
     ]
@@ -151,12 +160,12 @@ export default async function OtzarretaFlagshipPage({
   const contractHref = resolveProviderContractHref(OTZARRETA_CTA_SOURCE);
   return (
     <main className="min-h-screen bg-[#030305] text-white selection:bg-[#ecb613] selection:text-black pt-28 pb-24 overflow-x-hidden">
-      {/* Script Estructurado JSON-LD (saneado: cero lÃ­neas de proveedor) */}
+      {/* Script Estructurado JSON-LD (saneado: cero líneas de proveedor) */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
-            sanitizeSchemaContact(jsonLd, 'Derio (Bizkaia) & Zarautz (Gipuzkoa)')
+            sanitizeSchemaContact(jsonLd, 'Derio (Bizkaia)')
           ).replace(/</g, '\\u003c')
         }}
       />
@@ -186,7 +195,7 @@ export default async function OtzarretaFlagshipPage({
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight font-sans leading-[1.08]">
             Ezkertza Berria & Otzarreta
             <span className="block text-xl sm:text-3xl lg:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] via-amber-200 to-[#ecb613] font-serif italic font-normal mt-2">
-              Parrilla Vasca de Autor & Banquetes Nupciales en Derio y Zarautz
+              Parrilla Vasca de Autor & Banquetes Nupciales en Derio
             </span>
           </h1>
 
@@ -243,7 +252,7 @@ export default async function OtzarretaFlagshipPage({
           <div className="flex flex-wrap items-center justify-center gap-6 pt-4 text-xs text-gray-400 font-mono">
             <div className="flex items-center gap-1.5">
               <MapPin className="w-3.5 h-3.5 text-[#ecb613]" />
-              <span>Derio (Bizkaia) & Zarautz (Gipuzkoa)</span>
+              <span>Santo Domingo Hiribidea, 13 · Derio (Bizkaia)</span>
             </div>
             <div className="flex items-center gap-1.5">
               <Users className="w-3.5 h-3.5 text-blue-400" />
@@ -322,7 +331,7 @@ export default async function OtzarretaFlagshipPage({
                   <div className="flex items-start gap-3">
                     <XCircle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
                     <div>
-                      <strong className="text-white">1 sola ficha compartida:</strong> Tu caserío compite en la misma página contra 400 restaurantes y fincas de Bizkaia y Gipuzkoa.
+                      <strong className="text-white">1 sola ficha compartida:</strong> Tu caserío compite en la misma página contra decenas de restaurantes y fincas de Bizkaia.
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -378,7 +387,7 @@ export default async function OtzarretaFlagshipPage({
                   <div className="flex items-start gap-3">
                     <CheckCircle2 className="w-5 h-5 text-[#ecb613] shrink-0 mt-0.5" />
                     <div>
-                      <strong className="text-white">126 Landings Exclusivas y Propietarias:</strong> 72 páginas locales (18 municipios de Bizkaia y Gipuzkoa) + 54 de intención posicionadas en Google y motores IA (ChatGPT/Perplexity).
+                      <strong className="text-white">126 Landings Exclusivas y Propietarias:</strong> Páginas locales de intención en Bizkaia y municipios del Gran Bilbao posicionadas en Google y motores IA (ChatGPT/Perplexity).
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -433,21 +442,21 @@ export default async function OtzarretaFlagshipPage({
       <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto my-20">
         <div className="space-y-4 text-center max-w-3xl mx-auto mb-12">
           <span className="text-xs font-mono text-[#ecb613] uppercase tracking-wider">
-            DOS ENCLAVES PRIVILEGIADOS EN EL PAÍS VASCO
+            ENCLAVE PRIVILEGIADO EN EL PAÍS VASCO
           </span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
-            Las Sedes de Eduardo (Dirección Gastronómica de Ezkertza Berria & Otzarreta)
+            El Caserío de Eduardo (Dirección Gastronómica de Ezkertza Berria & Otzarreta)
           </h2>
           <p className="text-gray-400 text-sm sm:text-base">
-            Dos espacios emblemáticos diseñados para celebraciones de ensueño, desde bodas íntimas en la costa hasta banquetes multitudinarios a 5 minutos del aeropuerto.
+            Espacio emblemático diseñado para celebraciones de ensueño: banquetes multitudinarios y bodas íntimas a tan solo 5 minutos del aeropuerto y 8 minutos de Bilbao.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {OTZARRETA_ENTITY.affiliatedVenues.map((venue) => (
+        <div className="max-w-2xl mx-auto">
+          {OTZARRETA_ENTITY.affiliatedVenues.slice(0, 1).map((venue) => (
             <div
               key={venue.slug}
-              className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-8 space-y-6 backdrop-blur-md hover:border-[#ecb613]/40 transition-all"
+              className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-8 space-y-6 backdrop-blur-md hover:border-[#ecb613]/40 transition-all shadow-2xl"
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -611,7 +620,7 @@ export default async function OtzarretaFlagshipPage({
             </h2>
             <p className="text-xs sm:text-sm text-gray-400 max-w-3xl">
               Cada enlace es una URL con entidad verificada detrás: {OTZARRETA_MUNICIPALITIES.length}{' '}
-              municipios reales de Gipuzkoa y Bizkaia × {OTZARRETA_HUB.groups.length} formatos de banquete,
+              municipios reales de Bizkaia y áreas de influencia × {OTZARRETA_HUB.groups.length} formatos de banquete,
               más las consultas con intención de reserva. Sin huérfanos: este hub reparte
               autoridad a todo el clúster.
             </p>
@@ -717,7 +726,6 @@ export default async function OtzarretaFlagshipPage({
           <div>
             <div className="font-bold text-white text-sm mb-1">Ezkertza Berria & Otzarreta</div>
             <p>Sede Bizkaia: {OTZARRETA_ENTITY.affiliatedVenues[0].address}</p>
-            <p className="mt-1">Sede Gipuzkoa: {OTZARRETA_ENTITY.affiliatedVenues[1].address}</p>
             <p className="mt-2 text-gray-500 leading-relaxed">
               {supplierContactWithheldNotice('Ezkertza Berria & Otzarreta')}
             </p>

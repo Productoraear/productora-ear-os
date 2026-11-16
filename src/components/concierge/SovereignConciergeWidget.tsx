@@ -85,12 +85,12 @@ function getContextForRoute(pathname: string): RouteContextConfig {
   }
   if (pathname.includes('/otzarreta')) {
     return {
-      title: 'Finca & Asador Otzarreta · Derio',
-      badge: 'Menús 2026 desde 145 €',
-      greeting: 'Bienvenido al Asador Finca Otzarreta (Derio). Soy el Maître Digital de sala de Eduardo Martínez. ¿Deseas consultar nuestros menús de temporada, brasas al sarmiento o aforos?',
+      title: 'Ezkertza Berria & Otzarreta · Derio',
+      badge: '7 Menús 2026 desde 100 €',
+      greeting: 'Bienvenido al Caserío Restaurante Ezkertza Berria & Otzarreta (Derio · Bizkaia). Soy el Maître Digital de sala de Eduardo Martínez. ¿Deseas consultar nuestros 7 menús oficiales de boda (desde 100 € + IVA), parrilla al carbón o aforos?',
       category: 'Fincas',
-      providerName: 'Finca Otzarreta / Eduardo Martínez',
-      suggestedWa: 'Hola Eduardo, estoy en la ficha de Otzarreta y deseo consultar disponibilidad y menús para mi evento.',
+      providerName: 'Ezkertza Berria & Otzarreta / Eduardo Martínez',
+      suggestedWa: 'Hola Eduardo, estoy en la ficha de Ezkertza Berria & Otzarreta y deseo consultar disponibilidad y menús para mi evento.',
     };
   }
   if (pathname.includes('/fincas')) {
@@ -547,31 +547,31 @@ export function SovereignConciergeWidget() {
               <>
                 <button
                   type="button"
-                  onClick={() => handleSendMessage('¿Cuáles son los 4 menús de 2026 y precios en Otzarreta?')}
+                  onClick={() => handleSendMessage('¿Cuáles son los 7 menús de boda oficiales y precios en Ezkertza Berria?')}
                   className="px-2 py-1 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-amber-300 whitespace-nowrap transition-colors border border-zinc-700/60"
                 >
-                  🍖 Menús desde 145 €
+                  🍖 7 Menús desde 100 €
                 </button>
                 <button
                   type="button"
-                  onClick={() => handleSendMessage('¿Cómo son las brasas al sarmiento y asador en Derio?')}
+                  onClick={() => handleSendMessage('¿Cómo es la parrilla al carbón de encina y las carnes en Derio?')}
                   className="px-2 py-1 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-amber-300 whitespace-nowrap transition-colors border border-zinc-700/60"
                 >
-                  🥩 Asador y Brasas Derio
+                  🥩 Parrilla y Brasa Derio
                 </button>
                 <button
                   type="button"
-                  onClick={() => handleSendMessage('¿Cuál es el aforo del comedor y la finca de Otzarreta?')}
+                  onClick={() => handleSendMessage('¿Cuál es el aforo del caserío y comedores en Derio?')}
                   className="px-2 py-1 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-amber-300 whitespace-nowrap transition-colors border border-zinc-700/60"
                 >
                   👥 Aforo (50-350 pax)
                 </button>
                 <button
                   type="button"
-                  onClick={() => handleSendMessage('¿Cómo llegar al restaurante en Derio y dónde aparcar?')}
+                  onClick={() => handleSendMessage('¿Cómo llegar al caserío en Derio y cuántas plazas de parking tiene?')}
                   className="px-2 py-1 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-amber-300 whitespace-nowrap transition-colors border border-zinc-700/60"
                 >
-                  📍 Ubicación Derio (10 min)
+                  📍 Derio (150 parkings)
                 </button>
               </>
             ) : pathname.includes('/seating-planner') ? (

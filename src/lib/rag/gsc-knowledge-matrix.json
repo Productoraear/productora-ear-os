@@ -66,10 +66,10 @@
     {
       "id": "catering_banquetes",
       "patterns": ["catering", "banquete para boda", "catering bodas", "comida fin de año", "catering cuenca", "catering brasas"],
-      "reply": "Nuestros caterings homologados ofrecen gastronomía de brasas, banquetes tradicionales y menús de temporada desde 145,00 € por cubierto, con pruebas de menú y servicio integral de sala.",
+      "reply": "Nuestros caterings homologados y caseríos como Ezkertza Berria & Otzarreta (Derio) ofrecen gastronomía de brasas al carbón de encina, banquetes tradicionales y 7 menús oficiales de boda desde 100,00 € + IVA por comensal, con pruebas de menú y servicio integral de sala.",
       "action": {
         "type": "dossier",
-        "label": "Ver Menús de Temporada (145 €)",
+        "label": "Ver los 7 Menús Oficiales (desde 100 €)",
         "url": "/otzarreta"
       }
     },
