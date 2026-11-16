@@ -340,12 +340,18 @@ export function SovereignConciergeWidget() {
 
       try {
         const detectedSlug = pathname.includes('/otzarreta') ? 'otzarreta' : '';
+        const historyPayload = messages.slice(-4).map((m) => ({
+          role: m.role,
+          content: m.text,
+        }));
+
         const res = await fetch('/api/concierge/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             message: q,
             providerSlug: detectedSlug,
+            history: historyPayload,
             routeContext: {
               pathname,
               providerName: routeContext.providerName,
