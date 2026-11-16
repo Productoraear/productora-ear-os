@@ -5,7 +5,7 @@ import { User as FirebaseUser } from 'firebase/auth';
 // LISTA BLANCA DE LA DINASTÍA (Soberanía)
 const SOVEREIGN_DYNASTY = [
     'productoraear@gmail.com',
-    'edwin.agudelo@productoraear.com',
+    'edwin@productoraear.com',
     'luz.adriana@productoraear.com',
     'leire.naiara@productoraear.com'
 ];

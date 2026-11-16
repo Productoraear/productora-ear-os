@@ -51,7 +51,7 @@ interface TeamQuickAccount {
 const AUTHORIZED_ACCOUNTS: TeamQuickAccount[] = [
   {
     name: 'Edwin Agudelo',
-    email: 'edwin.agudelo@productoraear.com',
+    email: 'productoraear@gmail.com',
     role: 'admin',
     desc: 'CEO & Fundador'
   },
@@ -78,7 +78,7 @@ function OmniAuthLoginForm() {
   // Login normal
   const [authRole, setAuthRole] = useState<'admin' | 'editor' | 'partner'>('admin');
   const [step, setStep] = useState<1 | 2>(1);
-  const [email, setEmail] = useState('edwin.agudelo@productoraear.com');
+  const [email, setEmail] = useState('productoraear@gmail.com');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [code2fa, setCode2fa] = useState('');
@@ -88,7 +88,7 @@ function OmniAuthLoginForm() {
 
   // Recuperación en 3 Fases
   const [recPhase, setRecPhase] = useState<1 | 2 | 3>(1);
-  const [recEmail, setRecEmail] = useState('edwin.agudelo@productoraear.com');
+  const [recEmail, setRecEmail] = useState('productoraear@gmail.com');
   const [recOtp, setRecOtp] = useState('');
   const [recPassword, setRecPassword] = useState('');
   const [rec2fa, setRec2fa] = useState('');
@@ -369,7 +369,7 @@ function OmniAuthLoginForm() {
                 type="button"
                 onClick={() => { 
                   setAuthRole('admin'); 
-                  setEmail('edwin.agudelo@productoraear.com');
+                  setEmail('productoraear@gmail.com');
                   setStep(1); 
                   setError(null); 
                 }}

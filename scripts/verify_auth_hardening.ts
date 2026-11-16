@@ -59,7 +59,7 @@ const SMOKE_SECRETS: Readonly<Record<string, string>> = {
 
 const JWT_SECRET: string = SMOKE_SECRETS.NEXTAUTH_SECRET;
 const EDITOR_EMAIL = 'adri521@hotmail.com';
-const ADMIN_EMAIL = 'edwin.agudelo@productoraear.com';
+const ADMIN_EMAIL = 'productoraear@gmail.com';
 
 function applySmokeEnv(): void {
   for (const [key, value] of Object.entries(SMOKE_SECRETS)) {

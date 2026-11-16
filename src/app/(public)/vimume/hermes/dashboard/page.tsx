@@ -146,7 +146,7 @@ export default function HermesTrackerOTPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [needsMfa, setNeedsMfa] = useState(false);
   const [mfaCode, setMfaCode] = useState('');
-  const [emailInput, setEmailInput] = useState('edwin.agudelo@productoraear.com');
+  const [emailInput, setEmailInput] = useState('productoraear@gmail.com');
   const [passwordInput, setPasswordInput] = useState('••••••••');
   
   // Clinical Contexts

@@ -17,6 +17,13 @@ import {
   Link2,
   Loader2,
   CalendarDays,
+  Mic,
+  MicOff,
+  Send,
+  Volume2,
+  VolumeX,
+  ChevronDown,
+  ChevronUp,
 } from 'lucide-react';
 import { CENTRALITA_EAR_OS } from '@/lib/constants/ear-os-ssot';
 
@@ -32,12 +39,24 @@ interface RouteContextConfig {
   showScraper?: boolean;
 }
 
+interface ChatMessage {
+  id: string;
+  role: 'user' | 'assistant';
+  text: string;
+  timestamp: string;
+  action?: {
+    type: 'whatsapp' | 'dossier' | 'date_picker' | 'scraper';
+    label: string;
+    url?: string;
+  };
+}
+
 function getContextForRoute(pathname: string): RouteContextConfig {
   if (pathname.includes('/reservar/solista') || pathname.includes('/artistas/e78903') || pathname.includes('/edwin-agudelo')) {
     return {
       title: 'Edwin Agudelo · Solista Exclusivo',
       badge: 'Tarifa Canónica 350 €',
-      greeting: 'Hola, soy el asistente de Edwin Agudelo. ¿Tienes ya fecha para tu evento? Consulta disponibilidad o reserva con precio congelado.',
+      greeting: 'Hola, soy la Centralita de Edwin Agudelo. ¿Tienes fecha para tu evento? Consulta disponibilidad o reserva con precio congelado.',
       category: 'Solista',
       providerName: 'Edwin Agudelo',
       suggestedWa: 'Hola Edwin, estoy en tu ficha de solista y deseo consultar disponibilidad y precio para mi fecha.',
@@ -57,7 +76,7 @@ function getContextForRoute(pathname: string): RouteContextConfig {
     return {
       title: 'Homologación de Proveedores',
       badge: 'Traslado Soberano · S-Class',
-      greeting: '¿Vienes de Bodas.net? Pega tu enlace aquí abajo o habla con la Centralita para homologar tu ficha en EAR OS gratis.',
+      greeting: '¿Vienes de Bodas.net? Pega tu enlace o habla con la Centralita para homologar tu ficha en EAR OS gratis.',
       category: 'Proveedor',
       providerName: 'Portal Proveedores EAR OS',
       suggestedWa: 'Hola, soy proveedor de eventos y deseo solicitar la homologación de mi ficha en EAR OS.',
@@ -68,7 +87,7 @@ function getContextForRoute(pathname: string): RouteContextConfig {
     return {
       title: 'Fincas & Espacios Homologados',
       badge: 'Garantía Acústica S-Class',
-      greeting: 'Bienvenido al catálogo de Fincas Homologadas. ¿Buscas aforo, limitador acústico o menús de temporada 2026?',
+      greeting: 'Bienvenido al catálogo de Fincas Homologadas. ¿Buscas aforo, limitador acústico o menús de temporada 2026 de Otzarreta?',
       category: 'Fincas',
       providerName: 'Fincas Homologadas',
       suggestedWa: 'Hola Edwin, estoy valorando fincas en EAR OS y deseo consultar aforo y condiciones técnicas.',
@@ -110,8 +129,20 @@ export function SovereignConciergeWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showFastActions, setShowFastActions] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedSlot, setSelectedSlot] = useState<'mediodia' | 'tarde' | 'noche'>('tarde');
+
+  // Conversational Chat State
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [inputQuery, setInputQuery] = useState('');
+  const [isSending, setIsSending] = useState(false);
+
+  // Voice Interaction State (STT & TTS)
+  const [isListening, setIsListening] = useState(false);
+  const [voiceSupported, setVoiceSupported] = useState(false);
+  const [ttsEnabled, setTtsEnabled] = useState(true);
+  const [isSpeaking, setIsSpeaking] = useState(false);
 
   // Scraper simulator state
   const [scraperUrl, setScraperUrl] = useState('');
@@ -124,55 +155,215 @@ export function SovereignConciergeWidget() {
   } | null>(null);
 
   const popoverRef = useRef<HTMLDivElement>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const recognitionRef = useRef<any>(null);
 
+  const routeContext = useMemo(() => getContextForRoute(pathname), [pathname]);
+
+  // Initialize Speech Recognition & Greeting
   useEffect(() => {
     setMounted(true);
+
+    if (typeof window !== 'undefined') {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const SpeechRecognitionClass = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+      if (SpeechRecognitionClass) {
+        setVoiceSupported(true);
+        const recognition = new SpeechRecognitionClass();
+        recognition.lang = 'es-ES';
+        recognition.continuous = false;
+        recognition.interimResults = false;
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        recognition.onresult = (event: any) => {
+          const transcript = event.results[0][0].transcript;
+          if (transcript && transcript.trim()) {
+            setInputQuery(transcript);
+            void handleSendMessage(transcript);
+          }
+          setIsListening(false);
+        };
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        recognition.onerror = () => {
+          setIsListening(false);
+        };
+
+        recognition.onend = () => {
+          setIsListening(false);
+        };
+
+        recognitionRef.current = recognition;
+      }
+    }
   }, []);
+
+  // Update greeting when route changes or initial load
+  useEffect(() => {
+    setMessages([
+      {
+        id: 'initial-greeting',
+        role: 'assistant',
+        text: routeContext.greeting,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      },
+    ]);
+  }, [routeContext.greeting]);
+
+  // Scroll to bottom when messages update
+  useEffect(() => {
+    if (isOpen) {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages, isOpen]);
 
   // Close on Escape key
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isOpen) {
         setIsOpen(false);
+        stopSpeech();
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen]);
 
-  const routeContext = useMemo(() => getContextForRoute(pathname), [pathname]);
-
-  const notifyWebhook = useCallback((action: string, extraData?: Record<string, unknown>) => {
-    try {
-      const payload = JSON.stringify({
-        pathname,
-        providerName: routeContext.providerName,
-        category: routeContext.category,
-        action,
-        selectedDate: selectedDate || null,
-        selectedSlot: selectedDate ? selectedSlot : null,
-        timestamp: new Date().toISOString(),
-        ...extraData,
-      });
-
-      if (typeof navigator !== 'undefined' && typeof navigator.sendBeacon === 'function') {
-        navigator.sendBeacon('/api/concierge/webhook', new Blob([payload], { type: 'application/json' }));
-        return;
-      }
-
-      void fetch('/api/concierge/webhook', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: payload,
-        keepalive: true,
-        credentials: 'omit',
-      }).catch(() => {
-        // Fallback silencioso sin bloquear al usuario
-      });
-    } catch {
-      // Silencio deliberado
+  // Stop TTS speech
+  const stopSpeech = useCallback(() => {
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      setIsSpeaking(false);
     }
-  }, [pathname, routeContext, selectedDate, selectedSlot]);
+  }, []);
+
+  // Speak text with TTS
+  const speakText = useCallback(
+    (text: string) => {
+      if (!ttsEnabled || typeof window === 'undefined' || !('speechSynthesis' in window)) return;
+      try {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'es-ES';
+        utterance.rate = 1.05;
+        utterance.pitch = 1.0;
+        utterance.onstart = () => setIsSpeaking(true);
+        utterance.onend = () => setIsSpeaking(false);
+        utterance.onerror = () => setIsSpeaking(false);
+        window.speechSynthesis.speak(utterance);
+      } catch {
+        setIsSpeaking(false);
+      }
+    },
+    [ttsEnabled]
+  );
+
+  // Toggle voice recognition
+  const toggleListening = useCallback(() => {
+    if (!recognitionRef.current) return;
+    if (isListening) {
+      recognitionRef.current.stop();
+      setIsListening(false);
+    } else {
+      stopSpeech();
+      try {
+        recognitionRef.current.start();
+        setIsListening(true);
+      } catch {
+        setIsListening(false);
+      }
+    }
+  }, [isListening, stopSpeech]);
+
+  const notifyWebhook = useCallback(
+    (action: string, extraData?: Record<string, unknown>) => {
+      try {
+        const payload = JSON.stringify({
+          pathname,
+          providerName: routeContext.providerName,
+          category: routeContext.category,
+          action,
+          selectedDate: selectedDate || null,
+          selectedSlot: selectedDate ? selectedSlot : null,
+          timestamp: new Date().toISOString(),
+          ...extraData,
+        });
+
+        if (typeof navigator !== 'undefined' && typeof navigator.sendBeacon === 'function') {
+          navigator.sendBeacon('/api/concierge/webhook', new Blob([payload], { type: 'application/json' }));
+          return;
+        }
+
+        void fetch('/api/concierge/webhook', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: payload,
+          keepalive: true,
+          credentials: 'omit',
+        }).catch(() => {
+          // Fallback silencioso
+        });
+      } catch {
+        // Silencio deliberado
+      }
+    },
+    [pathname, routeContext, selectedDate, selectedSlot]
+  );
+
+  // Send message to conversational API
+  const handleSendMessage = useCallback(
+    async (textOverride?: string) => {
+      const q = (textOverride || inputQuery).trim();
+      if (!q || isSending) return;
+
+      const userMsg: ChatMessage = {
+        id: `user-${Date.now()}`,
+        role: 'user',
+        text: q,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      };
+
+      setMessages((prev) => [...prev, userMsg]);
+      setInputQuery('');
+      setIsSending(true);
+
+      try {
+        const res = await fetch('/api/concierge/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message: q,
+            routeContext: {
+              pathname,
+              providerName: routeContext.providerName,
+              category: routeContext.category,
+            },
+          }),
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          if (data.success && data.reply) {
+            const assistantMsg: ChatMessage = {
+              id: `assistant-${Date.now()}`,
+              role: 'assistant',
+              text: data.reply,
+              timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+              action: data.action,
+            };
+            setMessages((prev) => [...prev, assistantMsg]);
+            speakText(data.reply);
+          }
+        }
+      } catch (err) {
+        console.warn('Error en consulta de concierge:', err);
+      } finally {
+        setIsSending(false);
+      }
+    },
+    [inputQuery, isSending, pathname, routeContext, speakText]
+  );
 
   // Construct WhatsApp destination URL
   const waUrl = useMemo(() => {
@@ -196,7 +387,6 @@ export function SovereignConciergeWidget() {
     if (pathname.includes('/portal/proveedor') || pathname.includes('/otzarreta')) {
       window.print();
     } else {
-      // Abre el portal de proveedor o el modal de dossier
       window.open('/portal/proveedor', '_blank');
     }
   }, [notifyWebhook, pathname]);
@@ -234,34 +424,37 @@ export function SovereignConciergeWidget() {
     }, 600);
   }, [scraperUrl, notifyWebhook]);
 
-  const handlePatientZeroPreset = useCallback((preset: 'edwin' | 'otzarreta') => {
-    setIsScraping(false);
-    if (preset === 'edwin') {
-      const canonicalUrl = 'https://www.bodas.net/musica/productora-ear--e78903';
-      setScraperUrl(canonicalUrl);
-      setScrapeResult({
-        name: 'Productora EAR / Edwin Agudelo (Solista e78903)',
-        photos: 24,
-        menuPrice: 550,
-        capacity: 250,
-      });
-      notifyWebhook('sovereign_showcase_migration', {
-        showcaseUrl: canonicalUrl,
-        providerId: 'e78903',
-        providerName: 'Productora EAR / Edwin Agudelo',
-        category: 'MUSICA_DIRECTO',
-      });
-    } else {
-      setScraperUrl('https://productoraear.com/otzarreta');
-      setScrapeResult({
-        name: 'Eduardo Martínez (Otzarreta / Ezkertza Berria · Derio)',
-        photos: 32,
-        menuPrice: 145,
-        capacity: 350,
-      });
-      notifyWebhook('patient_zero_preset', { preset: 'otzarreta_derio' });
-    }
-  }, [notifyWebhook]);
+  const handlePatientZeroPreset = useCallback(
+    (preset: 'edwin' | 'otzarreta') => {
+      setIsScraping(false);
+      if (preset === 'edwin') {
+        const canonicalUrl = 'https://www.bodas.net/musica/productora-ear--e78903';
+        setScraperUrl(canonicalUrl);
+        setScrapeResult({
+          name: 'Productora EAR / Edwin Agudelo (Solista e78903)',
+          photos: 24,
+          menuPrice: 550,
+          capacity: 250,
+        });
+        notifyWebhook('sovereign_showcase_migration', {
+          showcaseUrl: canonicalUrl,
+          providerId: 'e78903',
+          providerName: 'Productora EAR / Edwin Agudelo',
+          category: 'MUSICA_DIRECTO',
+        });
+      } else {
+        setScraperUrl('https://productoraear.com/otzarreta');
+        setScrapeResult({
+          name: 'Eduardo Martínez (Otzarreta / Ezkertza Berria · Derio)',
+          photos: 32,
+          menuPrice: 145,
+          capacity: 350,
+        });
+        notifyWebhook('patient_zero_preset', { preset: 'otzarreta_derio' });
+      }
+    },
+    [notifyWebhook]
+  );
 
   // Exclude from admin back-office routes
   if (!mounted || pathname.startsWith('/admin') || pathname.startsWith('/panel')) {
@@ -277,251 +470,391 @@ export function SovereignConciergeWidget() {
           role="dialog"
           aria-modal="true"
           aria-label="Conserjería IA Productora EAR"
-          className="mb-3 w-[calc(100vw-2rem)] sm:w-[390px] max-h-[85vh] overflow-y-auto bg-[#09090d]/98 backdrop-blur-2xl border border-[#ecb613]/40 rounded-2xl shadow-[0_15px_50px_rgba(0,0,0,0.9)] text-white flex flex-col animate-in fade-in slide-in-from-bottom-5 duration-200"
+          className="mb-3 w-[calc(100vw-2rem)] sm:w-[420px] h-[580px] max-h-[85vh] bg-[#09090d]/98 backdrop-blur-2xl border border-[#ecb613]/40 rounded-2xl shadow-[0_15px_50px_rgba(0,0,0,0.9)] text-white flex flex-col animate-in fade-in slide-in-from-bottom-5 duration-200 overflow-hidden"
         >
           {/* Header */}
-          <div className="p-4 border-b border-zinc-800/80 bg-gradient-to-r from-[#0d0d14] via-[#09090d] to-[#121008] flex items-center justify-between">
-            <div className="flex items-center gap-3">
+          <div className="p-3.5 border-b border-zinc-800/80 bg-gradient-to-r from-[#0d0d14] via-[#09090d] to-[#121008] flex items-center justify-between shrink-0">
+            <div className="flex items-center gap-2.5">
               <div className="relative">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#ecb613]/20 to-amber-900/30 border border-[#ecb613]/50 flex items-center justify-center text-[#ecb613] shadow-[0_0_15px_rgba(236,182,19,0.2)]">
-                  <Bot size={22} className="animate-pulse" />
+                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#ecb613]/20 to-amber-900/30 border border-[#ecb613]/50 flex items-center justify-center text-[#ecb613] shadow-[0_0_15px_rgba(236,182,19,0.2)]">
+                  <Bot size={20} className={isSpeaking ? 'animate-bounce text-amber-300' : 'animate-pulse'} />
                 </div>
-                <span className="absolute -bottom-0.5 -right-0.5 flex h-3 w-3">
+                <span className="absolute -bottom-0.5 -right-0.5 flex h-2.5 w-2.5">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500 border border-black"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 border border-black"></span>
                 </span>
               </div>
               <div>
-                <div className="flex items-center gap-1.5">
-                  <h3 className="text-sm font-bold text-white tracking-wide font-montserrat">
-                    {routeContext.title}
-                  </h3>
-                </div>
-                <div className="flex items-center gap-1 text-[11px] text-zinc-400 font-mono">
+                <h3 className="text-xs sm:text-sm font-bold text-white tracking-wide font-montserrat leading-tight">
+                  {routeContext.title}
+                </h3>
+                <div className="flex items-center gap-1.5 text-[10px] text-zinc-400 font-mono">
                   <span className="text-[#ecb613] font-semibold">{routeContext.badge}</span>
                   <span>•</span>
                   <span className="flex items-center gap-0.5 text-emerald-400">
-                    <Clock size={11} /> &lt; 1 min
+                    <Clock size={10} /> &lt; 1 min
                   </span>
                 </div>
               </div>
             </div>
 
+            <div className="flex items-center gap-1">
+              {/* Speaker TTS Toggle */}
+              <button
+                type="button"
+                onClick={() => {
+                  if (isSpeaking) stopSpeech();
+                  setTtsEnabled((prev) => !prev);
+                }}
+                className={`p-1.5 rounded-lg transition-colors ${
+                  ttsEnabled ? 'text-amber-400 bg-amber-500/10 hover:bg-amber-500/20' : 'text-zinc-500 hover:text-zinc-300'
+                }`}
+                title={ttsEnabled ? 'Voz activada (clic para silenciar)' : 'Voz desactivada (clic para activar)'}
+                aria-label="Alternar voz del asistente"
+              >
+                {ttsEnabled ? <Volume2 size={16} /> : <VolumeX size={16} />}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setIsOpen(false);
+                  stopSpeech();
+                }}
+                className="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800/60 transition-colors"
+                aria-label="Cerrar Conserjería"
+              >
+                <X size={18} />
+              </button>
+            </div>
+          </div>
+
+          {/* Quick Prompts Bar */}
+          <div className="px-3 py-2 bg-black/60 border-b border-zinc-800/60 flex items-center gap-1.5 overflow-x-auto scrollbar-none shrink-0 text-[10px] font-mono">
             <button
               type="button"
-              onClick={() => setIsOpen(false)}
-              className="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800/60 transition-colors"
-              aria-label="Cerrar Conserjería"
+              onClick={() => handleSendMessage('¿Cuáles son las tarifas de Edwin Agudelo?')}
+              className="px-2 py-1 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-amber-300 whitespace-nowrap transition-colors border border-zinc-700/60"
             >
-              <X size={18} />
+              🎵 Tarifas Edwin (350 €)
+            </button>
+            <button
+              type="button"
+              onClick={() => handleSendMessage('¿Cómo es la contratación B2G para Ayuntamientos bajo Art. 118 LCSP?')}
+              className="px-2 py-1 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-amber-300 whitespace-nowrap transition-colors border border-zinc-700/60"
+            >
+              🏛️ Licitación B2G Art. 118
+            </button>
+            <button
+              type="button"
+              onClick={() => handleSendMessage('¿Cuáles son los menús y aforo de Finca Otzarreta?')}
+              className="px-2 py-1 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-amber-300 whitespace-nowrap transition-colors border border-zinc-700/60"
+            >
+              🏰 Menús Otzarreta (145 €)
+            </button>
+            <button
+              type="button"
+              onClick={() => handleSendMessage('¿Cómo traslado mi escaparate de Bodas.net a EAR OS?')}
+              className="px-2 py-1 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-amber-300 whitespace-nowrap transition-colors border border-zinc-700/60"
+            >
+              🔄 Traslado Bodas.net
             </button>
           </div>
 
-          {/* Body Content */}
-          <div className="p-4 space-y-4 text-xs font-montserrat">
-            {/* Contextual Greeting Bubble */}
-            <div className="p-3.5 bg-zinc-900/80 border border-zinc-800 rounded-xl rounded-tl-sm text-zinc-200 leading-relaxed shadow-inner">
-              <div className="flex items-center gap-1.5 text-[#ecb613] font-mono text-[10px] uppercase font-bold mb-1.5">
-                <Sparkles size={12} />
-                <span>Asistente Activo</span>
-              </div>
-              <p>{routeContext.greeting}</p>
-            </div>
-
-            {/* Trojan Scraper Input (Si aplica o en ficha de proveedores) */}
-            {routeContext.showScraper && (
-              <div className="p-3 bg-black/60 border border-zinc-800 rounded-xl space-y-2">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1.5 text-zinc-300 font-semibold text-[11px]">
-                    <Link2 size={13} className="text-[#ecb613]" />
-                    <span>Pega tu escaparate (Bodas.net o web):</span>
-                  </div>
-                </div>
-
-                {/* Quick Presets Pacientes Cero */}
-                <div className="flex gap-1.5">
-                  <button
-                    type="button"
-                    onClick={() => handlePatientZeroPreset('edwin')}
-                    className="px-2 py-1 rounded bg-zinc-800 hover:bg-zinc-700 text-[#ecb613] font-mono text-[9px] border border-amber-500/20 transition-colors"
-                  >
-                    🎵 Edwin Agudelo
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handlePatientZeroPreset('otzarreta')}
-                    className="px-2 py-1 rounded bg-zinc-800 hover:bg-zinc-700 text-[#ecb613] font-mono text-[9px] border border-amber-500/20 transition-colors"
-                  >
-                    🏰 Eduardo Martínez
-                  </button>
-                </div>
-
-                <div className="flex gap-2">
-                  <input
-                    type="url"
-                    placeholder="https://www.bodas.net/fincas/..."
-                    value={scraperUrl}
-                    onChange={(e) => setScraperUrl(e.target.value)}
-                    className="flex-1 bg-zinc-900 border border-zinc-700/80 rounded-lg px-2.5 py-1.5 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-[#ecb613]"
-                  />
-                  <button
-                    type="button"
-                    onClick={handleScrapeSimulate}
-                    disabled={isScraping || !scraperUrl.trim()}
-                    className="px-3 py-1.5 bg-[#ecb613] hover:bg-amber-400 text-black font-bold rounded-lg transition-colors disabled:opacity-50 text-[11px] flex items-center gap-1"
-                  >
-                    {isScraping ? <Loader2 size={12} className="animate-spin" /> : 'Analizar'}
-                  </button>
-                </div>
-
-                {scrapeResult && (
-                  <div className="p-2.5 bg-emerald-950/40 border border-emerald-500/30 rounded-lg text-emerald-300 space-y-1 text-[11px] animate-in fade-in">
-                    <div className="font-bold flex items-center gap-1 text-emerald-400">
-                      <CheckCircle2 size={13} />
-                      <span>{scrapeResult.name}</span>
+          {/* Chat Messages Stream */}
+          <div className="flex-1 p-3.5 space-y-3 overflow-y-auto text-xs font-montserrat">
+            {messages.map((m) => (
+              <div
+                key={m.id}
+                className={`flex flex-col ${m.role === 'user' ? 'items-end' : 'items-start'} animate-in fade-in duration-150`}
+              >
+                <div
+                  className={`max-w-[88%] p-3 rounded-2xl leading-relaxed text-xs ${
+                    m.role === 'user'
+                      ? 'bg-gradient-to-r from-emerald-600/90 to-teal-700/90 text-white rounded-br-none shadow-md'
+                      : 'bg-zinc-900/95 border border-zinc-800 text-zinc-200 rounded-bl-none shadow-sm'
+                  }`}
+                >
+                  {m.role === 'assistant' && (
+                    <div className="flex items-center gap-1 text-[#ecb613] font-mono text-[9px] uppercase font-bold mb-1">
+                      <Sparkles size={11} />
+                      <span>Agente EAR OS</span>
                     </div>
-                    <p className="text-zinc-300">
-                      {scrapeResult.name.includes('Edwin')
-                        ? 'Hub Méntrida · Tarifa estándar 550 € con 100 km incluidos (Suelo 350 €). Km extra a 0,50 € y hotel a 80 €.'
-                        : scrapeResult.name.includes('Eduardo')
-                        ? 'Finca Singular Derio · Menús de temporada 2026 desde 145 €, aforo 50-350 pax, acústica ≤ 75 dB SPL.'
-                        : `Detectadas ${scrapeResult.photos} fotos, menú desde ${scrapeResult.menuPrice} € y aforo para ${scrapeResult.capacity} invitados.`}
-                    </p>
-                    <p className="text-[#ecb613] font-mono font-bold">
-                      Ficha preliminar lista para homologación oficial gratuita.
-                    </p>
-                  </div>
-                )}
+                  )}
+                  <p className="whitespace-pre-wrap">{m.text}</p>
+
+                  {/* Attached Action Pill */}
+                  {m.action && (
+                    <div className="mt-2.5 pt-2 border-t border-zinc-700/50">
+                      {m.action.type === 'whatsapp' && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            if (m.action?.url) {
+                              window.open(m.action.url, '_blank', 'noopener,noreferrer');
+                            } else {
+                              handleWhatsAppClick();
+                            }
+                          }}
+                          className="w-full py-1.5 px-2.5 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 font-bold text-[11px] flex items-center justify-between transition-colors"
+                        >
+                          <span className="flex items-center gap-1.5">
+                            <MessageSquare size={13} />
+                            {m.action.label}
+                          </span>
+                          <ArrowRight size={13} />
+                        </button>
+                      )}
+
+                      {m.action.type === 'dossier' && (
+                        <button
+                          type="button"
+                          onClick={handleDossierClick}
+                          className="w-full py-1.5 px-2.5 rounded-lg bg-[#ecb613]/20 hover:bg-[#ecb613]/30 text-amber-300 border border-[#ecb613]/40 font-bold text-[11px] flex items-center justify-between transition-colors"
+                        >
+                          <span className="flex items-center gap-1.5">
+                            <FileText size={13} />
+                            {m.action.label}
+                          </span>
+                          <ArrowRight size={13} />
+                        </button>
+                      )}
+
+                      {m.action.type === 'date_picker' && (
+                        <button
+                          type="button"
+                          onClick={() => setShowDatePicker(true)}
+                          className="w-full py-1.5 px-2.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 font-bold text-[11px] flex items-center justify-between transition-colors"
+                        >
+                          <span className="flex items-center gap-1.5">
+                            <Calendar size={13} />
+                            {m.action.label}
+                          </span>
+                          <ArrowRight size={13} />
+                        </button>
+                      )}
+
+                      {m.action.type === 'scraper' && (
+                        <button
+                          type="button"
+                          onClick={() => setShowFastActions(true)}
+                          className="w-full py-1.5 px-2.5 rounded-lg bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 border border-purple-500/40 font-bold text-[11px] flex items-center justify-between transition-colors"
+                        >
+                          <span className="flex items-center gap-1.5">
+                            <Link2 size={13} />
+                            {m.action.label}
+                          </span>
+                          <ArrowRight size={13} />
+                        </button>
+                      )}
+                    </div>
+                  )}
+                </div>
+                <span className="text-[9px] text-zinc-500 mt-1 font-mono px-1">{m.timestamp}</span>
+              </div>
+            ))}
+
+            {isSending && (
+              <div className="flex items-center gap-2 text-zinc-400 text-xs py-1 animate-pulse">
+                <Loader2 size={14} className="animate-spin text-[#ecb613]" />
+                <span className="font-mono text-[10px]">Consultando Centralita...</span>
               </div>
             )}
 
-            {/* Interactive Date Picker Toggle Section */}
-            {showDatePicker && (
-              <div className="p-3 bg-zinc-900/90 border border-amber-500/30 rounded-xl space-y-2.5 animate-in fade-in">
-                <div className="flex items-center justify-between text-zinc-200 font-bold text-[11px]">
-                  <span className="flex items-center gap-1 text-[#ecb613]">
-                    <CalendarDays size={13} /> Seleccionar Fecha del Evento
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => setShowDatePicker(false)}
-                    className="text-zinc-400 hover:text-white text-[10px]"
-                  >
-                    Cerrar
-                  </button>
-                </div>
-                <div className="space-y-1.5">
-                  <label className="text-[10px] text-zinc-400 block">Fecha aproximada o confirmada:</label>
-                  <input
-                    type="date"
-                    min={new Date().toISOString().split('T')[0]}
-                    value={selectedDate}
-                    onChange={(e) => setSelectedDate(e.target.value)}
-                    className="w-full bg-black/80 border border-zinc-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-[#ecb613] font-mono"
-                  />
-                </div>
-                <div className="space-y-1">
-                  <label className="text-[10px] text-zinc-400 block">Franja horaria preferente:</label>
-                  <div className="grid grid-cols-3 gap-1.5">
-                    {(['mediodia', 'tarde', 'noche'] as const).map((slot) => (
-                      <button
-                        key={slot}
-                        type="button"
-                        onClick={() => setSelectedSlot(slot)}
-                        className={`py-1 text-[10px] font-mono uppercase font-bold rounded-md border transition-all ${
-                          selectedSlot === slot
-                            ? 'bg-[#ecb613] text-black border-[#ecb613]'
-                            : 'bg-zinc-800 text-zinc-300 border-zinc-700 hover:bg-zinc-700'
-                        }`}
-                      >
-                        {slot}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                {selectedDate && (
-                  <p className="text-[10px] text-emerald-400 font-mono">
-                    ✓ Fecha {selectedDate} guardada en el contexto de consulta.
-                  </p>
-                )}
-              </div>
-            )}
-
-            {/* ─── 3 ACCIONES DE 1 CLIC ─── */}
-            <div className="space-y-2 pt-1">
-              <span className="text-[10px] font-mono uppercase text-zinc-400 font-bold tracking-wider block">
-                Acciones Inmediatas (1 Clic):
-              </span>
-
-              {/* Botón A: WhatsApp Directo */}
-              <button
-                type="button"
-                onClick={handleWhatsAppClick}
-                className="w-full p-2.5 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 text-white font-bold rounded-xl flex items-center justify-between shadow-lg shadow-emerald-950/40 transition-all group"
-              >
-                <div className="flex items-center gap-2">
-                  <div className="p-1.5 rounded-lg bg-black/20 text-white">
-                    <MessageSquare size={16} />
-                  </div>
-                  <div className="text-left">
-                    <div className="text-xs font-bold leading-tight">Hablar directo con Edwin</div>
-                    <div className="text-[10px] text-emerald-200 font-normal">WhatsApp Oficial · +34 693 693 048</div>
-                  </div>
-                </div>
-                <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
-              </button>
-
-              {/* Botón B: Dossier Oficial A4 */}
-              <button
-                type="button"
-                onClick={handleDossierClick}
-                className="w-full p-2.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-700/80 text-zinc-100 font-semibold rounded-xl flex items-center justify-between transition-all group"
-              >
-                <div className="flex items-center gap-2">
-                  <div className="p-1.5 rounded-lg bg-[#ecb613]/10 text-[#ecb613]">
-                    <FileText size={16} />
-                  </div>
-                  <div className="text-left">
-                    <div className="text-xs font-bold leading-tight">Dossier / Memoria Oficial A4</div>
-                    <div className="text-[10px] text-zinc-400 font-normal">Memoria técnica & tarifario homologado</div>
-                  </div>
-                </div>
-                <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform text-zinc-400" />
-              </button>
-
-              {/* Botón C: Consultar Disponibilidad de Fecha */}
-              <button
-                type="button"
-                onClick={() => setShowDatePicker((prev) => !prev)}
-                className="w-full p-2.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-700/80 text-zinc-100 font-semibold rounded-xl flex items-center justify-between transition-all group"
-              >
-                <div className="flex items-center gap-2">
-                  <div className="p-1.5 rounded-lg bg-amber-500/10 text-amber-400">
-                    <Calendar size={16} />
-                  </div>
-                  <div className="text-left">
-                    <div className="text-xs font-bold leading-tight">Consultar Disponibilidad de Fecha</div>
-                    <div className="text-[10px] text-zinc-400 font-normal">
-                      {selectedDate ? `Seleccionada: ${selectedDate}` : 'Ver calendario y franjas horarias'}
-                    </div>
-                  </div>
-                </div>
-                <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform text-zinc-400" />
-              </button>
-            </div>
+            <div ref={messagesEndRef} />
           </div>
 
+          {/* Interactive Date Picker Toggle Section */}
+          {showDatePicker && (
+            <div className="p-3 bg-zinc-900/95 border-t border-amber-500/30 shrink-0 space-y-2 animate-in fade-in">
+              <div className="flex items-center justify-between text-zinc-200 font-bold text-[11px]">
+                <span className="flex items-center gap-1 text-[#ecb613]">
+                  <CalendarDays size={13} /> Seleccionar Fecha del Evento
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setShowDatePicker(false)}
+                  className="text-zinc-400 hover:text-white text-[10px]"
+                >
+                  Cerrar
+                </button>
+              </div>
+              <div className="space-y-1">
+                <input
+                  type="date"
+                  min={new Date().toISOString().split('T')[0]}
+                  value={selectedDate}
+                  onChange={(e) => setSelectedDate(e.target.value)}
+                  className="w-full bg-black/80 border border-zinc-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-[#ecb613] font-mono"
+                />
+              </div>
+              <div className="grid grid-cols-3 gap-1.5">
+                {(['mediodia', 'tarde', 'noche'] as const).map((slot) => (
+                  <button
+                    key={slot}
+                    type="button"
+                    onClick={() => setSelectedSlot(slot)}
+                    className={`py-1 text-[10px] font-mono uppercase font-bold rounded-md border transition-all ${
+                      selectedSlot === slot
+                        ? 'bg-[#ecb613] text-black border-[#ecb613]'
+                        : 'bg-zinc-800 text-zinc-300 border-zinc-700 hover:bg-zinc-700'
+                    }`}
+                  >
+                    {slot}
+                  </button>
+                ))}
+              </div>
+              {selectedDate && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    handleSendMessage(`Deseo reservar la fecha ${selectedDate} en turno ${selectedSlot}. ¿Está libre?`);
+                    setShowDatePicker(false);
+                  }}
+                  className="w-full py-1.5 bg-[#ecb613] text-black font-bold rounded-lg text-xs"
+                >
+                  Consultar Disponibilidad de {selectedDate}
+                </button>
+              )}
+            </div>
+          )}
+
+          {/* Fast Actions Expandable Accordion */}
+          <div className="border-t border-zinc-800/80 bg-black/50 shrink-0">
+            <button
+              type="button"
+              onClick={() => setShowFastActions((prev) => !prev)}
+              className="w-full px-3 py-1.5 flex items-center justify-between text-[10px] font-mono text-zinc-400 hover:text-zinc-200 uppercase font-bold"
+            >
+              <span>⚡ Acciones Rápidas (1 Clic)</span>
+              {showFastActions ? <ChevronDown size={14} /> : <ChevronUp size={14} />}
+            </button>
+
+            {showFastActions && (
+              <div className="p-3 space-y-2 bg-zinc-950/90 border-t border-zinc-800 text-xs animate-in fade-in">
+                {/* Botón WhatsApp */}
+                <button
+                  type="button"
+                  onClick={handleWhatsAppClick}
+                  className="w-full p-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl flex items-center justify-between text-[11px] transition-colors"
+                >
+                  <div className="flex items-center gap-2">
+                    <MessageSquare size={14} />
+                    <span>Hablar directo con Edwin</span>
+                  </div>
+                  <ArrowRight size={13} />
+                </button>
+
+                {/* Botón Dossier */}
+                <button
+                  type="button"
+                  onClick={handleDossierClick}
+                  className="w-full p-2 bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-200 font-bold rounded-xl flex items-center justify-between text-[11px] transition-colors"
+                >
+                  <div className="flex items-center gap-2">
+                    <FileText size={14} className="text-[#ecb613]" />
+                    <span>Dossier Oficial A4 (Print)</span>
+                  </div>
+                  <ArrowRight size={13} />
+                </button>
+
+                {/* Scraper Simulator */}
+                <div className="pt-2 border-t border-zinc-800 space-y-1.5">
+                  <div className="text-[10px] text-zinc-400 font-mono">Convertidor de escaparate (Bodas.net):</div>
+                  <div className="flex gap-1.5">
+                    <button
+                      type="button"
+                      onClick={() => handlePatientZeroPreset('edwin')}
+                      className="px-2 py-0.5 rounded bg-zinc-800 hover:bg-zinc-700 text-[#ecb613] font-mono text-[9px] border border-amber-500/20"
+                    >
+                      🎵 Edwin Agudelo
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handlePatientZeroPreset('otzarreta')}
+                      className="px-2 py-0.5 rounded bg-zinc-800 hover:bg-zinc-700 text-[#ecb613] font-mono text-[9px] border border-amber-500/20"
+                    >
+                      🏰 Otzarreta
+                    </button>
+                  </div>
+                  <div className="flex gap-1.5">
+                    <input
+                      type="url"
+                      placeholder="https://www.bodas.net/..."
+                      value={scraperUrl}
+                      onChange={(e) => setScraperUrl(e.target.value)}
+                      className="flex-1 bg-zinc-900 border border-zinc-700 rounded-lg px-2 py-1 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-[#ecb613]"
+                    />
+                    <button
+                      type="button"
+                      onClick={handleScrapeSimulate}
+                      disabled={isScraping || !scraperUrl.trim()}
+                      className="px-2.5 py-1 bg-[#ecb613] hover:bg-amber-400 text-black font-bold rounded-lg text-xs disabled:opacity-50 flex items-center gap-1"
+                    >
+                      {isScraping ? <Loader2 size={11} className="animate-spin" /> : 'Analizar'}
+                    </button>
+                  </div>
+                  {scrapeResult && (
+                    <div className="p-2 bg-emerald-950/40 border border-emerald-500/30 rounded-lg text-emerald-300 text-[10px]">
+                      <span className="font-bold">{scrapeResult.name}:</span> Ficha lista para homologación oficial.
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Input & Voice Controls Bar */}
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              void handleSendMessage();
+            }}
+            className="p-2.5 bg-[#0d0d14] border-t border-zinc-800 flex items-center gap-1.5 shrink-0"
+          >
+            {/* Voice STT Button */}
+            {voiceSupported && (
+              <button
+                type="button"
+                onClick={toggleListening}
+                className={`p-2 rounded-xl transition-all ${
+                  isListening
+                    ? 'bg-rose-500 text-white animate-pulse shadow-[0_0_12px_rgba(244,63,94,0.6)]'
+                    : 'bg-zinc-800 text-zinc-300 hover:text-amber-400 hover:bg-zinc-700'
+                }`}
+                title={isListening ? 'Escuchando tu voz... Clic para parar' : 'Hablar por voz (Speech-to-Text)'}
+                aria-label="Hablar por micrófono"
+              >
+                {isListening ? <Mic size={16} /> : <MicOff size={16} />}
+              </button>
+            )}
+
+            <input
+              type="text"
+              value={inputQuery}
+              onChange={(e) => setInputQuery(e.target.value)}
+              placeholder={isListening ? 'Escuchando tu voz...' : 'Pregunta o escribe tu consulta...'}
+              className="flex-1 bg-zinc-900 border border-zinc-700/80 rounded-xl px-3 py-2 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-[#ecb613] transition-colors"
+            />
+
+            <button
+              type="submit"
+              disabled={isSending || !inputQuery.trim()}
+              className="p-2 bg-[#ecb613] hover:bg-amber-400 text-black rounded-xl transition-colors disabled:opacity-40"
+              aria-label="Enviar mensaje"
+            >
+              {isSending ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
+            </button>
+          </form>
+
           {/* Footer */}
-          <div className="p-3 border-t border-zinc-800/80 bg-black/40 flex items-center justify-between text-[10px] text-zinc-400 font-mono">
-            <div className="flex items-center gap-1.5">
-              <ShieldCheck size={12} className="text-[#ecb613]" />
+          <div className="px-3 py-1.5 border-t border-zinc-800/80 bg-black/60 flex items-center justify-between text-[9px] text-zinc-400 font-mono shrink-0">
+            <div className="flex items-center gap-1">
+              <ShieldCheck size={11} className="text-[#ecb613]" />
               <span>Garantía S-Class EAR OS</span>
             </div>
-            <a
-              href={`tel:${CLEAN_PHONE}`}
-              className="hover:text-[#ecb613] transition-colors flex items-center gap-1"
-            >
-              <Phone size={10} />
+            <a href={`tel:${CLEAN_PHONE}`} className="hover:text-[#ecb613] transition-colors flex items-center gap-1">
+              <Phone size={9} />
               <span>{CENTRALITA_EAR_OS}</span>
             </a>
           </div>
@@ -531,7 +864,10 @@ export function SovereignConciergeWidget() {
       {/* ─── BURBUJA FLOTANTE PRINCIPAL (OLED S-CLASS) ─── */}
       <button
         type="button"
-        onClick={() => setIsOpen((prev) => !prev)}
+        onClick={() => {
+          setIsOpen((prev) => !prev);
+          if (isOpen) stopSpeech();
+        }}
         aria-label="Abrir Conserjería IA Productora EAR"
         className="group relative flex items-center gap-3 bg-[#09090d]/95 hover:bg-[#12121a] border border-[#ecb613]/50 hover:border-[#ecb613] p-2.5 sm:p-3 rounded-full shadow-[0_8px_32px_rgba(236,182,19,0.25)] hover:shadow-[0_8px_36px_rgba(236,182,19,0.45)] transition-all duration-300 hover:scale-105"
       >
@@ -559,7 +895,7 @@ export function SovereignConciergeWidget() {
             </span>
           </div>
           <span className="text-[10px] text-zinc-400 font-mono">
-            Respuesta en &lt; 1 min
+            Voz & Chat 24/7
           </span>
         </div>
       </button>

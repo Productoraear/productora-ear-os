@@ -22,14 +22,6 @@ export const AUTHORIZED_TEAM_MEMBERS: AuthorizedTeamMember[] = [
     allowedScopes: ['*']
   },
   {
-    email: 'edwin.agudelo@productoraear.com',
-    name: 'Edwin Agudelo',
-    role: 'admin',
-    title: 'CEO & Fundador',
-    department: 'Dirección General & Operaciones',
-    allowedScopes: ['*']
-  },
-  {
     email: 'edwin@productoraear.com',
     name: 'Edwin Agudelo',
     role: 'admin',

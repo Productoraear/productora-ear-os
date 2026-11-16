@@ -6,7 +6,7 @@ import {
   AutomationTaskItem,
   AutomationGlobalConfig,
   getDefaultAutomationConfig
-} from '@/lib/admin/automation-config-ssot';
+} from '@/lib/admin/automation-config-types';
 
 interface DepartmentGroup {
   id: string;
