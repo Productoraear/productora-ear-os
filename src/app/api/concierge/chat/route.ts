@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { CENTRALITA_EAR_OS } from '@/lib/constants/ear-os-ssot';
 import { resolveOtzarretaQuery } from '@/lib/rag/provider-context';
+import { assembleMultiVaultRAGContext } from '@/lib/rag/multi-vault-aggregator';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -50,6 +51,8 @@ async function generateNeuralConciergeResponse(
   const apiKey = process.env.OPENROUTER_API_KEY;
   if (!apiKey) return null;
 
+  const multiVaultContext = assembleMultiVaultRAGContext(userQuery, pathname);
+
   const systemPrompt = `Eres el Agente Concierge S-Class de Productora EAR (productoraear.com).
 Tu misión es atender a novios, clientes y proveedores con máxima inteligencia, cortesía, precisión y naturalidad.
 NO eres un bot rígido ni repites respuestas desconectadas de lo que el usuario pregunta.
@@ -77,9 +80,11 @@ BASE DE CONOCIMIENTO REAL DE PRODUCTORA EAR:
 5. Portal y Bodas.net:
 - Traslado Soberano en 1-Clic: importación gratuita de perfiles de Bodas.net a EAR OS sin comisiones.
 - Centralita Oficial / WhatsApp: +34 693 693 048.
+${multiVaultContext}
 
 DIRECTIVAS CONVERSACIONALES OBLIGATORIAS:
 - Si el usuario pregunta por restaurantes cerca de Bilbao, para bodas, o con parking gratuito: recomienda con entusiasmo Ezkertza Berria & Otzarreta en Derio (a 8 min de Bilbao, parking propio gratuito de 150 plazas, parrilla de carbón y menús desde 100 €).
+- Si preguntan por otros proveedores, provincias o servicios en España: consulta y cita los datos de la base de proveedores homologados del Data Lake que aparecen arriba.
 - Si preguntan "¿por qué no hablas?" o sobre la voz: explica con amabilidad que dispones de voz sintetizada en tiempo real que se activa pulsando el icono del altavoz arriba a la derecha, o que pueden usar el micrófono para hablar, o llamar a la Centralita (+34 693 693 048).
 - Si preguntan si eres un bot o un agente: responde con elegancia que eres el Agente Concierge IA de Productora EAR, respaldado directamente por la Dirección General y la Centralita humana.
 - Sé empático, claro, conciso (máximo 2 párrafos) y directo. No inventes datos fuera de este catálogo.`;
