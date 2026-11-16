@@ -83,14 +83,24 @@ function getContextForRoute(pathname: string): RouteContextConfig {
       showScraper: true,
     };
   }
-  if (pathname.includes('/otzarreta') || pathname.includes('/fincas')) {
+  if (pathname.includes('/otzarreta')) {
+    return {
+      title: 'Finca & Asador Otzarreta · Derio',
+      badge: 'Menús 2026 desde 145 €',
+      greeting: 'Bienvenido al Asador Finca Otzarreta (Derio). Soy el Maître Digital de sala de Eduardo Martínez. ¿Deseas consultar nuestros menús de temporada, brasas al sarmiento o aforos?',
+      category: 'Fincas',
+      providerName: 'Finca Otzarreta / Eduardo Martínez',
+      suggestedWa: 'Hola Eduardo, estoy en la ficha de Otzarreta y deseo consultar disponibilidad y menús para mi evento.',
+    };
+  }
+  if (pathname.includes('/fincas')) {
     return {
       title: 'Fincas & Espacios Homologados',
       badge: 'Garantía Acústica S-Class',
       greeting: 'Bienvenido al catálogo de Fincas Homologadas. ¿Buscas aforo, limitador acústico o menús de temporada 2026 de Otzarreta?',
       category: 'Fincas',
       providerName: 'Fincas Homologadas',
-      suggestedWa: 'Hola Edwin, estoy valorando fincas en EAR OS y deseo consultar aforo y condiciones técnicas.',
+      suggestedWa: 'Hola, estoy valorando fincas en EAR OS y deseo consultar aforo y condiciones técnicas.',
     };
   }
   if (pathname.includes('/seating-planner')) {
@@ -329,11 +339,13 @@ export function SovereignConciergeWidget() {
       setIsSending(true);
 
       try {
+        const detectedSlug = pathname.includes('/otzarreta') ? 'otzarreta' : '';
         const res = await fetch('/api/concierge/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             message: q,
+            providerSlug: detectedSlug,
             routeContext: {
               pathname,
               providerName: routeContext.providerName,
@@ -531,34 +543,93 @@ export function SovereignConciergeWidget() {
 
           {/* Quick Prompts Bar */}
           <div className="px-3 py-2 bg-black/60 border-b border-zinc-800/60 flex items-center gap-1.5 overflow-x-auto scrollbar-none shrink-0 text-[10px] font-mono">
-            <button
-              type="button"
-              onClick={() => handleSendMessage('¿Cuáles son las tarifas de Edwin Agudelo?')}
-              className="px-2 py-1 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-amber-300 whitespace-nowrap transition-colors border border-zinc-700/60"
-            >
-              🎵 Tarifas Edwin (350 €)
-            </button>
-            <button
-              type="button"
-              onClick={() => handleSendMessage('¿Cómo es la contratación B2G para Ayuntamientos bajo Art. 118 LCSP?')}
-              className="px-2 py-1 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-amber-300 whitespace-nowrap transition-colors border border-zinc-700/60"
-            >
-              🏛️ Licitación B2G Art. 118
-            </button>
-            <button
-              type="button"
-              onClick={() => handleSendMessage('¿Cuáles son los menús y aforo de Finca Otzarreta?')}
-              className="px-2 py-1 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-amber-300 whitespace-nowrap transition-colors border border-zinc-700/60"
-            >
-              🏰 Menús Otzarreta (145 €)
-            </button>
-            <button
-              type="button"
-              onClick={() => handleSendMessage('¿Cómo traslado mi escaparate de Bodas.net a EAR OS?')}
-              className="px-2 py-1 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-amber-300 whitespace-nowrap transition-colors border border-zinc-700/60"
-            >
-              🔄 Traslado Bodas.net
-            </button>
+            {pathname.includes('/otzarreta') ? (
+              <>
+                <button
+                  type="button"
+                  onClick={() => handleSendMessage('¿Cuáles son los 4 menús de 2026 y precios en Otzarreta?')}
+                  className="px-2 py-1 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-amber-300 whitespace-nowrap transition-colors border border-zinc-700/60"
+                >
+                  🍖 Menús desde 145 €
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleSendMessage('¿Cómo son las brasas al sarmiento y asador en Derio?')}
+                  className="px-2 py-1 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-amber-300 whitespace-nowrap transition-colors border border-zinc-700/60"
+                >
+                  🥩 Asador y Brasas Derio
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleSendMessage('¿Cuál es el aforo del comedor y la finca de Otzarreta?')}
+                  className="px-2 py-1 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-amber-300 whitespace-nowrap transition-colors border border-zinc-700/60"
+                >
+                  👥 Aforo (50-350 pax)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleSendMessage('¿Cómo llegar al restaurante en Derio y dónde aparcar?')}
+                  className="px-2 py-1 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-amber-300 whitespace-nowrap transition-colors border border-zinc-700/60"
+                >
+                  📍 Ubicación Derio (10 min)
+                </button>
+              </>
+            ) : pathname.includes('/seating-planner') ? (
+              <>
+                <button
+                  type="button"
+                  onClick={() => handleSendMessage('¿Cómo configuro mesas redondas de 8 a 12 comensales?')}
+                  className="px-2 py-1 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-amber-300 whitespace-nowrap transition-colors border border-zinc-700/60"
+                >
+                  🪑 Mesas de 8 a 12 pax
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleSendMessage('¿Cómo se exporta el plano de mesas en SVG y PDF?')}
+                  className="px-2 py-1 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-amber-300 whitespace-nowrap transition-colors border border-zinc-700/60"
+                >
+                  📐 Exportar plano SVG
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleSendMessage('¿Cuál es el aforo máximo de invitados en el salón?')}
+                  className="px-2 py-1 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-amber-300 whitespace-nowrap transition-colors border border-zinc-700/60"
+                >
+                  👥 Aforo máximo salón
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  type="button"
+                  onClick={() => handleSendMessage('¿Cuáles son las tarifas de Edwin Agudelo?')}
+                  className="px-2 py-1 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-amber-300 whitespace-nowrap transition-colors border border-zinc-700/60"
+                >
+                  🎵 Tarifas Edwin (350 €)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleSendMessage('¿Cómo es la contratación B2G para Ayuntamientos bajo Art. 118 LCSP?')}
+                  className="px-2 py-1 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-amber-300 whitespace-nowrap transition-colors border border-zinc-700/60"
+                >
+                  🏛️ Licitación B2G Art. 118
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleSendMessage('¿Cuáles son los menús y aforo de Finca Otzarreta?')}
+                  className="px-2 py-1 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-amber-300 whitespace-nowrap transition-colors border border-zinc-700/60"
+                >
+                  🏰 Menús Otzarreta (145 €)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleSendMessage('¿Cómo traslado mi escaparate de Bodas.net a EAR OS?')}
+                  className="px-2 py-1 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-amber-300 whitespace-nowrap transition-colors border border-zinc-700/60"
+                >
+                  🔄 Traslado Bodas.net
+                </button>
+              </>
+            )}
           </div>
 
           {/* Chat Messages Stream */}

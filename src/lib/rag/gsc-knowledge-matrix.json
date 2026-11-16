@@ -1,0 +1,87 @@
+{
+  "version": "1.0.0",
+  "source": "Google Search Console (GSC) + Clarity Telemetry 16M",
+  "generatedAt": "2026-11-16T13:40:00.000Z",
+  "summary": {
+    "totalClicks": 445,
+    "totalImpressions": 88082,
+    "topCountries": ["España", "Portugal", "Bélgica", "Estados Unidos", "Francia"],
+    "deviceDistribution": {
+      "mobilePercentage": 64.9,
+      "desktopPercentage": 31.5,
+      "tabletPercentage": 0.4
+    }
+  },
+  "intentClusters": [
+    {
+      "id": "contact_direct",
+      "patterns": ["como contacto", "telefono", "contactar", "contacto", "llamar", "hablar con ellos"],
+      "reply": "Puedes comunicarte al instante con la Centralita Oficial de EAR OS llamando o escribiendo por WhatsApp al +34 693 693 048. Atendemos consultas de fechas, disponibilidad y contratación directa en menos de 1 minuto.",
+      "action": {
+        "type": "whatsapp",
+        "label": "Hablar con Centralita (+34 693 693 048)",
+        "url": "https://wa.me/34693693048?text=Hola%2C%20deseo%20contactar%20directamente%20con%20la%20Centralita%20de%20EAR%20OS."
+      }
+    },
+    {
+      "id": "mixel_violin",
+      "patterns": ["mixel violin", "mixel violín", "violinista", "violin", "violín"],
+      "reply": "Mixel Violín es uno de nuestros artistas homologados para ceremonias, cócteles y eventos exclusivos, con tarifa base desde 450,00 €. Puedes consultar su disponibilidad y formalizar reserva segura en línea.",
+      "action": {
+        "type": "whatsapp",
+        "label": "Ver disponibilidad de Mixel Violín",
+        "url": "https://www.productoraear.com/checkout/presupuesto?proveedor=Mixel%20Viol%C3%ADn&base=450"
+      }
+    },
+    {
+      "id": "mariachis_gala",
+      "patterns": ["mariachi", "mariachis", "mariachi gala", "serenata"],
+      "reply": "Disponemos de agrupaciones de Mariachi de Gala homologadas para bodas y serenatas en toda España (desde Alcázar de San Juan, Toledo, Madrid, Murcia, Ciudad Real) y actuaciones internacionales en Bruselas.",
+      "action": {
+        "type": "whatsapp",
+        "label": "Consultar Mariachis (+34 693 693 048)",
+        "url": "https://wa.me/34693693048?text=Hola%2C%20deseo%20consultar%20disponibilidad%20de%20Mariachi%20de%20Gala."
+      }
+    },
+    {
+      "id": "alquiler_luces_sonido",
+      "patterns": ["alquiler luces", "luces de navidad", "alquiler de sonido", "pantallas led", "arsenal", "rubi", "bilbao"],
+      "reply": "En el catálogo del Arsenal Audiovisual de EAR OS gestionamos alquiler e instalación de sonido profesional (Bose, Meyer), iluminación arquitectónica, guirnaldas y alquiler de luces para eventos en Bilbao, Rubí, Madrid y zonas de influencia.",
+      "action": {
+        "type": "whatsapp",
+        "label": "Solicitar material audiovisual",
+        "url": "https://wa.me/34693693048?text=Hola%2C%20solicito%20presupuesto%20para%20alquiler%20de%20luces%2Fsonido."
+      }
+    },
+    {
+      "id": "fincas_celebracion",
+      "patterns": ["finca", "hacienda", "alqueria", "cortijo", "palacio", "torre valdeflores", "goyena", "salvago", "alubian", "san dámaso", "errota aoiz", "navafría", "ternero"],
+      "reply": "EAR OS cuenta con fincas y espacios singulares homologados como Finca Otzarreta (Derio), Hacienda El Ternero (Rioja Alta), Alquería Balada y fincas históricas en toda España con aforos certificados y garantía técnica.",
+      "action": {
+        "type": "dossier",
+        "label": "Explorar Fincas Homologadas",
+        "url": "/otzarreta"
+      }
+    },
+    {
+      "id": "catering_banquetes",
+      "patterns": ["catering", "banquete para boda", "catering bodas", "comida fin de año", "catering cuenca", "catering brasas"],
+      "reply": "Nuestros caterings homologados ofrecen gastronomía de brasas, banquetes tradicionales y menús de temporada desde 145,00 € por cubierto, con pruebas de menú y servicio integral de sala.",
+      "action": {
+        "type": "dossier",
+        "label": "Ver Menús de Temporada (145 €)",
+        "url": "/otzarreta"
+      }
+    },
+    {
+      "id": "seating_planner_mesas",
+      "patterns": ["seating", "mesas", "plano de mesas", "invitados", "aforo salon", "pulpetti"],
+      "reply": "Con nuestro Pulpetti Seating Planner SOTA puedes diseñar la distribución de tus mesas (redondas de 8 a 12 pax o presidencial), gestionar alérgenos y exportar el plano 3D/SVG con membrete oficial.",
+      "action": {
+        "type": "dossier",
+        "label": "Abrir Pulpetti Seating Planner",
+        "url": "/seating-planner"
+      }
+    }
+  ]
+}
