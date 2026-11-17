@@ -58,6 +58,7 @@ import { SovereignConciergeWidget } from "@/components/concierge/SovereignConcie
 import { AdminOnlyOmniConsole } from "@/components/agents/AdminOnlyOmniConsole";
 import { GeoStructuredData } from "@/components/seo/GeoStructuredData";
 import { VimumeThemeInjector } from "@/components/theme/VimumeThemeInjector";
+import { DevVisualAuditor } from "@/components/dev/DevVisualAuditor";
 import { CartProvider } from "@/components/checkout/CartContext";
 import { SovereignCartDrawer } from "@/components/checkout/SovereignCartDrawer";
 import { GlobalLiveVisualEditor } from "@/components/editor/GlobalLiveVisualEditor";
@@ -180,6 +181,7 @@ export default function RootLayout({
                               <UnifiedSearch />
                               <SovereignCartDrawer />
                               <GlobalLiveVisualEditor />
+                              {process.env.NODE_ENV === 'development' && <DevVisualAuditor />}
                             </div>
                           </SmoothScrollProvider>
                         </CartProvider>
