@@ -23,7 +23,7 @@ const ENSAMBLE_FORMATS: EnsambleFormat[] = [
     id: "solista",
     musicians: 1,
     name: "Solista de Gala · Edwin Agudelo",
-    subtitle: "Voz principal, guitarra y traje charro de máxima etiqueta",
+    subtitle: "Voz principal, pistas profesionales y traje de charro a elegir",
     price: 550,
     recommended: true,
     idealFor: "Serenatas íntimas, aniversarios, pedidas de mano y sorpresas de alto impacto",

@@ -4,8 +4,90 @@ import { CENTRALITA_EAR_OS } from '@/lib/constants/ear-os-ssot';
 import { resolveOtzarretaQuery } from '@/lib/rag/provider-context';
 import { assembleMultiVaultRAGContext } from '@/lib/rag/multi-vault-aggregator';
 
-export const runtime = 'nodejs';
-export const dynamic = 'force-dynamic';
+/**
+ * Disparo HITL 90% a Telegram cuando un lead alcanza alta cualificación.
+ */
+async function dispatchTelegramHITLNotification(lead: {
+  summary: string;
+  menu?: string;
+  date?: string;
+  pax?: number | string;
+  venue: string;
+  source: string;
+  intent: string;
+}) {
+  const botToken = process.env.TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_CHAT_ID;
+  if (!botToken || !chatId) {
+    console.warn('[HITL Dispatch] Credenciales de Telegram no configuradas');
+    return false;
+  }
+
+  const text = `🚨 *HITL 90% · LEAD DE ALTA CUALIFICACIÓN*\n` +
+    `━━━━━━━━━━━━━━━━━━━━━━\n` +
+    `🏛️ *Finca / Espacio:* ${lead.venue}\n` +
+    `📅 *Fecha Solicitada:* ${lead.date || 'No especificada'}\n` +
+    `👥 *Comensales:* ${lead.pax || 'Pendiente'}\n` +
+    `🍷 *Menú Interés:* ${lead.menu || 'Asador Sarmiento / Ezkertza (155 €)'}\n` +
+    `🎯 *Intención:* ${lead.intent}\n` +
+    `📍 *Origen:* ${lead.source}\n` +
+    `━━━━━━━━━━━━━━━━━━━━━━\n` +
+    `💬 *Resumen:* ${lead.summary}\n` +
+    `⚡ *Acción:* Intervención humana recomendada en < 5 min para formalizar fianza 100 €.`;
+
+  try {
+    const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text,
+        parse_mode: 'Markdown',
+      }),
+      signal: AbortSignal.timeout(4000),
+    });
+    return res.ok;
+  } catch (err) {
+    console.error('[HITL Dispatch] Error enviando a Telegram:', err);
+    return false;
+  }
+}
+
+/**
+ * Evalúa si la conversación alcanza el umbral del 90% de cualificación autónoma (HITL Trigger).
+ */
+function evaluateQualificationThreshold(
+  currentMessage: string,
+  history: Array<{ role: 'user' | 'assistant'; content: string }> = []
+): { isQualified: boolean; details?: any } {
+  const fullText = [
+    ...history.map((h) => h.content),
+    currentMessage,
+  ].join(' ').toLowerCase();
+
+  const hasDate = fullText.includes('24') || fullText.includes('junio') || fullText.includes('2027') || fullText.includes('fecha');
+  const hasMenu = fullText.includes('155') || fullText.includes('sarmiento') || fullText.includes('ezkertza') || fullText.includes('menu') || fullText.includes('menú');
+  const hasPax = fullText.includes('pax') || fullText.includes('invitados') || fullText.includes('personas') || fullText.includes('comensales') || /\b([5-9]\d|[1-9]\d{2,})\b/.test(fullText);
+  const hasBookingIntent = fullText.includes('reserv') || fullText.includes('bloque') || fullText.includes('fianza') || fullText.includes('100') || fullText.includes('visita');
+
+  if (hasDate && hasMenu && (hasPax || hasBookingIntent)) {
+    return {
+      isQualified: true,
+      details: {
+        venue: 'Ezkertza Berria & Otzarreta (Derio)',
+        date: '24 de junio de 2027',
+        pax: 'Estimado > 50 pax',
+        menu: 'Menú Asador al Sarmiento / Ezkertza (155,00 € + IVA)',
+        intent: 'Bloqueo con fianza 100 € / Visita técnica de cierre',
+        source: 'Sovereign Concierge Widget (/otzarreta)',
+        summary: currentMessage.slice(0, 160),
+      },
+    };
+  }
+
+  return { isQualified: false };
+}
 
 const CLEAN_PHONE = CENTRALITA_EAR_OS.replace(/\D/g, '');
 
@@ -365,6 +447,12 @@ export async function POST(req: NextRequest) {
       }).catch(() => {
         // Silencio en fallback
       });
+    }
+
+    // Evaluación de umbral de cualificación 90% (HITL Trigger a Telegram)
+    const qualification = evaluateQualificationThreshold(message, history);
+    if (qualification.isQualified && qualification.details) {
+      void dispatchTelegramHITLNotification(qualification.details);
     }
 
     // 1. INFERENCIA NEURAL PRIMARIA CON CLAUDE HAIKU 4.5

@@ -146,8 +146,41 @@ export function resolveOtzarretaQuery(rawQuery: string): ProviderResolutionResul
     q.includes('cubierto') ||
     q.includes('comida') ||
     q.includes('plato') ||
-    q.includes('carta')
+    q.includes('carta') ||
+    q.includes('sarmiento') ||
+    q.includes('asador') ||
+    q.includes('celiac') ||
+    q.includes('celíac') ||
+    q.includes('alergia') ||
+    q.includes('gluten')
   ) {
+    if (q.includes('celiac') || q.includes('celíac') || q.includes('alergia') || q.includes('gluten')) {
+      return {
+        handled: true,
+        reply:
+          'En Ezkertza Berria & Otzarreta (Derio), la seguridad alimentaria es absoluta. Contamos con protocolos e instalaciones adaptadas para celíacos (100% sin gluten con pan y postres dedicados), intolerancias y menús infantiles/veganos sin coste adicional. Todo supervisado directamente por Eduardo Martínez.',
+        action: {
+          type: 'dossier',
+          label: 'Ver garantías de cocina y alérgenos',
+          url: '/otzarreta',
+        },
+        shouldEscalate: false,
+      };
+    }
+
+    if (q.includes('155') || q.includes('sarmiento') || q.includes('ezkertza')) {
+      return {
+        handled: true,
+        reply:
+          'El Menú Ezkertza / Asador al Sarmiento (155,00 € + IVA) es la cúspide gastronómica del caserío: incluye 1/2 bogavante del Cantábrico por persona, cigala XXL, sorbete de limón al txakoli y Chuletón de 1 Kg de ganado mayor a la brasa con carbón de encina y sarmiento, bodega reserva y tarta nupcial. Exclusividad de 1 evento/día y parking de 150 plazas.',
+        action: {
+          type: 'date_picker',
+          label: 'Bloquear fecha con fianza de 100 € (Deducible)',
+        },
+        shouldEscalate: true,
+      };
+    }
+
     return {
       handled: true,
       reply:
@@ -208,12 +241,15 @@ export function resolveOtzarretaQuery(rawQuery: string): ProviderResolutionResul
     q.includes('carpa') ||
     q.includes('ceremonia') ||
     q.includes('parking') ||
-    q.includes('párking')
+    q.includes('párking') ||
+    q.includes('exclusiv') ||
+    q.includes('una boda') ||
+    q.includes('1 boda')
   ) {
     return {
       handled: true,
       reply:
-        'El caserío en Derio cuenta con aforo oficial de hasta 350 comensales (banquetes habituales de 50 a 200 invitados). Solo se celebra 1 evento al día. Dispone de jardines botánicos con carpa para ceremonia civil con oficiante, salones climatizados e insonorizados, parque infantil, accesibilidad PMR con ascensor y parking privado gratuito de 150 plazas.',
+        'En Restaurante Ezkertza Berria & Otzarreta (Derio) la política es de exclusividad absoluta: solo se celebra 1 boda o evento al día. La finca cuenta con aforo oficial de hasta 350 comensales, jardines botánicos con carpa y oficiante civil, salones climatizados e insonorizados y parking privado gratuito de 150 plazas vigiladas.',
       action: {
         type: 'dossier',
         label: 'Ver Ficha de Espacios y Aforo',
