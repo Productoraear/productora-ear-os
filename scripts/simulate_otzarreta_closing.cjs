@@ -43,36 +43,36 @@ async function runSimulation() {
   const page = await context.newPage();
 
   try {
-    // 1. Navegación a Otzarreta
+    // 1. Navegación a Otzarreta y estabilización del DOM
     console.log('📍 [1/5] Cargando Caserío Ezkertza Berria & Otzarreta (/otzarreta)...');
     await page.goto('http://localhost:3007/otzarreta', { waitUntil: 'domcontentloaded', timeout: 45000 });
-    await sleep(2000);
+    await page.waitForLoadState('domcontentloaded');
+    await sleep(2500); // Pausa de estabilización e hidratación de Next.js
+
     try {
       await page.screenshot({ path: path.join(screenshotsDir, '01_landing_otzarreta.png'), timeout: 5000 });
     } catch {
       console.warn('Screenshot 1 omitido por fuentes');
     }
 
-    // 2. Localizar y abrir el Concierge Widget
+    // 2. Localizar y abrir el Concierge Widget con selector nativo Playwright
     console.log('💬 [2/5] Desplegando el Agente Concierge S-Class...');
-    await sleep(3000);
+    await sleep(2000);
 
-    // Abrir el popover de chat
+    // Disparar apertura del Concierge tanto por evento CustomEvent como por click nativo
     await page.evaluate(() => {
-      const buttons = Array.from(document.querySelectorAll('button'));
-      const trigger = buttons.find((b) =>
-        b.getAttribute('aria-label') === 'Abrir Conserjería IA Productora EAR' ||
-        b.innerText.includes('Agente EAR OS') ||
-        b.innerText.includes('Voz & Chat')
-      );
-      if (trigger) {
-        trigger.click();
-      }
+      window.dispatchEvent(new CustomEvent('open-ai-concierge'));
     });
 
-    await sleep(2000);
-    // Esperar a que el popover esté abierto
     const dialog = page.locator('div[role="dialog"][aria-label*="Conserjería"]').first();
+    // Si no está abierto aún, hacer click en el disparador
+    if (!(await dialog.isVisible())) {
+      const trigger = page.locator('#concierge-trigger-button, button[data-testid="concierge-trigger"], button[aria-label*="Conserjería"]').first();
+      if (await trigger.count() > 0) {
+        await trigger.click({ force: true });
+      }
+    }
+
     await dialog.waitFor({ state: 'visible', timeout: 15000 });
     console.log('✅ Diálogo de Conserjería S-Class abierto en pantalla.');
 
@@ -80,19 +80,20 @@ async function runSimulation() {
     await input.waitFor({ state: 'visible', timeout: 10000 });
     console.log('✅ Input del chat localizado y listo.');
 
-    // Helper para interactuar con el chat
+    // Helper para interactuar con el chat de forma ultra-resiliente
     async function sendMessage(msg, stepName, snapFile) {
       console.log(`➡️ ${stepName}: "${msg}"`);
-      await input.fill('');
-      await input.type(msg, { delay: 20 });
+      // Esperar a que no esté enviando (isSending: false)
+      await page.waitForSelector('div[role="dialog"] button[type="submit"]:not([disabled])', { timeout: 15000 });
+      const chatInput = page.locator('div[role="dialog"] input[type="text"]').first();
+      await chatInput.fill(msg);
       await sleep(300);
 
-      // Enviar formulario del chat
-      const sendButton = dialog.locator('button[type="submit"], button[aria-label="Enviar mensaje"]').first();
+      const sendButton = page.locator('div[role="dialog"] button[type="submit"]').first();
       await sendButton.click();
 
-      // Esperar a que el agente responda
-      await sleep(4500);
+      // Esperar a que el mensaje aparezca y termine de responder el agente
+      await sleep(4000);
       try {
         await page.screenshot({ path: path.join(screenshotsDir, snapFile), timeout: 5000 });
       } catch {}

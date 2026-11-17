@@ -228,6 +228,13 @@ export function SovereignConciergeWidget() {
     }
   }, [messages, isOpen]);
 
+  // Listen to open-ai-concierge custom event from mobile HUD or buttons
+  useEffect(() => {
+    const handleOpenEvent = () => setIsOpen(true);
+    window.addEventListener('open-ai-concierge', handleOpenEvent);
+    return () => window.removeEventListener('open-ai-concierge', handleOpenEvent);
+  }, []);
+
   // Close on Escape key
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -941,6 +948,8 @@ export function SovereignConciergeWidget() {
       {/* ─── BURBUJA FLOTANTE PRINCIPAL (OLED S-CLASS) ─── */}
       <button
         type="button"
+        id="concierge-trigger-button"
+        data-testid="concierge-trigger"
         onClick={() => {
           setIsOpen((prev) => !prev);
           if (isOpen) stopSpeech();
