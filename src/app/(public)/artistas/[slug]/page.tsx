@@ -474,7 +474,7 @@ export default async function ArtistDetailPage({ params }: PageProps) {
   // 2. COMPROBACIÓN EN BASE DE DATOS PRISMA
   let artist = null;
   try {
-    artist = await (prisma as any).artistProfile.findUnique({
+    artist = await (prisma as any).artistProfile.findFirst({
       where: { slug },
       include: {
         user: {

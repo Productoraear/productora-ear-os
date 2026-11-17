@@ -1,6 +1,42 @@
 
 
-## [2026-11-15T22:05:00.000Z] · DESPLIEGUE AGENTE CONCIERGE INTERACTIVO VISIBLE & TROJAN PRESETS (W55_T03)
+## [2026-11-18T00:15:00.000Z] · EVOLUCIÓN CANÓNICA V19-V28 & MOTOR MULTI-TENANT DE VOZ S-CLASS
+
+**estado_bloque: `SELLADO_Y_CERTIFICADO_AL_100%`** (17/17 compuertas arnés global Exit 0 + tsc Exit 0 + lint Exit 0 + audit:ssot Exit 0).
+
+### Hitos de la Evolución Canónica (Director Generalista & Arquitecto IA)
+- **V19 (`ee4867eb`): Inspector Visual S-Class Dev (`DevVisualAuditor.tsx` & audit-hook):**
+  * Inyección condicional `{process.env.NODE_ENV === 'development' && <DevVisualAuditor />}`.
+  * Captura de selectores, pathname y tickets en `scratch/auditoria_visual_tickets.json` con reenvío opcional a n8n.
+  * Cero bytes en producción.
+- **V20 (`d00dc142`): Cualificación al 90% & Despacho Inmediato HITL Telegram (#393):**
+  * Disparo automático a `@ProductoraEAR_Intel_bot` (Chat ID `827002323`) ante leads de alta intención (Menú + Fecha + Pax > 50 + Reserva).
+  * Corrección de catálogo de Mariachis tras auditoría visual.
+- **V21 (`409e1b48`): Capturas de Sala en Derio & Despacho Prioritario (#397):**
+  * Estabilización de navegación y sincronización Playwright ante eventos de rehidratación DOM.
+  * Disparo prioritario de capturas y enlace bilateral con el Call Center interno.
+- **V28 (`aff5b3ab`): Motor de Perfiles Vocales Multi-Tenant (`voice-profile-engine.ts`):**
+  * Capa de abstracción vocal agéntica desacoplada con tipado estricto `VoiceProfile`.
+  * **Blindaje Constitucional de Edwin Agudelo (`ARTIST_FOUNDER`):** Perfil inmutable congelado con `Object.freeze()` (`isImmutable: true`). Intocable por terceros.
+  * **Perfil de Sala Otzarreta / Ezkertza Berria (`VENUE_MAITRE`):** Voz hospitalaria de alta gastronomía vasca de Eduardo Martínez.
+  * **Perfil B2G Institucional (`CUSTOM_TENANT`):** Tono técnico y formal para secretarías y licitaciones Art. 118 LCSP.
+  * Integración en `SovereignConciergeWidget.tsx` parametrizando la Web Speech API en desarrollo y exponiendo el hook para pesos neuronales de VibeVoice en producción.
+  * Erradicación de advertencia Prisma `findFirst` en `/artistas/[slug]` para builds estáticos 100% limpios.
+
+### SIGMA://CLOSE/v1
+```
+task_id        : SOBERANIA_VOICE_ENGINE_MULTI_TENANT_V28
+estado_bloque  : SELLADO_Y_CERTIFICADO_AL_100%
+commit         : aff5b3ab (origin/main)
+arnes          : 17/17 PASS (Exit Code 0)
+ssot_hash      : cefa76c2c6a3f92f57acf74f654932c02bf66774502102cb4f932520aaa64b2b (COINCIDE 100%)
+typescript     : Exit Code 0 (tsc --noEmit)
+eslint         : 0 errores
+coolify_ready  : SÍ (Force Deploy without cache listo)
+```
+
+---
+
 
 **estado_bloque: `SELLADO_Y_CERTIFICADO_AL_100%`** (17/17 puertas arnés global Exit 0 + tsc Exit 0 + lint Exit 0 + audit:ssot Exit 0).
 
