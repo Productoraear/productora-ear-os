@@ -26,6 +26,7 @@ import {
   ChevronUp,
 } from 'lucide-react';
 import { CENTRALITA_EAR_OS } from '@/lib/constants/ear-os-ssot';
+import { resolveVoiceProfile, type VoiceProfile } from '@/lib/voice/voice-profile-engine';
 
 const CLEAN_PHONE: string = CENTRALITA_EAR_OS.replace(/\D/g, '');
 
@@ -170,6 +171,7 @@ export function SovereignConciergeWidget() {
   const recognitionRef = useRef<any>(null);
 
   const routeContext = useMemo(() => getContextForRoute(pathname), [pathname]);
+  const activeVoiceProfile: VoiceProfile = useMemo(() => resolveVoiceProfile(pathname), [pathname]);
 
   // Initialize Speech Recognition & Greeting
   useEffect(() => {
@@ -255,16 +257,16 @@ export function SovereignConciergeWidget() {
     }
   }, []);
 
-  // Speak text with TTS
+  // Speak text with TTS calibrated by Multi-Tenant Voice Profile
   const speakText = useCallback(
     (text: string) => {
       if (!ttsEnabled || typeof window === 'undefined' || !('speechSynthesis' in window)) return;
       try {
         window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'es-ES';
-        utterance.rate = 1.05;
-        utterance.pitch = 1.0;
+        utterance.lang = activeVoiceProfile.fallbackLang || 'es-ES';
+        utterance.rate = activeVoiceProfile.speedMultiplier || 1.0;
+        utterance.pitch = activeVoiceProfile.pitch || 1.0;
         utterance.onstart = () => setIsSpeaking(true);
         utterance.onend = () => setIsSpeaking(false);
         utterance.onerror = () => setIsSpeaking(false);
@@ -273,7 +275,7 @@ export function SovereignConciergeWidget() {
         setIsSpeaking(false);
       }
     },
-    [ttsEnabled]
+    [ttsEnabled, activeVoiceProfile]
   );
 
   // Toggle voice recognition
