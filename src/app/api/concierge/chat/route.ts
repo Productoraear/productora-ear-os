@@ -68,8 +68,9 @@ BASE DE CONOCIMIENTO REAL DE PRODUCTORA EAR:
 - Bloqueo de fecha: Depósito Stripe garantizado de 100 € (100% deducible del banquete).
 
 2. Música y Artistas Exclusivos:
-- Edwin Agudelo: Tenor solista y guitarrista clásico con sonido Bose L1 Pro. Suelo canónico 350 € base, estándar 550 € con 100 km incluidos desde Méntrida (Toledo).
+- Edwin Agudelo: Tenor solista y guitarrista clásico con sonido Bose L1 Pro. Suelo canónico 350 € base, estándar 550 € con 100 km incluidos desde Méntrida (Toledo). Solo aplica a su perfil de artista personal.
 - Otros artistas: Mariachis de Gala, Mixel Violín (desde 450 €), DJs profesionales.
+- REGLA SUPREMA DE AISLAMIENTO: NUNCA menciones a Edwin Agudelo si el usuario está en la ficha de un restaurante, finca o catering (como Otzarreta), ni en rutas de otros proveedores, salvo que pregunten específicamente por música o guitarrista para la ceremonia.
 
 3. Logística Audiovisual y Sonometría:
 - Sonorización Bose F1 y S-Class homologada bajo la Ley 37/2003 del Ruido.
@@ -87,6 +88,7 @@ DIRECTIVAS CONVERSACIONALES OBLIGATORIAS:
 - Si preguntan por otros proveedores, provincias o servicios en España: consulta y cita los datos de la base de proveedores homologados del Data Lake que aparecen arriba.
 - Si preguntan "¿por qué no hablas?" o sobre la voz: explica con amabilidad que dispones de voz sintetizada en tiempo real que se activa pulsando el icono del altavoz arriba a la derecha, o que pueden usar el micrófono para hablar, o llamar a la Centralita (+34 693 693 048).
 - Si preguntan si eres un bot o un agente: responde con elegancia que eres el Agente Concierge IA de Productora EAR, respaldado directamente por la Dirección General y la Centralita humana.
+- AISLAMIENTO DE CATÁLOGO: En fichas de fincas, restaurantes, o consultas generales de catering, NUNCA menciones a Edwin Agudelo ni introduzcas temas ajenos a la gastronomía o al recinto consultado.
 - Sé empático, claro, conciso (máximo 2 párrafos) y directo. No inventes datos fuera de este catálogo.`;
 
   const messagesPayload = [
@@ -301,9 +303,23 @@ function resolveDeterministicFallback(
   }
 
   // 7. Respuesta General Inteligente
+  const isVenueRoute = pathname.includes('/otzarreta') || pathname.includes('/fincas') || pathname.includes('/catering');
+  if (isVenueRoute) {
+    return {
+      reply:
+        'Estás en el espacio gastronómico de Ezkertza Berria & Otzarreta (Derio). Disponemos de parrilla vasca al carbón de encina, parking privado gratuito de 150 plazas y menús nupciales desde 100 €. ¿Deseas consultar disponibilidad o ver un menú en detalle?',
+      action: {
+        type: 'dossier',
+        label: 'Ver menús y condiciones (/otzarreta)',
+        url: '/otzarreta',
+      },
+      shouldEscalate: false,
+    };
+  }
+
   return {
     reply:
-      'Estás conectado con la Centralita Inteligente de Productora EAR. Puedo orientarte sobre el Caserío Ezkertza Berria & Otzarreta en Derio (menús desde 100 € y parking de 150 plazas), tarifas de solista de Edwin Agudelo (desde 350 €) o licitaciones B2G para ayuntamientos.',
+      'Estás conectado con la Centralita Inteligente de Productora EAR. Puedo orientarte sobre espacios exclusivos como el Caserío Ezkertza Berria & Otzarreta en Derio (menús desde 100 € y parking de 150 plazas), servicios de producción y sonido Bose para eventos, o licitaciones B2G para ayuntamientos.',
     action: {
       type: 'whatsapp',
       label: 'Hablar con la Centralita (+34 693 693 048)',
