@@ -51,16 +51,16 @@ const OTZARRETA_CTA_SOURCE = {
 } as const;
 
 export const metadata: Metadata = {
-  title: 'Restaurante Ezkertza Berria & Otzarreta | Bodas & Banquetes en Derio (Bizkaia)',
+  title: 'Restaurante Otzarreta | Bodas, Asador & Banquetes en Derio (Bizkaia)',
   description:
-    'Banquetes nupciales exclusivos para hasta 350 comensales en caserío tradicional con jardines, carpa para ceremonias civiles y parrilla al carbón de encina. Valoración 4,8/5 sobre 23 opiniones (el 96% de las parejas lo recomienda). Menús oficiales 2026 desde 100 € + IVA y sonorización homologada Bose S-Class.',
+    'Banquetes nupciales exclusivos para hasta 350 comensales en caserío tradicional con jardines, carpa para ceremonias civiles y parrilla al carbón de encina y sarmiento de Eduardo Martínez. Parking privado cerrado >120 plazas. Menús oficiales 2026 desde 100 € a 185 € + IVA.',
   alternates: {
     canonical: 'https://productoraear.com/otzarreta'
   },
   openGraph: {
-    title: 'Ezkertza Berria & Otzarreta | Bodas & Banquetes de Gala en Derio',
+    title: 'Restaurante Otzarreta | Bodas, Asador & Banquetes de Gala en Derio',
     description:
-      'Caserío vasco con capacidad para 350 comensales, parking privado 150 plazas, jardines y alta parrilla al carbón. Menús de boda oficiales desde 100 €.',
+      'Caserío vasco con capacidad para 350 comensales, parking privado >120 plazas, jardines y alta parrilla al carbón. Menús de boda oficiales desde 100 €.',
     url: 'https://productoraear.com/otzarreta',
     siteName: 'Productora EAR',
     locale: 'es_ES',
@@ -70,7 +70,7 @@ export const metadata: Metadata = {
         url: 'https://www.ezkertzaberria.com/wp-content/uploads/2021/05/Fachada-Principal-1.jpg',
         width: 1200,
         height: 630,
-        alt: 'Restaurante Jatetxea Ezkertza Berria · Fachada Principal del Caserío'
+        alt: 'Restaurante Otzarreta · Fachada Principal del Caserío en Derio'
       }
     ]
   }
@@ -89,10 +89,10 @@ export default async function OtzarretaFlagshipPage({
       {
         '@type': ['Restaurant', 'EventVenue'],
         '@id': 'https://productoraear.com/otzarreta#venue',
-        name: 'Restaurante Jatetxea Ezkertza Berria & Otzarreta',
-        alternateName: 'Ezkertza Berria Jatetxea',
+        name: 'Restaurante Otzarreta',
+        alternateName: 'Restaurante Otzarreta Derio',
         description:
-          'Caserío tradicional vasco para banquetes de boda y eventos corporativos para hasta 350 comensales en alianza con Productora EAR.',
+          'Caserío tradicional vasco para banquetes de boda y eventos corporativos para hasta 350 comensales con parrilla al carbón de Eduardo Martínez.',
         url: 'https://productoraear.com/otzarreta',
         // PEAJE SOBERANO: la lÃ­nea del recinto NO viaja en el JSON-LD. El
         // saneador (`sanitizeSchemaContact`) inyecta el punto de contacto de la
@@ -136,7 +136,7 @@ export default async function OtzarretaFlagshipPage({
           {
             '@type': 'ListItem',
             position: 3,
-            name: 'Ezkertza Berria & Otzarreta',
+            name: 'Restaurante Otzarreta',
             item: 'https://productoraear.com/otzarreta',
           },
         ]
@@ -145,7 +145,7 @@ export default async function OtzarretaFlagshipPage({
   };
 
   const whatsappConciergeUrl = buildDemandWhatsappUrl({
-    entityName: 'Ezkertza Berria & Otzarreta',
+    entityName: 'Restaurante Otzarreta',
     intent: 'disponibilidad',
     detail: 'boda o banquete'
   });
@@ -178,22 +178,22 @@ export default async function OtzarretaFlagshipPage({
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-amber-600/15 rounded-full blur-[140px] pointer-events-none" />
 
         <div className="space-y-6 text-center max-w-4xl mx-auto">
-          {/* Badge de Alianza Exclusiva */}
+          {/* Badge de Gastronomía Soberana */}
           <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-500/10 via-[#ecb613]/10 to-amber-500/10 border border-[#ecb613]/30 text-[#ecb613] text-xs font-mono tracking-wider shadow-lg shadow-[#ecb613]/5">
             <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
-            <span>ALIANZA ESTRATÉGICA · EL CASERÍO & EDWIN AGUDELO</span>
+            <span>ALTA GASTRONOMÍA VASCA & BRASAS · DERIO (BIZKAIA)</span>
           </div>
 
           <div className="flex justify-center mb-2">
             <img
               src="https://www.ezkertzaberria.com/wp-content/uploads/2021/04/LOGO-EZKERTZA-2.jpg"
-              alt="Logo Oficial Ezkertza Berria Jatetxea"
+              alt="Logo Oficial Restaurante Otzarreta"
               className="h-16 sm:h-20 object-contain rounded-xl bg-white/5 p-2 border border-white/10"
             />
           </div>
 
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight font-sans leading-[1.08]">
-            Ezkertza Berria & Otzarreta
+            Restaurante Otzarreta
             <span className="block text-xl sm:text-3xl lg:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] via-amber-200 to-[#ecb613] font-serif italic font-normal mt-2">
               Parrilla Vasca de Autor & Banquetes Nupciales en Derio
             </span>
@@ -201,8 +201,8 @@ export default async function OtzarretaFlagshipPage({
 
           <p className="text-gray-300 text-base sm:text-lg lg:text-xl max-w-3xl mx-auto leading-relaxed">
             El caserío definitivo para bodas inolvidables: <strong>350 comensales</strong> en comedores climatizados e insonorizados,
-            jardines botánicos con carpa y oficiante civil, parking privado gratuito de <strong>150 plazas</strong> y la auténtica parrilla al
-            carbón de encina de <strong>Eduardo (Dirección Gastronómica de Ezkertza Berria & Otzarreta)</strong>, con sonorización homologada Bose S-Class de Productora EAR.
+            jardines botánicos con carpa y oficiante civil, parking privado gratuito para <strong>más de 120 vehículos</strong> y la auténtica parrilla al
+            carbón de encina de <strong>Eduardo Martínez (Dirección Gastronómica de Restaurante Otzarreta)</strong>.
           </p>
 
           {/* CTA Group */}
@@ -217,7 +217,7 @@ export default async function OtzarretaFlagshipPage({
 
             <SovereignWhatsAppButton
               url={whatsappConciergeUrl}
-              providerName="Ezkertza Berria & Otzarreta"
+              providerName="Restaurante Otzarreta"
               category="Finca y Banquetes"
               className="px-6 py-4 rounded-2xl bg-[#09090d]/80 text-white font-semibold text-sm sm:text-base hover:bg-white/10 transition-all border border-white/15 flex items-center gap-2.5 backdrop-blur-md"
             >
@@ -280,7 +280,7 @@ export default async function OtzarretaFlagshipPage({
 
 
       {/* â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â” */}
-      {/* 2B. FICHA COMPLETA DEL VENUE â€” EZKERTZA BERRIA (DERIO)  */}
+      {/* 2B. FICHA COMPLETA DEL VENUE — RESTAURANTE OTZARRETA (DERIO)  */}
       {/* â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â” */}
       <EzkertzaVenueListing
         blockHref={calendarBlockHref}
@@ -337,7 +337,7 @@ export default async function OtzarretaFlagshipPage({
                   <div className="flex items-start gap-3">
                     <XCircle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
                     <div>
-                      <strong className="text-white">Anuncios de tu competencia en tu perfil:</strong> Cuando una novia entra a ver Ezkertza Berria, la plataforma le recomienda fincas rivales en el lateral.
+                      <strong className="text-white">Anuncios de tu competencia en tu perfil:</strong> Cuando una novia entra a ver Restaurante Otzarreta, la plataforma le recomienda fincas rivales en el lateral.
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -423,7 +423,7 @@ export default async function OtzarretaFlagshipPage({
                 </div>
                 <SovereignWhatsAppButton
                   url={whatsappConciergeUrl}
-                  providerName="Ezkertza Berria & Otzarreta"
+                  providerName="Restaurante Otzarreta"
                   category="Finca y Banquetes"
                   className="px-5 py-2.5 rounded-xl bg-[#ecb613] text-black font-extrabold text-xs hover:bg-[#ffe066] transition-all flex items-center gap-2 shadow-md shadow-[#ecb613]/20"
                 >
@@ -437,7 +437,7 @@ export default async function OtzarretaFlagshipPage({
       </section>
 
       {/* â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â” */}
-      {/* 4. SEDES DEL GRUPO: DERIO (BIZKAIA) & ZARAUTZ (GIPUZKOA)*/}
+      {/* 4. SEDE GASTRONÓMICA: DERIO (BIZKAIA) */}
       {/* â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â” */}
       <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto my-20">
         <div className="space-y-4 text-center max-w-3xl mx-auto mb-12">
@@ -445,7 +445,7 @@ export default async function OtzarretaFlagshipPage({
             ENCLAVE PRIVILEGIADO EN EL PAÍS VASCO
           </span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
-            El Caserío de Eduardo (Dirección Gastronómica de Ezkertza Berria & Otzarreta)
+            Restaurante Otzarreta · Dirección Gastronómica de Eduardo Martínez (Derio)
           </h2>
           <p className="text-gray-400 text-sm sm:text-base">
             Espacio emblemático diseñado para celebraciones de ensueño: banquetes multitudinarios y bodas íntimas a tan solo 5 minutos del aeropuerto y 8 minutos de Bilbao.
@@ -525,38 +525,38 @@ export default async function OtzarretaFlagshipPage({
             <div className="lg:col-span-7 space-y-6">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-gray-300">
                 <Award className="w-3.5 h-3.5 text-[#ecb613]" />
-                <span>LA HISTORIA TRAS LA ALIANZA</span>
+                <span>PATRIMONIO & TRADICIÓN DESDE 1902</span>
               </div>
 
               <h2 className="text-3xl sm:text-4xl font-extrabold text-white leading-tight">
-                Dos Maestros, Una Visión Soberana:
-                <span className="block text-[#ecb613]">Eduardo (Dirección Gastronómica de Ezkertza Berria & Otzarreta) & Edwin Agudelo</span>
+                Cuatro Generaciones de Alta Cocina Vasca:
+                <span className="block text-[#ecb613]">Eduardo Martínez · Restaurante Otzarreta (Derio)</span>
               </h2>
 
               <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
-                Cuando <strong>Eduardo (Dirección Gastronómica de Ezkertza Berria & Otzarreta)</strong> enciende las brasas en Ezkertza Berria y Otzarreta, custodia más de
-                dos décadas de sabiduría en el trato de las carnes seleccionadas de ganado mayor, los rodaballos salvajes del Cantábrico y la cocina de cazuela tradicional.
+                Cuando <strong>Eduardo Martínez</strong> enciende las brasas en Restaurante Otzarreta en Derio, custodia más de
+                un siglo de sabiduría en el trato de las carnes maduradas de ganado mayor, los rodaballos salvajes del Cantábrico a la brasa y la cocina de cazuela tradicional vasca.
               </p>
 
               <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
-                Su alianza con <strong>Edwin Agudelo</strong>, tenor lírico de conservatorio y fundador de Productora EAR,
-                garantiza que cada banquete disfrute de un estándar impecable de sonorización conforme a la <strong>Ley 37/2003 de Ruido</strong>,
-                sin cortes intempestivos ni sanciones municipales.
+                Cada banquete en el caserío cuenta con atención de sala personalizada, menús canónicos de 100 € a 185 € + IVA elaborados al momento y salones insonorizados y climatizados con vistas a jardines botánicos.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
                 <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1">
                   <div className="text-xs font-mono text-amber-400 uppercase">La Brasa de Eduardo</div>
-                  <div className="text-sm font-bold text-white">Carbón de Encina al Minuto</div>
+                  <div className="text-sm font-bold text-white">Carbón de Encina y Sarmiento</div>
                   <p className="text-xs text-gray-400">
-                    Cero catering recalentado en cubetas. Del fuego al plato de tus invitados.
+                    Cero catering recalentado en cubetas. Del fuego al plato de tus comensales.
                   </p>
                 </div>
 
                 <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1">
-                  <div className="text-xs font-mono text-[#ecb613] uppercase">La Acústica de Edwin</div>
-                  <div className="text-sm font-bold text-white">Hardware Bose S-Class (12 W/pax)</div>
-                  <AudioReactiveVisualizer peakDba={85.0} theme="gold" className="mt-2" />
+                  <div className="text-xs font-mono text-[#ecb613] uppercase">Logística & Confort</div>
+                  <div className="text-sm font-bold text-white">Párking Privado &gt;120 Plazas</div>
+                  <p className="text-xs text-gray-400">
+                    Recinto cerrado en Derio a 5 min del aeropuerto y 10 min de Bilbao.
+                  </p>
                 </div>
               </div>
             </div>
@@ -566,33 +566,17 @@ export default async function OtzarretaFlagshipPage({
                 <div className="flex items-center gap-4">
                   <img
                     src="https://www.ezkertzaberria.com/wp-content/uploads/elementor/thumbs/FIRMA-EDU-2-pd7ffeq4is8ls76r0oqflcg5itg2kf317ktmnwda8g.jpg"
-                    alt="Firma de Eduardo · Dirección Gastronómica de Ezkertza Berria & Otzarreta"
+                    alt="Firma de Eduardo Martínez · Dirección Gastronómica Restaurante Otzarreta"
                     className="h-12 object-contain bg-white/10 rounded-lg p-1"
                   />
                   <div>
-                    <h3 className="text-base font-bold text-white">Eduardo (Dirección Gastronómica de Ezkertza Berria & Otzarreta)</h3>
+                    <h3 className="text-base font-bold text-white">Eduardo Martínez</h3>
                     <div className="text-xs text-[#ecb613] font-mono">Gerente & Maestro Asador</div>
                   </div>
                 </div>
                 <p className="text-xs text-gray-400 italic">
-                  &ldquo;En nuestros caseríos no admitimos atajos. El producto de primera calidad y el respeto a los comensales
-                  son innegociables. Esta alianza con Edwin blinda cada boda con la máxima seriedad.&rdquo;
-                </p>
-              </div>
-
-              <div className="rounded-2xl bg-white/[0.02] border border-white/10 p-6 space-y-4">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 font-bold text-lg font-mono">
-                    EA
-                  </div>
-                  <div>
-                    <h3 className="text-base font-bold text-white">Edwin Agudelo</h3>
-                    <div className="text-xs text-emerald-400 font-mono">Tenor Solista & Fundador Productora EAR</div>
-                  </div>
-                </div>
-                <p className="text-xs text-gray-400 italic">
-                  &ldquo;Eduardo es un amigo y un anfitrión extraordinario. Poner la infraestructura de Productora EAR y mi voz al
-                  servicio de sus banquetes es la garantía definitiva de excelencia para las parejas.&rdquo;
+                  &ldquo;En nuestro caserío no admitimos atajos. El producto de primera calidad y el respeto a los comensales
+                  son innegociables. Cada boda y banquete se atiende con la máxima solemnidad hostelera.&rdquo;
                 </p>
               </div>
             </div>
@@ -687,7 +671,7 @@ export default async function OtzarretaFlagshipPage({
 
           <p className="text-gray-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
             Sin cuotas abusivas ni riesgos. El depósito de garantía de <strong>{DEPOSITO_STRIPE_EUR} €</strong> sella la
-            exclusividad de la fecha en el calendario oficial de Eduardo (Dirección Gastronómica de Ezkertza Berria & Otzarreta) y se descuenta al 100% de la liquidación final
+            exclusividad de la fecha en el calendario oficial de Eduardo Martínez (Restaurante Otzarreta · Derio) y se descuenta al 100% de la liquidación final
             del banquete.
           </p>
 
@@ -702,7 +686,7 @@ export default async function OtzarretaFlagshipPage({
 
             <SovereignWhatsAppButton
               url={whatsappConciergeUrl}
-              providerName="Ezkertza Berria & Otzarreta"
+              providerName="Restaurante Otzarreta"
               category="Finca y Banquetes"
               className="px-6 py-4 rounded-xl bg-[#25D366] text-black font-bold text-sm hover:brightness-110 transition-all flex items-center gap-2 shadow-lg"
             >
@@ -724,26 +708,26 @@ export default async function OtzarretaFlagshipPage({
       <footer className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto pt-10 border-t border-white/10 text-xs text-gray-400">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
-            <div className="font-bold text-white text-sm mb-1">Ezkertza Berria & Otzarreta</div>
+            <div className="font-bold text-white text-sm mb-1">Restaurante Otzarreta</div>
             <p>Sede Bizkaia: {OTZARRETA_ENTITY.affiliatedVenues[0].address}</p>
             <p className="mt-2 text-gray-500 leading-relaxed">
-              {supplierContactWithheldNotice('Ezkertza Berria & Otzarreta')}
+              {supplierContactWithheldNotice('Restaurante Otzarreta')}
             </p>
           </div>
 
           <div>
-            <div className="font-bold text-white text-sm mb-1">Centralita VIP Productora EAR</div>
+            <div className="font-bold text-white text-sm mb-1">Centralita Soberana Productora EAR</div>
             <p>Atención y Conserjería de Bodas: {CENTRALITA_EAR_OS}</p>
-            <p className="mt-1">Línea de prensa y alianzas: bajo solicitud en la Conserjería</p>
-            <p className="mt-1">Director Artístico: Edwin Agudelo</p>
-            <p>Soporte Técnico de Sonorización Bose S-Class</p>
+            <p className="mt-1">Párking privado cerrado &gt;120 plazas</p>
+            <p className="mt-1">Dirección Gastronómica: Eduardo Martínez</p>
+            <p>Parrilla al carbón de encina y cocina de cazuela</p>
           </div>
 
           <div className="text-right">
-            <div className="font-bold text-white text-sm mb-1">Alianza Homologada EAR OS</div>
-            <p>Garantía de Acústica Legal · Ley 37/2003</p>
-            <p className="mt-1">Impacto Social VIMUME · Split 80/10/10</p>
-            <p>© {new Date().getFullYear()} Ezkertza Berria, Restaurante Otzarreta & Productora EAR</p>
+            <div className="font-bold text-white text-sm mb-1">Restaurante Otzarreta · Derio</div>
+            <p>Bizkaia / Txorierri · Asador & Finca de Banquetes</p>
+            <p className="mt-1">Menús oficiales de 100 € a 185 € + IVA</p>
+            <p>© {new Date().getFullYear()} Restaurante Otzarreta & Productora EAR</p>
           </div>
         </div>
       </footer>

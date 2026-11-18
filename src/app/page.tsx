@@ -1,44 +1,34 @@
-import { SovereignHomeHeroNodes } from '@/components/home/SovereignHomeHeroNodes';
-import { FreeViabilityScanner } from '@/components/scanner/FreeViabilityScanner';
-import { HeroWeddingCinematic } from '@/components/home/HeroWeddingCinematic';
-import { HomeNeuralConstellationSection } from '@/components/home/HomeNeuralConstellationSection';
-import { LumenBentoGrid } from '@/components/lumen/LumenBentoGrid';
+import React from 'react';
+import type { Metadata } from 'next';
+import { SovereignThreeDoorsDistributor } from '@/components/home/SovereignThreeDoorsDistributor';
 import { LumenNoiseGrain } from '@/components/lumen/LumenNoiseGrain';
-import { SovereignHomeClosingSection } from '@/components/home/SovereignHomeClosingSection';
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: 'Productora EAR · Distribuidor Soberano de Contratación Directa',
+  description:
+    'Distribuidor oficial de contratación directa: Restaurante Otzarreta (Derio), Roster Artístico S-Class (Edwin Agudelo y agrupaciones de gala) e Ingeniería Acústica & Alquiler de Sonido Line Array.',
+  alternates: {
+    canonical: 'https://productoraear.com',
+  },
+  openGraph: {
+    title: 'Productora EAR · Distribuidor Soberano de Contratación Directa',
+    description:
+      'Gastronomía en Derio (Restaurante Otzarreta), Música en Directo (Edwin Agudelo) y Sonorización Profesional Line Array sin intermediarios.',
+    url: 'https://productoraear.com',
+    siteName: 'Productora EAR',
+    locale: 'es_ES',
+    type: 'website',
+  },
+};
+
+export default function Home(): React.JSX.Element {
   return (
-    <main className="bg-[#030305] relative w-full max-w-full min-h-screen overflow-x-hidden text-zinc-100 font-sans selection:bg-[#ecb613] selection:text-black">
+    <main className="bg-[#030305] relative w-full max-w-full min-h-screen overflow-x-hidden text-zinc-100 font-sans selection:bg-[#ecb613] selection:text-black pt-20 sm:pt-24 pb-16">
       {/* Textura de Grano de Ruido SVG Acelerada por GPU */}
       <LumenNoiseGrain />
 
-      {/* ACTO 1: EL NÚCLEO CINEMÁTICO & EL VIAJE DEL CLIENTE (Vigil WebGL) */}
-      <section className="relative pt-24 sm:pt-28">
-        <SovereignHomeHeroNodes />
-      </section>
-
-      {/* ACTO 2: EL DIAGNÓSTICO EN TIEMPO REAL (Escáner de Viabilidad en 60s) */}
-      <section className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 py-8">
-        <FreeViabilityScanner />
-      </section>
-
-      {/* ACTO 3: LA EVIDENCIA ARTÍSTICA & HUMANA (Edwin Agudelo Voz en Directo & Sonido Bose) */}
-      <section className="relative">
-        <HeroWeddingCinematic />
-      </section>
-
-      {/* ACTO 4: LA ARQUITECTURA SOBERANA (Constelación 3D del Diamante & Command Deck) */}
-      <section className="relative">
-        <HomeNeuralConstellationSection />
-      </section>
-
-      {/* ACTO 5: LOS CUATRO CERROJOS OPERATIVOS (Bento Grid SSOT) */}
-      <section className="relative">
-        <LumenBentoGrid />
-      </section>
-
-      {/* ACTO 6: CIERRE BIFURCADO & ASISTENCIA DIRECTA S-CLASS */}
-      <SovereignHomeClosingSection />
+      {/* DISTRIBUIDOR SOBERANO: ARQUITECTURA DE TRES PUERTAS (AURA ONYX) */}
+      <SovereignThreeDoorsDistributor />
     </main>
   );
 }

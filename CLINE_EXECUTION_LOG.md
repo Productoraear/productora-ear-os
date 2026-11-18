@@ -5430,3 +5430,41 @@ El fichero está ignorado, pero mientras exista en disco y las claves no se **ro
 Cloud, la alerta `boreal-weaver-gplv2` sigue viva. **Acción del CEO:** rotar esas 3 claves y
 actualizar Coolify.
 
+---
+
+### 2026-11-18T15:52:00Z · SOBERANIA_PORTADA_TRES_PUERTAS_ALIANZA_OTZARRETA_V32 — SANEAMIENTO PORTADA (3 ACCESOS) + RUTA /alianza-otzarreta + REGISTRO MEGA ORQUESTA TROPICAL
+- ARCHIVOS:
+  * `src/app/page.tsx`
+  * `src/components/home/SovereignThreeDoorsDistributor.tsx`
+  * `src/app/(public)/alianza-otzarreta/page.tsx`
+  * `src/app/(public)/propuesta-otzarreta/page.tsx`
+  * `src/components/otzarreta/OtzarretaExecutiveDeck.tsx`
+  * `src/lib/catalog/orquesta-tropical-sovereign.ts`
+  * `src/lib/constants/sovereign-artists-roster.ts`
+  * `src/lib/constants/inventory-catalog.ts`
+  * `src/app/(public)/otzarreta/page.tsx`
+  * `src/app/(public)/otzarreta/[slug]/page.tsx`
+- HECHO:
+  1. Portada principal (`/`): Erradicación completa de toda sobrecarga conceptual previa. Sustituida por un distribuidor Aura Onyx (#030305) sobrio, directo y silencioso con TRES accesos limpios e independientes:
+     - ACCESO 1: «Restauración & Fincas Singulares» -> Redirige directo a la ficha de Restaurante Otzarreta (Derio, Bizkaia), con parrilla tradicional de encina y sarmiento, organizador digital de mesas y menús oficiales 2026 (145 € a 185 € + IVA). Cero música en la ficha gastronómica.
+     - ACCESO 2: «Música en Directo & Espectáculos» -> Catálogo artístico S-Class (Tenor lírico Edwin Agudelo con tarifa base 350 €, Mariachi de Gala y Gran Orquesta Latina). Habilitados LCSP Art. 118 (< 14.250 € Ayuntamientos).
+     - ACCESO 3: «Producción Técnica & Sonido Profesional» -> Alquiler de sistemas suspendidos Line Array (18.000W RMS), sonido club discoteca, pantallas LED P2.9 HDR e iluminación DMX con técnicos de sonido titulados.
+  2. Ruta Canónica de Presentación Otzarreta (`/alianza-otzarreta` y `/propuesta-otzarreta`):
+     - Formato vertical móvil 9:16 adaptable, tipografía ejecutiva grande y legible.
+     - Contiene los 5 bloques canónicos pactados:
+       * Bloque 1: Autoridad moral e histórica (macrodiscoteca compartida + caserío en Derio desde 1902).
+       * Bloque 2: Diagnóstico contable (45.000 € en directorios vs. la urgencia del 6 y 7 de marzo en Spacioboda BEC Barakaldo con 600-900 parejas).
+       * Bloque 3: Alivio operativo (Centralita 24/7 y botón de «Aceptar reserva» con fianza Stripe deducible de 100 € + Malla de 126 URLs en Bizkaia).
+       * Bloque 4: Comparativa cara a cara: Opción A (9.000 € cuota única anual plana, 0% comisiones, exclusividad 100 km y garantía de retorno euro a euro en < 90 días) vs. Opción B (6.000 € + 10% banquetes + 5% producción técnica).
+       * Bloque 5: Cierre presencial en Derio en 48 horas (reunión en el caserío con Edwin Agudelo y botón directo de WhatsApp).
+     - Cero contaminación ni menciones residuales a Zarautz, Gipuzkoa o Ezkertza Berria.
+  3. Alta de Vertical para Segundo Cliente (Gran Orquesta Tropical Latina & Sonido Profesional):
+     - Doble perfil: Categoría Música (13 músicos para verbenas, fiestas patronales y festivales) y Categoría Sonido (Line Array exterior 18.000W RMS + club discoteca).
+     - Régimen económico blindado: 5.000 € cuota fija anual o 2.500 € apertura + 15% de facturación bruta (prohibido pactar sobre beneficios).
+- COMANDOS:
+  * `npm run audit:ssot` -> PASS (Exit 0, hash cefa76c2... intacto).
+  * `npm run typecheck` -> PASS (Exit 0, 0 errores).
+  * `node scripts/run_sv_protocol_15_gates.cjs` -> PASS (17/17 COMPUERTAS EXIT CODE 0).
+- SIGMA://CLOSE/v1 emitido conforme al estándar constitucional.
+
+

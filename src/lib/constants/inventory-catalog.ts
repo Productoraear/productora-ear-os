@@ -82,6 +82,21 @@ export const INITIAL_INVENTORY: InventoryItem[] = [
     features: ['8 preamps de alta ganancia', 'QuickSmart Link', 'Efectos Dynacord integrados'],
     specs: { 'Respuesta': '37 Hz - 20 kHz', 'Dispersión': '120° H x 40° V' }
   },
+  {
+    id: 'spk-line-array-tropical',
+    name: 'Sistema Line Array Suspendido Exteriores (18.000W RMS)',
+    category: 'ALTAVOCES',
+    brand: 'Electro-Voice',
+    powerWatts: 18000,
+    coverageM2: 2500,
+    maxPax: 5000,
+    dailyPrice: 1800,
+    totalStock: 2,
+    reservedUnits: 0,
+    description: 'Sistema suspendido de gran alcance para plazas, festivales patronales y recintos feriales con subgraves de doble 18 pulgadas y procesado DSP.',
+    features: ['18.000W RMS de potencia neta', 'Tiro de largo alcance >80m', 'Homologación acústica y técnico titulado incluido'],
+    specs: { 'SPL Pico': '142 dB', 'Dispersión': '120° H' }
+  },
 
   // 🎙️ MICROFONÍA INALÁMBRICA & CABLEADA
   {

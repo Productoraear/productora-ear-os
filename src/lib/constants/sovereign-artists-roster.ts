@@ -11,7 +11,8 @@ import { TARIFA_BASE_SOLISTA_EUR } from "@/lib/constants/ear-os-ssot";
 export type SovereignArtistId =
   | "edwin-agudelo"
   | "trio-aurora"
-  | "cuarteto-ebano";
+  | "cuarteto-ebano"
+  | "gran-orquesta-tropical";
 
 export interface SovereignArtistItem {
   readonly id: SovereignArtistId;
@@ -68,6 +69,20 @@ export const SOVEREIGN_ARTISTS_ROSTER: readonly SovereignArtistItem[] = [
       "Timbre aterciopelado para veladas corporativas, embajadas y celebraciones íntimas S-Class.",
     image: "https://productoraear.com/images/brand/ear_logo_official_diamond.png",
     audioSample: "/audio/cuarteto-ebano-sample.mp3",
+    verified: true,
+  },
+  {
+    id: "gran-orquesta-tropical",
+    name: "Gran Orquesta Tropical Latina",
+    role: "13 Músicos en riguroso directo · Sección completa de metales y percusión",
+    basePrice: 3800,
+    rating: 5,
+    reviews: 62,
+    genres: ["Cumbia", "Salsa", "Merengue", "Verbena & Fiestas Patronales"],
+    signature:
+      "Espectáculo monumental para verbenas, festivales de verano y ferias municipales con sonido Line Array e iluminación propia.",
+    image: "https://productoraear.com/images/brand/ear_logo_official_diamond.png",
+    audioSample: "/audio/orquesta-tropical-sample.mp3",
     verified: true,
   },
 ];

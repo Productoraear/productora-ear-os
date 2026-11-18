@@ -65,7 +65,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         `restaurante bodas ${clusterLanding.municipalityName}`,
         `banquetes eventos ${clusterLanding.municipalityName}`,
         'otzarreta derio',
-        'ezkertza berria',
+        'restaurante otzarreta',
         'eduardo martinez'
       ],
       alternates: {
@@ -83,7 +83,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             url: 'https://www.ezkertzaberria.com/wp-content/uploads/2021/05/Fachada-Principal-1.jpg',
             width: 1200,
             height: 630,
-            alt: `${clusterLanding.h1} · Ezkertza Berria & Restaurante Otzarreta`
+            alt: `${clusterLanding.h1} · Restaurante Otzarreta (Derio)`
           }
         ]
       }
@@ -92,9 +92,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!landing) {
     return {
-      title: 'Restaurante Otzarreta · Zarautz (Gipuzkoa)',
+      title: 'Restaurante Otzarreta · Derio (Bizkaia)',
       description:
-        'Cocina de cazuela vasca desde 1902 en Zarautz y banquetes de boda con ceremonia en jardín.'
+        'Cocina de cazuela vasca y parrilla al carbón de Eduardo Martínez en Derio (Bizkaia).'
     };
   }
 
@@ -119,7 +119,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           url: 'https://www.ezkertzaberria.com/wp-content/uploads/2021/05/Fachada-Principal-1.jpg',
           width: 1200,
           height: 630,
-          alt: `${landing.h1} · Ezkertza Berria & Restaurante Otzarreta`
+          alt: `${landing.h1} · Restaurante Otzarreta (Derio)`
         }
       ]
     }
@@ -138,7 +138,7 @@ export default async function OtzarretaDynamicLandingPage({ params }: Props): Pr
   // Si corresponde al Clúster Transaccional de 126 Landings de Bizkaia / Txorierri
   if (clusterLanding) {
     const whatsappUrl = buildDemandWhatsappUrl({
-      entityName: 'Caserío Ezkertza Berria & Otzarreta',
+      entityName: 'Restaurante Otzarreta (Derio)',
       intent: 'disponibilidad',
       detail: clusterLanding.h1
     });
@@ -147,7 +147,7 @@ export default async function OtzarretaDynamicLandingPage({ params }: Props): Pr
       {
         '@context': 'https://schema.org',
         '@type': 'Restaurant',
-        name: `Restaurante Otzarreta · Ezkertza Berria (${clusterLanding.municipalityName})`,
+        name: `Restaurante Otzarreta (${clusterLanding.municipalityName})`,
         description: clusterLanding.description,
         telephone: SOVEREIGN_DEMAND_CHANNEL.telDisplay,
         address: {
@@ -201,7 +201,7 @@ export default async function OtzarretaDynamicLandingPage({ params }: Props): Pr
             <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight font-sans leading-[1.1]">
               {clusterLanding.h1}
               <span className="block text-xl sm:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] via-amber-200 to-[#ecb613] font-serif italic font-normal mt-2">
-                Caserío Ezkertza Berria & Otzarreta · Eduardo Martínez
+                Restaurante Otzarreta · Eduardo Martínez (Derio)
               </span>
             </h1>
 
@@ -219,7 +219,7 @@ export default async function OtzarretaDynamicLandingPage({ params }: Props): Pr
               </a>
               <SovereignWhatsAppButton
                 url={whatsappUrl}
-                providerName="Caserío Ezkertza Berria & Otzarreta"
+                providerName="Restaurante Otzarreta"
                 category="Finca y Banquetes"
                 className="px-6 py-3.5 rounded-xl bg-[#25D366] text-black font-bold text-sm hover:brightness-110 transition-all flex items-center gap-2 shadow-lg"
               >
@@ -294,13 +294,13 @@ export default async function OtzarretaDynamicLandingPage({ params }: Props): Pr
           <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-6 sm:p-8 backdrop-blur-md space-y-3">
             <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#ecb613]">
               <ShieldCheck className="w-4 h-4" />
-              ALIANZA GASTRONÓMICA BIZKAIA · CASERÍO EZKERTZA BERRIA & OTZARRETA
+              TEMPLO GASTRONÓMICO BIZKAIA · RESTAURANTE OTZARRETA (DERIO)
             </div>
             <p className="text-xs text-gray-400 leading-relaxed">
-              Dirección gastronómica por Eduardo Martínez. Capacidad técnica de 50 a 200 en salón acristalado y hasta 350 comensales en carpa de jardines botánicos. Centralita de demanda y coordinación operativa gestionada por Productora EAR.
+              Dirección gastronómica y maestría de brasas por Eduardo Martínez. Capacidad técnica de 50 a 200 en salón acristalado y hasta 350 comensales en carpa de jardines botánicos. Centralita de demanda y coordinación operativa gestionada por Productora EAR.
             </p>
             <p className="text-[10px] text-gray-500 font-mono break-all">
-              Entidad verificada · Caserío Ezkertza Berria (Derio) & Restaurante Otzarreta · Centralita Soberana:{' '}
+              Entidad verificada · Restaurante Otzarreta (Derio, Bizkaia) · Centralita Soberana:{' '}
               {SOVEREIGN_DEMAND_CHANNEL.telDisplay}
             </p>
           </div>
@@ -315,7 +315,7 @@ export default async function OtzarretaDynamicLandingPage({ params }: Props): Pr
   }
 
   const whatsappUrl = buildDemandWhatsappUrl({
-    entityName: 'Ezkertza Berria & Otzarreta',
+    entityName: 'Restaurante Otzarreta',
     intent: 'disponibilidad',
     detail: landing.h1
   });
@@ -378,7 +378,7 @@ export default async function OtzarretaDynamicLandingPage({ params }: Props): Pr
             </a>
             <SovereignWhatsAppButton
               url={whatsappUrl}
-              providerName="Ezkertza Berria & Otzarreta"
+              providerName="Restaurante Otzarreta"
               category="Finca y Banquetes"
               className="px-6 py-3.5 rounded-xl bg-[#25D366] text-black font-bold text-sm hover:brightness-110 transition-all flex items-center gap-2 shadow-lg"
             >
@@ -398,7 +398,7 @@ export default async function OtzarretaDynamicLandingPage({ params }: Props): Pr
             </div>
             <div className="flex items-center gap-1.5">
               <Sparkles className="w-3.5 h-3.5 text-[#ecb613]" />
-              <span>Alianza Edwin Agudelo & Productora EAR</span>
+              <span>Restaurante Otzarreta · Derio</span>
             </div>
           </div>
         </div>
@@ -488,12 +488,12 @@ export default async function OtzarretaDynamicLandingPage({ params }: Props): Pr
             </div>
           </dl>
           <p className="text-[10px] text-gray-500 font-mono break-all">
-            Entidad verificada · Ezkertza Berria & Otzarreta · línea de la casa{' '}
+            Entidad verificada · Restaurante Otzarreta (Derio, Bizkaia) · línea de la casa{' '}
             {supplierLineMask(landing.phone)} (protegida) · canal único:{' '}
             {SOVEREIGN_DEMAND_CHANNEL.telDisplay} · fuente: restauranteotzarreta.com
           </p>
           <p className="text-[10px] text-gray-500 leading-relaxed">
-            {supplierContactWithheldNotice('Ezkertza Berria & Otzarreta')}
+            {supplierContactWithheldNotice('Restaurante Otzarreta')}
           </p>
         </div>
 
@@ -501,7 +501,7 @@ export default async function OtzarretaDynamicLandingPage({ params }: Props): Pr
         {landing.related.length > 0 && (
           <div className="space-y-4 pt-6 border-t border-white/10">
             <div className="text-xs font-mono text-gray-400 uppercase tracking-wider">
-              Otras Opciones en el Clúster de Restaurante Otzarreta en Gipuzkoa:
+              Otras Opciones en el Clúster de Restaurante Otzarreta en Bizkaia:
             </div>
             <div className="flex flex-wrap gap-3">
               {landing.related.map((rel, idx) => (
