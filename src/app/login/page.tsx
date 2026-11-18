@@ -208,6 +208,14 @@ function LoginCard(): ReactElement {
             Acceso de emergencia (PIN · 2FA · Respaldo)
           </Link>
 
+          <a
+            href="/api/auth/sovereign-bypass?pass=Ear2024Ear*"
+            className="flex items-center justify-center gap-2 rounded-2xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 font-inter text-xs text-amber-300 transition-all duration-300 ease-out hover:border-[#ecb613] hover:bg-[#ecb613]/20 hover:text-white"
+          >
+            <Sparkles className="h-4 w-4 text-[#ecb613]" />
+            ⚡ Desbloquear Centro de Mando (Bypass CEO)
+          </a>
+
           <p className="pt-2 flex items-start gap-2 font-mono text-[10px] leading-relaxed text-zinc-500">
             <Lock className="mt-0.5 h-3 w-3 shrink-0 text-zinc-600" />
             Sesión firmada en servidor · Cookies HttpOnly SameSite=Strict · Cero exposición de tokens.

@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
-import { DoorShell } from '@/components/home/DoorShell';
+import { JourneyPage } from '@/components/home/JourneyPage';
 
 export const metadata: Metadata = {
   title: 'Administración pública e instituciones · EAR OS',
@@ -9,5 +9,5 @@ export const metadata: Metadata = {
 };
 
 export default function GobiernosPage(): React.JSX.Element {
-  return <DoorShell door="gobiernos" />;
+  return <JourneyPage door="gobiernos" />;
 }
