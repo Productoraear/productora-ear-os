@@ -109,7 +109,7 @@ export const JOURNEYS: Readonly<Record<DoorId, JourneyContent>> = Object.freeze(
     heroImage: `${BANANA}/finca_luxury_gala.jpg`,
     heroAlt: 'Finca preparada para una celebración de gala',
     headline: 'Su celebración, resuelta desde la primera conversación.',
-    lead: 'Restaurante Otzarreta en Derio, menús oficiales, música de gala y reserva con fianza deducible.',
+    lead: 'Restaurante Otzarreta (Eduardo Martínez) en Derio (Txorierri · Bizkaia), menús oficiales, música de gala y reserva con fianza deducible.',
     gallery: [
       { src: `${BANANA}/finca_luxury_gala.jpg`, alt: 'Finca de gala' },
       { src: `${BANANA}/finca_minimalist.jpg`, alt: 'Espacio minimalista' },
@@ -122,14 +122,14 @@ export const JOURNEYS: Readonly<Record<DoorId, JourneyContent>> = Object.freeze(
         id: 'fincas',
         kicker: '01 · Espacio',
         title: 'Un lugar con carácter',
-        body: 'Caserío con parrilla de brasa, salón acristalado y jardines en Derio, Bizkaia.',
-        bullets: ['Restaurante Otzarreta (Derio)', 'Salón y carpa para 50 a 350 comensales', 'Párking privado'],
+        body: 'Caserío con parrilla de brasa tradicional, salón acristalado y jardines en Derio (Bizkaia), con dominio del valle de Txorierri y Gran Bilbao.',
+        bullets: ['Restaurante Otzarreta · Eduardo Martínez (Derio)', 'Txorierri · A 11 km de Bilbao (Gran Bilbao)', 'Salón y carpa para 50 a 350 comensales', 'Párking privado propio'],
         image: `${BANANA}/finca_luxury_gala.jpg`,
         imageAlt: 'Finca de gala',
         ctas: {
-          COLD: { label: 'Conocer Restaurante Otzarreta', href: '/otzarreta' },
-          WARM: { label: 'Comparar fincas', href: '/fincas' },
-          HOT: { label: 'Consultar mi fecha ahora', href: 'WA:Hola, quiero consultar disponibilidad en Restaurante Otzarreta para mi fecha.' },
+          COLD: { label: 'Conocer Restaurante Otzarreta (Derio)', href: '/otzarreta' },
+          WARM: { label: 'Comparar fincas en Bizkaia', href: '/fincas' },
+          HOT: { label: 'Consultar mi fecha ahora', href: 'WA:Hola, quiero consultar disponibilidad en Restaurante Otzarreta (Derio) para mi fecha.' },
         },
       },
       {

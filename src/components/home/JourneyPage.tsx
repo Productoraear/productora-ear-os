@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Image from 'next/image';
 import Link from 'next/link';
 import { AnimatePresence, motion, useScroll, useSpring, useTransform } from 'framer-motion';
-import { ArrowRight, Flame, MessageCircle, Moon, Snowflake, Sun, Sparkles, X } from 'lucide-react';
+import { ArrowRight, Flame, Moon, Snowflake, Sun, Sparkles } from 'lucide-react';
 import { CENTRALITA_EAR_OS, DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
 import { CONNECTORS, DOORS, ECOSYSTEM_SECTORS } from '@/lib/catalog/ecosystem-ontology';
 import type { DoorId } from '@/lib/catalog/ecosystem-ontology';
@@ -63,7 +63,6 @@ export function JourneyPage({ door }: { door: DoorId }): React.JSX.Element {
   const [temp, setTemp] = useState<LeadTemp>('COLD');
   const [manualTemp, setManualTemp] = useState(false);
   const [active, setActive] = useState(0);
-  const [agentOpen, setAgentOpen] = useState(false);
 
   const stepRefs = useRef<(HTMLElement | null)[]>([]);
   const heroRef = useRef<HTMLElement | null>(null);
@@ -186,13 +185,14 @@ export function JourneyPage({ door }: { door: DoorId }): React.JSX.Element {
             <button type="button" onClick={() => goTo(0)} className={`inline-flex items-center gap-2 rounded-full px-5 py-3 text-[13px] font-medium ${gold}`}>
               Empezar el recorrido <ArrowRight className="h-4 w-4" />
             </button>
-            <button
-              type="button"
-              onClick={() => setAgentOpen(true)}
+            <a
+              href={waUrl(`Hola, quiero que el asistente me guíe para ${def.title}.`)}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--card)]/70 px-5 py-3 text-[13px] font-medium hover:border-[var(--gold)]"
             >
               <Sparkles className="h-4 w-4 text-[var(--gold)]" /> Que me guíe el asistente
-            </button>
+            </a>
           </div>
         </div>
       </section>
@@ -315,13 +315,14 @@ export function JourneyPage({ door }: { door: DoorId }): React.JSX.Element {
               <ul className="mt-3 flex flex-wrap gap-2">
                 {s.categories.map((c) => (
                   <li key={c.id}>
-                    <button
-                      type="button"
-                      onClick={() => setAgentOpen(true)}
-                      className="rounded-full border border-[var(--line)] px-3 py-1.5 text-[12px] text-[var(--muted)] hover:border-[var(--gold)] hover:text-[var(--fg)]"
+                    <a
+                      href={waUrl(`Hola, me interesa información sobre ${c.label}.`)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block rounded-full border border-[var(--line)] px-3 py-1.5 text-[12px] text-[var(--muted)] hover:border-[var(--gold)] hover:text-[var(--fg)]"
                     >
                       {c.label}
-                    </button>
+                    </a>
                   </li>
                 ))}
               </ul>
@@ -350,49 +351,6 @@ export function JourneyPage({ door }: { door: DoorId }): React.JSX.Element {
           <CtaLink cta={stage.ctas[temp]} className={`inline-flex items-center gap-2 rounded-full px-6 py-3 text-[13px] font-medium ${gold}`} />
         </div>
       </section>
-
-      {/* Asistente flotante */}
-      <button
-        type="button"
-        onClick={() => setAgentOpen((o) => !o)}
-        aria-label="Abrir asistente"
-        className={`fixed bottom-[calc(var(--ear-dock-h)+0.75rem)] lg:bottom-6 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full shadow-xl ${gold}`}
-      >
-        {agentOpen ? <X className="h-5 w-5" /> : <MessageCircle className="h-5 w-5" />}
-      </button>
-      <AnimatePresence>
-        {agentOpen && (
-          <motion.aside
-            initial={{ opacity: 0, y: 20, scale: 0.97 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20 }}
-            className="fixed bottom-[calc(var(--ear-dock-h)+5rem)] lg:bottom-24 right-5 z-50 w-[min(92vw,360px)] rounded-2xl border border-[var(--line)] bg-[var(--card)] p-5 shadow-2xl"
-            aria-label="Asistente EAR OS"
-          >
-            <p className="text-[13px] leading-[1.5]">{content.agentGreeting}</p>
-            <div className="mt-4 space-y-2">
-              {TEMPS.map(({ id, label }) => (
-                <button
-                  key={id}
-                  type="button"
-                  onClick={() => { chooseTemp(id); setAgentOpen(false); goTo(id === 'COLD' ? 0 : id === 'WARM' ? 1 : 3); }}
-                  className="block w-full rounded-xl border border-[var(--line)] px-4 py-2.5 text-left text-[13px] hover:border-[var(--gold)]"
-                >
-                  {label}
-                </button>
-              ))}
-              <a
-                href={waUrl('Hola, prefiero hablar con una persona.')}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`block rounded-xl px-4 py-2.5 text-center text-[13px] font-medium ${gold}`}
-              >
-                Hablar con una persona
-              </a>
-            </div>
-          </motion.aside>
-        )}
-      </AnimatePresence>
     </div>
   );
 }

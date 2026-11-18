@@ -1,0 +1,1 @@
+{"nodes": [{"id": "$graphify-root$_scripts_archive_vampires_legacy_scrape_module_py", "label": "scrape_module.py", "file_type": "code", "source_file": "scripts/archive_vampires_legacy/scrape_module.py", "source_location": "L1"}], "edges": [], "raw_calls": [], "parse_errors": {"first_error_line": 1, "multiline_error": false}}
