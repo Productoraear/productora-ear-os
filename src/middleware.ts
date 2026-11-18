@@ -84,7 +84,19 @@ export function middleware(request: NextRequest) {
   requestHeaders.set('x-ear-vertical', vertical.id);
   requestHeaders.set('x-ear-vertical-name', vertical.name);
 
-  // 4. Panel de administración y command-center blindados contra accesos sin sesión.
+  // 4. Redirecciones 301 Canónicas hacia el Hub Central de Mariachis (/mariachis)
+  if (url.pathname.startsWith('/centralita-mariachis')) {
+    const provinceMatch = url.pathname.match(/\/centralita-mariachis\/([^/?#]+)/);
+    const targetPath = provinceMatch && provinceMatch[1] && !provinceMatch[1].startsWith('red')
+      ? `/mariachis/red/${provinceMatch[1]}`
+      : '/mariachis';
+    return NextResponse.redirect(new URL(targetPath, request.url), 301);
+  }
+  if (url.pathname === '/servicios/mariachis' || url.pathname === '/artistas/mariachis') {
+    return NextResponse.redirect(new URL('/mariachis', request.url), 301);
+  }
+
+  // 5. Panel de administración y command-center blindados contra accesos sin sesión.
   if (isProtectedAdminPath(url.pathname)) {
     if (!hasValidAdminSession(request)) {
       const loginUrl = new URL('/login', request.url);

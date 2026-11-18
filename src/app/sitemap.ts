@@ -3,6 +3,7 @@ import { resolveSitemapOrigin } from '@/lib/seo/canonicalSite';
 import { PROVINCIAS_52_GRAPH } from '@/lib/constants/seo-data-hydrated';
 import { MARIACHI_LANDINGS } from '@/lib/mariachi/mariachiLandingCatalog';
 import { OTZARRETA_LANDINGS } from '@/lib/seo/otzarreta-dominance-engine';
+import { OTZARRETA_126_LANDINGS } from '@/lib/seo/otzarreta-126-cluster-engine';
 import { MARIACHI_LANDINGS as CENTRALITA_LANDINGS } from '@/lib/seo/centralita-mariachis-dominance-engine';
 import { EVENT_LANDINGS } from '@/lib/seo/ear-eventos-dominance-engine';
 import { MUNICIPALITIES_DATASET } from '@/lib/constants/spanish-municipalities';
@@ -178,6 +179,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
             lastModified,
             changeFrequency: 'weekly',
             priority: landing.kind === 'geo' ? 0.8 : 0.75,
+        });
+    }
+
+    // Clúster Otzarreta / Ezkertza Berria · Bizkaia / Txorierri: 126 landings transaccionales
+    // (18 municipios × 7 ocasiones de consumo: bodas, ceremonias, empresa, comuniones, asador).
+    for (const landing of OTZARRETA_126_LANDINGS) {
+        entries.push({
+            url: `${BASE_URL}/otzarreta/${landing.slug}`,
+            lastModified,
+            changeFrequency: 'weekly',
+            priority: landing.priority,
         });
     }
 

@@ -247,11 +247,10 @@ export default function UniversalPricingEngine({
               <div
                 key={fmt.id}
                 onClick={() => setSelectedFormat(fmt)}
-                className={`cursor-pointer rounded-3xl p-6 sm:p-8 transition-all duration-300 relative border flex flex-col justify-between ${
-                  isSelected
-                    ? "bg-zinc-950 border-amber-400 ring-2 ring-amber-400/30 shadow-2xl scale-[1.01]"
-                    : "bg-zinc-950/60 border-zinc-800 hover:border-zinc-700 hover:bg-zinc-950"
-                }`}
+                className={`cursor-pointer rounded-3xl p-6 sm:p-8 transition-all duration-300 relative border flex flex-col justify-between ${isSelected
+                  ? "bg-zinc-950 border-amber-400 ring-2 ring-amber-400/30 shadow-2xl scale-[1.01]"
+                  : "bg-zinc-950/60 border-zinc-800 hover:border-zinc-700 hover:bg-zinc-950"
+                  }`}
               >
                 {fmt.recommended && (
                   <span className="absolute -top-3 right-6 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest bg-gradient-to-r from-amber-400 to-amber-500 text-black shadow-md">

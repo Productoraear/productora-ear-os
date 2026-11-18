@@ -1,5 +1,30 @@
 
 
+## [2026-11-18T10:30:00.000Z] · SOBERANÍA GEO MATRIZ 126 V30: DESPLIEGUE CLÚSTER TRANSACCIONAL OTZARRETA
+
+**estado_bloque: `SELLADO_Y_CERTIFICADO_AL_100%`** (17/17 compuertas arnés global Exit 0 + tsc Exit 0 + lint Exit 0 + audit:ssot Exit 0).
+
+### Hitos de la Intervención Canónica
+- **V30: Clúster Transaccional de 126 Landings de Bizkaia y Txorierri (`otzarreta-126-cluster-engine.ts`):**
+  * Despliegue de la matriz de 18 municipios reales de Bizkaia (Derio, Loiu, Zamudio, Lezama, Larrabetzu, Sondika, Bilbao, Getxo, Erandio, Mungia, Barakaldo, Basauri, Galdakao, Durango, Amorebieta, Portugalete, Santurtzi, Castro Urdiales) × 7 ocasiones de consumo de alta rentabilidad (`bodas-caserio`, `ceremonia-civil-jardin`, `comidas-empresa-parque-tecnologico`, `eventos-corporativos-parking`, `comuniones-restaurante-jardin`, `bodas-de-oro-plata-caserio`, `asador-parrilla-grupos`).
+  * Integración completa en el generador estático SSG `generateStaticParams()` y `generateMetadata()` en `src/app/(public)/otzarreta/[slug]/page.tsx`, con compatibilidad hacia atrás con el clúster original de Gipuzkoa.
+  * Inyección canónica de las 126 URLs en `src/app/sitemap.ts` con prioridades transaccionales de 0.85 a 0.95.
+  * Preservación estricta de las entidades del SSOT: Párking cerrado >120 plazas, parrilla de carbón y sarmientos de Eduardo Martínez, aforos 50-200/350 pax, menús canónicos de 100 € a 185 € + IVA y depósito deducible Stripe Price-Lock de 100 €.
+  * Unificación de rutas de Mariachis y redirecciones canónicas 301 en `src/middleware.ts` eliminando colisiones de dynamic routes.
+
+### SIGMA://CLOSE/v1
+```
+task_id        : SOBERANIA_GEO_MATRIZ_126_V30
+estado_bloque  : SELLADO_Y_CERTIFICADO_AL_100%
+arnes          : 17/17 PASS (Exit Code 0)
+ssot_hash      : cefa76c2c6a3f92f57acf74f654932c02bf66774502102cb4f932520aaa64b2b (COINCIDE 100%)
+typescript     : Exit Code 0 (tsc --noEmit)
+eslint         : 0 errores
+sitemap_status : 126 URLs incorporadas
+```
+
+---
+
 ## [2026-11-18T00:15:00.000Z] · EVOLUCIÓN CANÓNICA V19-V28 & MOTOR MULTI-TENANT DE VOZ S-CLASS
 
 **estado_bloque: `SELLADO_Y_CERTIFICADO_AL_100%`** (17/17 compuertas arnés global Exit 0 + tsc Exit 0 + lint Exit 0 + audit:ssot Exit 0).
