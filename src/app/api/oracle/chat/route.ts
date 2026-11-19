@@ -14,6 +14,7 @@ import {
   SPLIT_SOBERANO,
 } from '@/lib/constants/ear-os-ssot';
 import { TWELVE_CANONICAL_HUBS } from '@/lib/config/twelve-canonical-hubs';
+import { buildAgentMinimumStandardBlock } from '@/lib/agents/agent-minimum-standard';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -61,7 +62,8 @@ REGLAS DE NEGOCIO INMUTABLES (ZONA CERO SSOT):
 ARQUITECTURA DE LAS 12 SUPER-PANTALLAS CANÓNICAS:
 ${TWELVE_CANONICAL_HUBS.map((h) => `- [HUB ${String(h.number).padStart(2, '0')}] ${h.title} (${h.route}): ${h.tabs.map((t) => t.label).join(' | ')}`).join('\n')}
 
-Responde SIEMPRE en español claro, ejecutivo, directo y accionable (sin tecnicismos innecesarios salvo que el usuario los pida), indicando cifras exactas en euros y a qué módulo o ruta de EAR OS dirigirse.`;
+Responde SIEMPRE en español claro, ejecutivo, directo y accionable (sin tecnicismos innecesarios salvo que el usuario los pida), indicando cifras exactas en euros y a qué módulo o ruta de EAR OS dirigirse.
+${buildAgentMinimumStandardBlock()}`;
 
 function buildDeterministicExecutiveReply(query: string): string {
   const lower = query.toLowerCase();

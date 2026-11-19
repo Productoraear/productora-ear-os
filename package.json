@@ -146,7 +146,8 @@
     "ledger:claim": "node scripts/ledger_append_claim.cjs",
     "verify:showcase": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_showcase_ingest.ts",
     "verify:w56": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_w56_core_suture.ts",
-    "ingest:showcase": "node scripts/ingest_competitor_showcase.cjs"
+    "ingest:showcase": "node scripts/ingest_competitor_showcase.cjs",
+    "verify:agent-standard": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_agent_standard.ts"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",

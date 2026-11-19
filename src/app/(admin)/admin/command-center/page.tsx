@@ -193,6 +193,8 @@ export default function AdminCommandCenterPage() {
   const [activeQuery, setActiveQuery] = useState('');
   const [oracleOutput, setOracleOutput] = useState<string | null>(null);
   const [isConsulting, setIsConsulting] = useState(false);
+  const [oracleQuery, setOracleQuery] = useState('');
+  const [oracleError, setOracleError] = useState<string | null>(null);
 
   const filteredTools = TOOLS.filter(t => {
     if (filter !== 'ALL' && t.category !== filter) return false;
@@ -200,18 +202,34 @@ export default function AdminCommandCenterPage() {
     return true;
   });
 
-  const handleSimulateConsult = (query?: string) => {
+  const handleConsult = async (rawQuery: string): Promise<void> => {
+    const query = rawQuery.trim();
+    if (query.length === 0) {
+      setOracleError('Escribe una consulta para el Oráculo.');
+      setOracleOutput(null);
+      return;
+    }
     setIsConsulting(true);
     setOracleOutput(null);
-    setTimeout(() => {
+    setOracleError(null);
+    try {
+      const res = await fetch('/api/oracle/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: [{ role: 'user', content: query }] }),
+      });
+      const text = await res.text();
+      if (!res.ok) {
+        setOracleError(`El Oráculo no pudo responder (HTTP ${res.status}). Reintenta: la consulta es idempotente.`);
+        return;
+      }
+      setOracleOutput(text.trim().length > 0 ? text : null);
+      if (text.trim().length === 0) setOracleError('El Oráculo devolvió una respuesta vacía. Reintenta.');
+    } catch {
+      setOracleError('Sin conexión con el Oráculo. Comprueba la red y reintenta.');
+    } finally {
       setIsConsulting(false);
-      setOracleOutput(`💎 [ORÁCULO MAESTRO DE CRECIMIENTO MUSICAL EAR OS]:
-Consulta: "${query || 'Optimización de captación'}"
-1. Diagnóstico: La retención se pierde en los primeros 3 segundos si usas introducciones genéricas.
-2. Marco Mental: El cliente busca certeza, estatus y emoción real, no especificaciones de cables ni marcas.
-3. Plan de Acción: Aplica la fórmula de 4 pasos para propuestas de alto impacto y anclaje de señal 100 €.
-📂 Módulo Formativo: file:///H:/00_PRODUCTORA_EAR/EAR_ABSORBED_VAULT/03_CURSOS/Copywriting/1.3_formula_4_pasos_anuncios_convincentes.mp4`);
-    }, 600);
+    }
   };
 
   return (
@@ -331,20 +349,28 @@ Consulta: "${query || 'Optimización de captación'}"
           <div className="flex flex-col sm:flex-row gap-2 pt-1">
             <input
               type="text"
-              placeholder="Ej: ¿Cómo crear una oferta irresistible y captar atención en los primeros 3 segundos?"
-              className="flex-1 px-4 py-2.5 rounded-xl bg-black/60 border border-white/15 text-xs font-mono text-white placeholder:text-zinc-500 outline-none focus:border-[#ecb613] transition-all"
+              value={oracleQuery}
+              onChange={(e) => setOracleQuery(e.target.value)}
+              aria-label="Consulta al Oráculo"
+              placeholder="Ej: ¿Cómo cualifico un lead de boda antes de cotizar?"
+              className="flex-1 px-4 py-2.5 rounded-xl bg-black/60 border border-white/15 text-xs font-mono text-white placeholder:text-zinc-500 outline-none focus:border-[#ecb613] focus-visible:ring-2 focus-visible:ring-[#ecb613] transition-all duration-300 ease-out"
               onKeyDown={(e) => {
-                if (e.key === 'Enter') handleSimulateConsult((e.target as HTMLInputElement).value);
+                if (e.key === 'Enter') void handleConsult(oracleQuery);
               }}
             />
             <button
-              onClick={() => handleSimulateConsult("como captar atencion con hook marketing")}
+              onClick={() => void handleConsult(oracleQuery)}
               disabled={isConsulting}
               className="px-5 py-2.5 rounded-xl bg-[#ecb613] hover:bg-amber-400 text-black font-mono font-bold text-xs transition-all shadow-[0_0_20px_rgba(236,182,19,0.3)] shrink-0 cursor-pointer disabled:opacity-50"
             >
               {isConsulting ? 'Consultando...' : 'Preguntar al Oráculo'}
             </button>
           </div>
+          {oracleError && (
+            <div role="alert" className="mt-4 p-4 rounded-xl bg-[#FF2B44]/10 border border-[#FF2B44]/40 text-xs font-mono text-[#FF2B44]">
+              {oracleError}
+            </div>
+          )}
           {oracleOutput && (
             <div className="mt-4 p-4 rounded-xl bg-black/80 border border-[#ecb613]/40 text-xs font-mono text-zinc-200 whitespace-pre-wrap animate-fadeIn">
               {oracleOutput}
