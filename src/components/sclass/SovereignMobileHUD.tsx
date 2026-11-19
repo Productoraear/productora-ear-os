@@ -8,6 +8,7 @@ import type { LucideIcon } from 'lucide-react';
 import {
   Activity,
   ArrowRight,
+  Bot,
   Building2,
   Calculator,
   ChevronDown,
@@ -845,7 +846,7 @@ export const SovereignMobileHUD: React.FC = React.memo(function SovereignMobileH
         )}
       </AnimatePresence>
 
-      {/* ─── DOCK Único (z-80) · 3 items: Menú · Astra (10s) · Contacto ─── */}
+      {/* ─── DOCK Único (z-80) · 4 items: Menú · Agente IA · Astra · Contacto ─── */}
       <nav
         aria-label="Navegación móvil unificada"
         className="fixed inset-x-0 bottom-0 z-[80] px-3 pb-[calc(0.5rem+env(safe-area-inset-bottom))] pt-2 lg:hidden"
@@ -867,7 +868,24 @@ export const SovereignMobileHUD: React.FC = React.memo(function SovereignMobileH
             <span>Menú</span>
           </button>
 
-          {/* 2 · ASTRA — 10 s long-press activa cockpit · tap simple → WhatsApp */}
+          {/* 2 · AGENTE IA CONSERJERÍA — apertura instantánea del asistente */}
+          <button
+            type="button"
+            onClick={openConcierge}
+            aria-label="Abrir Agente IA Productora EAR"
+            className={dockItemClass(false)}
+          >
+            <span className="relative flex items-center justify-center">
+              <Bot size={18} strokeWidth={2.2} className="text-[#ecb613]" />
+              <span className="absolute -top-1 -right-1 flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </span>
+            </span>
+            <span className="text-[#ecb613]">Agente</span>
+          </button>
+
+          {/* 3 · ASTRA — 10 s long-press activa cockpit · tap simple → WhatsApp */}
           <button
             type="button"
             onPointerDown={startAstraLongPress}
@@ -876,17 +894,17 @@ export const SovereignMobileHUD: React.FC = React.memo(function SovereignMobileH
             onPointerCancel={clearAstraLongPress}
             onContextMenu={(e) => { if (astraLongPressFired.current) e.preventDefault(); }}
             aria-label="Astra — mantén 10 s para abrir el Oráculo"
-            className="flex min-h-[56px] w-[70px] shrink-0 flex-col items-center justify-center gap-0.5 rounded-2xl transition-all duration-300 ease-out active:scale-95 touch-manipulation select-none"
+            className="flex min-h-[56px] w-[62px] shrink-0 flex-col items-center justify-center gap-0.5 rounded-2xl transition-all duration-300 ease-out active:scale-95 touch-manipulation select-none"
           >
             <span
-              className="flex h-10 w-10 items-center justify-center rounded-2xl transition-all duration-300 ease-out"
+              className="flex h-9 w-9 items-center justify-center rounded-2xl transition-all duration-300 ease-out"
               style={{
                 backgroundColor: sheet === 'cockpit' ? accentColor : '#1a1a22',
                 boxShadow: sheet === 'cockpit' ? `0 0 22px ${accentColor}66` : 'none',
                 border: `1px solid ${accentColor}44`,
               }}
             >
-              <Sparkles size={19} strokeWidth={2.4} style={{ color: sheet === 'cockpit' ? '#030305' : accentColor }} />
+              <Sparkles size={18} strokeWidth={2.4} style={{ color: sheet === 'cockpit' ? '#030305' : accentColor }} />
             </span>
             <span
               className="font-mono text-[8px] font-bold uppercase tracking-wider"
@@ -896,7 +914,7 @@ export const SovereignMobileHUD: React.FC = React.memo(function SovereignMobileH
             </span>
           </button>
 
-          {/* 3 · CONTACTO DIRECTO */}
+          {/* 4 · CONTACTO DIRECTO */}
           <button
             type="button"
             onClick={() => toggleSheet('contact')}

@@ -10,6 +10,7 @@ import {
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useAirbnbBookingFiltersStore, EventType } from './stores/useAirbnbBookingFiltersStore';
 import { PROVINCE_COORDINATES } from './utils/mentridaDistanceEngine';
+import { ALL_SPANISH_PROVINCES } from '@/lib/constants/spain-regions-and-categories';
 
 const CATEGORIES_LIST = [
   'DJ', 'Solista', 'Catering', 'Luces / LED',
@@ -341,7 +342,7 @@ export const AirbnbNeuralBookingBar: React.FC = () => {
                 onChange={(e) => setLocation(e.target.value)}
                 className="w-full bg-white/5 border border-white/10 rounded-2xl p-3 text-sm text-white font-mono focus:outline-none focus:border-[#00E5FF]"
               >
-                {Object.keys(PROVINCE_COORDINATES).map(p => (
+                {ALL_SPANISH_PROVINCES.map(p => (
                   <option key={p} value={p} className="bg-black text-white">{p}</option>
                 ))}
               </select>

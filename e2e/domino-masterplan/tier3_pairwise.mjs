@@ -236,11 +236,11 @@ export async function runTier3() {
       async () => {
         const graph = readJson('graphify-out/graph.json');
         assert(graph.exists && graph.data, 'Missing/invalid graphify-out/graph.json');
-        const gq = runCmd('graphify', ['query', 'ear-os-ssot'], {
+        const gq = runCmd('graphify', ['query', 'src/lib/constants/ear-os-ssot.ts'], {
           timeoutMs: 30_000,
           cacheKey: 'graphify_query_ssot',
         });
-        assertEqual(gq.status, 0, `graphify query "ear-os-ssot" exit code: ${gq.stderr}`);
+        assertEqual(gq.status, 0, `graphify query "src/lib/constants/ear-os-ssot.ts" exit code: ${gq.stderr}`);
 
         const plan = readText(MASTER_PLAN_PATH);
         assert(plan.exists, `Missing Master Plan: ${MASTER_PLAN_PATH}`);

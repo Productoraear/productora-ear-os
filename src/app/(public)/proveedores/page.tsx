@@ -242,6 +242,14 @@ const SOVEREIGN_OTZARRETA: ProviderItem = {
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 function normalizeCategory(inputCat: string | null | undefined, description?: string, name?: string): string {
   const l = (inputCat || '').toLowerCase().trim();
+  const CANONICAL_CATEGORIES = new Set([
+    'finca', 'catering', 'decoracion', 'musica', 'sonido',
+    'foto', 'wedding', 'moda', 'transporte', 'servicios', 'senior_care'
+  ]);
+  if (CANONICAL_CATEGORIES.has(l)) {
+    return l;
+  }
+
   const d = (description || '').toLowerCase();
   const n = (name || '').toLowerCase();
   const full = `${l} ${d} ${n}`;

@@ -20,6 +20,7 @@ export const BASE_HUBS = {
 export const PROVINCE_COORDINATES: Record<string, { lat: number; lng: number; defaultKmFromMentrida: number }> = {
   'Madrid': { lat: 40.4168, lng: -3.7038, defaultKmFromMentrida: 54 },
   'Toledo': { lat: 39.8628, lng: -4.0273, defaultKmFromMentrida: 52 },
+  'Albacete': { lat: 38.9943, lng: -1.8585, defaultKmFromMentrida: 243 },
   'Guadalajara': { lat: 40.6327, lng: -3.1669, defaultKmFromMentrida: 120 },
   'Cuenca': { lat: 40.0704, lng: -2.1374, defaultKmFromMentrida: 215 },
   'Ciudad Real': { lat: 38.9863, lng: -3.9271, defaultKmFromMentrida: 180 },
@@ -57,17 +58,24 @@ export const PROVINCE_COORDINATES: Record<string, { lat: number; lng: number; de
   'Asturias': { lat: 43.3614, lng: -5.8593, defaultKmFromMentrida: 460 },
   'Cantabria': { lat: 43.4623, lng: -3.8099, defaultKmFromMentrida: 430 },
   'A Coruña': { lat: 43.3623, lng: -8.4115, defaultKmFromMentrida: 590 },
+  'La Coruña': { lat: 43.3623, lng: -8.4115, defaultKmFromMentrida: 590 },
   'Pontevedra': { lat: 42.431, lng: -8.6444, defaultKmFromMentrida: 580 },
   'Lugo': { lat: 43.012, lng: -7.5558, defaultKmFromMentrida: 490 },
   'Ourense': { lat: 42.3358, lng: -7.8639, defaultKmFromMentrida: 480 },
   'Navarra': { lat: 42.8125, lng: -1.6458, defaultKmFromMentrida: 410 },
   'La Rioja': { lat: 42.2871, lng: -2.5396, defaultKmFromMentrida: 330 },
   'Araba/Álava': { lat: 42.8467, lng: -2.6716, defaultKmFromMentrida: 360 },
+  'Álava': { lat: 42.8467, lng: -2.6716, defaultKmFromMentrida: 360 },
   'Gipuzkoa': { lat: 43.3183, lng: -1.9812, defaultKmFromMentrida: 460 },
+  'Guipúzcoa': { lat: 43.3183, lng: -1.9812, defaultKmFromMentrida: 460 },
   'Bizkaia': { lat: 43.263, lng: -2.935, defaultKmFromMentrida: 410 },
+  'Vizcaya': { lat: 43.263, lng: -2.935, defaultKmFromMentrida: 410 },
   'Baleares': { lat: 39.5696, lng: 2.6502, defaultKmFromMentrida: 600 },
+  'Islas Baleares': { lat: 39.5696, lng: 2.6502, defaultKmFromMentrida: 600 },
   'Las Palmas': { lat: 28.1235, lng: -15.4363, defaultKmFromMentrida: 1800 },
   'Santa Cruz de Tenerife': { lat: 28.4636, lng: -16.2518, defaultKmFromMentrida: 1850 },
+  'Ceuta': { lat: 35.8894, lng: -5.3198, defaultKmFromMentrida: 493 },
+  'Melilla': { lat: 35.2923, lng: -2.9381, defaultKmFromMentrida: 561 },
 };
 
 /**

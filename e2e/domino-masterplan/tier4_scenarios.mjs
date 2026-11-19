@@ -378,7 +378,7 @@ export async function runTier4() {
 
         // 2. Graphify query
         assert(fileExists('graphify-out/graph.json'), 'Missing graphify-out/graph.json');
-        const gq = runCmd('graphify', ['query', 'ear-os-ssot'], {
+        const gq = runCmd('graphify', ['query', 'src/lib/constants/ear-os-ssot.ts'], {
           timeoutMs: 30_000,
           cacheKey: 'graphify_query_ssot',
         });

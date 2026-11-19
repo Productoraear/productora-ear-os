@@ -520,7 +520,7 @@ export function SovereignConciergeWidget() {
   }
 
   return (
-    <div className="fixed bottom-[calc(var(--ear-dock-h,5rem)+0.75rem)] lg:bottom-6 right-4 sm:right-6 z-50 flex flex-col items-end select-none">
+    <div className="fixed bottom-[calc(var(--ear-dock-h,5rem)+0.75rem)] lg:bottom-6 right-4 sm:right-6 z-[85] flex flex-col items-end select-none pointer-events-none">
       {/* ─── CHAT POPOVER S-CLASS ─── */}
       {isOpen && (
         <div
@@ -528,7 +528,7 @@ export function SovereignConciergeWidget() {
           role="dialog"
           aria-modal="true"
           aria-label="Conserjería IA Productora EAR"
-          className="mb-3 w-[calc(100vw-2rem)] sm:w-[420px] h-[580px] max-h-[85vh] bg-[#09090d]/98 backdrop-blur-2xl border border-[#ecb613]/40 rounded-2xl shadow-[0_15px_50px_rgba(0,0,0,0.9)] text-white flex flex-col animate-in fade-in slide-in-from-bottom-5 duration-200 overflow-hidden"
+          className="pointer-events-auto mb-3 w-[calc(100vw-2rem)] sm:w-[420px] h-[580px] max-h-[85vh] bg-[#09090d]/98 backdrop-blur-2xl border border-[#ecb613]/40 rounded-2xl shadow-[0_15px_50px_rgba(0,0,0,0.9)] text-white flex flex-col animate-in fade-in slide-in-from-bottom-5 duration-200 overflow-hidden"
         >
           {/* Header */}
           <div className="p-3.5 border-b border-zinc-800/80 bg-gradient-to-r from-[#0d0d14] via-[#09090d] to-[#121008] flex items-center justify-between shrink-0">
@@ -1011,7 +1011,7 @@ export function SovereignConciergeWidget() {
           if (isOpen) stopSpeech();
         }}
         aria-label="Abrir Conserjería IA Productora EAR"
-        className="group relative flex items-center gap-3 bg-[#09090d]/95 hover:bg-[#12121a] border border-[#ecb613]/50 hover:border-[#ecb613] p-2.5 sm:p-3 rounded-full shadow-[0_8px_32px_rgba(236,182,19,0.25)] hover:shadow-[0_8px_36px_rgba(236,182,19,0.45)] transition-all duration-300 hover:scale-105"
+        className="pointer-events-auto group relative flex items-center gap-3 bg-[#09090d]/95 hover:bg-[#12121a] border border-[#ecb613]/50 hover:border-[#ecb613] p-2.5 sm:p-3 rounded-full shadow-[0_8px_32px_rgba(236,182,19,0.25)] hover:shadow-[0_8px_36px_rgba(236,182,19,0.45)] transition-all duration-300 hover:scale-105"
       >
         {/* Pulsing indicator */}
         <div className="relative flex items-center justify-center">

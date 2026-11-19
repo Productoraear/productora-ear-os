@@ -536,12 +536,14 @@ async function queryStaticProviders(options: {
       if (fallbackRaw) {
         try {
           const featured = JSON.parse(fallbackRaw);
-          if (normCat === 'finca') {
-            list = featured.filter((item: any) => 
-              (item.category || '').toLowerCase().includes('finca') || 
-              (item.category || '').toLowerCase().includes('espacio') ||
-              (item.description || '').toLowerCase().includes('finca')
-            );
+          if (normCat && normCat !== 'ALL') {
+            list = featured.filter((item: any) => {
+              const itemCat = (item.category || '').toLowerCase().trim();
+              if (normCat === 'finca') {
+                return itemCat.includes('finca') || itemCat.includes('espacio') || (item.description || '').toLowerCase().includes('finca');
+              }
+              return itemCat === normCat;
+            });
           } else {
             list = featured;
           }
