@@ -443,6 +443,36 @@ function OmniAuthLoginForm() {
                   </span>
                 </div>
 
+                {/* SELECTOR RÁPIDO DE CUENTA CEO / ADMIN */}
+                {authRole === 'admin' && (
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setEmail('productoraear@gmail.com')}
+                      className={`p-2 rounded-lg border text-left text-xs transition cursor-pointer ${
+                        email === 'productoraear@gmail.com'
+                          ? 'bg-amber-500/20 border-amber-500 text-amber-300 font-bold'
+                          : 'bg-black/40 border-neutral-800 text-neutral-400 hover:text-white'
+                      }`}
+                    >
+                      <div className="text-[11px]">Edwin Agudelo (CEO)</div>
+                      <div className="text-[9px] font-mono opacity-70 truncate">productoraear@gmail.com</div>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setEmail('edwin@productoraear.com')}
+                      className={`p-2 rounded-lg border text-left text-xs transition cursor-pointer ${
+                        email === 'edwin@productoraear.com'
+                          ? 'bg-amber-500/20 border-amber-500 text-amber-300 font-bold'
+                          : 'bg-black/40 border-neutral-800 text-neutral-400 hover:text-white'
+                      }`}
+                    >
+                      <div className="text-[11px]">CEO Soberano</div>
+                      <div className="text-[9px] font-mono opacity-70 truncate">edwin@productoraear.com</div>
+                    </button>
+                  </div>
+                )}
+
                 {/* SELECTOR RÁPIDO DE CUENTAS AUTORIZADAS DE MARKETING */}
                 {authRole === 'editor' && (
                   <div>
@@ -497,7 +527,7 @@ function OmniAuthLoginForm() {
 
                 <div>
                   <label className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider block mb-1.5">
-                    {authRole === 'admin' ? 'Contraseña Master EAR OS' : 'Contraseña del Sistema'}
+                    {authRole === 'admin' ? 'Contraseña Master o PIN Soberano (4 dígitos)' : 'Contraseña del Sistema'}
                   </label>
                   <div className="relative">
                     <input

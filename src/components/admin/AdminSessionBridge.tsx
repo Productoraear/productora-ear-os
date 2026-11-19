@@ -24,9 +24,18 @@ export function AdminSessionBridge(): ReactElement | null {
         const firebaseAuth = auth as Auth | null;
         if (!firebaseAuth) return;
 
+        const hasSovereignCookie = (): boolean => {
+            if (typeof document === 'undefined') return false;
+            return /(?:^|;\s*)(?:ear_admin_token|ear_session)=/.test(document.cookie);
+        };
+
         const unsubscribe = onAuthStateChanged(firebaseAuth, async (user) => {
             try {
                 if (!user) {
+                    // Si el CEO entró por PIN Maestro / 2FA / Bypass Soberano, NO borrar su cookie
+                    if (hasSovereignCookie()) {
+                        return;
+                    }
                     await fetch('/api/admin/session', {
                         method: 'DELETE',
                         cache: 'no-store',

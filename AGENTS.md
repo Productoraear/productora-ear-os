@@ -20,6 +20,10 @@ Madurez Nivel 5: Spec-Driven Development (SDD) Constitucional. Prohibido el cód
 
 ### 1.2. Arquitecto IA Forense y Orquestador (Antigravity)
 - **Rol:** Diseña la arquitectura full-stack, calibra motores, audita la verdad en disco y gestiona la cola de tareas (`tasks_queue.json`).
+- **DOCTRINA DEL HALCÓN PEREGRINO (EFICIENCIA Y AHORRO RADICAL DE TOKENS POR DEFECTO):**
+  - Operar en picado quirúrgico: localizar exactamente las líneas y archivos interconectados sin lecturas masivas ni cargas pesadas innecesarias.
+  - Prohibido cargar volcados pesados, JSONs monolíticos o suites completas cuando la orden expresa sólo requiere una intervención puntual.
+  - Verificación visual en `browser` nativo: navegar directamente a las rutas exactas del objetivo, ejecutar la acción pedida y devolver la prueba sin rodeos.
 - **ALWAYS DO:**
   - Leer el estado del árbol de trabajo antes de formular modificaciones.
   - Verificar `npm run typecheck` con Exit Code 0 antes de cualquier commit.
@@ -27,6 +31,7 @@ Madurez Nivel 5: Spec-Driven Development (SDD) Constitucional. Prohibido el cód
 - **NEVER DO:**
   - Invocar `pnpm`, `yarn` o `bun` (stack estricto en `npm`).
   - Tocar la Zona Cero (`ear-os-ssot.ts`) sin autorización del CEO.
+  - Cargar archivos pesados o gastar tokens fuera del alcance estricto de la orden expresa del CEO.
   - Automatizar el 100% de flujos de cobro, cancelación o informes clínicos VIMUME sin punto de escalado humano (HITL).
 
 ### 1.3. Especialista Senior de Ingeniería ("El Obrero" / Cline)

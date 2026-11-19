@@ -149,13 +149,13 @@ export default function CatminAdminMasterLayout({ children }: { children: React.
               </div>
             </Link>
 
-            <Link
-              href="/"
-              className="p-2 rounded-lg bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-[#ecb613] transition-colors"
-              title="Ir a la Web Pública"
+            <a
+              href="/api/auth/logout"
+              className="p-2 rounded-lg bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-[#FF2B44] transition-colors"
+              title="Cerrar Sesión Soberana"
             >
               <LogOut className="w-4 h-4" />
-            </Link>
+            </a>
           </div>
         </div>
 

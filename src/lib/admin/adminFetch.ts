@@ -149,10 +149,15 @@ function readIssues(payload: unknown): readonly string[] {
 // Identidad: ID token de Firebase
 // ---------------------------------------------------------------------------
 
+function hasSovereignBrowserCookie(): boolean {
+    if (typeof document === 'undefined') return false;
+    return /(?:^|;\s*)(?:ear_admin_token|ear_session)=/.test(document.cookie);
+}
+
 /**
- * Devuelve el ID token del usuario autenticado.
+ * Devuelve el ID token del usuario autenticado o el marcador de sesión soberana por cookie.
  * El SDK refresca de forma transparente un token caducado.
- * @throws AdminHttpError CONFIG si Firebase no está configurado o se invoca en servidor.
+ * @throws AdminHttpError CONFIG si Firebase no está configurado y no hay cookie soberana.
  * @throws AdminHttpError UNAUTHORIZED si no hay sesión iniciada.
  */
 export async function getAdminIdToken(): Promise<string> {
@@ -166,6 +171,15 @@ export async function getAdminIdToken(): Promise<string> {
     }
 
     const auth: Auth | null = firebaseAuth;
+    const user: User | null = auth?.currentUser ?? null;
+    if (user) {
+        return user.getIdToken();
+    }
+
+    if (hasSovereignBrowserCookie()) {
+        return 'sovereign_cookie_session';
+    }
+
     if (!auth) {
         throw new AdminHttpError({
             status: 0,
@@ -174,16 +188,11 @@ export async function getAdminIdToken(): Promise<string> {
         });
     }
 
-    const user: User | null = auth.currentUser;
-    if (!user) {
-        throw new AdminHttpError({
-            status: 401,
-            code: 'UNAUTHORIZED',
-            message: 'Sesion no iniciada',
-        });
-    }
-
-    return user.getIdToken();
+    throw new AdminHttpError({
+        status: 401,
+        code: 'UNAUTHORIZED',
+        message: 'Sesion no iniciada',
+    });
 }
 
 // ---------------------------------------------------------------------------
