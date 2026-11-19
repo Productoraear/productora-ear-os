@@ -276,3 +276,8 @@ id_ed25519.*
 
 # Secretos locales de acceso (nunca versionar)
 .antigravity/local/
+.antigravity/agent_ref/
+
+# Graphify AST caches y artefactos generados localmente
+graphify-out/
+
