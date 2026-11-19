@@ -58,13 +58,13 @@ export const VendorClaimProposalCard: React.FC<VendorClaimProposalCardProps> = (
     {
       num: 5,
       title: 'Certificado RSC & Deducción Fiscal de hasta el 80% (Ley 49/2002)',
-      description: `El 10% del split financia talleres de neuro-musicoterapia 40 Hz para nuestros mayores en residencias senior de Gipuzkoa. El caserío recibe un certificado oficial RSC deducible hasta el 80% en IRPF o 50% en Sociedades.`,
+      description: `El 10% del split financia talleres de neuro-musicoterapia 40 Hz para nuestros mayores en residencias senior de Bizkaia. El caserío recibe un certificado oficial RSC deducible hasta el 80% en IRPF o 50% en Sociedades.`,
       highlight: 'Deducción fiscal directa (Modelo 182 AEAT)',
       badge: 'Fondo VIMUME (Ley 49/2002)'
     },
     {
       num: 6,
-      title: 'Autonomía Gastronómica Soberana & Exclusividad #1 en Gipuzkoa',
+      title: 'Autonomía Gastronómica Soberana & Exclusividad #1 en Bizkaia',
       description: `Eduardo mantiene la independencia y control absoluto sobre menús, parrillada de chuletón, bodegas y tarifas de comensal. EAR OS actúa como motor tecnológico invisible sin interferir en la cocina del caserío.`,
       highlight: 'Control total de la dirección del restaurante',
       badge: 'Soberanía Empresarial'
@@ -84,7 +84,7 @@ export const VendorClaimProposalCard: React.FC<VendorClaimProposalCardProps> = (
             <Sparkles size={14} /> DOSSIER DE GARANTÍA EJECUTIVA S-CLASS 2026
           </span>
           <span className="px-3 py-1 bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 text-xs font-mono font-bold rounded-full">
-            Gipuzkoa Hub #1 · Atención Preferente
+            Bizkaia Hub #1 · Atención Preferente
           </span>
         </div>
         <span className="text-xs font-mono text-zinc-400">Exclusivamente para Eduardo & Dirección</span>

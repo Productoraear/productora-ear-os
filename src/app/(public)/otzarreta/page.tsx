@@ -53,14 +53,14 @@ const OTZARRETA_CTA_SOURCE = {
 export const metadata: Metadata = {
   title: 'Restaurante Otzarreta | Bodas, Asador & Banquetes en Derio (Bizkaia)',
   description:
-    'Banquetes nupciales exclusivos para hasta 350 comensales en caserío tradicional con jardines, carpa para ceremonias civiles y parrilla al carbón de encina y sarmiento de Eduardo Martínez. Parking privado cerrado >120 plazas. Menús oficiales 2026 desde 100 € a 185 € + IVA.',
+    'Banquetes nupciales exclusivos para hasta 350 comensales en caserío tradicional con jardines, carpa para ceremonias civiles y parrilla al carbón de encina y sarmiento de Eduardo Martínez. Parking privado cerrado de 150 plazas. Menús oficiales 2026 desde 100 € a 185 € + IVA.',
   alternates: {
     canonical: 'https://productoraear.com/otzarreta'
   },
   openGraph: {
     title: 'Restaurante Otzarreta | Bodas, Asador & Banquetes de Gala en Derio',
     description:
-      'Caserío vasco con capacidad para 350 comensales, parking privado >120 plazas, jardines y alta parrilla al carbón. Menús de boda oficiales desde 100 €.',
+      'Caserío vasco con capacidad para 350 comensales, parking privado de 150 plazas, jardines y alta parrilla al carbón. Menús de boda oficiales desde 100 €.',
     url: 'https://productoraear.com/otzarreta',
     siteName: 'Productora EAR',
     locale: 'es_ES',
@@ -201,7 +201,7 @@ export default async function OtzarretaFlagshipPage({
 
           <p className="text-gray-300 text-base sm:text-lg lg:text-xl max-w-3xl mx-auto leading-relaxed">
             El caserío definitivo para bodas inolvidables: <strong>350 comensales</strong> en comedores climatizados e insonorizados,
-            jardines botánicos con carpa y oficiante civil, parking privado gratuito para <strong>más de 120 vehículos</strong> y la auténtica parrilla al
+            jardines botánicos con carpa y oficiante civil, parking privado gratuito de <strong>150 plazas</strong> y la auténtica parrilla al
             carbón de encina de <strong>Eduardo Martínez (Dirección Gastronómica de Restaurante Otzarreta)</strong>.
           </p>
 
@@ -275,9 +275,6 @@ export default async function OtzarretaFlagshipPage({
       {/* â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â” */}
       {/* W47_T02 · sección 2 eliminada: galería duplicada que amputaba verticales como novios-1022x1536. */}
 
-      {/* Residuo de encoding no editable (invisible) de la galería eliminada:ÍO
-                */}
-
 
       {/* â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â” */}
       {/* 2B. FICHA COMPLETA DEL VENUE — RESTAURANTE OTZARRETA (DERIO)  */}
@@ -289,7 +286,7 @@ export default async function OtzarretaFlagshipPage({
       />
 
       {/* â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â” */}
-      {/* 3. ANÃLISIS FINANCIERO: EAR OS VS DIRECTORIO PASIVO (SIN REBAJA) */}
+      {/* 3. ANÁLISIS FINANCIERO: EAR OS VS DIRECTORIO PASIVO (SIN REBAJA) */}
       {/* â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â” */}
       <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto my-24">
         <div className="rounded-3xl bg-gradient-to-b from-[#0e0e14] via-[#09090d] to-[#050507] border border-[#ecb613]/30 p-8 sm:p-12 lg:p-16 backdrop-blur-md relative overflow-hidden shadow-2xl shadow-amber-950/20">
@@ -298,7 +295,7 @@ export default async function OtzarretaFlagshipPage({
           <div className="space-y-4 text-center max-w-4xl mx-auto mb-14">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-xs font-mono tracking-wider">
               <TrendingUp className="w-4 h-4 text-[#ecb613]" />
-              <span>ANÁLISIS DE RETORNO DE INVERSIÓN (ROI) · PROPUESTA EJECUTIVA</span>
+              <span>ANÁLISIS DE RETORNO DE INVERSIÓN (ROI) · PROPUESTA EJECUTIVA</span>
             </div>
             <h2 className="text-3xl sm:text-5xl font-extrabold text-white leading-tight">
               Por Qué EAR OS Rinde Más que un Directorio Pasivo
@@ -387,7 +384,7 @@ export default async function OtzarretaFlagshipPage({
                   <div className="flex items-start gap-3">
                     <CheckCircle2 className="w-5 h-5 text-[#ecb613] shrink-0 mt-0.5" />
                     <div>
-                      <strong className="text-white">126 Landings Exclusivas y Propietarias:</strong> Páginas locales de intención en Bizkaia y municipios del Gran Bilbao posicionadas en Google y motores IA (ChatGPT/Perplexity).
+                      <strong className="text-white">126 Landings Exclusivas y Propietarias:</strong> Páginas locales de intención en Derio, Bilbao, Txorierri (Loiu, Sondika, Zamudio, Lezama, Larrabetzu), Mungia, Uribe Kosta y Bizkaia central posicionadas en Google y motores IA (ChatGPT/Perplexity).
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -553,7 +550,7 @@ export default async function OtzarretaFlagshipPage({
 
                 <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1">
                   <div className="text-xs font-mono text-[#ecb613] uppercase">Logística & Confort</div>
-                  <div className="text-sm font-bold text-white">Párking Privado &gt;120 Plazas</div>
+                  <div className="text-sm font-bold text-white">Párking Privado 150 Plazas</div>
                   <p className="text-xs text-gray-400">
                     Recinto cerrado en Derio a 5 min del aeropuerto y 10 min de Bilbao.
                   </p>
@@ -597,14 +594,14 @@ export default async function OtzarretaFlagshipPage({
         <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-8 sm:p-12 backdrop-blur-md space-y-10">
           <div className="space-y-2">
             <span className="text-xs font-mono text-[#ecb613] uppercase tracking-wider">
-              MALLA DE DOMINANCIA · {OTZARRETA_HUB.total} PÁGINAS DEDICADAS
+              MALLA DE DOMINANCIA · {OTZARRETA_HUB.total} PÁGINAS DEDICADAS
             </span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
               {OTZARRETA_HUB.geoCount} Landings Geográficas + {OTZARRETA_HUB.intentCount} de Intención
             </h2>
             <p className="text-xs sm:text-sm text-gray-400 max-w-3xl">
               Cada enlace es una URL con entidad verificada detrás: {OTZARRETA_MUNICIPALITIES.length}{' '}
-              municipios reales de Bizkaia y áreas de influencia × {OTZARRETA_HUB.groups.length} formatos de banquete,
+              municipios y comarcas de Bizkaia (Derio, Bilbao, Txorierri, Mungia, Uribe Kosta y Bizkaia central) × {OTZARRETA_HUB.groups.length} formatos de banquete,
               más las consultas con intención de reserva. Sin huérfanos: este hub reparte
               autoridad a todo el clúster.
             </p>
@@ -632,7 +629,7 @@ export default async function OtzarretaFlagshipPage({
 
           <div className="space-y-3 pt-2 border-t border-white/10">
             <h3 className="text-xs font-mono uppercase tracking-wider text-[#ecb613]">
-              Intenciones provinciales · {OTZARRETA_HUB.provinceIntents.length} URLs
+              Intenciones provinciales en Bizkaia · {OTZARRETA_HUB.provinceIntents.length} URLs
             </h3>
             <div className="flex flex-wrap gap-2">
               {OTZARRETA_HUB.provinceIntents.map((landing) => (
@@ -718,7 +715,7 @@ export default async function OtzarretaFlagshipPage({
           <div>
             <div className="font-bold text-white text-sm mb-1">Centralita Soberana Productora EAR</div>
             <p>Atención y Conserjería de Bodas: {CENTRALITA_EAR_OS}</p>
-            <p className="mt-1">Párking privado cerrado &gt;120 plazas</p>
+            <p className="mt-1">Párking privado cerrado 150 plazas</p>
             <p className="mt-1">Dirección Gastronómica: Eduardo Martínez</p>
             <p>Parrilla al carbón de encina y cocina de cazuela</p>
           </div>

@@ -1,6 +1,6 @@
 /**
  * ════════════════════════════════════════════════════════════════════════════
- * GUARDIÁN ANTI-CANIBALIZACIÓN — CLÚSTER OTZARRETA · GIPUZKOA (126 LANDINGS)
+ * GUARDIÁN ANTI-CANIBALIZACIÓN — CLÚSTER OTZARRETA · DERIO / BIZKAIA (126 LANDINGS)
  * ════════════════════════════════════════════════════════════════════════════
  * Audita `public/landings/otzarreta/manifest.json` (emitido por
  * `scripts/build_otzarreta_landings.ts`) sin recomponer copy.
@@ -174,10 +174,16 @@ function readCentralita() {
     return match[1];
 }
 
+const TERRITORIAL_DRIFT_RE = /zarautz|zarauz|gipuzkoa|guipuzcoa|zizurkil|santa clara/i;
+
 /** Auditoría de campos atómicos por landing. */
 function auditEntry(entry, centralitaDigits) {
     const errors = [];
     const hex64 = /^[0-9a-f]{64}$/;
+
+    if (TERRITORIAL_DRIFT_RE.test(`${entry.slug} ${entry.title} ${entry.description} ${entry.h1} ${entry.uniqueCopy}`)) {
+        errors.push('deriva territorial Zarautz/Gipuzkoa detectada');
+    }
 
     if (entry.depositEur !== EXPECTED_DEPOSIT) {
         errors.push(`depósito ${entry.depositEur} ≠ ${EXPECTED_DEPOSIT}`);
@@ -260,6 +266,14 @@ function main() {
     }
     if (!manifest.entity || manifest.entity.verified !== true) {
         console.error('[AUDIT] FAIL entidad no verificada');
+        totalErrors += 1;
+    }
+    if (
+        TERRITORIAL_DRIFT_RE.test(
+            `${manifest.engine || ''} ${manifest.logistics?.origin || ''} ${manifest.entity?.address || ''} ${manifest.entity?.email || ''}`,
+        )
+    ) {
+        console.error('[AUDIT] FAIL deriva territorial en cabecera del manifiesto');
         totalErrors += 1;
     }
 

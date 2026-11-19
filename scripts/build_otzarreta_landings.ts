@@ -1,6 +1,6 @@
 /**
  * ════════════════════════════════════════════════════════════════════════════
- * BUILD — CLÚSTER DE DOMINANCIA OTZARRETA · GIPUZKOA (126 LANDINGS)
+ * BUILD — CLÚSTER DE DOMINANCIA OTZARRETA · DERIO / BIZKAIA (126 LANDINGS)
  * ════════════════════════════════════════════════════════════════════════════
  * Consume el motor tipado `src/lib/seo/otzarreta-dominance-engine.ts`, valida
  * los invariantes SSOT y emite `public/landings/otzarreta/manifest.json`
@@ -232,7 +232,7 @@ function main(): void {
     }
 
     const manifest: Manifest = {
-        engine: 'omega-otzarreta-gipuzkoa-126',
+        engine: 'omega-otzarreta-bizkaia-126',
         version: '1.0.0',
         landingCount: payload.length,
         geoCount: payload.filter((entry) => entry.kind === 'geo').length,

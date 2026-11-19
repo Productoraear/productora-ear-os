@@ -154,21 +154,16 @@ function deriveCategoryFromProfileUrl(profileUrl: string): string | null {
 /** Ficha verificada del grupo hostelero que aparece en `/otzarreta`. */
 function buildOtzarretaContext(pathname: string): PageContext {
   const venues = OTZARRETA_ENTITY.affiliatedVenues;
-  const ezkertza = venues.find((venue) => venue.slug === 'restaurante-ezkertza-berria');
-  const otzarreta = venues.find((venue) => venue.slug === 'restaurante-otzarreta');
+  const derioVenue = venues[0];
 
   const facts: string[] = [];
-  if (ezkertza) {
+  if (derioVenue) {
     facts.push(
-      `Sede Ezkertza Berria (${ezkertza.municipality}, ${ezkertza.province} · a 11 km / 12 min de Bilbao por el corredor del Txorierri) · ${ezkertza.address}: hasta ${ezkertza.capacityPax} comensales, ${ezkertza.parkingSpaces} plazas de parking propio. ${ezkertza.features.join(' · ')}.`,
-    );
-  }
-  if (otzarreta) {
-    facts.push(
-      `Sede Otzarreta (${otzarreta.municipality}, ${otzarreta.province}) · ${otzarreta.address}: hasta ${otzarreta.capacityPax} comensales, ${otzarreta.parkingSpaces} plazas de parking propio. ${otzarreta.features.join(' · ')}.`,
+      `Sede canónica Ezkertza Berria & Otzarreta (${derioVenue.municipality}, ${derioVenue.province} · comarca Txorierri / Gran Bilbao, a 8 km / 10-12 min de Bilbao y 5 min del aeropuerto de Loiu) · ${derioVenue.address}: salón acristalado de 50 a 200 comensales y hasta ${derioVenue.capacityPax} comensales en finca y carpa botánica, ${derioVenue.parkingSpaces} plazas de parking propio cerrado. ${derioVenue.features.join(' · ')}.`,
     );
   }
   facts.push(
+    'Área de influencia y cobertura en Bizkaia: Derio, Bilbao, Txorierri (Loiu, Sondika, Zamudio, Lezama, Larrabetzu), Mungia, Uribe Kosta (Sopela, Plentzia, Gorliz, Getxo) y Bizkaia central (Erandio, Barakaldo, Basauri, Galdakao, Durango, Amorebieta).',
     `Historia: ${OTZARRETA_ENTITY.heritage}`,
     `Menús oficiales 2026: menú de grupos y cenas de empresa desde ${OTZARRETA_ENTITY.menuPriceFromEur} € (menús gastronómicos de grupo entre 65 € y 95 €); menú oficial de boda desde ${OTZARRETA_ENTITY.weddingPriceFromEur} € + IVA (110 € IVA incl., con opciones de 115 € a 145 € + IVA que encajan dentro de presupuestos de hasta 154 €/comensal).`,
     `Servicios publicados por la casa: ${OTZARRETA_ENTITY.services.join(', ')}.`,
@@ -179,9 +174,9 @@ function buildOtzarretaContext(pathname: string): PageContext {
     kind: 'venue',
     id: OTZARRETA_ENTITY.id,
     name: 'Restaurante Jatetxea Ezkertza Berria & Otzarreta',
-    municipality: 'Derio (Bizkaia) / Zarautz (Gipuzkoa)',
-    province: 'Bizkaia / Gipuzkoa',
-    // Gremio declarado por la fuente: las dos sedes son `restaurante-*`.
+    municipality: 'Derio',
+    province: 'Bizkaia',
+    // Gremio declarado por la fuente: sede canónica en Derio (Bizkaia).
     category: 'restaurantes',
     // Fuera de la matriz del Hub: se confirma por GPS real (nunca 58 km por defecto).
     distanceKmFromHub: null,
@@ -194,7 +189,7 @@ function buildOtzarretaContext(pathname: string): PageContext {
       'disponibilidad real de la fecha',
     ],
     guidance:
-      'Estás en la ficha de un recinto colaborador homologado. SÍ tienes datos verificados: úsalos y PROHIBIDO decir que no tienes información del recinto. Si el cliente pregunta cómo contratar, cuánto cuesta el menú o qué sede le queda más cerca de Bilbao o en Gipuzkoa, responde directamente con las cifras de Ezkertza Berria (Derio, a 11 km / 12 min de Bilbao) y Otzarreta (Zarautz, Gipuzkoa), confirmando que sus menús (desde 40 € grupos y 100 € + IVA bodas/galas) encajan en su presupuesto por comensal. Cuando pregunten por aforo por espacio, hora límite de música, potencia, exclusividad o disponibilidad exacta de fecha, di que se confirma en visita técnica. No publiques teléfonos del recinto en el chat.',
+      'Estás en la ficha de un recinto colaborador homologado en Derio (Bizkaia · comarca Txorierri / Gran Bilbao). SÍ tienes datos verificados: úsalos y PROHIBIDO decir que no tienes información del recinto. Si el cliente pregunta cómo contratar, cuánto cuesta el menú o qué sede le queda más cerca de Bilbao, Txorierri, Mungia, Uribe Kosta o Bizkaia central, responde directamente con las cifras de Ezkertza Berria & Otzarreta (Santo Domingo Hiribidea, 13, 48160 Derio, a 8-11 km / 10-12 min de Bilbao, salón acristalado de 50-200 pax, hasta 350 pax en finca y carpa, 150 plazas de parking), confirmando que sus menús (desde 40 € grupos y 100 € + IVA bodas/galas) encajan en su presupuesto por comensal. Cuando pregunten por hora límite de música, potencia, exclusividad o disponibilidad exacta de fecha, di que se confirma en visita técnica. No publiques teléfonos del recinto en el chat.',
     pathname,
     source: 'pathname',
   };
@@ -248,7 +243,12 @@ function buildProviderContext(ficha: ProviderFicha, pathname: string, source: Pa
 
 function resolveByPathname(pathname: string, source: PageContextSource): PageContext | null {
   // 1. Grupo hostelero Otzarreta / Ezkertza Berria (ficha curada con provenance).
-  if (pathname.includes('otzarreta') || pathname.includes('ezkertza')) {
+  if (
+    pathname.includes('otzarreta') ||
+    pathname.includes('ezkertza') ||
+    pathname === '/fincas/restaurante-eduardo-martinez' ||
+    pathname.startsWith('/fincas/restaurante-eduardo-martinez/')
+  ) {
     return { ...buildOtzarretaContext(pathname), source };
   }
 
@@ -350,12 +350,27 @@ export function resolvePageContext(input: { pathname?: unknown; message?: unknow
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '');
 
-    // 1. Mención directa a Otzarreta / Ezkertza / Derio / Zarautz o consulta de
-    //    restaurante/finca en Bizkaia / Bilbao / Gipuzkoa.
+    // 1. Mención directa a Otzarreta / Ezkertza / Derio / Txorierri / Mungia / Uribe Kosta
+    //    o consulta de restaurante/finca en Bizkaia / Bilbao.
+    //    No capturar búsquedas de otros gremios ("fotografo para boda en Bilbao") salvo
+    //    mención explícita de recinto o marca Otzarreta/Ezkertza.
+    const explicitBrandMatch: boolean = /\b(otzarreta|ezkertza)\b/.test(lowerMsg);
+    const explicitVenueNoun: boolean =
+      /\b(finca|fincas|restaurante|restaurantes|resturante|banquete|banquetes|caserio|caserios|asador|asadores|salon|salones|catering)\b/.test(
+        lowerMsg,
+      );
+    const asksForNonVenueService: boolean =
+      /\b(fotografo|fotografos|fotografia|videografo|videografos|videografia|fotomaton|fotomatones|floristeria|floristerias|florista|flores|peluqueria|maquillaje|maquilladora|vestido|vestidos|traje|trajes|joyeria|invitaciones|wedding\s*planner|limusina|limusinas|autobus|autobuses|dj|djs|discomovil|mariachi|mariachis|orquesta|violinista|musico|musicos|musica)\b/.test(
+        lowerMsg,
+      );
+    const matchesBasqueGeoOrIntent: boolean =
+      /\b(derio|txorierri|loiu|sondika|zamudio|lezama|larrabetzu|mungia|uribe\s*kosta|sopela|plentzia|gorliz)\b/.test(lowerMsg) ||
+      (/\b(bizkaia|vizcaya|bilbao|getxo|barakaldo|galdakao|basauri|erandio|durango|amorebieta|portugalete|santurtzi)\b/.test(lowerMsg) &&
+        /\b(finca|fincas|restaurante|restaurantes|resturante|banquete|banquetes|cena|menu|menus|boda|bodas|evento|eventos|caserio|caserios|comida|comidas|comunion|comuniones|celebracion|celebraciones|catering|asador|salon|salones|invitados|comensales|alquilar|contratar)\b/.test(
+          lowerMsg,
+        ));
     const mentionsFlagshipBasque: boolean =
-      /\b(otzarreta|ezkertza|derio|zarautz|zarauz|txorierri)\b/.test(lowerMsg) ||
-      (/\b(gipuzkoa|guipuzcoa|bizkaia|vizcaya|bilbao)\b/.test(lowerMsg) &&
-        /\b(finca|fincas|restaurante|restaurantes|resturante|banquete|cena|menu|menus|boda|invitados|comensales|alquilar|contratar)\b/.test(lowerMsg));
+      explicitBrandMatch || (matchesBasqueGeoOrIntent && (!asksForNonVenueService || explicitVenueNoun));
 
     if (mentionsFlagshipBasque) {
       return {
@@ -369,7 +384,7 @@ export function resolvePageContext(input: { pathname?: unknown; message?: unknow
     //    genéricos de servicio ("música", "gala", "evento", "proveedor") NO bastan:
     //    emparejaban "gala corporativa" con "Gala Peluquería" (incoherencia de intención).
     const asksForProviderOrVenue: boolean =
-      /\b(restaurante|restaurantes|resturante|finca|fincas|catering|fotografo|fotografia|salon|salones|bodega|hotel|masia|casona|pazo|castillo)\b/.test(
+      /\b(restaurante|restaurantes|resturante|finca|fincas|catering|fotografo|fotografos|fotografia|videografo|videografos|floristeria|floristerias|salon|salones|bodega|hotel|masia|casona|pazo|castillo)\b/.test(
         lowerMsg,
       );
     if (asksForProviderOrVenue) {

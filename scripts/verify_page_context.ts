@@ -65,9 +65,10 @@ check(
   `${otzarreta.kind} · ${otzarreta.name}`,
 );
 check(
-  'Otzarreta: hechos verificados con aforos de ambas sedes',
+  'Otzarreta: hechos verificados con aforos de Derio (200 salón / 350 finca)',
   otzarreta.facts.some((fact: string) => fact.includes('350')) &&
-    otzarreta.facts.some((fact: string) => fact.includes('220')),
+    otzarreta.facts.some((fact: string) => fact.includes('200')) &&
+    otzarreta.facts.some((fact: string) => fact.includes('Derio')),
   `hechos=${otzarreta.facts.length}`,
 );
 check(
@@ -112,7 +113,7 @@ check(
 const prompt = buildHardenedSystemPrompt({
   pathname: '/otzarreta',
   activeFincaName: otzarreta.name,
-  detectedCity: 'Derio (Bizkaia) / Zarautz (Gipuzkoa)',
+  detectedCity: 'Derio (Bizkaia)',
   distanceKm: null,
   endHour: 2,
   formattedTotalEur: 350,
@@ -175,7 +176,7 @@ check(
   `${desconocida.kind}`,
 );
 
-/* ── 7. Regresión en vivo: URL pegada desde "/" + consulta Derio / Gipuzkoa ─ */
+/* ── 7. Regresión en vivo: URL pegada desde "/" + consulta Derio / Bizkaia ─ */
 const fromRootWithUrl = resolvePageContext({
   pathname: '/',
   message: 'otzarreta en tu base de datos estoy viendo su url en mi navegador, http://localhost:3007/otzarreta#panel-eduardo',
@@ -196,16 +197,56 @@ check(
   `${derioQuery.kind} · ${derioQuery.name}`,
 );
 
-const gipuzkoaBilbaoQuery = resolvePageContext({
+const bizkaiaBilbaoQuery = resolvePageContext({
   pathname: '/',
-  message: 'hola cuanto cuesta alquilar una finca para una boda o un restaurante en Gipuzkoa? dia 31 dic, 100 invitados cena de empresa. menu maximo 154 € por persona de presupuesto. el lugar mas cerca de bilbao a menos de 15 minutos o 30kms',
+  message: 'hola cuanto cuesta alquilar una finca para una boda o un restaurante en Bizkaia? dia 31 dic, 100 invitados cena de empresa. menu maximo 154 € por persona de presupuesto. el lugar mas cerca de bilbao o uribe kosta a menos de 15 minutos',
 });
 check(
-  'Regresión CEO: consulta Gipuzkoa / cerca de Bilbao (154 €/pax) resuelve sedes y menús',
-  gipuzkoaBilbaoQuery.kind === 'venue' &&
-    gipuzkoaBilbaoQuery.facts.some((fact: string) => fact.includes('11 km / 12 min de Bilbao')) &&
-    gipuzkoaBilbaoQuery.facts.some((fact: string) => fact.includes('154 €')),
-  `${gipuzkoaBilbaoQuery.kind} · hechos=${gipuzkoaBilbaoQuery.facts.length}`,
+  'Regresión CEO: consulta Bizkaia / cerca de Bilbao (154 €/pax) resuelve sede Derio y menús',
+  bizkaiaBilbaoQuery.kind === 'venue' &&
+    bizkaiaBilbaoQuery.facts.some((fact: string) => fact.includes('Derio') && fact.includes('Bilbao')) &&
+    bizkaiaBilbaoQuery.facts.some((fact: string) => fact.includes('154 €')),
+  `${bizkaiaBilbaoQuery.kind} · hechos=${bizkaiaBilbaoQuery.facts.length}`,
+);
+
+const bilbaoEventoQuery = resolvePageContext({
+  pathname: '/',
+  message: 'evento en Bilbao',
+});
+check(
+  'Regresión R5: "evento en Bilbao" resuelve Otzarreta Derio',
+  bilbaoEventoQuery.id === 'restaurante-otzarreta',
+  `id=${String(bilbaoEventoQuery.id)}`,
+);
+
+const bilbaoBodasQuery = resolvePageContext({
+  pathname: '/',
+  message: 'bodas en Bilbao',
+});
+check(
+  'Regresión R5: "bodas en Bilbao" resuelve Otzarreta Derio',
+  bilbaoBodasQuery.id === 'restaurante-otzarreta',
+  `id=${String(bilbaoBodasQuery.id)}`,
+);
+
+const amorebietaRestauranteQuery = resolvePageContext({
+  pathname: '/',
+  message: 'restaurante en Amorebieta',
+});
+check(
+  'Regresión R5: "restaurante en Amorebieta" resuelve Otzarreta Derio',
+  amorebietaRestauranteQuery.id === 'restaurante-otzarreta',
+  `id=${String(amorebietaRestauranteQuery.id)}`,
+);
+
+const legacyOutsideProvinceQuery = resolvePageContext({
+  pathname: '/',
+  message: 'busco un restaurante para boda en Gipuzkoa cerca de Zarautz',
+});
+check(
+  'Regresión territorial (R5): consulta pura Gipuzkoa/Zarautz NO devuelve Otzarreta Derio',
+  legacyOutsideProvinceQuery.id !== 'restaurante-otzarreta',
+  `id=${String(legacyOutsideProvinceQuery.id)}`,
 );
 
 /* ── Informe ─────────────────────────────────────────────────────────────── */

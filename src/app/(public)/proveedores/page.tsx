@@ -189,7 +189,7 @@ const SOVEREIGN_OTZARRETA: ProviderItem = {
   province: OTZARRETA_ENTITY.provinceAlias,
   municipality: OTZARRETA_ENTITY.municipality,
   address: OTZARRETA_ENTITY.fullAddress,
-  description: `Casa fundada en 1902 como sidrería y reabierta en 1962: cuarta generación de cocina de cazuela vasca, comedor histórico, terraza de verano, jardines de Santa Clara y bodega seleccionada en Zarautz. Aforo de ${OTZARRETA_ENTITY.capacityPax} comensales en la sede de Gipuzkoa. El grupo incluye Ezkertza Berria (Derio · Bizkaia) con ${OTZARRETA_ENTITY.groupCapacityPax} pax, jardines para ceremonias civiles y ${OTZARRETA_ENTITY.groupParkingSpaces} plazas de aparcamiento.`,
+  description: `Caserío tradicional vasco y asador en Santo Domingo Hiribidea, 13, 48160 Derio (Bizkaia · comarca Txorierri / Gran Bilbao): cocina de cazuela vasca y parrilla al carbón de encina dirigida por Eduardo Martínez. Salón acristalado de 50 a 200 comensales y capacidad total de hasta ${OTZARRETA_ENTITY.capacityPax} pax con jardines botánicos para ceremonias civiles, carpa climatizada y ${OTZARRETA_ENTITY.parkingSpaces} plazas de aparcamiento privado.`,
   price: formatEuro(OTZARRETA_ENTITY.weddingPriceFromEur),
   priceLabel: 'Desde',
   basePrice: OTZARRETA_ENTITY.weddingPriceFromEur,
@@ -780,12 +780,8 @@ function ProveedoresDirectoryContent() {
 
   const providersData = useMemo(() => {
     const isBasqueProvince = !selectedProvince || selectedProvince === 'ALL' || 
-      isProvinceMatch(selectedProvince, 'Guipúzcoa') || 
-      isProvinceMatch(selectedProvince, 'Gipuzkoa') || 
       isProvinceMatch(selectedProvince, 'Vizcaya') || 
-      isProvinceMatch(selectedProvince, 'Bizkaia') || 
-      isProvinceMatch(selectedProvince, 'Álava') || 
-      isProvinceMatch(selectedProvince, 'Araba');
+      isProvinceMatch(selectedProvince, 'Bizkaia');
 
     // Descartar posibles duplicados de Otzarreta para que prevalezca el canónico S-Class
     const cleanApi = apiProviders.filter(p => p.id !== 'v-32714' && !p.name?.toLowerCase().includes('otzarreta'));

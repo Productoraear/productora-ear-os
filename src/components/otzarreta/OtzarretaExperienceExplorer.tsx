@@ -496,7 +496,7 @@ export const OFFICIAL_EXTRAS: AdditionalService[] = [
     name: 'Servicio de Autobús (55 plazas)',
     price: 550,
     perPax: false,
-    desc: 'Desde 550 € según dossier oficial: traslado de ida y vuelta para invitados desde Gipuzkoa o Bizkaia'
+    desc: 'Desde 550 € según dossier oficial: traslado de ida y vuelta para invitados desde Bilbao, Txorierri, Mungia, Uribe Kosta y Bizkaia central'
   },
   {
     id: 'aurresku',

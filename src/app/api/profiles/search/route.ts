@@ -1,9 +1,10 @@
 export const dynamic = 'force-dynamic';
 
 import { NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'node:url';
 
 import { SCLASS_12_FINCAS_HOMOLOGADAS } from '@/lib/constants/fincas-catalog';
 import { OTZARRETA_ENTITY } from '@/lib/constants/otzarreta-entity';
@@ -64,9 +65,9 @@ const FINCAS_HOMOLOGADAS_ITEMS = SCLASS_12_FINCAS_HOMOLOGADAS.map((f, idx) => {
 });
 
 // ── PARCHE CANÓNICO OTZARRETA (CERO FACHADAS · SSOT VERIFICADO) ───────────────
-// El data lake conserva el volcado histórico (aforo de Derio, 350 pax) bajo la
-// ficha de Zarautz. La API de venta NUNCA debe servir esa conflación: la
-// respuesta se sella con la entidad canónica verificada antes de salir.
+// La ficha canónica de Eduardo Martínez (Ezkertza Berria & Otzarreta) reside
+// exclusivamente en Derio (Bizkaia · Txorierri / Gran Bilbao, 350 pax). La API
+// sella cualquier registro heredado del data lake con la entidad canónica.
 const OTZARRETA_CANONICAL_API = Object.freeze({
   name: `${OTZARRETA_ENTITY.commercialName} & Ezkertza Berria • Eduardo Martínez`,
   slug: OTZARRETA_ENTITY.slug,
@@ -74,7 +75,7 @@ const OTZARRETA_CANONICAL_API = Object.freeze({
   province: OTZARRETA_ENTITY.provinceAlias,
   municipality: OTZARRETA_ENTITY.municipality,
   address: OTZARRETA_ENTITY.fullAddress,
-  description: `Casa fundada en 1902 como sidrería y reabierta en 1962: cuarta generación de cocina de cazuela vasca, comedor histórico, terraza de verano, jardines de Santa Clara y bodega seleccionada en Zarautz. Aforo de ${OTZARRETA_ENTITY.capacityPax} comensales en la sede de Gipuzkoa. El grupo incluye Ezkertza Berria (Derio · Bizkaia) con ${OTZARRETA_ENTITY.groupCapacityPax} pax, jardines para ceremonias civiles y ${OTZARRETA_ENTITY.groupParkingSpaces} plazas de aparcamiento.`,
+  description: `Caserío tradicional vasco y asador en Santo Domingo Hiribidea, 13, 48160 Derio (Bizkaia · comarca Txorierri / Gran Bilbao): cocina de cazuela vasca y parrilla al carbón de encina dirigida por Eduardo Martínez. Salón acristalado de 50 a 200 comensales y capacidad total de hasta ${OTZARRETA_ENTITY.capacityPax} pax con jardines botánicos para ceremonias civiles, carpa climatizada y ${OTZARRETA_ENTITY.parkingSpaces} plazas de aparcamiento privado.`,
   price: `${new Intl.NumberFormat('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(OTZARRETA_ENTITY.weddingPriceFromEur)} €`,
   priceLabel: 'Desde',
   basePrice: OTZARRETA_ENTITY.weddingPriceFromEur,
@@ -95,12 +96,71 @@ const OTZARRETA_CANONICAL_API = Object.freeze({
   customUrl: '/otzarreta',
 });
 
+function normalizeSearchText(value: string): string {
+  return value
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .trim();
+}
+
 /** Detecta cualquier variante de la ficha Otzarreta (id de lake, slug o nombre). */
 function isOtzarretaRecord(record: { id?: unknown; slug?: unknown; name?: unknown }): boolean {
   const id = String(record.id ?? '');
   const slug = String(record.slug ?? '');
   const name = String(record.name ?? '');
-  return id === 'v-32714' || slug === OTZARRETA_ENTITY.slug || /otzarreta/i.test(name);
+  return id === 'v-32714' || slug === OTZARRETA_ENTITY.slug || /otzarreta/i.test(slug) || /otzarreta/i.test(name);
+}
+
+/**
+ * Construye una respuesta de API 100% canónica para Otzarreta / Ezkertza Berria
+ * sin arrastrar campos heredados del data lake (`description_full`, `faqs`,
+ * `google_maps_url`, `google_search_url`, `profile_url`, `postalCode`, etc.).
+ */
+function buildCanonicalOtzarretaRecord(
+  p: {
+    id?: unknown;
+    vendorId?: unknown;
+    shaHash?: unknown;
+    rating?: unknown;
+    reviewsCount?: unknown;
+  },
+  meta: {
+    isClaimed: boolean;
+    estadoHomologacion: string;
+  },
+) {
+  const canonicalMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+    `${OTZARRETA_CANONICAL_API.name} ${OTZARRETA_ENTITY.fullAddress}`,
+  )}`;
+  const canonicalSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(
+    `${OTZARRETA_CANONICAL_API.name} ${OTZARRETA_ENTITY.municipality} ${OTZARRETA_ENTITY.province} telefono`,
+  )}`;
+
+  return {
+    id: typeof p.id === 'string' && p.id.length > 0 ? p.id : 'v-32714',
+    ...(p.vendorId !== undefined ? { vendorId: p.vendorId } : {}),
+    ...(p.shaHash !== undefined ? { shaHash: p.shaHash } : {}),
+    ...(typeof p.rating === 'number' ? { rating: p.rating } : {}),
+    ...(typeof p.reviewsCount === 'number' ? { reviewsCount: p.reviewsCount } : {}),
+    isClaimed: meta.isClaimed,
+    estadoHomologacion: meta.estadoHomologacion,
+    ...OTZARRETA_CANONICAL_API,
+    postalCode: OTZARRETA_ENTITY.postalCode,
+    autonomousCommunity: OTZARRETA_ENTITY.autonomousCommunity,
+    country: OTZARRETA_ENTITY.country,
+    email: OTZARRETA_ENTITY.email,
+    website: OTZARRETA_ENTITY.website,
+    profile_url: OTZARRETA_ENTITY.website,
+    sourceUrl: OTZARRETA_ENTITY.website,
+    originHtml: null,
+    original_html: null,
+    google_search_url: canonicalSearchUrl,
+    google_maps_url: canonicalMapsUrl,
+    description_full: OTZARRETA_CANONICAL_API.description,
+    faqs: [] as const,
+    services_list: [...OTZARRETA_ENTITY.affiliatedVenues[0].features],
+  };
 }
 
 const SUBCATEGORY_KEYWORD_MAP: Record<string, string[]> = {
@@ -308,15 +368,27 @@ function buildCapacityText(p: any): string {
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // MOTOR ESTÁTICO DE ALTA VELOCIDAD (NETLIFY EDGE / ZERO-COLD-START)
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function resolveModuleDir(): string | null {
+  try {
+    if (typeof import.meta?.url === 'string' && import.meta.url.startsWith('file:')) {
+      return path.dirname(fileURLToPath(import.meta.url));
+    }
+  } catch {
+    /* entorno sin file:// import.meta.url */
+  }
+  return null;
+}
+
 async function loadStaticDataset(targetFile: string, requestUrl: string): Promise<string | null> {
   // 1. Intento en disco (dev / standalone / self-hosted).
+  const moduleDir = resolveModuleDir();
   const candidatePaths = [
     path.join(process.cwd(), 'public', 'data', 'providers', targetFile),
     path.join(process.cwd(), '.next', 'standalone', 'public', 'data', 'providers', targetFile),
-    path.join(__dirname, '..', '..', '..', '..', '..', 'public', 'data', 'providers', targetFile),
+    ...(moduleDir ? [path.join(moduleDir, '..', '..', '..', '..', '..', 'public', 'data', 'providers', targetFile)] : []),
     path.join(process.cwd(), 'public', 'data', 'artists', targetFile),
     path.join(process.cwd(), '.next', 'standalone', 'public', 'data', 'artists', targetFile),
-    path.join(__dirname, '..', '..', '..', '..', '..', 'public', 'data', 'artists', targetFile),
+    ...(moduleDir ? [path.join(moduleDir, '..', '..', '..', '..', '..', 'public', 'data', 'artists', targetFile)] : []),
   ];
 
   // Si la petición es para música, comprobar también la ruta canónica de artistas
@@ -324,7 +396,7 @@ async function loadStaticDataset(targetFile: string, requestUrl: string): Promis
     candidatePaths.push(
       path.join(process.cwd(), 'public', 'data', 'artists', 'artists_canonical.json'),
       path.join(process.cwd(), '.next', 'standalone', 'public', 'data', 'artists', 'artists_canonical.json'),
-      path.join(__dirname, '..', '..', '..', '..', '..', 'public', 'data', 'artists', 'artists_canonical.json')
+      ...(moduleDir ? [path.join(moduleDir, '..', '..', '..', '..', '..', 'public', 'data', 'artists', 'artists_canonical.json')] : [])
     );
   }
 
@@ -500,18 +572,31 @@ async function queryStaticProviders(options: {
 
   // 1. Filtro por provincia (52 provincias con tolerancia de acentos, códigos y alias)
   if (province && province !== 'ALL' && province.trim() !== '') {
-    list = list.filter((p) => isProvinceMatch(province, p.province || ''));
+    list = list.filter((p) => {
+      if (isOtzarretaRecord(p)) {
+        return isProvinceMatch(province, OTZARRETA_ENTITY.province);
+      }
+      return isProvinceMatch(province, p.province || '');
+    });
   }
 
   // 2. Filtro por texto de búsqueda
   if (q) {
-    const qLower = q.toLowerCase().trim();
-    list = list.filter(
-      (p) =>
-        (p.name || '').toLowerCase().includes(qLower) ||
-        (p.description || '').toLowerCase().includes(qLower) ||
-        (p.municipality || '').toLowerCase().includes(qLower)
-    );
+    const qNorm = normalizeSearchText(q);
+    list = list.filter((p) => {
+      if (isOtzarretaRecord(p)) {
+        return (
+          normalizeSearchText(OTZARRETA_CANONICAL_API.name).includes(qNorm) ||
+          normalizeSearchText(OTZARRETA_CANONICAL_API.description).includes(qNorm) ||
+          normalizeSearchText(OTZARRETA_CANONICAL_API.municipality).includes(qNorm)
+        );
+      }
+      return (
+        normalizeSearchText(p.name || '').includes(qNorm) ||
+        normalizeSearchText(p.description || '').includes(qNorm) ||
+        normalizeSearchText(p.municipality || '').includes(qNorm)
+      );
+    });
   }
 
   // 3. Filtro por subcategoría semántica (Estricto por gremioTag)
@@ -650,6 +735,10 @@ async function queryStaticProviders(options: {
         ? (isClaimed ? 'CERTIFICADA_GOLD_MASTER' : 'AUDITORIA_VIGENTE')
         : 'ASOCIADO_STANDARD');
 
+    if (isOtzarretaRecord(p)) {
+      return buildCanonicalOtzarretaRecord(p, { isClaimed, estadoHomologacion });
+    }
+
     const mapped = {
       ...p,
       name: cleanedName || rawName,
@@ -677,7 +766,7 @@ async function queryStaticProviders(options: {
       galleryAugmented: finalImages.length > realGallery.length,
     };
 
-    return isOtzarretaRecord(p) ? { ...mapped, ...OTZARRETA_CANONICAL_API } : mapped;
+    return mapped;
   });
 
   return { total, providers };
@@ -702,7 +791,7 @@ export async function GET(request: Request) {
   if (process.env.POSTGRES_PRISMA_URL && (!isNetlify || !isLocalDb)) {
     try {
       const client = getPrismaClient();
-      const where: any = {};
+      const where: Prisma.VendorShadowProfileWhereInput = {};
       // Normalización SSOT: "fotografos"/"banquetes"/"novias" -> gremio canónico
       const normalizedCategory = normalizeBodasNetCategory(category);
       if (normalizedCategory && normalizedCategory !== 'ALL') {
@@ -710,27 +799,64 @@ export async function GET(request: Request) {
       }
       // Provincia tolerante (tildes, códigos y cooficiales) también en PostgreSQL
       const canonicalProvince = resolveProvince(province);
+      const andConditions: Prisma.VendorShadowProfileWhereInput[] = [];
       if (canonicalProvince) {
         const provinceVariants = getProvinceSearchVariants(canonicalProvince.name);
+        const matchesOtzarretaProvince = isProvinceMatch(canonicalProvince.name, OTZARRETA_ENTITY.province);
         where.OR = [
           ...provinceVariants.map((variant) => ({
-            province: { contains: variant, mode: 'insensitive' },
+            province: { contains: variant, mode: 'insensitive' as const },
           })),
           { province: { equals: canonicalProvince.code, mode: 'insensitive' } },
+          ...(matchesOtzarretaProvince
+            ? [
+                { id: 'v-32714' },
+                { name: { contains: 'otzarreta', mode: 'insensitive' as const } },
+              ]
+            : []),
         ];
-      } else if (province && !isAllSpainProvince(province)) {
-        where.province = { contains: province, mode: 'insensitive' };
+        if (!matchesOtzarretaProvince) {
+          andConditions.push(
+            { id: { not: 'v-32714' } },
+            { NOT: { name: { contains: 'otzarreta', mode: 'insensitive' } } },
+          );
+        }
+      } else if (province && province.trim() !== '' && !isAllSpainProvince(province)) {
+        where.province = { contains: province.trim(), mode: 'insensitive' };
+        andConditions.push(
+          { id: { not: 'v-32714' } },
+          { NOT: { name: { contains: 'otzarreta', mode: 'insensitive' } } },
+        );
       }
 
-      const andConditions: any[] = [];
       if (q) {
+        const qNorm = normalizeSearchText(q);
+        const otzarretaMatchesCanonicalQ = [
+          OTZARRETA_CANONICAL_API.name,
+          OTZARRETA_CANONICAL_API.description,
+          OTZARRETA_CANONICAL_API.municipality,
+        ].some((field) => normalizeSearchText(field).includes(qNorm));
+
         andConditions.push({
           OR: [
             { name: { contains: q, mode: 'insensitive' } },
             { description: { contains: q, mode: 'insensitive' } },
             { municipality: { contains: q, mode: 'insensitive' } },
+            ...(otzarretaMatchesCanonicalQ
+              ? [
+                  { id: 'v-32714' },
+                  { name: { contains: 'otzarreta', mode: 'insensitive' as const } },
+                ]
+              : []),
           ],
         });
+
+        if (!otzarretaMatchesCanonicalQ) {
+          andConditions.push(
+            { id: { not: 'v-32714' } },
+            { NOT: { name: { contains: 'otzarreta', mode: 'insensitive' } } },
+          );
+        }
       }
 
       if (subcategory && subcategory !== 'all') {
@@ -784,6 +910,15 @@ export async function GET(request: Request) {
               : [getApiFallbackImage(p.category, p.id || p.shaHash || p.name)];
           const finalImages = getApiAugmentedGallery(p.category, seededImages);
 
+          if (isOtzarretaRecord(p)) {
+            const isClaimed = Boolean((p as { isClaimed?: unknown }).isClaimed);
+            const estadoHomologacion =
+              p.status === 'VERIFIED_ACTIVE' || p.status === 'APPROVED_SCLASS'
+                ? (isClaimed ? 'CERTIFICADA_GOLD_MASTER' : 'AUDITORIA_VIGENTE')
+                : 'ASOCIADO_STANDARD';
+            return buildCanonicalOtzarretaRecord(p, { isClaimed, estadoHomologacion });
+          }
+
           const mappedRecord = {
             ...p,
             name: cleanedName || rawName,
@@ -796,9 +931,7 @@ export async function GET(request: Request) {
             galleryAugmented: finalImages.length > realGallery.length,
           };
 
-          return isOtzarretaRecord(p)
-            ? { ...mappedRecord, ...OTZARRETA_CANONICAL_API }
-            : mappedRecord;
+          return mappedRecord;
         });
 
         return NextResponse.json({

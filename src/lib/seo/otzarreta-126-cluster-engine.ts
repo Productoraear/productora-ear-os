@@ -7,12 +7,14 @@
  *
  * Características de Entidad:
  * - Parrilla vasca de brasa al carbón de encina y sarmiento de Eduardo Martínez.
- * - Parking privado cerrado para más de 120 vehículos.
+ * - Parking privado cerrado para 150 vehículos.
  * - Aforo acristalado de 50 a 200 comensales (hasta 350 en carpa/jardín).
  * - 7 Menús oficiales canónicos (145 € a 185 € + IVA).
  * - Maître Digital 24/7 integrado en cada landing.
  * ══════════════════════════════════════════════════════════════════════════════
  */
+
+import { OTZARRETA_ENTITY } from '../constants/otzarreta-entity';
 
 export interface OtzarretaBizkaiaMunicipality {
   readonly slug: string;
@@ -73,7 +75,7 @@ export const OTZARRETA_BIZKAIA_MUNICIPALITIES: readonly OtzarretaBizkaiaMunicipa
   { slug: 'amorebieta', name: 'Amorebieta', distanceKm: 21, minutesFromDerio: 16, highway: 'AP-8 / N-637', landmark: 'conexión rápida por el corredor del Txorierri' },
   { slug: 'portugalete', name: 'Portugalete', distanceKm: 17, minutesFromDerio: 15, highway: 'Rontegi / N-637', landmark: 'acceso directo desde la margen izquierda' },
   { slug: 'santurtzi', name: 'Santurtzi', distanceKm: 19, minutesFromDerio: 16, highway: 'A-8 / N-637', landmark: 'comunicación directa sin entrar en el núcleo urbano' },
-  { slug: 'castro-urdiales', name: 'Castro Urdiales', distanceKm: 38, minutesFromDerio: 28, highway: 'A-8 / N-637', landmark: 'a menos de 30 minutos con párking privado asegurado' },
+  { slug: 'uribe-kosta', name: 'Uribe Kosta', distanceKm: 18, minutesFromDerio: 16, highway: 'BI-634 / N-637', landmark: 'la comarca costera de Sopela, Plentzia, Gorliz y Getxo' },
 ]);
 
 /** 2. LAS 7 OCASIONES DE CONSUMO TRANSACCIONALES */
@@ -86,7 +88,7 @@ export const OTZARRETA_OCCASIONS: readonly OtzarretaOccasion[] = Object.freeze([
     targetAudience: 'Parejas que buscan caserío vasco auténtico, 1 evento al día y cocina de brasa.',
     menuRecommendation: 'Menú Asador al Sarmiento (155 € + IVA) con chuletón de 1 Kg y 1/2 bogavante.',
     capacityRange: '50 a 200 comensales (hasta 350 en carpa botánica)',
-    keyBenefit: 'Solo 1 boda al día en exclusiva, párking privado de 120 plazas y parrilla al carbón.',
+    keyBenefit: `Solo 1 boda al día en exclusiva, párking privado de ${OTZARRETA_ENTITY.parkingSpaces} plazas y parrilla al carbón.`,
   },
   {
     slugPrefix: 'ceremonia-civil-jardin',
@@ -101,7 +103,7 @@ export const OTZARRETA_OCCASIONS: readonly OtzarretaOccasion[] = Object.freeze([
   {
     slugPrefix: 'comidas-empresa-parque-tecnologico',
     occasionName: 'Comidas de Empresa y Parque Tecnológico',
-    h1Pattern: 'Comidas de Empresa cerca de {municipio} con Párking Privado para 120 Vehículos',
+    h1Pattern: `Comidas de Empresa cerca de {municipio} con Párking Privado para ${OTZARRETA_ENTITY.parkingSpaces} Vehículos`,
     priority: 0.90,
     targetAudience: 'Empresas, comités de dirección y reuniones corporativas de Zamudio, Bilbao y Bizkaia.',
     menuRecommendation: 'Menús ejecutivos y banquetes de brasa desde 100 € hasta 155 € + IVA.',
@@ -159,7 +161,7 @@ function generateOtzarreta126Landings(): readonly OtzarretaClusterLanding[] {
       const slug = `${occasion.slugPrefix}-${muni.slug}`;
       const h1 = occasion.h1Pattern.replace('{municipio}', muni.name);
       const title = `${h1} | Otzarreta Caserío`;
-      const description = `Celebra tu evento en Caserío Ezkertza Berria & Otzarreta (Derio), a ${muni.minutesFromDerio} min de ${muni.name} por ${muni.highway}. Párking privado de 120 plazas, parrilla al carbón de Eduardo Martínez y exclusividad.`;
+      const description = `Celebra tu evento en Caserío Ezkertza Berria & Otzarreta (Derio), a ${muni.minutesFromDerio} min de ${muni.name} por ${muni.highway}. Párking privado de ${OTZARRETA_ENTITY.parkingSpaces} plazas, parrilla al carbón de Eduardo Martínez y exclusividad.`;
 
       landings.push(
         Object.freeze({
@@ -176,7 +178,7 @@ function generateOtzarreta126Landings(): readonly OtzarretaClusterLanding[] {
           minutesFromDerio: muni.minutesFromDerio,
           highway: muni.highway,
           landmark: muni.landmark,
-          parkingInfo: 'Párking propio cerrado y vigilado para más de 120 vehículos.',
+          parkingInfo: `Párking propio cerrado y vigilado para ${OTZARRETA_ENTITY.parkingSpaces} vehículos.`,
           grillInfo: 'Parrilla vasca tradicional de carbón de encina y sarmiento dirigida por Eduardo Martínez.',
           capacityInfo: occasion.capacityRange,
           menuRange: 'Menús oficiales canónicos de 100 € a 173 € / 185 € + IVA.',

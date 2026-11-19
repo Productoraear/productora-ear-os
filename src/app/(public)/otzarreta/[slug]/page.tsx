@@ -43,7 +43,7 @@ interface Props {
 export const dynamicParams = false;
 
 export function generateStaticParams(): { slug: string }[] {
-  // SSG completo del clúster: Gipuzkoa (126 URLs) + Bizkaia/Txorierri (126 URLs)
+  // SSG completo del clúster Derio / Bizkaia: Dominancia (126 URLs) + Txorierri/Uribe Kosta (126 URLs)
   // pre-renderizan en build; cualquier slug fuera de ambos catálogos responde 404.
   const allSlugs = Array.from(new Set([...getOtzarretaSlugs(), ...getOtzarreta126Slugs()]));
   return allSlugs.map((slug) => ({ slug }));
@@ -231,7 +231,7 @@ export default async function OtzarretaDynamicLandingPage({ params }: Props): Pr
             <div className="flex flex-wrap items-center justify-center gap-6 pt-4 text-xs text-gray-400 font-mono">
               <div className="flex items-center gap-1.5">
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                <span>Párking Privado &gt;120 Plazas</span>
+                <span>Párking Privado 150 Plazas</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <Flame className="w-3.5 h-3.5 text-amber-400" />
@@ -309,7 +309,7 @@ export default async function OtzarretaDynamicLandingPage({ params }: Props): Pr
     );
   }
 
-  // Fallback a landing de Gipuzkoa
+  // Landing del motor de dominancia Derio / Bizkaia
   if (!landing) {
     notFound();
   }
@@ -490,7 +490,7 @@ export default async function OtzarretaDynamicLandingPage({ params }: Props): Pr
           <p className="text-[10px] text-gray-500 font-mono break-all">
             Entidad verificada · Restaurante Otzarreta (Derio, Bizkaia) · línea de la casa{' '}
             {supplierLineMask(landing.phone)} (protegida) · canal único:{' '}
-            {SOVEREIGN_DEMAND_CHANNEL.telDisplay} · fuente: restauranteotzarreta.com
+            {SOVEREIGN_DEMAND_CHANNEL.telDisplay} · fuente: ezkertzaberria.com
           </p>
           <p className="text-[10px] text-gray-500 leading-relaxed">
             {supplierContactWithheldNotice('Restaurante Otzarreta')}

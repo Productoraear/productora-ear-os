@@ -1,23 +1,23 @@
 /**
  * ════════════════════════════════════════════════════════════════════════════
- * MOTOR DE DOMINANCIA PROVINCIAL — RESTAURANTE OTZARRETA · GIPUZKOA
+ * MOTOR DE DOMINANCIA PROVINCIAL — RESTAURANTE OTZARRETA / EZKERTZA BERRIA · DERIO (BIZKAIA)
  * ════════════════════════════════════════════════════════════════════════════
  * Instantánea del "Motor Génesis" (ESTRATEGIA_LANDING_GENESIS_100_PREGUNTAS.md)
- * aplicada a una entidad REAL verificada (`OTZARRETA_ENTITY`, Zarautz):
+ * aplicada a la entidad REAL verificada (`OTZARRETA_ENTITY`, Derio · Bizkaia):
  *
- *   · 72 landings geográficas = 18 municipios reales de Gipuzkoa × 4 verticales
+ *   · 72 landings geográficas = 18 municipios/comarcas reales de Bizkaia × 4 verticales
  *   · 54 landings de intención = consultas con intención transaccional real
  *   · 1 hub de clúster que reparte autoridad a las 126 URL
  *
  * Doctrina aplicada sin excepciones:
  *  1. Entidad-first: sin proveedor verificado no hay URL.
- *  2. Cero invención: aforo y precios de menú son `null` en la ficha; el copy
- *     NUNCA afirma lo que el origen no publica.
+ *  2. Cero invención: cada cifra (350 pax, 50-200 salón, 150 plazas de parking,
+ *     menús 2026) proviene de la ficha canónica y del dossier oficial.
  *  3. Precio/depósito/split: SIEMPRE desde `ear-os-ssot.ts` (cero hardcode).
  *  4. Determinismo: mismo slug → mismo copy, mismo `stripeSessionId`, mismo
  *     `provenanceHash`. N ejecuciones = bytes idénticos (idempotencia ACID).
  *  5. Anti-cannibalización: composición por bancos con carriles de hash
- *     independientes para que dos landings no compartan >10% de shingles.
+ *     independientes y cero colisión de slugs con `otzarreta-126-cluster-engine.ts`.
  * ════════════════════════════════════════════════════════════════════════════
  */
 
@@ -35,15 +35,15 @@ import {
 /** Vertical comercial del restaurante (4 × 18 municipios = 72 landings). */
 export type OtzarretaVerticalSlug =
     | 'bodas-gala'
-    | 'ceremonia-civil-jardin'
+    | 'ceremonia-civil-caserio'
     | 'comuniones-empresa'
     | 'catering-fincas';
 
-/** Municipio real de Gipuzkoa con distancia aproximada por carretera. */
+/** Municipio o comarca real de Bizkaia con distancia aproximada por carretera. */
 export interface OtzarretaMunicipality {
     readonly slug: string;
     readonly name: string;
-    /** Kilómetros aproximados por carretera desde C/ Santa Clara 5 (Zarautz). */
+    /** Kilómetros aproximados por carretera desde Santo Domingo Hiribidea, 13 (Derio). */
     readonly distanceKm: number;
     /** Eje viario real utilizado en el trayecto. */
     readonly corridor: string;
@@ -80,169 +80,169 @@ export interface OtzarretaIntentSeed {
     readonly hook: string;
 }
 
-/** Los 18 municipios de Gipuzkoa con demanda real de banquete. */
+/** Los 18 municipios y áreas de influencia de Bizkaia con demanda real de banquete. */
 export const OTZARRETA_MUNICIPALITIES: readonly OtzarretaMunicipality[] = Object.freeze([
     {
-        slug: 'zarautz',
-        name: 'Zarautz',
+        slug: 'derio',
+        name: 'Derio',
         distanceKm: 0,
-        corridor: 'GI-20 / N-634',
-        profile: 'litoral',
-        landmark: 'la villa costera y su paseo marítimo',
-        demand: 'bodas de junio a septiembre con ceremonia y banquete el mismo día',
-    },
-    {
-        slug: 'getaria',
-        name: 'Getaria',
-        distanceKm: 5,
-        corridor: 'GI-20 / N-634',
-        profile: 'litoral',
-        landmark: 'el puerto pesquero y su lonja',
-        demand: 'celebraciones de familias con casa en la costa guipuzcoana',
-    },
-    {
-        slug: 'orio',
-        name: 'Orio',
-        distanceKm: 12,
-        corridor: 'GI-20',
-        profile: 'litoral',
-        landmark: 'la desembocadura del río Oria',
-        demand: 'bodas de temporada alta y comidas de cuadrilla',
-    },
-    {
-        slug: 'aia',
-        name: 'Aia',
-        distanceKm: 14,
-        corridor: 'GI-2631 / GI-3180',
+        corridor: 'Santo Domingo Hiribidea / N-637',
         profile: 'valle',
-        landmark: 'los caseríos dispersos entre montes',
-        demand: 'ceremonias civiles en caserío con banquete fuera del núcleo urbano',
+        landmark: 'el corazón del Txorierri junto al Parque Tecnológico',
+        demand: 'bodas exclusivas de un evento al día con ceremonia y banquete en la misma finca',
     },
     {
-        slug: 'usurbil',
-        name: 'Usurbil',
-        distanceKm: 16,
-        corridor: 'GI-20 / GI-3631',
-        profile: 'valle',
-        landmark: 'la vega del río Oria',
-        demand: 'comuniones y comidas familiares de fin de semana',
-    },
-    {
-        slug: 'zumaia',
-        name: 'Zumaia',
-        distanceKm: 17,
-        corridor: 'GI-20',
-        profile: 'litoral',
-        landmark: 'el flysch y la ría del Urola',
-        demand: 'bodas de destination wedding con invitados de fuera de Gipuzkoa',
-    },
-    {
-        slug: 'zestoa',
-        name: 'Zestoa',
-        distanceKm: 20,
-        corridor: 'GI-631 / GI-3290',
-        profile: 'valle',
-        landmark: 'el valle del Urola y su tradición termal',
-        demand: 'banquetes de empresa y celebraciones de temporada media',
-    },
-    {
-        slug: 'donostia',
-        name: 'San Sebastián',
-        distanceKm: 21,
-        corridor: 'AP-8 / GI-20',
+        slug: 'bilbao',
+        name: 'Bilbao',
+        distanceKm: 8,
+        corridor: 'Túneles de Artxanda / N-637',
         profile: 'capital',
-        landmark: 'la bahía de La Concha y su casco viejo',
-        demand: 'bodas de parejas urbanas que buscan costa sin renunciar a la calidad',
+        landmark: 'el centro de Bilbao y la ría del Nervión',
+        demand: 'bodas urbanas que buscan caserío con jardín y 150 plazas de párking privado a 8 minutos',
     },
     {
-        slug: 'azpeitia',
-        name: 'Azpeitia',
-        distanceKm: 22,
-        corridor: 'GI-631',
+        slug: 'loiu',
+        name: 'Loiu',
+        distanceKm: 4,
+        corridor: 'BI-631 / N-637',
         profile: 'valle',
-        landmark: 'el valle del Urola y el entorno de Loiola',
-        demand: 'ceremonias familiares con banquete de cazuela y bodega',
+        landmark: 'el entorno del aeropuerto y las campas de Loiu',
+        demand: 'bodas con invitados llegados en avión y comidas directivas sin pérdida de tiempo',
     },
     {
-        slug: 'lasarte-oria',
-        name: 'Lasarte-Oria',
-        distanceKm: 23,
-        corridor: 'AP-8 / GI-11',
+        slug: 'sondika',
+        name: 'Sondika',
+        distanceKm: 5,
+        corridor: 'BI-737 / Túnel de Santo Domingo',
         profile: 'valle',
-        landmark: 'el nudo de comunicaciones del Oria',
-        demand: 'comidas de empresa y celebraciones de campanillas',
+        landmark: 'el acceso norte de Artxanda y el eje de Sondika',
+        demand: 'celebraciones familiares, comuniones y banquetes de cuadrilla con aparcamiento privado',
     },
     {
-        slug: 'villabona',
-        name: 'Villabona',
-        distanceKm: 25,
-        corridor: 'N-1 / GI-131',
-        profile: 'valle',
-        landmark: 'el curso alto del río Oria',
-        demand: 'bodas de familias del interior con desplazamiento a la costa',
-    },
-    {
-        slug: 'hernani',
-        name: 'Hernani',
-        distanceKm: 28,
-        corridor: 'AP-8 / GI-131',
-        profile: 'valle',
-        landmark: 'el valle del Urumea',
-        demand: 'comuniones y comidas de cuadrilla de gran formato',
-    },
-    {
-        slug: 'azkoitia',
-        name: 'Azkoitia',
-        distanceKm: 29,
-        corridor: 'GI-631',
-        profile: 'valle',
-        landmark: 'la villa junto al Urola',
-        demand: 'celebraciones de empresa del alto Urola',
-    },
-    {
-        slug: 'andoain',
-        name: 'Andoain',
-        distanceKm: 32,
-        corridor: 'N-1 / GI-131',
-        profile: 'valle',
-        landmark: 'el valle del Oria entre montes',
-        demand: 'bautizos y aniversarios de parejas del interior',
-    },
-    {
-        slug: 'tolosa',
-        name: 'Tolosa',
-        distanceKm: 35,
-        corridor: 'N-1 / A-1',
-        profile: 'valle',
-        landmark: 'el casco histórico junto al Oria',
-        demand: 'banquetes de gran grupo y comidas de empresa de temporada',
-    },
-    {
-        slug: 'bergara',
-        name: 'Bergara',
-        distanceKm: 42,
-        corridor: 'AP-1 / N-1',
-        profile: 'valle',
-        landmark: 'el casco señorial del Alto Deba',
-        demand: 'bodas del Alto Deba con ceremonia y banquete en la costa',
-    },
-    {
-        slug: 'eibar',
-        name: 'Eibar',
-        distanceKm: 43,
-        corridor: 'AP-8 / N-634',
+        slug: 'zamudio',
+        name: 'Zamudio',
+        distanceKm: 4,
+        corridor: 'N-637 Corredor del Txorierri',
         profile: 'industrial',
-        landmark: 'la ciudad armera y su eje industrial',
-        demand: 'comidas de empresa y celebraciones de fin de año',
+        landmark: 'el Parque Científico y Tecnológico de Bizkaia',
+        demand: 'comidas de empresa, galas corporativas y bodas del valle del Txorierri',
     },
     {
-        slug: 'irun',
-        name: 'Irun',
-        distanceKm: 45,
-        corridor: 'AP-8 / N-121-A',
-        profile: 'frontera',
-        landmark: 'la frontera del Bidasoa',
-        demand: 'bodas transfronterizas con invitados de ambos lados del Bidasoa',
+        slug: 'lezama',
+        name: 'Lezama',
+        distanceKm: 7,
+        corridor: 'BI-737 / Corredor del Txorierri',
+        profile: 'valle',
+        landmark: 'el valle rural de Lezama y sus viñedos de txakoli',
+        demand: 'ceremonias civiles en caserío rodeadas de praderas verdes y cocina tradicional a la brasa',
+    },
+    {
+        slug: 'larrabetzu',
+        name: 'Larrabetzu',
+        distanceKm: 11,
+        corridor: 'BI-2713 / N-637',
+        profile: 'valle',
+        landmark: 'la villa medieval y el Txorierri oriental',
+        demand: 'banquetes gastronómicos de producto noble y reuniones familiares de gran formato',
+    },
+    {
+        slug: 'mungia',
+        name: 'Mungia',
+        distanceKm: 12,
+        corridor: 'BI-631 Autovía de Mungia',
+        profile: 'valle',
+        landmark: 'la comarca de Mungialdea y Butrón',
+        demand: 'bodas de finca campestre, comuniones con jardín infantil y banquetes de asador',
+    },
+    {
+        slug: 'uribe-kosta',
+        name: 'Uribe Kosta',
+        distanceKm: 18,
+        corridor: 'BI-634 / N-637',
+        profile: 'litoral',
+        landmark: 'la costa vizcaína entre Sopela, Plentzia, Gorliz y Getxo',
+        demand: 'bodas de parejas costeras que eligen un caserío tranquilo en el Txorierri sin atascos',
+    },
+    {
+        slug: 'sopela',
+        name: 'Sopela',
+        distanceKm: 19,
+        corridor: 'BI-634 / N-637',
+        profile: 'litoral',
+        landmark: 'los acantilados y playas de Sopela',
+        demand: 'bodas de primavera y verano con traslado rápido en autobús privado hasta Derio',
+    },
+    {
+        slug: 'plentzia',
+        name: 'Plentzia',
+        distanceKm: 20,
+        corridor: 'BI-634 / BI-2120',
+        profile: 'litoral',
+        landmark: 'la bahía y ría de Plentzia',
+        demand: 'celebraciones familiares y enlaces civiles con parrilla de pescados salvajes del Cantábrico',
+    },
+    {
+        slug: 'gorliz',
+        name: 'Gorliz',
+        distanceKm: 22,
+        corridor: 'BI-634 / BI-3151',
+        profile: 'litoral',
+        landmark: 'el pinar y la bahía de Gorliz',
+        demand: 'comuniones, bautizos y bodas costeras que buscan carpa climatizada y jardín botánico',
+    },
+    {
+        slug: 'getxo',
+        name: 'Getxo',
+        distanceKm: 16,
+        corridor: 'La Avanzada / N-637',
+        profile: 'litoral',
+        landmark: 'Neguri, Las Arenas, Algorta y el Puente Colgante',
+        demand: 'bodas de gran formato de la Margen Derecha con exclusividad de un evento al día',
+    },
+    {
+        slug: 'erandio',
+        name: 'Erandio',
+        distanceKm: 9,
+        corridor: 'BI-637 / N-637',
+        profile: 'industrial',
+        landmark: 'la vega de Asúa y la ría en Erandio',
+        demand: 'banquetes de empresa y celebraciones vecinales a menos de diez minutos de Derio',
+    },
+    {
+        slug: 'barakaldo',
+        name: 'Barakaldo',
+        distanceKm: 14,
+        corridor: 'Puente Rontegi / N-637',
+        profile: 'industrial',
+        landmark: 'la Margen Izquierda y el entorno de BEC',
+        demand: 'eventos corporativos, bodas multitudinarias hasta 350 comensales y comuniones',
+    },
+    {
+        slug: 'basauri',
+        name: 'Basauri',
+        distanceKm: 12,
+        corridor: 'N-637 / AP-68',
+        profile: 'industrial',
+        landmark: 'el nudo del Nervión-Ibaizabal en Basauri',
+        demand: 'bodas de familias de Bizkaia central y comidas de empresa con factura B2B',
+    },
+    {
+        slug: 'galdakao',
+        name: 'Galdakao',
+        distanceKm: 13,
+        corridor: 'N-637 / N-240',
+        profile: 'valle',
+        landmark: 'el corredor del Ibaizabal desde Galdakao',
+        demand: 'banquetes nupciales y asador de chuletón a la brasa con acceso directo sin semáforos',
+    },
+    {
+        slug: 'durango',
+        name: 'Durango',
+        distanceKm: 32,
+        corridor: 'AP-8 / N-637',
+        profile: 'valle',
+        landmark: 'el casco histórico del Duranguesado',
+        demand: 'bodas del interior de Bizkaia que reúnen invitados de toda la provincia en Derio',
     },
 ]);
 
@@ -254,17 +254,17 @@ export const OTZARRETA_VERTICALS: readonly OtzarretaVertical[] = Object.freeze([
         shortLabel: 'boda de gala',
         eventNoun: 'boda',
         promise:
-            'menú de cazuela vasca servido en comedor, terraza o jardín, con ceremonia y banquete en la misma casa',
+            'menú de parrilla al carbón y cazuela vasca servido en salón acristalado, terraza o jardín en Derio, con un solo evento al día',
         noiseRange: '85-90 dBA en exterior y 80-85 dBA en interior',
         spaces: Object.freeze(['comedor', 'terraza', 'jardin', 'bodega']),
     },
     {
-        slug: 'ceremonia-civil-jardin',
-        label: 'Ceremonia civil en jardín',
+        slug: 'ceremonia-civil-caserio',
+        label: 'Ceremonia civil en caserío',
         shortLabel: 'ceremonia civil',
         eventNoun: 'ceremonia civil',
         promise:
-            'jardín y terraza para el sí quiero, con el banquete servido sin desplazar a los invitados',
+            'jardín botánico y carpa climatizada para el sí quiero en Derio, con el banquete servido sin desplazar a los invitados',
         noiseRange: '85-90 dBA en exterior y 80-85 dBA en interior',
         spaces: Object.freeze(['jardin', 'terraza', 'comedor', 'bodega']),
     },
@@ -274,7 +274,7 @@ export const OTZARRETA_VERTICALS: readonly OtzarretaVertical[] = Object.freeze([
         shortLabel: 'comida de grupo',
         eventNoun: 'comida de grupo',
         promise:
-            'menús especiales para grupos familiares y equipos, con bodega propia y menús adaptados',
+            'menús especiales para familias y equipos de Bizkaia, con parque infantil homologado, bodega y 150 plazas de párking privado',
         noiseRange: '80-85 dBA en interior',
         spaces: Object.freeze(['comedor', 'bodega', 'terraza']),
     },
@@ -284,7 +284,7 @@ export const OTZARRETA_VERTICALS: readonly OtzarretaVertical[] = Object.freeze([
         shortLabel: 'catering de finca',
         eventNoun: 'banquete en finca',
         promise:
-            'cocina de cazuela trasladada a fincas y caseríos de Gipuzkoa, con montaje y servicio completos',
+            'cocina vasca tradicional y logística de eventos coordinada desde Derio para fincas y caseríos de Bizkaia',
         noiseRange: '85-90 dBA en exterior y 80-85 dBA en interior',
         spaces: Object.freeze(['jardin', 'terraza', 'bodega']),
     },
@@ -309,382 +309,382 @@ export const OTZARRETA_VERTICAL_BY_SLUG: Readonly<Record<string, OtzarretaVertic
 /** 54 landings de intención transaccional (cero relleno: cada una con ángulo propio). */
 export const OTZARRETA_INTENT_SEEDS: readonly OtzarretaIntentSeed[] = Object.freeze([
     {
-        slug: 'restaurante-bodas-zarautz',
-        keyword: 'restaurante para bodas en Zarautz',
+        slug: 'restaurante-bodas-derio',
+        keyword: 'restaurante para bodas en Derio',
         vertical: 'bodas-gala',
-        municipality: 'zarautz',
-        hook: 'la casa está en el propio Zarautz, así que la ceremonia y el banquete no exigen autobús',
+        municipality: 'derio',
+        hook: 'el caserío está en el propio Derio (Santo Domingo Hiribidea, 13), así que la ceremonia y el banquete no exigen autobús',
     },
     {
-        slug: 'banquete-boda-zarautz',
-        keyword: 'banquete de boda en Zarautz',
+        slug: 'banquete-boda-derio',
+        keyword: 'banquete de boda en Derio',
         vertical: 'bodas-gala',
-        municipality: 'zarautz',
-        hook: 'el banquete se sirve en comedor o en la terraza, según el mes y el viento',
+        municipality: 'derio',
+        hook: 'el banquete se sirve en comedor acristalado de 50 a 200 pax o en carpa ajardinada hasta 350 invitados',
     },
     {
-        slug: 'menu-boda-zarautz',
-        keyword: 'menú de boda en Zarautz',
+        slug: 'menu-boda-derio',
+        keyword: 'menú de boda en Derio',
         vertical: 'bodas-gala',
-        municipality: 'zarautz',
-        hook: 'los menús especiales se acuerdan antes de firmar y se sirven identificados en mesa',
+        municipality: 'derio',
+        hook: 'los siete menús oficiales 2026 desde 100 € + IVA y los menús especiales se acuerdan antes de firmar',
     },
     {
-        slug: 'boda-jardin-zarautz',
-        keyword: 'boda en jardín en Zarautz',
-        vertical: 'ceremonia-civil-jardin',
-        municipality: 'zarautz',
-        hook: 'el jardín permite el sí quiero al aire libre y pasar al comedor sin coches',
+        slug: 'boda-jardin-derio',
+        keyword: 'boda en jardín en Derio',
+        vertical: 'ceremonia-civil-caserio',
+        municipality: 'derio',
+        hook: 'los jardines botánicos permiten el sí quiero al aire libre y pasar al comedor sin coches',
     },
     {
-        slug: 'ceremonia-civil-en-jardin-zarautz',
-        keyword: 'ceremonia civil al aire libre en Zarautz',
-        vertical: 'ceremonia-civil-jardin',
-        municipality: 'zarautz',
-        hook: 'la terraza cubre el plan B si el tiempo cambia a media ceremonia',
+        slug: 'ceremonia-civil-en-jardin-derio',
+        keyword: 'ceremonia civil al aire libre en Derio',
+        vertical: 'ceremonia-civil-caserio',
+        municipality: 'derio',
+        hook: 'la carpa climatizada y la terraza cubren el plan B si cambia el tiempo a media ceremonia',
     },
     {
-        slug: 'restaurante-ceremonias-zarautz',
-        keyword: 'restaurante para ceremonias en Zarautz',
-        vertical: 'ceremonia-civil-jardin',
-        municipality: 'zarautz',
-        hook: 'ceremonia y aperitivo comparten recinto, así que nadie se pierde por el camino',
+        slug: 'restaurante-ceremonias-derio',
+        keyword: 'restaurante para ceremonias en Derio',
+        vertical: 'ceremonia-civil-caserio',
+        municipality: 'derio',
+        hook: 'ceremonia, cóctel y banquete comparten recinto exclusivo de un solo evento al día',
     },
     {
-        slug: 'boda-sidreria-gipuzkoa',
-        keyword: 'boda en sidrería en Gipuzkoa',
+        slug: 'caserio-bodas-txorierri',
+        keyword: 'caserío para bodas en el Txorierri',
         vertical: 'bodas-gala',
         municipality: null,
-        hook: 'la casa nació como sidrería en 1902 y hoy celebra bodas con bodega propia',
+        hook: 'en el valle del Txorierri la casa reúne parrilla al carbón de encina, jardines y 150 plazas de párking',
     },
     {
-        slug: 'sidreria-bodas-zarautz',
-        keyword: 'sidrería para bodas en Zarautz',
+        slug: 'asador-bodas-derio',
+        keyword: 'asador para bodas en Derio',
         vertical: 'bodas-gala',
-        municipality: 'zarautz',
-        hook: 'la bodega y la tradición sidrera siguen vivas en la cuarta generación',
+        municipality: 'derio',
+        hook: 'Eduardo Martínez asa al momento chuletones y rodaballos salvajes sobre brasa de encina y sarmiento',
     },
     {
-        slug: 'restaurante-bodas-getaria',
-        keyword: 'restaurante para bodas cerca de Getaria',
+        slug: 'restaurante-bodas-bilbao',
+        keyword: 'restaurante para bodas cerca de Bilbao',
         vertical: 'bodas-gala',
-        municipality: 'getaria',
-        hook: 'a cinco kilómetros del puerto de Getaria, sin cruzar la provincia',
+        municipality: 'bilbao',
+        hook: 'a ocho minutos del centro de Bilbao por los túneles de Artxanda, con 150 plazas de párking privado',
     },
     {
-        slug: 'banquete-boda-getaria',
-        keyword: 'banquete de boda para invitados de Getaria',
+        slug: 'banquete-boda-bilbao',
+        keyword: 'banquete de boda para invitados de Bilbao',
         vertical: 'bodas-gala',
-        municipality: 'getaria',
-        hook: 'los invitados que llegan de la lonja aparcan una sola vez y no vuelven a mover el coche',
+        municipality: 'bilbao',
+        hook: 'los invitados que salen de Bilbao aparcan una sola vez en recinto cerrado y no vuelven a mover el coche',
     },
     {
-        slug: 'boda-jardin-getaria',
-        keyword: 'boda en jardín cerca de Getaria',
-        vertical: 'ceremonia-civil-jardin',
-        municipality: 'getaria',
-        hook: 'el jardín evita el traslado desde el puerto hasta el lugar del banquete',
+        slug: 'boda-jardin-bilbao',
+        keyword: 'boda en jardín cerca de Bilbao',
+        vertical: 'ceremonia-civil-caserio',
+        municipality: 'bilbao',
+        hook: 'el jardín botánico evita elegir entre entorno verde y cercanía inmediata a la capital vizcaína',
     },
     {
-        slug: 'restaurante-bodas-san-sebastian',
-        keyword: 'restaurante para bodas cerca de San Sebastián',
+        slug: 'restaurante-bodas-loiu',
+        keyword: 'restaurante para bodas cerca de Loiu',
         vertical: 'bodas-gala',
-        municipality: 'donostia',
-        hook: 'veintiún kilómetros desde la bahía, con buena parte del trayecto por autovía',
+        municipality: 'loiu',
+        hook: 'a cinco minutos del aeropuerto de Bilbao en Loiu, ideal para bodas con familia de fuera',
     },
     {
-        slug: 'banquete-boda-donostia',
-        keyword: 'banquete de boda para invitados de Donostia',
+        slug: 'restaurante-bodas-sondika',
+        keyword: 'restaurante para bodas cerca de Sondika',
         vertical: 'bodas-gala',
-        municipality: 'donostia',
-        hook: 'las parejas de la capital cambian el centro por una villa costera a media hora',
+        municipality: 'sondika',
+        hook: 'desde Sondika el túnel de Santo Domingo deja el caserío a apenas cinco kilómetros',
     },
     {
-        slug: 'boda-jardin-donostia',
-        keyword: 'boda en jardín cerca de San Sebastián',
-        vertical: 'ceremonia-civil-jardin',
-        municipality: 'donostia',
-        hook: 'la ceremonia al aire libre sustituye la sala por el jardín',
-    },
-    {
-        slug: 'restaurante-bodas-tolosa',
-        keyword: 'restaurante para bodas cerca de Tolosa',
+        slug: 'restaurante-bodas-zamudio',
+        keyword: 'restaurante para bodas cerca de Zamudio',
         vertical: 'bodas-gala',
-        municipality: 'tolosa',
-        hook: 'desde el casco histórico del Oria el trayecto baja a la costa por la N-1',
+        municipality: 'zamudio',
+        hook: 'junto al Parque Tecnológico de Zamudio, con acceso directo por la N-637 sin semáforos',
     },
     {
-        slug: 'banquete-boda-tolosa',
-        keyword: 'banquete de boda para invitados de Tolosa',
+        slug: 'restaurante-bodas-lezama',
+        keyword: 'restaurante para bodas cerca de Lezama',
         vertical: 'bodas-gala',
-        municipality: 'tolosa',
-        hook: 'los grupos del interior encuentran comedor y bodega en el mismo edificio',
+        municipality: 'lezama',
+        hook: 'el corredor del Txorierri une Lezama con Santo Domingo Hiribidea en siete minutos',
     },
     {
-        slug: 'restaurante-bodas-eibar',
-        keyword: 'restaurante para bodas cerca de Eibar',
+        slug: 'restaurante-bodas-larrabetzu',
+        keyword: 'restaurante para bodas cerca de Larrabetzu',
         vertical: 'bodas-gala',
-        municipality: 'eibar',
-        hook: 'la ciudad armera queda a tres cuartos de hora por la AP-8',
+        municipality: 'larrabetzu',
+        hook: 'los invitados de Larrabetzu y el Txorierri oriental llegan en diez minutos por la N-637',
     },
     {
-        slug: 'restaurante-bodas-irun',
-        keyword: 'restaurante para bodas cerca de Irun',
+        slug: 'restaurante-bodas-mungia',
+        keyword: 'restaurante para bodas cerca de Mungia',
         vertical: 'bodas-gala',
-        municipality: 'irun',
-        hook: 'la frontera del Bidasoa permite invitar a familia francesa sin fricción',
+        municipality: 'mungia',
+        hook: 'la autovía BI-631 conecta Mungia con la finca de Derio en doce kilómetros exactos',
     },
     {
-        slug: 'restaurante-bodas-hernani',
-        keyword: 'restaurante para bodas cerca de Hernani',
+        slug: 'banquete-boda-mungia',
+        keyword: 'banquete de boda para familias de Mungia',
         vertical: 'bodas-gala',
-        municipality: 'hernani',
-        hook: 'el valle del Urumea baja a la costa por la AP-8',
+        municipality: 'mungia',
+        hook: 'Mungia y Mungialdea encuentran salón acristalado, carpa y parque infantil homologado en un solo recinto',
     },
     {
-        slug: 'restaurante-bodas-azpeitia',
-        keyword: 'restaurante para bodas cerca de Azpeitia',
+        slug: 'restaurante-bodas-uribe-kosta',
+        keyword: 'restaurante para bodas cerca de Uribe Kosta',
         vertical: 'bodas-gala',
-        municipality: 'azpeitia',
-        hook: 'el Urola conecta Azpeitia con Zarautz por la GI-631',
+        municipality: 'uribe-kosta',
+        hook: 'las parejas de Uribe Kosta disfrutan de un caserío con jardín a dieciséis minutos de la costa',
     },
     {
-        slug: 'restaurante-bodas-azkoitia',
-        keyword: 'restaurante para bodas cerca de Azkoitia',
+        slug: 'boda-jardin-uribe-kosta',
+        keyword: 'boda en jardín para invitados de Uribe Kosta',
+        vertical: 'ceremonia-civil-caserio',
+        municipality: 'uribe-kosta',
+        hook: 'la conexión por la BI-634 permite trasladar en autobús privado a todo el grupo desde la costa',
+    },
+    {
+        slug: 'restaurante-bodas-sopela',
+        keyword: 'restaurante para bodas cerca de Sopela',
         vertical: 'bodas-gala',
-        municipality: 'azkoitia',
-        hook: 'la villa del Urola llega al banquete sin pasar por la capital',
+        municipality: 'sopela',
+        hook: 'desde Sopela el enlace al Txorierri evita el tráfico urbano de Bilbao y garantiza párking para 150 coches',
     },
     {
-        slug: 'restaurante-bodas-zumaia',
-        keyword: 'restaurante para bodas cerca de Zumaia',
+        slug: 'restaurante-bodas-plentzia',
+        keyword: 'restaurante para bodas cerca de Plentzia',
         vertical: 'bodas-gala',
-        municipality: 'zumaia',
-        hook: 'el flysch queda al lado y el banquete se celebra a diecisiete kilómetros',
+        municipality: 'plentzia',
+        hook: 'las bodas de Plentzia encuentran cocina de brasa del Cantábrico en el valle de Derio',
     },
     {
-        slug: 'restaurante-bodas-orio',
-        keyword: 'restaurante para bodas cerca de Orio',
+        slug: 'restaurante-bodas-gorliz',
+        keyword: 'restaurante para bodas cerca de Gorliz',
         vertical: 'bodas-gala',
-        municipality: 'orio',
-        hook: 'la desembocadura del Oria está a doce minutos del comedor',
+        municipality: 'gorliz',
+        hook: 'a veintidós kilómetros de Gorliz, con carpa climatizada preparada frente a cualquier cambio de clima',
     },
     {
-        slug: 'restaurante-bodas-aia',
-        keyword: 'restaurante para bodas cerca de Aia',
+        slug: 'restaurante-bodas-getxo',
+        keyword: 'restaurante para bodas cerca de Getxo',
         vertical: 'bodas-gala',
-        municipality: 'aia',
-        hook: 'los caseríos de Aia celebran en la costa sin renunciar a la cocina de cazuela',
+        municipality: 'getxo',
+        hook: 'desde Neguri, Las Arenas y Algorta se accede en catorce minutos por La Avanzada y N-637',
     },
     {
-        slug: 'restaurante-bodas-zestoa',
-        keyword: 'restaurante para bodas cerca de Zestoa',
+        slug: 'banquete-boda-getxo',
+        keyword: 'banquete de boda para invitados de Getxo',
         vertical: 'bodas-gala',
-        municipality: 'zestoa',
-        hook: 'el valle termal de Zestoa baja a Zarautz por la GI-631',
+        municipality: 'getxo',
+        hook: 'los invitados de Getxo disponen de un evento único al día y barra libre hasta las 6:00 AM en Exclusividad Premium',
     },
     {
-        slug: 'restaurante-bodas-usurbil',
-        keyword: 'restaurante para bodas cerca de Usurbil',
+        slug: 'restaurante-bodas-erandio',
+        keyword: 'restaurante para bodas cerca de Erandio',
         vertical: 'bodas-gala',
-        municipality: 'usurbil',
-        hook: 'la vega del Oria queda a dieciséis kilómetros del jardín',
+        municipality: 'erandio',
+        hook: 'a nueve kilómetros de Erandio, con acceso llano y ascensor adaptado 100% PMR',
     },
     {
-        slug: 'restaurante-bodas-lasarte-oria',
-        keyword: 'restaurante para bodas cerca de Lasarte-Oria',
+        slug: 'restaurante-bodas-barakaldo',
+        keyword: 'restaurante para bodas cerca de Barakaldo',
         vertical: 'bodas-gala',
-        municipality: 'lasarte-oria',
-        hook: 'el nudo del Oria deja el banquete a veintitrés kilómetros',
+        municipality: 'barakaldo',
+        hook: 'cruzando Rontegi desde Barakaldo, el complejo acoge hasta 350 comensales con 150 plazas de párking',
     },
     {
-        slug: 'restaurante-bodas-andoain',
-        keyword: 'restaurante para bodas cerca de Andoain',
+        slug: 'restaurante-bodas-basauri',
+        keyword: 'restaurante para bodas cerca de Basauri',
         vertical: 'bodas-gala',
-        municipality: 'andoain',
-        hook: 'el valle del Oria entre montes desemboca en la terraza de Zarautz',
+        municipality: 'basauri',
+        hook: 'desde Basauri la N-637 enlaza directamente en doce minutos con la puerta del caserío',
     },
     {
-        slug: 'restaurante-bodas-villabona',
-        keyword: 'restaurante para bodas cerca de Villabona',
+        slug: 'restaurante-bodas-galdakao',
+        keyword: 'restaurante para bodas cerca de Galdakao',
         vertical: 'bodas-gala',
-        municipality: 'villabona',
-        hook: 'Villabona llega a la costa por la N-1 sin peajes',
+        municipality: 'galdakao',
+        hook: 'Galdakao y el valle del Ibaizabal conectan en trece kilómetros sin cruzar el centro de Bilbao',
     },
     {
-        slug: 'restaurante-bodas-bergara',
-        keyword: 'restaurante para bodas cerca de Bergara',
+        slug: 'restaurante-bodas-durango',
+        keyword: 'restaurante para bodas cerca de Durango',
         vertical: 'bodas-gala',
-        municipality: 'bergara',
-        hook: 'el Alto Deba baja por la AP-1 hasta el jardín',
+        municipality: 'durango',
+        hook: 'el Duranguesado llega por la AP-8 en veintidós minutos para celebrar en un caserío exclusivo',
     },
     {
-        slug: 'comuniones-zarautz',
-        keyword: 'comuniones en Zarautz',
+        slug: 'restaurante-bodas-amorebieta',
+        keyword: 'restaurante para bodas cerca de Amorebieta',
+        vertical: 'bodas-gala',
+        municipality: null,
+        hook: 'desde Amorebieta-Etxano la AP-8 y la N-637 dejan el caserío de Derio a dieciséis minutos',
+    },
+    {
+        slug: 'comuniones-derio',
+        keyword: 'comuniones en Derio',
         vertical: 'comuniones-empresa',
-        municipality: 'zarautz',
-        hook: 'la comunión se celebra en comedor con menús especiales para niños y adultos',
+        municipality: 'derio',
+        hook: 'la comunión cuenta con menús oficiales 2025-2027 de 55 € a 95 €, jardines y parque infantil homologado',
     },
     {
-        slug: 'comunion-restaurante-zarautz',
-        keyword: 'restaurante para comuniones en Zarautz',
+        slug: 'comunion-restaurante-derio',
+        keyword: 'restaurante para comuniones en Derio',
         vertical: 'comuniones-empresa',
-        municipality: 'zarautz',
-        hook: 'el grupo familiar no necesita decorar un salón: la casa ya está vestida',
+        municipality: 'derio',
+        hook: 'el grupo familiar disfruta de recinto cerrado, columpios homologados y aparcamiento para 150 vehículos',
     },
     {
-        slug: 'bautizos-zarautz',
-        keyword: 'bautizos en Zarautz',
+        slug: 'bautizos-derio',
+        keyword: 'bautizos en Derio',
         vertical: 'comuniones-empresa',
-        municipality: 'zarautz',
-        hook: 'el bautizo cabe en la terraza con el mismo menú de cazuela',
+        municipality: 'derio',
+        hook: 'el bautizo se adapta a comedor luminoso o terraza ajardinada con acceso cómodo para carritos y mayores',
     },
     {
-        slug: 'comida-empresa-zarautz',
-        keyword: 'comida de empresa en Zarautz',
+        slug: 'comida-empresa-derio',
+        keyword: 'comida de empresa en Derio',
         vertical: 'comuniones-empresa',
-        municipality: 'zarautz',
-        hook: 'las comidas de empresa usan bodega y comedor con factura y hora de cierre pactada',
+        municipality: 'derio',
+        hook: 'las comidas directivas junto al Parque Tecnológico cuentan con factura B2B, menú cerrado desde 40 € y privacidad',
     },
     {
-        slug: 'cena-empresa-gipuzkoa',
-        keyword: 'cena de empresa en Gipuzkoa',
+        slug: 'cena-empresa-bizkaia',
+        keyword: 'cena de empresa en Bizkaia',
         vertical: 'comuniones-empresa',
         municipality: null,
-        hook: 'las cenas de empresa de toda Gipuzkoa encuentran menús especiales y bodega',
+        hook: 'las cenas de empresa de toda Bizkaia combinan parrilla al carbón de encina, bodega y párking privado',
     },
     {
-        slug: 'comida-fin-de-ano-zarautz',
-        keyword: 'comida de fin de año en Zarautz',
+        slug: 'comida-fin-de-ano-derio',
+        keyword: 'comida de fin de año en Derio',
         vertical: 'comuniones-empresa',
-        municipality: 'zarautz',
-        hook: 'el fin de año se cierra con menú especial y bodega, no con carta abierta',
+        municipality: 'derio',
+        hook: 'los equipos del Txorierri y Bilbao cierran el ejercicio con menú pactado, bodega y música sin sorpresas',
     },
     {
-        slug: 'celebracion-aniversario-boda-gipuzkoa',
-        keyword: 'celebrar aniversario de boda en Gipuzkoa',
+        slug: 'celebracion-aniversario-boda-bizkaia',
+        keyword: 'celebrar aniversario de boda en Bizkaia',
         vertical: 'comuniones-empresa',
         municipality: null,
-        hook: 'los aniversarios vuelven a la casa donde se celebró la boda, con la misma cocina',
+        hook: 'las bodas de oro y plata vuelven al caserío de Derio con ascensor PMR y cocina vasca de producto',
     },
     {
-        slug: 'pedida-de-mano-restaurante-zarautz',
-        keyword: 'pedida de mano en un restaurante de Zarautz',
+        slug: 'pedida-de-mano-restaurante-derio',
+        keyword: 'pedida de mano en un restaurante de Derio',
         vertical: 'comuniones-empresa',
-        municipality: 'zarautz',
-        hook: 'la pedida se resuelve con una mesa reservada y un menú especial pactado',
+        municipality: 'derio',
+        hook: 'la pedida se prepara en reservado con menú degustación y maridaje seleccionado en bodega',
     },
     {
-        slug: 'banquete-bautizo-zarautz',
-        keyword: 'banquete de bautizo en Zarautz',
+        slug: 'banquete-bautizo-bilbao',
+        keyword: 'banquete de bautizo cerca de Bilbao',
         vertical: 'comuniones-empresa',
-        municipality: 'zarautz',
-        hook: 'el bautizo usa el patio de verano cuando el tiempo acompaña',
+        municipality: 'bilbao',
+        hook: 'a ocho minutos de Bilbao, las familias celebran en jardín privado sin estrés de aparcamiento urbano',
     },
     {
-        slug: 'catering-boda-finca-gipuzkoa',
-        keyword: 'catering de boda para finca en Gipuzkoa',
+        slug: 'catering-boda-finca-bizkaia',
+        keyword: 'catering de boda para finca en Bizkaia',
         vertical: 'catering-fincas',
         municipality: null,
-        hook: 'el catering sale de la cocina de Zarautz hacia fincas de toda Gipuzkoa',
+        hook: 'la coordinación gastronómica parte de Derio hacia fincas y caseríos de toda Bizkaia',
     },
     {
-        slug: 'catering-caserio-gipuzkoa',
-        keyword: 'catering para caserío en Gipuzkoa',
+        slug: 'catering-caserio-bizkaia',
+        keyword: 'catering para caserío en Bizkaia',
         vertical: 'catering-fincas',
         municipality: null,
-        hook: 'los caseríos de Gipuzkoa reciben la cazuela montada en su propio espacio',
+        hook: 'los caseríos de Bizkaia central, Mungia y Uribe Kosta reciben servicio integral con trazabilidad oficial',
     },
     {
-        slug: 'catering-boda-playa-zarautz',
-        keyword: 'catering para boda de playa en Zarautz',
+        slug: 'catering-boda-txorierri',
+        keyword: 'catering para boda en el Txorierri',
         vertical: 'catering-fincas',
-        municipality: 'zarautz',
-        hook: 'la boda de playa usa terraza y jardín, no un salón cerrado',
+        municipality: 'zamudio',
+        hook: 'en el propio valle del Txorierri el montaje llega en minutos desde Santo Domingo Hiribidea, 13',
     },
     {
-        slug: 'restaurante-terraza-bodas-zarautz',
-        keyword: 'restaurante con terraza para bodas en Zarautz',
+        slug: 'restaurante-terraza-bodas-derio',
+        keyword: 'restaurante con terraza para bodas en Derio',
         vertical: 'bodas-gala',
-        municipality: 'zarautz',
-        hook: 'la terraza permite aperitivo fuera y banquete dentro si cambia el viento',
+        municipality: 'derio',
+        hook: 'la zona chill out y terraza enlaza el cóctel al aire libre con el comedor acristalado climatizado',
     },
     {
-        slug: 'restaurante-bodega-bodas-zarautz',
-        keyword: 'restaurante con bodega para bodas en Zarautz',
+        slug: 'restaurante-bodega-bodas-derio',
+        keyword: 'restaurante con bodega para bodas en Derio',
         vertical: 'bodas-gala',
-        municipality: 'zarautz',
-        hook: 'la bodega se abre como espacio de copas después del postre',
+        municipality: 'derio',
+        hook: 'la bodega seleccionada acompaña el chuletón a la brasa y da paso a la barra libre hasta el amanecer',
     },
     {
-        slug: 'comida-familiar-tradicional-vasca-zarautz',
-        keyword: 'comida familiar tradicional vasca en Zarautz',
+        slug: 'comida-familiar-tradicional-vasca-derio',
+        keyword: 'comida familiar tradicional vasca en Derio',
         vertical: 'comuniones-empresa',
-        municipality: 'zarautz',
-        hook: 'la cocina de cazuela es la misma que sirve la casa desde hace cuatro generaciones',
+        municipality: 'derio',
+        hook: 'la cazuela vasca y el carbón de encina siguen la línea de cuatro generaciones bajo la dirección de Eduardo Martínez',
     },
     {
-        slug: 'restaurante-grupos-zarautz',
-        keyword: 'restaurante para grupos en Zarautz',
+        slug: 'restaurante-grupos-derio',
+        keyword: 'restaurante para grupos en Derio',
         vertical: 'comuniones-empresa',
-        municipality: 'zarautz',
-        hook: 'los grupos grandes se sientan en comedor con menú cerrado, sin sorpresas de carta',
+        municipality: 'derio',
+        hook: 'grupos desde 40 € por comensal disponen de salones modulables para 50 a 200 invitados y hasta 350 en finca',
     },
     {
-        slug: 'menu-especial-celiacos-boda-gipuzkoa',
-        keyword: 'menú especial para celiacos en boda en Gipuzkoa',
+        slug: 'menu-especial-celiacos-boda-bizkaia',
+        keyword: 'menú especial para celiacos en boda en Bizkaia',
         vertical: 'bodas-gala',
         municipality: null,
-        hook: 'los menús especiales se pactan antes de firmar y se sirven identificados en mesa',
+        hook: 'los menús sin gluten se pactan antes de firmar y se sirven identificados en mesa con total seguridad',
     },
     {
-        slug: 'menu-vegetariano-boda-gipuzkoa',
-        keyword: 'menú vegetariano para boda en Gipuzkoa',
+        slug: 'menu-vegetariano-boda-bizkaia',
+        keyword: 'menú vegetariano para boda en Bizkaia',
         vertical: 'bodas-gala',
         municipality: null,
-        hook: 'el menú vegetariano se diseña con la misma cazuela, no como un añadido',
+        hook: 'el menú vegetariano se diseña con producto de temporada vasco al mismo nivel que el banquete principal',
     },
     {
-        slug: 'banquete-boda-sin-gluten-gipuzkoa',
-        keyword: 'banquete de boda sin gluten en Gipuzkoa',
+        slug: 'banquete-boda-sin-gluten-bizkaia',
+        keyword: 'banquete de boda sin gluten en Bizkaia',
         vertical: 'bodas-gala',
         municipality: null,
-        hook: 'el banquete sin gluten se coordina con cocina antes del día del evento',
+        hook: 'el banquete adaptado para alergias se coordina directamente con cocina antes de la prueba de menú',
     },
     {
-        slug: 'restaurante-con-jardin-gipuzkoa',
-        keyword: 'restaurante con jardín en Gipuzkoa',
-        vertical: 'ceremonia-civil-jardin',
+        slug: 'restaurante-con-jardin-bizkaia',
+        keyword: 'restaurante con jardín para bodas en Bizkaia',
+        vertical: 'ceremonia-civil-caserio',
         municipality: null,
-        hook: 'el jardín es espacio de ceremonia y de aperitivo, no un decorado de fondo',
+        hook: 'el jardín botánico de Derio funciona como altar civil, zona de cóctel y entorno fotográfico privado',
     },
     {
-        slug: 'restaurante-cerca-de-playa-zarautz',
-        keyword: 'restaurante cerca de la playa en Zarautz',
+        slug: 'banquete-boda-gran-bilbao',
+        keyword: 'banquete de boda en Gran Bilbao',
         vertical: 'bodas-gala',
-        municipality: 'zarautz',
-        hook: 'la casa está en Zarautz, villa costera, sin depender de la marea ni del socorrista',
+        municipality: 'bilbao',
+        hook: 'en el cinturón verde del Gran Bilbao, Santo Domingo Hiribidea 13 combina naturaleza y acceso inmediato',
     },
     {
-        slug: 'banquete-boda-costa-vasca-gipuzkoa',
-        keyword: 'banquete de boda en la costa vasca',
-        vertical: 'bodas-gala',
-        municipality: null,
-        hook: 'la costa vasca concentra bodas de junio a septiembre y la casa trabaja ese calendario',
-    },
-    {
-        slug: 'restaurante-bodas-guipuzcoa-precio',
-        keyword: 'precio de restaurante para bodas en Guipúzcoa',
+        slug: 'restaurante-bodas-bizkaia-precio',
+        keyword: 'precio de restaurante para bodas en Bizkaia',
         vertical: 'bodas-gala',
         municipality: null,
-        hook: 'el presupuesto se pide por comensales y fecha, y el depósito de 100 € se descuenta del total',
+        hook: 'tarifas transparentes de 100 € a 173 € + IVA por comensal y depósito de 100 € 100% deducible del total',
     },
     {
         slug: 'reservar-restaurante-otzarreta',
-        keyword: 'reservar en Restaurante Otzarreta',
+        keyword: 'reservar en Restaurante Otzarreta Derio',
         vertical: 'comuniones-empresa',
-        municipality: 'zarautz',
-        hook: 'la reserva se confirma por teléfono directo de la casa o con el depósito de 100 € descontable',
+        municipality: 'derio',
+        hook: 'la fecha se bloquea en exclusiva (1 evento al día) mediante Conserjería EAR OS y depósito Stripe de 100 € deducible',
     },
 ]);
 
@@ -693,116 +693,116 @@ export const OTZARRETA_INTENT_SEEDS: readonly OtzarretaIntentSeed[] = Object.fre
  * carril de hash propio, de modo que dos URLs casi nunca comparten apertura.
  */
 const OPENINGS: readonly string[] = Object.freeze([
-    'Quien organiza {event} en {muni} busca una dirección que resuelva ceremonia, aperitivo y banquete sin cambiar de coche, y esta casa está en el casco de Zarautz.',
-    'En {muni} la pregunta no es dónde celebrar, sino cuántos traslados aguanta la familia; aquí la respuesta es uno solo.',
-    '{muni} aporta invitados, fecha y prisa; la casa aporta comedor, terraza, jardín y bodega bajo la misma dirección.',
-    'Hay fechas en {muni} que se cierran con meses de antelación, y conviene mirar el espacio antes de enamorarse de un menú.',
-    'Si la lista de invitados sale de {muni} y de media Gipuzkoa, el punto de encuentro lógico es una villa costera con un solo aparcamiento por coche.',
-    'Entre el juzgado o la iglesia de {muni} y el banquete suele haber un hueco de dos horas; la casa lo convierte en aperitivo en terraza.',
-    'Para {event} en {muni}, la casa enseña primero el espacio y después habla de comida, porque el orden correcto es ese.',
-    '{muni} tiene su propio calendario de celebraciones; la cocina de Otzarreta lleva adaptándose a él desde 1902.',
-    'La distancia entre {muni} y el comedor se mide en minutos, y esa cifra cambia el día del evento más que cualquier discurso.',
-    'Un {event} en {muni} se complica cuando ceremonia, copas y cena ocurren en tres sitios distintos; aquí ocurren en uno.',
-    'Cuando la familia es de {muni} y los amigos llegan de fuera, la casa funciona como punto medio entre costa e interior.',
-    'Antes de reservar en {muni}, merece la pena comprobar si el jardín permite el sí quiero y el comedor evita el autobús.',
-    'En {muni} se celebran todo tipo de banquetes; la diferencia entre uno memorable y uno agotador está en los traslados.',
-    'La casa abrió en 1902 y desde entonces ha visto celebraciones de todas las escalas; en {muni} esa experiencia se traduce en oficio.',
+    'Quien organiza {event} en {muni} busca un caserío vasco que resuelva ceremonia, aperitivo y banquete sin cambiar de coche, y la sede canónica de Derio concentra todo en un único recinto.',
+    'En {muni} la pregunta decisiva no es dónde celebrar, sino cuántos traslados soporta la familia; en Santo Domingo Hiribidea, 13 (Derio, Bizkaia) la respuesta es uno solo y con 150 plazas de párking.',
+    '{muni} aporta invitados, fecha y exigencia gastronómica; el caserío de Derio aporta salón acristalado de 50 a 200 plazas, carpa botánica hasta 350 comensales y parrilla al carbón.',
+    'Hay fechas de temporada alta en {muni} que se bloquean con meses de antelación, por lo que conviene visitar el caserío de Derio y asegurar exclusividad de un solo evento al día.',
+    'Si la lista de invitados sale de {muni} y del Gran Bilbao, el punto de encuentro más práctico es Derio, en el corazón del Txorierri, con aparcamiento cerrado gratuito para toda la comitiva.',
+    'Entre el enlace civil o religioso en {muni} y el banquete suele abrirse una espera incómoda; en los jardines botánicos de Derio ese tiempo se transforma en cóctel con cortador de jamón.',
+    'Para {event} en {muni}, la dirección de Eduardo Martínez muestra primero los salones y jardines de Derio antes de cerrar menú, porque la logística manda tanto como el producto.',
+    '{muni} mantiene su propio pulso social y familiar; la cocina tradicional vasca y la brasa de encina en Derio responden con menús oficiales cerrados desde 100 € + IVA en bodas y 40 € en grupos.',
+    'La distancia real entre {muni} y Santo Domingo Hiribidea, 13 se mide en pocos minutos de autovía, una ventaja que permite disfrutar hasta el final sin depender de taxis urbanos.',
+    'Un {event} en {muni} pierde ritmo cuando ceremonia, copas y cena se reparten en tres direcciones; en Derio todo ocurre dentro de la misma finca ajardinada y climatizada.',
+    'Cuando parte de la familia reside en {muni} y otros invitados aterrizan en Loiu, Derio actúa como nodo central de Bizkaia con acceso directo desde el aeropuerto y la N-637.',
+    'Antes de contratar salón en {muni}, merece la pena comprobar en persona la carpa de ceremonia civil, la accesibilidad PMR con ascensor y las 150 plazas de párking privado en Derio.',
+    'En {muni} conviven todo tipo de banquetes, pero la diferencia entre una jornada agotadora y una celebración fluida está en reunir parrilla viva, jardín y discoteca en un solo enclave.',
+    'Con más de un siglo de oficio hostelero vasco, el equipo de Eduardo Martínez atiende celebraciones de {muni} desde su finca de Derio con trato señorial y cero intermediarios.',
 ]);
 
 /** Banco de anclajes geográficos (14 variantes con distancia y eje viario). */
 const LOCALS: readonly string[] = Object.freeze([
-    'Desde {landmark}, la referencia para llegar es {corridor}: {km} km hasta la puerta de Santa Clara 5.',
-    'El trayecto desde {landmark} son {km} km por {corridor}, y la demanda local se concentra en {demand}.',
-    '{landmark} marca el paisaje de origen de muchos invitados; el último tramo hasta el comedor se hace por {corridor}.',
-    'A {km} km de {landmark} por {corridor}, la casa recibe sobre todo {demand}.',
-    'La carretera {corridor} deja {landmark} a {km} km del jardín, sin transbordos ni lanzaderas.',
-    'En {muni} manda la temporada: {demand}, y eso explica por qué ciertas fechas desaparecen del calendario.',
-    'Con {landmark} como punto de partida, {corridor} resuelve los {km} km que separan a los invitados del banquete.',
-    '{landmark} y la casa comparten provincia, no municipio: hay {km} km de por medio por {corridor}.',
-    'Los mapas colocan {landmark} a {km} km por {corridor}, una distancia que permite volver a casa la misma noche.',
-    '{muni} no es un punto de paso: {landmark} tiene vida propia y su calendario de {demand} lo demuestra.',
-    'La ruta natural desde {landmark} es {corridor}; después, {km} km y una sola dirección que memorizar.',
-    'Si el banquete cae en puente, {landmark} y {corridor} se llenan; los {km} km hasta la casa se agradecen cortos.',
-    '{demand} es la tónica de {muni}; para eso la casa reserva comedor, bodega y jardín con antelación.',
-    'Desde {landmark} se llega por {corridor} en {km} km, con la playa de Zarautz como última referencia antes de aparcar.',
+    'Desde {landmark}, el acceso por {corridor} cubre {km} km directos hasta Santo Domingo Hiribidea, 13 en Derio (Bizkaia).',
+    'El recorrido desde {landmark} supone {km} km cómodos por {corridor}, respondiendo a una demanda centrada en {demand}.',
+    '{landmark} marca el punto de partida de numerosos invitados; el último enlace hacia el valle del Txorierri entra por {corridor} hasta Derio.',
+    'A {km} km de {landmark} siguiendo {corridor}, el caserío atiende de forma habitual {demand}.',
+    'La vía {corridor} conecta {landmark} en {km} km con la entrada del recinto en Derio, evitando atascos urbanos y zonas de pago.',
+    'En {muni} predomina {demand}, un calendario donde la exclusividad de un único evento al día protege cada reserva en Derio.',
+    'Tomando {landmark} como referencia, {corridor} resuelve en pocos minutos los {km} km hasta el aparcamiento privado de 150 plazas.',
+    '{landmark} y la finca de Derio comparten comarca y provincia en Bizkaia, separados por apenas {km} km a través de {corridor}.',
+    'La ruta desde {landmark} suma {km} km por {corridor}, facilitando el regreso nocturno de invitados de Bilbao, Txorierri y Uribe Kosta.',
+    '{muni} posee agenda propia: {landmark} concentra familias y empresas que buscan {demand} a un paso de casa.',
+    'El trayecto natural desde {landmark} sigue {corridor} durante {km} km hasta estacionar dentro del recinto cerrado en Derio.',
+    'En fines de semana de primavera y otoño, {corridor} mantiene fluido el enlace desde {landmark} en {km} km hasta la zona de jardines.',
+    '{demand} define el perfil habitual de quienes reservan desde {muni} con antelación para asegurar su fecha en Derio.',
+    'Desde {landmark} se llega por {corridor} en {km} km, con señalización directa al Parque Tecnológico y Santo Domingo Hiribidea, 13.',
 ]);
 
 /** Banco de ángulos diferenciales (12 marcos para el `hook` de la landing). */
 const ANGLES: readonly string[] = Object.freeze([
-    'El detalle que decide la reserva: {hook}.',
-    'Lo que conviene saber antes de comparar presupuestos: {hook}.',
-    'Un dato que no aparece en los portales genéricos: {hook}.',
-    'La diferencia práctica: {hook}.',
-    'Sobre el terreno, esto significa una cosa concreta: {hook}.',
-    'El punto que suele inclinar la balanza: {hook}.',
-    'Y hay un matiz que la casa explica en la primera visita: {hook}.',
-    'Ningún catálogo lo cuenta, así que lo decimos claro: {hook}.',
-    'En la práctica, {hook}.',
-    'La letra pequeña se resume así: {hook}.',
-    'Un criterio útil para elegir: {hook}.',
-    'Lo que marca la diferencia el día del evento: {hook}.',
+    'El detalle decisivo de esta ruta: {hook}.',
+    'Lo que conviene comprobar antes de comparar presupuestos en Bizkaia: {hook}.',
+    'Un dato clave que no detallan los portales genéricos: {hook}.',
+    'La ventaja operativa para los anfitriones: {hook}.',
+    'En la práctica diaria del caserío, esto se traduce en lo siguiente: {hook}.',
+    'El factor que suele inclinar la elección de las parejas: {hook}.',
+    'Un matiz importante que Eduardo Martínez explica en la visita técnica: {hook}.',
+    'Frente a los salones convencionales de alquiler compartido: {hook}.',
+    'Sobre el terreno en Derio, {hook}.',
+    'La propuesta de valor de esta ubicación se resume así: {hook}.',
+    'Un criterio práctico al elegir recinto en Bizkaia: {hook}.',
+    'Lo que marca la comodidad de los invitados el día del banquete: {hook}.',
 ]);
 
 /** Banco de autoridad culinaria (12 variantes, sólo hechos publicados). */
 const KITCHEN: readonly string[] = Object.freeze([
-    'La cocina empezó en 1902 como sidrería; tras reabrir en 1962, la casa añadió sala y mantelería, y la cuarta generación mantiene la cazuela.',
-    'Cuatro generaciones después, el fuego sigue en el mismo edificio y la bodega sigue formando parte del servicio.',
-    'La carta nace de la cocina de cazuela vasca, no de un catálogo de catering industrial.',
-    'De la sidrería de 1902 queda la bodega; de la reapertura de 1962, la sala; de la cuarta generación, el criterio.',
-    'Aquí se guisa, se emplata y se sirve en la misma casa desde hace más de un siglo.',
-    'El menú se apoya en la tradición guipuzcoana y en una bodega que ya existía cuando la casa era sidrería.',
-    'La memoria de la casa incluye nombres propios: Eleuterio Guesalaga, Mª Jesús Lopetegui y la matriarca Catalina Mujika.',
-    'No hay cocina central a kilómetros: la cazuela se hace donde se come, salvo en los servicios de catering.',
-    'La cuarta generación conserva lo que funciona y corrige lo que no: cocina de siempre, servicio actual.',
-    'El edificio cumplió un siglo y la carta sigue discutiéndose en la cocina, plato a plato, temporada a temporada.',
-    'Hay platos que no se tocan porque sostienen la identidad de la casa, y menús especiales que sí se adaptan.',
-    'La bodega no es decorado: forma parte del recorrido del menú y del servicio de copas.',
+    'La cocina de Eduardo Martínez une la tradición vasca documentada desde 1902 y 1962 con la parrilla al carbón de encina y sarmiento en Derio.',
+    'Lejos del catering recalentado en cubetas, cada chuletón de ganado mayor y cada rodaballo salvaje del Cantábrico pasan de la brasa viva al plato.',
+    'El dossier oficial 2026 fija siete menús nupciales cerrados (de 100 € a 173 € + IVA), comuniones de 55 € a 95 € y menús de grupo desde 40 €.',
+    'Cuatro generaciones de oficio respaldan una cocina de cazuela vasca y brasa directa apoyada en bodega seleccionada y servicio de sala propio.',
+    'El recinto elabora, emplata y sirve en la misma finca de Derio, asegurando temperatura, punto de brasa y ritmo de mesa en banquetes de hasta 350 pax.',
+    'Desde el Menú Cantábrico (100 €) hasta el Menú Caserío Ezkertza Beko (173 € con txangurro y Möet & Chandon), cada partida es pública y trazable.',
+    'Opciones como el Menú Imperial o el Menú Vasco incorporan barra libre, DJ y autobús de 55 plazas incluidos en el presupuesto oficial de 2026.',
+    'La cocina adapta menús identificados en mesa para celíacos, vegetarianos y alergias alimentarias sin perder la calidad del banquete principal.',
+    'El comedor acristalado de 50 a 200 comensales y la carpa exterior hasta 350 plazas permiten celebrar con total holgura en cualquier estación.',
+    'La tradición sidrera y de asador vasco convive en Derio con zona chill out, parque infantil homologado y ascensor accesible para personas mayores.',
+    'Cada menú nupcial puede complementarse con cortador de jamón ibérico, recena nocturna y Exclusividad Premium hasta las 6:00 AM.',
+    'La bodega forma parte activa del recorrido gastronómico, maridando pescados salvajes, mariscos y carnes maduradas con total rigor.',
 ]);
 
 /** Banco de espacios y servicio (12 variantes construidas con la vertical). */
 const SPACES: readonly string[] = Object.freeze([
-    'El recorrido se reparte entre {spaces}: {promise}.',
-    'La casa distribuye {spaces} y propone este orden: {promise}.',
-    'Con {spaces} disponibles, el plan se ajusta al tiempo y no al revés: {promise}.',
-    'Los espacios disponibles son {spaces}, y el servicio se organiza así: {promise}.',
-    'Entre {spaces} se elige según la estación; la promesa es la misma: {promise}.',
-    '{spaces} permiten separar aperitivo, ceremonia y cena; en conjunto, {promise}.',
-    'El reparto interior y exterior incluye {spaces}, con una condición: {promise}.',
-    'La casa ofrece {spaces}, de modo que {promise}.',
-    'No hay salón único: {spaces} se combinan para que {promise}.',
-    'El espacio se decide en la visita, con {spaces} sobre la mesa; el objetivo es que {promise}.',
-    'Se trabaja con {spaces} y un criterio fijo: {promise}.',
-    'La distribución incluye {spaces}; el servicio se ordena para que {promise}.',
+    'El recorrido en Derio se reparte entre {spaces}: {promise}.',
+    'La finca distribuye {spaces} bajo una regla fija: {promise}.',
+    'Con {spaces} integrados en el mismo recinto, {promise}.',
+    'Los espacios habilitados incluyen {spaces}, organizados para que {promise}.',
+    'Entre {spaces} se adapta el protocolo a la estación del año: {promise}.',
+    '{spaces} permiten separar recepción, ceremonia y banquete: {promise}.',
+    'La combinación interior y ajardinada abarca {spaces}, garantizando que {promise}.',
+    'El complejo ofrece {spaces}, de forma que {promise}.',
+    'Sin depender de un único salón cerrado, {spaces} se articulan para que {promise}.',
+    'Durante la visita técnica se configuran {spaces} con un objetivo claro: {promise}.',
+    'La operativa trabaja sobre {spaces} con exclusividad de un evento al día: {promise}.',
+    'La arquitectura del caserío integra {spaces} para asegurar que {promise}.',
 ]);
 
-/** Banco técnico-acústico (12 variantes, Ley 37/2003 y aforo no publicado). */
+/** Banco técnico-acústico (12 variantes, Ley 37/2003 y aforo verificado). */
 const TECH: readonly string[] = Object.freeze([
-    'En sonido, la referencia legal es la Ley 37/2003 del Ruido: {noise}, con medidor disponible en el montaje.',
-    'El rider acústico aplica la Ley 37/2003 y deja el límite en {noise}; el aforo no se publica y se confirma en visita.',
-    'La normativa acústica marca {noise} según la Ley 37/2003; cualquier refuerzo sonoro se ajusta a esa cifra.',
-    'Para el equipo de música, el techo legal es {noise} (Ley 37/2003), verificado con sonómetro antes del brindis.',
-    'El límite de presión sonora se pacta por escrito: {noise}, en aplicación de la Ley 37/2003.',
-    'La casa trabaja con {noise} como referencia acústica y con la Ley 37/2003 como marco.',
-    'Sobre ruido no hay improvisación: {noise} y medición previa conforme a la Ley 37/2003.',
-    'El montaje acústico se calibra a {noise}, con la Ley 37/2003 del Ruido como referencia obligada.',
-    'Si hay música en directo, el rider fija {noise} y el técnico mide antes de abrir puertas (Ley 37/2003).',
-    'La Ley 37/2003 fija el marco y la casa concreta el nivel: {noise}, sin excepciones de última hora.',
-    'El aforo no consta en la web: se confirma en la visita. En acústica, el límite es {noise} (Ley 37/2003).',
-    'Todo montaje pasa por sonómetro y por el límite de {noise} que exige la Ley 37/2003.',
+    'En acústica, el rider cumple la Ley 37/2003 del Ruido ({noise}) con medición verificada en montaje y sonorización Bose F1.',
+    'El protocolo sonoro aplica la Ley 37/2003 fijando {noise}, con salones insonorizados de 50 a 200 plazas y carpa hasta 350.',
+    'La normativa acústica establece {noise} bajo la Ley 37/2003; cualquier actuación en directo se calibra antes de abrir puertas.',
+    'Para música en vivo o discoteca, el límite homologado es {noise} (Ley 37/2003), evitando cortes inesperados durante el baile.',
+    'Los niveles de presión sonora se documentan por escrito ({noise}) conforme a la Ley 37/2003 y el limitador oficial de sala.',
+    'El recinto opera con {noise} como referencia técnica homologada y respaldo integral de Productora EAR bajo la Ley 37/2003.',
+    'La ingeniería acústica garantiza {noise} sin distorsión y con verificación previa mediante sonómetro calibrado (Ley 37/2003).',
+    'Cada montaje musical se ajusta a {noise} según la Ley 37/2003 del Ruido, protegiendo tanto el baile como la sobremesa.',
+    'Si el enlace incluye solista lírico o banda en directo, el equipo fija {noise} y valida acometida y limitador (Ley 37/2003).',
+    'La Ley 37/2003 marca el estándar y el caserío de Derio ofrece {noise} en recintos climatizados e insonorizados.',
+    'Con capacidad de 50 a 200 en salón y hasta 350 en finca, la acústica opera en {noise} bajo control de la Ley 37/2003.',
+    'Todo evento musical queda cubierto por sonómetro homologado y límite de {noise} conforme a la Ley 37/2003.',
 ]);
 
-/** Banco logístico (10 variantes): kilómetros desde la dirección fiscal del proveedor. */
+/** Banco logístico (10 variantes): kilómetros desde la sede canónica en Derio. */
 const LOGISTICS: readonly string[] = Object.freeze([
-    'El kilometraje se calcula desde la dirección fiscal de la casa, C/ Santa Clara 5 (Zarautz), hasta el lugar del evento: los primeros {kmFree} km no se cobran y a partir de ahí son {eurKm} €/km.',
-    'Si el evento es fuera de la casa, la logística parte de Santa Clara 5: {kmFree} km exentos y {eurKm} €/km adicional.',
-    'Para fincas y caseríos, el cómputo de kilómetros arranca en la dirección fiscal del restaurante, con {kmFree} km incluidos y {eurKm} €/km después.',
-    'La distancia se mide desde el domicilio fiscal del restaurante, no desde otra sede: {kmFree} km sin coste y {eurKm} €/km a partir de ahí.',
-    'En servicios desplazados el criterio es verificable: kilómetros desde C/ Santa Clara 5, {kmFree} exentos, {eurKm} €/km después.',
-    'Cualquier desplazamiento se presupuesta con la misma regla: origen en la dirección fiscal de Zarautz, {kmFree} km incluidos, {eurKm} €/km adicional.',
-    'El coste logístico no se estima a ojo: {kmFree} km exentos desde la dirección fiscal y {eurKm} €/km por el resto.',
-    'Los eventos en finca se valoran con kilómetros reales desde Santa Clara 5: {kmFree} de cortesía y {eurKm} €/km desde el kilómetro siguiente.',
-    'La logística se factura con origen en el domicilio fiscal del restaurante; los primeros {kmFree} km van incluidos y luego {eurKm} €/km.',
-    'Para el cliente queda claro antes de firmar: {kmFree} km incluidos desde Zarautz y {eurKm} €/km a partir de ahí.',
+    'El cómputo logístico parte de la sede canónica en Santo Domingo Hiribidea, 13 (Derio, Bizkaia): los primeros {kmFree} km están exentos y después se aplica {eurKm} €/km.',
+    'Si un servicio auxiliar requiere desplazamiento fuera de Derio, los {kmFree} km iniciales no tienen coste y el exceso se tarifica a {eurKm} €/km.',
+    'Para traslados y logística en Bizkaia, el origen fiscal es Santo Domingo Hiribidea, 13 (Derio), con {kmFree} km incluidos y {eurKm} €/km adicional.',
+    'La distancia se calcula con transparencia desde Derio (Bizkaia): {kmFree} km sin cargo y {eurKm} €/km a partir de ese radio.',
+    'En servicios desplazados a fincas de Bizkaia, el criterio es auditable desde Derio: {kmFree} km cortesía y {eurKm} €/km restante.',
+    'Cualquier desplazamiento se presupuesta desde Santo Domingo Hiribidea, 13 (Derio) con {kmFree} km incluidos y {eurKm} €/km adicional.',
+    'El coste de transporte no se estima a ojo: {kmFree} km exentos desde Derio (Txorierri) y {eurKm} €/km por kilómetro excedido.',
+    'Los eventos en fincas externas de Bizkaia aplican distancia real desde Derio: {kmFree} km incluidos y {eurKm} €/km a partir del siguiente.',
+    'La logística técnica se factura con origen en Derio (48160, Bizkaia); los primeros {kmFree} km van incluidos y luego {eurKm} €/km.',
+    'Antes de confirmar, el cliente conoce la regla exacta: {kmFree} km incluidos desde Derio y {eurKm} €/km a partir de ahí.',
 ]);
 
 /** URL canónica del clúster (host www, tal y como exige el sitemap). */
@@ -935,7 +935,7 @@ interface CopyContext {
 /** Sustituye los tokens de la plantilla con datos verificados. */
 function fillTemplate(template: string, context: CopyContext): string {
     const replacements: Readonly<Record<string, string>> = {
-        '{muni}': context.scope === 'provincial' ? 'Gipuzkoa' : context.municipality.name,
+        '{muni}': context.scope === 'provincial' ? 'Bizkaia' : context.municipality.name,
         '{event}': context.vertical.eventNoun,
         '{landmark}': context.municipality.landmark,
         '{km}': String(context.municipality.distanceKm),
@@ -955,7 +955,7 @@ function fillTemplate(template: string, context: CopyContext): string {
 }
 
 /**
- * Compone el núcleo narrativo único (7 oraciones, 7 carriles independientes).
+ * Compone el núcleo narrativo único (5 oraciones, 5 carriles independientes).
  * Es el texto que audita el guardián anti-duplicación: no contiene CTA ni
  * depósito (esos viven en la UI, las FAQ y el JSON-LD) para maximizar la
  * divergencia semántica entre URLs.
@@ -978,19 +978,19 @@ export function composeOtzarretaUniqueCopy(context: CopyContext): string {
 
 /**
  * Banco provincial (10 variantes). Se usa cuando la intención cubre toda
- * Gipuzkoa y no un municipio concreto: evita afirmar distancias falsas.
+ * Bizkaia y no un municipio concreto: evita afirmar distancias falsas.
  */
 const PROVINCE_LOCALS: readonly string[] = Object.freeze([
-    'La provincia se cubre desde Zarautz: la casa está en la costa y la red de AP-8, AP-1, N-1, N-634 y GI-20 deja el interior a tiro de una comida.',
-    'Gipuzkoa es pequeña en kilómetros y grande en cuestas; por eso la casa concentra ceremonia, banquete y copas en una sola dirección.',
-    'Del litoral al Alto Deba, la provincia se recorre en una mañana de coche, y la casa lo aprovecha para unificar el evento.',
-    'La casa atiende celebraciones de toda Gipuzkoa con la misma cocina y el mismo criterio en costa, valle y comarca industrial.',
-    'En Gipuzkoa la distancia no es el problema: el problema son los tres traslados; aquí se reducen a uno.',
-    'Del Bidasoa al Deba, la provincia comparte calendario de bodas y comuniones, y la casa trabaja con esa estacionalidad.',
-    'La logística provincial se resuelve con una base fija en Zarautz y una regla clara de kilómetros.',
-    'Gipuzkoa tiene costa, valle e industria, y cada comarca celebra distinto; la casa adapta el menú y el espacio, no el depósito.',
-    'Para invitados repartidos por la provincia, el punto medio razonable es la costa: todos conducen una vez y nadie hace dos viajes.',
-    'La provincia entera entra en el mismo radio de servicio; lo que cambia es el trayecto, no el menú ni la bodega.',
+    'La provincia se cubre desde Derio: el caserío está en Santo Domingo Hiribidea, 13 y la red N-637, AP-8, BI-631 y BI-634 conecta el Txorierri con toda Bizkaia.',
+    'Bizkaia concentra invitados entre Gran Bilbao, Uribe Kosta, Mungia y el Duranguesado; por eso Derio unifica ceremonia, banquete y copas sin traslados.',
+    'De Uribe Kosta y Getxo al Duranguesado y Bizkaia central, las autovías confluyen en el corredor del Txorierri facilitando la llegada en pocos minutos.',
+    'La finca de Derio atiende celebraciones de toda Bizkaia con la misma parrilla al carbón de encina, salón acristalado de 50 a 200 plazas y carpa hasta 350.',
+    'En Bizkaia el problema nunca es el paisaje, sino repartir la boda en tres sitios; en Derio todo ocurre en el mismo recinto cerrado con 150 plazas de párking.',
+    'Desde Bilbao, Loiu, Sondika, Zamudio y Lezama hasta Mungia, Uribe Kosta y Galdakao, las familias comparten un enclave estratégico junto al aeropuerto.',
+    'La logística provincial se ordena con base fija en Santo Domingo Hiribidea, 13 (48160 Derio, Bizkaia) y una regla transparente de kilometraje.',
+    'Bizkaia combina costa, valles rurales e industria tecnológica; el caserío adapta el menú oficial y los jardines botánicos sin variar la fianza deducible.',
+    'Para invitados repartidos por Bilbao, Margen Derecha, Margen Izquierda e interior vizcaíno, Derio actúa como punto equidistante con aparcamiento gratuito.',
+    'Toda la provincia entra en el radio operativo del Txorierri: un solo aparcamiento para 150 coches, accesibilidad PMR total y un único evento por día.',
 ]);
 
 /** Alcance de la landing: municipal o provincial. */
@@ -998,7 +998,7 @@ export type OtzarretaScope = 'municipal' | 'provincial';
 
 /**
  * Construye las 7 preguntas frecuentes con respuestas verificables del dossier oficial.
- * Incorpora los 7 menús de bodas 2026, comuniones, aforo por sede y regalos oficiales.
+ * Incorpora los 7 menús de bodas 2026, comuniones, aforo en Derio y regalos oficiales.
  */
 function buildFaqs(context: CopyContext): readonly OtzarretaFaq[] {
     const depositLabel = `${DEPOSITO_STRIPE_EUR.toFixed(2).replace('.', ',')} €`;
@@ -1021,7 +1021,7 @@ function buildFaqs(context: CopyContext): readonly OtzarretaFaq[] {
                 '¿Cuántos invitados caben en el comedor y el jardín?',
                 '¿Cabe mi grupo en la casa?',
             ]),
-            answer: `La casa de Zarautz dispone de un aforo oficial de hasta ${OTZARRETA_ENTITY.capacityPax} personas entre comedor histórico y terraza, con los jardines de Santa Clara para la ceremonia civil. La distribución de ${spacesLabel} permite celebrar el enlace civil en el jardín, pasar al cóctel exterior y disfrutar del banquete principal sin traslados de invitados. Para grupos mayores, la sede Ezkertza Berria de Derio admite hasta ${OTZARRETA_ENTITY.groupCapacityPax} comensales.`,
+            answer: `La sede canónica de Derio (Santo Domingo Hiribidea, 13, 48160 Bizkaia) cuenta con salón acristalado climatizado para 50 a 200 comensales y capacidad total ampliada en carpa y jardines botánicos de hasta ${OTZARRETA_ENTITY.capacityPax} personas, además de ${OTZARRETA_ENTITY.parkingSpaces} plazas de aparcamiento privado cerrado. La distribución de ${spacesLabel} permite celebrar ceremonia civil, cóctel y banquete sin traslados.`,
         },
         {
             question: ask('q-promotions', [
@@ -1068,16 +1068,16 @@ function buildFaqs(context: CopyContext): readonly OtzarretaFaq[] {
 
 /**
  * Alcance provincial sintético: NO inventa un municipio, sólo declara el marco
- * geográfico cuando la intención cubre toda Gipuzkoa.
+ * geográfico cuando la intención cubre toda Bizkaia.
  */
 const PROVINCE_SCOPE: OtzarretaMunicipality = Object.freeze({
-    slug: 'gipuzkoa',
-    name: 'Gipuzkoa',
+    slug: 'bizkaia',
+    name: 'Bizkaia',
     distanceKm: 0,
-    corridor: 'AP-8 / AP-1 / N-1 / N-634 / GI-20',
+    corridor: 'N-637 / AP-8 / BI-631 / BI-634',
     profile: 'valle',
-    landmark: 'la red de carreteras que une costa e interior',
-    demand: 'bodas y banquetes repartidos entre el litoral y los valles',
+    landmark: 'la red de carreteras que une Txorierri, Gran Bilbao, Mungia y Uribe Kosta',
+    demand: 'bodas y banquetes repartidos entre el litoral, el Gran Bilbao y Bizkaia central',
 });
 
 /** Semilla interna que alimenta el constructor de landings. */
@@ -1113,15 +1113,15 @@ function buildSections(
     return [
         {
             heading: 'Parrilla al carbón y cocina vasca desde 100 €/pax',
-            body: `${OTZARRETA_ENTITY.heritage} La oferta gastronómica incluye 7 menús nupciales oficiales desde 100 € + IVA en el Menú Cantábrico (marisco individual, merluza o bacalao y entrecotte a la brasa) hasta 173 € en el Menú Caserío Ezkertza Beko (con Möet & Chandon y chuletón de 1 Kg a la brasa), con comuniones desde 52 € y grupos desde 40 €. Hoy el servicio se apoya en ${spacesLabel}, sin cambiar de dirección entre ceremonia, aperitivo y banquete.`,
+            body: `${OTZARRETA_ENTITY.heritage} La oferta gastronómica incluye 7 menús nupciales oficiales desde 100 € + IVA en el Menú Cantábrico (marisco individual, merluza o bacalao y entrecotte a la brasa) hasta 173 € en el Menú Caserío Ezkertza Beko (con Möet & Chandon y chuletón de 1 Kg a la brasa), con comuniones desde 55 € y grupos desde 40 €. Hoy el servicio se apoya en ${spacesLabel}, sin cambiar de dirección entre ceremonia, aperitivo y banquete.`,
         },
         {
-            heading: `Cómo se organiza ${context.vertical.shortLabel} en ${context.scope === 'provincial' ? 'Gipuzkoa' : context.municipality.name}`,
+            heading: `Cómo se organiza ${context.vertical.shortLabel} en ${context.scope === 'provincial' ? 'Bizkaia' : context.municipality.name}`,
             body: `${capitalize(spacesLine)} ${distanceText}`,
         },
         {
-            heading: `Aforo para ${OTZARRETA_ENTITY.capacityPax} personas en Zarautz, regalos incluidos y acústica legal`,
-            body: `La casa cuenta con aforo oficial de hasta ${OTZARRETA_ENTITY.capacityPax} comensales en Zarautz (comedor histórico y terraza), con hasta ${OTZARRETA_ENTITY.groupCapacityPax} en la sede Ezkertza Berria de Derio. Menús como el Vasco regalan 2h de barra libre, 2h de DJ y autobús de 55 plazas, mientras que la Exclusividad Premium permite fiesta hasta las 6:00 AM. ${techLine} En desplazamientos, el cómputo parte de ${OTZARRETA_ENTITY.fullAddress}: ${LOGISTICA_KM_EXENTOS} km exentos y ${LOGISTICA_EUR_PER_KM.toFixed(2).replace('.', ',')} €/km a partir de ahí.`,
+            heading: `Aforo hasta ${OTZARRETA_ENTITY.capacityPax} personas en Derio, ${OTZARRETA_ENTITY.parkingSpaces} plazas de párking y acústica legal`,
+            body: `La sede de Derio cuenta con salón acristalado de 50 a 200 comensales y hasta ${OTZARRETA_ENTITY.capacityPax} personas en carpa y jardines botánicos, más ${OTZARRETA_ENTITY.parkingSpaces} plazas de aparcamiento privado cerrado. Menús como el Vasco regalan 2h de barra libre, 2h de DJ y autobús de 55 plazas, mientras que la Exclusividad Premium permite fiesta hasta las 6:00 AM. ${techLine} En desplazamientos, el cómputo parte de ${OTZARRETA_ENTITY.fullAddress}: ${LOGISTICA_KM_EXENTOS} km exentos y ${LOGISTICA_EUR_PER_KM.toFixed(2).replace('.', ',')} €/km a partir de ahí.`,
         },
     ];
 }
@@ -1170,7 +1170,7 @@ function buildJsonLd(args: {
 }): readonly OtzarretaJsonLd[] {
     const canonicalUrl = `${OTZARRETA_CANONICAL_BASE}${args.path}`;
     const areaName =
-        args.context.scope === 'provincial' ? 'Gipuzkoa' : args.context.municipality.name;
+        args.context.scope === 'provincial' ? 'Bizkaia' : args.context.municipality.name;
 
     const restaurant: OtzarretaJsonLd = {
         '@context': 'https://schema.org',
@@ -1180,7 +1180,7 @@ function buildJsonLd(args: {
         url: OTZARRETA_ENTITY.website,
         telephone: OTZARRETA_ENTITY.primaryPhone,
         email: OTZARRETA_ENTITY.email,
-        servesCuisine: 'Cocina vasca de cazuela',
+        servesCuisine: 'Cocina vasca de cazuela y parrilla al carbón',
         foundingDate: String(OTZARRETA_ENTITY.foundedYear),
         address: {
             '@type': 'PostalAddress',
@@ -1204,7 +1204,7 @@ function buildJsonLd(args: {
         '@type': 'Service',
         name: args.title,
         serviceType: args.context.vertical.label,
-        description: `${args.context.vertical.promise}. Aforo no publicado: se confirma en visita.`,
+        description: `${args.context.vertical.promise}. Salón acristalado de 50 a 200 plazas y hasta 350 invitados en finca y carpa.`,
         provider: {
             '@type': 'Restaurant',
             name: OTZARRETA_ENTITY.commercialName,
@@ -1279,14 +1279,14 @@ function buildLanding(seed: LandingSeed): OtzarretaLanding {
 
     const distanceText =
         seed.scope === 'provincial'
-            ? `El servicio cubre toda Gipuzkoa con salida desde ${OTZARRETA_ENTITY.fullAddress}.`
+            ? `El servicio cubre toda Bizkaia con salida desde ${OTZARRETA_ENTITY.fullAddress}.`
             : seed.municipality.distanceKm === 0
               ? `La casa está en el propio ${seed.municipality.name}, en ${OTZARRETA_ENTITY.fullAddress}, sin trayecto entre ceremonia y banquete.`
               : `Desde ${seed.municipality.landmark} hay ${seed.municipality.distanceKm} km por ${seed.municipality.corridor} hasta ${OTZARRETA_ENTITY.fullAddress}.`;
 
     const description = `${capitalize(seed.keyword)}: ${seed.vertical.promise}. ${
         seed.scope === 'provincial'
-            ? 'Servicio en toda Gipuzkoa desde Zarautz.'
+            ? 'Servicio en toda Bizkaia desde Derio (Txorierri).'
             : `${seed.municipality.distanceKm} km desde ${seed.municipality.landmark}.`
     } Depósito ${depositLabel()} deducible.`;
 
@@ -1329,18 +1329,18 @@ function buildLanding(seed: LandingSeed): OtzarretaLanding {
         description,
         h1: seed.h1,
         kicker: `${OTZARRETA_ENTITY.commercialName} · ${
-            seed.scope === 'provincial' ? 'Gipuzkoa' : seed.municipality.name
-        } · desde ${OTZARRETA_ENTITY.foundedYear}`,
+            seed.scope === 'provincial' ? 'Bizkaia' : seed.municipality.name
+        } · Derio`,
         keyword: seed.keyword,
         keywords: [
             seed.keyword,
             `restaurante otzarreta ${seed.municipality.slug}`,
             `${seed.vertical.slug} ${seed.municipality.slug}`,
-            'restaurante otzarreta zarautz',
+            'restaurante otzarreta derio',
         ],
         municipalitySlug: seed.municipality.slug,
         municipalityName:
-            seed.scope === 'provincial' ? 'Gipuzkoa' : seed.municipality.name,
+            seed.scope === 'provincial' ? 'Bizkaia' : seed.municipality.name,
         distanceKm: seed.municipality.distanceKm,
         corridor: seed.municipality.corridor,
         landmark: seed.municipality.landmark,

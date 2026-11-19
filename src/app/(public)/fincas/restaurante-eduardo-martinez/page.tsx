@@ -55,7 +55,7 @@ const OTZARRETA_CTA_SOURCE = {
 export const metadata: Metadata = {
   title: 'Restaurante Ezkertza Berria & Otzarreta · Eduardo Martínez | Finca Canónica EAR OS',
   description:
-    'Dossier maestro para Eduardo Martínez: Caserío Ezkertza Berria (Derio) & Restaurante Otzarreta (Zarautz). Recorrido cinematográfico Altura, storytelling interactivo, análisis ROI vs portales pasivos y malla de 126 landings propietarias.',
+    'Dossier maestro para Eduardo Martínez: Caserío Ezkertza Berria & Restaurante Otzarreta en Derio (Bizkaia · Txorierri). Recorrido cinematográfico Altura, storytelling interactivo, análisis ROI vs portales pasivos y malla de 126 landings propietarias.',
 };
 
 export default async function EduardoMartinezMasterPage({
@@ -82,7 +82,7 @@ export default async function EduardoMartinezMasterPage({
         
         {/* ━━━ 1. CABECERA MAESTRA EDITORIAL CON LOGO OFICIAL ━━━ */}
         <section className="text-center space-y-6 max-w-4xl mx-auto">
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-500/10 via-[#ecb613]/10 to-amber-500/10 border border-[#ecb613]/30 text-[#ecb613] text-xs font-mono tracking-wider shadow-lg shadow-[#ecb613]/5">
+          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-500/10 via-[#ecb613]/10 to-amber-500/10 border border-[#ecb613]/30 text-[#ecb613] text-xs font-mono tracking-wider shadow-[0_0_20px_rgba(236,182,19,0.08)]">
             <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
             <span>PROPUESTA ESTRATÉGICA S-CLASS · EDUARDO MARTÍNEZ & EDWIN AGUDELO</span>
           </div>
@@ -98,7 +98,7 @@ export default async function EduardoMartinezMasterPage({
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight font-display leading-[1.08]">
             Ezkertza Berria & Otzarreta
             <span className="block text-xl sm:text-3xl lg:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] via-amber-200 to-[#ecb613] font-serif italic font-normal mt-2">
-              Parrilla Vasca de Autor & Banquetes Nupciales en Derio y Zarautz
+              Parrilla Vasca de Autor & Banquetes Nupciales en Derio (Txorierri · Bizkaia)
             </span>
           </h1>
 
@@ -110,19 +110,19 @@ export default async function EduardoMartinezMasterPage({
 
           {/* Quick Metrics Bar */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4">
-            <div className="p-4 rounded-2xl bg-zinc-950/80 border border-white/10 text-center">
+            <div className="p-4 rounded-2xl bg-[#09090d]/80 border border-white/10 text-center">
               <div className="text-2xl font-black text-white font-mono">{EZKERTZA_DERIO_VENUE.rating.toFixed(1)} / 5</div>
               <div className="text-[11px] font-mono text-zinc-400 mt-0.5">{EZKERTZA_DERIO_VENUE.reviewCount} Opiniones Verificadas</div>
             </div>
-            <div className="p-4 rounded-2xl bg-zinc-950/80 border border-white/10 text-center">
+            <div className="p-4 rounded-2xl bg-[#09090d]/80 border border-white/10 text-center">
               <div className="text-2xl font-black text-[#ecb613] font-mono">{EZKERTZA_DERIO_VENUE.recommendationPercent}%</div>
               <div className="text-[11px] font-mono text-zinc-400 mt-0.5">Parejas Recomiendan</div>
             </div>
-            <div className="p-4 rounded-2xl bg-zinc-950/80 border border-white/10 text-center">
+            <div className="p-4 rounded-2xl bg-[#09090d]/80 border border-white/10 text-center">
               <div className="text-2xl font-black text-[#00E5FF] font-mono">350 pax</div>
               <div className="text-[11px] font-mono text-zinc-400 mt-0.5">Aforo Máximo Grupo</div>
             </div>
-            <div className="p-4 rounded-2xl bg-zinc-950/80 border border-white/10 text-center">
+            <div className="p-4 rounded-2xl bg-[#09090d]/80 border border-white/10 text-center">
               <div className="text-2xl font-black text-emerald-400 font-mono">1 al Día</div>
               <div className="text-[11px] font-mono text-zinc-400 mt-0.5">Exclusividad Total</div>
             </div>
@@ -132,7 +132,7 @@ export default async function EduardoMartinezMasterPage({
           <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
             <a
               href={calendarBlockHref}
-              className="px-8 py-4 rounded-2xl bg-gradient-to-r from-[#ecb613] via-[#f7cb45] to-[#ecb613] text-black font-extrabold text-sm sm:text-base hover:brightness-110 transition-all shadow-xl shadow-[#ecb613]/25 flex items-center gap-2.5 hover:scale-[1.02] active:scale-[0.98]"
+              className="px-8 py-4 rounded-2xl bg-gradient-to-r from-[#ecb613] via-[#f7cb45] to-[#ecb613] text-black font-extrabold text-sm sm:text-base hover:brightness-110 transition-all shadow-[0_0_30px_rgba(236,182,19,0.25)] flex items-center gap-2.5 hover:scale-[1.02] active:scale-[0.98]"
             >
               <CreditCard className="w-5 h-5" />
               <span>Bloquear Fecha con {DEPOSITO_STRIPE_EUR} € (Deducible)</span>
@@ -157,7 +157,7 @@ export default async function EduardoMartinezMasterPage({
             </a>
           </div>
 
-          <p className="max-w-3xl mx-auto text-[11px] sm:text-xs text-gray-500 font-mono leading-relaxed pt-1">
+          <p className="max-w-3xl mx-auto text-[11px] sm:text-xs text-zinc-400 font-mono leading-relaxed pt-1">
             Conserjería única: {SOVEREIGN_DEMAND_CHANNEL.telDisplay} · Línea directa de la casa{' '}
             {supplierLineMask(OTZARRETA_ENTITY.primaryPhone)} (verificada) — se facilita al confirmar la visita técnica.
           </p>
@@ -195,12 +195,12 @@ export default async function EduardoMartinezMasterPage({
             {EZKERTZA_STORYTELLING_CHAPTERS.map((chapter, idx) => (
               <article
                 key={chapter.id}
-                className={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center p-6 sm:p-10 rounded-[36px] bg-zinc-950/60 border border-white/10 backdrop-blur-xl ${
+                className={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center p-6 sm:p-10 rounded-[36px] bg-[#09090d]/60 border border-white/10 backdrop-blur-xl ${
                   idx % 2 === 1 ? 'lg:flex-row-reverse' : ''
                 }`}
               >
                 <div className={`lg:col-span-7 ${idx % 2 === 1 ? 'lg:order-2' : 'lg:order-1'}`}>
-                  <div className="relative aspect-[16/10] sm:aspect-[16/9] rounded-3xl overflow-hidden border border-white/10 shadow-2xl group">
+                  <div className="relative aspect-[16/10] sm:aspect-[16/9] rounded-3xl overflow-hidden border border-white/10 shadow-[0_24px_60px_rgba(0,0,0,0.7)] group">
                     <img
                       src={chapter.imageUrl}
                       alt={chapter.roomName.replace('\n', ' ')}
@@ -236,7 +236,7 @@ export default async function EduardoMartinezMasterPage({
                     {chapter.description}
                   </p>
 
-                  <div className="p-3.5 rounded-2xl bg-zinc-900/80 border border-white/5 text-xs font-sans text-zinc-400">
+                  <div className="p-3.5 rounded-2xl bg-[#09090d]/90 border border-white/5 text-xs font-sans text-zinc-400">
                     <strong className="text-white block mb-0.5 font-mono text-[11px] uppercase tracking-wider">
                       Detalle de Arquitectura & Operación:
                     </strong>
@@ -248,7 +248,7 @@ export default async function EduardoMartinezMasterPage({
                       href={whatsappConciergeUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-white/10 text-white text-xs font-mono font-bold transition-all"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#09090d] hover:bg-white/10 border border-white/10 text-white text-xs font-mono font-bold transition-all"
                     >
                       <Phone className="w-3.5 h-3.5 text-emerald-400" />
                       <span>Consultar esta Zona</span>
@@ -268,7 +268,7 @@ export default async function EduardoMartinezMasterPage({
         </section>
 
         {/* ━━━ 4. ANÁLISIS FINANCIERO: POR QUÉ EAR OS RINDE MÁS QUE UN DIRECTORIO PASIVO (PROPUESTA PARA EDUARDO) ━━━ */}
-        <section className="rounded-3xl bg-gradient-to-b from-[#0e0e14] via-[#09090d] to-[#050507] border border-[#ecb613]/30 p-8 sm:p-12 lg:p-16 backdrop-blur-md relative overflow-hidden shadow-2xl shadow-amber-950/20">
+        <section className="rounded-3xl bg-gradient-to-b from-[#0e0e14] via-[#09090d] to-[#050507] border border-[#ecb613]/30 p-8 sm:p-12 lg:p-16 backdrop-blur-md relative overflow-hidden shadow-[0_24px_60px_rgba(69,26,3,0.2)]">
           <div className="absolute top-0 right-0 w-96 h-96 bg-[#ecb613]/10 rounded-full blur-[120px] pointer-events-none" />
 
           <div className="space-y-4 text-center max-w-4xl mx-auto mb-14">
@@ -306,7 +306,7 @@ export default async function EduardoMartinezMasterPage({
                   <div className="flex items-start gap-3">
                     <XCircle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
                     <div>
-                      <strong className="text-white">1 sola ficha compartida:</strong> Tu caserío compite en la misma página contra 400 restaurantes y fincas de Bizkaia y Gipuzkoa.
+                      <strong className="text-white">1 sola ficha compartida:</strong> Tu caserío compite en la misma página contra decenas de restaurantes y fincas de Bizkaia.
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -342,7 +342,7 @@ export default async function EduardoMartinezMasterPage({
             </div>
 
             {/* Modelo EAR OS Soberano */}
-            <div className="rounded-3xl bg-gradient-to-b from-[#141209] to-[#09090d] border-2 border-[#ecb613] p-8 space-y-6 flex flex-col justify-between shadow-xl shadow-[#ecb613]/10">
+            <div className="rounded-3xl bg-gradient-to-b from-[#141209] to-[#09090d] border-2 border-[#ecb613] p-8 space-y-6 flex flex-col justify-between shadow-[0_20px_50px_rgba(236,182,19,0.1)]">
               <div className="space-y-5">
                 <div className="flex items-center justify-between border-b border-[#ecb613]/30 pb-4">
                   <div>
@@ -358,7 +358,7 @@ export default async function EduardoMartinezMasterPage({
                   <div className="flex items-start gap-3">
                     <CheckCircle2 className="w-5 h-5 text-[#ecb613] shrink-0 mt-0.5" />
                     <div>
-                      <strong className="text-white">126 Landings Exclusivas y Propietarias:</strong> 72 páginas locales (18 municipios de Bizkaia y Gipuzkoa) + 54 de intención posicionadas en Google y motores IA (ChatGPT/Perplexity).
+                      <strong className="text-white">126 Landings Exclusivas y Propietarias:</strong> 72 páginas locales (18 municipios y comarcas de Bizkaia: Derio, Bilbao, Txorierri, Mungia, Uribe Kosta y Bizkaia central) + 54 de intención posicionadas en Google y motores IA (ChatGPT/Perplexity).
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -396,7 +396,7 @@ export default async function EduardoMartinezMasterPage({
                   href={whatsappConciergeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-5 py-2.5 rounded-xl bg-[#ecb613] text-black font-extrabold text-xs hover:bg-[#ffe066] transition-all flex items-center gap-2 shadow-md shadow-[#ecb613]/20"
+                  className="px-5 py-2.5 rounded-xl bg-[#ecb613] text-black font-extrabold text-xs hover:bg-[#ffe066] transition-all flex items-center gap-2 shadow-[0_0_20px_rgba(236,182,19,0.2)]"
                 >
                   <span>Firmar Alianza Directa</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -406,22 +406,22 @@ export default async function EduardoMartinezMasterPage({
           </div>
         </section>
 
-        {/* ━━━ 5. LAS DOS SEDES DE EDUARDO: DERIO (BIZKAIA) & ZARAUTZ (GIPUZKOA) ━━━ */}
+        {/* ━━━ 5. SEDE CANÓNICA DE EDUARDO: DERIO (TXORIERRI · BIZKAIA) ━━━ */}
         <section className="space-y-8">
           <div className="text-center max-w-3xl mx-auto space-y-3">
             <span className="text-xs font-mono text-[#ecb613] uppercase tracking-wider">
-              DOS ENCLAVES PRIVILEGIADOS EN EL PAÍS VASCO
+              ENCLAVE PRIVILEGIADO EN TXORIERRI · BIZKAIA
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-white font-display">
-              Las Sedes de Eduardo: Ezkertza Berria & Otzarreta
+              Sede Canónica de Eduardo Martínez: Ezkertza Berria & Otzarreta (Derio)
             </h2>
             <p className="text-gray-400 text-sm sm:text-base">
-              Dos espacios emblemáticos diseñados para celebraciones de ensueño, desde bodas íntimas en la costa de Zarautz hasta banquetes multitudinarios en el valle de Derio.
+              Espacio emblemático en el valle de Derio diseñado para bodas íntimas y banquetes de hasta 350 comensales, con servicio directo a Bilbao, Txorierri, Mungia, Uribe Kosta y Bizkaia central.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {OTZARRETA_ENTITY.affiliatedVenues.map((venue) => (
+          <div className="max-w-2xl mx-auto">
+            {OTZARRETA_ENTITY.affiliatedVenues.slice(0, 1).map((venue) => (
               <div
                 key={venue.slug}
                 className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-8 space-y-6 backdrop-blur-md hover:border-[#ecb613]/40 transition-all"
@@ -561,7 +561,7 @@ export default async function EduardoMartinezMasterPage({
             </h2>
             <p className="text-xs sm:text-sm text-gray-400 max-w-3xl">
               Cada enlace es una URL real con entidad verificada detrás: {OTZARRETA_MUNICIPALITIES.length}{' '}
-              municipios reales de Gipuzkoa y Bizkaia × {OTZARRETA_HUB.groups.length} formatos de banquete,
+              municipios y comarcas de Bizkaia (Derio, Bilbao, Txorierri, Mungia, Uribe Kosta y Bizkaia central) × {OTZARRETA_HUB.groups.length} formatos de banquete,
               más las búsquedas directas con intención de reserva. Todo el tráfico posiciona únicamente al grupo de Eduardo.
             </p>
           </div>
@@ -616,7 +616,7 @@ export default async function EduardoMartinezMasterPage({
                 Todas las Instalaciones de Ezkertza Berria
               </h2>
             </div>
-            <span className="text-xs font-mono text-zinc-500">
+            <span className="text-xs font-mono text-zinc-400">
               {EZKERTZA_DERIO_VENUE.media.galleryPhotos.length} Fotografías Reales · Caserío & Jardines
             </span>
           </div>
@@ -625,7 +625,7 @@ export default async function EduardoMartinezMasterPage({
             {EZKERTZA_DERIO_VENUE.media.galleryPhotos.map((photoUrl, index) => (
               <figure
                 key={photoUrl}
-                className="group relative rounded-2xl overflow-hidden border border-white/10 bg-zinc-950 aspect-[4/3] shadow-lg"
+                className="group relative rounded-2xl overflow-hidden border border-white/10 bg-[#050507] aspect-[4/3] shadow-[0_16px_40px_rgba(0,0,0,0.65)]"
               >
                 <img
                   src={photoUrl}
@@ -649,7 +649,7 @@ export default async function EduardoMartinezMasterPage({
             glowColor="gold"
             intensity="high"
             bordered={false}
-            className="border border-amber-500/30 shadow-2xl shadow-amber-950/30"
+            className="border border-amber-500/30 shadow-[0_24px_60px_rgba(69,26,3,0.3)]"
           >
             <div className="p-8 sm:p-12 text-center space-y-6">
               <div className="w-16 h-16 rounded-2xl bg-[#ecb613]/10 border border-[#ecb613]/30 flex items-center justify-center text-[#ecb613] mx-auto">
@@ -668,7 +668,7 @@ export default async function EduardoMartinezMasterPage({
               <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
                 <a
                   href={calendarBlockHref}
-                  className="px-8 py-4 rounded-xl bg-[#ecb613] text-black font-extrabold text-sm hover:bg-[#ffe066] transition-all flex items-center gap-2 shadow-lg shadow-[#ecb613]/20"
+                  className="px-8 py-4 rounded-xl bg-[#ecb613] text-black font-extrabold text-sm hover:bg-[#ffe066] transition-all flex items-center gap-2 shadow-[0_0_25px_rgba(236,182,19,0.2)]"
                 >
                   <CreditCard className="w-4 h-4" />
                   Bloquear Fecha en Exclusiva ({DEPOSITO_STRIPE_EUR} €)
@@ -678,14 +678,14 @@ export default async function EduardoMartinezMasterPage({
                   href={whatsappConciergeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-6 py-4 rounded-xl bg-[#25D366] text-black font-bold text-sm hover:brightness-110 transition-all flex items-center gap-2 shadow-lg"
+                  className="px-6 py-4 rounded-xl bg-[#25D366] text-black font-bold text-sm hover:brightness-110 transition-all flex items-center gap-2 shadow-[0_12px_30px_rgba(37,211,102,0.2)]"
                 >
                   <Phone className="w-4 h-4" />
                   Hablar con Conserjería VIP
                 </a>
               </div>
 
-              <div className="pt-4 text-xs text-gray-500 font-mono">
+              <div className="pt-4 text-xs text-zinc-400 font-mono">
                 Contrato respaldado por el Art. 1255 del Código Civil · Split Soberano 80/10/10 · Productora EAR
               </div>
             </div>
@@ -697,9 +697,8 @@ export default async function EduardoMartinezMasterPage({
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
               <div className="font-bold text-white text-sm mb-1 font-display">Ezkertza Berria & Otzarreta</div>
-              <p>Sede Bizkaia: {OTZARRETA_ENTITY.affiliatedVenues[0].address}</p>
-              <p className="mt-1">Sede Gipuzkoa: {OTZARRETA_ENTITY.affiliatedVenues[1].address}</p>
-              <p className="mt-2 text-gray-500 leading-relaxed">
+              <p>Sede Canónica (Derio, Bizkaia): {OTZARRETA_ENTITY.affiliatedVenues[0].address}</p>
+              <p className="mt-2 text-zinc-400 leading-relaxed">
                 {supplierContactWithheldNotice('Ezkertza Berria & Otzarreta')}
               </p>
             </div>

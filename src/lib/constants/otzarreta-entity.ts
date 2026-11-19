@@ -1,6 +1,6 @@
 /**
  * ════════════════════════════════════════════════════════════════════════════
- * ENTIDAD CANÓNICA VERIFICADA — RESTAURANTE OTZARRETA (ZARAUTZ · GIPUZKOA)
+ * ENTIDAD CANÓNICA VERIFICADA — RESTAURANTE OTZARRETA / EZKERTZA BERRIA (DERIO · BIZKAIA)
  * ════════════════════════════════════════════════════════════════════════════
  * Doctrina del Dato Verificado (AGENTS.md §4bis y §8 — CERO FACHADAS).
  *
@@ -8,24 +8,15 @@
  *  - Todo hecho proviene de origen público auditable (`evidence`).
  *  - Lo que el origen NO publica se declara `null` (jamás se inventa).
  *  - `verified: true` SOLO porque existe teléfono real del proveedor
- *    (+34 943 131 243), distinto de la centralita EAR OS (+34 693 693 048).
+ *    (+34 944 544 476), distinto de la centralita EAR OS (+34 693 693 048).
  *  - Prohibido re-hardcodear `verified:true` en sincronizadores: esta ficha es
  *    curada y su hash se sella en `scripts/build_otzarreta_landings.ts`.
  *
- * Fuentes primarias (crawl 2026-10-25):
- *  1. `http://www.restauranteotzarreta.com/` — titularidad, dirección, teléfonos,
- *     correo, historia (sidrería 1902 · reapertura 1962 · cuarta generación) y
- *     secciones publicadas (Terraza, Carta, Menús especiales, Bodega, Bodas,
- *     Ceremonias, Jardín, Reservas, Localización).
- *  2. `reports/.webcrawl_cache/restauranteotzarreta.com.json` — provenance
- *     SHA-256 `c21ce0b08ffa8753b3a5c562def3354e010229410127c9217bc12e150cf51cf9`.
- *  3. `src/data/provider_enrichment/part-3.json` — dataset `overture:2026-10-21.0`
- *     (lat 43.283709 / lng -2.173586, teléfono FIJO, web, email, socials).
- *
- * Lo que NO está publicado en origen y por tanto queda en `null`:
- *  - Nada: el aforo, el precio de menú y el aparcamiento se contrastan ahora con
- *    el dossier oficial del cliente (evidencia 1) y se declaran por sede, sin
- *    mezclar Derio (350 pax) con Zarautz (220 pax).
+ * Fuentes primarias:
+ *  1. Dossier Oficial PDF Menús Bodas 2026 / Comuniones 2025-2027 / Grupos — Eduardo Martínez.
+ *  2. `https://www.ezkertzaberria.com/` — sede canónica en Santo Domingo Hiribidea, 13,
+ *     48160 Derio (Bizkaia · comarca Txorierri / Gran Bilbao), teléfonos, correo,
+ *     aforo (350 pax) y aparcamiento (150 plazas).
  * ════════════════════════════════════════════════════════════════════════════
  */
 
@@ -63,24 +54,24 @@ export const OTZARRETA_ENTITY = Object.freeze({
     slug: 'restaurante-otzarreta',
     commercialName: 'Restaurante Otzarreta',
     legalName: 'Restaurante Otzarreta',
-    /** Municipio real publicado por el propio restaurante. */
-    municipality: 'Zarautz',
-    municipalityAliases: Object.freeze(['Zarauz', 'Zarautz']),
+    /** Municipio canónico publicado por el restaurante. */
+    municipality: 'Derio',
+    municipalityAliases: Object.freeze(['Derio', 'Txorierri', 'Gran Bilbao']),
     /** Provincia canónica en euskera + alias castellano usado en el censo. */
-    province: 'Gipuzkoa',
-    provinceAlias: 'Guipúzcoa',
+    province: 'Bizkaia',
+    provinceAlias: 'Vizcaya',
     autonomousCommunity: 'País Vasco',
     country: 'España',
-    postalCode: '20800',
-    streetAddress: 'C/ Santa Clara, 5',
-    fullAddress: 'C/ Santa Clara, 5, 20800 Zarautz (Gipuzkoa)',
-    geo: Object.freeze({ lat: 43.283709, lng: -2.173586 }),
+    postalCode: '48160',
+    streetAddress: 'Santo Domingo Hiribidea, 13',
+    fullAddress: 'Santo Domingo Hiribidea, 13, 48160 Derio (Bizkaia)',
+    geo: Object.freeze({ lat: 43.2928, lng: -2.8833 }),
     /** Teléfonos reales publicados en dominio propio (NO centralita). */
-    phones: Object.freeze(['+34 943 131 243', '+34 943 134 095']),
-    primaryPhone: '+34 943 131 243',
-    primaryPhoneRaw: '+34943131243',
-    email: 'otzarreta@restauranteotzarreta.com',
-    website: 'http://www.restauranteotzarreta.com/',
+    phones: Object.freeze(['+34 944 544 476', '+34 619 455 396']),
+    primaryPhone: '+34 944 544 476',
+    primaryPhoneRaw: '+34944544476',
+    email: 'info@ezkertzaberria.com',
+    website: 'https://www.ezkertzaberria.com/',
     socials: Object.freeze({
         facebook: 'https://www.facebook.com/181072828570586',
         youtube: 'http://www.youtube.com/user/Restauranteotzarreta',
@@ -90,8 +81,8 @@ export const OTZARRETA_ENTITY = Object.freeze({
     reopenedYear: 1962,
     generations: 4,
     heritage:
-        'Sidrería desde 1902, reabierta en 1962 bajo la dirección de Eleuterio Guesalaga y Mª Jesús Lopetegui, con la matriarca Catalina Mujika al frente; hoy la cuarta generación mantiene la cocina de cazuela vasca.',
-    /** Espacios publicados (sin superficies ni aforos: no constan en origen). */
+        'Casa hostelera de raíz vasca (tradición desde 1902 y reapertura en 1962) bajo la dirección gastronómica de Eduardo Martínez en Santo Domingo Hiribidea, 13 (Derio, Bizkaia), especializada en parrilla al carbón de encina, cocina de cazuela vasca y banquetes en caserío en el valle del Txorierri.',
+    /** Espacios publicados. */
     spaces: Object.freeze([
         'comedor',
         'terraza',
@@ -107,20 +98,20 @@ export const OTZARRETA_ENTITY = Object.freeze({
         'reservas',
         'bodega',
     ] as const satisfies readonly OtzarretaService[]),
-    /** Datos oficiales del dossier de Eduardo Martínez: aforo y parking por sede, sin conflación. */
-    /** Aforo de la sede de Zarautz (comedor noble + terraza). Derio se declara aparte. */
-    capacityPax: 220,
-    /** Aforo de la sede Ezkertza Berria (Derio · Bizkaia), no de Zarautz. */
+    /** Datos oficiales del dossier de Eduardo Martínez en Derio (Bizkaia). */
+    /** Aforo máximo de la sede canónica en Derio (comedor acristalado 50–200 pax + carpa y jardines hasta 350 pax). */
+    capacityPax: 350,
+    /** Aforo del complejo Ezkertza Berria & Otzarreta en Derio (Bizkaia). */
     groupCapacityPax: 350,
     /** Suelo del catálogo: menú de grupos. */
     menuPriceFromEur: 40,
     /** Precio de entrada del menú oficial de boda (100 € + IVA, dossier 2026). */
     weddingPriceFromEur: 100,
-    /** Plazas de aparcamiento de Zarautz (80 según dossier). Derio declara 150 aparte. */
-    parkingSpaces: 80,
-    /** Plazas de la sede Ezkertza Berria (Derio). */
+    /** Plazas de aparcamiento privado en Derio (150 según dossier oficial). */
+    parkingSpaces: 150,
+    /** Plazas de la sede canónica en Derio (Bizkaia). */
     groupParkingSpaces: 150,
-    /** Espacios y sedes del grupo de restauración bajo la gerencia de Eduardo Martínez. */
+    /** Sede canónica única bajo la gerencia de Eduardo Martínez en Derio (Bizkaia). */
     affiliatedVenues: Object.freeze([
         {
             name: 'Restaurante Jatetxea Ezkertza Berria',
@@ -135,29 +126,11 @@ export const OTZARRETA_ENTITY = Object.freeze({
             parkingSpaces: 150,
             features: Object.freeze([
                 'Jardines para ceremonias civiles con carpa y oficiante',
-                'Amplios comedores climatizados e insonorizados',
+                'Amplios comedores climatizados e insonorizados (50 a 200 pax)',
                 'Zona Chill Out con terraza y coctelería',
                 'Parque infantil con columpios homologados',
                 'Ascensor adaptado y 100% accesibilidad PMR',
                 'Parrilla de carbón de encina y pescados salvajes del Cantábrico',
-            ]),
-        },
-        {
-            name: 'Restaurante Otzarreta',
-            slug: 'restaurante-otzarreta',
-            address: 'C/ Santa Clara, 5, 20800 Zarautz (Gipuzkoa)',
-            municipality: 'Zarautz',
-            province: 'Gipuzkoa',
-            phones: Object.freeze(['+34 943 131 243', '+34 943 134 095']),
-            email: 'otzarreta@restauranteotzarreta.com',
-            website: 'http://www.restauranteotzarreta.com/',
-            capacityPax: 220,
-            parkingSpaces: 80,
-            features: Object.freeze([
-                'Tradición sidrera y cazuela vasca desde 1902',
-                'Comedor histórico y terraza de verano',
-                'Jardines de Santa Clara',
-                'Bodega seleccionada y maridaje con Getariako Txakolina',
             ]),
         },
     ]),
@@ -231,6 +204,10 @@ export const OTZARRETA_ENTITY = Object.freeze({
             fields: Object.freeze([
                 'commercialName',
                 'streetAddress',
+                'postalCode',
+                'municipality',
+                'province',
+                'geo',
                 'phones',
                 'email',
                 'website',
@@ -239,37 +216,6 @@ export const OTZARRETA_ENTITY = Object.freeze({
                 'scrapedAssets',
                 'reviews',
             ]),
-        },
-        {
-            source: 'http://www.restauranteotzarreta.com/',
-            dataset: 'own-domain-crawl',
-            provenanceSha256:
-                'c21ce0b08ffa8753b3a5c562def3354e010229410127c9217bc12e150cf51cf9',
-            retrievedAt: '2026-10-25T20:23:12.997Z',
-            fields: Object.freeze([
-                'commercialName',
-                'streetAddress',
-                'postalCode',
-                'municipality',
-                'province',
-                'phones',
-                'email',
-                'website',
-                'socials',
-                'foundedYear',
-                'reopenedYear',
-                'generations',
-                'heritage',
-                'spaces',
-                'services',
-            ]),
-        },
-        {
-            source: 'overture:2026-10-21.0',
-            dataset: 'overture',
-            provenanceSha256: null,
-            retrievedAt: '2026-10-25T19:42:40.682Z',
-            fields: Object.freeze(['geo', 'primaryPhone', 'email', 'socials']),
         },
     ] as const satisfies readonly OtzarretaEvidence[]),
 });

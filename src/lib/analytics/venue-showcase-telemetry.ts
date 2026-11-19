@@ -95,7 +95,7 @@ const ORIGENES_TOP: VenueGeoOrigin[] = [
   { municipio: 'Bilbao (Gran Bilbao)', porcentaje: 42, sesiones: 1610, intencion: 'Bodas Caserío Exclusivo & Menús 2026' },
   { municipio: 'Getxo / Uribe Kosta', porcentaje: 21, sesiones: 805, intencion: 'Celebración Familiar & Jardines para Cóctel' },
   { municipio: 'Derio / Txorierri', porcentaje: 16, sesiones: 613, intencion: 'Banquete Empresarial & Cercanía Aeropuerto' },
-  { municipio: 'Donostia / Zarautz', porcentaje: 12, sesiones: 460, intencion: 'Bodas Destino & Fin de Semana Gastronómico' },
+  { municipio: 'Mungia / Bizkaia Central', porcentaje: 12, sesiones: 460, intencion: 'Bodas Destino & Fin de Semana Gastronómico' },
   { municipio: 'Búsqueda IA & Google pSEO', porcentaje: 9, sesiones: 344, intencion: 'Presupuestos Cerrados sin Comisiones Ocultas' }
 ];
 

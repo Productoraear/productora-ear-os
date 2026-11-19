@@ -165,7 +165,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // puerta de doorway casi idéntica y diluiría el clúster comercial de
     // clientes. Si algún día se indexan, esta exclusión debe revisarse.
 
-    // Clúster Otzarreta · Gipuzkoa: hub + 126 landings con entidad verificada
+    // Clúster Otzarreta · Derio (Bizkaia): hub + 126 landings con entidad verificada
     // (72 geo + 54 intención). Sin entidad verificada detrás no hay URL.
     entries.push({
         url: `${BASE_URL}/otzarreta`,

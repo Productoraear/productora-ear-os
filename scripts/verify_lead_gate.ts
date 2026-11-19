@@ -83,7 +83,7 @@ check(
 const visitUrl: string = buildDemandWhatsappUrl({
   entityName: 'Ezkertza Berria & Otzarreta',
   intent: 'visita-tecnica',
-  detail: 'Derio / Zarautz',
+  detail: 'Derio (Bizkaia)',
 });
 const visitMessage: string = decodeURIComponent(visitUrl.split('?text=')[1] ?? '');
 check(
@@ -96,7 +96,7 @@ check(
   visitMessage.includes('Conserjería EAR OS') &&
     visitMessage.includes('Ezkertza Berria & Otzarreta') &&
     visitMessage.includes('visita técnica') &&
-    visitMessage.includes('Derio / Zarautz'),
+    visitMessage.includes('Derio (Bizkaia)'),
   visitMessage,
 );
 check(
@@ -156,11 +156,11 @@ const rawFixture = {
   '@context': 'https://schema.org',
   '@type': 'Restaurant',
   name: 'Restaurante Otzarreta',
-  telephone: '+34 943 131 243',
-  email: 'otzarreta@restauranteotzarreta.com',
-  address: { '@type': 'PostalAddress', addressLocality: 'Zarautz' },
+  telephone: '+34 944 544 476',
+  email: 'info@ezkertzaberria.com',
+  address: { '@type': 'PostalAddress', addressLocality: 'Derio' },
   offers: { '@type': 'Offer', price: 100, priceCurrency: 'EUR' },
-  sameAs: ['https://www.restauranteotzarreta.com'],
+  sameAs: ['https://www.ezkertzaberria.com'],
 };
 
 check(
@@ -169,7 +169,7 @@ check(
   'fuga detectada antes de sanear',
 );
 
-const sanitized = sanitizeSchemaContact(rawFixture, 'Gipuzkoa');
+const sanitized = sanitizeSchemaContact(rawFixture, 'Bizkaia');
 check(
   'JSON-LD: tras sanear no queda teléfono ni email de proveedor',
   schemaIsContactFree(sanitized) === true,
@@ -177,8 +177,8 @@ check(
 );
 check(
   'JSON-LD: la línea y el email del recinto desaparecen del payload',
-  !JSON.stringify(sanitized).includes('943131243') &&
-    !JSON.stringify(sanitized).includes('@restauranteotzarreta') &&
+  !JSON.stringify(sanitized).includes('944544476') &&
+    !JSON.stringify(sanitized).includes('@ezkertzaberria') &&
     !JSON.stringify(sanitized).includes('"email"'),
   'sin teléfono ni email',
 );
@@ -191,12 +191,12 @@ check(
 check(
   'JSON-LD: se preservan los datos comerciales legítimos',
   JSON.stringify(sanitized).includes('"price":100') &&
-    JSON.stringify(sanitized).includes('Zarautz'),
+    JSON.stringify(sanitized).includes('Derio'),
   'offers + dirección intactos',
 );
 check(
   'JSON-LD: el saneador es puro (no muta el original)',
-  rawFixture.telephone === '+34 943 131 243' && rawFixture.email.length > 0,
+  rawFixture.telephone === '+34 944 544 476' && rawFixture.email.length > 0,
   'inmutable',
 );
 

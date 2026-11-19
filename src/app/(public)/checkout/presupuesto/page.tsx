@@ -62,13 +62,14 @@ function ExternalVendorEscrowCheckout({
   // Detector de Establecimiento Fijo (Finca / Restaurante / Palacio / Hotel)
   const isVenueProvider = useMemo(() => {
     const n = cleanVenueName.toLowerCase();
-    return n.includes('restaurante') || n.includes('ezkertza') || n.includes('finca') || n.includes('cigarral') || n.includes('palacio') || n.includes('hotel') || n.includes('complejo') || n.includes('bodega') || n.includes('masia') || n.includes('pazo') || n.includes('cortijo');
+    return n.includes('restaurante') || n.includes('ezkertza') || n.includes('otzarreta') || n.includes('finca') || n.includes('cigarral') || n.includes('palacio') || n.includes('hotel') || n.includes('complejo') || n.includes('bodega') || n.includes('masia') || n.includes('pazo') || n.includes('cortijo');
   }, [cleanVenueName]);
 
-  // Si es un establecimiento fijo como Ezkertza Berria, fijamos su ubicación real automáticamente
+  // Si es un establecimiento fijo como Ezkertza Berria u Otzarreta, fijamos su ubicación real en Derio automáticamente
   useEffect(() => {
-    if (cleanVenueName.toLowerCase().includes('ezkertza')) {
-      setEventLocation('Santo Domingo Hiribidea 13, Derio / Zizurkil, Gipuzkoa');
+    const cleanLower = cleanVenueName.toLowerCase();
+    if (cleanLower.includes('ezkertza') || cleanLower.includes('otzarreta')) {
+      setEventLocation('Santo Domingo Hiribidea, 13, 48160 Derio (Bizkaia)');
     } else if (isVenueProvider && (eventLocation === 'Madrid' || !eventLocation)) {
       setEventLocation(`${cleanVenueName} (Instalaciones Homologadas)`);
     }

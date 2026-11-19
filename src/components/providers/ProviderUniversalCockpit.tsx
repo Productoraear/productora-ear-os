@@ -10,7 +10,7 @@
  *   2. Inspector y editor de la Ficha Universal de 380 campos tipados con
  *      búsqueda en vivo y agrupación por secciones.
  *   3. Seating Planner (Estándar Pulpetti) embebido con presets para Eduardo
- *      Martínez (Ezkertza Berria 350 pax / Otzarreta 220 pax).
+ *      Martínez (Salón Derio 200 pax / Finca Completa Derio 350 pax).
  *   4. Matriz de Capacidades de Plataforma bajo Default-Deny (Google Business,
  *      Bodas.net, Instagram, WhatsApp, Webhooks).
  *   5. Agenda Soberana, feed iCal bidireccional y depósito Price-Lock (100 €).
@@ -234,9 +234,9 @@ export function ProviderUniversalCockpit({
     readonly capacity: number;
   }>({
     key: 'otzarreta',
-    name: 'Banquete Otzarreta (Zarautz)',
+    name: 'Salón Acristalado Otzarreta (Derio)',
     pax: 140,
-    capacity: 220,
+    capacity: 200,
   });
 
   // Umbral HITL (Human-in-the-Loop 5% ↔ 90% según AGENTS.md § 2)
@@ -669,7 +669,7 @@ export function ProviderUniversalCockpit({
                     Plano de Mesas & Menús de Temporada Activo
                   </h3>
                   <p className="text-xs text-zinc-400 max-w-2xl">
-                    Herramienta de distribución métrica espacial para Ezkertza Berria (350 pax) y Otzarreta (220 pax). Mesas de 2 a 12 comensales, gestión de alérgenos y exportación A4 para cocina.
+                    Herramienta de distribución métrica espacial para Ezkertza Berria &amp; Otzarreta en Derio (Salón Acristalado 200 pax / Finca Completa 350 pax). Mesas de 2 a 12 comensales, gestión de alérgenos y exportación A4 para cocina.
                   </p>
                 </div>
                 <button
@@ -894,7 +894,7 @@ export function ProviderUniversalCockpit({
                   Presets Canónicos · Eduardo Martínez
                 </span>
                 <p className="text-xs text-zinc-400">
-                  Configuración rápida de aforo para los salones de Ezkertza Berria y Restaurante Otzarreta.
+                  Configuración rápida de aforo para los salones de Ezkertza Berria y Restaurante Otzarreta en Derio (Bizkaia).
                 </p>
               </div>
 
@@ -904,7 +904,7 @@ export function ProviderUniversalCockpit({
                   onClick={() =>
                     setSeatingPreset({
                       key: 'ezkertza',
-                      name: 'Banquete Ezkertza Berria (Derio)',
+                      name: 'Finca Completa Ezkertza Berria & Otzarreta (Derio)',
                       pax: 280,
                       capacity: 350,
                     })
@@ -915,7 +915,7 @@ export function ProviderUniversalCockpit({
                       : 'border-white/10 bg-black/40 text-zinc-400 hover:text-white'
                   }`}
                 >
-                  Ezkertza Berria (350 pax)
+                  Finca Derio (350 pax)
                 </button>
 
                 <button
@@ -923,9 +923,9 @@ export function ProviderUniversalCockpit({
                   onClick={() =>
                     setSeatingPreset({
                       key: 'otzarreta',
-                      name: 'Banquete Otzarreta (Zarautz)',
+                      name: 'Salón Acristalado Otzarreta (Derio)',
                       pax: 140,
-                      capacity: 220,
+                      capacity: 200,
                     })
                   }
                   className={`px-3.5 py-2 rounded-xl text-xs font-mono uppercase tracking-wider border transition-all ${
@@ -934,7 +934,7 @@ export function ProviderUniversalCockpit({
                       : 'border-white/10 bg-black/40 text-zinc-400 hover:text-white'
                   }`}
                 >
-                  Otzarreta (220 pax)
+                  Salón Derio (200 pax)
                 </button>
               </div>
             </div>
