@@ -40,13 +40,22 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
-export const dynamicParams = false;
+export const dynamicParams = true;
+export const revalidate = 86400;
 
 export function generateStaticParams(): { slug: string }[] {
-  // SSG completo del clúster Derio / Bizkaia: Dominancia (126 URLs) + Txorierri/Uribe Kosta (126 URLs)
-  // pre-renderizan en build; cualquier slug fuera de ambos catálogos responde 404.
+  // Pre-renderizamos en build los slugs semilla de Derio / Txorierri / Uribe Kosta / Bilbao
+  // para mantener el build Docker por debajo de 15 minutos en Coolify; el resto de las
+  // 252 landings del clúster se sirven bajo demanda con ISR (revalidate=86400) y cualquier
+  // slug fuera de ambos catálogos responde 404 real vía notFound().
   const allSlugs = Array.from(new Set([...getOtzarretaSlugs(), ...getOtzarreta126Slugs()]));
-  return allSlugs.map((slug) => ({ slug }));
+  const seedSlugs = allSlugs.filter((slug) =>
+    /^(bodas-caserio-derio|restaurante-bodas-derio|celebraciones-familiares-derio|comidas-empresa-derio|bodas-caserio-bilbao|bodas-caserio-uribe-kosta|bodas-caserio-txorierri|bodas-caserio-mungia)$/i.test(
+      slug,
+    ),
+  );
+  const finalSlugs = seedSlugs.length >= 4 ? seedSlugs : allSlugs.slice(0, 12);
+  return finalSlugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

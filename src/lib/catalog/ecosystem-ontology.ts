@@ -10,14 +10,15 @@ export interface ConnectorDef {
   readonly id: ConnectorId;
   readonly label: string;
   readonly summary: string;
+  readonly href: string;
 }
 
 export const CONNECTORS: readonly ConnectorDef[] = Object.freeze([
-  { id: 'CLIENTE', label: 'Cliente', summary: 'Contrata artistas, reserva fincas, alquila sonido o cotiza menús.' },
-  { id: 'PROVEEDOR', label: 'Proveedor', summary: 'Vende fechas, cobra cachés con reparto soberano o alquila equipos.' },
-  { id: 'AFILIADO', label: 'Afiliado', summary: 'Recomienda la plataforma y recibe comisión por cada contrato liquidado.' },
-  { id: 'MECENAS', label: 'Mecenas', summary: 'Canaliza aportaciones o patrocinios a VIMUME con balance de responsabilidad social.' },
-  { id: 'SOCIO_ESTRATEGICO', label: 'Socio estratégico', summary: 'Alianza con exclusividad territorial de 100 km y canon anual de infraestructura.' },
+  { id: 'CLIENTE', label: 'Cliente', summary: 'Contrata artistas, reserva fincas, alquila sonido o cotiza menús.', href: '/presupuesto' },
+  { id: 'PROVEEDOR', label: 'Proveedor', summary: 'Vende fechas, cobra cachés con reparto soberano o alquila equipos.', href: '/portal/proveedor' },
+  { id: 'AFILIADO', label: 'Afiliado', summary: 'Recomienda la plataforma y recibe comisión por cada contrato liquidado.', href: '/afiliados' },
+  { id: 'MECENAS', label: 'Mecenas', summary: 'Canaliza aportaciones o patrocinios a VIMUME con balance de responsabilidad social.', href: '/vimume' },
+  { id: 'SOCIO_ESTRATEGICO', label: 'Socio estratégico', summary: 'Alianza con exclusividad territorial de 100 km y canon anual de infraestructura.', href: '/fincas' },
 ]);
 
 export type SectorId = 'PUBLICO' | 'HOSTELERIA' | 'ARTISTICO' | 'TECNICO' | 'COMPLEMENTARIO';
@@ -26,6 +27,7 @@ export type DoorId = 'gobiernos' | 'celebraciones' | 'profesionales';
 export interface CategoryDef {
   readonly id: string;
   readonly label: string;
+  readonly href: string;
 }
 
 export interface SectorDef {
@@ -35,7 +37,7 @@ export interface SectorDef {
   readonly categories: readonly CategoryDef[];
 }
 
-const c = (id: string, label: string): CategoryDef => ({ id, label });
+const c = (id: string, label: string, href: string): CategoryDef => ({ id, label, href });
 
 export const ECOSYSTEM_SECTORS: readonly SectorDef[] = Object.freeze([
   {
@@ -43,10 +45,10 @@ export const ECOSYSTEM_SECTORS: readonly SectorDef[] = Object.freeze([
     label: 'Sector público e institucional',
     primaryDoor: 'gobiernos',
     categories: [
-      c('ayuntamiento', 'Ayuntamientos (Festejos, Cultura, Juventud, Turismo)'),
-      c('diputacion', 'Diputaciones, mancomunidades y gobiernos regionales'),
-      c('fundacion-cultural', 'Fundaciones culturales, museos, casas regionales y consulados'),
-      c('comision-fiestas', 'Comisiones de fiestas patronales y cofradías'),
+      c('ayuntamiento', 'Ayuntamientos (Festejos, Cultura, Juventud, Turismo)', '/ayuntamientos'),
+      c('diputacion', 'Diputaciones, mancomunidades y gobiernos regionales', '/b2g'),
+      c('fundacion-cultural', 'Fundaciones culturales, museos, casas regionales y consulados', '/vimume/b2g'),
+      c('comision-fiestas', 'Comisiones de fiestas patronales y cofradías', '/ocasiones/ayuntamientos'),
     ],
   },
   {
@@ -54,11 +56,11 @@ export const ECOSYSTEM_SECTORS: readonly SectorDef[] = Object.freeze([
     label: 'Hostelería y espacios singulares',
     primaryDoor: 'celebraciones',
     categories: [
-      c('asador-caserio', 'Asadores y caseríos tradicionales (parrilla y brasa)'),
-      c('finca-palacete', 'Fincas señoriales, palacetes, bodegas y espacios con encanto'),
-      c('restaurante-banquetes', 'Restaurantes con salones de bodas y banquetes'),
-      c('sala-fiesta', 'Discotecas, salas de fiesta, clubes y terrazas de verano'),
-      c('hotel-convenciones', 'Hoteles con centro de convenciones y salones de actos'),
+      c('asador-caserio', 'Asadores y caseríos tradicionales (parrilla y brasa)', '/otzarreta'),
+      c('finca-palacete', 'Fincas señoriales, palacetes, bodegas y espacios con encanto', '/proveedores?cat=finca'),
+      c('restaurante-banquetes', 'Restaurantes con salones de bodas y banquetes', '/proveedores?cat=catering'),
+      c('sala-fiesta', 'Discotecas, salas de fiesta, clubes y terrazas de verano', '/fincas'),
+      c('hotel-convenciones', 'Hoteles con centro de convenciones y salones de actos', '/proveedores?cat=finca'),
     ],
   },
   {
@@ -66,11 +68,11 @@ export const ECOSYSTEM_SECTORS: readonly SectorDef[] = Object.freeze([
     label: 'Catálogo artístico y escénico',
     primaryDoor: 'celebraciones',
     categories: [
-      c('solista-lirico', 'Solistas líricos y clásicos'),
-      c('folclorico', 'Formaciones folclóricas y tradicionales (mariachis)'),
-      c('orquesta-fiesta', 'Grandes orquestas de fiesta y de verbena'),
-      c('grupo-musical', 'Pop, rock, tributos, jazz, flamenco y música de cámara'),
-      c('espectaculo', 'Espectáculos infantiles, magia, teatro de calle y danza'),
+      c('solista-lirico', 'Solistas líricos y clásicos', '/artistas/edwin-agudelo'),
+      c('folclorico', 'Formaciones folclóricas y tradicionales (mariachis)', '/centralita-mariachis'),
+      c('orquesta-fiesta', 'Grandes orquestas de fiesta y de verbena', '/artistas/orquestas'),
+      c('grupo-musical', 'Pop, rock, tributos, jazz, flamenco y música de cámara', '/proveedores?cat=musica'),
+      c('espectaculo', 'Espectáculos infantiles, magia, teatro de calle y danza', '/artistas/shows'),
     ],
   },
   {
@@ -78,11 +80,11 @@ export const ECOSYSTEM_SECTORS: readonly SectorDef[] = Object.freeze([
     label: 'Infraestructura técnica y eventos',
     primaryDoor: 'profesionales',
     categories: [
-      c('sonido-suspendido', 'Sonorización y sistemas suspendidos para exteriores'),
-      c('sonido-sala', 'Sonido de sala para baile y discotecas'),
-      c('iluminacion', 'Iluminación robótica, puentes de luces y efectos'),
-      c('pantallas-led', 'Pantallas LED de gran formato y proyección'),
-      c('energia-escenarios', 'Generadores homologados, tarimas y escenarios certificados'),
+      c('sonido-suspendido', 'Sonorización y sistemas suspendidos para exteriores', '/alquiler-equipos-sonido-audiovisuales'),
+      c('sonido-sala', 'Sonido de sala para baile y discotecas', '/proveedores?cat=sonido'),
+      c('iluminacion', 'Iluminación robótica, puentes de luces y efectos', '/arsenal/luces-navidad'),
+      c('pantallas-led', 'Pantallas LED de gran formato y proyección', '/alquiler-pantallas-led-madrid'),
+      c('energia-escenarios', 'Generadores homologados, tarimas y escenarios certificados', '/arsenal'),
     ],
   },
   {
@@ -90,11 +92,11 @@ export const ECOSYSTEM_SECTORS: readonly SectorDef[] = Object.freeze([
     label: 'Servicios complementarios de gala',
     primaryDoor: 'celebraciones',
     categories: [
-      c('jamon-venencia', 'Cortadores de jamón y venenciadores'),
-      c('barras-recena', 'Barras de coctelería y carritos de recena'),
-      c('organizacion', 'Organizadores de eventos y bodas'),
-      c('foto-video', 'Fotografía documental, drones y fotomatones'),
-      c('decoracion-carpas', 'Decoración floral y carpas climatizadas'),
+      c('jamon-venencia', 'Cortadores de jamón y venenciadores', '/proveedores?cat=catering'),
+      c('barras-recena', 'Barras de coctelería y carritos de recena', '/proveedores?cat=catering'),
+      c('organizacion', 'Organizadores de eventos y bodas', '/proveedores?cat=wedding'),
+      c('foto-video', 'Fotografía documental, drones y fotomatones', '/proveedores?cat=foto'),
+      c('decoracion-carpas', 'Decoración floral y carpas climatizadas', '/proveedores?cat=decoracion'),
     ],
   },
 ]);

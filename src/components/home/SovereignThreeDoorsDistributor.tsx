@@ -42,9 +42,13 @@ export function SovereignThreeDoorsDistributor(): React.JSX.Element {
         })}
       </div>
 
-      <footer className="mt-16 border-t border-[#1E1E26] pt-6 text-[12px] text-[#94A3B8]">
-        <Link href="/otzarreta" className="mr-6 hover:text-white">Alianzas para hostelería y fincas</Link>
-        <Link href="/alianza-otzarreta" className="hover:text-white">Propuesta Otzarreta</Link>
+      <footer className="mt-16 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-[#1E1E26] pt-6 text-[12px] text-[#94A3B8]">
+        <Link href="/otzarreta" className="hover:text-white">Restaurante Otzarreta (Derio · Bizkaia)</Link>
+        <Link href="/proveedores" className="hover:text-white">Directorio Soberano de Proveedores</Link>
+        <Link href="/centralita-mariachis" className="hover:text-white">Centralita de Mariachis (220 nodos)</Link>
+        <Link href="/productora-ear" className="hover:text-white">Red Nacional 52 Provincias (268 nodos)</Link>
+        <Link href="/portal/proveedor" className="hover:text-white">Cabina Universal del Proveedor</Link>
+        <Link href="/presupuesto" className="hover:text-white">Cotizador &amp; Simulador S-Class</Link>
       </footer>
     </div>
   );

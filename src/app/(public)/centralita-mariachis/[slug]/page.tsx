@@ -26,14 +26,16 @@ interface Props {
     params: Promise<{ slug: string }>;
 }
 
-export const dynamicParams = false;
+export const dynamicParams = true;
+export const revalidate = 86400;
 
 /**
- * SSG completo del clúster: las 220 URLs se pre-renderizan en build y
- * cualquier slug fuera del catálogo responde 404 real (sin soft-404).
+ * Pre-renderiza en build la muestra semilla de mercados principales; el resto de las
+ * 220 URLs se sirven bajo demanda con ISR y cualquier slug fuera del catálogo responde
+ * 404 real vía notFound() (sin soft-404).
  */
 export function generateStaticParams(): { slug: string }[] {
-    return getMariachiSlugs().map((slug) => ({ slug }));
+    return getMariachiSlugs().slice(0, 10).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

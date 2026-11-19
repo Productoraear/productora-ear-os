@@ -57,7 +57,7 @@ export const JOURNEYS: Readonly<Record<DoorId, JourneyContent>> = Object.freeze(
         imageAlt: 'Formación musical en directo',
         ctas: {
           COLD: { label: 'Ver el catálogo artístico', href: '/artistas' },
-          WARM: { label: 'Calcular presupuesto', href: '/calculadora' },
+          WARM: { label: 'Calcular presupuesto', href: '/presupuesto' },
           HOT: { label: 'Hablar con un técnico ahora', href: 'WA:Hola, necesito cerrar la contratación de las fiestas patronales de mi municipio.' },
         },
       },
@@ -71,7 +71,7 @@ export const JOURNEYS: Readonly<Record<DoorId, JourneyContent>> = Object.freeze(
         imageAlt: 'Espacio cultural minimalista',
         ctas: {
           COLD: { label: 'Cómo funciona la contratación', href: '/ayuntamientos' },
-          WARM: { label: 'Preparar presupuesto para expediente', href: '/calculadora' },
+          WARM: { label: 'Preparar presupuesto para expediente', href: '/presupuesto' },
           HOT: { label: 'Solicitar documentación hoy', href: 'WA:Hola, necesito la documentación para un contrato menor (art. 118 LCSP).' },
         },
       },
@@ -85,7 +85,7 @@ export const JOURNEYS: Readonly<Record<DoorId, JourneyContent>> = Object.freeze(
         imageAlt: 'Pack de sonido para concierto',
         ctas: {
           COLD: { label: 'Explorar equipamiento', href: '/alquiler-equipos-sonido-audiovisuales' },
-          WARM: { label: 'Configurar el rider técnico', href: '/calculadora' },
+          WARM: { label: 'Configurar el rider técnico', href: '/presupuesto' },
           HOT: { label: 'Reservar equipo para mi fecha', href: 'WA:Hola, quiero reservar sonido e iluminación para una fecha concreta.' },
         },
       },
@@ -99,7 +99,7 @@ export const JOURNEYS: Readonly<Record<DoorId, JourneyContent>> = Object.freeze(
         imageAlt: 'Iluminación en directo',
         ctas: {
           COLD: { label: 'Ver garantías y registro público', href: '/confianza' },
-          WARM: { label: 'Pedir presupuesto cerrado', href: '/calculadora' },
+          WARM: { label: 'Pedir presupuesto cerrado', href: '/presupuesto' },
           HOT: { label: 'Bloquear la fecha', href: 'WA:Hola, quiero bloquear fecha con la fianza para una contratación municipal.' },
         },
       },
@@ -142,7 +142,7 @@ export const JOURNEYS: Readonly<Record<DoorId, JourneyContent>> = Object.freeze(
         imageAlt: 'Mesas dispuestas para un banquete',
         ctas: {
           COLD: { label: 'Ver menús', href: '/otzarreta' },
-          WARM: { label: 'Calcular mi presupuesto', href: '/calculadora' },
+          WARM: { label: 'Calcular mi presupuesto', href: '/presupuesto' },
           HOT: { label: 'Reservar menú y fecha', href: 'WA:Hola, quiero reservar fecha y menú en Restaurante Otzarreta.' },
         },
       },
@@ -156,7 +156,7 @@ export const JOURNEYS: Readonly<Record<DoorId, JourneyContent>> = Object.freeze(
         imageAlt: 'Formación de gala',
         ctas: {
           COLD: { label: 'Escuchar artistas', href: '/artistas' },
-          WARM: { label: 'Añadir música al presupuesto', href: '/calculadora' },
+          WARM: { label: 'Añadir música al presupuesto', href: '/presupuesto' },
           HOT: { label: 'Cerrar artista para mi fecha', href: 'WA:Hola, quiero cerrar un artista para mi celebración.' },
         },
       },
@@ -170,7 +170,7 @@ export const JOURNEYS: Readonly<Record<DoorId, JourneyContent>> = Object.freeze(
         imageAlt: 'Celebración de boda',
         ctas: {
           COLD: { label: 'Ver cómo funciona la reserva', href: '/confianza' },
-          WARM: { label: 'Obtener presupuesto con fianza', href: '/calculadora' },
+          WARM: { label: 'Obtener presupuesto con fianza', href: '/presupuesto' },
           HOT: { label: 'Reservar ahora', href: 'WA:Hola, quiero bloquear mi fecha con la fianza.' },
         },
       },
@@ -198,8 +198,8 @@ export const JOURNEYS: Readonly<Record<DoorId, JourneyContent>> = Object.freeze(
         image: `${SONO}/PACK-BACKLINE.png`,
         imageAlt: 'Pack backline',
         ctas: {
-          COLD: { label: 'Ver el directorio', href: '/directorio' },
-          WARM: { label: 'Reclamar mi ficha', href: '/proveedores' },
+          COLD: { label: 'Ver el directorio', href: '/proveedores' },
+          WARM: { label: 'Abrir mi cabina de proveedor', href: '/portal/proveedor' },
           HOT: { label: 'Darme de alta hoy', href: 'WA:Hola, quiero dar de alta mi ficha profesional en EAR OS.' },
         },
       },
@@ -213,7 +213,7 @@ export const JOURNEYS: Readonly<Record<DoorId, JourneyContent>> = Object.freeze(
         imageAlt: 'Mesa de mezcla',
         ctas: {
           COLD: { label: 'Entender el reparto', href: '/confianza' },
-          WARM: { label: 'Simular mis ingresos', href: '/calculadora' },
+          WARM: { label: 'Simular mis ingresos', href: '/presupuesto' },
           HOT: { label: 'Hablar con un asesor', href: 'WA:Hola, quiero que me expliquen el cobro y el reparto 80/10/10.' },
         },
       },
@@ -227,7 +227,7 @@ export const JOURNEYS: Readonly<Record<DoorId, JourneyContent>> = Object.freeze(
         imageAlt: 'Pack discomóvil',
         ctas: {
           COLD: { label: 'Ver equipamiento', href: '/alquiler-equipos-sonido-audiovisuales' },
-          WARM: { label: 'Publicar mi equipo', href: '/proveedores' },
+          WARM: { label: 'Publicar mi equipo', href: '/portal/proveedor' },
           HOT: { label: 'Alquilar equipo ahora', href: 'WA:Hola, quiero ofrecer o alquilar equipo técnico en EAR OS.' },
         },
       },

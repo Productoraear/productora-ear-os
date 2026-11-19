@@ -39,4 +39,7 @@ n8n-workflows/
 .firebase/
 .obsidian/
 .models/
+.agents/
+e2e/
+graphify-out/
 /*.pdf

@@ -15,15 +15,15 @@ ENV NODE_ENV=development \
     NEXT_CPU_COUNT=1 \
     NODE_OPTIONS="--max-old-space-size=2048"
 COPY package.json package-lock.json* ./
+COPY prisma ./prisma
 RUN --mount=type=cache,target=/root/.npm \
-    npm install --include=dev --legacy-peer-deps --no-audit
+    npm install --include=dev --legacy-peer-deps --no-audit --no-fund --prefer-offline
 
 COPY . .
 
 ENV NODE_ENV=production
-RUN ./node_modules/.bin/prisma generate || npx prisma generate || true
 RUN --mount=type=cache,target=/app/.next/cache \
-    npm run build
+    node ./node_modules/next/dist/bin/next build
 
 # 2. Production runner ultraligero
 FROM node:22-alpine AS runner

@@ -315,14 +315,12 @@ export function JourneyPage({ door }: { door: DoorId }): React.JSX.Element {
               <ul className="mt-3 flex flex-wrap gap-2">
                 {s.categories.map((c) => (
                   <li key={c.id}>
-                    <a
-                      href={waUrl(`Hola, me interesa información sobre ${c.label}.`)}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <Link
+                      href={c.href}
                       className="inline-block rounded-full border border-[var(--line)] px-3 py-1.5 text-[12px] text-[var(--muted)] hover:border-[var(--gold)] hover:text-[var(--fg)]"
                     >
                       {c.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -333,10 +331,10 @@ export function JourneyPage({ door }: { door: DoorId }): React.JSX.Element {
         <h2 className="mt-12 text-[15px] font-medium tracking-[-0.01em]">Cómo puede participar</h2>
         <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
           {CONNECTORS.map((k) => (
-            <div key={k.id} className="rounded-xl border border-[var(--line)] bg-[var(--card)] p-4 transition-colors hover:border-[var(--gold)]">
-              <span className="text-[12px] text-[var(--gold)]">{k.label}</span>
+            <Link key={k.id} href={k.href} className="rounded-xl border border-[var(--line)] bg-[var(--card)] p-4 transition-colors hover:border-[var(--gold)]">
+              <span className="text-[12px] text-[var(--gold)]">{k.label} →</span>
               <p className="mt-1 text-[13px] leading-[1.5] text-[var(--muted)]">{k.summary}</p>
-            </div>
+            </Link>
           ))}
         </div>
       </section>

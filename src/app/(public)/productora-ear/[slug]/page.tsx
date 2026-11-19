@@ -27,14 +27,16 @@ interface Props {
     params: Promise<{ slug: string }>;
 }
 
-export const dynamicParams = false;
+export const dynamicParams = true;
+export const revalidate = 86400;
 
 /**
- * SSG completo del clúster: las 268 URLs se pre-renderizan en build y
- * cualquier slug fuera del catálogo responde 404 real (sin soft-404).
+ * Pre-renderiza en build la muestra semilla de provincias principales; el resto de las
+ * 268 URLs se sirven bajo demanda con ISR y cualquier slug fuera del catálogo responde
+ * 404 real vía notFound() (sin soft-404).
  */
 export function generateStaticParams(): { slug: string }[] {
-    return getEventSlugs().map((slug) => ({ slug }));
+    return getEventSlugs().slice(0, 10).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
