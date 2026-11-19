@@ -68,6 +68,29 @@ ${buildAgentMinimumStandardBlock()}`;
 function buildDeterministicExecutiveReply(query: string): string {
   const lower = query.toLowerCase();
 
+  if (
+    lower.includes('cualific') ||
+    lower.includes('lead') ||
+    lower.includes('anatom') ||
+    lower.includes('hubspot') ||
+    lower.includes('estandar') ||
+    lower.includes('estándar') ||
+    lower.includes('handoff') ||
+    lower.includes('hitl')
+  ) {
+    return [
+      '🎯 **Protocolo de Cualificación de Leads & Estándar de Agente S-Class (HubSpot + 7 Roles Sectoriales):**',
+      '1. **5 Slots Obligatorios antes de Cotizar (1 pregunta por turno, memoria sin amnesia):**',
+      '   • **Tipo de evento** (boda, gala corporativa, festejo municipal B2G, sesión VIMUME).',
+      '   • **Fecha solicitada** (para verificar bloqueo en calendario con depósito Stripe de 100,00 €).',
+      '   • **Localidad exacta / Provincia** (para calcular kilometraje real desde Hub Méntrida: 50 km exentos + 1,50 €/km).',
+      '   • **Aforo / Número de invitados** (para calibrar presión acústica a 12 W/pax y < 75 dB SPL).',
+      '   • **Presupuesto orientativo / Formato deseado** (Solista 350,00 €, Mariachi, Menús Otzarreta 100–185 € o DJ).',
+      '2. **Doctrina Cero Trabajo Gratis (Identidad Protegida):** Nunca entregues el nombre comercial ni teléfono de un proveedor no reclamado (`DIRECTORY_UNCLAIMED`). Muestra su encaje técnico como `Proveedor Homologado S-Class #CÓDIGO` y exige desbloqueo de 1,00 € deducible o fianza de 100,00 €.',
+      '3. **Escalado Humano (HITL):** Escala a Centralita (`+34 693 693 048`) con resumen ejecutivo de 3 líneas cuando el lead supere el 90% de cualificación, pida contrato B2G > 5.000 € o solicite atención humana.',
+    ].join('\n');
+  }
+
   if (lower.includes('telegram') || lower.includes('radar') || lower.includes('oportunidad') || lower.includes('licitacion')) {
     return [
       '📡 **Diagnóstico del Radar de Oportunidades y Telegram:**',

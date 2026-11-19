@@ -1,4 +1,4 @@
-﻿/**
+/**
  * VERIFICADOR · ESTÁNDAR MÍNIMO DE AGENTES IA (HubSpot + Agentes por Sector + MKT Hackers)
  * Uso: node ./node_modules/tsx/dist/cli.mjs scripts/verify_agent_standard.ts  (Exit 0 = cumple)
  */
@@ -29,6 +29,10 @@ const cc = read('src/app/(admin)/admin/command-center/page.tsx');
 check('Command-center sin oráculo simulado', !/handleSimulateConsult|setTimeout\(/.test(cc));
 check('Command-center llama al endpoint real', cc.includes("/api/oracle/chat"));
 check('Command-center envía lo que el CEO escribe', cc.includes('handleConsult(oracleQuery)'));
+const conciergeRoute = read('src/app/api/concierge/chat/route.ts');
+check('Endpoint /api/concierge/chat usa el estándar mínimo y add_to_cart', conciergeRoute.includes('buildAgentMinimumStandardBlock()') && conciergeRoute.includes('add_to_cart'));
+const conciergeWidget = read('src/components/concierge/SovereignConciergeWidget.tsx');
+check('SovereignConciergeWidget inyecta al Carrito Soberano (useCart/addItem)', conciergeWidget.includes('useCart') && conciergeWidget.includes('addItem'));
 
 console.log(failures.length === 0 ? '\nRESULTADO: PASS' : `\nRESULTADO: FAIL (${failures.length})`);
 process.exit(failures.length === 0 ? 0 : 1);

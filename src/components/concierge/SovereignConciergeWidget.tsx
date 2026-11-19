@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import {
   Bot,
   Sparkles,
@@ -24,9 +24,11 @@ import {
   VolumeX,
   ChevronDown,
   ChevronUp,
+  ShoppingCart,
 } from 'lucide-react';
 import { CENTRALITA_EAR_OS } from '@/lib/constants/ear-os-ssot';
 import { resolveVoiceProfile, type VoiceProfile } from '@/lib/voice/voice-profile-engine';
+import { useCart, type ExtendedServiceCategory } from '@/components/checkout/CartContext';
 
 const CLEAN_PHONE: string = CENTRALITA_EAR_OS.replace(/\D/g, '');
 
@@ -46,9 +48,21 @@ interface ChatMessage {
   text: string;
   timestamp: string;
   action?: {
-    type: 'whatsapp' | 'dossier' | 'date_picker' | 'scraper';
+    type: 'whatsapp' | 'dossier' | 'date_picker' | 'scraper' | 'add_to_cart';
     label: string;
     url?: string;
+    cartItem?: {
+      id: string;
+      name: string;
+      category: ExtendedServiceCategory;
+      providerId?: string;
+      providerName?: string;
+      unitPriceEur: number;
+      description?: string;
+      badge?: string;
+      distanceKm?: number;
+      pax?: number;
+    };
   };
 }
 
@@ -137,6 +151,8 @@ function getContextForRoute(pathname: string): RouteContextConfig {
 
 export function SovereignConciergeWidget() {
   const pathname = usePathname() ?? '/';
+  const router = useRouter();
+  const { addItem, setIsOpen: setCartOpen } = useCart();
   const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -349,10 +365,13 @@ export function SovereignConciergeWidget() {
 
       try {
         const detectedSlug = pathname.includes('/otzarreta') ? 'otzarreta' : '';
-        const historyPayload = messages.slice(-4).map((m) => ({
-          role: m.role,
-          content: m.text,
-        }));
+        const historyPayload = messages
+          .filter((m) => m.id !== 'initial-greeting')
+          .slice(-8)
+          .map((m) => ({
+            role: m.role,
+            content: m.text,
+          }));
 
         const res = await fetch('/api/concierge/chat', {
           method: 'POST',
@@ -381,6 +400,18 @@ export function SovereignConciergeWidget() {
             };
             setMessages((prev) => [...prev, assistantMsg]);
             speakText(data.reply);
+
+            // Si la respuesta incluye un ítem de reserva y el usuario expresó intención de reservar/carrito, lo añadimos al Carrito Soberano de inmediato
+            if (
+              data.action?.type === 'add_to_cart' &&
+              data.action.cartItem &&
+              /quiero reservar|reservar la fecha|bloquear la fecha|bloquear fecha|añadir al carrito|anadir al carrito|contratar/i.test(q)
+            ) {
+              addItem({
+                ...data.action.cartItem,
+                quantity: 1,
+              });
+            }
           }
         }
       } catch (err) {
@@ -389,7 +420,7 @@ export function SovereignConciergeWidget() {
         setIsSending(false);
       }
     },
-    [inputQuery, isSending, pathname, routeContext, speakText]
+    [inputQuery, isSending, messages, pathname, routeContext, speakText, addItem]
   );
 
   // Construct WhatsApp destination URL
@@ -728,6 +759,29 @@ export function SovereignConciergeWidget() {
                         >
                           <span className="flex items-center gap-1.5">
                             <Link2 size={13} />
+                            {m.action.label}
+                          </span>
+                          <ArrowRight size={13} />
+                        </button>
+                      )}
+
+                      {m.action.type === 'add_to_cart' && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            if (m.action?.cartItem) {
+                              addItem({
+                                ...m.action.cartItem,
+                                quantity: 1,
+                              });
+                            }
+                            setCartOpen(true);
+                            router.push(m.action?.url || '/checkout/presupuesto');
+                          }}
+                          className="w-full py-2 px-3 rounded-xl bg-[#ecb613] hover:bg-amber-400 text-black font-black text-[11px] flex items-center justify-between transition-all shadow-[0_0_15px_rgba(236,182,19,0.3)] cursor-pointer"
+                        >
+                          <span className="flex items-center gap-1.5">
+                            <ShoppingCart size={13} />
                             {m.action.label}
                           </span>
                           <ArrowRight size={13} />

@@ -17,6 +17,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { loadFullProviderCatalog, type EdgeProviderRecord } from '@/lib/providers/edge-partition-loader';
 import { OTZARRETA_KNOWLEDGE_BASE } from '@/lib/rag/provider-context';
+import { resolvePublicProviderDisplayName } from '@/lib/providers/contact-gate';
 
 export interface MultiVaultKnowledgeContext {
   providersSnippet: string;
@@ -72,10 +73,17 @@ export function queryDataLakeProviders(query: string, maxResults: number = 3): s
   if (matches.length === 0) return '';
 
   return matches
-    .map(
-      (m) =>
-        `- ${m.name} (${m.category}, ${m.province || m.municipality || 'España'}): ${m.description?.slice(0, 140) || 'Ficha homologada en EAR OS'} (Suelo: ${m.basePrice ? m.basePrice + ' €' : 'Consultar'})`
-    )
+    .map((m) => {
+      const publicName = resolvePublicProviderDisplayName({
+        id: m.id,
+        slug: m.slug,
+        name: m.name,
+        category: m.category,
+        province: m.province,
+        municipality: m.municipality,
+      });
+      return `- ${publicName} (${m.category}, ${m.province || m.municipality || 'España'}): ${m.description?.slice(0, 140) || 'Ficha homologada en EAR OS'} (Suelo: ${m.basePrice ? m.basePrice + ' €' : 'Consultar'})`;
+    })
     .join('\n');
 }
 
