@@ -669,6 +669,28 @@ async function queryStaticProviders(options: {
     return true;
   });
 
+  // Posicionamiento Privilegiado #1 de Eduardo Martínez (Restaurante Otzarreta / Ezkertza Berria)
+  // cuando la provincia es Bizkaia/Vizcaya (o sin filtro de provincia si la búsqueda es Derio/Gran Bilbao/Otzarreta):
+  const provStr = typeof province === 'string' ? province.trim() : '';
+  const hasExplicitNonBasqueProvince =
+    provStr.length > 0 &&
+    provStr !== 'ALL' &&
+    !isProvinceMatch(provStr, 'Bizkaia') &&
+    !isProvinceMatch(provStr, 'Vizcaya');
+  const isBasqueFilter =
+    !hasExplicitNonBasqueProvince &&
+    ((provStr.length > 0 && (isProvinceMatch(provStr, 'Bizkaia') || isProvinceMatch(provStr, 'Vizcaya'))) ||
+      Boolean(q && /derio|bilbao|bizkaia|vizcaya|txorierri|uribe|mungia|getxo|leioa|barakaldo|otzarreta|ezkertza|eduardo/i.test(q)));
+  if (isBasqueFilter) {
+    const otzList = list.filter((p) => isOtzarretaRecord(p));
+    const nonOtzList = list.filter((p) => !isOtzarretaRecord(p));
+    if (otzList.length > 0) {
+      list = [otzList[0], ...nonOtzList];
+    } else if (!normCat || normCat === 'ALL' || normCat === 'finca' || normCat === 'catering') {
+      list = [{ id: 'v-32714', ...OTZARRETA_CANONICAL_API }, ...nonOtzList];
+    }
+  }
+
   const total = list.length;
   const skip = (page - 1) * limit;
   const isDirty = (u: any) =>

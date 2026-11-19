@@ -162,15 +162,15 @@ export default function CatminAdminMasterLayout({ children }: { children: React.
         {/* ===================================================================== */}
         {/* FILA 2: BARRA DE PESTAÑAS MAESTRAS (TOP TABS RIBBON)                  */}
         {/* ===================================================================== */}
-        <div className="py-2 flex items-center gap-1.5 overflow-x-auto custom-scrollbar relative">
-          {MASTER_TABS.map((tab) => {
-            const Icon = tab.icon;
-            const isSelected = activeTabId === tab.id;
-            const isDropdownOpen = openDropdownId === tab.id;
+        <div className="relative">
+          <div className="py-2 flex items-center gap-1.5 overflow-x-auto custom-scrollbar">
+            {MASTER_TABS.map((tab) => {
+              const Icon = tab.icon;
+              const isSelected = activeTabId === tab.id;
+              const isDropdownOpen = openDropdownId === tab.id;
 
-            return (
-              <div key={tab.id} className="relative shrink-0">
-                <div className="flex items-center">
+              return (
+                <div key={tab.id} className="shrink-0">
                   <button
                     onClick={() => {
                       setActiveTabId(tab.id);
@@ -192,16 +192,38 @@ export default function CatminAdminMasterLayout({ children }: { children: React.
                     <ChevronDown className={`w-3 h-3 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
                   </button>
                 </div>
+              );
+            })}
+          </div>
 
-                {/* DROPDOWN SUB-MENÚ FLOTANTE */}
-                {isDropdownOpen && (
-                  <div className="absolute left-0 top-full mt-2 w-72 p-2 bg-[#09090f] border border-[#ecb613]/30 rounded-2xl shadow-2xl z-50 space-y-1 animate-in fade-in slide-in-from-top-2 duration-150">
-                    <div className="px-3 py-1.5 text-[10px] font-mono text-[#ecb613] font-bold uppercase tracking-wider border-b border-white/5 flex items-center justify-between">
-                      <span>Sub-menús de {tab.shortTitle}</span>
-                      <span className="text-zinc-500">{tab.subTabs.length} módulos</span>
+          {/* DROPDOWN SUB-MENÚ FLOTANTE ELEVADO (FUERA DEL OVERFLOW-X-AUTO) */}
+          {openDropdownId && (() => {
+            const openTab = MASTER_TABS.find((t) => t.id === openDropdownId);
+            if (!openTab) return null;
+            return (
+              <>
+                <div
+                  className="fixed inset-0 z-40"
+                  onClick={() => setOpenDropdownId(null)}
+                  aria-hidden="true"
+                />
+                <div className="absolute left-0 top-full mt-1 w-full max-w-3xl p-3 bg-[#09090f] border border-[#ecb613]/40 rounded-2xl shadow-[0_24px_60px_rgba(0,0,0,0.9)] z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                  <div className="px-3 py-1.5 mb-2 text-[10px] font-mono text-[#ecb613] font-bold uppercase tracking-wider border-b border-white/10 flex items-center justify-between">
+                    <span>Sub-menús de {openTab.title} ({openTab.shortTitle})</span>
+                    <div className="flex items-center gap-3">
+                      <span className="text-zinc-400">{openTab.subTabs.length} módulos operativos</span>
+                      <button
+                        onClick={() => setOpenDropdownId(null)}
+                        className="text-zinc-400 hover:text-white p-0.5 rounded"
+                        title="Cerrar menú"
+                      >
+                        <X className="w-3.5 h-3.5" />
+                      </button>
                     </div>
+                  </div>
 
-                    {tab.subTabs.map((sub) => {
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                    {openTab.subTabs.map((sub) => {
                       const SubIcon = sub.icon;
                       const isSubActive = pathname === sub.href;
 
@@ -210,27 +232,29 @@ export default function CatminAdminMasterLayout({ children }: { children: React.
                           key={sub.id}
                           href={sub.href}
                           onClick={() => setOpenDropdownId(null)}
-                          className={`flex items-start gap-2.5 p-2 rounded-xl text-xs transition-colors group ${isSubActive
-                            ? 'bg-[#ecb613]/15 text-[#ecb613] font-bold border border-[#ecb613]/30'
-                            : 'text-zinc-300 hover:bg-zinc-800/80 hover:text-white'
+                          className={`flex items-start gap-2.5 p-2.5 rounded-xl text-xs transition-colors group ${isSubActive
+                            ? 'bg-[#ecb613]/15 text-[#ecb613] font-bold border border-[#ecb613]/40'
+                            : 'text-zinc-300 hover:bg-zinc-800/90 hover:text-white border border-transparent'
                             }`}
                         >
                           <SubIcon className={`w-4 h-4 mt-0.5 shrink-0 ${isSubActive ? 'text-[#ecb613]' : 'text-zinc-400 group-hover:text-[#ecb613]'}`} />
                           <div className="min-w-0 flex-1">
-                            <div className="flex items-center justify-between">
-                              <span className="truncate">{sub.name}</span>
-                              <span className="text-[9px] font-mono text-zinc-500 group-hover:text-zinc-300">{sub.badge}</span>
+                            <div className="flex items-center justify-between gap-2">
+                              <span className="truncate font-medium">{sub.name}</span>
+                              <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-black/40 border border-white/10 text-zinc-400 group-hover:text-[#ecb613] shrink-0">
+                                {sub.badge}
+                              </span>
                             </div>
-                            <p className="text-[10px] text-zinc-500 line-clamp-1 mt-0.5">{sub.description}</p>
+                            <p className="text-[10px] text-zinc-400 line-clamp-1 mt-0.5">{sub.description}</p>
                           </div>
                         </Link>
                       );
                     })}
                   </div>
-                )}
-              </div>
+                </div>
+              </>
             );
-          })}
+          })()}
         </div>
 
         {/* ===================================================================== */}

@@ -42,6 +42,8 @@ import {
   contactLabelForAccess,
   gatedPhoneNumber,
   maskPhoneForDisplay,
+  resolvePublicProviderDisplayName,
+  stripOriginLinksFromHtml,
 } from '@/lib/providers/contact-gate';
 import {
   evaluateProviderContactAccess,
@@ -606,7 +608,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const isGenericDoorway = isOpaqueProviderSlug(canonicalSlug) || cleanName.toLowerCase().startsWith('prov-');
   const shouldNoIndex = isBlacklisted || isGenericDoorway || (!isVerifiedTier && !cleanName);
 
-  const isGenericName = !cleanName || cleanName.toLowerCase().startsWith('prov-') || isBlacklisted;
+  const isGenericName = !cleanName || cleanName.toLowerCase().startsWith('prov-') || isBlacklisted || !isVerifiedTier;
   const isFinca = category.toLowerCase().includes('finca') || category.toLowerCase().includes('espacio') || slug.includes('finca');
   const isMusica = category.toLowerCase().includes('música') || category.toLowerCase().includes('musica') || category.toLowerCase().includes('mariachi') || category.toLowerCase().includes('artista') || category.toLowerCase().includes('dj');
 
@@ -614,8 +616,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   let metaDescription: string;
 
   if (isGenericName) {
-    displayTitle = `Proveedor Homologado S-Class #${providerIdShort} (${category} en ${location}) | Productora EAR`;
-    metaDescription = `Servicio profesional homologado S-Class (${category}) en ${location}. Conexión técnica y fianza protegida Stripe vía Productora EAR.`;
+    displayTitle = `Proveedor Homologado S-Class #${providerIdShort} · ${category} (${location}) | Productora EAR`;
+    metaDescription = `Encaje quirúrgico verificado: ${category} en ${location}. Desbloquea identidad comercial y línea directa o bloquea fecha con depósito deducible vía Productora EAR.`;
   } else if (isFinca) {
     displayTitle = `Música, Sonorización y Contratación para ${cleanName} (${location}) · Enlace Homologado | Productora EAR`;
     metaDescription = `Central técnica y enlace oficial para bodas en ${cleanName} (${location}). Sonorización Bose F1 certificada (Ley 37/2003), música en directo y despacho de reserva garantizada vía n8n.`;
@@ -777,15 +779,21 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
     }
   }
 
-  // 🏛️ IDENTIDAD S-CLASS: Mostrar nombre real si es legítimo; si está en optout/protegido, anonimizar completamente
+  // 🏛️ IDENTIDAD S-CLASS & DOCTRINA CERO TRABAJO GRATIS:
+  // Solo se muestra el nombre comercial real si el proveedor es SOVEREIGN, CLAIMED/PAYING
+  // o si el cliente ya abonó el desbloqueo de contacto (`isUnlocked === true`).
   const cleanName = isBlacklisted ? '' : cleanText(rawProvider.name);
   const displayName = isBlacklisted
     ? `División Técnica Homologada #${providerIdShort} · ${category}`
-    : cleanName && !cleanName.toLowerCase().startsWith('prov-')
-      ? cleanName
-      : isUnlocked
-        ? `División Técnica Homologada #${providerIdShort} · ${category}`
-        : `Proveedor Homologado S-Class #${providerIdShort} — ${category} (${location.split(',')[0]})`;
+    : resolvePublicProviderDisplayName({
+      id: providerId,
+      slug,
+      name: cleanName,
+      category,
+      province: location.split(',')[0],
+      tier,
+      paidUnlock: isUnlocked,
+    });
 
   const rating = rawProvider.atomic_specs?.metrics?.rating || rawProvider.rating || 5.0;
   const reviewsCount = rawProvider.atomic_specs?.metrics?.reviewCount || rawProvider.reviews || 27;
@@ -808,20 +816,20 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
   const providerMedia = isBlacklisted
     ? { images: [] as readonly string[], videos: [] as readonly string[] }
     : collectProviderMedia({
-        gallery: rawProvider.gallery,
-        imageUrls: rawProvider.imageUrls,
-        images: rawProvider.images,
-        photos: rawProvider.photos,
-        img: rawProvider.img,
-        coverImage: rawProvider.atomic_specs?.media?.coverImage,
-        video_url: rawProvider.video_url,
-        videoUrl: rawProvider.videoUrl,
-        videos: rawProvider.videos,
-        media: rawProvider.atomic_specs?.media,
-        atomic_specs: rawProvider.atomic_specs,
-        raw_html: rawProvider.raw_html,
-        scraped_content: rawProvider.scraped_content,
-      });
+      gallery: rawProvider.gallery,
+      imageUrls: rawProvider.imageUrls,
+      images: rawProvider.images,
+      photos: rawProvider.photos,
+      img: rawProvider.img,
+      coverImage: rawProvider.atomic_specs?.media?.coverImage,
+      video_url: rawProvider.video_url,
+      videoUrl: rawProvider.videoUrl,
+      videos: rawProvider.videos,
+      media: rawProvider.atomic_specs?.media,
+      atomic_specs: rawProvider.atomic_specs,
+      raw_html: rawProvider.raw_html,
+      scraped_content: rawProvider.scraped_content,
+    });
 
   const mediaPolicy = evaluateProviderMediaDeliveryPolicy({
     tier,
@@ -836,10 +844,10 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
     : (providerMedia.images[0] || rawProvider.img || NEUTRAL_COVER);
   const rawGallery: string[] = isBlacklisted
     ? [
-        NEUTRAL_COVER,
-        'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=800&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=800&auto=format&fit=crop'
-      ]
+      NEUTRAL_COVER,
+      'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=800&auto=format&fit=crop'
+    ]
     : (providerMedia.images.length > 0 ? [...providerMedia.images] : [coverImg]);
 
   const totalPrivatePhotosCount = rawGallery.length;
@@ -1080,12 +1088,15 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
                   <div
                     className="text-sm text-zinc-300 leading-relaxed font-light space-y-3 prose prose-invert max-w-none [&_a]:text-[#ecb613] [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5"
                     dangerouslySetInnerHTML={{
-                      __html: sanitizeHtml(cleanText(rawProvider.raw_html || rawProvider.scraped_content), {
-                        allowedTags: ['b', 'i', 'em', 'strong', 'a', 'p', 'ul', 'ol', 'li', 'br', 'span', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
-                        allowedAttributes: {
-                          'a': ['href', 'target', 'rel']
+                      __html: sanitizeHtml(
+                        stripOriginLinksFromHtml(cleanText(rawProvider.raw_html || rawProvider.scraped_content)),
+                        {
+                          allowedTags: ['b', 'i', 'em', 'strong', 'a', 'p', 'ul', 'ol', 'li', 'br', 'span', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
+                          allowedAttributes: {
+                            'a': ['href', 'target', 'rel']
+                          }
                         }
-                      })
+                      )
                     }}
                   />
                 ) : (
@@ -1419,11 +1430,10 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
                     Contacto de la entidad
                   </span>
                   <span
-                    className={`text-[9px] font-mono px-2 py-0.5 rounded-full border ${
-                      contactAccess.canRevealPhone
-                        ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300'
-                        : 'border-[#FF2B44]/30 bg-[#FF2B44]/10 text-[#FF2B44]'
-                    }`}
+                    className={`text-[9px] font-mono px-2 py-0.5 rounded-full border ${contactAccess.canRevealPhone
+                      ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300'
+                      : 'border-[#FF2B44]/30 bg-[#FF2B44]/10 text-[#FF2B44]'
+                      }`}
                   >
                     {contactLabelForAccess(contactAccess)}
                   </span>

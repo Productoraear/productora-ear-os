@@ -4,16 +4,16 @@ import { SovereignThreeDoorsDistributor } from '@/components/home/SovereignThree
 import { LumenNoiseGrain } from '@/components/lumen/LumenNoiseGrain';
 
 export const metadata: Metadata = {
-  title: 'Productora EAR · Distribuidor Soberano de Contratación Directa',
+  title: 'Productora EAR · Distribuidor Soberano de Contratación Directa (52 Provincias)',
   description:
-    'Distribuidor oficial de contratación directa: Restaurante Otzarreta (Derio), Roster Artístico S-Class (Edwin Agudelo y agrupaciones de gala) e Ingeniería Acústica & Alquiler de Sonido Line Array.',
+    'Distribuidor nacional de contratación directa en las 52 provincias de España: Fincas, Caseríos y Asadores Homologados, Roster Artístico S-Class (Edwin Agudelo y agrupaciones de gala) e Ingeniería Acústica & Alquiler de Sonido Line Array.',
   alternates: {
     canonical: 'https://productoraear.com',
   },
   openGraph: {
-    title: 'Productora EAR · Distribuidor Soberano de Contratación Directa',
+    title: 'Productora EAR · Distribuidor Soberano de Contratación Directa (52 Provincias)',
     description:
-      'Gastronomía en Derio (Restaurante Otzarreta), Música en Directo (Edwin Agudelo) y Sonorización Profesional Line Array sin intermediarios.',
+      'Gastronomía y Fincas Homologadas en toda España, Música en Directo (Edwin Agudelo) y Sonorización Profesional Line Array sin intermediarios.',
     url: 'https://productoraear.com',
     siteName: 'Productora EAR',
     locale: 'es_ES',

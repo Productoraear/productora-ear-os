@@ -36,6 +36,7 @@ import {
   X
 } from 'lucide-react';
 import { CENTRALITA } from '@/lib/phone-constants';
+import { resolvePublicProviderDisplayName } from '@/lib/providers/contact-gate';
 import CinematicVanguardCarousel from '@/components/sclass/CinematicVanguardCarousel';
 import { NeuralArtistTinderMatch, type CanonicalArtist } from '@/components/artists/NeuralArtistTinderMatch';
 import type { CoupleCalibration } from '@/lib/matching/calibratorTypes';
@@ -250,7 +251,19 @@ export default function ArtistasNationalCatalogClient() {
       fetch('/data/artists/artists_canonical.json')
         .then((res) => (res.ok ? res.json() : []))
         .then((data) => {
-          setCanonicalArtists(Array.isArray(data) ? data : []);
+          const rawList = Array.isArray(data) ? data : [];
+          setCanonicalArtists(
+            rawList.map((a: CanonicalArtist) => ({
+              ...a,
+              name: resolvePublicProviderDisplayName({
+                id: a.id,
+                name: a.name,
+                category: 'musica',
+                province: a.province,
+                municipality: a.municipality,
+              }),
+            }))
+          );
         })
         .catch((err) => console.error('Error cargando canonical artists:', err))
         .finally(() => setCanonicalLoading(false));
@@ -294,9 +307,20 @@ export default function ArtistasNationalCatalogClient() {
 
         // Excluir a Edwin Agudelo de la cuadrícula estándar para que no aparezca duplicado
         // (ya que tiene su Escaparate de Élite S-Class exclusivo en la parte superior)
-        const filteredProviders = providers.filter(
-          (p) => !p.name.toLowerCase().includes('edwin agudelo')
-        );
+        // y enmascarar nombres reales de artistas no reclamados (Doctrina Cero Trabajo Gratis).
+        const filteredProviders = providers
+          .filter((p) => !p.name.toLowerCase().includes('edwin agudelo'))
+          .map((p) => ({
+            ...p,
+            name: resolvePublicProviderDisplayName({
+              id: p.id,
+              slug: p.slug,
+              name: p.name,
+              category: 'musica',
+              province: p.province,
+              municipality: p.municipality,
+            }),
+          }));
 
         setArtists(filteredProviders);
         if (typeof data.total === 'number' && data.total > 0) {

@@ -27,6 +27,7 @@ import type { FincaHomologada } from '@/lib/constants/fincas-catalog';
 import { CENTRALITA } from '@/lib/phone-constants';
 import { getFincaImage } from '@/lib/constants/fincas-images';
 import { DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
+import { resolvePublicProviderDisplayName } from '@/lib/providers/contact-gate';
 
 export interface FincasCatalogExplorerProps {
     fincas: FincaHomologada[];
@@ -189,11 +190,10 @@ export default function FincasCatalogExplorer({ fincas, provinceName }: FincasCa
                         <button
                             type="button"
                             onClick={() => setOnlyNoLimiter((v) => !v)}
-                            className={`w-full p-3.5 rounded-2xl border flex items-center justify-between transition-all cursor-pointer ${
-                                onlyNoLimiter
-                                    ? 'bg-emerald-500/10 border-emerald-500/50 text-emerald-400'
-                                    : 'bg-white/5 border-white/10 text-zinc-400 hover:border-white/20'
-                            }`}
+                            className={`w-full p-3.5 rounded-2xl border flex items-center justify-between transition-all cursor-pointer ${onlyNoLimiter
+                                ? 'bg-emerald-500/10 border-emerald-500/50 text-emerald-400'
+                                : 'bg-white/5 border-white/10 text-zinc-400 hover:border-white/20'
+                                }`}
                         >
                             <span className="text-xs font-bold font-syne flex items-center gap-2">
                                 {onlyNoLimiter ? <VolumeX size={16} /> : <Volume2 size={16} />}
@@ -220,11 +220,10 @@ export default function FincasCatalogExplorer({ fincas, provinceName }: FincasCa
                             key={opt.key}
                             type="button"
                             onClick={() => setSortKey(opt.key)}
-                            className={`px-3.5 py-1.5 rounded-xl text-[11px] font-bold font-mono uppercase tracking-wide border transition-all cursor-pointer ${
-                                sortKey === opt.key
-                                    ? 'bg-[#ecb613] text-black border-[#ecb613]'
-                                    : 'bg-white/5 text-zinc-400 border-white/10 hover:text-white'
-                            }`}
+                            className={`px-3.5 py-1.5 rounded-xl text-[11px] font-bold font-mono uppercase tracking-wide border transition-all cursor-pointer ${sortKey === opt.key
+                                ? 'bg-[#ecb613] text-black border-[#ecb613]'
+                                : 'bg-white/5 text-zinc-400 border-white/10 hover:text-white'
+                                }`}
                         >
                             {opt.label}
                         </button>
@@ -328,9 +327,16 @@ function FincaCard({
     const facturables = Math.max(0, finca.distanciaHubMentridaKm - 50);
     const hasLimiter = finca.limiteAcustico.limitadorInstalado;
     const freeFieldDba = finca.limiteAcustico.exteriorDBA;
+    const publicFincaName = resolvePublicProviderDisplayName({
+        id: finca.id,
+        slug: finca.slug,
+        name: finca.name,
+        category: 'finca',
+        province: finca.provincia,
+    });
 
     const waHref = `https://wa.me/${CENTRALITA.whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(
-        `Hola Productora EAR, me interesa consultar disponibilidad técnica para "${finca.name}" (${finca.location}).`
+        `Hola Productora EAR, me interesa consultar disponibilidad técnica para "${publicFincaName}" (${finca.location}).`
     )}`;
 
     return (
@@ -356,11 +362,10 @@ function FincaCard({
                     <ShieldCheck size={12} /> Certificada S-Class
                 </span>
                 <span
-                    className={`absolute top-4 right-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-full backdrop-blur font-mono text-[10px] uppercase tracking-widest ${
-                        hasLimiter
-                            ? 'bg-amber-500/15 border border-amber-500/40 text-amber-300'
-                            : 'bg-emerald-500/15 border border-emerald-500/40 text-emerald-300'
-                    }`}
+                    className={`absolute top-4 right-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-full backdrop-blur font-mono text-[10px] uppercase tracking-widest ${hasLimiter
+                        ? 'bg-amber-500/15 border border-amber-500/40 text-amber-300'
+                        : 'bg-emerald-500/15 border border-emerald-500/40 text-emerald-300'
+                        }`}
                 >
                     {hasLimiter ? <Volume2 size={11} /> : <VolumeX size={11} />}
                     {hasLimiter ? `Limitador ${freeFieldDba} dB` : `Libre ${freeFieldDba} dB`}
@@ -374,7 +379,7 @@ function FincaCard({
                         <MapPin size={11} className="text-[#ecb613]" /> {finca.location}
                     </p>
                     <h3 className="font-syne text-xl font-black text-white mt-1 group-hover:text-[#ecb613] transition-colors">
-                        {finca.name}
+                        {publicFincaName}
                     </h3>
                 </div>
 
@@ -419,9 +424,9 @@ function FincaCard({
                 <div className="p-3 rounded-xl bg-[#030305] border border-white/10 space-y-1.5 text-[11px]">
                     <div className="flex items-center justify-between">
                         <span className="text-zinc-400 font-mono flex items-center gap-1.5">
-                            <Lock size={11} className="text-[#ecb613]" /> Contacto Directo:
+                            <Lock size={11} className="text-[#ecb613]" /> Identidad & Contacto:
                         </span>
-                        <span className="text-zinc-300 font-semibold">{finca.directorioContacto.director}</span>
+                        <span className="text-zinc-300 font-semibold">Protegido · Desbloqueo S-Class</span>
                     </div>
                     <div className="flex items-center justify-between font-mono">
                         <span className="text-zinc-500">Teléfono:</span>
@@ -576,7 +581,13 @@ function TechnicalVisitLockModal({
                         Bloquear Visita Técnica
                     </h3>
                     <p className="text-xs text-zinc-400 font-mono">
-                        {finca.name} · {finca.location}
+                        {resolvePublicProviderDisplayName({
+                            id: finca.id,
+                            slug: finca.slug,
+                            name: finca.name,
+                            category: 'finca',
+                            province: finca.provincia,
+                        })} · {finca.location}
                     </p>
                 </div>
 

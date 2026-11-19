@@ -5,22 +5,22 @@ import React, { useState, useEffect, useMemo, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import { 
-  MapPin, 
-  Star, 
-  ShieldCheck, 
-  Sparkles, 
-  PhoneCall, 
-  Building2, 
-  UtensilsCrossed, 
-  Flower2, 
-  Music2, 
-  Volume2, 
-  Video, 
-  HeartHandshake, 
-  Shirt, 
-  Car, 
-  Layers, 
+import {
+  MapPin,
+  Star,
+  ShieldCheck,
+  Sparkles,
+  PhoneCall,
+  Building2,
+  UtensilsCrossed,
+  Flower2,
+  Music2,
+  Volume2,
+  Video,
+  HeartHandshake,
+  Shirt,
+  Car,
+  Layers,
   Loader2,
   Lock,
   Zap,
@@ -44,6 +44,8 @@ import { PROVIDERS_MANIFEST_TOTALS, PROVIDERS_B2C_TOTAL, B2C_DIRECTORY_GREMIO_TO
 import { DEPOSITO_STRIPE_EUR, TARIFA_ESTANDAR_SOLISTA_EUR } from '@/lib/constants/ear-os-ssot';
 import { ALL_SPANISH_PROVINCES, isProvinceMatch, findCanonicalProvinceName, normalizeBodasNetCategory, ALL_VENUE_TYPOLOGIES } from '@/lib/constants/spain-regions-and-categories';
 import { OTZARRETA_ENTITY } from '@/lib/constants/otzarreta-entity';
+import { EZKERTZA_DERIO_VENUE } from '@/lib/constants/ezkertza-derio-venue';
+import { resolvePublicProviderDisplayName } from '@/lib/providers/contact-gate';
 
 /** Formato monetario canónico es-ES (2 decimales, coma decimal). */
 const formatEuro = (value: number): string =>
@@ -90,9 +92,20 @@ function normalizeDirectoryProvider(provider: ProviderItem): ProviderItem {
   const rawBadge = (provider.badge || '').trim();
   const badgeClaimsVerification = /verificad|homologad/i.test(rawBadge);
   const hasPrice = rawPrice.length > 0 || (typeof provider.basePrice === 'number' && provider.basePrice > 0);
+  const maskedName = resolvePublicProviderDisplayName({
+    id: provider.id,
+    slug: provider.slug,
+    name: provider.name,
+    category: provider.category,
+    province,
+    municipality: provider.municipality,
+    isClaimed: provider.isClaimed,
+    isPreferred: provider.isPreferred,
+  });
 
   return {
     ...provider,
+    name: maskedName,
     province,
     price: hasPrice ? rawPrice : CUSTOM_QUOTE_LABEL,
     priceLabel: hasPrice ? provider.priceLabel : SECTOR_RANGE_LABEL,
@@ -189,19 +202,32 @@ const SOVEREIGN_OTZARRETA: ProviderItem = {
   province: OTZARRETA_ENTITY.provinceAlias,
   municipality: OTZARRETA_ENTITY.municipality,
   address: OTZARRETA_ENTITY.fullAddress,
-  description: `Caserío tradicional vasco y asador en Santo Domingo Hiribidea, 13, 48160 Derio (Bizkaia · comarca Txorierri / Gran Bilbao): cocina de cazuela vasca y parrilla al carbón de encina dirigida por Eduardo Martínez. Salón acristalado de 50 a 200 comensales y capacidad total de hasta ${OTZARRETA_ENTITY.capacityPax} pax con jardines botánicos para ceremonias civiles, carpa climatizada y ${OTZARRETA_ENTITY.parkingSpaces} plazas de aparcamiento privado.`,
+  description: `Caserío tradicional vasco y asador en Santo Domingo Hiribidea, 13, 48160 Derio (Bizkaia · comarca Txorierri / Gran Bilbao): cocina de cazuela vasca y parrilla al carbón de encina dirigida por Eduardo Martínez. Salón acristalado de 50 a 200 comensales y capacidad total de hasta ${OTZARRETA_ENTITY.capacityPax} pax con jardines botánicos para ceremonias civiles, carpa climatizada, 1 solo evento al día, promoción activa del ${EZKERTZA_DERIO_VENUE.discountPercent}% de descuento (${EZKERTZA_DERIO_VENUE.recommendationPercent}% de recomendación en ${EZKERTZA_DERIO_VENUE.reviewCount} opiniones verificadas) y ${OTZARRETA_ENTITY.parkingSpaces} plazas de aparcamiento privado.`,
   price: formatEuro(OTZARRETA_ENTITY.weddingPriceFromEur),
   priceLabel: 'Desde',
   basePrice: OTZARRETA_ENTITY.weddingPriceFromEur,
-  rating: 5.0,
-  reviews: OTZARRETA_ENTITY.reviews.length,
+  rating: EZKERTZA_DERIO_VENUE.rating,
+  reviews: EZKERTZA_DERIO_VENUE.reviewCount,
   img: OTZARRETA_ENTITY.scrapedAssets.facade,
   gallery: [
     OTZARRETA_ENTITY.scrapedAssets.facade,
-    OTZARRETA_ENTITY.scrapedAssets.diningHall
+    OTZARRETA_ENTITY.scrapedAssets.diningHall,
+    ...EZKERTZA_DERIO_VENUE.media.galleryPhotos.slice(0, 6),
   ],
+  imageUrls: [
+    OTZARRETA_ENTITY.scrapedAssets.facade,
+    OTZARRETA_ENTITY.scrapedAssets.diningHall,
+    ...EZKERTZA_DERIO_VENUE.media.galleryPhotos.slice(0, 6),
+  ],
+  services_list: [
+    ...EZKERTZA_DERIO_VENUE.datosDeInteres,
+    `Promoción activa: ${EZKERTZA_DERIO_VENUE.discountPercent}% de descuento nupcial`,
+    ...EZKERTZA_DERIO_VENUE.menus.map((m) => `${m.name}: ${m.description}`),
+  ],
+  faqs: Object.fromEntries(EZKERTZA_DERIO_VENUE.faqs.map((f) => [f.question, f.answer])),
   isPreferred: true,
-  badge: 'ALIANZA VIP S-CLASS · GRUPO OTZARRETA',
+  isClaimed: true,
+  badge: `TOP #1 GRAN BILBAO · ${EZKERTZA_DERIO_VENUE.discountPercent}% DTO · GRUPO OTZARRETA`,
   customUrl: '/otzarreta',
   // Teléfono real publicado en dominio propio (NO centralita EAR OS).
   phone: OTZARRETA_ENTITY.primaryPhoneRaw,
@@ -337,7 +363,7 @@ function ProveedoresDirectoryContent() {
   };
 
   const pageSize = 24;
-  
+
   const [apiProviders, setApiProviders] = useState<ProviderItem[]>([]);
   const [totalApiProviders, setTotalApiProviders] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -425,7 +451,7 @@ function ProveedoresDirectoryContent() {
 
           if (searchQuery && searchQuery.trim()) {
             const qLow = searchQuery.toLowerCase().trim();
-            filtered = filtered.filter(p => 
+            filtered = filtered.filter(p =>
               (p.name || '').toLowerCase().includes(qLow) ||
               (p.description || '').toLowerCase().includes(qLow) ||
               (p.municipality || '').toLowerCase().includes(qLow)
@@ -779,15 +805,33 @@ function ProveedoresDirectoryContent() {
   }, [selectedCategory, selectedSubcategory, selectedProvince, searchQuery, currentPage]);
 
   const providersData = useMemo(() => {
-    const isBasqueProvince = !selectedProvince || selectedProvince === 'ALL' || 
-      isProvinceMatch(selectedProvince, 'Vizcaya') || 
-      isProvinceMatch(selectedProvince, 'Bizkaia');
+    const qNorm = normalizeSearchText(searchQuery || '');
+    const isBasqueQuery =
+      qNorm.length > 0 &&
+      /derio|bilbao|bizkaia|vizcaya|txorierri|uribe|mungia|getxo|leioa|barakaldo|sondika|zamudio|lezama|larrabetzu|loi|otzarreta|ezkertza|eduardo/.test(qNorm);
+    const hasExplicitNonBasqueProvince =
+      Boolean(selectedProvince) &&
+      selectedProvince !== 'ALL' &&
+      !isProvinceMatch(selectedProvince, 'Vizcaya') &&
+      !isProvinceMatch(selectedProvince, 'Bizkaia');
+    const isBasqueProvince =
+      !hasExplicitNonBasqueProvince &&
+      ((Boolean(selectedProvince) &&
+        selectedProvince !== 'ALL' &&
+        (isProvinceMatch(selectedProvince, 'Vizcaya') || isProvinceMatch(selectedProvince, 'Bizkaia'))) ||
+        isBasqueQuery);
 
-    // Descartar posibles duplicados de Otzarreta para que prevalezca el canónico S-Class
-    const cleanApi = apiProviders.filter(p => p.id !== 'v-32714' && !p.name?.toLowerCase().includes('otzarreta'));
+    // Subcategorías de finca donde encaja el Caserío & Restaurante de Eduardo Martínez en Derio:
+    const isOtzarretaSubcat =
+      !selectedSubcategory ||
+      selectedSubcategory === 'all' ||
+      ['restaurante', 'masia', 'finca', 'salon', 'singular'].includes(selectedSubcategory.toLowerCase());
+
+    // Descartar posibles duplicados de Otzarreta para que prevalezca el canónico S-Class solo en su territorio (Derio / Gran Bilbao / Bizkaia)
+    const cleanApi = apiProviders.filter(p => p.id !== 'v-32714' && !p.name?.toLowerCase().includes('otzarreta') && !p.name?.toLowerCase().includes('ezkertza'));
 
     const list: ProviderItem[] = [];
-    if (isBasqueProvince && (selectedCategory === 'ALL' || selectedCategory === 'finca' || selectedCategory === 'catering')) {
+    if (isBasqueProvince && isOtzarretaSubcat && (selectedCategory === 'ALL' || selectedCategory === 'finca' || selectedCategory === 'catering')) {
       list.push(SOVEREIGN_OTZARRETA);
     }
     // AISLAMIENTO DE CATÁLOGO: Edwin Agudelo solo existe en la vertical de música.
@@ -798,7 +842,7 @@ function ProveedoresDirectoryContent() {
     }
     list.push(...cleanApi);
     return list.map(normalizeDirectoryProvider);
-  }, [apiProviders, selectedCategory, selectedProvince]);
+  }, [apiProviders, selectedCategory, selectedSubcategory, selectedProvince, searchQuery]);
 
   const categories: CategoryItem[] = [
     { id: 'ALL', label: 'Todos los Servicios', count: STATIC_CATEGORY_TOTALS.ALL, icon: Layers },
@@ -955,11 +999,10 @@ function ProveedoresDirectoryContent() {
       : null;
 
   return (
-    <div className={`min-h-screen w-full overflow-x-hidden ${
-      isAirbnb
-        ? 'bg-[#FFFFFF] text-[#222222]'
-        : 'bg-[#030305] text-white font-sans selection:bg-[#258DCD] selection:text-black'
-    }`}>
+    <div className={`min-h-screen w-full overflow-x-hidden ${isAirbnb
+      ? 'bg-[#FFFFFF] text-[#222222]'
+      : 'bg-[#030305] text-white font-sans selection:bg-[#258DCD] selection:text-black'
+      }`}>
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
           1. HEADER S-CLASS COMPACTO CON MIGAS DE PAN (DE UN VISTAZO)
          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
@@ -1028,7 +1071,7 @@ function ProveedoresDirectoryContent() {
           /* 🌙 HEADER CANÓNICO S-CLASS OLED */
           <div className="bg-[#08080c] border border-neutral-800 hover:border-[#258DCD]/40 rounded-2xl p-5 sm:p-6 relative overflow-hidden shadow-xl transition-colors">
             <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-b from-[#258DCD]/10 to-transparent blur-3xl pointer-events-none" />
-            
+
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div className="space-y-1">
                 <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full border border-[#258DCD]/30 bg-[#258DCD]/5 text-[#AAD6CD] text-[10px] font-mono font-bold uppercase tracking-widest">
@@ -1208,323 +1251,320 @@ function ProveedoresDirectoryContent() {
             5. MODAL DE FICHA COMPLETA S-CLASS (FRAMER MOTION EDITION)
            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
         <AnimatePresence>
-        {activeModalProvider && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-black/40 backdrop-blur-[100px] flex justify-center items-center p-3 sm:p-6 overflow-y-auto perspective-[2000px]"
-          >
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95, y: 20, rotateX: 5 }}
-              animate={{ opacity: 1, scale: 1, y: 0, rotateX: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20, rotateX: -5 }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="bg-[#08080c]/90 border border-white/10 w-full max-w-5xl max-h-[92vh] rounded-[2.5rem] overflow-y-auto p-6 sm:p-10 relative space-y-8 shadow-[0_0_80px_rgba(37,141,205,0.15)] font-sans scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent"
+          {activeModalProvider && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[100] bg-black/40 backdrop-blur-[100px] flex justify-center items-center p-3 sm:p-6 overflow-y-auto perspective-[2000px]"
             >
-              <button
-                onClick={() => setActiveModalProvider(null)}
-                className="absolute top-6 right-6 bg-white/5 hover:bg-white/20 text-white h-10 w-10 rounded-full transition-all flex items-center justify-center cursor-pointer border border-white/10 z-50 backdrop-blur-md"
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 20, rotateX: 5 }}
+                animate={{ opacity: 1, scale: 1, y: 0, rotateX: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 20, rotateX: -5 }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                className="bg-[#08080c]/90 border border-white/10 w-full max-w-5xl max-h-[92vh] rounded-[2.5rem] overflow-y-auto p-6 sm:p-10 relative space-y-8 shadow-[0_0_80px_rgba(37,141,205,0.15)] font-sans scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent"
               >
-                ✕
-              </button>
-
-              {/* Header de la Ficha */}
-              <div className="space-y-4 pr-12">
-                <div className="flex flex-wrap items-center gap-3">
-                  <span className="text-[10px] font-bold text-[#AAD6CD] uppercase tracking-widest font-mono px-3 py-1 rounded-full bg-white/5 border border-white/10 shadow-[0_0_15px_rgba(170,214,205,0.1)]">
-                    {activeModalProvider.badge || (activeModalProvider.category ? activeModalProvider.category.toUpperCase() : 'HOMOLOGADO')}
-                  </span>
-                  <span className="text-xs font-mono text-neutral-400 flex items-center gap-1.5">
-                    <MapPin size={14} className="text-[#258DCD]" /> {activeModalProvider.province?.toUpperCase() || 'ESPAÑA'}
-                  </span>
-                  {activeModalProvider.rating ? (
-                    <span className="text-xs font-mono text-amber-400 font-bold ml-auto flex items-center gap-1.5">
-                      <Star size={14} fill="currentColor" /> {activeModalProvider.rating} <sub>({activeModalProvider.reviews || 0})</sub>
-                    </span>
-                  ) : (
-                    <span className="text-xs font-mono text-neutral-500 ml-auto flex items-center gap-1.5">
-                      <ShieldCheck size={14} /> Homologado
-                    </span>
-                  )}
-                </div>
-                <h2 className="text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-neutral-200 to-neutral-400 font-syne leading-tight tracking-tight">
-                  {activeModalProvider.name}
-                </h2>
-                {activeModalProvider.address && (
-                  <p className="text-sm text-neutral-500 font-mono flex items-center gap-1.5">
-                    📍 {activeModalProvider.address}
-                  </p>
-                )}
-
-                {activeModalProvider.customUrl && (
-                  <div className="bg-gradient-to-r from-[#ecb613]/20 via-[#ecb613]/10 to-transparent border border-[#ecb613]/40 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg">
-                    <div>
-                      <span className="text-[10px] font-mono text-[#ecb613] uppercase tracking-wider font-bold block">
-                        ALIANZA ESTRATÉGICA S-CLASS · ACCESO EXCLUSIVO
-                      </span>
-                      <p className="text-sm font-bold text-white font-syne">
-                        {activeModalProvider.customUrl === '/otzarreta'
-                          ? 'Ficha Oficial, 126 Landings de Dominancia y Menús 2026'
-                          : 'Ficha Oficial, Menús y Reserva Directa'}
-                      </p>
-                      <p className="text-xs text-neutral-400 font-light mt-0.5 line-clamp-2">
-                        {activeModalProvider.description || `${activeModalProvider.province || 'España'} · Proveedor homologado EAR OS con seguro de responsabilidad civil.`}
-                      </p>
-                    </div>
-                    <a
-                      href={activeModalProvider.customUrl}
-                      className="px-5 py-2.5 rounded-xl bg-[#ecb613] text-black font-mono text-xs font-black uppercase tracking-wider hover:bg-[#ecb613]/90 transition-all shrink-0 flex items-center gap-2 shadow-lg shadow-[#ecb613]/20"
-                    >
-                      <span>{activeModalProvider.customUrl === '/otzarreta' ? 'Ver Showroom VIP & Menús' : 'Ver Ficha Oficial'}</span>
-                      <ArrowRight size={14} />
-                    </a>
-                  </div>
-                )}
-              </div>
-
-              {/* Carrusel Figma High-End S-Class */}
-              <div className="shadow-2xl rounded-[2rem] overflow-hidden ring-1 ring-white/10">
-                <PremiumMediaCarousel 
-                  images={((activeModalProvider.gallery && activeModalProvider.gallery.length > 0)
-                    ? activeModalProvider.gallery
-                    : (activeModalProvider.imageUrls && activeModalProvider.imageUrls.length > 0)
-                      ? activeModalProvider.imageUrls
-                      : (activeModalProvider.img ? [activeModalProvider.img] : [])).slice(0, 2)} 
-                  providerName={activeModalProvider.name} 
-                />
-              </div>
-
-              {/* Magic Tabs Estilo Linear/Vercel */}
-              <div className="flex gap-2 overflow-x-auto pb-2 text-xs font-mono font-bold relative border-b border-white/5 scrollbar-none">
-                {([
-                  { id: 'info', label: '📋 Descripción & Contacto' },
-                  { id: 'faqs', label: '❓ Preguntas Frecuentes' },
-                  { id: 'services', label: `🛠️ Packs & Tarifas (${activeModalProvider.services_list?.length || 0})` },
-                  { id: 'garantia', label: '🛡️ Garantía S-Class' }
-                ] as const).map((tab) => (
-                  <button
-                    key={tab.id}
-                    onClick={() => setModalTab(tab.id)}
-                    className={`relative px-5 py-3 rounded-2xl transition-all cursor-pointer whitespace-nowrap z-10 ${
-                      modalTab === tab.id ? 'text-white' : 'text-neutral-500 hover:text-white'
-                    }`}
-                  >
-                    {modalTab === tab.id && (
-                      <motion.div
-                        layoutId="activeModalTab"
-                        className="absolute inset-0 bg-white/10 border border-white/20 rounded-2xl -z-10 shadow-[0_0_15px_rgba(255,255,255,0.05)]"
-                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                      />
-                    )}
-                    {tab.label}
-                  </button>
-                ))}
-              </div>
-
-              {/* Contenido de la Pestaña Activa con Fade-Up */}
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={modalTab}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.2 }}
-                  className="min-h-[200px]"
+                <button
+                  onClick={() => setActiveModalProvider(null)}
+                  className="absolute top-6 right-6 bg-white/5 hover:bg-white/20 text-white h-10 w-10 rounded-full transition-all flex items-center justify-center cursor-pointer border border-white/10 z-50 backdrop-blur-md"
                 >
-                  {/* PESTAÑA 1: DESCRIPCIÓN */}
-                  {modalTab === 'info' && (
-                    <div className="space-y-6 text-sm font-sans leading-relaxed text-neutral-300">
-                      <div className="bg-[#050508] p-6 rounded-3xl border border-white/5 space-y-3">
-                        <h4 className="text-white font-mono font-bold uppercase tracking-widest text-[10px] opacity-70">
-                          Overview
-                        </h4>
-                        <p className="whitespace-pre-line text-lg font-light tracking-wide text-neutral-300">
-                          {activeModalProvider.description_full || activeModalProvider.description || 'Este proveedor aún no ha publicado descripción en su ficha de origen. Solicita información verificada desde el directorio.'}
+                  ✕
+                </button>
+
+                {/* Header de la Ficha */}
+                <div className="space-y-4 pr-12">
+                  <div className="flex flex-wrap items-center gap-3">
+                    <span className="text-[10px] font-bold text-[#AAD6CD] uppercase tracking-widest font-mono px-3 py-1 rounded-full bg-white/5 border border-white/10 shadow-[0_0_15px_rgba(170,214,205,0.1)]">
+                      {activeModalProvider.badge || (activeModalProvider.category ? activeModalProvider.category.toUpperCase() : 'HOMOLOGADO')}
+                    </span>
+                    <span className="text-xs font-mono text-neutral-400 flex items-center gap-1.5">
+                      <MapPin size={14} className="text-[#258DCD]" /> {activeModalProvider.province?.toUpperCase() || 'ESPAÑA'}
+                    </span>
+                    {activeModalProvider.rating ? (
+                      <span className="text-xs font-mono text-amber-400 font-bold ml-auto flex items-center gap-1.5">
+                        <Star size={14} fill="currentColor" /> {activeModalProvider.rating} <sub>({activeModalProvider.reviews || 0})</sub>
+                      </span>
+                    ) : (
+                      <span className="text-xs font-mono text-neutral-500 ml-auto flex items-center gap-1.5">
+                        <ShieldCheck size={14} /> Homologado
+                      </span>
+                    )}
+                  </div>
+                  <h2 className="text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-neutral-200 to-neutral-400 font-syne leading-tight tracking-tight">
+                    {activeModalProvider.name}
+                  </h2>
+                  {activeModalProvider.address && (
+                    <p className="text-sm text-neutral-500 font-mono flex items-center gap-1.5">
+                      📍 {activeModalProvider.address}
+                    </p>
+                  )}
+
+                  {activeModalProvider.customUrl && (
+                    <div className="bg-gradient-to-r from-[#ecb613]/20 via-[#ecb613]/10 to-transparent border border-[#ecb613]/40 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg">
+                      <div>
+                        <span className="text-[10px] font-mono text-[#ecb613] uppercase tracking-wider font-bold block">
+                          ALIANZA ESTRATÉGICA S-CLASS · ACCESO EXCLUSIVO
+                        </span>
+                        <p className="text-sm font-bold text-white font-syne">
+                          {activeModalProvider.customUrl === '/otzarreta'
+                            ? 'Ficha Oficial, 126 Landings de Dominancia y Menús 2026'
+                            : 'Ficha Oficial, Menús y Reserva Directa'}
+                        </p>
+                        <p className="text-xs text-neutral-400 font-light mt-0.5 line-clamp-2">
+                          {activeModalProvider.description || `${activeModalProvider.province || 'España'} · Proveedor homologado EAR OS con seguro de responsabilidad civil.`}
                         </p>
                       </div>
+                      <a
+                        href={activeModalProvider.customUrl}
+                        className="px-5 py-2.5 rounded-xl bg-[#ecb613] text-black font-mono text-xs font-black uppercase tracking-wider hover:bg-[#ecb613]/90 transition-all shrink-0 flex items-center gap-2 shadow-lg shadow-[#ecb613]/20"
+                      >
+                        <span>{activeModalProvider.customUrl === '/otzarreta' ? 'Ver Showroom VIP & Menús' : 'Ver Ficha Oficial'}</span>
+                        <ArrowRight size={14} />
+                      </a>
+                    </div>
+                  )}
+                </div>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 font-mono text-xs">
-                        <div className="bg-white/[0.02] hover:bg-white/[0.04] transition-colors p-5 rounded-2xl border border-white/5">
-                          <span className="text-neutral-500 uppercase block mb-1">Contacto Directo</span>
-                          {/*
+                {/* Carrusel Figma High-End S-Class */}
+                <div className="shadow-2xl rounded-[2rem] overflow-hidden ring-1 ring-white/10">
+                  <PremiumMediaCarousel
+                    images={((activeModalProvider.gallery && activeModalProvider.gallery.length > 0)
+                      ? activeModalProvider.gallery
+                      : (activeModalProvider.imageUrls && activeModalProvider.imageUrls.length > 0)
+                        ? activeModalProvider.imageUrls
+                        : (activeModalProvider.img ? [activeModalProvider.img] : [])).slice(0, 2)}
+                    providerName={activeModalProvider.name}
+                  />
+                </div>
+
+                {/* Magic Tabs Estilo Linear/Vercel */}
+                <div className="flex gap-2 overflow-x-auto pb-2 text-xs font-mono font-bold relative border-b border-white/5 scrollbar-none">
+                  {([
+                    { id: 'info', label: '📋 Descripción & Contacto' },
+                    { id: 'faqs', label: '❓ Preguntas Frecuentes' },
+                    { id: 'services', label: `🛠️ Packs & Tarifas (${activeModalProvider.services_list?.length || 0})` },
+                    { id: 'garantia', label: '🛡️ Garantía S-Class' }
+                  ] as const).map((tab) => (
+                    <button
+                      key={tab.id}
+                      onClick={() => setModalTab(tab.id)}
+                      className={`relative px-5 py-3 rounded-2xl transition-all cursor-pointer whitespace-nowrap z-10 ${modalTab === tab.id ? 'text-white' : 'text-neutral-500 hover:text-white'
+                        }`}
+                    >
+                      {modalTab === tab.id && (
+                        <motion.div
+                          layoutId="activeModalTab"
+                          className="absolute inset-0 bg-white/10 border border-white/20 rounded-2xl -z-10 shadow-[0_0_15px_rgba(255,255,255,0.05)]"
+                          transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                        />
+                      )}
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Contenido de la Pestaña Activa con Fade-Up */}
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={modalTab}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.2 }}
+                    className="min-h-[200px]"
+                  >
+                    {/* PESTAÑA 1: DESCRIPCIÓN */}
+                    {modalTab === 'info' && (
+                      <div className="space-y-6 text-sm font-sans leading-relaxed text-neutral-300">
+                        <div className="bg-[#050508] p-6 rounded-3xl border border-white/5 space-y-3">
+                          <h4 className="text-white font-mono font-bold uppercase tracking-widest text-[10px] opacity-70">
+                            Overview
+                          </h4>
+                          <p className="whitespace-pre-line text-lg font-light tracking-wide text-neutral-300">
+                            {activeModalProvider.description_full || activeModalProvider.description || 'Este proveedor aún no ha publicado descripción en su ficha de origen. Solicita información verificada desde el directorio.'}
+                          </p>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 font-mono text-xs">
+                          <div className="bg-white/[0.02] hover:bg-white/[0.04] transition-colors p-5 rounded-2xl border border-white/5">
+                            <span className="text-neutral-500 uppercase block mb-1">Contacto Directo</span>
+                            {/*
                             ANTI-PICARESCA: el número de la entidad nunca se publica aquí.
                             Se retiró el atajo "Buscar Teléfono en Google", que burlaba el
                             candado de 1,00 € y regalaba el contacto del proveedor.
                           */}
-                          <SovereignWhatsAppButton
-      url={makeCentralitaWaLink(activeModalProvider.name, activeModalProvider.category, activeModalProvider.province)}
-      providerName={activeModalProvider.name}
-      category={activeModalProvider.category || 'Proveedor Homologado'}
-      className="text-emerald-400 font-bold text-lg hover:text-emerald-300 transition-colors"
-    >
-                            🔒 Contacto protegido · Centralita EAR
-                          </SovereignWhatsAppButton>
-                          <span className="block text-[10px] text-neutral-500 mt-1 leading-relaxed">
-                            El teléfono directo se libera con el desbloqueo de 1,00 € (descontable)
-                            o si el proveedor reclama su ficha.
-                          </span>
-                        </div>
-                        <div className="bg-white/[0.02] hover:bg-white/[0.04] transition-colors p-5 rounded-2xl border border-white/5">
-                          <span className="text-neutral-500 uppercase block mb-1">Desplazamiento</span>
-                          <span className="text-white font-bold text-lg">
-                            {activeModalProvider.province || 'Madrid'} <span className="text-neutral-500 text-sm font-normal">(Nacional)</span>
-                          </span>
-                        </div>
-                        {activeModalProvider.capacidadMaxPax && (
-                          <div className="bg-white/[0.02] hover:bg-white/[0.04] transition-colors p-5 rounded-2xl border border-white/5 sm:col-span-2">
-                            <span className="text-neutral-500 uppercase block mb-1">Capacidad Máxima Homologada</span>
-                            <span className="text-[#ecb613] font-bold text-lg font-mono">
-                              Hasta {activeModalProvider.capacidadMaxPax} comensales en banquete privado
+                            <SovereignWhatsAppButton
+                              url={makeCentralitaWaLink(activeModalProvider.name, activeModalProvider.category, activeModalProvider.province)}
+                              providerName={activeModalProvider.name}
+                              category={activeModalProvider.category || 'Proveedor Homologado'}
+                              className="text-emerald-400 font-bold text-lg hover:text-emerald-300 transition-colors"
+                            >
+                              🔒 Contacto protegido · Centralita EAR
+                            </SovereignWhatsAppButton>
+                            <span className="block text-[10px] text-neutral-500 mt-1 leading-relaxed">
+                              El teléfono directo se libera con el desbloqueo de 1,00 € (descontable)
+                              o si el proveedor reclama su ficha.
                             </span>
+                          </div>
+                          <div className="bg-white/[0.02] hover:bg-white/[0.04] transition-colors p-5 rounded-2xl border border-white/5">
+                            <span className="text-neutral-500 uppercase block mb-1">Desplazamiento</span>
+                            <span className="text-white font-bold text-lg">
+                              {activeModalProvider.province || 'Madrid'} <span className="text-neutral-500 text-sm font-normal">(Nacional)</span>
+                            </span>
+                          </div>
+                          {activeModalProvider.capacidadMaxPax && (
+                            <div className="bg-white/[0.02] hover:bg-white/[0.04] transition-colors p-5 rounded-2xl border border-white/5 sm:col-span-2">
+                              <span className="text-neutral-500 uppercase block mb-1">Capacidad Máxima Homologada</span>
+                              <span className="text-[#ecb613] font-bold text-lg font-mono">
+                                Hasta {activeModalProvider.capacidadMaxPax} comensales en banquete privado
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* PESTAÑA 2: FAQS */}
+                    {modalTab === 'faqs' && (
+                      <div className="grid grid-cols-1 gap-3 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+                        {modalFaqs && Object.keys(modalFaqs).length > 0 ? (
+                          Object.entries(modalFaqs).map(([pregunta, respuesta], qIdx) => (
+                            <div key={qIdx} className="bg-[#050508] p-5 rounded-2xl border border-white/5 space-y-2 group hover:border-white/20 transition-colors">
+                              <h5 className="text-white font-mono font-bold text-sm flex items-start gap-3">
+                                <span className="text-[#258DCD] shrink-0">Q:</span> <span className="pt-0.5">{pregunta}</span>
+                              </h5>
+                              <p className="text-neutral-400 text-sm font-light leading-relaxed pl-6 whitespace-pre-line">
+                                {String(respuesta)}
+                              </p>
+                            </div>
+                          ))
+                        ) : (
+                          <div className="space-y-3">
+                            <div className="bg-[#050508] p-5 rounded-2xl border border-white/5 space-y-2">
+                              <h5 className="text-white font-mono font-bold text-sm flex items-start gap-3"><span className="text-[#258DCD]">Q:</span>¿Qué incluye la contratación?</h5>
+                              <p className="text-neutral-400 text-sm font-light pl-6">Servicio homologado, rider técnico y seguro RC 1.000.000 €.</p>
+                            </div>
                           </div>
                         )}
                       </div>
-                    </div>
-                  )}
+                    )}
 
-                  {/* PESTAÑA 2: FAQS */}
-                  {modalTab === 'faqs' && (
-                    <div className="grid grid-cols-1 gap-3 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
-                      {modalFaqs && Object.keys(modalFaqs).length > 0 ? (
-                        Object.entries(modalFaqs).map(([pregunta, respuesta], qIdx) => (
-                          <div key={qIdx} className="bg-[#050508] p-5 rounded-2xl border border-white/5 space-y-2 group hover:border-white/20 transition-colors">
-                            <h5 className="text-white font-mono font-bold text-sm flex items-start gap-3">
-                              <span className="text-[#258DCD] shrink-0">Q:</span> <span className="pt-0.5">{pregunta}</span>
-                            </h5>
-                            <p className="text-neutral-400 text-sm font-light leading-relaxed pl-6 whitespace-pre-line">
-                              {String(respuesta)}
-                            </p>
+                    {/* PESTAÑA 3: PACKS */}
+                    {modalTab === 'services' && (
+                      <PremiumPacksCarousel
+                        providerSlug={String(activeModalProvider.slug || activeModalProvider.id)}
+                        providerName={activeModalProvider.name}
+                        basePrice={activeModalProvider.basePrice || (activeModalProvider.price ? parseFloat(String(activeModalProvider.price).replace(/[^\d.-]/g, '')) : undefined) || TARIFA_ESTANDAR_SOLISTA_EUR}
+                        servicesList={activeModalProvider.services_list || []}
+                      />
+                    )}
+
+                    {/* PESTAÑA 4: GARANTÍA */}
+                    {modalTab === 'garantia' && (
+                      <div className="space-y-4">
+                        <div className="bg-[#050508] p-6 rounded-3xl border border-[#ecb613]/20 shadow-[0_0_30px_rgba(236,182,19,0.05)] relative overflow-hidden">
+                          <div className="absolute top-0 right-0 p-8 opacity-10">
+                            <ShieldCheck size={120} className="text-[#ecb613]" />
                           </div>
-                        ))
-                      ) : (
-                        <div className="space-y-3">
-                          <div className="bg-[#050508] p-5 rounded-2xl border border-white/5 space-y-2">
-                            <h5 className="text-white font-mono font-bold text-sm flex items-start gap-3"><span className="text-[#258DCD]">Q:</span>¿Qué incluye la contratación?</h5>
-                            <p className="text-neutral-400 text-sm font-light pl-6">Servicio homologado, rider técnico y seguro RC 1.000.000 €.</p>
-                          </div>
+                          <h4 className="text-sm font-bold text-[#ecb613] uppercase tracking-widest font-mono mb-4 relative z-10">
+                            Protocolo Inmutable S-Class
+                          </h4>
+                          <ul className="space-y-4 text-sm font-light text-neutral-300 relative z-10">
+                            <li className="flex items-start gap-3"><Zap className="text-[#ecb613] shrink-0 mt-0.5" size={18} /> <span><strong>Split Soberano 80/10/10:</strong> Transparencia total en el flujo de capital. Sin cuotas de directorio.</span></li>
+                            <li className="flex items-start gap-3"><ShieldCheck className="text-[#ecb613] shrink-0 mt-0.5" size={18} /> <span><strong>Seguro RC 1.000.000 €:</strong> Protección total ante cualquier contingencia en el evento.</span></li>
+                            <li className="flex items-start gap-3"><Lock className="text-[#ecb613] shrink-0 mt-0.5" size={18} /> <span><strong>Price-Lock SHA-256:</strong> Depósito de 100€ intocable para blindar la fecha.</span></li>
+                          </ul>
                         </div>
-                      )}
-                    </div>
-                  )}
-
-                  {/* PESTAÑA 3: PACKS */}
-                  {modalTab === 'services' && (
-                    <PremiumPacksCarousel
-                      providerSlug={String(activeModalProvider.slug || activeModalProvider.id)}
-                      providerName={activeModalProvider.name}
-                      basePrice={activeModalProvider.basePrice || (activeModalProvider.price ? parseFloat(String(activeModalProvider.price).replace(/[^\d.-]/g, '')) : undefined) || TARIFA_ESTANDAR_SOLISTA_EUR}
-                      servicesList={activeModalProvider.services_list || []}
-                    />
-                  )}
-
-                  {/* PESTAÑA 4: GARANTÍA */}
-                  {modalTab === 'garantia' && (
-                    <div className="space-y-4">
-                      <div className="bg-[#050508] p-6 rounded-3xl border border-[#ecb613]/20 shadow-[0_0_30px_rgba(236,182,19,0.05)] relative overflow-hidden">
-                        <div className="absolute top-0 right-0 p-8 opacity-10">
-                          <ShieldCheck size={120} className="text-[#ecb613]" />
-                        </div>
-                        <h4 className="text-sm font-bold text-[#ecb613] uppercase tracking-widest font-mono mb-4 relative z-10">
-                          Protocolo Inmutable S-Class
-                        </h4>
-                        <ul className="space-y-4 text-sm font-light text-neutral-300 relative z-10">
-                          <li className="flex items-start gap-3"><Zap className="text-[#ecb613] shrink-0 mt-0.5" size={18} /> <span><strong>Split Soberano 80/10/10:</strong> Transparencia total en el flujo de capital. Sin cuotas de directorio.</span></li>
-                          <li className="flex items-start gap-3"><ShieldCheck className="text-[#ecb613] shrink-0 mt-0.5" size={18} /> <span><strong>Seguro RC 1.000.000 €:</strong> Protección total ante cualquier contingencia en el evento.</span></li>
-                          <li className="flex items-start gap-3"><Lock className="text-[#ecb613] shrink-0 mt-0.5" size={18} /> <span><strong>Price-Lock SHA-256:</strong> Depósito de 100€ intocable para blindar la fecha.</span></li>
-                        </ul>
                       </div>
-                    </div>
-                  )}
-                </motion.div>
-              </AnimatePresence>
+                    )}
+                  </motion.div>
+                </AnimatePresence>
 
-              {/* Acciones y Cierre */}
-              <div className="pt-6 mt-6 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-6">
-                <div>
-                  <span className="text-[10px] text-neutral-500 uppercase font-mono tracking-widest block mb-1">Cierre Automático S-Class</span>
-                  <span className="text-3xl font-black text-white font-mono tracking-tighter">
-                    {typeof activeModalProvider.basePrice === 'number' && activeModalProvider.basePrice > 0
-                      ? `${activeModalProvider.basePrice} €`
-                      : (activeModalProvider.price ? String(activeModalProvider.price) : 'Consultar')}
-                  </span>
-                </div>
+                {/* Acciones y Cierre */}
+                <div className="pt-6 mt-6 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-6">
+                  <div>
+                    <span className="text-[10px] text-neutral-500 uppercase font-mono tracking-widest block mb-1">Cierre Automático S-Class</span>
+                    <span className="text-3xl font-black text-white font-mono tracking-tighter">
+                      {typeof activeModalProvider.basePrice === 'number' && activeModalProvider.basePrice > 0
+                        ? `${activeModalProvider.basePrice} €`
+                        : (activeModalProvider.price ? String(activeModalProvider.price) : 'Consultar')}
+                    </span>
+                  </div>
 
-                <div className="flex flex-wrap gap-2.5 w-full sm:w-auto font-mono text-xs sm:text-sm">
-                  {(() => {
-                    const directPhone = activeModalProvider.phone || activeModalProvider.telephone;
-                    const hasDirect = Boolean(directPhone) && activeModalProvider.has_real_phone === true;
-                    const originUrl = activeModalProvider.profile_url || activeModalProvider.sourceUrl;
-                    
-                    if (hasDirect) {
+                  <div className="flex flex-wrap gap-2.5 w-full sm:w-auto font-mono text-xs sm:text-sm">
+                    {(() => {
+                      const directPhone = activeModalProvider.phone || activeModalProvider.telephone;
+                      const hasDirect = Boolean(directPhone) && activeModalProvider.has_real_phone === true;
+                      const originUrl = activeModalProvider.profile_url || activeModalProvider.sourceUrl;
+
+                      if (hasDirect) {
+                        return (
+                          <>
+                            <SovereignWhatsAppButton
+                              url={makeCentralitaWaLink(activeModalProvider.name, activeModalProvider.category, activeModalProvider.province)}
+                              providerName={activeModalProvider.name}
+                              category={activeModalProvider.category || 'Proveedor Homologado'}
+                              className="px-4 py-3 sm:px-5 sm:py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all shadow-md"
+                            >
+                              <MessageCircle size={15} />
+                              <span>Coordinar vía Centralita VIP</span>
+                            </SovereignWhatsAppButton>
+                            <SovereignWhatsAppButton
+                              url={makeCentralitaWaLink(activeModalProvider.name, activeModalProvider.category, activeModalProvider.province)}
+                              providerName={activeModalProvider.name}
+                              category={activeModalProvider.category || 'Proveedor Homologado'}
+                              className="px-4 py-3 sm:px-5 sm:py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-[#ecb613] hover:text-white font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all border border-[#ecb613]/40"
+                            >
+                              <PhoneCall size={14} />
+                              <span>Centralita EAR VIP</span>
+                            </SovereignWhatsAppButton>
+                          </>
+                        );
+                      }
                       return (
                         <>
                           <SovereignWhatsAppButton
-      url={makeCentralitaWaLink(activeModalProvider.name, activeModalProvider.category, activeModalProvider.province)}
-      providerName={activeModalProvider.name}
-      category={activeModalProvider.category || 'Proveedor Homologado'}
-      className="px-4 py-3 sm:px-5 sm:py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all shadow-md"
-    >
-                            <MessageCircle size={15} />
-                            <span>Coordinar vía Centralita VIP</span>
-                          </SovereignWhatsAppButton>
-                          <SovereignWhatsAppButton
-      url={makeCentralitaWaLink(activeModalProvider.name, activeModalProvider.category, activeModalProvider.province)}
-      providerName={activeModalProvider.name}
-      category={activeModalProvider.category || 'Proveedor Homologado'}
-      className="px-4 py-3 sm:px-5 sm:py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-[#ecb613] hover:text-white font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all border border-[#ecb613]/40"
-    >
+                            url={makeCentralitaWaLink(activeModalProvider.name, activeModalProvider.category, activeModalProvider.province)}
+                            providerName={activeModalProvider.name}
+                            category={activeModalProvider.category || 'Proveedor Homologado'}
+                            className="px-4 py-3 sm:px-5 sm:py-3.5 rounded-xl bg-gradient-to-r from-[#E61E4D] to-[#D70466] text-white font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all shadow-md"
+                          >
                             <PhoneCall size={14} />
-                            <span>Centralita EAR VIP</span>
+                            <span>Localizar vía Centralita</span>
                           </SovereignWhatsAppButton>
+                          <a
+                            href={`/proveedores/${encodeURIComponent(String(activeModalProvider.slug || activeModalProvider.id))}#contacto`}
+                            className="px-3.5 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all"
+                          >
+                            <span>🔓 Desbloquear contacto</span>
+                          </a>
+                          <a
+                            href={`/proveedores/${encodeURIComponent(String(activeModalProvider.slug || activeModalProvider.id))}`}
+                            className="px-3.5 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-white font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all border border-white/10"
+                          >
+                            <span>🌐 Ver Ficha Homologada</span>
+                          </a>
                         </>
                       );
-                    }
-                    return (
-                      <>
-                        <SovereignWhatsAppButton
-      url={makeCentralitaWaLink(activeModalProvider.name, activeModalProvider.category, activeModalProvider.province)}
-      providerName={activeModalProvider.name}
-      category={activeModalProvider.category || 'Proveedor Homologado'}
-      className="px-4 py-3 sm:px-5 sm:py-3.5 rounded-xl bg-gradient-to-r from-[#E61E4D] to-[#D70466] text-white font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all shadow-md"
-    >
-                          <PhoneCall size={14} />
-                          <span>Localizar vía Centralita</span>
-                        </SovereignWhatsAppButton>
-                        <a
-                          href={`/proveedores/${encodeURIComponent(String(activeModalProvider.slug || activeModalProvider.id))}#contacto`}
-                          className="px-3.5 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all"
-                        >
-                          <span>🔓 Desbloquear contacto</span>
-                        </a>
-                        <a
-                          href={originUrl || `/reclamar-perfil?name=${encodeURIComponent(activeModalProvider.name)}`}
-                          target={originUrl ? '_blank' : undefined}
-                          rel={originUrl ? 'noopener noreferrer' : undefined}
-                          className="px-3.5 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-white font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all border border-white/10"
-                        >
-                          <span>🌐 Ficha</span>
-                        </a>
-                      </>
-                    );
-                  })()}
+                    })()}
 
-                  <Link
-                    href={buildEntityCalendarHref(
-                      inferCalendarKindFromCategory(activeModalProvider.category),
-                      activeModalProvider.slug || String(activeModalProvider.id),
-                      { intent: 'bloquear' },
-                    )}
-                    className="px-8 py-4 rounded-2xl bg-white hover:bg-neutral-200 text-black font-black uppercase tracking-widest flex items-center justify-center gap-2 transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:scale-105"
-                  >
-                    <Lock size={16} />
-                    <span>Ver agenda · Bloquear {DEPOSITO_STRIPE_EUR} €</span>
-                  </Link>
+                    <Link
+                      href={buildEntityCalendarHref(
+                        inferCalendarKindFromCategory(activeModalProvider.category),
+                        activeModalProvider.slug || String(activeModalProvider.id),
+                        { intent: 'bloquear' },
+                      )}
+                      className="px-8 py-4 rounded-2xl bg-white hover:bg-neutral-200 text-black font-black uppercase tracking-widest flex items-center justify-center gap-2 transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:scale-105"
+                    >
+                      <Lock size={16} />
+                      <span>Ver agenda · Bloquear {DEPOSITO_STRIPE_EUR} €</span>
+                    </Link>
+                  </div>
                 </div>
-              </div>
+              </motion.div>
             </motion.div>
-          </motion.div>
-        )}
+          )}
         </AnimatePresence>
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1536,8 +1576,8 @@ function ProveedoresDirectoryContent() {
             <span className="font-bold uppercase tracking-wider">Directorio Profesional Homologado • Marco Legal y Transparencia</span>
           </div>
           <p className="text-neutral-200 leading-relaxed font-sans text-[11px]">
-            Productora EAR opera como directorio público profesional y plataforma de intermediación tecnológica al amparo del 
-            <strong> Art. 6.1.f del RGPD</strong> y el régimen de Safe Harbor del <strong>Art. 16 de la Ley 34/2002 (LSSI-CE)</strong>. 
+            Productora EAR opera como directorio público profesional y plataforma de intermediación tecnológica al amparo del
+            <strong> Art. 6.1.f del RGPD</strong> y el régimen de Safe Harbor del <strong>Art. 16 de la Ley 34/2002 (LSSI-CE)</strong>.
             Los datos comerciales mostrados proceden de fuentes públicas profesionales y tienen como único fin la dinamización de eventos y la derivación de clientes bajo el protocolo soberano <strong>Split 80/10/10</strong> y depósito de 100 € en Stripe Price-Lock.
           </p>
           <div className="flex flex-wrap items-center gap-4 text-[10px] text-neutral-300 font-medium pt-2 border-t border-neutral-800">

@@ -28,7 +28,11 @@ for (const cmd of gates) {
   console.log('[RUN] ' + cmd);
   log += `\n=== ${cmd} ===\n`;
   try {
-    const out = execSync(cmd, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
+    const out = execSync(cmd, {
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'pipe'],
+      env: { ...process.env, NODE_OPTIONS: '--max-old-space-size=6144' }
+    });
     log += out + '\nEXIT_CODE=0\n';
     console.log('  -> PASS (Exit 0)');
   } catch (err) {

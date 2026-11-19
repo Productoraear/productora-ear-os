@@ -160,3 +160,113 @@ export function contactLabelForAccess(access: ContactAccess): string {
       return access.canRevealPhone ? 'Contacto desbloqueado' : 'Contacto protegido';
   }
 }
+
+/**
+ * ════════════════════════════════════════════════════════════════════════════
+ * DOCTRINA DE IDENTIDAD PROTEGIDA (CERO TRABAJO GRATIS / ANTI-PICARESCA)
+ * ════════════════════════════════════════════════════════════════════════════
+ * Ningún usuario público que no haya pagado el desbloqueo (1,00 € deducible)
+ * ni reservado con depósito (100 € Stripe Price-Lock) puede ver el nombre
+ * comercial real de un proveedor no reclamado (`DIRECTORY_UNCLAIMED`), para
+ * impedir que el cliente obtenga gratis el resultado del encaje quirúrgico
+ * y busque al proveedor fuera de EAR OS.
+ *
+ * Excepciones que SÍ muestran su marca real abiertamente:
+ *  · `SOVEREIGN` (Productora EAR · Edwin Agudelo y agrupaciones propias)
+ *  · `PAYING_CLIENT` / `CLAIMED` / `isPreferred` (Restaurante Otzarreta /
+ *    Ezkertza Berria • Eduardo Martínez y miembros de pago activos)
+ *  · `paidUnlock === true` (el cliente abonó el desbloqueo de contacto)
+ * ════════════════════════════════════════════════════════════════════════════
+ */
+export interface ProviderIdentityGateInput {
+  readonly id?: string | number | null;
+  readonly slug?: string | null;
+  readonly name?: string | null;
+  readonly category?: string | null;
+  readonly province?: string | null;
+  readonly municipality?: string | null;
+  readonly isClaimed?: boolean | null;
+  readonly isPreferred?: boolean | null;
+  readonly tier?: ProviderContactTier | string | null;
+  readonly paidUnlock?: boolean | null;
+}
+
+const CATEGORY_DISPLAY_LABELS: Readonly<Record<string, string>> = Object.freeze({
+  finca: 'Finca & Espacio Singular',
+  catering: 'Alta Gastronomía & Banquetes',
+  musica: 'Artista & Música en Directo',
+  sonido: 'Ingeniería Acústica & Sonido',
+  foto: 'Fotografía & Cine Nupcial',
+  decoracion: 'Arte Floral & Decoración',
+  wedding: 'Wedding Planner & Protocolo',
+  moda: 'Atelier & Moda Nupcial',
+  transporte: 'Flota & Vehículos de Gala',
+  servicios: 'Producción & Servicios de Evento',
+  senior_care: 'Centro Senior VIMUME',
+});
+
+export function isSovereignOrPayingBrand(input: ProviderIdentityGateInput): boolean {
+  if (input.paidUnlock === true) return true;
+  if (input.tier === 'SOVEREIGN' || input.tier === 'PAYING_CLIENT' || input.tier === 'CLAIMED') {
+    return true;
+  }
+  if (input.isClaimed === true || input.isPreferred === true) return true;
+
+  const rawId = String(input.id ?? '').toLowerCase();
+  const rawSlug = String(input.slug ?? '').toLowerCase();
+  const rawName = String(input.name ?? '').toLowerCase();
+
+  // Pacientes Cero y Alianzas Soberanas S-Class
+  if (
+    rawId === 'v-32714' ||
+    rawId === 'prov-ear-sovereign-01' ||
+    rawId === 'e78903' ||
+    rawSlug.includes('edwin-agudelo') ||
+    rawSlug.includes('otzarreta') ||
+    rawSlug.includes('ezkertza') ||
+    rawSlug.includes('eduardo-martinez') ||
+    rawName.includes('edwin agudelo') ||
+    rawName.includes('otzarreta') ||
+    rawName.includes('ezkertza') ||
+    rawName.includes('eduardo martínez') ||
+    rawName.includes('eduardo martinez') ||
+    rawName.includes('productora ear')
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+export function formatProtectedProviderCode(idOrSlug: string | number | null | undefined, fallbackName?: string | null): string {
+  const raw = String(idOrSlug || fallbackName || 'EAR').replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+  if (raw.length >= 6) return raw.slice(-6);
+  return raw.padEnd(6, '0');
+}
+
+export function resolvePublicProviderDisplayName(input: ProviderIdentityGateInput): string {
+  const cleanRealName = String(input.name ?? '').trim();
+  if (isSovereignOrPayingBrand(input) && cleanRealName.length > 0 && !cleanRealName.toLowerCase().startsWith('prov-')) {
+    return cleanRealName;
+  }
+
+  const catKey = String(input.category ?? '').toLowerCase().trim();
+  const catLabel = CATEGORY_DISPLAY_LABELS[catKey] || (input.category ? String(input.category).toUpperCase() : 'Proveedor Homologado');
+  const loc = String(input.municipality || input.province || 'España').split(',')[0].trim() || 'España';
+  const code = formatProtectedProviderCode(input.id ?? input.slug, cleanRealName);
+
+  return `Proveedor Homologado S-Class #${code} · ${catLabel} (${loc})`;
+}
+
+/**
+ * Elimina o neutraliza cualquier enlace HTML saliente hacia portales de origen
+ * externos (p. ej. bodas.net, zankyou, celebrents) conservando el 100 % del
+ * texto, estructura HTML, descripciones, menús y promociones.
+ */
+export function stripOriginLinksFromHtml(html: string | null | undefined): string {
+  if (!html || typeof html !== 'string') return '';
+  return html
+    .replace(/<a\b[^>]*href=["'][^"']*(?:bodas\.net|zankyou\.|celebrents\.|matrimonio\.com|weddingwire\.)[^"']*["'][^>]*>([\s\S]*?)<\/a>/gi, '<span>$1</span>')
+    .replace(/https?:\/\/(?:www\.)?(?:cdn\d*\.)?bodas\.net\/[^\s"'<>)]+/gi, '#ficha-homologada-ear');
+}
+

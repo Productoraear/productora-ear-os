@@ -6,10 +6,15 @@ import { updateProviderAction, deleteProviderAction, createProviderAction } from
 
 interface ProviderItem {
   id: string;
+  slug?: string;
   name: string;
   category: string;
   province: string;
   telephone?: string | null;
+  phone?: string | null;
+  originHtml?: string | null;
+  imageUrls?: string[];
+  gallery?: string[];
   status: string;
 }
 
@@ -156,8 +161,10 @@ export function ProvidersAdminTable({ providers, onRefresh, onOpenProfile }: Pro
               filteredProviders.map(p => (
                 <tr key={p.id} className="hover:bg-white/[0.02] transition-colors">
                   <td className="px-4 py-3">
-                    <div className="font-bold text-white max-w-[200px] truncate">{p.name}</div>
-                    <div className="text-[10px] text-zinc-500">{p.id.split('-')[0] || p.id}</div>
+                    <div className="font-bold text-white max-w-[220px] truncate">{p.name}</div>
+                    <div className="text-[10px] text-zinc-500">
+                      {p.id.split('-')[0] || p.id} · <span className="text-emerald-400/80">{p.originHtml || `${p.slug || p.id}.html`}</span> ({p.imageUrls?.length || p.gallery?.length || 1} fotos)
+                    </div>
                   </td>
                   <td className="px-4 py-3 text-zinc-300">
                     <span className="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-[10px]">
@@ -166,7 +173,7 @@ export function ProvidersAdminTable({ providers, onRefresh, onOpenProfile }: Pro
                   </td>
                   <td className="px-4 py-3">
                     <div className="text-zinc-300">{p.province}</div>
-                    <div className="text-[10px] text-zinc-500">{p.telephone || 'Sin teléfono'}</div>
+                    <div className="text-[10px] text-zinc-500">{p.telephone || p.phone || 'Centralita (+34 693 693 048)'}</div>
                   </td>
                   <td className="px-4 py-3">
                     {p.status === 'VERIFIED_ACTIVE' ? (

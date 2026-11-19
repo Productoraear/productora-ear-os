@@ -59,13 +59,18 @@ interface ProviderItem {
   category: string;
   province?: string;
   city?: string;
+  municipality?: string;
   phone?: string;
+  telephone?: string;
   price?: number | string;
   rating?: number;
   reviewsCount?: number;
   imageUrls?: string[];
+  gallery?: string[];
   description?: string;
   verified?: boolean;
+  originHtml?: string | null;
+  sourceUrl?: string | null;
 }
 
 interface ProvidersApiResponse {
@@ -443,9 +448,9 @@ function ProveedoresSyncContent(): React.ReactElement {
           No se encontraron nodos para los filtros aplicados.
         </div>
       ) : viewMode === 'table' ? (
-        <ProvidersAdminTable 
-          providers={providers as any} 
-          onRefresh={() => void fetchProviders()} 
+        <ProvidersAdminTable
+          providers={providers as any}
+          onRefresh={() => void fetchProviders()}
           onOpenProfile={openProviderProfile}
         />
       ) : (
@@ -569,7 +574,19 @@ function ProveedoresSyncContent(): React.ReactElement {
                 </div>
                 <div className="p-3 rounded-xl bg-black/50 border border-white/5">
                   <span className="text-zinc-500 text-[10px] block">UBICACIÓN</span>
-                  <span className="text-white font-bold">{selectedProvider.city || selectedProvider.province || 'Nacional'}</span>
+                  <span className="text-white font-bold">{selectedProvider.city || selectedProvider.municipality || selectedProvider.province || 'Nacional'}</span>
+                </div>
+                <div className="p-3 rounded-xl bg-black/50 border border-white/5">
+                  <span className="text-zinc-500 text-[10px] block">HTML DE ORIGEN &amp; MEDIA</span>
+                  <span className="text-emerald-400 font-bold truncate block">
+                    {selectedProvider.originHtml || `${toProviderSlug(selectedProvider.slug ?? selectedProvider.id, selectedProvider.name)}.html`} · {(selectedProvider.imageUrls?.length || selectedProvider.gallery?.length || 1)} fotos
+                  </span>
+                </div>
+                <div className="p-3 rounded-xl bg-black/50 border border-white/5">
+                  <span className="text-zinc-500 text-[10px] block">CONTACTO DIRECTO</span>
+                  <span className="text-[#ecb613] font-bold">
+                    {selectedProvider.phone || selectedProvider.telephone || 'Centralita (+34 693 693 048)'}
+                  </span>
                 </div>
               </div>
             </div>

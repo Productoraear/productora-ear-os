@@ -139,10 +139,10 @@ export const DOORS: Readonly<Record<DoorId, DoorDef>> = Object.freeze({
     id: 'celebraciones',
     href: '/celebraciones',
     title: 'Celebraciones privadas y restauración',
-    subtitle: 'Gastronomía, música y calma para su día.',
+    subtitle: 'Gastronomía, música y calma para su día en las 52 provincias.',
     cta: 'Preparar mi celebración',
     points: [
-      'Restaurante Otzarreta, Derio (Bizkaia)',
+      'Fincas, caseríos y asadores homologados por provincia',
       'Organizador digital de mesas y menús oficiales',
       'Reserva con fianza deducible',
     ],
