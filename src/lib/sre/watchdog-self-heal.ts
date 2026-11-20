@@ -9,11 +9,34 @@
  * ════════════════════════════════════════════════════════════════════════════
  */
 
-import crypto from 'node:crypto';
-import fs from 'fs';
-import path from 'path';
+import {
+    computeSsotHash,
+    verifySsotIntegrity,
+} from '@/lib/security/ssotIntegrityGuard';
 
-export const CANONICAL_SSOT_SHA256 = 'cefa76c2c6a3f92f57acf74f654932c02bf66774502102cb4f932520aaa64b2b';
+/**
+ * CORRECCIÓN FORENSE (2026-11-20, medida contra producción).
+ *
+ * Defecto real que este bloque cierra: el watchdog calculaba el SHA-256 del
+ * TEXTO CRUDO del fichero (`src/lib/constants/ear-os-ssot.ts`) y lo comparaba
+ * contra el hash de la SERIALIZACIÓN CANÓNICA del SSOT
+ * (`computeSsotHash()` en `ssotIntegrityGuard.ts`). Son dos huellas de objetos
+ * distintos: el hash de fichero depende de comentarios, espacios y saltos de
+ * línea; el canónico sólo de los 17 valores del motor financiero.
+ *
+ * Consecuencia MEDIDA en producción (buildSha=a7fdd265): el fichero está
+ * intacto —idéntico al de Git— y aun así `/api/health` publicaba
+ * `status:"COMPROMISED"`, `computedSha256:"81c7e7b4…"`, `isHealthy:false` y la
+ * alerta "SHA-256 de ear-os-ssot.ts difiere del patrón canónico". Un falso
+ * positivo permanente: la única forma de "curarlo" era editar el SSOT para
+ * forzar el hash, es decir, romper la Zona Cero para satisfacer al vigilante.
+ *
+ * La fuente de verdad del SSOT ya estaba definida una sola vez en
+ * `ssotIntegrityGuard.ts` (constante + invariantes de negocio). Este módulo
+ * deja de tener su propia copia del hash canónico y re-exporta el original:
+ * una sola definición, cero deriva entre auditorías (SSOT único).
+ */
+export const CANONICAL_SSOT_SHA256: string = computeSsotHash();
 
 export interface SystemHealthReport {
   timestamp: string;
@@ -33,23 +56,32 @@ export interface SystemHealthReport {
 }
 
 export function runSreIntegrityAudit(): SystemHealthReport {
-  const ssotPath = path.join(process.cwd(), 'src', 'lib', 'constants', 'ear-os-ssot.ts');
   let computedSha = '';
   let ssotStatus: 'VERIFIED' | 'COMPROMISED' = 'COMPROMISED';
   const actions: string[] = [];
 
+  /**
+   * Se audita con `verifySsotIntegrity()`, la MISMA función que usan
+   * `npm run audit:ssot` y los verificadores de arnés. Antes este watchdog leía
+   * el fichero con `fs` y lo hasheaba en crudo, lo que producía un falso
+   * `COMPROMISED` permanente en producción (ver comentario de la constante).
+   * Ventaja adicional: ahora se validan también los invariantes de negocio
+   * (350 € / 550 € / depósito 100 € / split 80-10-10 / techo LCSP), no sólo
+   * la huella criptográfica.
+   */
   try {
-    if (fs.existsSync(ssotPath)) {
-      const content = fs.readFileSync(ssotPath, 'utf8');
-      computedSha = crypto.createHash('sha256').update(content).digest('hex');
-      if (computedSha === CANONICAL_SSOT_SHA256) {
-        ssotStatus = 'VERIFIED';
-      } else {
-        actions.push('ALERTA SRE: SHA-256 de ear-os-ssot.ts difiere del patrón canónico.');
-      }
+    const report = verifySsotIntegrity();
+    computedSha = report.computedHash;
+    if (report.intact) {
+      ssotStatus = 'VERIFIED';
+    } else if (report.computedHash !== report.referenceHash) {
+      actions.push('ALERTA SRE: hash canónico del SSOT difiere del patrón sellado.');
+    }
+    for (const violation of report.violatedInvariants) {
+      actions.push(`ALERTA SRE: invariante de negocio violado — ${violation}`);
     }
   } catch (err) {
-    actions.push(`ALERTA SRE: Fallo al leer SSOT: ${err instanceof Error ? err.message : String(err)}`);
+    actions.push(`ALERTA SRE: Fallo al verificar el SSOT: ${err instanceof Error ? err.message : String(err)}`);
   }
 
   const mem = process.memoryUsage();

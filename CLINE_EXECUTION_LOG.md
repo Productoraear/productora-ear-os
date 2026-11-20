@@ -1,3 +1,53 @@
+## [OMEGA-CLOSE] 2026-11-20 · SRE_SSOT_WATCHDOG_FALSE_COMPROMISED (P0 producción)
+
+1) **CAMBIO**: `src/lib/sre/watchdog-self-heal.ts` deja de hashear el *texto crudo* de
+   `ear-os-ssot.ts` (`crypto.createHash` + `fs.readFileSync`) y pasa a auditar con
+   `verifySsotIntegrity()` — el mismo verificador de `npm run audit:ssot`. `CANONICAL_SSOT_SHA256`
+   se deriva de `computeSsotHash()` en vez de duplicar la constante: una sola definición del hash
+   canónico en todo el repo (de 2 copias a 1).
+
+2) **RIESGO QUE DESAPARECE**: falso `COMPROMISED` permanente en producción. Medido en vivo contra
+   `https://www.productoraear.com/api/health` (buildSha=a7fdd265):
+   `ssotIntegrity.status="COMPROMISED"`, `computedSha256=81c7e7b4…`, `isHealthy:false`.
+   Causa raíz: el fichero del SSOT estaba **intacto** (blob de Git `2cc8ce70`, idéntico entre
+   `a7fdd265` y `HEAD`) y su SHA-256 de fichero es `81c7e7b4…`, pero se comparaba contra el hash de
+   la **serialización canónica** (`cefa76c2…`). Dos huellas de objetos distintos. La única forma de
+   "curar" el falso positivo era editar el SSOT para forzar el hash → romper la Zona Cero para
+   satisfacer al vigilante. Además ahora se validan los invariantes de negocio, no solo la huella.
+
+3) **PRUEBA (medida en esta sesión)**:
+   - `node --max-old-space-size=6144 …/tsc --noEmit` → `TYPECHECK_EXIT=0`
+   - `eslint src/lib/sre/watchdog-self-heal.ts` → `LINT_EXIT=0`
+   - `npm run audit:ssot` → `SSOT_EXIT=0`, `coincide: SÍ`, `invariantes: OK`, hash `cefa76c2…b2b`
+   - `node scripts/run_sv_protocol_15_gates.cjs` → `TODAS LAS 17 PUERTAS: EXIT CODE 0`
+   - `npm run audit:omega-rojo` → `OMEGA_ROJO_SCORE=20/20 VERDICT=VERDE`
+   - `gate:prepush` (35 puertas, runner local) → `PREPUSH_TOTAL=35 FALLIDAS=0`
+   - ejecución directa del watchdog → `STATUS=VERIFIED`, `IS_HEALTHY=true`, `ACTIONS=[]`
+   - Zona Cero **intacta**: `src/lib/constants/ear-os-ssot.ts` sin tocar (0 diffs).
+
+4) **NO PROBADO**: el veredicto real en producción requiere desplegar (buildSha nuevo en
+   `/api/health`). Antes del deploy, producción seguirá publicando `COMPROMISED` porque ejecuta la
+   imagen `a7fdd265`.
+
+5) **DECISIÓN**: push a `origin/main` y despliegue en Coolify, validado con
+   `node scripts/prod_deploy_freshness.cjs --expect=<sha>`.
+
+**Premortem (INC-2)**:
+1. ¿Objetivo exacto o primo cosmético? Exacto: el consumidor (`/api/health` → `runSreIntegrityAudit`)
+   se corrige en su raíz, no se silencia la alerta.
+2. ¿Asunciones frágiles? Que `computeSsotHash()` sea determinista entre Node 22-alpine (contenedor)
+   y Node 26 (local); ambos usan el mismo `Number.prototype.toFixed` de V8 y el mismo orden de
+   claves cableado a mano — no depende de `Object.keys` del objeto original.
+3. ¿Alternativa descartada? Leer el fichero y hashear con normalización LF; descartada porque
+   cualquier reformateo del SSOT (comentario, salto de línea) volvería a disparar el falso positivo,
+   y una regla de integridad que se rompe al documentar el código no es una regla: es una trampa.
+4. ¿Qué se rompe bajo carga? Nada nuevo: `verifySsotIntegrity()` es puro cálculo en memoria (17
+   valores, un `sha256`), no toca disco ni red. Antes se hacía un `readFileSync` por request en
+   `/api/health`; ahora hay **menos** I/O.
+5. ¿Consecuencia al firmar? Si alguien altera un valor del SSOT, el watchdog lo detecta (hash +
+   invariante). Si añade un comentario, ya no da falso positivo. Acepto el commit.
+
+
 ﻿## [2026-11-20T17:15:00.000Z] Â· METACOMPILADOR S-CLASS: FSM DETERMINISTA, MCP LOCAL JSON-RPC Y TERMINAL OLED EN /admin/compiler
 
 **estado_bloque: `VERIFICADO`** (75/75 aserciones propias Â· tsc Exit 0 Â· eslint 0 errores Â· audit:ssot Exit 0 con hash `cefa76c2â€¦` intacto).
