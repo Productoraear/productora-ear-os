@@ -1,0 +1,65 @@
+{
+  "verdict": "PASS",
+  "assertions": 130,
+  "passed": 130,
+  "failed": 0,
+  "blocks": [
+    {
+      "block": "A_FSM",
+      "assertions": 19,
+      "failures": []
+    },
+    {
+      "block": "B_PARITY",
+      "assertions": 8,
+      "failures": []
+    },
+    {
+      "block": "C_DETERMINISM",
+      "assertions": 10,
+      "failures": []
+    },
+    {
+      "block": "D_AST",
+      "assertions": 10,
+      "failures": []
+    },
+    {
+      "block": "E_FALSABILITY",
+      "assertions": 10,
+      "failures": []
+    },
+    {
+      "block": "F_IDEMPOTENCE",
+      "assertions": 6,
+      "failures": []
+    },
+    {
+      "block": "G_MCP",
+      "assertions": 12,
+      "failures": []
+    },
+    {
+      "block": "H_MUTATOR",
+      "assertions": 13,
+      "failures": []
+    },
+    {
+      "block": "I_MATRIX",
+      "assertions": 23,
+      "failures": []
+    },
+    {
+      "block": "J_MCP_HTTP",
+      "assertions": 12,
+      "failures": []
+    },
+    {
+      "block": "K_LOYALTY",
+      "assertions": 7,
+      "failures": []
+    }
+  ],
+  "ssotHash": "cefa76c2c6a3f92f57acf74f654932c02bf66774502102cb4f932520aaa64b2b",
+  "checkedAt": "2026-11-20T18:22:00.473Z"
+}

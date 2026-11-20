@@ -32,6 +32,8 @@ import {
   type OracleRefinedResult
 } from '@/lib/oracle/quantum-oracle-engine';
 import type { CompiledDAGResult } from '@/lib/compiler/omega-intent-compiler';
+import { MetaCompilerFsmPanel } from '@/components/admin/MetaCompilerFsmPanel';
+import { MetaCompilerCommandCenter } from '@/components/admin/MetaCompilerCommandCenter';
 import {
   MASTER_OBJECTIVES,
   MASTER_TACTICS,
@@ -979,6 +981,12 @@ export default function MasterCompilerPage() {
           </div>
         </div>
       </div>
+
+      {/* CENTRO DE MANDO SOBERANO (5 conectores · 3 puertas · sello y despliegue) */}
+      <MetaCompilerCommandCenter />
+
+      {/* TERMINAL DE ESTADOS DEL METACOMPILADOR (FSM determinista · zero-token) */}
+      <MetaCompilerFsmPanel />
     </div>
   );
 }
