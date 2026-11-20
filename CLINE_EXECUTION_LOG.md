@@ -4687,6 +4687,60 @@ en vez de contra el techo contractual). Se endureciÃƒÂ³ G23 y se re-midiÃƒ
    pÃƒÂºblica** la quintupla EP-1 se sella `SOSPECHOSO`, nunca `VERIFICADO`.
 
 
+
+---
+
+## [2026-11-20] SKILL DISPATCHER ENGINE · RACK DE CARTUCHOS EJECUTIVOS DEL CEO (`/admin/cockpit`)
+
+**estado_bloque: `VERIFICADO`** (151 aserciones propias · tsc Exit 0 · eslint 0 errores · audit:ssot Exit 0, hash `cefa76c2…` intacto · verify:metacompiler 131/131 PASS).
+
+### 1 · Directiva cubierta
+Vampirización industrial de skills: AGENTS.md (rol) → SKILL.md (procedimiento) →
+herramienta local ejecutable a 0 tokens. Cero dependencias nuevas instaladas.
+
+### 2 · Motores de documento escritos desde cero (`src/lib/skills/`)
+
+| Fichero | Qué escribe de verdad |
+|---|---|
+| `zip-store.ts` | ZIP método STORE con CRC-32 real (tabla IEEE 802.3) y estructura local/central/EOCD. Determinista bit a bit. |
+| `xlsx-writer.ts` | SpreadsheetML real: `[Content_Types].xml`, `_rels`, `workbook.xml`, `styles.xml` con `numFmt` 164 (€) y 165, `sharedStrings`, y una hoja por pestaña con fórmulas `<f>` + valor en caché. |
+| `pdf-writer.ts` | PDF 1.4 con fuentes base-14 WinAnsi (acentos y `€`), paginación A4, tabla `xref` con offsets calculados sobre los bytes reales, `startxref` y `%%EOF`. Sin `/CreationDate` ni `/ID`: determinista. |
+| `money.ts` | Aritmética en **céntimos enteros**. Split Soberano con resto de redondeo asignado al artista y **`reconciled` calculado**, no prometido. IVA bidireccional y formato español. |
+| `skill-contract.ts` / `registry.ts` / `dispatcher.ts` | Contrato tipado, registro único de 4 cartuchos, despachador con default-deny por rol y timeout duro de 10 s (INV-17). |
+
+### 3 · Los 4 cartuchos ejecutables
+
+1. `ceo-liquidation-split` → **.xlsx** con 3 hojas (Liquidación + Reparto 80/10/10 + Auditoría con fórmula `=B11-B12-B13-B14`).
+2. `ceo-lcsp-contract` → **.pdf** B2G/B2C; **aborta** (`ABORTED_BY_POLICY`) si un B2G supera el techo del SSOT.
+3. `ceo-provider-dossier` → **.pdf** con propuesta reconciliada; omite el aforo si el dato no llega (no lo inventa).
+4. `ceo-forensic-audit` → **.md** con hash recalculado en runtime y veredicto **derivado de la sonda**.
+
+### 4 · Superficies
+
+- `src/app/(admin)/admin/cockpit/page.tsx` + `src/components/admin/CeoSkillsRack.tsx` (OLED `#030905`/`#ecb613`, 0 emojis, formularios tipados, descarga autenticada con SHA-256 a la vista).
+- `src/app/api/admin/skills/route.ts`: `GET` catálogo / `GET ?download=` binario / `POST` ejecución. `requireAdmin` primero, Zod estricto, guard de 256 KB.
+- MCP: `list_ceo_skills` + `execute_ceo_skill` sobre JSON-RPC stdio. El binario **nunca** viaja por stdio.
+- Navegación: `Ctrl Soberano → Rack de Cartuchos CEO` (`Crown`, badge `0 TOKENS`).
+
+### 5 · Defecto real encontrado y corregido
+
+El arnés detectó **154 secuencias de mojibake** (`Ã³` en lugar de `ó`) en los 4 cartuchos:
+el fichero se escribió con BOM y doble codificación UTF-8. Sin el arnés, el CEO habría
+descargado un contrato con `clÃ¡usula` en el PDF. Corregido y verificado con volcado de
+codepoints (53 → 0 por fichero).
+
+### 6 · Evidencia
+
+```
+verify:skills   → kernels 28/28 · dispatcher 53/53 · mcp 19/19 · Exit 0
+verify:metacompiler → 131 aserciones PASS (G_MCP pasa de 12 a 13 aserciones)
+audit:ssot      → cefa76c2c6a3f92f57acf74f654932c02bf66774502102cb4f932520aaa64b2b · invariantes OK
+audit:admin-ecosystem → 30 módulos · 31 páginas · 0 violaciones
+audit:admin-vanity     → ok:true
+tsc --noEmit    → Exit 0   ·   eslint → 0 errores
+Inspección EXTERNA (lector ZIP propio + parser xref): 28/28 PASS
+```
+
 ### SIGMA://CLOSE/v1
 
 ```
@@ -5564,6 +5618,53 @@ actualizar Coolify.
 
 
 ---
+
+
+[OMEGA-CLOSE] 2026-11-20 · ROUTE_GATING_AND_HMAC_BRIDGE
+
+1) CAMBIO: Fase 5 completa. `src/middleware.ts` gana la lista blanca
+   `CERTIFIED_PRODUCTION_ROUTES` (9 rutas, L51-61) con reflujo 307 (L137-147)
+   y matching por prefijo SEGMENTADO (L75-83). Fase 4 completada:
+   `src/lib/security/n8nHmacBridge.ts` (firma HMAC-SHA256 sobre
+   `${timestamp}.${rawBody}`, ventana anti-replay 300 s, rotacion de secreto,
+   comparacion en tiempo constante) y `src/app/api/webhooks/n8n-dispatch/route.ts`
+   (default-deny: verifica firma ANTES de JSON.parse; 503 sin secreto).
+2) RIESGO QUE DESAPARECE: (a) ninguna ruta en taller puede responder 404 a
+   cliente o inversor; (b) el endpoint de despacho hacia Telegram VIP y
+   WhatsApp Centralita deja de ser un rele abierto — sin firma valida no
+   despacha, y sin secreto configurado responde 503, nunca 200.
+3) PRUEBA: `npm run verify:route-gating-hmac` = 31/31 PASS Exit 0;
+   `node scripts/run_sv_protocol_15_gates.cjs` = 17/17 Exit Code 0;
+   `npm run audit:ssot` = hash cefa76c2...64b2b coincide, invariantes OK.
+4) NO PROBADO: no se ha sondeado el endpoint contra un n8n real en vuelo
+   (requiere `N8N_DISPATCH_SECRET` en el VPS y `POST` firmado end-to-end).
+   El 200 de entrega real queda SIN_EVIDENCIA hasta el smoke en produccion.
+   La ruta tambien depende de que `/celebraciones` siga certificada para el
+   destino del 307 (si saliera de la lista, el fallback cae a `/`).
+5) DECISION: se descarto un gating por `startsWith` crudo de cada ruta —
+   habria dejado pasar `/presupuesto-oculto`; se exige frontera de segmento.
+   Se descarto 301 en favor de 307 para no cachear como permanente una
+   redireccion que debe caducar cuando la ruta salga del taller.
+   Acepto que el gating es fail-open para `/api`, `/_next`, assets y `/admin`:
+   blindar el escaparate sin romper telemetria ni back-office.
+
+Premortem (5 preguntas):
+  1) Objetivo exacto: SI. La directiva nombraba `CERTIFIED_PRODUCTION_ROUTES`,
+     307 y `/celebraciones` — los tres estan literalmente en disco. Fases 1-3
+     ya existian en el arbol (ServiceOffer L488, LeadDeferredDemand L535,
+     4 cartuchos de skills, 10 herramientas MCP); NO se recrearon.
+  2) Asunciones fragiles: que el middleware corra en Edge (Web Crypto, no
+     Node) — por eso el HMAC vive en la ruta Node, no en el edge; y que n8n
+     firme con el mismo canónico `${timestamp}.${rawBody}`.
+  3) Alternativa descartada: implementar el HMAC dentro de `middleware.ts`.
+     Descartada por runtime: el edge no garantiza `node:crypto`.
+  4) Que se rompería bajo carga: nada nuevo — el gating es O(9) por peticion
+     y no toca red; el HMAC es un digest unico por peticion.
+  5) Consecuencia aceptada: si el CEO anade una ruta de venta y olvida
+     certificarla, redirige a /celebraciones en silencio. Mitigado con el
+     header `x-ear-route-gating` para diagnostico inmediato.
+
+Estado: VERIFICADO (17/17 + 31/31). Sin tocar la ZONA CERO.
 
 
 [OMEGA-CLOSE] 2026-11-20 · METACOMPILER_COMMAND_CENTER_S_CLASS

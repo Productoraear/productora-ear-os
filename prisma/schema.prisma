@@ -351,13 +351,17 @@ model providerProfile {
   claimedAt            DateTime?
 
   // Relaciones (Aislamiento Multi-Tenant & Operaciones)
-  waybills       waybill[]
-  mediaAssets    MediaAsset[]
-  quota          ProviderQuota?
-  packages       ProviderPackage[]
-  technicalRider TechnicalRider?
-  auditLogs      ProviderAuditLog[]
-  calibrator     ProviderCalibration?
+  waybills           waybill[]
+  mediaAssets        MediaAsset[]
+  quota              ProviderQuota?
+  packages           ProviderPackage[]
+  technicalRider     TechnicalRider?
+  auditLogs          ProviderAuditLog[]
+  calibrator         ProviderCalibration?
+  /** Catálogo universal polimórfico (precio/fianza en céntimos + metadata Json). */
+  serviceOffers      ServiceOffer[]
+  /** Libreta relacional de peticiones satélite diferidas hacia esta entidad. */
+  deferredDemands    LeadDeferredDemand[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -457,6 +461,102 @@ model ProviderAuditLog {
   provider providerProfile @relation(fields: [providerId], references: [id], onDelete: Cascade)
 
   @@index([providerId], name: "idx_audit_provider")
+}
+
+// ==================================================
+// 🧬 CATÁLOGO UNIVERSAL POLIMÓRFICO + DEMANDA DIFERIDA (S-CLASS)
+// ==================================================
+// Patrón multi-tenant universal: NO se crea una tabla por gremio (prohibido
+// `Finca`, `DJ`, `Tarta`). Una entidad (`providerProfile`), un catálogo
+// polimórfico (`ServiceOffer`) y una libreta de peticiones satélite
+// (`LeadDeferredDemand`). El gremio se expresa como dato, nunca como esquema.
+//
+// Invariantes:
+//   · El ancla del catálogo es `providerProfile.id` (FK ON DELETE CASCADE):
+//     borrar una entidad NO deja ofertas huérfanas.
+//   · DINERO EN CÉNTIMOS ENTEROS (Int). Cero Float para precios (redondeo
+//     bancario prohibido): 35000 = 350,00 €.
+//   · `metadata` es Json pequeño y polimórfico (aforo, menú, potencia...) con
+//     valores por defecto que Prisma 6 puede migrar (`[]`), nunca volcados.
+//   · `@@unique([providerId, code])` hace idempotente la siembra de ofertas:
+//     N ejecuciones del seed = 1 fila por oferta.
+//
+// Doctrina: `src/lib/mcp/concierge-tools.ts` (herramientas MCP) y
+// `src/lib/concierge/sovereign-script.ts` (guion del Maître) son los únicos
+// consumidores, con `select` quirúrgico (INV-20).
+
+model ServiceOffer {
+  id              String   @id @default(cuid())
+  providerId      String
+  /// Código estable dentro de la entidad (`menu-ezkertza`, `solista-base`).
+  code            String
+  /// Nombre comercial exacto que se pinta en el dossier.
+  name            String
+  /// Gremio lógico de la partida: BASE | MUSIC | GASTRO_EXTRA | PHOTO |
+  /// TRANSPORT | DECORATION. Dato, no tabla.
+  category        String
+  priceInCents    Int
+  /// Fianza comercial ofrecida por la entidad. `null` = no publicada: el techo
+  /// legal del depósito EAR OS se aplica como límite superior al reservar.
+  depositInCents  Int?
+  currency        String   @default("EUR")
+  unitLabel       String?
+  isAnchor        Boolean  @default(false)
+  isActive        Boolean  @default(true)
+  metadata        Json     @default("[]")
+  sortOrder       Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  provider providerProfile @relation(fields: [providerId], references: [id], onDelete: Cascade)
+
+  @@unique([providerId, code], name: "uniq_service_offer_code")
+  @@index([providerId], name: "idx_service_offer_provider")
+  @@index([category], name: "idx_service_offer_category")
+}
+
+/// 🔖 LIBRETA RELACIONAL DE PETICIONES SATÉLITE (VENTA CONCÉNTRICA)
+/// El cliente que pregunta por un servicio ajeno en la ficha de un proveedor
+/// NO se queda sin respuesta ni rompe la conversación: la necesidad se guarda
+/// como DEMANDA DIFERIDA y se repliega tras confirmar el ancla (fianza 100 €).
+///
+/// Invariantes:
+///   · `category` cerrada por `DEFERRED_DEMAND_CATEGORIES`
+///     (`src/lib/concierge/deferred-demand.ts`); SEC-4 en el boundary.
+///   · `status` cerrada por `DEFERRED_DEMAND_STATUSES`: STASHED → PRESENTED →
+///     CONVERTED (o DISMISSED si el cliente la descarta).
+///   · `promptFingerprint` (SHA-256) + `@@unique([sessionId, providerId, category,
+///     promptFingerprint])` ⇒ N turnos pidiendo lo mismo = 1 fila (idempotencia
+///     a nivel de base de datos, no de aplicación).
+///   · CERO PII: `rawPrompt` se redacta con `redactPii` antes de escribir
+///     (emails, DNI/NIE, IBAN). Teléfonos y nombres no llegan aquí.
+///   · `presentedAt` es la prueba de que el agente YA replegó la demanda
+///     (AF-1: sin sello de tiempo no se declara presentada).
+model LeadDeferredDemand {
+  id               String   @id @default(cuid())
+  sessionId        String
+  providerId       String
+  /// MUSIC | GASTRO_EXTRA | PHOTO | TRANSPORT | DECORATION
+  category         String
+  /// Necesidad extraída del turno, ya redactada de PII.
+  rawPrompt        String   @db.Text
+  /// SHA-256 del prompt normalizado: clave de idempotencia con `sessionId`.
+  promptFingerprint String
+  /// STASHED | PRESENTED | CONVERTED | DISMISSED
+  status           String   @default("STASHED")
+  /// Sesión Stripe del ancla que desbloqueó el repliegue (si se conoce).
+  anchorSessionId  String?
+  presentedAt      DateTime?
+  convertedAt      DateTime?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  provider providerProfile @relation(fields: [providerId], references: [id], onDelete: Cascade)
+
+  @@unique([sessionId, providerId, category, promptFingerprint], name: "uniq_deferred_demand_turn")
+  @@index([sessionId], name: "idx_deferred_demand_session")
+  @@index([providerId], name: "idx_deferred_demand_provider")
+  @@index([status], name: "idx_deferred_demand_status")
 }
 
 model workspace {

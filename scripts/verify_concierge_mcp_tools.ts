@@ -8,7 +8,7 @@
  * devuelven las cifras del SSOT y que fallan cuando deben fallar.
  *
  * Qué prueba (y cómo se rompe: Exit 1):
- *   T1 · MANIFEST        · 8 herramientas declaradas, cada una con motor real.
+ *   T1 · MANIFEST        · 10 herramientas declaradas, cada una con motor real.
  *   T2 · TARIFA_SSOT     · la tarifa sale de `ear-os-ssot`, no de literales.
  *   T3 · TARIFA_NO_KM    · sin distancia ⇒ `ok:false`, jamás una estimación.
  *   T4 · SPLIT_10_10     · el Split 80/10/10 suma el 100 % del total.
@@ -95,11 +95,18 @@ function euro(value: number): string {
 
 async function main(): Promise<void> {
   /* ── T1 · MANIFEST ──────────────────────────────────────────────────────── */
+  // 10 herramientas = 8 de motor + 2 de libreta (`stash_deferred_demand`,
+  // `get_stashed_demands`). El número se ancla al manifiesto: si alguien añade
+  // una herramienta sin declararla, el conteo deja de cuadrar.
   const names: readonly string[] = CONCIERGE_TOOL_NAMES;
   const manifestNames: readonly string[] = CONCIERGE_TOOL_MANIFEST.map((tool) => tool.name);
   check(
     'T1_MANIFEST',
-    names.length === 8 && manifestNames.length === 8 && manifestNames.every((name) => names.includes(name)),
+    names.length === 10 &&
+      manifestNames.length === 10 &&
+      manifestNames.every((name) => names.includes(name)) &&
+      manifestNames.includes('stash_deferred_demand') &&
+      manifestNames.includes('get_stashed_demands'),
     `declaradas=${names.length} manifest=${manifestNames.length} [${manifestNames.join(', ')}]`,
   );
 
@@ -308,7 +315,8 @@ async function main(): Promise<void> {
   check(
     'T14_JSONRPC_LOOP',
     listResult !== null &&
-      listResult.tools.length === 8 &&
+      listResult.tools.length === CONCIERGE_TOOL_NAMES.length &&
+      listResult.tools.length === 10 &&
       callResult !== null &&
       callResult.tool === 'split_soberano' &&
       /^[0-9a-f]{64}$/.test(callResult.envelope.evidenceSha256) &&
@@ -318,10 +326,34 @@ async function main(): Promise<void> {
       `badVersion=${'error' in badVersion ? String(badVersion.error.code) : 'SIN_ERROR'}`,
   );
 
-  /* ── T15 · NO_SIDE_EFFECT (nada cobra ni bloquea) ───────────────────────── */
-  const effectFree: boolean = CONCIERGE_TOOL_MANIFEST.every(
+  /* ── T15 · NO_SIDE_EFFECT (el dinero no se mueve sin el terminal) ───────── */
+  // Invariante rectificada al añadir la libreta de demanda diferida: las 8
+  // herramientas de MOTOR siguen sin efecto alguno. La ÚNICA herramienta con
+  // escritura es `stash_deferred_demand`, y su efecto se confina a
+  // `LeadDeferredDemand` (jamás Stripe, jamás agenda, jamás ledger).
+  const moneyTools: readonly string[] = [
+    'tarifa_logistica',
+    'split_soberano',
+    'simular_presupuesto',
+    'auditar_rider_acustico',
+    'verificar_fecha',
+    'expediente_b2g',
+    'consultar_proveedor',
+    'preparar_price_lock',
+  ];
+  const moneyEffectFree: boolean = CONCIERGE_TOOL_MANIFEST.filter((tool) => moneyTools.includes(tool.name)).every(
     (tool) => tool.sideEffects === 'none' || tool.sideEffects === 'read-only',
   );
+  const writers: readonly string[] = CONCIERGE_TOOL_MANIFEST.filter((tool) => tool.sideEffects === 'write').map(
+    (tool) => tool.name,
+  );
+  const stashDescriptor = CONCIERGE_TOOL_MANIFEST.find((tool) => tool.name === 'stash_deferred_demand');
+  const writeConfined: boolean =
+    writers.length === 1 &&
+    writers[0] === 'stash_deferred_demand' &&
+    stashDescriptor !== undefined &&
+    stashDescriptor.engine.includes('deferred-demand') &&
+    !stashDescriptor.engine.toLowerCase().includes('stripe');
   const verificarFecha = await callTool('verificar_fecha', { date: '2026-12-31', timeSlot: '21:00' }, now);
   const verificarOk: boolean =
     verificarFecha.ok === true &&
@@ -329,9 +361,9 @@ async function main(): Promise<void> {
     verificarFecha.result?.envelope.checkedAt === new Date(now).toISOString();
   check(
     'T15_NO_SIDE_EFFECT',
-    effectFree && verificarOk && lock.data.createsStripeSession === false,
-    `manifest_sin_efectos=${effectFree} verificar_fecha_ok=${verificarOk} ` +
-      `price_lock_crea_stripe=${String(lock.data.createsStripeSession)}`,
+    moneyEffectFree && writeConfined && verificarOk && lock.data.createsStripeSession === false,
+    `motor_sin_efectos=${moneyEffectFree} escritura_confinada=${writeConfined} [${writers.join(',')}] ` +
+      `verificar_fecha_ok=${verificarOk} price_lock_crea_stripe=${String(lock.data.createsStripeSession)}`,
   );
 
   /* ── Smoke de política (mascarado + PII) ────────────────────────────────── */

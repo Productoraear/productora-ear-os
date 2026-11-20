@@ -9,6 +9,8 @@ import { generateModelo182Draft } from '@/lib/vimume-mecenazgo-engine';
 import { waitUntil } from '@vercel/functions';
 import { createClient } from '@supabase/supabase-js';
 import { getStripe } from '@/lib/payments';
+import { replenishAfterAnchor } from '@/lib/concierge/deferred-demand';
+import { buildPostConversionScript } from '@/lib/concierge/sovereign-script';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -19,6 +21,14 @@ interface ServiceLine {
   providerId?: string;
   unitPrice?: number;
   providerSplit?: number;
+}
+
+/**
+ * Etiqueta humana de una apertura de repliegue (`1 prioridad`, `3 prioridades`).
+ * Cero cifras inventadas: solo cuenta los registros realmente presentados.
+ */
+function demandCountLabel(count: number): string {
+  return count === 1 ? '1 prioridad' : `${count} prioridades`;
 }
 
 // 🔒 FAIL-CLOSED STRIPE (BLINDAJE SESSION_SECRET P0) — PEREZOSO.
@@ -217,6 +227,71 @@ export async function POST(req: NextRequest) {
               console.warn('[ATOMIC DATE LOCK] Fallo resiliente:', err instanceof Error ? err.message : String(err))
             )
         );
+      }
+
+      // 2ter. REPLIEGUE CONCÉNTRICO (FASE 4): el ancla ya está cobrada, así que
+      // se recupera la libreta de peticiones satélite y se abre el expediente.
+      // Idempotente por diseño: `replenishAfterAnchor` solo promueve STASHED →
+      // PRESENTED, de modo que N reintentos de Stripe producen 1 sola apertura.
+      // El diálogo se encola al orquestador (n8n) con la MISMA clave de
+      // idempotencia que la sesión de Stripe: cero diálogos duplicados.
+      if (metadata.providerId) {
+        const providerId = metadata.providerId;
+        const sessionIdForDemand = metadata.sessionId || session.id;
+
+        const replenishTask = async () => {
+          const replenishment = await replenishAfterAnchor({
+            sessionId: sessionIdForDemand,
+            providerId,
+            anchorSessionId: session.id,
+          });
+          if (!replenishment.ok || replenishment.presented.length === 0) return;
+
+          const provider = await prisma.providerProfile.findUnique({
+            where: { id: providerId },
+            select: { companyName: true, name: true, slug: true },
+          });
+          const providerName =
+            provider?.companyName?.trim() || provider?.name?.trim() || provider?.slug || 'la entidad reservada';
+
+          const dialogue = buildPostConversionScript({
+            providerName,
+            anchorOfferName: null,
+            demands: replenishment.presented.map((demand) => ({
+              category: demand.category,
+              rawPrompt: demand.rawPrompt,
+            })),
+          });
+          if (dialogue === null) return;
+
+          // Trazabilidad comercial en el panel: el esquema real de
+          // `AdminNotification` sólo tiene `message` (+ isRead/timestamp).
+          await prisma.adminNotification.create({
+            data: {
+              message: `${providerName} · ${dialogue}`,
+            },
+          }).catch((err: unknown) =>
+            console.warn('[CONCENTRIC] Aviso admin no persistido:', err instanceof Error ? err.message : String(err)),
+          );
+
+          fireAndForgetN8n('concierge-deferred-demand', {
+            sessionId: sessionIdForDemand,
+            providerId,
+            stripeSessionId: session.id,
+            providerName,
+            dialogue,
+            demands: replenishment.presented.map((demand) => ({
+              id: demand.id,
+              category: demand.category,
+              status: demand.status,
+            })),
+          });
+
+          console.log(
+            `🎯 [CONCENTRIC] Repliegue abierto para ${demandCountLabel(replenishment.presented.length)} · provider=${providerId}`,
+          );
+        };
+        tasks.push(replenishTask());
       }
 
       // 3. FLUJO DE PAGOS B2B/B2G Y PAYOUTS (Transfers)

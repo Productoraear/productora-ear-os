@@ -4,6 +4,7 @@ import {
   Calendar,
   Compass,
   CreditCard,
+  Crown,
   ExternalLink,
   FileText,
   Film,
@@ -312,6 +313,15 @@ export const ADMIN_MASTER_TABS: AdminMasterTab[] = [
     icon: CreditCard,
     badge: DEPOSITO_BADGE,
     subTabs: [
+      {
+        id: 'ceo-cockpit',
+        name: 'Rack de Cartuchos CEO',
+        href: '/admin/cockpit',
+        icon: Crown,
+        badge: '0 TOKENS',
+        description:
+          'Ejecuta liquidaciones, contratos LCSP y dossiers reales (.xlsx/.pdf) con SHA-256, sin llamadas a modelos',
+      },
       {
         id: 'treasury',
         name: '💳 Tesorería & Stripe 100€',

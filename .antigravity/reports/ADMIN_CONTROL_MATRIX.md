@@ -29,6 +29,9 @@
 | automation-config/route.ts | GET+PATCH | SIN GUARD | no | no |
 | cockpit/route.ts | GET | SIN GUARD | no | no |
 | compile-intent/route.ts | POST+GET | requireAdmin | sí | no |
+| compiler/connectors/route.ts | GET+POST | requireAdmin | sí | no |
+| compiler/fsm/route.ts | GET+POST | requireAdmin | sí | no |
+| compiler/seal/route.ts | GET+POST | requireAdmin | sí | no |
 | demand-map/route.ts | GET | requireAdmin | sí | no |
 | dispatch/lock/route.ts | POST+DELETE | SIN GUARD | no | no |
 | dispatch/route.ts | GET | SIN GUARD | no | no |
@@ -44,6 +47,7 @@
 | route-governance/route.ts | GET+POST | requireAdmin | sí | no |
 | sentinel/route.ts | GET+POST | requireAdmin | sí | no |
 | session/route.ts | POST+DELETE+GET | SIN GUARD | no | no |
+| skills/route.ts | GET+POST | requireAdmin | sí | no |
 | sysinfo/route.ts | GET | requireAdmin | sí | no |
 | tasks/inject/route.ts | GET+POST | requireAdmin | sí | no |
 | telemetry/route.ts | GET | requireAdmin | sí | no |
@@ -73,4 +77,4 @@
 | stripeConnectActions.ts | SIN GUARD | sí |
 | vendorAuthActions.ts | SIN GUARD | sí |
 
-**RESUMEN**: 13 enlaces UI→API en /admin/control · 0 fachadas/401 · 32 endpoints mapeados.
+**RESUMEN**: 13 enlaces UI→API en /admin/control · 0 fachadas/401 · 36 endpoints mapeados.

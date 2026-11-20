@@ -281,3 +281,7 @@ id_ed25519.*
 # Graphify AST caches y artefactos generados localmente
 graphify-out/
 
+# Artefactos efímeros del Despachador de Skills (regenerables en cada ejecución).
+# Un .xlsx/.pdf emitido por un cartucho es una salida de taller, no fuente.
+.antigravity/skills-out/
+

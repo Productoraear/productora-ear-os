@@ -3,8 +3,8 @@
 > Emitido por `scripts/audit_admin_ecosystem.cjs` (solo lectura).
 > Fuente única de verdad: `src/lib/config/admin-navigation.ts`.
 
-- Módulos registrados en el SSOT: **29**
-- Páginas reales bajo (admin)/admin: **30**
+- Módulos registrados en el SSOT: **30**
+- Páginas reales bajo (admin)/admin: **31**
 - Violaciones: **0**
 
 ## Módulos registrados
@@ -15,6 +15,7 @@
 - `/admin/arena`
 - `/admin/calibrador-proveedores`
 - `/admin/call-center`
+- `/admin/cockpit`
 - `/admin/command-center`
 - `/admin/compiler`
 - `/admin/control`
@@ -47,6 +48,7 @@
 - `/admin/arena`
 - `/admin/calibrador-proveedores`
 - `/admin/call-center`
+- `/admin/cockpit`
 - `/admin/command-center`
 - `/admin/compiler`
 - `/admin/control`

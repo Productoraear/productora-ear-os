@@ -259,16 +259,30 @@ async function main(): Promise<void> {
 
   // ── G · MCP JSON-RPC ───────────────────────────────────────────────────
   const host = hostOf(createLocalRuntime());
-  // El contrato MCP declara 10 herramientas: 6 originales + las 4 que exige la
+  // El contrato MCP declara 12 herramientas: 6 originales + las 4 que exige la
   // directiva del Centro de Mando (audit_ssot_integrity, execute_isolated_gates,
-  // mutate_ontology_node, trigger_coolify_deploy).
-  check('G_MCP', 'G1_herramientas', MCP_TOOLS.length === 10, `total=${MCP_TOOLS.length}`);
+  // mutate_ontology_node, trigger_coolify_deploy) + las 2 del Despachador de
+  // Skills (list_ceo_skills, execute_ceo_skill).
+  check('G_MCP', 'G1_herramientas', MCP_TOOLS.length === 12, `total=${MCP_TOOLS.length}`);
   const runGatesTool = MCP_TOOLS.find((tool) => tool.name === 'run_sv_gates');
   check(
     'G_MCP',
     'G2_run_gates_deshabilitado',
     runGatesTool !== undefined && runGatesTool.description.includes('EXECUTION_DISABLED'),
     'run_sv_gates declara EXECUTION_DISABLED',
+  );
+  // G2b · Las dos herramientas del Despachador existen y declaran su contrato:
+  // cero llamadas a modelos y transporte del binario por fuera de stdio.
+  const listSkillsTool = MCP_TOOLS.find((tool) => tool.name === 'list_ceo_skills');
+  const execSkillTool = MCP_TOOLS.find((tool) => tool.name === 'execute_ceo_skill');
+  check(
+    'G_MCP',
+    'G2b_despachador_declarado',
+    listSkillsTool !== undefined &&
+      execSkillTool !== undefined &&
+      execSkillTool.description.includes('Cero llamadas a modelos') &&
+      execSkillTool.description.includes('/api/admin/skills'),
+    'list_ceo_skills + execute_ceo_skill declarados con su contrato',
   );
   const init = await handleJsonRpcLine(JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'initialize', params: {} }), host);
   const initPayload = init === null ? {} : (JSON.parse(init) as { result?: { serverInfo?: { name?: string } } });

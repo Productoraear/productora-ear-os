@@ -29,6 +29,70 @@ const AFFILIATE_COOKIE_OPTIONS = {
   maxAge: 60 * 60 * 24 * 30, // 30 días de atribución
 };
 
+/**
+ * ════════════════════════════════════════════════════════════════════════════
+ * ROUTE-GATING · DARK LAUNCHING (SUELO DE MARMOL)
+ * ════════════════════════════════════════════════════════════════════════════
+ * Lista blanca de rutas certificadas para clientes e inversores. Cualquier
+ * ruta en taller que NO figure aquí se repliega con 307 a `/celebraciones`
+ * (o a `/` si la propia ruta de destino no fuese certificada): cero 404
+ * visibles, cero páginas a medio construir expuestas en producción.
+ *
+ * INVARIANTES:
+ *   · El gating es FAIL-OPEN SOLO para `/api`, `/_next`, assets y `/admin`:
+ *     el escaparate se blinda, la telemetría y el back-office no se rompen.
+ *   · Las rutas certificadas se comparan por PREFIJO SEGMENTADO
+ *     (`/presupuesto/x` cuenta como `/presupuesto`), nunca por `startsWith`
+ *     crudo — de lo contrario `/presupuesto-oculto` colaría.
+ *   · `307` (no 301): preserva método y cuerpo, y no se cachea como permanente
+ *     mientras la ruta siga en taller.
+ * ════════════════════════════════════════════════════════════════════════════
+ */
+const CERTIFIED_PRODUCTION_ROUTES: readonly string[] = Object.freeze([
+  '/',
+  '/gobiernos',
+  '/celebraciones',
+  '/profesionales',
+  '/restaurante-otzarreta',
+  '/seating-planner',
+  '/presupuesto',
+  '/portal/proveedor',
+  '/login',
+]);
+
+/** Rutas que escapan al gating aunque no estén certificadas (back-office y assets). */
+const ROUTE_GATING_BYPASS_PREFIXES: readonly string[] = Object.freeze([
+  '/api',
+  '/_next',
+  '/admin',
+  '/command-center',
+  '/favicon.ico',
+  '/robots.txt',
+  '/sitemap.xml',
+  '/manifest.webmanifest',
+]);
+
+function isCertifiedRoute(pathname: string): boolean {
+  // La raíz sólo coincide exactamente: `/` como prefijo certificaría todo.
+  if (pathname === '/') {
+    return true;
+  }
+  return CERTIFIED_PRODUCTION_ROUTES.some(
+    (route) => route !== '/' && (pathname === route || pathname.startsWith(`${route}/`))
+  );
+}
+
+function isRouteGatingBypassed(pathname: string): boolean {
+  return ROUTE_GATING_BYPASS_PREFIXES.some(
+    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`) || pathname.startsWith(prefix)
+  );
+}
+
+function isFileRequest(pathname: string): boolean {
+  // Assets estáticos servidos desde /public (logos, imágenes, fuentes).
+  return /\.[a-z0-9]{2,5}$/i.test(pathname);
+}
+
 function isProtectedAdminPath(pathname: string): boolean {
   return ADMIN_PATHS.some(
     (path) => pathname === path || pathname.startsWith(`${path}/`)
@@ -70,7 +134,19 @@ export function middleware(request: NextRequest) {
     );
   }
 
-  // 3. Aislamiento de rutas por vertical (un visitante de fincasparaboda no entra en /vimume)
+  // 3. ROUTE-GATING · DARK LAUNCHING: cualquier ruta no certificada refluye con
+  //    307 hacia el escaparate público (cero 404 visibles para cliente o inversor).
+  //    Se evalúa ANTES del aislamiento por vertical para que una ruta en taller
+  //    no dependa del host: siempre aterriza en suelo de mármol.
+  if (!isRouteGatingBypassed(url.pathname) && !isFileRequest(url.pathname) && !isCertifiedRoute(url.pathname)) {
+    const fallback = isCertifiedRoute('/celebraciones') ? '/celebraciones' : '/';
+    const gatedResponse = NextResponse.redirect(new URL(fallback, request.url), 307);
+    gatedResponse.headers.set('x-ear-vertical', vertical.id);
+    gatedResponse.headers.set('x-ear-route-gating', 'redirected-to-certified-route');
+    return gatedResponse;
+  }
+
+  // 4. Aislamiento de rutas por vertical (un visitante de fincasparaboda no entra en /vimume)
   if (!isPathAllowedForVertical(vertical, url.pathname)) {
     const redirectTarget = new URL(vertical.defaultHomePath, request.url);
     const response = NextResponse.redirect(redirectTarget);
@@ -84,7 +160,7 @@ export function middleware(request: NextRequest) {
   requestHeaders.set('x-ear-vertical', vertical.id);
   requestHeaders.set('x-ear-vertical-name', vertical.name);
 
-  // 4. Redirecciones 301 Canónicas hacia el Hub Central de Mariachis (/mariachis)
+  // 5. Redirecciones 301 Canónicas hacia el Hub Central de Mariachis (/mariachis)
   if (url.pathname.startsWith('/centralita-mariachis')) {
     const provinceMatch = url.pathname.match(/\/centralita-mariachis\/([^/?#]+)/);
     const targetPath = provinceMatch && provinceMatch[1] && !provinceMatch[1].startsWith('red')
@@ -96,7 +172,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/mariachis', request.url), 301);
   }
 
-  // 5. Panel de administración y command-center blindados contra accesos sin sesión.
+  // 6. Panel de administración y command-center blindados contra accesos sin sesión.
   if (isProtectedAdminPath(url.pathname)) {
     if (!hasValidAdminSession(request)) {
       const loginUrl = new URL('/login', request.url);
@@ -105,7 +181,7 @@ export function middleware(request: NextRequest) {
     }
   }
 
-  // 5. Interceptar URLs de referidos / afiliados (ej. productoraear.com/f/MIRAFLORES)
+  // 7. Interceptar URLs de referidos / afiliados (ej. productoraear.com/f/MIRAFLORES)
   if (url.pathname.startsWith('/f/')) {
     const affiliateCode = url.pathname.replace('/f/', '').toUpperCase();
 
@@ -118,7 +194,7 @@ export function middleware(request: NextRequest) {
     return response;
   }
 
-  // 6. Interceptar links directos de fincas (/fincas/[slug]?ref=[code])
+  // 8. Interceptar links directos de fincas (/fincas/[slug]?ref=[code])
   if (url.searchParams.has('ref')) {
     const affiliateCode = url.searchParams.get('ref')!.toUpperCase();
     const response = NextResponse.next({

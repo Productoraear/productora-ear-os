@@ -30,6 +30,7 @@ export type N8nWebhookSlug =
     | 'support-health'
     | 'dlq-retry'
     | 'campus-lead-magnet'
+    | 'concierge-deferred-demand'
     | 'concierge-whatsapp-dispatch';
 
 export interface CampusLeadMagnetPayload {

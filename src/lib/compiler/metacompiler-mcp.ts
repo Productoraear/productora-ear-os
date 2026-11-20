@@ -28,6 +28,9 @@ import { verifySsotIntegrity } from '@/lib/security/ssotIntegrityGuard';
 import { sha256OfText } from './metacompiler-hash';
 import { compileMetaSpec } from './metacompiler-engine';
 import type { MetaCompilerRuntime } from './metacompiler-runtime';
+import { dispatchSkill } from '@/lib/skills/dispatcher';
+import { listSkillManifests } from '@/lib/skills/registry';
+import { SKILL_ROLES, type SkillRole } from '@/lib/skills/skill-contract';
 
 /** Perfil de capacidades de `initialize` (MCP 2025-06-18). */
 export function initializePayload(): Record<string, unknown> {
@@ -81,6 +84,8 @@ export type ToolName =
   | 'mutate_ontology_node'
   | 'inject_ontology_node'
   | 'emit_artifact'
+  | 'execute_ceo_skill'
+  | 'list_ceo_skills'
   | 'trigger_coolify_deploy';
 
 
@@ -133,6 +138,26 @@ const deployInput = z
     confirm: z.literal(true),
     /** SHA-256 del sello del MetaCompilador que autoriza el despliegue. */
     sealHash: z.string().regex(/^[a-f0-9]{64}$/),
+  })
+  .strict();
+
+/**
+ * Entrada de `execute_ceo_skill`. El `role` se exige y el despachador lo
+ * contrasta con el rol declarado por el cartucho (AGENTS.md). `payload` es
+ * libre aquí porque cada cartucho impone su propio Zod estricto; lo que no
+ * viaja jamás es un identificador de fichero ni una ruta.
+ */
+const ceoSkillInput = z
+  .object({
+    skillName: z.string().trim().min(3).max(80),
+    role: z.enum(SKILL_ROLES),
+    payload: z.record(z.string(), z.unknown()),
+  })
+  .strict();
+
+const ceoSkillListInput = z
+  .object({
+    role: z.enum(SKILL_ROLES).optional(),
   })
   .strict();
 
@@ -278,6 +303,37 @@ export const MCP_TOOLS: readonly ToolDefinition[] = Object.freeze([
       additionalProperties: false,
     },
     input: deployInput,
+  },
+  {
+    name: 'list_ceo_skills',
+    title: 'Listar cartuchos ejecutivos del CEO',
+    description:
+      'Devuelve los manifiestos de las habilidades locales (id, rol, formato del artefacto y pasos). Sólo lectura: no ejecuta nada.',
+    mutating: false,
+    inputSchema: {
+      type: 'object',
+      properties: { role: { type: 'string', enum: [...SKILL_ROLES] } },
+      additionalProperties: false,
+    },
+    input: ceoSkillListInput,
+  },
+  {
+    name: 'execute_ceo_skill',
+    title: 'Ejecutar un cartucho ejecutivo local (0 tokens)',
+    description:
+      'Ejecuta una habilidad del despachador local y devuelve la ejecución con el SHA-256 y el tamaño de cada artefacto. El binario NO se transfiere por JSON-RPC: se descarga desde /api/admin/skills con el token devuelto. Cero llamadas a modelos.',
+    mutating: true,
+    inputSchema: {
+      type: 'object',
+      properties: {
+        skillName: { type: 'string', minLength: 3, maxLength: 80 },
+        role: { type: 'string', enum: [...SKILL_ROLES] },
+        payload: { type: 'object', description: 'Payload validado por el Zod del cartucho.' },
+      },
+      required: ['skillName', 'role', 'payload'],
+      additionalProperties: false,
+    },
+    input: ceoSkillInput,
   },
 ]);
 
@@ -425,6 +481,72 @@ async function dispatch(name: ToolName, data: unknown, host: McpHostContext): Pr
     }
     case 'execute_isolated_gates': {
       return { ok: false, isError: true, payload: { ...RUN_GATES_REFUSAL, tool: name } };
+    }
+    case 'list_ceo_skills': {
+      const input = data as { role?: SkillRole };
+      const manifests = listSkillManifests().filter(
+        (manifest) => input.role === undefined || manifest.role === input.role,
+      );
+      return {
+        ok: true,
+        isError: false,
+        payload: {
+          status: 'VERIFICADO',
+          tool: name,
+          count: manifests.length,
+          externalTokenCost: 0,
+          skills: manifests,
+          probed: true,
+          source: 'live',
+          checkedAt: host.now(),
+        },
+      };
+    }
+    case 'execute_ceo_skill': {
+      const input = data as { skillName: string; role: SkillRole; payload: Record<string, unknown> };
+      const result = await dispatchSkill(input.skillName, input.payload, {
+        role: input.role,
+        now: host.now(),
+      });
+      if (!result.ok) {
+        return {
+          ok: false,
+          isError: true,
+          payload: {
+            status: result.code,
+            tool: name,
+            error: result.error,
+            details: result.issues ?? result.available ?? [],
+            checkedAt: host.now(),
+          },
+        };
+      }
+      const execution = result.execution;
+      // El binario NUNCA viaja por JSON-RPC: sólo metadatos + SHA-256.
+      return {
+        ok: true,
+        isError: false,
+        payload: {
+          status: 'VERIFICADO',
+          tool: name,
+          skill: execution.skill,
+          title: execution.title,
+          mode: execution.mode,
+          summary: execution.summary,
+          evidence: execution.evidence,
+          artifacts: execution.artifacts.map((artifact) => ({
+            kind: artifact.kind,
+            filename: artifact.filename,
+            byteLength: artifact.byteLength,
+            sha256: artifact.sha256,
+            transport: 'Descarga autenticada en /api/admin/skills (no viaja por stdio).',
+          })),
+          externalTokenCost: 0,
+          probed: true,
+          source: 'live',
+          checkedAt: host.now(),
+        },
+      };
     }
     case 'mutate_ontology_node': {
       const input = data as {

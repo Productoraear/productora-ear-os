@@ -70,6 +70,17 @@ import { checkDateAvailability } from '@/lib/availability/atomicDateLockEngine';
 import { generateMunicipalExpediente } from '@/lib/b2g/municipal-fast-track-engine';
 import { resolveFichaFromUrlOrText } from '@/lib/providers/fichaProvider';
 import { buildFichaFacts, buildFichaMissing, type ProviderFicha } from '@/lib/providers/providerFichaTypes';
+import {
+  DEFERRED_DEMAND_CATEGORIES,
+  DEFERRED_DEMAND_LABELS,
+  MAX_DEFERRED_DEMANDS_RETURNED,
+  MAX_DEMAND_PROMPT_CHARS,
+  detectDeferredDemand,
+  getStashedDemands,
+  stashDeferredDemand,
+  type DeferredDemandCategory,
+  type DeferredDemandRecord,
+} from '@/lib/concierge/deferred-demand';
 
 import type { ToolEnvelope, ToolMode, ToolSource } from '@/lib/mcp/concierge-policy';
 
@@ -235,6 +246,36 @@ export type VerificarFechaInput = z.infer<typeof verificarFechaInputSchema>;
 export type ExpedienteB2gInput = z.infer<typeof expedienteB2gInputSchema>;
 export type ConsultarProveedorInput = z.infer<typeof consultarProveedorInputSchema>;
 export type PrepararPriceLockInput = z.infer<typeof prepararPriceLockInputSchema>;
+
+/* ── FASE 2 · CAPTURA Y REPLIEGUE DE DEMANDA SATÉLITE (CONCÉNTRICO) ────────── */
+
+/** Gremios cerrados: el LLM no puede inventar una categoría nueva (SEC-4). */
+const deferredDemandCategorySchema = z.enum(DEFERRED_DEMAND_CATEGORIES);
+
+export const stashDeferredDemandInputSchema = z
+  .object({
+    /** Sesión de conversación: clave de la libreta. */
+    sessionId: z.string().min(4).max(120),
+    /** Entidad (`providerProfile.id`) en cuya ficha está el cliente. */
+    providerId: z.string().min(4).max(64),
+    /** Gremio del servicio AJENO solicitado. */
+    category: deferredDemandCategorySchema,
+    /** Necesidad tal y como la expresó el cliente (se redacta de PII). */
+    prompt: z.string().min(2).max(MAX_DEMAND_PROMPT_CHARS * 4),
+  })
+  .strict();
+
+export const getStashedDemandsInputSchema = z
+  .object({
+    sessionId: z.string().min(4).max(120),
+    /** Acota la libreta a una entidad. Omitido ⇒ todas las de la sesión. */
+    providerId: z.string().min(4).max(64).optional(),
+    limit: z.number().int().min(1).max(MAX_DEFERRED_DEMANDS_RETURNED).optional(),
+  })
+  .strict();
+
+export type StashDeferredDemandInput = z.infer<typeof stashDeferredDemandInputSchema>;
+export type GetStashedDemandsInput = z.infer<typeof getStashedDemandsInputSchema>;
 
 /* ════════════════════════════════════════════════════════════════════════════ */
 /* 1 · MOTORES DE DINERO (cero estimación: cómputo exacto al céntimo)          */
@@ -606,6 +647,142 @@ export function runPrepararPriceLock(
     { ...meta, source: 'live' },
   );
 }
+/* ════════════════════════════════════════════════════════════════════════════ */
+/* 5bis · DEMANDA DIFERIDA — captura silenciosa y repliegue concéntrico        */
+/* ════════════════════════════════════════════════════════════════════════════ */
+
+export interface StashDeferredDemandData {
+  readonly persisted: boolean;
+  /** `true` si la fila es nueva; `false` si ya existía (idempotencia de turno). */
+  readonly created: boolean;
+  readonly demandId: string | null;
+  readonly sessionId: string;
+  readonly providerId: string;
+  readonly category: DeferredDemandCategory;
+  /** Etiqueta humana del gremio aplazado. */
+  readonly label: string;
+  /** Necesidad tal y como quedó guardada (ya redactada de PII). */
+  readonly sanitizedPrompt: string;
+  /**
+   * Instrucción de cierre que el agente DEBE respetar: el ancla va primero,
+   * el satélite se repliega después del cobro (guion del Maître, FASE 3).
+   */
+  readonly reorientToAnchor: true;
+  /**
+   * Código ACCIONABLE del fallo (`DB_UNREACHABLE`, `DB_SCHEMA_MISSING`,
+   * `PROVIDER_NOT_FOUND`...). `null` cuando la fila quedó confirmada. Sin este
+   * campo la telemetría diría «no persistido» sin decir POR QUÉ (AF-1).
+   */
+  readonly failureCode: string | null;
+}
+
+/**
+ * `stash_deferred_demand` — extrae silenciosamente la necesidad complementaria
+ * y la guarda en `LeadDeferredDemand`.
+ *
+ * Contrato de honestidad (AF-1/AF-5):
+ *   · Fila confirmada  ⇒ `mode:"REAL"` + `persisted:true`.
+ *   · DB caída         ⇒ `mode:"SIMULADO"` + `persisted:false` + `ok:false`.
+ *                        La conversación NO se rompe, pero el agente no puede
+ *                        afirmar que la petición quedó registrada.
+ *   · CERO PII: el prompt se redacta y se trunca antes de persistir (INV-14).
+ */
+export async function runStashDeferredDemand(
+  input: StashDeferredDemandInput,
+  meta: EnvelopeMeta = { source: 'live' },
+): Promise<ToolEnvelope<StashDeferredDemandData>> {
+  const detection = detectDeferredDemand(input.prompt);
+  const sanitizedPrompt: string = detection.sanitizedPrompt.length > 0
+    ? detection.sanitizedPrompt
+    : input.prompt.trim().slice(0, MAX_DEMAND_PROMPT_CHARS);
+
+  const outcome = await stashDeferredDemand({
+    sessionId: input.sessionId,
+    providerId: input.providerId,
+    category: input.category,
+    prompt: sanitizedPrompt,
+  });
+
+  const data: StashDeferredDemandData = {
+    persisted: outcome.persisted,
+    created: outcome.created,
+    demandId: outcome.record?.id ?? null,
+    sessionId: input.sessionId,
+    providerId: input.providerId,
+    category: input.category,
+    label: DEFERRED_DEMAND_LABELS[input.category],
+    sanitizedPrompt,
+    reorientToAnchor: true,
+    failureCode: outcome.ok ? null : outcome.errorCode,
+  };
+
+  if (!outcome.ok) {
+    return envelopeFail(outcome.error, { ...meta, source: 'static', mode: 'SIMULADO', simulationReason: outcome.error }, data);
+  }
+  return envelopeOk(data, { ...meta, source: 'live' });
+}
+
+export interface GetStashedDemandsData {
+  readonly count: number;
+  readonly demands: readonly {
+    readonly id: string;
+    readonly category: string;
+    readonly label: string;
+    readonly status: string;
+    readonly prompt: string;
+    readonly presentedAt: string | null;
+  }[];
+  /** Apertura post-conversión ya redactada (FASE 4). `null` si no hay libreta. */
+  readonly dialogue: string | null;
+  /** Código accionable si la libreta no se pudo leer. `null` si fue OK (AF-1). */
+  readonly failureCode: string | null;
+}
+
+function demandLabel(category: string): string {
+  return (DEFERRED_DEMAND_LABELS as Record<string, string | undefined>)[category] ?? 'servicios complementarios';
+}
+
+/**
+ * `get_stashed_demands` — devuelve la libreta de la sesión. SOLO LECTURA: no la
+ * marca como presentada. El repliegue que sella `presentedAt` vive en el
+ * webhook de Stripe (`replenishAfterAnchor`), que es quien tiene la prueba del
+ * cobro.
+ */
+export async function runGetStashedDemands(
+  input: GetStashedDemandsInput,
+  meta: EnvelopeMeta = { source: 'live' },
+): Promise<ToolEnvelope<GetStashedDemandsData>> {
+  const read = await getStashedDemands(input.sessionId, input.providerId, input.limit);
+
+  const demands = read.demands.map((record: DeferredDemandRecord) => ({
+    id: record.id,
+    category: record.category,
+    label: demandLabel(record.category),
+    status: record.status,
+    prompt: record.rawPrompt,
+    presentedAt: record.presentedAt,
+  }));
+
+  const empty: GetStashedDemandsData = { count: 0, demands: [], dialogue: null, failureCode: read.ok ? null : read.errorCode };
+  if (!read.ok) {
+    return envelopeFail(read.error, { ...meta, source: 'static', mode: 'SIMULADO', simulationReason: read.error }, empty);
+  }
+
+  const uniqueLabels: string[] = [];
+  for (const demand of demands) {
+    if (!uniqueLabels.includes(demand.label)) uniqueLabels.push(demand.label);
+  }
+
+  const dialogue: string | null =
+    uniqueLabels.length === 0
+      ? null
+      : `En vuestro expediente habíais indicado interés en ${uniqueLabels.join(' · ')}. ` +
+        '¿Cuál de estas prioridades queréis que dejemos resuelta ahora?';
+
+  return envelopeOk({ count: demands.length, demands, dialogue, failureCode: null }, { ...meta, source: 'live' });
+}
+
+
 
 /* ════════════════════════════════════════════════════════════════════════════ */
 /* 6 · REGISTRO DE HERRAMIENTAS — el LLM solo puede llamar a lo declarado aquí */
@@ -620,6 +797,8 @@ export const CONCIERGE_TOOL_NAMES = [
   'expediente_b2g',
   'consultar_proveedor',
   'preparar_price_lock',
+  'stash_deferred_demand',
+  'get_stashed_demands',
 ] as const;
 
 export type ConciergeToolName = (typeof CONCIERGE_TOOL_NAMES)[number];
@@ -634,7 +813,7 @@ export interface ToolDescriptor {
   readonly description: string;
   /** Motor real que ejecuta el cálculo (rastreable en ≤ 3 clics, AF-4). */
   readonly engine: string;
-  readonly sideEffects: 'none' | 'read-only';
+  readonly sideEffects: 'none' | 'read-only' | 'write';
 }
 
 export const CONCIERGE_TOOL_MANIFEST: readonly ToolDescriptor[] = Object.freeze([
@@ -691,6 +870,20 @@ export const CONCIERGE_TOOL_MANIFEST: readonly ToolDescriptor[] = Object.freeze(
     engine: 'src/lib/mcp/concierge-tools.ts#runPrepararPriceLock',
     sideEffects: 'none',
   },
+  {
+    name: 'stash_deferred_demand',
+    description:
+      'Aplaza en la libreta una necesidad complementaria (servicio ajeno al ancla) y devuelve la instrucción de reorientar al ancla. Redacta PII antes de guardar.',
+    engine: 'src/lib/concierge/deferred-demand.ts#stashDeferredDemand',
+    sideEffects: 'write',
+  },
+  {
+    name: 'get_stashed_demands',
+    description:
+      'Devuelve las peticiones satélite aplazadas de una sesión (solo lectura) y el diálogo de repliegue post-conversión.',
+    engine: 'src/lib/concierge/deferred-demand.ts#getStashedDemands',
+    sideEffects: 'read-only',
+  },
 ]);
 
 /* ════════════════════════════════════════════════════════════════════════════ */
@@ -743,6 +936,8 @@ export function listTools(): {
     expediente_b2g: expedienteB2gInputSchema,
     consultar_proveedor: consultarProveedorInputSchema,
     preparar_price_lock: prepararPriceLockInputSchema,
+    stash_deferred_demand: stashDeferredDemandInputSchema,
+    get_stashed_demands: getStashedDemandsInputSchema,
   };
 
   return {
@@ -850,6 +1045,18 @@ export async function callTool(
         const parsed = prepararPriceLockInputSchema.safeParse(rawArgs);
         if (!parsed.success) return invalidParams(parsed.error);
         envelope = runPrepararPriceLock(parsed.data, meta);
+        break;
+      }
+      case 'stash_deferred_demand': {
+        const parsed = stashDeferredDemandInputSchema.safeParse(rawArgs);
+        if (!parsed.success) return invalidParams(parsed.error);
+        envelope = await runStashDeferredDemand(parsed.data, meta);
+        break;
+      }
+      case 'get_stashed_demands': {
+        const parsed = getStashedDemandsInputSchema.safeParse(rawArgs);
+        if (!parsed.success) return invalidParams(parsed.error);
+        envelope = await runGetStashedDemands(parsed.data, meta);
         break;
       }
     }
@@ -1048,6 +1255,19 @@ function describeToolCall(result: ToolCallResult): string {
     case 'preparar_price_lock': {
       const data = envelope.data as PrepararPriceLockData;
       return `- preparar_price_lock: enlace ${data.href} (depósito ${data.depositEur.toFixed(2)} € aún NO cobrado).`;
+    }
+    case 'stash_deferred_demand': {
+      const data = envelope.data as StashDeferredDemandData;
+      return (
+        `- stash_deferred_demand: ${data.label} aplazado en el expediente ` +
+        `(${data.created ? 'registro nuevo' : 'ya constaba'}). NO cerrar este servicio antes del ancla: ` +
+        'reorientar a la fecha y a la propuesta principal.'
+      );
+    }
+    case 'get_stashed_demands': {
+      const data = envelope.data as GetStashedDemandsData;
+      if (data.count === 0) return `- get_stashed_demands: libreta vacía.`;
+      return `- get_stashed_demands: ${data.count} petición(es) aplazada(s) ⇒ ${data.demands.map((d) => d.label).join(', ')}.`;
     }
   }
 }

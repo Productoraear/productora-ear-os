@@ -158,8 +158,8 @@ export const AirbnbNeuralBookingBar: React.FC = () => {
           <div
             onClick={() => setActiveSegment(activeSegment === 'date' ? null : 'date')}
             className={`md:col-span-3 p-3 rounded-2xl cursor-pointer transition-all border ${activeSegment === 'date'
-                ? 'bg-white/10 border-[#ecb613]/50 shadow-inner'
-                : 'bg-white/[0.02] border-white/5 hover:bg-white/5'
+              ? 'bg-white/10 border-[#ecb613]/50 shadow-inner'
+              : 'bg-white/[0.02] border-white/5 hover:bg-white/5'
               }`}
           >
             <div className="flex items-center gap-3">
@@ -181,8 +181,8 @@ export const AirbnbNeuralBookingBar: React.FC = () => {
           <div
             onClick={() => setActiveSegment(activeSegment === 'location' ? null : 'location')}
             className={`md:col-span-3 p-3 rounded-2xl cursor-pointer transition-all border ${activeSegment === 'location'
-                ? 'bg-white/10 border-[#00E5FF]/50 shadow-inner'
-                : 'bg-white/[0.02] border-white/5 hover:bg-white/5'
+              ? 'bg-white/10 border-[#00E5FF]/50 shadow-inner'
+              : 'bg-white/[0.02] border-white/5 hover:bg-white/5'
               }`}
           >
             <div className="flex items-center gap-3">
@@ -209,8 +209,8 @@ export const AirbnbNeuralBookingBar: React.FC = () => {
           <div
             onClick={() => setActiveSegment(activeSegment === 'pax' ? null : 'pax')}
             className={`md:col-span-3 p-3 rounded-2xl cursor-pointer transition-all border ${activeSegment === 'pax'
-                ? 'bg-white/10 border-emerald-500/50 shadow-inner'
-                : 'bg-white/[0.02] border-white/5 hover:bg-white/5'
+              ? 'bg-white/10 border-emerald-500/50 shadow-inner'
+              : 'bg-white/[0.02] border-white/5 hover:bg-white/5'
               }`}
           >
             <div className="flex items-center gap-3">
@@ -327,10 +327,10 @@ export const AirbnbNeuralBookingBar: React.FC = () => {
                   onClick={handleGps}
                   disabled={gpsStatus === 'loading'}
                   className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-bold font-mono uppercase tracking-wide transition-all cursor-pointer disabled:opacity-50 shrink-0 ${gpsStatus === 'success'
-                      ? 'bg-[#10b981]/20 text-[#10b981] border border-[#10b981]/40'
-                      : gpsStatus === 'error'
-                        ? 'bg-[#FF2B44]/20 text-[#FF2B44] border border-[#FF2B44]/40'
-                        : 'bg-[#00E5FF]/10 text-[#00E5FF] border border-[#00E5FF]/30 hover:bg-[#00E5FF]/20'
+                    ? 'bg-[#10b981]/20 text-[#10b981] border border-[#10b981]/40'
+                    : gpsStatus === 'error'
+                      ? 'bg-[#FF2B44]/20 text-[#FF2B44] border border-[#FF2B44]/40'
+                      : 'bg-[#00E5FF]/10 text-[#00E5FF] border border-[#00E5FF]/30 hover:bg-[#00E5FF]/20'
                     }`}
                 >
                   <Compass size={12} className={gpsStatus === 'loading' ? 'animate-spin' : ''} />
@@ -455,8 +455,8 @@ export const AirbnbNeuralBookingBar: React.FC = () => {
                         key={cat}
                         onClick={() => toggleCategory(cat)}
                         className={`px-3 py-1.5 rounded-xl text-xs font-syne font-bold transition-all border ${selected
-                            ? 'bg-[#ecb613] text-black border-[#ecb613] shadow'
-                            : 'bg-white/5 text-zinc-300 border-white/10 hover:border-white/20'
+                          ? 'bg-[#ecb613] text-black border-[#ecb613] shadow'
+                          : 'bg-white/5 text-zinc-300 border-white/10 hover:border-white/20'
                           }`}
                       >
                         {cat}
@@ -475,8 +475,8 @@ export const AirbnbNeuralBookingBar: React.FC = () => {
                       key={type}
                       onClick={() => setEventType(type)}
                       className={`p-2 rounded-xl text-center transition-all border ${eventType === type
-                          ? 'bg-[#00E5FF] text-black border-[#00E5FF]'
-                          : 'bg-white/5 text-zinc-400 border-white/10 hover:text-white'
+                        ? 'bg-[#00E5FF] text-black border-[#00E5FF]'
+                        : 'bg-white/5 text-zinc-400 border-white/10 hover:text-white'
                         }`}
                     >
                       {type}
@@ -490,8 +490,8 @@ export const AirbnbNeuralBookingBar: React.FC = () => {
                 <button
                   onClick={() => setSClassOnly(!sClassOnly)}
                   className={`p-4 rounded-2xl border flex items-center justify-between transition-all ${sClassOnly
-                      ? 'bg-[#ecb613]/10 border-[#ecb613] text-[#ecb613]'
-                      : 'bg-white/5 border-white/10 text-zinc-400'
+                    ? 'bg-[#ecb613]/10 border-[#ecb613] text-[#ecb613]'
+                    : 'bg-white/5 border-white/10 text-zinc-400'
                     }`}
                 >
                   <div className="flex items-center gap-3">
@@ -507,8 +507,8 @@ export const AirbnbNeuralBookingBar: React.FC = () => {
                 <button
                   onClick={() => setB2gMode(!b2gMode)}
                   className={`p-4 rounded-2xl border flex items-center justify-between transition-all ${b2gMode
-                      ? 'bg-blue-500/10 border-blue-500 text-blue-400'
-                      : 'bg-white/5 border-white/10 text-zinc-400'
+                    ? 'bg-blue-500/10 border-blue-500 text-blue-400'
+                    : 'bg-white/5 border-white/10 text-zinc-400'
                     }`}
                 >
                   <div className="flex items-center gap-3">
