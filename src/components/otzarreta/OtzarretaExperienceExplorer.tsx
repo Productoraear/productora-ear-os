@@ -17,6 +17,11 @@ import {
   CalendarCheck
 } from 'lucide-react';
 import { CENTRALITA_EAR_OS, DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
+import {
+  OTZARRETA_WEDDING_MENUS,
+  formatOtzarretaMenuPrice,
+  type OtzarretaWeddingMenu,
+} from '@/lib/constants/otzarreta-entity';
 import { resolveProviderCalendarHref } from '@/lib/providers/provider-cta-engine';
 import { SovereignWhatsAppButton } from '@/components/shared/SovereignWhatsAppButton';
 
@@ -44,7 +49,7 @@ export interface MenuPackage {
 export const OFFICIAL_OTZARRETA_MENUS: MenuPackage[] = [
   // ── MENÚS BODAS 2026 (OFICIALES EDUARDO MARTÍNEZ) ──
   {
-    id: 'boda-cantabrico',
+    id: 'boda-tradicion',
     category: 'bodas',
     name: 'Menú Cantábrico',
     subtitle: 'El clásico atlántico: Marisco a la plancha, merluza o bacalao y entrecotte al carbón',
@@ -182,7 +187,7 @@ export const OFFICIAL_OTZARRETA_MENUS: MenuPackage[] = [
     soundIncluded: 'Sonorización Bose S1 Pro / F1 para salones y zona exterior de cóctel'
   },
   {
-    id: 'boda-vasco',
+    id: 'boda-asador',
     category: 'bodas',
     name: 'Menú Vasco',
     subtitle: 'El pack más completo: 2 h Barra Libre + 2 h DJ + Autobús 55 pax + Decoración floral',
@@ -248,7 +253,7 @@ export const OFFICIAL_OTZARRETA_MENUS: MenuPackage[] = [
     soundIncluded: 'Sonorización completa de gala Bose F1 (12 W/pax) con atril y microfonía'
   },
   {
-    id: 'boda-caserio-beko',
+    id: 'boda-soberano',
     category: 'bodas',
     name: 'Menú Caserío Ezkertza Beko',
     subtitle: 'La cumbre gastronómica: Möet & Chandon, huevo a baja temperatura, bogavante y chuletón',
@@ -440,6 +445,54 @@ export const OFFICIAL_OTZARRETA_MENUS: MenuPackage[] = [
   }
 ];
 
+/**
+ * Enlace de la CARTA DE BODA con el SSOT canónico (sanción del CEO 2026-11-21).
+ *
+ * El dataset de arriba conserva el detalle gastronómico noble (cóctel, platos,
+ * bodega) que el cotizador muestra al novio, pero su bloque `bodas` seguía
+ * arrastrando los nombres y los importes del dossier de 2026 (100–173 €), hoy
+ * derogados como tarifa comercial. En lugar de reescribir siete literales a
+ * mano —origen histórico de la deriva (INV-10)—, cada paquete declara a qué
+ * menú canónico corresponde y el precio, el nombre y la etiqueta se IMPONEN
+ * desde `OTZARRETA_WEDDING_MENUS`.
+ *
+ * Consecuencia: subir un precio exige editar SOLO la carta canónica; este
+ * simulador, el Bento de `/otzarreta`, la portada y el Concierge se mueven
+ * juntos o no se mueve ninguno.
+ */
+const CANONICAL_WEDDING_MENU_BY_ID: Readonly<Record<string, OtzarretaWeddingMenu>> = Object.freeze(
+  Object.fromEntries(
+    (['boda-tradicion', 'boda-asador', 'boda-ezkertza', 'boda-soberano'] as const).map(
+      (id, index) => {
+        const canonical = OTZARRETA_WEDDING_MENUS[index];
+        if (canonical === undefined) {
+          throw new Error(`[OtzarretaExperienceExplorer] falta el menú canónico #${index + 1} (${id})`);
+        }
+        return [id, canonical] as const;
+      },
+    ),
+  ),
+);
+
+/** Aplica la carta canónica sobre el dataset gastronómico (bodas únicamente). */
+function withCanonicalWeddingPricing(menu: MenuPackage): MenuPackage {
+  if (menu.category !== 'bodas') return menu;
+  const canonical = CANONICAL_WEDDING_MENU_BY_ID[menu.id];
+  if (canonical === undefined || canonical.priceEur === null) return menu;
+  const priceLabel = formatOtzarretaMenuPrice(canonical.priceEur) ?? 'a consultar';
+  return {
+    ...menu,
+    name: canonical.name,
+    tag: `${priceLabel} + IVA · ${canonical.note}`,
+    pricePerPax: canonical.priceEur,
+  };
+}
+
+/** Carta que consume el cotizador: bodas alineadas al SSOT, resto intacto. */
+export const CANONICAL_OTZARRETA_MENUS: readonly MenuPackage[] = Object.freeze(
+  OFFICIAL_OTZARRETA_MENUS.map(withCanonicalWeddingPricing),
+);
+
 export interface AdditionalService {
   id: string;
   name: string;
@@ -565,7 +618,7 @@ export const OFFICIAL_EXTRAS: AdditionalService[] = [
 
 export function OtzarretaExperienceExplorer(): React.JSX.Element {
   const [activeCategory, setActiveCategory] = useState<'bodas' | 'comuniones' | 'grupos'>('bodas');
-  const [selectedMenuId, setSelectedMenuId] = useState<string>('boda-vasco');
+  const [selectedMenuId, setSelectedMenuId] = useState<string>('boda-asador');
   const [guestCount, setGuestCount] = useState<number>(110);
   const [selectedExtras, setSelectedExtras] = useState<Record<string, boolean>>({
     'solista-edwin': true
@@ -590,11 +643,14 @@ export function OtzarretaExperienceExplorer(): React.JSX.Element {
   }, []);
 
 
-  const availableMenus = OFFICIAL_OTZARRETA_MENUS.filter((m) => m.category === activeCategory);
+  // La carta que ve y cotiza el novio se lee SIEMPRE de `CANONICAL_OTZARRETA_MENUS`
+  // (bodas alineadas al SSOT 145–185 €). El dataset crudo queda solo como origen
+  // del detalle gastronómico y nunca puede publicar un importe derogado.
+  const availableMenus = CANONICAL_OTZARRETA_MENUS.filter((m) => m.category === activeCategory);
   const currentMenu =
-    OFFICIAL_OTZARRETA_MENUS.find((m) => m.id === selectedMenuId) ||
+    CANONICAL_OTZARRETA_MENUS.find((m) => m.id === selectedMenuId) ||
     availableMenus[0] ||
-    OFFICIAL_OTZARRETA_MENUS[4];
+    CANONICAL_OTZARRETA_MENUS[0];
 
   // Cálculo en vivo
   const baseMenuTotal = guestCount * currentMenu.pricePerPax;
@@ -677,7 +733,7 @@ export function OtzarretaExperienceExplorer(): React.JSX.Element {
                 type="button"
                 onClick={() => {
                   setActiveCategory(cat.id as 'bodas' | 'comuniones' | 'grupos');
-                  const firstOfCat = OFFICIAL_OTZARRETA_MENUS.find((m) => m.category === cat.id);
+                  const firstOfCat = CANONICAL_OTZARRETA_MENUS.find((m) => m.category === cat.id);
                   if (firstOfCat) setSelectedMenuId(firstOfCat.id);
                 }}
                 className={`px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all border ${
@@ -923,7 +979,7 @@ export function OtzarretaExperienceExplorer(): React.JSX.Element {
                   Propuesta Gastronómica Seleccionada
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
-                  {OFFICIAL_OTZARRETA_MENUS.map((m) => (
+                  {CANONICAL_OTZARRETA_MENUS.filter((m) => m.category === activeCategory).map((m) => (
                     <button
                       key={m.id}
                       type="button"

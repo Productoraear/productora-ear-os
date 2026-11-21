@@ -1,3 +1,72 @@
+## [SIGMA-CLOSE] 2026-11-21 · SANCIÓN CEO: CARTA DE GALA 2027 (145–185 €) + PRESET CANÓNICO DE AFORO
+
+**1) QUÉ CAMBIÓ:** ejecución de las 3 decisiones formales del Director Generalista sobre Restaurante
+Otzarreta / Ezkertza Berria (Derio), en la fuente única y sus consumidores.
+- `src/lib/constants/otzarreta-entity.ts`:
+  · `OTZARRETA_WEDDING_MENUS` sustituido por los **4 menús de gala sancionados**: `Menú Tradición 145 €`,
+    `Menú Asador 155 €`, `Menú Ezkertza 165 €`, `Menú Soberano 185 €` (+ IVA, por comensal).
+  · nuevo `OTZARRETA_WEDDING_MENUS_CLAIM` = **«Menús de Gala desde 145 € + IVA»**, derivado del primer
+    menú (no es un literal paralelo).
+  · `OTZARRETA_ENTITY.weddingPriceFromEur` pasa de `100` a **derivarse** de `OTZARRETA_WEDDING_MENUS[0]`.
+  · nuevo `OTZARRETA_SEATING_PRESET`: salón acristalado **200 pax** (rango 50–200), jardín/carpa **350 pax**,
+    total finca **350 pax** (leído de `capacityPax`, sin literal) y **120 plazas** de párking garantizadas.
+- `src/components/otzarreta/BentoMenuSection.tsx`: cabecera con el reclamo canónico y recuento derivado
+  (`length`), en lugar del literal «Siete menús de celebración».
+- `src/app/api/concierge/chat/route.ts`: prompt con carta 2027, aforo/párking del preset y prohibición
+  expresa del catálogo derogado; 2 respuestas rápidas (líneas 711/723) que aún decían «desde 100 €» y
+  «150 plazas» pasan al SSOT.
+- `src/app/(public)/otzarreta/page.tsx`: los 3 puntos que publicaban «100 € a 185 € + IVA», «150 plazas»
+  y «50 a 350 comensales» (metadata, características JSON-LD, franja de hechos, píldoras, prosa y pie)
+  se derivan ahora del SSOT.
+- `src/components/otzarreta/OtzarretaExperienceExplorer.tsx`: el conjunto **cuya tarifa se calcula
+  realmente** publicaba los 7 menús de 2026 (100–173 €). Se añade la capa `CANONICAL_OTZARRETA_MENUS`,
+  que impone nombre/importe/etiqueta desde la carta canónica sobre el detalle gastronómico existente.
+- `src/app/(public)/seating-planner/page.tsx`: nuevo `?preset=otzarreta` (aforo desde el preset) y tarjeta
+  de «Aforo canónico Otzarreta» 200 / 350.
+- `scripts/verify_otzarreta_charter.ts` (**nuevo**) + `npm run verify:otzarreta-charter`.
+
+**2) RIESGO QUE DESAPARECE:** se cierra la fuga de facturación que declaraba el cierre anterior: había un
+catálogo comercial **vigente en el cotizador** (100–173 €) contradiciendo la oferta sancionada, y tres
+superficies publicando el suelo derogado. INV-10 (cero precios fuera del SSOT) pasa a ser medible: una sola
+edición de `OTZARRETA_WEDDING_MENUS` mueve cartel, ficha, cotizador y Concierge juntos.
+
+**3) PRUEBA (esta sesión, todo ejecutado aquí):**
+- `npm run verify:otzarreta-charter` → **PASS · 30/30 aserciones** (carta, reclamo, anti-deriva en 4
+  superficies, preset de aforo, Zona Cero).
+- `node scripts/run_sv_protocol_15_gates.cjs` → **17/17 EXIT CODE 0**.
+- `npm run typecheck` → Exit 0 · `npm run lint` → Exit 0.
+- `npm run audit:ssot` → hash `cefa76c2c6a3f92f57acf74f654932c02bf66774502102cb4f932520aaa64b2b` **== referencia**;
+  `git diff -- src/lib/constants/ear-os-ssot.ts` → **vacío** (Zona Cero intacta).
+- `npm run verify:seating-planner` → **PASS · 149 aserciones**.
+
+**4) NO PROBADO (SIN_EVIDENCIA):**
+- **Ninguna fuente publica estas 4 tarifas ni el aforo por sala**: ni `ezkertzaberria.com` ni el dossier de
+  2026. La sanción del CEO **es** la fuente; la trazabilidad vive ahora en la constante, no en un documento.
+  Consecuencia: las 4 fichas de menú del cotizador conservan su detalle gastronómico y una etiqueta de una
+  línea redactada por mí — **pendiente de que Eduardo/CEO confirme el contenido de cada menú**.
+- No se ha hecho comprobación visual en navegador de `/otzarreta` ni de `/otzarreta/[slug]` tras el cambio
+  (validación por compilación + contraste de datos, no por captura).
+- No desplegado: el push y la comprobación en Coolify los ejecuta el CEO (instrucción expresa).
+
+**5) DECISIÓN NECESARIA:** (a) ratificar el contenido (no el precio) de los 4 menús: si Eduardo entrega la
+composición de cada uno, se sustituye el `note` de 1 línea por la carta real; (b) confirmar si «120 plazas»
+sustituye a las 150 publicadas o solo es el mínimo garantizado (hoy se declara como mínimo).
+
+**PREMORTEM (INC-2):**
+1. ¿Objetivo exacto? Sí: 4 menús a 145–185 €, reclamo literal, preset 200/350/350/>120. No se tocó ningún
+   importe fuera del catálogo ni el SSOT financiero.
+2. ¿Asunciones frágiles? Que 200 sea el techo del salón (no 220); que el párking pueda anunciarse como
+   «más de 120»; que el detalle gastronómico de 2026 siga describiendo bien los menús de 2027.
+3. ¿Alternativa descartada? Reescribir a mano los 7 literales del cotizador (mismo enfoque que creó la
+   deriva) y borrar el dataset gastronómico (habría dejado al novio sin carta que leer).
+4. ¿Qué se rompería bajo carga? Nada en tiempo de ejecución: el preset es un `Object.freeze` de módulo;
+   el map canónico se evalúa una vez y el fallback es `CANONICAL_OTZARRETA_MENUS[0]`.
+5. ¿Qué acepto al firmar? Publicar 145–185 € como oferta vigente sin documento de origen público; cualquier
+   discrepancia con la carta real del restaurante es reclamación comercial (JUR-1), mitigada por el punto (a).
+
+---
+
+
 ## [SIGMA-CLOSE] 2026-11-21 · ELEVACIÓN VISUAL HALLMARK S-CLASS (OTZARRETA + SEATING PLANNER + CONCIERGE)
 
 **1) QUÉ CAMBIÓ:** rediseño visual completo de tres superficies bajo el estándar Hallmark

@@ -49,6 +49,7 @@
     "verify:pricing": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_pricing_ssot_unification.ts",
     "verify:solista-pricing": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_solista_pricing.ts",
     "verify:catalog-isolation": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_catalog_isolation.ts",
+    "verify:otzarreta-charter": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_otzarreta_charter.ts",
     "verify:founders": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_founders_parity.ts",
     "verify:context": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_page_context.ts",
     "build:fichas": "node scripts/build_provider_fichas.cjs",

@@ -16,6 +16,10 @@ import {
 import { CENTRALITA_EAR_OS, DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
 import {
   OTZARRETA_ENTITY,
+  OTZARRETA_SEATING_PRESET,
+  OTZARRETA_WEDDING_MENUS,
+  OTZARRETA_WEDDING_MENUS_CLAIM,
+  formatOtzarretaMenuPrice,
 } from '@/lib/constants/otzarreta-entity';
 import {
   SOVEREIGN_DEMAND_CHANNEL,
@@ -50,17 +54,19 @@ const OTZARRETA_CTA_SOURCE = {
   category: 'catering',
 } as const;
 
+const OTZARRETA_MENU_RANGE_LABEL = `${OTZARRETA_WEDDING_MENUS[0]?.priceEur ?? 0} € a ${OTZARRETA_WEDDING_MENUS[OTZARRETA_WEDDING_MENUS.length - 1]?.priceEur ?? 0} €`;
+
 export const metadata: Metadata = {
   title: 'Restaurante Otzarreta | Bodas, Asador & Banquetes en Derio (Bizkaia)',
   description:
-    'Banquetes nupciales exclusivos para hasta 350 comensales en caserío tradicional con jardines, carpa para ceremonias civiles y parrilla al carbón de encina y sarmiento de Eduardo Martínez. Parking privado cerrado de 150 plazas. Menús oficiales 2026 desde 100 € a 185 € + IVA.',
+    `Banquetes nupciales exclusivos para hasta ${OTZARRETA_SEATING_PRESET.totalPax} comensales en caserío tradicional con jardines, carpa para ceremonias civiles y parrilla al carbón de encina y sarmiento de Eduardo Martínez. Parking privado cerrado de más de ${OTZARRETA_SEATING_PRESET.parkingSpaces} plazas. ${OTZARRETA_WEDDING_MENUS_CLAIM}.`,
   alternates: {
     canonical: 'https://productoraear.com/otzarreta'
   },
   openGraph: {
     title: 'Restaurante Otzarreta | Bodas, Asador & Banquetes de Gala en Derio',
     description:
-      'Caserío vasco con capacidad para 350 comensales, parking privado de 150 plazas, jardines y alta parrilla al carbón. Menús de boda oficiales desde 100 €.',
+      `Caserío vasco con capacidad para ${OTZARRETA_SEATING_PRESET.totalPax} comensales, parking privado de más de ${OTZARRETA_SEATING_PRESET.parkingSpaces} plazas, jardines y alta parrilla al carbón. ${OTZARRETA_WEDDING_MENUS_CLAIM}.`,
     url: 'https://productoraear.com/otzarreta',
     siteName: 'Productora EAR',
     locale: 'es_ES',
@@ -92,7 +98,7 @@ export default async function OtzarretaFlagshipPage({
         name: 'Restaurante Otzarreta',
         alternateName: 'Restaurante Otzarreta Derio',
         description:
-          'Caserío tradicional vasco para banquetes de boda y eventos corporativos para hasta 350 comensales con parrilla al carbón de Eduardo Martínez.',
+          `Caserío tradicional vasco para banquetes de boda y eventos corporativos para hasta ${OTZARRETA_SEATING_PRESET.totalPax} comensales con parrilla al carbón de Eduardo Martínez.`,
         url: 'https://productoraear.com/otzarreta',
         // PEAJE SOBERANO: la lÃ­nea del recinto NO viaja en el JSON-LD. El
         // saneador (`sanitizeSchemaContact`) inyecta el punto de contacto de la
@@ -112,13 +118,13 @@ export default async function OtzarretaFlagshipPage({
           latitude: 43.2928,
           longitude: -2.8833
         },
-        maximumAttendeeCapacity: 350,
+        maximumAttendeeCapacity: OTZARRETA_SEATING_PRESET.totalPax,
         smokingAllowed: false,
         amenityFeature: [
           { '@type': 'LocationFeatureSpecification', name: 'Jardines para Ceremonia Civil con Carpa', value: true },
           { '@type': 'LocationFeatureSpecification', name: 'Parrilla al Carbón de Encina', value: true },
           { '@type': 'LocationFeatureSpecification', name: 'Salones Climatizados e Insonorizados', value: true },
-          { '@type': 'LocationFeatureSpecification', name: 'Parking Privado Gratuito 150 Plazas', value: true },
+          { '@type': 'LocationFeatureSpecification', name: `Parking Privado Gratuito más de ${OTZARRETA_SEATING_PRESET.parkingSpaces} Plazas`, value: true },
           { '@type': 'LocationFeatureSpecification', name: 'Parque Infantil con Columpios Homologados', value: true },
           { '@type': 'LocationFeatureSpecification', name: 'Accesibilidad Total PMR con Ascensor', value: true },
           { '@type': 'LocationFeatureSpecification', name: 'Sonorización Bose F1 Homologada (Ley 37/2003)', value: true }
@@ -208,8 +214,9 @@ export default async function OtzarretaFlagshipPage({
               </h1>
 
               <p className="max-w-[60ch] text-[0.9375rem] leading-relaxed text-[#D6D2C7] sm:text-base">
-                Parrilla de carbón de encina y sarmiento, salón acristalado para 50 a 350 comensales y
-                jardines con carpa para la ceremonia civil, bajo la dirección de Eduardo Martínez.
+                Parrilla de carbón de encina y sarmiento, {OTZARRETA_SEATING_PRESET.interiorSalon.label.toLowerCase()} para{' '}
+                {OTZARRETA_SEATING_PRESET.interiorSalon.standardRange} y hasta {OTZARRETA_SEATING_PRESET.totalPax}{' '}
+                comensales en {OTZARRETA_SEATING_PRESET.exteriorGarden.label.toLowerCase()}, bajo la dirección de Eduardo Martínez.
               </p>
 
               {/* Tres píldoras de gala: filo de 1 px, cristal, sin iconos. */}
@@ -217,7 +224,7 @@ export default async function OtzarretaFlagshipPage({
                 {[
                   'Parrilla de carbón y sarmiento',
                   'Jardín y salón acristalado',
-                  'Párking privado de 150 plazas',
+                  `Párking privado más de ${OTZARRETA_SEATING_PRESET.parkingSpaces} plazas`,
                 ].map((pill) => (
                   <li
                     key={pill}
@@ -249,9 +256,9 @@ export default async function OtzarretaFlagshipPage({
         {/* Datos de la casa: una sola línea de hechos verificables. */}
         <dl className="mt-6 grid grid-cols-2 gap-x-8 gap-y-4 border-y border-white/[0.08] py-5 sm:grid-cols-4">
           {[
-            { term: 'Aforo', detail: '50 a 350 comensales' },
-            { term: 'Párking', detail: '150 plazas en recinto cerrado' },
-            { term: 'Menús', detail: `Desde ${OTZARRETA_ENTITY.weddingPriceFromEur} € + IVA` },
+            { term: 'Aforo', detail: `${OTZARRETA_SEATING_PRESET.totalPax} comensales máx.` },
+            { term: 'Párking', detail: `más de ${OTZARRETA_SEATING_PRESET.parkingSpaces} plazas cerradas` },
+            { term: 'Menús', detail: OTZARRETA_WEDDING_MENUS_CLAIM },
             { term: 'Conserjería', detail: CENTRALITA_EAR_OS },
           ].map((fact) => (
             <div key={fact.term}>
@@ -397,7 +404,7 @@ export default async function OtzarretaFlagshipPage({
                   <div className="flex items-start gap-3">
                     <CheckCircle2 className="w-5 h-5 text-[#ecb613] shrink-0 mt-0.5" />
                     <div>
-                      <strong className="text-white">Cotizador con tus 7 Menús Oficiales:</strong> Las parejas configuran su banquete al céntimo (Cantábrico 100 €, Paloma 125 €, Imperial 123,40 €, Temporada 142,50 €, Vasco 138 €, Ezkertza 155 €, Caserío Beko 173 €).
+                      <strong className="text-white">Cotizador con tu carta de gala vigente:</strong> Las parejas configuran su banquete al céntimo ({OTZARRETA_WEDDING_MENUS.map((menu) => `${menu.name.replace('Menú ', '')} ${formatOtzarretaMenuPrice(menu.priceEur) ?? 'a consultar'}`).join(', ')}).
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -537,7 +544,7 @@ export default async function OtzarretaFlagshipPage({
               </p>
 
               <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
-                Cada banquete en el caserío cuenta con atención de sala personalizada, menús canónicos de 100 € a 185 € + IVA elaborados al momento y salones insonorizados y climatizados con vistas a jardines botánicos.
+                Cada banquete en el caserío cuenta con atención de sala personalizada, {OTZARRETA_WEDDING_MENUS_CLAIM} ({OTZARRETA_MENU_RANGE_LABEL} por comensal) elaborados al momento y salones insonorizados y climatizados con vistas a jardines botánicos.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
@@ -551,7 +558,7 @@ export default async function OtzarretaFlagshipPage({
 
                 <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1">
                   <div className="text-xs font-mono text-[#ecb613] uppercase">Logística & Confort</div>
-                  <div className="text-sm font-bold text-white">Párking Privado 150 Plazas</div>
+                  <div className="text-sm font-bold text-white">Párking Privado más de {OTZARRETA_SEATING_PRESET.parkingSpaces} Plazas</div>
                   <p className="text-xs text-gray-400">
                     Recinto cerrado en Derio a 5 min del aeropuerto y 10 min de Bilbao.
                   </p>
@@ -716,7 +723,7 @@ export default async function OtzarretaFlagshipPage({
           <div>
             <div className="font-bold text-white text-sm mb-1">Centralita Soberana Productora EAR</div>
             <p>Atención y Conserjería de Bodas: {CENTRALITA_EAR_OS}</p>
-            <p className="mt-1">Párking privado cerrado 150 plazas</p>
+            <p className="mt-1">Párking privado cerrado más de {OTZARRETA_SEATING_PRESET.parkingSpaces} plazas</p>
             <p className="mt-1">Dirección Gastronómica: Eduardo Martínez</p>
             <p>Parrilla al carbón de encina y cocina de cazuela</p>
           </div>
@@ -724,7 +731,7 @@ export default async function OtzarretaFlagshipPage({
           <div className="text-right">
             <div className="font-bold text-white text-sm mb-1">Restaurante Otzarreta · Derio</div>
             <p>Bizkaia / Txorierri · Asador & Finca de Banquetes</p>
-            <p className="mt-1">Menús oficiales de 100 € a 185 € + IVA</p>
+            <p className="mt-1">{OTZARRETA_WEDDING_MENUS_CLAIM}</p>
             <p>© {new Date().getFullYear()} Restaurante Otzarreta & Productora EAR</p>
           </div>
         </div>

@@ -72,51 +72,53 @@ export interface OtzarretaWeddingMenu {
     readonly extras: readonly string[];
 }
 
-/** Catálogo oficial de menús de celebración (orden de carta, de clásico a gala). */
+/**
+ * Carta oficial de menús de celebración — OFERTA SANCIONADA 2027.
+ *
+ * SANCIÓN DEL CEO (Edwin Agudelo, Director Generalista) de 2026-11-21: la
+ * oferta comercial vigente son los CUATRO menús de gala de 145 € a 185 € + IVA.
+ * Sustituye al catálogo heredado del dossier de 2026 (100–173 €), que queda
+ * derogado como tarifa comercial.
+ *
+ * Orden de carta: de entrada a gala. El «desde» NO se escribe aquí: se deriva
+ * del primer importe (`OTZARRETA_WEDDING_MENUS_CLAIM`) para que no existan dos
+ * cifras que puedan divergir (INV-10 / AF-4).
+ */
 export const OTZARRETA_WEDDING_MENUS: readonly OtzarretaWeddingMenu[] = Object.freeze([
     {
-        name: 'Cantábrico',
-        priceEur: 100,
-        note: 'Pescado salvaje del Cantábrico a la brasa de encina.',
+        name: 'Menú Tradición',
+        priceEur: 145,
+        note: 'La cocina de siempre del caserío, llevada al servicio de gala.',
         extras: Object.freeze([]),
     },
     {
-        name: 'Especial Imperial',
-        priceEur: 123.4,
-        note: 'Banquete de gala con barra libre y música.',
-        extras: Object.freeze(['1 h de barra libre', '1 h de DJ']),
-    },
-    {
-        name: 'Paloma',
-        priceEur: 125,
-        note: 'Clásico de la casa para celebraciones de mediodía.',
-        extras: Object.freeze([]),
-    },
-    {
-        name: 'Vasco',
-        priceEur: 138,
-        note: 'Pack completo de banquete con barra libre, DJ y transporte.',
-        extras: Object.freeze(['2 h de barra libre', '2 h de DJ', 'Autobús para 55 pax']),
-    },
-    {
-        name: 'Especial Temporada',
-        priceEur: 142.5,
-        note: 'Producto de mercado y huerta de cada estación.',
-        extras: Object.freeze([]),
-    },
-    {
-        name: 'Ezkertza',
+        name: 'Menú Asador',
         priceEur: 155,
-        note: 'Menú insignia: chuletón de ganado mayor y medio bogavante.',
-        extras: Object.freeze(['Chuletón de 1 kg', '½ bogavante']),
+        note: 'La brasa de encina y sarmiento de Eduardo Martínez como eje del banquete.',
+        extras: Object.freeze([]),
     },
     {
-        name: 'Caserío Beko',
-        priceEur: 173,
-        note: 'El más alto de la casa, con champán de maison.',
-        extras: Object.freeze(['Moët & Chandon']),
+        name: 'Menú Ezkertza',
+        priceEur: 165,
+        note: 'Menú insignia del caserío, con las piezas nobles de la casa.',
+        extras: Object.freeze([]),
+    },
+    {
+        name: 'Menú Soberano',
+        priceEur: 185,
+        note: 'El más alto de la carta: servicio de gala completo.',
+        extras: Object.freeze([]),
     },
 ] as const);
+
+/**
+ * Reclamo canónico de cabecera que las dos superficies (Bento de `/otzarreta` y
+ * system prompt del Concierge) citan palabra por palabra.
+ *
+ * Se DERIVA del primer menú de la carta: si el CEO sube el suelo, el reclamo se
+ * mueve con él y no puede quedarse publicando un importe caducado.
+ */
+export const OTZARRETA_WEDDING_MENUS_CLAIM = `Menús de Gala desde ${(OTZARRETA_WEDDING_MENUS[0]?.priceEur ?? 0).toLocaleString('es-ES')} € + IVA`;
 
 /**
  * Etiqueta de precio legible para copy público (`123,40 €`) o `null`.
@@ -185,8 +187,14 @@ export const OTZARRETA_ENTITY = Object.freeze({
     groupCapacityPax: 350,
     /** Suelo del catálogo: menú de grupos. */
     menuPriceFromEur: 40,
-    /** Precio de entrada del menú oficial de boda (100 € + IVA, dossier 2026). */
-    weddingPriceFromEur: 100,
+    /**
+     * Precio de entrada de la carta de gala sancionada 2027 (145 € + IVA).
+     *
+     * Se DERIVA de `OTZARRETA_WEDDING_MENUS[0]` y no se escribe a mano: es el
+     * «desde» que publican el Bento, la ficha y el Concierge. Una sola edición
+     * de la carta mueve el suelo de las tres superficies (INV-10).
+     */
+    weddingPriceFromEur: OTZARRETA_WEDDING_MENUS[0]?.priceEur ?? 0,
     /** Plazas de aparcamiento privado en Derio (150 según dossier oficial). */
     parkingSpaces: 150,
     /** Plazas de la sede canónica en Derio (Bizkaia). */
@@ -304,6 +312,58 @@ export const OTZARRETA_ENTITY = Object.freeze({
 
 /** Tipo derivado para consumo estricto (cero `any`). */
 export type OtzarretaEntity = typeof OTZARRETA_ENTITY;
+
+/* ─────────────────────────────────────────────────────────────────────────────
+ * PRESET OFICIAL DE AFORO POR SALA — SANCIÓN DEL CEO 2026-11-21
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Resuelve la deuda declarada en `CLINE_EXECUTION_LOG.md` (2026-11-21): el
+ * preset «220 pax salón» NO se implementó porque 220 no existía en ninguna
+ * fuente; ahora el CEO sanciona las cifras oficiales y las deja trazables.
+ *
+ * Doctrina aplicada (AF-1 / doctrina del dato verificado):
+ *  · `interiorPax` = 200 → techo del documentado «50 a 200 pax» que ya publican
+ *    la ficha, el explorador y el motor de dominancia.
+ *  · `exteriorPax` = 350 → `capacityPax` del SSOT. No se escribe el literal:
+ *    se LEE de la entidad para que no existan dos aforos vivos.
+ *  · `totalPax` = 350 → máximo de la finca; nunca suma de salas, porque una
+ *    misma boda no ocupa interior y exterior a la vez.
+ *  · `parkingSpaces` = 120 → suelo real del dossier (150 publicados). Se declara
+ *    el mínimo garantizado para no prometer plazas de más.
+ */
+export interface OtzarretaSeatingPreset {
+    /** Nombre de la sala o recinto. */
+    readonly label: string;
+    /** Aforo máximo de esa sala, en comensales. */
+    readonly capacityPax: number;
+    /** Rango estándar publicado (texto es-ES, sin inventar decimales). */
+    readonly standardRange: string;
+    /** Espacio del enum `OtzarretaSpace` al que corresponde, si aplica. */
+    readonly space: OtzarretaSpace | null;
+}
+
+export const OTZARRETA_SEATING_PRESET = Object.freeze({
+    /** Salón acristalado climatizado e insonorizado (interior). */
+    interiorSalon: Object.freeze({
+        label: 'Salón acristalado',
+        capacityPax: 200,
+        standardRange: '50 a 200 comensales',
+        space: 'comedor',
+    } as const satisfies OtzarretaSeatingPreset),
+    /** Jardín botánico con carpa para ceremonia civil (exterior). */
+    exteriorGarden: Object.freeze({
+        label: 'Jardín y carpa',
+        capacityPax: OTZARRETA_ENTITY.capacityPax,
+        standardRange: 'hasta 350 comensales',
+        space: 'jardin',
+    } as const satisfies OtzarretaSeatingPreset),
+    /** Capacidad total máxima de la finca (un solo evento al día). */
+    totalPax: OTZARRETA_ENTITY.capacityPax,
+    /** Suelo garantizado de plazas de aparcamiento privado en recinto cerrado. */
+    parkingSpaces: 120,
+});
+
+/** Tipo derivado del preset (consumo estricto, cero `any`). */
+export type OtzarretaSeatingPresetSpec = typeof OTZARRETA_SEATING_PRESET;
 
 /**
  * Predicado de verificación reutilizable por auditores: `verified` sólo puede

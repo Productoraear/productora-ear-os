@@ -15,7 +15,9 @@ import { buildAgentMinimumStandardBlock } from '@/lib/agents/agent-minimum-stand
 import { resolveCityDistance } from '@/lib/agents/geo';
 import { computeSoloQuote } from '@/lib/agents/pricing';
 import {
+  OTZARRETA_SEATING_PRESET,
   OTZARRETA_WEDDING_MENUS,
+  OTZARRETA_WEDDING_MENUS_CLAIM,
   formatOtzarretaMenuPrice,
 } from '@/lib/constants/otzarreta-entity';
 
@@ -303,10 +305,10 @@ BASE DE CONOCIMIENTO REAL DE PRODUCTORA EAR (SSOT INMUTABLE):
 1. Restaurante y Finca de Bodas Homologada en Gran Bilbao / Bizkaia:
 - Restaurante Jatetxea Ezkertza Berria & Otzarreta: Caserío tradicional vasco ubicado en Santo Domingo Hiribidea, 13, 48160 Derio (Bizkaia), a solo 8 minutos de Bilbao y 5 minutos del Aeropuerto.
 - Exclusividad: Solo se celebra 1 evento o boda al día.
-- Aforo: hasta 350 comensales (banquetes habituales de 50 a 200 invitados).
-- PARKING: Parking privado gratuito dentro del caserío con más de 150 plazas vigiladas.
+- Aforo: hasta 350 comensales. ${OTZARRETA_SEATING_PRESET.interiorSalon.label} (interior) ${OTZARRETA_SEATING_PRESET.interiorSalon.standardRange} y ${OTZARRETA_SEATING_PRESET.exteriorGarden.label} (exterior) ${OTZARRETA_SEATING_PRESET.exteriorGarden.standardRange}. Capacidad total máxima de la finca: ${OTZARRETA_SEATING_PRESET.totalPax} pax.
+- PARKING: Parking privado gratuito dentro del caserío con más de ${OTZARRETA_SEATING_PRESET.parkingSpaces} plazas vigiladas.
 - Cocina y Parrilla: Alta gastronomía vasca de brasa al carbón de encina dirigida por Eduardo Martínez (chuletones de 1 Kg de ganado mayor, rodaballos salvajes, bogavante, rape, mariscos).
-- 7 Menús Oficiales de Boda 2026 (fuente única: OTZARRETA_WEDDING_MENUS): ${buildWeddingMenusPromptLine()}. Todos los importes son por comensal SIN IVA; cita el importe exacto y aclara «+ IVA».
+- Carta de gala vigente 2027 — ${OTZARRETA_WEDDING_MENUS_CLAIM} (fuente única: OTZARRETA_WEDDING_MENUS): ${buildWeddingMenusPromptLine()}. Todos los importes son por comensal SIN IVA; cita el importe exacto y aclara «+ IVA». PROHIBIDO citar el catálogo derogado de 2026.
 - Bloqueo de fecha: Depósito Stripe Price-Lock garantizado de ${DEPOSITO_STRIPE_EUR} € (100% deducible del total).
 
 2. Música, Solista y Artistas Exclusivos (Fórmula Oficial SSOT — PROHIBIDO CITAR 550 €):
@@ -706,7 +708,7 @@ function resolveDeterministicFallback(
   if (isVenueRoute) {
     return {
       reply:
-        'Estás en el espacio gastronómico de Ezkertza Berria & Otzarreta (Derio). Disponemos de parrilla vasca al carbón de encina, parking privado gratuito de 150 plazas y menús nupciales desde 100 €. ¿Deseas consultar disponibilidad o ver un menú en detalle?',
+        `Estás en el espacio gastronómico de Ezkertza Berria & Otzarreta (Derio). Disponemos de parrilla vasca al carbón de encina, parking privado gratuito de más de ${OTZARRETA_SEATING_PRESET.parkingSpaces} plazas y ${OTZARRETA_WEDDING_MENUS_CLAIM}. ¿Deseas consultar disponibilidad o ver un menú en detalle?`,
       action: {
         type: 'dossier',
         label: 'Ver menús y condiciones (/otzarreta)',
@@ -718,7 +720,7 @@ function resolveDeterministicFallback(
 
   return {
     reply:
-      'Estás conectado con la Centralita Inteligente de Productora EAR. Puedo orientarte sobre espacios exclusivos como el Caserío Ezkertza Berria & Otzarreta en Derio (menús desde 100 € y parking de 150 plazas), servicios de producción y sonido Bose para eventos, o licitaciones B2G para ayuntamientos.',
+      `Estás conectado con la Centralita Inteligente de Productora EAR. Puedo orientarte sobre espacios exclusivos como el Caserío Ezkertza Berria & Otzarreta en Derio (${OTZARRETA_WEDDING_MENUS_CLAIM} y parking de más de ${OTZARRETA_SEATING_PRESET.parkingSpaces} plazas), servicios de producción y sonido Bose para eventos, o licitaciones B2G para ayuntamientos.`,
     action: {
       type: 'whatsapp',
       label: 'Hablar con la Centralita (+34 693 693 048)',

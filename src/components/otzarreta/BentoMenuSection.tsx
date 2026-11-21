@@ -14,8 +14,9 @@
  *  · Cero emojis, cero degradados de texto, cero texto apelmazado.
  *
  * Invariante de dinero (INV-10): aquí NO se escribe ningún importe. Los menús
- * y sus precios llegan de `OTZARRETA_WEDDING_MENUS`; el suelo «desde» sale de
- * `weddingPriceFromEur`. Este componente no puede desviarse del SSOT.
+ * y sus precios llegan de `OTZARRETA_WEDDING_MENUS`; el reclamo de cabecera y el
+ * suelo «desde» salen de `OTZARRETA_WEDDING_MENUS_CLAIM` (derivado del primer
+ * menú de la carta). Este componente no puede desviarse del SSOT.
  * ════════════════════════════════════════════════════════════════════════════
  */
 
@@ -23,8 +24,8 @@ import React from 'react';
 import Link from 'next/link';
 import { DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
 import {
-  OTZARRETA_ENTITY,
   OTZARRETA_WEDDING_MENUS,
+  OTZARRETA_WEDDING_MENUS_CLAIM,
   formatOtzarretaMenuPrice,
 } from '@/lib/constants/otzarreta-entity';
 
@@ -56,11 +57,11 @@ export default function BentoMenuSection({
           id="carta-menus-title"
           className="font-syne text-[clamp(1.75rem,3.4vw,2.75rem)] font-black leading-[1.06] tracking-[-0.02em] text-[#F4F1EA]"
         >
-          Siete menús de celebración
+          {OTZARRETA_WEDDING_MENUS_CLAIM}
         </h2>
         <p className="mt-3 text-sm leading-relaxed text-[#C9C4B8] sm:text-base">
-          Cada importe es por comensal y sin IVA, tal como figura en el dossier oficial de la casa. El
-          menú se cierra en la visita técnica con la Conserjería.
+          Carta de gala vigente con {OTZARRETA_WEDDING_MENUS.length} menús. Cada importe es por
+          comensal y sin IVA; el menú se cierra en la visita técnica con la Conserjería.
         </p>
       </div>
 
@@ -110,9 +111,7 @@ export default function BentoMenuSection({
 
       <div className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-[#ecb613]/30 bg-[#ecb613]/[0.04] p-6 sm:p-8">
         <div className="max-w-[58ch]">
-          <p className="text-sm font-semibold text-[#F4F1EA]">
-            Menús de celebración desde {OTZARRETA_ENTITY.weddingPriceFromEur} € + IVA
-          </p>
+          <p className="text-sm font-semibold text-[#F4F1EA]">{OTZARRETA_WEDDING_MENUS_CLAIM}</p>
           <p className="mt-1 text-xs leading-relaxed text-[#C9C4B8]">
             La fianza de {DEPOSITO_STRIPE_EUR} € sella la fecha en la agenda de la casa y se descuenta al
             100 % de la liquidación final.{' '}

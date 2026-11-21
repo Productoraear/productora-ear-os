@@ -11,6 +11,7 @@ import {
 } from '@/lib/constants/ear-os-ssot';
 import { isTableShapeValue, readPaxFromQuery } from '@/lib/seating/seating-codec';
 import type { TableShape } from '@/lib/seating/seating-plan';
+import { OTZARRETA_SEATING_PRESET } from '@/lib/constants/otzarreta-entity';
 
 export const metadata: Metadata = {
   title: 'Planificador de Mesas Pro | Productora EAR',
@@ -53,7 +54,18 @@ function firstValue(value: string | string[] | undefined): string | null {
 export default async function SeatingPlannerPage({ searchParams }: { searchParams: SearchParams }) {
   const params = await searchParams;
   const pax = readPaxFromQuery(firstValue(params.pax)) ?? 80;
-  const venueCapacity = readPaxFromQuery(firstValue(params.aforo)) ?? 0;
+  /**
+   * Preset canónico `?preset=otzarreta` (sanción del CEO 2026-11-21).
+   *
+   * El aforo del espacio llega de `OTZARRETA_SEATING_PRESET`, nunca de un literal
+   * en la ruta: salón acristalado 200 pax (interior) y jardín/carpa 350 pax
+   * (exterior), con 350 pax de capacidad total de la finca. `?aforo=` explícito
+   * sigue mandando si el cliente lo trae desde otra ficha.
+   */
+  const presetParam = firstValue(params.preset);
+  const presetVenueCapacity =
+    presetParam === 'otzarreta' ? OTZARRETA_SEATING_PRESET.exteriorGarden.capacityPax : 0;
+  const venueCapacity = readPaxFromQuery(firstValue(params.aforo)) ?? presetVenueCapacity;
   const shapeParam = firstValue(params.tipo);
   const shape: TableShape = shapeParam !== null && isTableShapeValue(shapeParam) ? shapeParam : 'round';
 
@@ -116,7 +128,17 @@ export default async function SeatingPlannerPage({ searchParams }: { searchParam
         </div>
 
         {/* Evidencia operativa: cifras leídas del SSOT, no de copy. */}
-        <section className="grid gap-4 sm:grid-cols-3">
+        <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="rounded-2xl border border-[#1E1E26] bg-[#0A0A0E] p-6">
+            <p className="text-xs text-[#8E8A80]">Aforo canónico Otzarreta</p>
+            <p className="mt-2 font-syne text-xl font-black tabular-nums text-[#F4F1EA]">
+              {OTZARRETA_SEATING_PRESET.interiorSalon.capacityPax} /{' '}
+              {OTZARRETA_SEATING_PRESET.exteriorGarden.capacityPax}
+            </p>
+            <p className="mt-1 text-xs text-[#C9C4B8]">
+              {OTZARRETA_SEATING_PRESET.interiorSalon.label} y {OTZARRETA_SEATING_PRESET.exteriorGarden.label}
+            </p>
+          </div>
           <div className="rounded-2xl border border-[#1E1E26] bg-[#0A0A0E] p-6">
             <p className="text-xs text-[#8E8A80]">Split soberano</p>
             <p className="mt-2 font-syne text-xl font-black tabular-nums text-[#F4F1EA]">
