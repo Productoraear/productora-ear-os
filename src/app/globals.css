@@ -1402,10 +1402,15 @@ p {
     }
   }
 
+  /* El hover redefine la sombra completa (filo interior + sombra descendente).
+     Se conserva el ANILLO perimetral de oro de 1 px que el material Aura Onyx
+     usa como resplandor: sin él, la tarjeta Bento perdía su firma al pasar el
+     puntero (el resplandor es un filo, nunca un orbe difuso). */
   .hallmark-card:hover {
     border-color: rgba(236, 182, 19, 0.4);
     background-color: #0d0d12;
     box-shadow:
+      0 0 0 1px rgba(236, 182, 19, 0.28),
       0 2px 4px rgba(3, 3, 5, 0.5),
       0 18px 40px -22px rgba(3, 3, 5, 0.9),
       inset 0 1px 0 rgba(255, 255, 255, 0.05);

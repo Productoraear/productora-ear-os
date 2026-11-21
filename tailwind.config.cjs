@@ -52,6 +52,17 @@ module.exports = {
         "gold-dark": "#b38805",
         "gold-glow": "rgba(236, 182, 19, 0.35)",
 
+        // 🏛️ AURA ONYX HALLMARK S-CLASS · tema insignia (DESIGN.md §8)
+        // Superficies cosechadas del catálogo Hallmark y verificadas por
+        // contraste en scratch/HALLMARK_HARVESTED_VAULT.json (6/6 PASS).
+        // Se registran con nombres NUEVOS (`void-*`) para no redefinir los
+        // tokens `obsidian`/`canvas` que ya consumen otras rutas.
+        "void": "#030305",
+        "void-surface": "#08080C",
+        "void-elevated": "#0E0E14",
+        "void-panel": "#0F0F16",
+        "void-hairline": "#1E1E26",
+
         // 🎬 CINEMATIC MONOCHROME SYSTEM (SQUARESPACE ULTRA-LUXURY SPEC)
         obsidian: "#000000",
         paper: "#ffffff",
@@ -134,6 +145,19 @@ module.exports = {
           "0 2px 4px rgba(3, 3, 5, 0.55), 0 30px 60px -28px rgba(3, 3, 5, 0.95), inset 0 1px 0 rgba(255, 255, 255, 0.06)",
         "inset-hairline": "inset 0 0 0 1px rgba(255, 255, 255, 0.08)",
         "inset-hairline-gold": "inset 0 0 0 1px rgba(236, 182, 19, 0.28)",
+
+        // 🏛️ MICRO-BORDES Y RESPLANDORES PERIMETRALES (1 px, nunca orbe difuso)
+        // Firma extraída 12 veces del sitio (0 0 0 1px) por
+        // scripts/vampirize_hallmark_engine.cjs → perimeterGlows[].
+        // Un resplandor es un ANILLO de 1 px: el blur sólo añade un halo de
+        // 24 px con propagación negativa (-12 px), jamás un orbe.
+        "micro-border": "0 0 0 1px rgba(255, 255, 255, 0.08)",
+        "micro-border-strong": "0 0 0 1px rgba(255, 255, 255, 0.14)",
+        "perimeter-gold": "0 0 0 1px rgba(236, 182, 19, 0.28)",
+        "perimeter-gold-hover":
+          "0 0 0 1px rgba(236, 182, 19, 0.45), 0 0 24px -12px rgba(236, 182, 19, 0.55)",
+        "perimeter-cyan": "0 0 0 1px rgba(0, 229, 255, 0.24)",
+        "perimeter-ruby": "0 0 0 1px rgba(255, 43, 68, 0.28)",
       },
       borderRadius: {
         // Un radio por nivel de anidamiento (invariante de página Hallmark).
@@ -182,9 +206,18 @@ module.exports = {
         // Blueprint del Seating Planner: cuadrícula de 1 px (--grid-line).
         blueprint:
           "linear-gradient(to right, rgba(255, 255, 255, 0.045) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.045) 1px, transparent 1px)",
+        // Blueprint milimétrico del tema Aura Onyx (DESIGN.md §8): cuadrícula
+        // MENOR de 8 px al 2,5 % (la retícula fina del blueprint), sin saturar
+        // la lectura. La rejilla mayor sigue en `blueprint-major` (96 px).
+        "blueprint-fine":
+          "linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px)",
+        // Gradiente de gala: elevación por luminosidad en tres paradas
+        // (máximo permitido por el suelo de Hallmark), nunca morado/azul.
+        "grad-gala": "linear-gradient(180deg, #0E0E14 0%, #08080C 55%, #030305 100%)",
       },
       backgroundSize: {
         blueprint: "24px 24px",
+        "blueprint-fine": "8px 8px",
         "blueprint-major": "96px 96px",
       },
 

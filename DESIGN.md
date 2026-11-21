@@ -1,4 +1,4 @@
-# DESIGN.md — EAR OS v14.1 · CAPA 3: ESTÁNDAR DE DISEÑO, TASTE ENGINE & CANVAS
+# DESIGN.md — EAR OS v14.2 · CAPA 3: ESTÁNDAR DE DISEÑO, TASTE ENGINE & CANVAS
 
 Gobernanza visual orientada a conversión, cero fricción visual y justificación de pricing soberano.
 
@@ -6,10 +6,21 @@ Gobernanza visual orientada a conversión, cero fricción visual y justificació
 > no se escribe de memoria: se cosechó del paquete local `Nutlope/hallmark`
 > (commit `04977e15f3dfd6ee4b74c887dac3eb52665d6c92`, instalado en
 > `.claude/skills/hallmark/`, `skills-lock.json`) y del sitio `https://www.usehallmark.com/`
-> mediante `scripts/harvest_hallmark_dna.cjs`. Cada token de geometría citado
+> mediante `scripts/vampirize_hallmark_engine.cjs` (Operación Vampirización
+> HORIZONX / ZTLM). Cada token de geometría citado
 > (`--rule-hair`, `--r`, `--r-pill`, `--ease`, `--ease-out`, `--shadow-card`,
 > la escala `--s-1…--s-10`) y cada ratio de contraste se lee del artefacto
-> `scratch/HALLMARK_HARVESTED_DNA.json`. Sin ese fichero, la cifra no se cita.
+> `scratch/HALLMARK_HARVESTED_VAULT.json`. Sin ese fichero, la cifra no se cita.
+>
+> **Medición de la captura (2026-11-21, `VAMPIRE=VERIFICADO`, Exit 0).**
+> Portada `200` · 63.267 B · sha256 `bf40f84d7529…`; hoja `style.css` `200` ·
+> 45.612 B · sha256 `03677b0c2699…`; **40/40** rutas públicas sondeadas `200`;
+> **13** páginas de tema con tokens propios; **128** variables CSS nativas;
+> **12** temas de la casa (`--d-<slug>-p` / `--d-<slug>-a`); **51** temas del
+> paquete local (13 oscuros); **12** glows perimetrales de 1 px (`0 0 0 1px`);
+> **5** curvas de easing y **16** duraciones distintas.
+
+
 
 ---
 
@@ -130,9 +141,88 @@ jamás dos bloques fotográficos consecutivos.
 
 Y en `globals.css` (capa `@layer components`):
 `.hallmark-canvas`, `.hallmark-lede`, `.subtle-border`, `.subtle-border-strong`,
-`.glass-panel-sclass`, `.aura-glow`, `.hallmark-card`, `.hallmark-badge`,
+`.glass-panel-sglass`, `.aura-glow`, `.hallmark-card`, `.hallmark-badge`,
 `.hallmark-btn-primary`, `.hallmark-btn-secondary`, `.hallmark-bento`,
 `.hallmark-blueprint`, `.hallmark-label`, `.hallmark-figure`, `.hallmark-rule`.
+(El nombre real de la utilidad de cristal es `.glass-panel-sclass`; la siguiente
+revisión de esta línea debe corregir la errata, no el CSS.)
 
 ---
+
+## 7. CATÁLOGO COSECHADO · 12 TEMAS DE LA CASA (`usehallmark.com`)
+
+Leído de `scratch/HALLMARK_HARVESTED_VAULT.json` → `phase2ExternalSite.themes`.
+Cada fila es un par `--d-<slug>-p` (papel) / `--d-<slug>-a` (acento) declarado por
+el sitio y resuelto a hexadecimal por el motor. **Un tema es un material, no un plan.**
+
+| Tema | Papel | Acento | Luminancia del papel | Acento sobre papel |
+|---|---|---|---|---|
+| `bloom` | `#f9f4ee` | `#af4529` | 0,9119 | 5,17:1 |
+| `carnival` | `#ffddca` | `#f6ce00` | 0,7701 | 1,19:1 |
+| `cobalt` | `#f8fbfe` | `#0462d3` | 0,9590 | 5,44:1 |
+| `garden` | `#f7f1df` | `#1f6a19` | 0,8799 | 5,97:1 |
+| `halftone` | `#f9f3db` | `#d01a00` | 0,8919 | 4,95:1 |
+| `hedgerow` | `#032615` | `#cae430` | 0,0149 | 11,27:1 |
+| `kiln` | `#0b0605` | `#fe6a00` | 0,0021 | 6,99:1 |
+| `manifesto` | `#0a0704` | `#db0310` | 0,0022 | 3,85:1 |
+| `midnight` | `#02071d` | `#6bcbf7` | 0,0026 | 10,93:1 |
+| `riso` | `#f8f5ed` | `#fe419d` | 0,9130 | 2,98:1 |
+| `sport` | `#f6f9fc` | `#c8e928` | 0,9416 | 1,31:1 |
+| `terminal` | `#040805` | `#7ef473` | 0,0020 | 14,49:1 |
+
+**Lectura soberana del catálogo.** Cinco papeles oscuros (`hedgerow`, `kiln`,
+`manifesto`, `midnight`, `terminal`) son los únicos compatibles con Aura Onyx.
+Los acentos `carnival` (1,19:1), `sport` (1,31:1) y `riso` (2,98:1) **no se
+adoptan jamás** en texto: incumplen WCAG 2.2 AA por debajo de 4,5:1. `terminal`
+(14,49:1) y `hedgerow` (11,27:1) son las combinaciones de la casa que alcanzan
+AAA sin retrabajo, y por eso alimentan la variante de datos densos.
+
+
+---
+
+## 8. TEMA INSIGNIA · «AURA ONYX HALLMARK S-CLASS»
+
+Mapeo canónico del sistema cosechado sobre la identidad de la casa. Los valores
+son los del artefacto (`phase3EarOsSynthesis.themes[0]`) y su contraste está
+**medido, no afirmado**: 6/6 pares PASS.
+
+| Ranura | Token | Valor | Uso |
+|---|---|---|---|
+| Fondo primario | `--bg-void` / `bg-void` | `#030305` | Lienzo de página, inmersión OLED |
+| Superficie | `--bg-surface` / `bg-void-surface` | `#08080C` | Tarjetas, paneles, widget |
+| Elevación | `--bg-elevated` / `bg-void-elevated` | `#0E0E14` | Módulos elevados, hover de tarjeta |
+| Panel técnico | `--bg-panel` | `#0F0F16` | Lienzo del Seating Planner (blueprint) |
+| Filo | `--border-hairline` | `#1E1E26` | Borde de 1 px de todo panel |
+| Filo vítreo | `--border-glass` | `rgba(255,255,255,0.08)` | Insignias, cristal, separadores |
+| Acento único | `--gold` / `gold` | `#ecb613` | Transacciones, fianza de 100 €, CTA |
+| Tinta | `--ink` | `#F4F1EA` | Titulares display |
+| Tinta 2 | `--ink-2` | `#C9C4B8` | Cuerpo de lectura |
+| Tinta muda | `--ink-muted` | `#8E8A80` | Etiquetas y notas legales |
+
+**Contraste medido (WCAG 2.2).** `ink/void` 18,27:1 (AAA) · `ink-2/void` 11,85:1
+(AAA) · `ink-2/surface` 11,49:1 (AAA) · `ink-muted/surface` 5,80:1 (AA) ·
+`gold/surface` 10,73:1 (AAA sobre 3:1) · `#120D00/gold` 10,40:1 (AAA).
+
+**Elevación.** `shadow-elevation-1/2/3` = filo interior de 1 px + sombra
+descendente. El resplandor es un **anillo de 1 px** (`0 0 0 1px
+rgba(236,182,19,0.28)`), la firma que el motor extrajo 12 veces del sitio.
+Prohibido el orbe difuso (`rounded-full blur-[120px]`): es fuga de estilo
+genérico detectada y eliminada en `/otzarreta`.
+
+**Tipografía.** Display `Syne` 700/800, tracking `-0.025em` en H2 y `-0.035em` en
+H1 (rango cosechado de `craft.md`: `-0.02` a `-0.04em` en caras de ancho regular;
+line-height `1.0`–`1.15`). Cuerpo `Inter`/`Montserrat` a 16 px con line-height
+1.65 (rango cosechado: `1.5`–`1.65`). Datos `JetBrains Mono` tabular.
+
+**Movimiento.** `--ease-out: cubic-bezier(0.16, 1, 0.3, 1)`; sólo `color`,
+`box-shadow` y `transform`; `160 ms` en hover, `320 ms` en panel. Jamás
+`transition: all` (suelo 2 de Hallmark).
+
+**Pureza de capas.** `font-mono` con `tracking-wider` y `uppercase` es una
+etiqueta versalita espaciada, prohibida por el suelo 9 de Hallmark: las etiquetas
+van en la cara de cuerpo, un paso menor, sentence case, sin tracking.
+
+---
+
+
 

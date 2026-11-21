@@ -115,24 +115,30 @@ export default async function SeatingPlannerPage({ searchParams }: { searchParam
           </dl>
         </header>
 
-        {/* Lienzo Blueprint: cuadrícula de 1 px sobre #0F0F16, radio único de
-            14 px y filo hairline. `scroll-mt` reserva la altura de la barra
-            fija para que el salto del ancla no reordene el flujo (CLS 0). */}
-        <div id="plano" className="hallmark-blueprint scroll-mt-28 p-2 sm:p-3">
-          <SeatingPlanner
-            initialPax={pax}
-            initialVenueCapacity={venueCapacity}
-            initialShape={shape}
-            initialEventName=""
-            catalogValueEur={EUR_FORMAT.format(SEATING_PLANNER_CATALOG_VALUE_EUR)}
-            depositEur={EUR_FORMAT.format(DEPOSITO_STRIPE_EUR)}
-            phoneE164={CENTRALITA_EAR_OS}
-          />
+        {/* Lienzo Blueprint milimétrico: retícula doble (8 px fina al 2,5 %,
+            24 px base) sobre #0F0F16, radio único de 14 px y filo hairline de
+            1 px. `scroll-mt` reserva la altura de la barra fija para que el
+            salto del ancla no reordene el flujo (CLS 0).
+            Material: DESIGN.md §8 «Aura Onyx Hallmark S-Class». */}
+        <div id="plano" className="hallmark-blueprint scroll-mt-28 p-2 shadow-elevation-1 sm:p-3">
+          <div className="rounded-card bg-blueprint-fine">
+            <SeatingPlanner
+              initialPax={pax}
+              initialVenueCapacity={venueCapacity}
+              initialShape={shape}
+              initialEventName=""
+              catalogValueEur={EUR_FORMAT.format(SEATING_PLANNER_CATALOG_VALUE_EUR)}
+              depositEur={EUR_FORMAT.format(DEPOSITO_STRIPE_EUR)}
+              phoneE164={CENTRALITA_EAR_OS}
+            />
+          </div>
         </div>
 
-        {/* Evidencia operativa: cifras leídas del SSOT, no de copy. */}
+        {/* Evidencia operativa: cifras leídas del SSOT, no de copy.
+            Cada tarjeta lleva micro-borde de 1 px; el resplandor es un anillo
+            perimetral, nunca un halo difuso. */}
         <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="hallmark-card">
+          <div className="hallmark-card shadow-micro-border">
             <p className="hallmark-label">Aforo canónico Otzarreta</p>
             <p className="hallmark-figure text-xl font-black">
               {OTZARRETA_SEATING_PRESET.interiorSalon.capacityPax} /{' '}
@@ -142,7 +148,7 @@ export default async function SeatingPlannerPage({ searchParams }: { searchParam
               {OTZARRETA_SEATING_PRESET.interiorSalon.label} y {OTZARRETA_SEATING_PRESET.exteriorGarden.label}
             </p>
           </div>
-          <div className="hallmark-card">
+          <div className="hallmark-card shadow-micro-border">
             <p className="hallmark-label">Split soberano</p>
             <p className="hallmark-figure text-xl font-black">
               {Math.round(SPLIT_SOBERANO.artista * 100)} / {Math.round(SPLIT_SOBERANO.earOs * 100)} /{' '}
@@ -150,21 +156,21 @@ export default async function SeatingPlannerPage({ searchParams }: { searchParam
             </p>
             <p className="text-xs leading-relaxed text-[#C9C4B8]">Artista, infraestructura y VIMUME</p>
           </div>
-          <div className="hallmark-card">
+          <div className="hallmark-card shadow-micro-border">
             <p className="hallmark-label">Rider acústico</p>
             <p className="hallmark-figure text-xl font-black">
               {WATTS_PER_PAX} W/pax, &lt; {LIMITE_SPL_DB} dB SPL
             </p>
             <p className="text-xs leading-relaxed text-[#C9C4B8]">Ley 37/2003, limitador telemático</p>
           </div>
-          <div className="hallmark-card">
+          <div className="hallmark-card shadow-perimeter-gold">
             <p className="hallmark-label">Canal único</p>
             <p className="hallmark-figure text-xl font-black tabular-nums">{CENTRALITA_EAR_OS}</p>
             <p className="text-xs leading-relaxed text-[#C9C4B8]">Revisión humana del plano</p>
           </div>
         </section>
 
-        <section className="flex flex-wrap items-center justify-between gap-4 rounded-card border border-[#1E1E26] bg-[#0A0A0E] p-6 shadow-inset-hairline">
+        <section className="flex flex-wrap items-center justify-between gap-4 rounded-card border border-[#1E1E26] bg-[#08080C] p-6 shadow-inset-hairline">
           <p className="flex items-center gap-2 text-xs leading-relaxed text-[#C9C4B8]">
             <ShieldCheck size={15} className="shrink-0 text-[#57d99a]" aria-hidden="true" />
             El plano no cotiza: organiza. Cualquier importe del evento nace del presupuesto sellado.

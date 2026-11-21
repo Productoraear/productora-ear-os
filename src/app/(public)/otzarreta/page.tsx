@@ -296,23 +296,26 @@ export default async function OtzarretaFlagshipPage({
       {/* 3. ANÁLISIS FINANCIERO: EAR OS VS DIRECTORIO PASIVO (SIN REBAJA) */}
       {/* â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â” */}
       <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto my-24">
-        <div className="rounded-3xl bg-gradient-to-b from-[#0e0e14] via-[#09090d] to-[#050507] border border-[#ecb613]/30 p-8 sm:p-12 lg:p-16 backdrop-blur-md relative overflow-hidden shadow-2xl shadow-amber-950/20">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-[#ecb613]/10 rounded-full blur-[120px] pointer-events-none" />
+        <div className="relative overflow-hidden rounded-panel border border-[#ecb613]/30 bg-grad-gala p-8 shadow-elevation-3 sm:p-12 lg:p-16">
+          {/* Resplandor perimetral de 1 px (anillo), jamás un orbe difuso:
+              `shadow-2xl` + `rounded-full blur-[120px]` era fuga de estilo
+              genérico (INV-21 / suelo 11 de Hallmark) y se retiró. */}
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 rounded-panel shadow-perimeter-gold" />
 
-          <div className="space-y-4 text-center max-w-4xl mx-auto mb-14">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-xs font-mono tracking-wider">
-              <TrendingUp className="w-4 h-4 text-[#ecb613]" />
-              <span>ANÁLISIS DE RETORNO DE INVERSIÓN (ROI) · PROPUESTA EJECUTIVA</span>
+          <div className="mx-auto mb-14 max-w-4xl space-y-4 text-center">
+            <div className="hallmark-badge text-[#ecb613]">
+              <TrendingUp className="h-4 w-4" aria-hidden="true" />
+              <span>Análisis de retorno de inversión · propuesta ejecutiva</span>
             </div>
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-white leading-tight">
-              Por Qué EAR OS Rinde Más que un Directorio Pasivo
-              <span className="mt-2 block font-syne text-2xl font-bold tracking-display text-[#ecb613] sm:text-4xl">
+            <h2 className="text-3xl font-syne font-extrabold leading-[1.06] tracking-display text-[#F4F1EA] [overflow-wrap:break-word] sm:text-5xl">
+              Por qué EAR OS rinde más que un directorio pasivo
+              <span className="mt-2 block text-2xl font-syne font-bold tracking-display text-[#ecb613] sm:text-4xl">
                 Cero fuga de parejas y 126 landings propias
               </span>
             </h2>
-            <p className="text-gray-300 text-sm sm:text-base max-w-3xl mx-auto leading-relaxed">
+            <p className="mx-auto max-w-3xl text-sm leading-relaxed text-[#C9C4B8] sm:text-base">
               Un directorio pasivo cobra su cuota anual y te entrega un perfil entre miles.
-              EAR OS te entrega un <strong>activo tecnol&oacute;gico soberano</strong> que trabaja exclusivamente para ti las 24 horas del d&iacute;a.
+              EAR OS te entrega un <strong className="text-[#F4F1EA]">activo tecnol&oacute;gico soberano</strong> que trabaja exclusivamente para ti las 24 horas del d&iacute;a.
             </p>
           </div>
 
@@ -323,10 +326,10 @@ export default async function OtzarretaFlagshipPage({
               <div className="space-y-5">
                 <div className="flex items-center justify-between border-b border-red-500/20 pb-4">
                   <div>
-                    <span className="text-xs font-mono text-red-400 uppercase tracking-wider">MODELO CONVENCIONAL</span>
-                    <h3 className="text-2xl font-bold text-white">Directorio Convencional (Alquiler Pasivo)</h3>
+                    <span className="text-xs text-[#FF6B7D]">Modelo convencional</span>
+                    <h3 className="text-2xl font-syne font-bold tracking-display text-[#F4F1EA]">Directorio Convencional (Alquiler Pasivo)</h3>
                   </div>
-                  <div className="px-3 py-1 rounded-full bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-mono">
+                  <div className="rounded-pill border border-red-500/30 bg-red-500/10 px-3 py-1 font-mono text-xs text-[#FF6B7D]">
                     Fuga de Clientes
                   </div>
                 </div>
@@ -371,19 +374,19 @@ export default async function OtzarretaFlagshipPage({
             </div>
 
             {/* Tarjeta EAR OS (Activo Soberano) */}
-            <div className="rounded-3xl bg-gradient-to-b from-[#141209] to-[#09090d] border-2 border-[#ecb613] p-8 space-y-6 relative flex flex-col justify-between shadow-xl shadow-[#ecb613]/10">
-              <div className="absolute -top-3.5 right-8 px-4 py-1 rounded-full bg-[#ecb613] text-black font-extrabold text-xs tracking-wider uppercase shadow-md">
-                RECOMENDADO
+            <div className="rounded-panel border-2 border-[#ecb613] bg-grad-gala p-8 shadow-perimeter-gold relative flex flex-col justify-between sm:p-8">
+              <div className="hallmark-badge absolute -top-3.5 right-8 border-[#ecb613]/60 bg-[#ecb613] font-semibold text-[#120D00]">
+                Recomendado
               </div>
 
               <div className="space-y-5">
                 <div className="flex items-center justify-between border-b border-[#ecb613]/30 pb-4">
                   <div>
-                    <span className="text-xs font-mono text-[#ecb613] uppercase tracking-wider">TECNOLOGÍA PROPIA S-CLASS</span>
-                    <h3 className="text-2xl font-bold text-white">EAR OS Engine (Activo Soberano)</h3>
+                    <span className="text-xs text-[#ecb613]">Tecnología propia S-Class</span>
+                    <h3 className="font-syne text-2xl font-bold tracking-display text-[#F4F1EA]">EAR OS Engine (Activo Soberano)</h3>
                   </div>
-                  <div className="px-3 py-1 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/40 text-[#ecb613] text-xs font-mono">
-                    100% Exclusivo
+                  <div className="rounded-pill border border-[#ecb613]/40 bg-[#ecb613]/10 px-3 py-1 text-xs tabular-nums text-[#ecb613]">
+                    <span className="font-syne font-bold">100 %</span> exclusivo
                   </div>
                 </div>
 
@@ -445,10 +448,10 @@ export default async function OtzarretaFlagshipPage({
       {/* â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â” */}
       <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto my-20">
         <div className="space-y-4 text-center max-w-3xl mx-auto mb-12">
-          <span className="text-xs font-mono text-[#ecb613] uppercase tracking-wider">
-            ENCLAVE PRIVILEGIADO EN EL PAÍS VASCO
+          <span className="text-xs text-[#ecb613]">
+            Enclave privilegiado en el País Vasco
           </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
+          <h2 className="font-syne text-3xl font-extrabold tracking-display text-[#F4F1EA] [overflow-wrap:break-word] sm:text-4xl">
             Restaurante Otzarreta · Dirección Gastronómica de Eduardo Martínez (Derio)
           </h2>
           <p className="text-gray-400 text-sm sm:text-base">
@@ -522,22 +525,23 @@ export default async function OtzarretaFlagshipPage({
       {/* 7. LA ALIANZA: EL CASERÍO & EDWIN AGUDELO        */}
       {/* â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â” */}
       <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto my-20">
-        <div className="rounded-3xl bg-gradient-to-b from-[#09090d]/90 to-[#050507] border border-white/10 p-8 sm:p-12 lg:p-16 backdrop-blur-md relative overflow-hidden">
-          <div className="absolute -right-24 -top-24 w-80 h-80 bg-[#ecb613]/10 rounded-full blur-[100px] pointer-events-none" />
+        <div className="relative overflow-hidden rounded-panel border border-white/[0.08] bg-grad-gala p-8 shadow-elevation-2 sm:p-12 lg:p-16">
+          {/* Anillo perimetral de 1 px en lugar del orbe `blur-[100px]`. */}
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 rounded-panel shadow-micro-border" />
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            <div className="lg:col-span-7 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-gray-300">
-                <Award className="w-3.5 h-3.5 text-[#ecb613]" />
-                <span>PATRIMONIO & TRADICIÓN DESDE 1902</span>
+          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12">
+            <div className="space-y-6 lg:col-span-7">
+              <div className="hallmark-badge text-[#C9C4B8]">
+                <Award className="h-3.5 w-3.5 text-[#ecb613]" aria-hidden="true" />
+                <span>Patrimonio y tradición desde 1902</span>
               </div>
 
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-white leading-tight">
-                Cuatro Generaciones de Alta Cocina Vasca:
+              <h2 className="text-3xl font-syne font-extrabold leading-[1.08] tracking-display text-[#F4F1EA] [overflow-wrap:break-word] sm:text-4xl">
+                Cuatro generaciones de alta cocina vasca
                 <span className="block text-[#ecb613]">Eduardo Martínez · Restaurante Otzarreta (Derio)</span>
               </h2>
 
-              <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
+              <p className="text-sm leading-relaxed text-[#C9C4B8] sm:text-base">
                 Cuando <strong>Eduardo Martínez</strong> enciende las brasas en Restaurante Otzarreta en Derio, custodia más de
                 un siglo de sabiduría en el trato de las carnes maduradas de ganado mayor, los rodaballos salvajes del Cantábrico a la brasa y la cocina de cazuela tradicional vasca.
               </p>
@@ -548,7 +552,7 @@ export default async function OtzarretaFlagshipPage({
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
                 <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1">
-                  <div className="text-xs font-mono text-amber-400 uppercase">La Brasa de Eduardo</div>
+                  <div className="text-xs text-[#ecb613]">La brasa de Eduardo</div>
                   <div className="text-sm font-bold text-white">Carbón de Encina y Sarmiento</div>
                   <p className="text-xs text-gray-400">
                     Cero catering recalentado en cubetas. Del fuego al plato de tus comensales.
@@ -556,7 +560,7 @@ export default async function OtzarretaFlagshipPage({
                 </div>
 
                 <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1">
-                  <div className="text-xs font-mono text-[#ecb613] uppercase">Logística & Confort</div>
+                  <div className="text-xs text-[#ecb613]">Logística y confort</div>
                   <div className="text-sm font-bold text-white">Párking Privado más de {OTZARRETA_SEATING_PRESET.parkingSpaces} Plazas</div>
                   <p className="text-xs text-gray-400">
                     Recinto cerrado en Derio a 5 min del aeropuerto y 10 min de Bilbao.
@@ -598,10 +602,10 @@ export default async function OtzarretaFlagshipPage({
           </span>
           <span className="text-xs font-mono text-[#ecb613] shrink-0">Mostrar / ocultar</span>
         </summary>
-        <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-8 sm:p-12 backdrop-blur-md space-y-10">
+        <div className="hallmark-blueprint space-y-10 rounded-panel p-8 sm:p-12">
           <div className="space-y-2">
-            <span className="text-xs font-mono text-[#ecb613] uppercase tracking-wider">
-              MALLA DE DOMINANCIA · {OTZARRETA_HUB.total} PÁGINAS DEDICADAS
+            <span className="text-xs text-[#ecb613]">
+              Malla de dominancia · {OTZARRETA_HUB.total} páginas dedicadas
             </span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
               {OTZARRETA_HUB.geoCount} Landings Geográficas + {OTZARRETA_HUB.intentCount} de Intención
@@ -616,7 +620,7 @@ export default async function OtzarretaFlagshipPage({
 
           {OTZARRETA_HUB.groups.map((group) => (
             <div key={group.vertical.slug} className="space-y-3">
-              <h3 className="text-xs font-mono uppercase tracking-wider text-[#ecb613]">
+              <h3 className="text-xs text-[#ecb613]">
                 {group.vertical.label} · {group.landings.length} municipios
               </h3>
               <div className="flex flex-wrap gap-2">
@@ -635,7 +639,7 @@ export default async function OtzarretaFlagshipPage({
           ))}
 
           <div className="space-y-3 pt-2 border-t border-white/10">
-            <h3 className="text-xs font-mono uppercase tracking-wider text-[#ecb613]">
+            <h3 className="text-xs text-[#ecb613]">
               Intenciones provinciales en Bizkaia · {OTZARRETA_HUB.provinceIntents.length} URLs
             </h3>
             <div className="flex flex-wrap gap-2">

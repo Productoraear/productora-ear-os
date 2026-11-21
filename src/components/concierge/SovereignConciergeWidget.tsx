@@ -138,10 +138,13 @@ function getContextForRoute(pathname: string): RouteContextConfig {
     };
   }
 
+  // AF-1 / AF-3: ningún estado de presencia se afirma sin sonda. La Centralita
+  // se declara con su horario contractual, verificable; el canal directo es la
+  // línea oficial. Prohibido pintar "en línea" por defecto (verde por defecto).
   return {
     title: 'Conserjería IA · Centralita EAR OS',
-    badge: 'En línea · < 1 min',
-    greeting: 'Bienvenido a Productora EAR. Estoy coordinando la centralita en tiempo real. ¿En qué podemos ayudarte hoy?',
+    badge: 'Centralita 09:00–21:00',
+    greeting: 'Bienvenido a Productora EAR. Esta conserjería resuelve catálogo, aforos y disponibilidad. Para una decisión de sala, la Centralita responde en la línea oficial.',
     category: 'General',
     providerName: 'Centralita EAR OS',
     suggestedWa: 'Hola Productora EAR, estoy navegando por productoraear.com y deseo consultar disponibilidad e información.',
@@ -532,13 +535,16 @@ export function SovereignConciergeWidget() {
           {/* Header */}
           <div className="flex shrink-0 items-center justify-between border-b border-white/[0.08] px-4 py-3">
             <div className="flex items-center gap-2.5">
-              <div className="relative flex h-9 w-9 items-center justify-center rounded-xl border border-[#ecb613]/30 bg-[#101018] text-[#ecb613]">
-                <Bot size={18} />
-                <span className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full border-2 border-[#08080C] bg-[#3FCF8E]" />
+              <div className="relative flex h-9 w-9 items-center justify-center rounded-card border border-[#ecb613]/30 bg-[#0E0E14] text-[#ecb613] shadow-micro-border">
+                <Bot size={18} aria-hidden="true" />
+                {/* Indicador de canal: anillo de 1 px en oro, sin pulso continuo
+                    (Floor 10) y sin punto verde de presencia no sondeada
+                    (AF-1: prohibido el verde por defecto). */}
+                <span aria-hidden="true" className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full bg-[#ecb613] ring-2 ring-[#08080C]" />
               </div>
               <div>
                 <h3 className="text-sm font-semibold leading-tight text-[#F4F1EA]">{routeContext.title}</h3>
-                <p className="text-xs leading-tight text-[#8E8A80]">Maître de sala · responde en menos de un minuto</p>
+                <p className="text-xs leading-tight text-[#8E8A80]">{routeContext.badge} · atención humana en la Centralita</p>
               </div>
             </div>
 
@@ -998,21 +1004,23 @@ export function SovereignConciergeWidget() {
           if (isOpen) stopSpeech();
         }}
         aria-label="Abrir el Maître de Sala"
-        className="pointer-events-auto flex min-h-[52px] items-center gap-3 rounded-pill border border-white/[0.12] bg-[#08080C]/92 px-2 py-1.5 shadow-elevation-1 transition-colors duration-160 ease-hallmark hover:border-[#ecb613]/50 hover:bg-[#0C0C12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
+        className="pointer-events-auto flex min-h-[52px] items-center gap-3 rounded-pill border border-white/[0.08] bg-[#08080C]/95 px-2 py-1.5 shadow-micro-border backdrop-blur-2xl transition-colors duration-160 ease-hallmark hover:bg-[#0E0E14] hover:shadow-perimeter-gold-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305] motion-reduce:transition-none"
       >
-        {/* Indicador: punto verde estático, sin pulso continuo (Floor 10). */}
-        <span className="relative flex h-9 w-9 items-center justify-center rounded-full border border-[#ecb613]/30 bg-[#101018] text-[#ecb613]">
-          {isOpen ? <X size={17} /> : <Bot size={18} />}
+        {/* Indicador de canal: anillo de oro, estático. Cero punto verde de
+            presencia no sondeada (AF-1) y cero pulso continuo (Floor 10). */}
+        <span className="relative flex h-9 w-9 items-center justify-center rounded-full border border-[#ecb613]/30 bg-[#0E0E14] text-[#ecb613]">
+          {isOpen ? <X size={17} aria-hidden="true" /> : <Bot size={18} aria-hidden="true" />}
           {!isOpen && (
-            <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-[#08080C] bg-[#3FCF8E]" />
+            <span aria-hidden="true" className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full bg-[#ecb613] ring-2 ring-[#08080C]" />
           )}
         </span>
 
-        {/* Etiqueta: quién responde, no promesas vacías. 14 px limpios. */}
+        {/* Etiqueta: quién responde y por qué canal, sin promesas de tiempo
+            que ninguna sonda verifique. 14 px limpios. */}
         <span className="hidden pr-3 text-left sm:flex sm:flex-col">
           <span className="text-[0.875rem] font-semibold leading-tight text-[#F4F1EA]">Maître de Sala</span>
           <span className="text-xs leading-tight text-[#8E8A80]">
-            {isOpen ? 'Conversación abierta' : 'En línea'}
+            {isOpen ? 'Conversación abierta' : routeContext.badge}
           </span>
         </span>
       </button>

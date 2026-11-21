@@ -74,7 +74,9 @@ const PAIRS = [
   ['#C9C4B8', POPOVER, 4.5, 'Chip de sugerencia sobre popover'],
   ['#ecb613', POPOVER, 3.0, 'Firma del Maître sobre popover'],
   ['#6F6B62', POPOVER, 3.0, 'Marca de tiempo (texto grande/apoyo) sobre popover'],
-  ['#3FCF8E', POPOVER, 3.0, 'Indicador de presencia sobre popover'],
+  // AF-1: el indicador de canal es un anillo de oro estático, no un punto verde
+  // de presencia no sondeada. Se audita el token que la UI pinta de verdad.
+  ['#ecb613', POPOVER, 3.0, 'Indicador de canal (anillo oro) sobre popover'],
 
   // Ficha de impresión A4: papel blanco
   ['#18181b', '#ffffff', 4.5, 'Tinta de plano impreso sobre papel'],
