@@ -24,8 +24,11 @@ import {
   CALENDAR_TIME_SLOTS,
   getCalendarEntityKindMeta,
 } from '@/lib/calendar/entity-calendar-types';
-import { DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
-import { resolveProviderContractHref } from '@/lib/providers/provider-cta-engine';
+import { DEPOSITO_STRIPE_EUR, CENTRALITA_EAR_OS } from '@/lib/constants/ear-os-ssot';
+import { buildCalendarHandoffHref } from '@/lib/calendar/entity-calendar-engine';
+
+/** Número oficial de la Centralita en formato `wa.me` (INV-12 · fuente única SSOT). */
+const CENTRALITA_WHATSAPP_DIGITS: string = CENTRALITA_EAR_OS.replace(/\D/g, '');
 
 export interface EntityCalendarPayload {
   ok: boolean;
@@ -77,6 +80,21 @@ function monthKey(year: number, monthIndex: number): string {
   return `${year}-${pad(monthIndex + 1)}`;
 }
 
+function deriveDeterministicIdempotencyKey(seed: string): string {
+  let h1 = 0x811c9dc5;
+  let h2 = 0x9e3779b9;
+  for (let i = 0; i < seed.length; i += 1) {
+    const code = seed.charCodeAt(i);
+    h1 ^= code;
+    h1 = Math.imul(h1, 0x01000193);
+    h2 ^= code + i;
+    h2 = Math.imul(h2, 0x85ebca6b);
+  }
+  const part1 = (h1 >>> 0).toString(16).padStart(8, '0');
+  const part2 = (h2 >>> 0).toString(16).padStart(8, '0');
+  return `cal_${part1}${part2}`;
+}
+
 function statusStyles(status: EntityDayAvailability['status']): string {
   switch (status) {
     case 'LIBRE':
@@ -115,6 +133,27 @@ export default function EntityCalendarBoard({
   const [selectedDate, setSelectedDate] = useState<string | null>(initialDate);
   const [selectedSlot, setSelectedSlot] = useState<string | null>(initialSlot);
   const [pendingAction, setPendingAction] = useState<string | null>(null);
+  const [clientName, setClientName] = useState<string>('');
+  const [clientEmail, setClientEmail] = useState<string>('');
+  const [clientPhone, setClientPhone] = useState<string>('');
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
+  const [depositReturnStatus, setDepositReturnStatus] = useState<'confirmado' | 'cancelado' | null>(null);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const depositParam = new URLSearchParams(window.location.search).get('deposit');
+    if (depositParam === 'confirmado' || depositParam === 'cancelado') {
+      setDepositReturnStatus(depositParam);
+    }
+  }, []);
+
+  const idempotencyKey = useMemo(
+    () =>
+      deriveDeterministicIdempotencyKey(
+        `${kind}|${slug}|${selectedDate ?? ''}|${selectedSlot ?? ''}|${clientEmail.trim().toLowerCase()}`,
+      ),
+    [kind, slug, selectedDate, selectedSlot, clientEmail],
+  );
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -186,6 +225,91 @@ export default function EntityCalendarBoard({
     });
   };
 
+  const handleDepositCheckout = useCallback(async (): Promise<void> => {
+    setCheckoutError(null);
+    setFeedback(null);
+
+    if (!selectedDate) {
+      setCheckoutError('Selecciona primero un día libre en el calendario.');
+      return;
+    }
+    if (selectedDay?.status === 'BLOQUEADO' || selectedDay?.status === 'PASADO') {
+      setCheckoutError('La fecha seleccionada no admite bloqueos.');
+      return;
+    }
+    if (clientName.trim().length < 2) {
+      setCheckoutError('Indica tu nombre y apellidos para emitir el bloqueo.');
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(clientEmail.trim())) {
+      setCheckoutError('Indica un correo electrónico válido para el recibo.');
+      return;
+    }
+
+    setPendingAction('deposit-checkout');
+    try {
+      const res = await fetch(`/api/calendar/${kind}/${encodeURIComponent(slug)}/deposit`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          eventDate: selectedDate,
+          timeSlot: selectedSlot ?? undefined,
+          clientName: clientName.trim(),
+          clientEmail: clientEmail.trim(),
+          clientPhone: clientPhone.trim() || undefined,
+          intent: initialIntent ?? 'bloquear',
+          idempotencyKey,
+        }),
+      });
+      const json = (await res.json().catch(() => ({}))) as {
+        ok?: boolean;
+        url?: string;
+        error?: string;
+        message?: string;
+      };
+
+      if (res.ok && json.ok && typeof json.url === 'string' && json.url.length > 0) {
+        window.location.assign(json.url);
+        return;
+      }
+
+      if (res.status === 503) {
+        setCheckoutError(
+          json.message ??
+            json.error ??
+            `Pasarela Stripe no disponible en este instante. Contacta por WhatsApp en ${CENTRALITA_EAR_OS}.`,
+        );
+        return;
+      }
+
+      if (res.status === 409) {
+        setCheckoutError(
+          json.error ?? 'Esta fecha o franja acaba de bloquearse. Actualizando disponibilidad…',
+        );
+        await load();
+        return;
+      }
+
+      setCheckoutError(json.error ?? 'No se pudo iniciar el checkout del depósito.');
+    } catch {
+      setCheckoutError('Fallo de red al conectar con la pasarela de depósito.');
+    } finally {
+      setPendingAction(null);
+    }
+  }, [
+    clientEmail,
+    clientName,
+    clientPhone,
+    idempotencyKey,
+    initialIntent,
+    kind,
+    load,
+    selectedDate,
+    selectedDay?.status,
+    selectedSlot,
+    slug,
+  ]);
+
   return (
     <section className="space-y-6">
       <header className="rounded-3xl bg-[#09090d]/80 border border-white/10 backdrop-blur-md p-6 space-y-4">
@@ -240,6 +364,20 @@ export default function EntityCalendarBoard({
           ))}
         </div>
       </header>
+
+      {depositReturnStatus === 'confirmado' && (
+        <div className="flex items-center gap-2 rounded-2xl border border-emerald-500/40 bg-emerald-500/10 p-4 text-xs font-mono text-emerald-300">
+          <CheckCircle2 size={15} className="shrink-0" />
+          Depósito de {DEPOSITO_STRIPE_EUR} € confirmado en Stripe. Tu fecha queda bloqueada de forma inmutable.
+        </div>
+      )}
+
+      {depositReturnStatus === 'cancelado' && (
+        <div className="flex items-center gap-2 rounded-2xl border border-[#ecb613]/40 bg-[#ecb613]/10 p-4 text-xs font-mono text-[#f5d273]">
+          <AlertCircle size={15} className="shrink-0" />
+          Checkout cancelado. Puedes reintentar el bloqueo de fecha o contactar con un agente por WhatsApp.
+        </div>
+      )}
 
       {error && (
         <div className="flex items-center gap-2 rounded-2xl border border-rose-500/30 bg-rose-500/10 p-4 text-xs font-mono text-rose-300">
@@ -459,7 +597,7 @@ export default function EntityCalendarBoard({
           )}
 
           {!canMutate && (
-            <div className="space-y-2 pt-3 border-t border-white/10">
+            <div className="space-y-3 pt-3 border-t border-white/10">
               {initialIntent === 'bloquear' && (
                 <p className="text-[10px] font-mono text-[#f5d273] leading-relaxed">
                   Modo bloqueo: elige día y franja en esta agenda y formaliza el depósito
@@ -467,15 +605,85 @@ export default function EntityCalendarBoard({
                   nunca en la de otro proveedor.
                 </p>
               )}
-              <a
-                href={resolveProviderContractHref(
-                  { slug, category: payload?.entity.category ?? null },
-                  { date: selectedDate },
-                )}
-                className="w-full py-3 rounded-xl bg-[#ecb613] text-black font-mono text-[11px] font-black uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-[#f5d273] hover:scale-[1.01] transition-all duration-300 ease-out"
+
+              <div className="space-y-2">
+                <input
+                  type="text"
+                  value={clientName}
+                  onChange={(e) => {
+                    setClientName(e.target.value);
+                    setCheckoutError(null);
+                  }}
+                  placeholder="Tu nombre y apellidos *"
+                  aria-label="Nombre y apellidos"
+                  maxLength={120}
+                  className="w-full rounded-xl border border-white/15 bg-black/50 px-3 py-2 text-xs font-mono text-white placeholder:text-zinc-500 focus:border-[#ecb613] focus:outline-none"
+                />
+                <input
+                  type="email"
+                  value={clientEmail}
+                  onChange={(e) => {
+                    setClientEmail(e.target.value);
+                    setCheckoutError(null);
+                  }}
+                  placeholder="Tu correo electrónico *"
+                  aria-label="Correo electrónico"
+                  maxLength={160}
+                  className="w-full rounded-xl border border-white/15 bg-black/50 px-3 py-2 text-xs font-mono text-white placeholder:text-zinc-500 focus:border-[#ecb613] focus:outline-none"
+                />
+                <input
+                  type="tel"
+                  value={clientPhone}
+                  onChange={(e) => setClientPhone(e.target.value)}
+                  placeholder="Teléfono (opcional)"
+                  aria-label="Teléfono de contacto"
+                  maxLength={32}
+                  className="w-full rounded-xl border border-white/15 bg-black/50 px-3 py-2 text-xs font-mono text-white placeholder:text-zinc-500 focus:border-[#ecb613] focus:outline-none"
+                />
+              </div>
+
+              <button
+                type="button"
+                disabled={
+                  pendingAction !== null ||
+                  !selectedDate ||
+                  selectedDay?.status === 'BLOQUEADO' ||
+                  selectedDay?.status === 'PASADO'
+                }
+                onClick={() => void handleDepositCheckout()}
+                className="w-full py-3 rounded-xl bg-[#ecb613] text-black font-mono text-[11px] font-black uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-[#f5d273] hover:scale-[1.01] disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-300 ease-out"
               >
                 <CheckCircle2 size={14} />
-                Formalizar depósito {DEPOSITO_STRIPE_EUR} € (deducible)
+                {pendingAction === 'deposit-checkout'
+                  ? 'Abriendo Stripe Checkout…'
+                  : `Bloquear Fecha con ${DEPOSITO_STRIPE_EUR} €`}
+              </button>
+
+              {checkoutError && (
+                <div className="flex items-start gap-2 rounded-xl border border-rose-500/40 bg-rose-500/10 p-2.5 text-[11px] font-mono text-rose-300">
+                  <AlertCircle size={13} className="mt-0.5 shrink-0" />
+                  <span>{checkoutError}</span>
+                </div>
+              )}
+
+              {/* Canal humano con contexto: agenda + fecha elegida + tenant.
+                  Antes, si el depósito no aplicaba al tenant, el visitante con
+                  `?intent=bloquear` se quedaba con un botón y ninguna salida. */}
+              <a
+                href={buildCalendarHandoffHref({
+                  kind,
+                  entitySlug: payload?.entity.slug ?? slug,
+                  displayName: payload?.entity.displayName ?? slug,
+                  category: payload?.entity.category ?? null,
+                  date: selectedDate,
+                  intent: initialIntent,
+                  phoneDigits: CENTRALITA_WHATSAPP_DIGITS,
+                })}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-2.5 rounded-xl border border-white/15 bg-white/5 text-white font-mono text-[11px] font-bold flex items-center justify-center gap-2 hover:bg-white/10 transition-all"
+              >
+                Hablar con un agente por WhatsApp
               </a>
               <p className="text-[10px] font-mono text-zinc-500 leading-relaxed">
                 {selectedDate ? `Fecha seleccionada: ${selectedDate}. ` : 'Selecciona un día y una franja. '}

@@ -1,0 +1,16 @@
+{
+  "gate": "ssot",
+  "cmd": "node ./node_modules/tsx/dist/cli.mjs scripts/baseline_ssot_integrity.ts",
+  "exit": 0,
+  "ms": 4744,
+  "bytes": 416,
+  "ts": "2026-11-21T17:28:16.416Z",
+  "tail": [
+    "── SSOT INTEGRITY BASELINE ─────────────────────────────────────",
+    "hash calculado   : cefa76c2c6a3f92f57acf74f654932c02bf66774502102cb4f932520aaa64b2b",
+    "hash referencia  : cefa76c2c6a3f92f57acf74f654932c02bf66774502102cb4f932520aaa64b2b",
+    "coincide         : SÍ",
+    "invariantes      : OK",
+    "Modo auditoría. Para re-sellar (sanción del CEO): --seal"
+  ]
+}

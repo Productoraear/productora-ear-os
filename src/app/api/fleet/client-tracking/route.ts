@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { calculateHaversineDistance } from '@/features/search/utils/mentridaDistanceEngine';
+import { CENTRALITA } from '@/lib/phone-constants';
 
 export const runtime = 'nodejs';
 
@@ -155,7 +156,7 @@ export async function GET(request: NextRequest) {
         'Productora EAR OS'
       ),
       driverName: asString(convoy.driverName, 'Jefe de Convoy EAR OS'),
-      driverPhone: asString(convoy.driverPhone, '+34600000000'),
+      driverPhone: asString(convoy.driverPhone, CENTRALITA.phone),
       vehiclePlate: asString(convoy.vehiclePlate, 'PENDIENTE'),
       vehicleModel: asString(convoy.vehicleModel, 'Furgón Logístico S-Class'),
       currentStatus,

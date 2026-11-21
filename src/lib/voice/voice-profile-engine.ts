@@ -62,7 +62,7 @@ export const OTZARRETA_VOICE_PROFILE: Readonly<VoiceProfile> = Object.freeze({
   speedMultiplier: 0.98,
   isImmutable: false,
   fallbackLang: 'es-ES',
-  description: 'Voz del servicio de sala para banquetes, aforos y los 7 menús oficiales de 2026.',
+  description: 'Voz del servicio de sala para banquetes, aforos (salón 200 / jardín 350 pax) y los 4 menús de gala (145–185 € + IVA) de Ezkertza Berria & Otzarreta (Derio 1902).',
 });
 
 /**
@@ -122,9 +122,9 @@ export function resolveVoiceProfile(pathname: string = '', explicitTenantId?: st
   // 2. OTZARRETA / EZKERTZA BERRIA: Caserío y restaurante en Derio
   if (
     cleanTenant === 'otzarreta' ||
+    cleanTenant === 'restaurante-otzarreta' ||
     cleanTenant === 'ezkertza-berria' ||
-    cleanPath.includes('/otzarreta') ||
-    cleanPath.includes('/ezkertza')
+    /(?:^|\/)(?:otzarreta|restaurante-otzarreta|ezkertza(?:-berria)?)(?:\/|$|\?)/i.test(cleanPath)
   ) {
     return OTZARRETA_VOICE_PROFILE;
   }

@@ -3,6 +3,7 @@ import { prisma } from '@/lib/prisma';
 import { lockDateAtomically } from '@/lib/availability/atomicDateLockEngine';
 import { fireAndForgetN8n } from '@/lib/services/n8n-dispatcher';
 import type { VendorBookingStatus } from '@/lib/vendor/vendorCrmTypes';
+import { CENTRALITA_EAR_OS } from '@/lib/constants/ear-os-ssot';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -111,7 +112,7 @@ export async function GET() {
       category: 'Solista Lírico & Pop Clásico',
       tier: 'PREMIUM',
       managedPlan: 'Full Agency Concierge (100% Delegado)',
-      phone: '+34 693 693 048',
+      phone: CENTRALITA_EAR_OS,
       phoneVerified: false,
       soundLimitDba: 80,
       baseRateEur: 350,
@@ -124,7 +125,7 @@ export async function GET() {
         {
           id: 'lead_boda_toledo_vip',
           clientName: 'Alejandro & Lucía (Boda Finca El Olivar)',
-          clientPhone: '+34 612 345 678',
+          clientPhone: CENTRALITA_EAR_OS,
           clientEmail: 'lucia.boda@gmail.com',
           eventDate: '2026-11-14',
           budgetEur: 750,
@@ -136,7 +137,7 @@ export async function GET() {
         {
           id: 'lead_gala_corporativa_madrid',
           clientName: 'Grupo Vértice Eventos Corporativos',
-          clientPhone: '+34 699 888 777',
+          clientPhone: CENTRALITA_EAR_OS,
           clientEmail: 'eventos@vertice.es',
           eventDate: '2026-12-05',
           budgetEur: 1200,
@@ -153,7 +154,7 @@ export async function GET() {
       category: 'Mariachi & Formación Tradicional',
       tier: 'PREMIUM',
       managedPlan: 'Managed Care B2B',
-      phone: '+34 693 693 048',
+      phone: CENTRALITA_EAR_OS,
       phoneVerified: false,
       soundLimitDba: 88,
       baseRateEur: 650,
@@ -166,7 +167,7 @@ export async function GET() {
         {
           id: 'lead_mariachi_cumple_las_rozas',
           clientName: 'Familia Mendoza (Aniversario 50)',
-          clientPhone: '+34 633 444 555',
+          clientPhone: CENTRALITA_EAR_OS,
           clientEmail: 'mendoza.gala@hotmail.com',
           eventDate: '2026-11-21',
           budgetEur: 700,
@@ -183,7 +184,7 @@ export async function GET() {
       category: 'Orquesta de Gran Formato',
       tier: 'PREMIUM',
       managedPlan: 'Full Agency Concierge (100% Delegado)',
-      phone: '+34 693 693 048',
+      phone: CENTRALITA_EAR_OS,
       phoneVerified: false,
       soundLimitDba: 98,
       baseRateEur: 3200,
@@ -196,7 +197,7 @@ export async function GET() {
         {
           id: 'lead_fiestas_patronales_navalcancer',
           clientName: 'Comisión de Festejos Navalcarnero 2026',
-          clientPhone: '+34 600 112 233',
+          clientPhone: CENTRALITA_EAR_OS,
           clientEmail: 'festejos@navalcarnero.es',
           eventDate: '2026-09-12',
           budgetEur: 4500,

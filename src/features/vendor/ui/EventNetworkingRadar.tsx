@@ -14,6 +14,7 @@ import {
   ShieldCheck,
 } from 'lucide-react';
 import { playHapticClick } from '@/lib/audio/AuraAudioSynth';
+import { CENTRALITA } from '@/lib/phone-constants';
 
 interface NearbyColleague {
   id: string;
@@ -40,7 +41,7 @@ const NEARBY_COLLEAGUES: NearbyColleague[] = [
     status: 'hora_muerta',
     statusText: 'Hora muerta entre cóctel y banquete',
     freeUntil: '1h 15m libre',
-    phone: '34659116376',
+    phone: CENTRALITA.raw,
     avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80',
   },
   {
@@ -53,7 +54,7 @@ const NEARBY_COLLEAGUES: NearbyColleague[] = [
     status: 'montaje',
     statusText: 'Prueba de sonido terminada, esperando apertura',
     freeUntil: 'Disponible hasta 20:30h',
-    phone: '34693693048',
+    phone: CENTRALITA.raw,
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80',
   },
   {
@@ -66,7 +67,7 @@ const NEARBY_COLLEAGUES: NearbyColleague[] = [
     status: 'hora_muerta',
     statusText: 'Banquete en marcha bajo cronograma impecable',
     freeUntil: '45 min libres para networking',
-    phone: '34693693048',
+    phone: CENTRALITA.raw,
     avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&auto=format&fit=crop&q=80',
   },
   {
@@ -79,7 +80,7 @@ const NEARBY_COLLEAGUES: NearbyColleague[] = [
     status: 'disponible_relevo',
     statusText: 'Buscando saxofonista o solista para recena sorpresa',
     freeUntil: 'Presupuesto asignado 350€',
-    phone: '34693693048',
+    phone: CENTRALITA.raw,
     avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80',
   },
 ];

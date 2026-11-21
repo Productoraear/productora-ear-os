@@ -1,0 +1,163 @@
+{
+  "name": "AGENTE · Concierge WhatsApp con voz (S-Class)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "whatsapp-concierge",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "wb-wa-concierge",
+      "name": "Webhook WhatsApp (Meta Cloud API)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [0, 0],
+      "webhookId": "ear-wb-whatsapp-concierge-v1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// EAR OS · Normalización del mensaje entrante de WhatsApp Cloud API.\n// Acepta texto y NOTA DE VOZ (audio): en ese caso adjunta el mediaId para que\n// el canal oficial resuelva la transcripción. Nunca inventa contenido: si el\n// payload no trae un campo reconocible, marca handled=false y escala a humano.\nconst entry = ($input.first().json.body?.entry ?? $input.first().json.entry ?? [])[0];\nconst change = entry?.changes?.[0]?.value ?? {};\nconst message = change.messages?.[0] ?? null;\nif (!message) {\n  return { handled: false, reason: 'sin_mensaje', escalate: false };\n}\nconst text = message.text?.body ?? '';\nconst audioId = message.audio?.id ?? message.voice?.id ?? null;\nconst q = String(text).toLowerCase();\nconst intent = /(como llego|c[oó]mo llego|llegar|direcci[oó]n|acceso|parking|p[aá]rking|mapa|gps)/.test(q)\n  ? 'directions'\n  : /(men[uú]|precio|cu[aá]nto cuesta|banquete|carta)/.test(q)\n    ? 'menus'\n    : /(aforo|capacidad|invitados|jard[ií]n|sal[oó]n)/.test(q)\n      ? 'capacity'\n      : /(reserv|bloque|fianza|dep[oó]sito|se[nñ]al)/.test(q)\n        ? 'booking'\n        : 'general';\nreturn {\n  handled: true,\n  from: message.from ?? null,\n  type: message.type ?? 'unknown',\n  text,\n  audioId,\n  isVoiceNote: Boolean(audioId),\n  intent,\n  escalate: false,\n  receivedAt: new Date().toISOString()\n};"
+      },
+      "id": "code-normalize",
+      "name": "Normalizar mensaje (texto o nota de voz)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [220, 0]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": { "caseSensitive": true, "version": 2 },
+                "conditions": [
+                  {
+                    "id": "cond-handled",
+                    "leftValue": "={{ $json.handled }}",
+                    "rightValue": true,
+                    "operator": { "type": "boolean", "operation": "true" }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "mensaje valido"
+            },
+            {
+              "conditions": {
+                "options": { "caseSensitive": true, "version": 2 },
+                "conditions": [
+                  {
+                    "id": "cond-unhandled",
+                    "leftValue": "={{ $json.handled }}",
+                    "rightValue": false,
+                    "operator": { "type": "boolean", "operation": "false" }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "sin mensaje"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "switch-valid",
+      "name": "¿Mensaje utilizable?",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [440, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.EAR_OS_CONCIERGE_URL }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ message: $json.text || '(nota de voz)', providerSlug: '', voiceMode: $json.isVoiceNote, routeContext: { pathname: '/whatsapp', providerName: 'WhatsApp Agent' } }) }}",
+        "options": { "timeout": 8000 }
+      },
+      "id": "http-concierge",
+      "name": "Cerebro EAR OS (/api/concierge/chat)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [680, -80],
+      "notes": "Misma fuente unica de conocimiento que el widget web: cero divergencia entre canales."
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.EAR_OS_WHATSAPP_SEND_URL }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ to: $('Normalizar mensaje (texto o nota de voz)').first().json.from, type: 'text', text: { preview_url: false, body: $json.reply } }) }}",
+        "options": { "timeout": 8000 }
+      },
+      "id": "http-respond",
+      "name": "Responder al cliente (WhatsApp)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [920, -80]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.EAR_OS_HITL_URL }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ reason: 'whatsapp_unhandled', payload: $json }) }}",
+        "options": { "timeout": 8000 }
+      },
+      "id": "http-hitl",
+      "name": "Escalar a humano (HITL 5%)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [680, 160],
+      "notes": "Regla de gobernanza: 5% HITL total. Un mensaje que el clasificador no entiende JAMAS se queda sin respuesta humana."
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ ok: true, ts: new Date().toISOString() }) }}",
+        "options": {}
+      },
+      "id": "respond-ok",
+      "name": "ACK 200 (Meta exige < 20 s)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1160, 0]
+    }
+  ],
+  "connections": {
+    "Webhook WhatsApp (Meta Cloud API)": {
+      "main": [[{ "node": "Normalizar mensaje (texto o nota de voz)", "type": "main", "index": 0 }]]
+    },
+    "Normalizar mensaje (texto o nota de voz)": {
+      "main": [[{ "node": "¿Mensaje utilizable?", "type": "main", "index": 0 }]]
+    },
+    "¿Mensaje utilizable?": {
+      "main": [
+        [{ "node": "Cerebro EAR OS (/api/concierge/chat)", "type": "main", "index": 0 }],
+        [{ "node": "Escalar a humano (HITL 5%)", "type": "main", "index": 0 }]
+      ]
+    },
+    "Cerebro EAR OS (/api/concierge/chat)": {
+      "main": [[{ "node": "Responder al cliente (WhatsApp)", "type": "main", "index": 0 }]]
+    },
+    "Responder al cliente (WhatsApp)": {
+      "main": [[{ "node": "ACK 200 (Meta exige < 20 s)", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "pinData": {},
+  "meta": {
+    "earOs": {
+      "purpose": "Agente conversacional WhatsApp con soporte de nota de voz y handoff HITL.",
+      "envRequired": ["EAR_OS_CONCIERGE_URL", "EAR_OS_WHATSAPP_SEND_URL", "EAR_OS_HITL_URL"],
+      "ssot": "El conocimiento sale de /api/concierge/chat (misma BASE DE CONOCIMIENTO SSOT que la web). Este workflow NO hardcodea precios."
+    }
+  }
+}

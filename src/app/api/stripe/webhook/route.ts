@@ -3,7 +3,18 @@ import Stripe from 'stripe';
 import { createHash } from 'crypto';
 import { prisma } from '@/lib/prisma';
 import { fireAndForgetN8n } from '@/lib/services/n8n-dispatcher';
-import { lockDateAtomically } from '@/lib/availability/atomicDateLockEngine';
+import {
+  checkDateAvailability,
+  lockDateAtomically,
+  unlockDateAtomically,
+} from '@/lib/availability/atomicDateLockEngine';
+import {
+  releaseEntitySlot,
+  reserveEntitySlot,
+  sanitizeEntitySlug,
+  setEntityDateBlock,
+} from '@/lib/calendar/entity-calendar-store';
+import { parseCalendarEntityKindParam } from '@/lib/calendar/entity-registry';
 import { LEDGER_SSOT } from '@/lib/vendor/ledgerEngine';
 import { generateModelo182Draft } from '@/lib/vimume-mecenazgo-engine';
 import { waitUntil } from '@vercel/functions';
@@ -229,6 +240,60 @@ export async function POST(req: NextRequest) {
         );
       }
 
+      // 2quater. FLUJO CALENDAR_ENTITY_DEPOSIT_100: confirmar bloqueo idempotente por entidad
+      if (metadata.tipo === 'CALENDAR_ENTITY_DEPOSIT_100' && metadata.entitySlug && metadata.eventDate) {
+        const calendarDepositTask = async () => {
+          const kind = parseCalendarEntityKindParam(metadata.entityKind) ?? 'servicios';
+          const slug = sanitizeEntitySlug(metadata.entitySlug);
+          if (!slug) return;
+
+          const scopeKey = kind === 'artista' ? slug : `${kind}:${slug}`;
+          const timeSlot = metadata.timeSlot?.trim() || undefined;
+          const displayHolder = metadata.clientName?.trim() || clientEmail;
+
+          if (metadata.lockTicket) {
+            await unlockDateAtomically({ stripeSessionId: metadata.lockTicket });
+          }
+
+          const lockResult = await lockDateAtomically({
+            eventDate: metadata.eventDate,
+            artistProfileId: scopeKey,
+            entityKind: kind,
+            entitySlug: slug,
+            timeSlot,
+            clientName: displayHolder,
+            clientEmail,
+            clientPhone: metadata.clientPhone?.trim() || undefined,
+            stripeSessionId: session.id,
+            priceLockSha256: metadata.priceLockHash?.trim() || undefined,
+            depositAmountEur: amountTotal,
+            status: 'PAID_CONFIRMED',
+            location: metadata.entityName?.trim() ? `Agenda ${metadata.entityName.trim()}` : `Agenda ${slug}`,
+          });
+
+          if (!lockResult.success) {
+            console.warn(
+              `⚠️ [CALENDAR DEPOSIT WEBHOOK] No se pudo confirmar ${kind}:${slug} (${metadata.eventDate}): ${lockResult.reason}`,
+            );
+          }
+
+          if (timeSlot) {
+            await reserveEntitySlot(kind, slug, metadata.eventDate, timeSlot, displayHolder);
+          } else {
+            await setEntityDateBlock(kind, slug, metadata.eventDate, true, displayHolder);
+          }
+        };
+
+        tasks.push(
+          calendarDepositTask().catch((err: unknown) =>
+            console.warn(
+              '[CALENDAR DEPOSIT WEBHOOK] Fallo resiliente:',
+              err instanceof Error ? err.message : String(err),
+            ),
+          ),
+        );
+      }
+
       // 2ter. REPLIEGUE CONCÉNTRICO (FASE 4): el ancla ya está cobrada, así que
       // se recupera la libreta de peticiones satélite y se abre el expediente.
       // Idempotente por diseño: `replenishAfterAnchor` solo promueve STASHED →
@@ -363,6 +428,45 @@ export async function POST(req: NextRequest) {
       }
 
       waitUntil(Promise.allSettled(tasks));
+      return NextResponse.json({ received: true });
+    }
+
+    case 'checkout.session.expired': {
+      const session = event.data.object as Stripe.Checkout.Session;
+      const metadata = session.metadata ?? {};
+
+      if (metadata.tipo === 'CALENDAR_ENTITY_DEPOSIT_100' && metadata.lockTicket) {
+        const releaseExpiredTask = async () => {
+          await unlockDateAtomically({ stripeSessionId: metadata.lockTicket });
+
+          if (metadata.entitySlug && metadata.eventDate && metadata.timeSlot) {
+            const kind = parseCalendarEntityKindParam(metadata.entityKind) ?? 'servicios';
+            const slug = sanitizeEntitySlug(metadata.entitySlug);
+            if (!slug) return;
+            const scopeKey = kind === 'artista' ? slug : `${kind}:${slug}`;
+            const avail = await checkDateAvailability({
+              eventDate: metadata.eventDate,
+              artistProfileId: scopeKey,
+              entityKind: kind,
+              entitySlug: slug,
+              timeSlot: metadata.timeSlot,
+            });
+            if (avail.available) {
+              await releaseEntitySlot(kind, slug, metadata.eventDate, metadata.timeSlot);
+            }
+          }
+        };
+
+        waitUntil(
+          releaseExpiredTask().catch((err: unknown) =>
+            console.warn(
+              '[CALENDAR EXPIRED WEBHOOK] Error liberando bloqueo expirado:',
+              err instanceof Error ? err.message : String(err),
+            ),
+          ),
+        );
+      }
+
       return NextResponse.json({ received: true });
     }
 

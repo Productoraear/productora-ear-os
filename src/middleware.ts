@@ -60,6 +60,15 @@ const CERTIFIED_PRODUCTION_ROUTES: readonly string[] = Object.freeze([
   // insignia del asador NUNCA llegaba a un cliente real (medido en producción
   // el 2026-11-21). Se certifica el destino para que el alias aterrice en la ficha.
   '/otzarreta',
+  // ── CELEBRACIONES ES UN DESTINO, JAMÁS UN EMBUDO ────────────────────────
+  // Fallo P0 medido en producción el 2026-11-21: `/calendario/catering/
+  // restaurante-otzarreta?intent=ver|bloquear` y `/proveedores?cat=finca`
+  // devolvían `307 -> /celebraciones` (cabecera `x-ear-route-gating`). El
+  // escaparate canibalizaba las URLs de conversión, de modo que los botones
+  // de /celebraciones parecían «muertos»: el cliente nunca llegaba a la ficha
+  // ni al directorio. Ambas son superficies de venta certificadas.
+  '/proveedores',
+  '/calendario',
   '/seating-planner',
   '/presupuesto',
   '/portal/proveedor',
@@ -86,6 +95,42 @@ function isCertifiedRoute(pathname: string): boolean {
   return CERTIFIED_PRODUCTION_ROUTES.some(
     (route) => route !== '/' && (pathname === route || pathname.startsWith(`${route}/`))
   );
+}
+
+/**
+ * Huellas de las rutas dinámicas certificadas (`/calendario/[kind]/[slug]`).
+ * Se comparan contra la ruta REAL; comparar la plantilla literalmente nunca
+ * coincide con una URL viva y dejaría el calendario fuera del gating.
+ */
+const CERTIFIED_DYNAMIC_ROUTE_PATTERNS: readonly RegExp[] = Object.freeze([
+  /^\/calendario\/[^/]+\/[^/]+\/?$/,
+]);
+
+function matchesCertifiedDynamicRoute(pathname: string): boolean {
+  return CERTIFIED_DYNAMIC_ROUTE_PATTERNS.some((pattern) => pattern.test(pathname));
+}
+
+/**
+ * ¿La ruta aterriza en un page.tsx REAL del App Router?
+ *
+ * Guarda estructural (P0 2026-11-21): `startsWith(prefix)` certificaba también
+ * URLs hijas inexistentes (`/proveedores/loquesea`), que el cliente veía como
+ * 404 dentro de una superficie que se declara certificada. Se mantiene una
+ * lista explícita por razones de coste en Edge (sin fs): sólo los segmentos
+ * que existen en disco como páginas públicas y que queremos abrir al cliente.
+ */
+function isKnownPublicSegment(pathname: string): boolean {
+  const segments = pathname.split('/').filter(Boolean);
+  if (segments.length <= 1) return false;
+  const [head, second] = segments;
+  if (head === 'proveedores') {
+    // /proveedores/[slug] (ficha) y /proveedores/dashboard. Nunca rutas de admin.
+    return segments.length === 2 && second !== 'dashboard';
+  }
+  if (head === 'calendario') {
+    return matchesCertifiedDynamicRoute(pathname);
+  }
+  return false;
 }
 
 function isRouteGatingBypassed(pathname: string): boolean {
@@ -144,11 +189,18 @@ export function middleware(request: NextRequest) {
   //    307 hacia el escaparate público (cero 404 visibles para cliente o inversor).
   //    Se evalúa ANTES del aislamiento por vertical para que una ruta en taller
   //    no dependa del host: siempre aterriza en suelo de mármol.
-  if (!isRouteGatingBypassed(url.pathname) && !isFileRequest(url.pathname) && !isCertifiedRoute(url.pathname)) {
+  //    Guarda estructural (P0 2026-11-21): el gate sólo puede absorber URLs de
+  //    taller que EXISTEN como página. Un prefijo certificado no debe tragarse
+  //    rutas hijas inexistentes (`/proveedores/loquesea` → 404 nativo), y las
+  //    URLs de conversión vivas (`/proveedores`, `/calendario/[kind]/[slug]`)
+  //    jamás deben caer en el escaparate: eso era la canibalización medida.
+  const isCertified = isCertifiedRoute(url.pathname) || isKnownPublicSegment(url.pathname);
+  if (!isRouteGatingBypassed(url.pathname) && !isFileRequest(url.pathname) && !isCertified) {
     const fallback = isCertifiedRoute('/celebraciones') ? '/celebraciones' : '/';
     const gatedResponse = NextResponse.redirect(new URL(fallback, request.url), 307);
     gatedResponse.headers.set('x-ear-vertical', vertical.id);
     gatedResponse.headers.set('x-ear-route-gating', 'redirected-to-certified-route');
+    gatedResponse.headers.set('x-ear-route-gating-sank', url.pathname.slice(0, 96));
     return gatedResponse;
   }
 

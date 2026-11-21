@@ -17,6 +17,7 @@ import {
   CALENDAR_MAX_SERVICES_PER_DAY,
   CALENDAR_TIME_SLOTS,
   getCalendarEntityKindMeta,
+  inferCalendarKindFromCategory,
 } from '@/lib/calendar/entity-calendar-types';
 
 const MONTH_NAMES_ES: readonly string[] = Object.freeze([
@@ -57,6 +58,39 @@ export function buildEntityCalendarHref(
 /** Feed .ics canónico de la entidad (exportable a Google/Apple Calendar). */
 export function buildEntityIcalHref(kind: CalendarEntityKind, slug: string): string {
   return `/api/calendar/${kind}/${encodeURIComponent(slug)}/ical`;
+}
+
+/**
+ * Canal humano con CONTEXTO de la agenda (WhatsApp de la Centralita oficial).
+ *
+ * Regla de negocio: en una agenda el cliente siempre debe tener una salida
+ * humana con la fecha que ya eligió. Sin esto, quien llega con
+ * `?intent=bloquear` a una entidad sin checkout propio se queda en un callejón
+ * sin salida (medido en producción el 2026-11-21).
+ *
+ * El teléfono NO se escribe aquí: lo inyecta el llamador desde
+ * `CENTRALITA_EAR_OS` para respetar INV-12 (fuente única del número oficial).
+ */
+export function buildCalendarHandoffHref(input: {
+  readonly kind?: CalendarEntityKind;
+  readonly entitySlug: string;
+  readonly displayName: string;
+  readonly category: string | null;
+  readonly date?: string | null;
+  readonly intent?: 'bloquear' | 'ver' | null;
+  readonly phoneDigits: string;
+}): string {
+  const resolvedKind = input.kind ?? inferCalendarKindFromCategory(input.category);
+  const goal = input.intent === 'bloquear' ? 'bloquear la fecha' : 'consultar disponibilidad';
+  const message = [
+    `Hola, vengo de la agenda de ${input.displayName} en EAR OS.`,
+    `Quiero ${goal}${input.date ? ` el ${input.date.slice(0, 10)}` : ''}.`,
+    input.category ? `Gremio: ${input.category}.` : null,
+    `Ficha: /calendario/${resolvedKind}/${encodeURIComponent(input.entitySlug)}`,
+  ]
+    .filter((line): line is string => line !== null)
+    .join(' ');
+  return `https://wa.me/${input.phoneDigits}?text=${encodeURIComponent(message)}`;
 }
 
 /** Resumen legible de ocupación de un registro. */

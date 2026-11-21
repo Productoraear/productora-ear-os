@@ -13,6 +13,8 @@ import {
   DEPOSITO_STRIPE,
   computeSovereignLogistics,
 } from '../pricing/sovereign-pricing';
+import { CENTRALITA_EAR_OS } from '../constants/ear-os-ssot';
+import { CENTRALITA } from '../phone-constants';
 
 /* ------------------------------------------------------------------ */
 /* Constantes de Negocio y Tarifas Homologadas                         */
@@ -168,7 +170,7 @@ export function calculateMariachiDispatch(input: MariachiOrderInput): MariachiDi
     '*8 · PASO ÚNICO DE BLOQUEO Y CONTRATO*',
     'El contrato firmado del proveedor se emite automáticamente al validar el depósito dentro de las próximas 2 h:',
     `https://www.productoraear.com/reservar/solista?ref=${orderId}&hash=${priceLockHash.substring(0, 16)}`,
-    'Conserjería Oficial 24/7: +34 693 693 048'
+    `Conserjería Oficial 24/7: ${CENTRALITA_EAR_OS}`
   ].filter(Boolean).join('\n');
 
   return {
@@ -200,7 +202,7 @@ export function runMariachiDispatchDiagnostics(): boolean {
     urgency: 'urgencia_nocturna_24_7',
     locationCity: 'Madrid Centro',
     distanceKm: 15,
-    clientPhone: '+34600000000',
+    clientPhone: CENTRALITA.phone,
   });
 
   const expectedTotalCase1 = 480 + computeSovereignLogistics(15).totalLogistics + 120;
@@ -212,7 +214,7 @@ export function runMariachiDispatchDiagnostics(): boolean {
     urgency: 'estandar',
     locationCity: 'Toledo',
     distanceKm: 80,
-    clientPhone: '+34600000001',
+    clientPhone: CENTRALITA.phone,
   });
 
   const expectedTotalCase2 = 1400 + computeSovereignLogistics(80).totalLogistics;

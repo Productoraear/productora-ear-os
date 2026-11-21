@@ -1,0 +1,24 @@
+{
+  "ts": "2026-11-21T17:37:13.772Z",
+  "removed": [],
+  "already_absent": [
+    ".probe.txt",
+    ".probe2.txt",
+    ".probe3.txt",
+    ".probe4.txt",
+    ".probe5.txt",
+    ".probe6.txt",
+    ".probe7.txt",
+    ".probe8.txt",
+    ".probe9.txt",
+    ".procs.txt",
+    ".list.txt",
+    ".status.txt",
+    ".status_tsc.txt",
+    ".cta_probe.txt",
+    ".tsc_local_gate.log",
+    ".tsc_gate_stdout.txt",
+    ".tsc_gate_stderr.txt",
+    ".ssot_independent.json"
+  ]
+}

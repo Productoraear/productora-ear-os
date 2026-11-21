@@ -5,6 +5,7 @@ import { prisma } from '@/lib/prisma';
 import { fireAndForgetN8n } from '@/lib/services/n8n-dispatcher';
 import { VendorCrmRepository } from '@/lib/vendor/vendorCrmRepository';
 import { resolveCurrentVendor } from '@/lib/vendor/vendorSession';
+import { CENTRALITA } from '@/lib/phone-constants';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -68,7 +69,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
                     id: 'lead_demo_boda_1',
                     vendorId: vendor.id,
                     clientName: 'Lucía Fernández & Carlos Méndez',
-                    clientPhone: '+34612345678',
+                    clientPhone: CENTRALITA.phone,
                     clientEmail: 'lucia.fernandez@example.com',
                     eventDate: '2026-11-14',
                     pax: 130,
@@ -91,7 +92,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
                     id: 'lead_demo_gala_2',
                     vendorId: vendor.id,
                     clientName: 'Grupo Vértice Corporativo',
-                    clientPhone: '+34698765432',
+                    clientPhone: CENTRALITA.phone,
                     clientEmail: 'eventos@verticecorp.es',
                     eventDate: '2026-12-05',
                     pax: 80,

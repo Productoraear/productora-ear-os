@@ -7,6 +7,8 @@
  * ════════════════════════════════════════════════════════════════════════════
  */
 
+import { CENTRALITA_EAR_OS } from './ear-os-ssot';
+
 export const BODAS_NET_PROVEEDOR_78903 = Object.freeze({
   vendorId: '78903',
   publicUrl: 'https://www.bodas.net/empresa.php?id_empresa=78903',
@@ -15,8 +17,7 @@ export const BODAS_NET_PROVEEDOR_78903 = Object.freeze({
   aliasHistorico: 'Edwin Agudelo',
   contactPerson: 'EDWIN AGUDELO · Tu mensajero de sentimientos',
   phones: {
-    centralitaSoberana: '+34 693 693 048',
-    movilAlternativo: '+34 659 116 376',
+    centralitaSoberana: CENTRALITA_EAR_OS,
   },
   registeredAddress: 'Calle Bailén, Alcorcón 28921 Madrid',
   officialWeb: 'http://www.productoraear.com/bodas',

@@ -9,12 +9,14 @@ import {
   SUPLEMENTO_HOTEL_EUR,
   TARIFA_BASE_SOLISTA_EUR,
 } from '@/lib/constants/ear-os-ssot';
-import { resolveOtzarretaQuery } from '@/lib/rag/provider-context';
+import { OTZARRETA_MAPS_URL, resolveOtzarretaQuery } from '@/lib/rag/provider-context';
+import { requireAdmin } from '@/lib/security/adminGuard';
 import { assembleMultiVaultRAGContext } from '@/lib/rag/multi-vault-aggregator';
 import { buildAgentMinimumStandardBlock } from '@/lib/agents/agent-minimum-standard';
 import { resolveCityDistance } from '@/lib/agents/geo';
 import { computeSoloQuote } from '@/lib/agents/pricing';
 import {
+  OTZARRETA_ENTITY,
   OTZARRETA_SEATING_PRESET,
   OTZARRETA_WEDDING_MENUS,
   OTZARRETA_WEDDING_MENUS_CLAIM,
@@ -124,6 +126,21 @@ function evaluateQualificationThreshold(
 
 const CLEAN_PHONE = CENTRALITA_EAR_OS.replace(/\D/g, '');
 
+/**
+ * ── RUTAS DE ENTIDAD ───────────────────────────────────────────────────────
+ * Una ficha de entidad tiene DOS puertas públicas: `/otzarreta` (dossier) y
+ * `/calendario/<kind>/<slug>` (agenda con `intent=ver|bloquear`). El agente
+ * debe reconocer ambas; antes sólo miraba `/otzarreta` y, al llegar por la
+ * agenda, perdía el contexto del caserío y devolvía respuestas genéricas
+ * (síntoma «chip cómo llegar que no responde», medido en producción).
+ */
+const OTZARRETA_ROUTE_PATTERN = /(?:^|\/)(?:otzarreta|restaurante-otzarreta)(?:\/|$|\?)/i;
+
+function isOtzarretaTenant(pathname: string, providerSlug: string | null | undefined): boolean {
+  if (providerSlug && /^(restaurante-)?otzarreta$/i.test(providerSlug.trim())) return true;
+  return OTZARRETA_ROUTE_PATTERN.test(pathname);
+}
+
 const ChatRequestSchema = z.object({
   message: z.string().min(1).max(2000),
   history: z
@@ -213,7 +230,10 @@ function extractThreadMemory(
   const pax = paxMatch ? parseInt(paxMatch[1], 10) : null;
 
   let serviceKind: ThreadMemorySummary['serviceKind'] = null;
-  if (pathname.includes('/otzarreta') || /otzarreta|ezkertza|derio/i.test(lower)) {
+  // Ficha insignia: también se reconoce cuando el cliente llega por la URL de
+  // agenda (`/calendario/catering/restaurante-otzarreta?intent=ver`), no solo
+  // por `/otzarreta`. Sin esto el agente perdía el contexto del caserío.
+  if (isOtzarretaTenant(pathname, null) || /otzarreta|ezkertza|derio/i.test(lower)) {
     serviceKind = 'finca';
   } else if (/solista|tenor|ceremonia|edwin|cantante|mariachi/i.test(lower)) {
     serviceKind = 'solista';
@@ -227,7 +247,7 @@ function extractThreadMemory(
 }
 
 function buildCartItemFromMemory(mem: ThreadMemorySummary, pathname: string): ConciergeCartItemPayload {
-  if (mem.serviceKind === 'finca' || pathname.includes('/otzarreta')) {
+  if (mem.serviceKind === 'finca' || isOtzarretaTenant(pathname, null)) {
     return {
       id: 'finca-ezkertza-berria',
       name: 'Reserva Finca & Banquete · Ezkertza Berria & Otzarreta (Derio)',
@@ -303,11 +323,11 @@ ${memoryLine || 'Sin datos confirmados aún en el hilo.'}
 
 BASE DE CONOCIMIENTO REAL DE PRODUCTORA EAR (SSOT INMUTABLE):
 1. Restaurante y Finca de Bodas Homologada en Gran Bilbao / Bizkaia:
-- Restaurante Jatetxea Ezkertza Berria & Otzarreta: Caserío tradicional vasco ubicado en Santo Domingo Hiribidea, 13, 48160 Derio (Bizkaia), a solo 8 minutos de Bilbao y 5 minutos del Aeropuerto.
+- Restaurante Jatetxea Ezkertza Berria & Otzarreta: Caserío tradicional vasco (tradición desde ${OTZARRETA_ENTITY.foundedYear}) ubicado en Santo Domingo Hiribidea, 13, 48160 Derio (Bizkaia), a solo 8 minutos de Bilbao y 5 minutos del Aeropuerto.
 - Exclusividad: Solo se celebra 1 evento o boda al día.
 - Aforo: hasta 350 comensales. ${OTZARRETA_SEATING_PRESET.interiorSalon.label} (interior) ${OTZARRETA_SEATING_PRESET.interiorSalon.standardRange} y ${OTZARRETA_SEATING_PRESET.exteriorGarden.label} (exterior) ${OTZARRETA_SEATING_PRESET.exteriorGarden.standardRange}. Capacidad total máxima de la finca: ${OTZARRETA_SEATING_PRESET.totalPax} pax.
-- PARKING: Parking privado gratuito dentro del caserío con más de ${OTZARRETA_SEATING_PRESET.parkingSpaces} plazas vigiladas.
-- Cocina y Parrilla: Alta gastronomía vasca de brasa al carbón de encina dirigida por Eduardo Martínez (chuletones de 1 Kg de ganado mayor, rodaballos salvajes, bogavante, rape, mariscos).
+- PARKING: Parking privado gratuito dentro del caserío con ${OTZARRETA_SEATING_PRESET.parkingSpaces} plazas vigiladas.
+- Cocina y Parrilla: Alta gastronomía vasca de brasa al carbón de encina y sarmiento dirigida por Eduardo Martínez (chuletones de 1 Kg de ganado mayor, rodaballos salvajes, bogavante, rape, mariscos).
 - Carta de gala vigente 2027 — ${OTZARRETA_WEDDING_MENUS_CLAIM} (fuente única: OTZARRETA_WEDDING_MENUS): ${buildWeddingMenusPromptLine()}. Todos los importes son por comensal SIN IVA; cita el importe exacto y aclara «+ IVA». PROHIBIDO citar el catálogo derogado de 2026.
 - Bloqueo de fecha: Depósito Stripe Price-Lock garantizado de ${DEPOSITO_STRIPE_EUR} € (100% deducible del total).
 
@@ -329,10 +349,12 @@ BASE DE CONOCIMIENTO REAL DE PRODUCTORA EAR (SSOT INMUTABLE):
 - IDENTIDAD PROTEGIDA: NUNCA reveles el nombre comercial real ni el teléfono de fincas o proveedores no reclamados del directorio. Preséntalos como "Proveedor Homologado S-Class #CÓDIGO" y ofrece desbloquear su contacto (1 € deducible) o gestionarlo vía Centralita Oficial (${CENTRALITA_EAR_OS}).
 ${multiVaultContext}
 
-REGLAS DE FORMATO Y CIERRE EN CADA TURNO:
+REGLAS DE FORMATO Y CIERRE EN CADA TURNO (el cliente debe percibir un AGENTE, no un bot):
 - Máximo 2 párrafos breves y completos (nunca dejes frases cortadas a mitad).
 - Prohibido volver a pedir fecha, localidad o número de invitados si ya figuran en MEMORIA CONFIRMADA EN ESTE HILO.
 - Cierra SIEMPRE con UNA SOLA pregunta concreta de avance (jamás hagas 2 preguntas en el mismo turno).
+- Prohibido cerrar con «¿en qué más puedo ayudarte?» o con cualquier pregunta retórica: la pregunta final pide un DATO CONCRETO que aún no conste en la memoria del hilo.
+- Si la pregunta del cliente es de HECHO (cómo llegar, aforo, menú, parking, precio), la primera frase responde el hecho con el dato exacto; la pregunta final sólo avanza la venta.
 ${buildAgentMinimumStandardBlock()}`;
 
   const messagesPayload = [
@@ -379,7 +401,8 @@ ${buildAgentMinimumStandardBlock()}`;
 function determineActionForQuery(
   rawQuery: string,
   pathname: string = '',
-  mem: ThreadMemorySummary
+  mem: ThreadMemorySummary,
+  isAdmin: boolean = false
 ): ConciergeResolution['action'] {
   const q = rawQuery.toLowerCase();
 
@@ -410,15 +433,36 @@ function determineActionForQuery(
   }
 
   if (
+    isOtzarretaTenant(pathname, null) &&
+    (q.includes('como llegar') ||
+      q.includes('cómo llegar') ||
+      q.includes('como llego') ||
+      q.includes('cómo llego') ||
+      q.includes('mapa') ||
+      q.includes('gps') ||
+      q.includes('ubicacion') ||
+      q.includes('ubicación'))
+  ) {
+    return {
+      type: 'whatsapp',
+      label: 'Abrir ruta en Google Maps',
+      url: OTZARRETA_MAPS_URL,
+    };
+  }
+
+  if (
     q.includes('restaurante') ||
     q.includes('otzarreta') ||
     q.includes('ezkertza') ||
     q.includes('bilbao') ||
     q.includes('derio') ||
     q.includes('parking') ||
+    q.includes('párking') ||
     q.includes('menu') ||
     q.includes('menú') ||
-    pathname.includes('/otzarreta')
+    q.includes('llego') ||
+    q.includes('llegar') ||
+    isOtzarretaTenant(pathname, null)
   ) {
     return {
       type: 'dossier',
@@ -434,16 +478,28 @@ function determineActionForQuery(
     };
   }
 
+  // Guarda RBAC R4: el convertidor de escaparates sólo se emite para administradores
+  // verificados dentro de `/portal/proveedor`; cualquier visitante no admin degrada
+  // limpiamente a la Centralita oficial sin exponer la herramienta.
   if (q.includes('bodas.net') || q.includes('traslado') || q.includes('escaparate')) {
+    if (isAdmin && pathname.includes('/portal/proveedor')) {
+      return {
+        type: 'scraper',
+        label: 'Abrir convertidor de escaparate 1-Clic',
+      };
+    }
     return {
-      type: 'scraper',
-      label: 'Abrir convertidor de escaparate 1-Clic',
+      type: 'whatsapp',
+      label: `Hablar con la Centralita (${CENTRALITA_EAR_OS})`,
+      url: `https://wa.me/${CLEAN_PHONE}?text=${encodeURIComponent(
+        'Hola, soy proveedor de eventos y deseo homologar mi ficha en EAR OS.'
+      )}`,
     };
   }
 
   return {
     type: 'whatsapp',
-    label: 'Hablar con la Centralita (+34 693 693 048)',
+    label: `Hablar con la Centralita (${CENTRALITA_EAR_OS})`,
     url: `https://wa.me/${CLEAN_PHONE}?text=${encodeURIComponent(
       `Hola, tengo una consulta sobre: "${rawQuery.slice(0, 100)}"`
     )}`,
@@ -457,7 +513,8 @@ function resolveDeterministicFallback(
   rawMessage: string,
   pathname: string = '',
   providerSlug: string = '',
-  mem: ThreadMemorySummary
+  mem: ThreadMemorySummary,
+  isAdmin: boolean = false
 ): ConciergeResolution {
   const query = rawMessage.toLowerCase().trim();
   const km = mem.distanceKm ?? 45;
@@ -542,7 +599,7 @@ function resolveDeterministicFallback(
     !query.includes('otzarreta') &&
     !query.includes('ezkertza') &&
     !query.includes('derio') &&
-    !pathname.includes('/otzarreta')
+    !isOtzarretaTenant(pathname, providerSlug)
   ) {
     return {
       reply: `Todavía no consta en este hilo el nombre ni la dirección exacta de la finca${mem.city ? ` en **${mem.city}**` : ''} donde celebráis el evento, por lo que no puedo darte coordenadas sin verificarlas primero. Dime el nombre del recinto o escríbenos a la Centralita (${CENTRALITA_EAR_OS}) para validar el acceso y el kilometraje por GPS: ¿ya tenéis la finca cerrada o queréis que os propongamos espacios homologados?`,
@@ -558,7 +615,7 @@ function resolveDeterministicFallback(
   // 0E. Pregunta sobre DJ / discomóvil
   if (/\bdj\b|djs|discomovil|discomóvil/i.test(query)) {
     return {
-      reply: `Disponemos de **DJs profesionales de boda y sonorización Bose F1 Line Array** calibrada a 12 W/pax (< 75 dB SPL conforme a la Ley 37/2003) desde **450 €**${ctxSummary ? ` para vuestro evento ${ctxSummary}` : ''}, además de que en nuestro Caserío Ezkertza Berria & Otzarreta (Derio) los menús Especial Imperial y Vasco ya incluyen 1 h y 2 h de DJ gratis. ¿Quieres que añadamos la sesión de DJ al presupuesto de vuestra boda?`,
+      reply: `Disponemos de **DJs profesionales de boda y sonorización Bose F1 Line Array** calibrada a 12 W/pax (< 75 dB SPL conforme a la Ley 37/2003) desde **450 €**${ctxSummary ? ` para vuestro evento ${ctxSummary}` : ''}, compatible con nuestro Caserío Ezkertza Berria & Otzarreta (Derio, ${OTZARRETA_WEDDING_MENUS_CLAIM}). ¿Quieres que añadamos la sesión de DJ al presupuesto de vuestra boda?`,
       action: {
         type: 'add_to_cart',
         label: `🛒 Añadir DJ & Sonido Bose (450 €) · Bloquear con ${DEPOSITO_STRIPE_EUR} €`,
@@ -576,10 +633,10 @@ function resolveDeterministicFallback(
     !query.includes('ezkertza') &&
     !query.includes('derio') &&
     !query.includes('bilbao') &&
-    !pathname.includes('/otzarreta')
+    !isOtzarretaTenant(pathname, providerSlug)
   ) {
     return {
-      reply: `Para banquetes${mem.city ? ` en **${mem.city}**` : ''}, el menú exacto se cotiza según el recinto o catering homologado que elijáis a través de la Conserjería EAR OS (${CENTRALITA_EAR_OS}); como referencia verificada en propiedad, en nuestro **Caserío Ezkertza Berria & Otzarreta (Derio · Bizkaia)** disponemos de ${OTZARRETA_WEDDING_MENUS_CLAIM} a la brasa de encina. ¿Prefieres que te enviemos propuestas de catering para ${mem.city || 'tu provincia'} o ver los menús oficiales de Otzarreta?`,
+      reply: `Para banquetes${mem.city ? ` en **${mem.city}**` : ''}, el menú exacto se cotiza según el recinto o catering homologado que elijáis a través de la Conserjería EAR OS (${CENTRALITA_EAR_OS}); como referencia verificada en propiedad, en nuestro **Caserío Ezkertza Berria & Otzarreta (Derio · Bizkaia, ${OTZARRETA_ENTITY.foundedYear})** disponemos de ${OTZARRETA_WEDDING_MENUS_CLAIM} a la brasa de carbón y sarmiento. ¿Prefieres que te enviemos propuestas de catering para ${mem.city || 'tu provincia'} o ver los menús oficiales de Otzarreta?`,
       action: {
         type: 'dossier',
         label: `Ver la carta de gala de Ezkertza & Otzarreta (Derio)`,
@@ -591,8 +648,7 @@ function resolveDeterministicFallback(
 
   // 1. Contexto explícito de Otzarreta o preguntas sobre restaurante / bodas / parking cerca de Bilbao
   if (
-    providerSlug === 'otzarreta' ||
-    pathname.includes('/otzarreta') ||
+    isOtzarretaTenant(pathname, providerSlug) ||
     query.includes('otzarreta') ||
     query.includes('ezkertza') ||
     query.includes('eduardo') ||
@@ -610,10 +666,10 @@ function resolveDeterministicFallback(
   if (query.includes('bot') || query.includes('agente') || query.includes('quien eres') || query.includes('quién eres')) {
     return {
       reply:
-        'Soy el Agente Concierge S-Class de Productora EAR. Estoy coordinando la atención en tiempo real respaldado por nuestro equipo de dirección y la Centralita oficial (+34 693 693 048). ¿Qué fecha y localidad tienes previstas para tu evento?',
+        `Soy el Agente Concierge S-Class de Productora EAR. Estoy coordinando la atención en tiempo real respaldado por nuestro equipo de dirección y la Centralita oficial (${CENTRALITA_EAR_OS}). ¿Qué fecha y localidad tienes previstas para tu evento?`,
       action: {
         type: 'whatsapp',
-        label: 'Hablar con la Centralita (+34 693 693 048)',
+        label: `Hablar con la Centralita (${CENTRALITA_EAR_OS})`,
         url: `https://wa.me/${CLEAN_PHONE}?text=${encodeURIComponent('Hola, deseo hablar con un agente humano de la Centralita de Productora EAR.')}`,
       },
       shouldEscalate: false,
@@ -624,10 +680,10 @@ function resolveDeterministicFallback(
   if (query.includes('hablas') || query.includes('voz') || query.includes('audio') || query.includes('hablar') || query.includes('escuchar')) {
     return {
       reply:
-        'Dispongo de voz sintetizada en tiempo real: puedes activar o desactivar la locución pulsando el icono del altavoz arriba a la derecha. También puedes hablarme por micrófono o llamarnos al +34 693 693 048: ¿en qué puedo ayudarte hoy?',
+        `Dispongo de voz sintetizada en tiempo real: puedes activar o desactivar la locución pulsando el icono del altavoz arriba a la derecha. También puedes hablarme por micrófono o llamarnos al ${CENTRALITA_EAR_OS}: ¿en qué puedo ayudarte hoy?`,
       action: {
         type: 'whatsapp',
-        label: 'Llamar a Centralita (+34 693 693 048)',
+        label: `Llamar a Centralita (${CENTRALITA_EAR_OS})`,
         url: `https://wa.me/${CLEAN_PHONE}?text=${encodeURIComponent('Hola, deseo asistencia directa por teléfono o WhatsApp.')}`,
       },
       shouldEscalate: false,
@@ -675,7 +731,7 @@ function resolveDeterministicFallback(
         'El Gabinete B2G de Productora EAR tramita contratos menores bajo el Art. 118 de la LCSP (hasta 14.999 € + IVA). Emitimos Facturae con códigos DIR3 para cobro vía FACe y memoria técnica de sonorización según la Ley 37/2003 del Ruido.',
       action: {
         type: 'whatsapp',
-        label: 'Contactar con Gabinete B2G (+34 693 693 048)',
+        label: `Contactar con Gabinete B2G (${CENTRALITA_EAR_OS})`,
         url: `https://wa.me/${CLEAN_PHONE}?text=${encodeURIComponent(
           'Hola, represento a un ayuntamiento y deseo tramitar un contrato menor Art. 118 LCSP.'
         )}`,
@@ -684,31 +740,47 @@ function resolveDeterministicFallback(
     };
   }
 
-  // 6. Traslado Soberano desde Bodas.net
+  // 6. Traslado Soberano desde Bodas.net (poda RBAC estricta R4)
   if (
     query.includes('bodas.net') ||
     query.includes('escaparate') ||
     query.includes('migr') ||
     query.includes('traslado') ||
-    pathname.includes('/portal/proveedor')
+    (isAdmin && pathname.includes('/portal/proveedor'))
   ) {
+    if (isAdmin && pathname.includes('/portal/proveedor')) {
+      return {
+        reply:
+          'Con el Traslado Soberano en 1-Clic puedes importar un escaparate a EAR OS desde el panel interno de proveedor.',
+        action: {
+          type: 'scraper',
+          label: 'Abrir convertidor de escaparate 1-Clic',
+        },
+        shouldEscalate: false,
+      };
+    }
+
     return {
       reply:
-        'Con el Traslado Soberano en 1-Clic puedes importar tu escaparate de Bodas.net a EAR OS de forma 100% gratuita. Importamos tus fotos, menús y aforos, y publicamos tu Ficha Soberana indexada en Google sin comisiones de intermediación.',
+        `Para homologar o actualizar una ficha de proveedor en EAR OS, nuestro equipo lo gestiona directamente a través de la Centralita oficial (${CENTRALITA_EAR_OS}). ¿Cuál es el nombre de tu empresa y provincia?`,
       action: {
-        type: 'scraper',
-        label: 'Abrir convertidor de escaparate 1-Clic',
+        type: 'whatsapp',
+        label: `Hablar con la Centralita (${CENTRALITA_EAR_OS})`,
+        url: `https://wa.me/${CLEAN_PHONE}?text=${encodeURIComponent(
+          'Hola, soy proveedor de eventos y deseo solicitar la homologación de mi ficha en EAR OS.'
+        )}`,
       },
       shouldEscalate: false,
     };
   }
 
   // 7. Respuesta General Inteligente
-  const isVenueRoute = pathname.includes('/otzarreta') || pathname.includes('/fincas') || pathname.includes('/catering');
+  const isVenueRoute =
+    isOtzarretaTenant(pathname, providerSlug) || pathname.includes('/fincas') || pathname.includes('/catering');
   if (isVenueRoute) {
     return {
       reply:
-        `Estás en el espacio gastronómico de Ezkertza Berria & Otzarreta (Derio). Disponemos de parrilla vasca al carbón de encina, parking privado gratuito de más de ${OTZARRETA_SEATING_PRESET.parkingSpaces} plazas y ${OTZARRETA_WEDDING_MENUS_CLAIM}. ¿Deseas consultar disponibilidad o ver un menú en detalle?`,
+        `Estás en el espacio gastronómico de Ezkertza Berria & Otzarreta (Derio, tradición desde ${OTZARRETA_ENTITY.foundedYear}). Disponemos de alta brasa de carbón de encina y sarmiento, salón acristalado interior (${OTZARRETA_SEATING_PRESET.interiorSalon.capacityPax} comensales), jardín exterior (${OTZARRETA_SEATING_PRESET.exteriorGarden.capacityPax} comensales), párking privado gratuito de ${OTZARRETA_SEATING_PRESET.parkingSpaces} plazas y ${OTZARRETA_WEDDING_MENUS_CLAIM}. ¿Deseas consultar disponibilidad o ver un menú en detalle?`,
       action: {
         type: 'dossier',
         label: 'Ver menús y condiciones (/otzarreta)',
@@ -720,10 +792,10 @@ function resolveDeterministicFallback(
 
   return {
     reply:
-      `Estás conectado con la Centralita Inteligente de Productora EAR. Puedo orientarte sobre espacios exclusivos como el Caserío Ezkertza Berria & Otzarreta en Derio (${OTZARRETA_WEDDING_MENUS_CLAIM} y parking de más de ${OTZARRETA_SEATING_PRESET.parkingSpaces} plazas), servicios de producción y sonido Bose para eventos, o licitaciones B2G para ayuntamientos.`,
+      `Estás conectado con la Centralita Inteligente de Productora EAR. Puedo orientarte sobre espacios exclusivos como el Caserío Ezkertza Berria & Otzarreta en Derio (${OTZARRETA_WEDDING_MENUS_CLAIM} y párking privado de ${OTZARRETA_SEATING_PRESET.parkingSpaces} plazas), servicios de producción y sonido Bose para eventos, o licitaciones B2G para ayuntamientos.`,
     action: {
       type: 'whatsapp',
-      label: 'Hablar con la Centralita (+34 693 693 048)',
+      label: `Hablar con la Centralita (${CENTRALITA_EAR_OS})`,
       url: `https://wa.me/${CLEAN_PHONE}?text=${encodeURIComponent(
         `Hola, tengo una consulta sobre: "${rawMessage.slice(0, 100)}"`
       )}`,
@@ -744,9 +816,13 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const isAdmin = (await requireAdmin(req)).ok;
     const { message, routeContext, providerSlug, history = [] } = parsed.data;
     const pathname = routeContext?.pathname || '';
-    const slug = providerSlug || (pathname.includes('/otzarreta') ? 'otzarreta' : '');
+    // El tenant se propaga por tres vías: slug explícito, ruta de dossier y ruta
+    // de agenda (`/calendario/catering/restaurante-otzarreta`). Antes sólo se
+    // miraba la primera y `restaurante-otzarreta` no coincidía.
+    const slug = providerSlug || (isOtzarretaTenant(pathname, providerSlug) ? 'otzarreta' : '');
 
     // Intento de reenvío no bloqueante a n8n si existe webhook configurado
     const n8nWebhookUrl = process.env.N8N_WHATSAPP_WEBHOOK_URL;
@@ -780,7 +856,18 @@ export async function POST(req: NextRequest) {
     const neuralReply = await generateNeuralConciergeResponse(message, pathname, history, mem);
 
     if (neuralReply) {
-      const action = determineActionForQuery(message, pathname, mem);
+      let action = determineActionForQuery(message, pathname, mem, isAdmin);
+      // Guarda RBAC R4: el convertidor de escaparates sólo se emite a administradores
+      // autenticados dentro de `/portal/proveedor`.
+      if (action?.type === 'scraper' && (!isAdmin || !pathname.includes('/portal/proveedor'))) {
+        action = {
+          type: 'whatsapp',
+          label: `Hablar con la Centralita (${CENTRALITA_EAR_OS})`,
+          url: `https://wa.me/${CLEAN_PHONE}?text=${encodeURIComponent(
+            'Hola, tengo una consulta sobre: "' + message.slice(0, 100) + '"'
+          )}`,
+        };
+      }
       return NextResponse.json({
         success: true,
         reply: neuralReply,
@@ -791,7 +878,7 @@ export async function POST(req: NextRequest) {
     }
 
     // 2. FALLBACK DETERMINISTA S-CLASS
-    const resolution = resolveDeterministicFallback(message, pathname, slug, mem);
+    const resolution = resolveDeterministicFallback(message, pathname, slug, mem, isAdmin);
 
     return NextResponse.json({
       success: true,

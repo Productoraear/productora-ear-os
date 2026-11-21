@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { ShieldCheck, MessageSquare, Lock, X } from 'lucide-react';
 import Link from 'next/link';
+import { CENTRALITA } from '@/lib/phone-constants';
 
 interface SovereignConciergeDockProps {
   providerName?: string;
@@ -13,7 +14,7 @@ interface SovereignConciergeDockProps {
 export default React.memo(function SovereignConciergeDock({
   providerName = 'Espacio Homologado',
   category = 'Finca',
-  directPhone = '+34 693 693 048'
+  directPhone = CENTRALITA.display
 }: SovereignConciergeDockProps) {
   const [visible, setVisible] = useState(true);
 
@@ -44,7 +45,7 @@ export default React.memo(function SovereignConciergeDock({
 
         <div className="flex items-center gap-2 shrink-0">
           <a
-            href={`https://wa.me/34693693048?text=${waMessage}`}
+            href={`${CENTRALITA.whatsapp}?text=${waMessage}`}
             target="_blank"
             rel="noopener noreferrer"
             className="bg-[#ecb613] hover:bg-amber-400 text-slate-950 font-black text-xs px-3 py-2 rounded-xl transition flex items-center gap-1.5 shadow-sm"

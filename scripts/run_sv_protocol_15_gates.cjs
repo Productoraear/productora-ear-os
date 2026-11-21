@@ -19,6 +19,16 @@ const gates = [
   'npm run verify:db-failure',
   'npm run verify:iban',
   'npm run audit:integrity',
+  // P0 2026-11-21 · ALCANZABILIDAD DE LA SUPERFICIE DE VENTA.
+  // Cuatro URLs de conversión devolvían 307 -> /celebraciones y ninguna de las
+  // compuertas anteriores lo detectó porque todas medían invariantes de DATOS.
+  // Este auditor es el único que verifica que una ruta pública sirve su propio
+  // contenido (y que las herramientas de proveedor están aisladas del cliente).
+  'npm run audit:metacompiler-enterprise',
+  // Contract-tests de la superficie de venta (P0 2026-11-21): alcanzabilidad de
+  // rutas públicas y respuesta con hecho verificado de cada chip del agente.
+  'npm run verify:middleware-reachability',
+  'npm run verify:concierge-chips',
   'npm run lint',
   'npm run typecheck'
 ];

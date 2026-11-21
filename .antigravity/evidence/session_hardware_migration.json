@@ -1,0 +1,35 @@
+{
+  "ts": "2026-11-21T17:37:06.311Z",
+  "perimeter": "D:/EAR_OS_V2/EAR_OS_V2",
+  "claims": [
+    {
+      "claim": "ENV-01 perimeter D:/EAR_OS_V2/EAR_OS_V2 is the single repo root",
+      "exit": 0
+    },
+    {
+      "claim": "INV-05 Zona Cero SSOT hash cefa76c2... intacta",
+      "exit": 0
+    },
+    {
+      "claim": "INV-01/02/03/04/12/13 pricing unification 31/31",
+      "exit": 0
+    },
+    {
+      "claim": "INV-09 CTA trace matrix 0 dead clicks",
+      "exit": 0
+    },
+    {
+      "claim": "G-1 tsc --noEmit Exit 0",
+      "exit": 0
+    },
+    {
+      "claim": "G-2 lint Exit 0 (0 errors, 3534 warnings)",
+      "exit": 0
+    },
+    {
+      "claim": "SSOT invariants resolved through real module (10/10)",
+      "exit": 0
+    }
+  ],
+  "ledgerLines": 206
+}

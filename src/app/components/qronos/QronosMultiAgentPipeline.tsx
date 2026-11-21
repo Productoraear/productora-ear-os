@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Play, CheckCircle2, AlertTriangle, Sparkles, RefreshCw, Radio, Terminal, Cpu } from 'lucide-react';
+import { CENTRALITA_EAR_OS } from '@/lib/constants/ear-os-ssot';
 
 interface PipelineLog {
   id: string;
@@ -51,7 +52,7 @@ export function QronosMultiAgentPipeline({
       id: '4',
       time: '10:42:18',
       agent: 'Price-Lock Guard',
-      message: 'Depósito 100,00 € Stripe Price-Lock SHA-256 generado y enviado al contacto (+34 693 048 440)',
+      message: `Depósito 100,00 € Stripe Price-Lock SHA-256 generado y enviado al contacto (${CENTRALITA_EAR_OS})`,
       type: 'success'
     }
   ];

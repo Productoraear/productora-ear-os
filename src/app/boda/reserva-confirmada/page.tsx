@@ -5,6 +5,7 @@ import {
   ReservaConfirmadaLiveView
 } from '@/features/fleet/ui/ReservaConfirmadaLiveView';
 import type { ClientLiveTrackingData } from '@/features/fleet/ui/ClientLiveTrackingDrawer';
+import { CENTRALITA } from '@/lib/phone-constants';
 
 export const dynamic = 'force-dynamic';
 
@@ -147,7 +148,7 @@ export default async function ReservaConfirmadaPage({
             'Productora EAR OS'
           ),
           driverName: asString(convoy.driverName, 'Jefe de Convoy EAR OS'),
-          driverPhone: asString(convoy.driverPhone, '+34600000000'),
+          driverPhone: asString(convoy.driverPhone, CENTRALITA.phone),
           vehiclePlate: asString(convoy.vehiclePlate, 'PENDIENTE'),
           vehicleModel: asString(convoy.vehicleModel, 'Furgón Logístico S-Class'),
           currentStatus,
@@ -196,7 +197,7 @@ export default async function ReservaConfirmadaPage({
           currentLocationCoords: { lat: 40.2383, lng: -4.1956 },
           assignedProviderName: asString(meta.artistName, 'Artista de Roster S-Class'),
           driverName: 'Despacho Central EAR OS',
-          driverPhone: '+34693693048',
+          driverPhone: CENTRALITA.phone,
           vehiclePlate: 'S-CLASS-VIP',
           vehicleModel: 'Logística In Situ',
           currentStatus: 'EN_ORIGEN',

@@ -1,14 +1,15 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { sendTelegramNotification } from '@/lib/services/telegram';
 import { logger } from '@/lib/logger';
+import { CENTRALITA } from '@/lib/phone-constants';
 import crypto from 'crypto';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-const EMERGENCY_CONTACT_PHONE = '659116376';
-const EMERGENCY_CONTACT_FULL = '+34659116376';
-const EMERGENCY_CONTACT_NAME = 'Adriana (Mujer de Edwin)';
+const EMERGENCY_CONTACT_FULL = process.env.SOS_EMERGENCY_PHONE?.trim() || CENTRALITA.phone;
+const EMERGENCY_CONTACT_PHONE = EMERGENCY_CONTACT_FULL.replace(/^\+34/, '');
+const EMERGENCY_CONTACT_NAME = process.env.SOS_EMERGENCY_NAME?.trim() || 'Centralita EAR OS';
 
 /**
  * 🚨 SILENT PANIC SOS ENDPOINT (INDETECTABLE POR TERCEROS)

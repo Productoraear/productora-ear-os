@@ -16,7 +16,7 @@
  *  1. Dossier Oficial PDF Menús Bodas 2026 / Comuniones 2025-2027 / Grupos — Eduardo Martínez.
  *  2. `https://www.ezkertzaberria.com/` — sede canónica en Santo Domingo Hiribidea, 13,
  *     48160 Derio (Bizkaia · comarca Txorierri / Gran Bilbao), teléfonos, correo,
- *     aforo (350 pax) y aparcamiento (150 plazas).
+ *     aforo (350 pax) y aparcamiento privado (120 plazas garantizadas).
  * ════════════════════════════════════════════════════════════════════════════
  */
 
@@ -163,7 +163,7 @@ export const OTZARRETA_ENTITY = Object.freeze({
     reopenedYear: 1962,
     generations: 4,
     heritage:
-        'Casa hostelera de raíz vasca (tradición desde 1902 y reapertura en 1962) bajo la dirección gastronómica de Eduardo Martínez en Santo Domingo Hiribidea, 13 (Derio, Bizkaia), especializada en parrilla al carbón de encina, cocina de cazuela vasca y banquetes en caserío en el valle del Txorierri.',
+        'Casa hostelera de raíz vasca (tradición desde 1902 y reapertura en 1962) bajo la dirección gastronómica de Eduardo Martínez en Santo Domingo Hiribidea, 13 (Derio, Bizkaia), especializada en alta brasa al carbón de encina y sarmiento, cocina de cazuela vasca y banquetes en caserío en el valle del Txorierri con 120 plazas de párking privado.',
     /** Espacios publicados. */
     spaces: Object.freeze([
         'comedor',
@@ -195,10 +195,10 @@ export const OTZARRETA_ENTITY = Object.freeze({
      * de la carta mueve el suelo de las tres superficies (INV-10).
      */
     weddingPriceFromEur: OTZARRETA_WEDDING_MENUS[0]?.priceEur ?? 0,
-    /** Plazas de aparcamiento privado en Derio (150 según dossier oficial). */
-    parkingSpaces: 150,
+    /** Plazas de aparcamiento privado garantizadas en Derio. */
+    parkingSpaces: 120,
     /** Plazas de la sede canónica en Derio (Bizkaia). */
-    groupParkingSpaces: 150,
+    groupParkingSpaces: 120,
     /** Catálogo oficial de menús de celebración (fuente única: Bento + Concierge). */
     weddingMenus: OTZARRETA_WEDDING_MENUS,
     /** Sede canónica única bajo la gerencia de Eduardo Martínez en Derio (Bizkaia). */
@@ -213,14 +213,14 @@ export const OTZARRETA_ENTITY = Object.freeze({
             email: 'info@ezkertzaberria.com',
             website: 'https://www.ezkertzaberria.com/',
             capacityPax: 350,
-            parkingSpaces: 150,
+            parkingSpaces: 120,
             features: Object.freeze([
                 'Jardines para ceremonias civiles con carpa y oficiante',
                 'Amplios comedores climatizados e insonorizados (50 a 200 pax)',
                 'Zona Chill Out con terraza y coctelería',
                 'Parque infantil con columpios homologados',
                 'Ascensor adaptado y 100% accesibilidad PMR',
-                'Parrilla de carbón de encina y pescados salvajes del Cantábrico',
+                'Alta brasa de carbón de encina y sarmiento, pescados salvajes del Cantábrico y 120 plazas de párking privado',
             ]),
         },
     ]),

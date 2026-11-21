@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 import { runCazadorFantasma } from '@/lib/services/scrapers/cazador_fantasma';
+import { CENTRALITA_EAR_OS } from '@/lib/constants/ear-os-ssot';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -102,7 +103,7 @@ function getHarvestedSample(sector: string, count: number): string[] {
         const town = townMatch 
           ? townMatch[1].replace(/^(Fincas|Catering|Música|Animación|Fotógrafos|Salones de Boda|Hoteles|Restaurantes|Decoración|Mobiliario)\s+/i, '').trim()
           : (v.location?.city || 'Madrid');
-        const phone = v.phone && v.phone.length > 6 ? v.phone : '+34 605 584 338';
+        const phone = v.phone && v.phone.length > 6 ? v.phone : CENTRALITA_EAR_OS;
         const catLabel = v.category === 'FINCAS_Y_ESPACIOS' ? 'FINCA' :
                          v.category === 'MUSICA_VIVO' ? 'MÚSICA' :
                          v.category === 'CATERING' ? 'CATERING' :
@@ -115,13 +116,13 @@ function getHarvestedSample(sector: string, count: number): string[] {
   }
 
   const staticPool = [
-    `[FINCA] Finca Las Tenadas (Madrid) · Tel: +34 605 584 338`,
-    `[FINCA] Palacio de Aldovea (Torrejón de Ardoz) · Tel: +34 693 693 048`,
-    `[ESPACIO] El Antiguo Convento (Boadilla del Monte) · Tel: +34 612 345 678`,
-    `[FINCA] Soto de Cerrolén (Torrelodones) · Tel: +34 622 987 654`,
-    `[FINCA] Cigarral del Ángel (Toledo) · Tel: +34 633 445 566`,
-    `[MÚSICA] Mariachi Imperial de Madrid · Tel: +34 693 693 048`,
-    `[CATERING] Acadi Catering Alta Gastronomía · Tel: +34 605 584 338`
+    `[FINCA] Finca Las Tenadas (Madrid) · Tel: ${CENTRALITA_EAR_OS}`,
+    `[FINCA] Palacio de Aldovea (Torrejón de Ardoz) · Tel: ${CENTRALITA_EAR_OS}`,
+    `[ESPACIO] El Antiguo Convento (Boadilla del Monte) · Tel: ${CENTRALITA_EAR_OS}`,
+    `[FINCA] Soto de Cerrolén (Torrelodones) · Tel: ${CENTRALITA_EAR_OS}`,
+    `[FINCA] Cigarral del Ángel (Toledo) · Tel: ${CENTRALITA_EAR_OS}`,
+    `[MÚSICA] Mariachi Imperial de Madrid · Tel: ${CENTRALITA_EAR_OS}`,
+    `[CATERING] Acadi Catering Alta Gastronomía · Tel: ${CENTRALITA_EAR_OS}`
   ];
   return staticPool.slice(0, count);
 }

@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { CheckCircle2, AlertTriangle, Clock, Check, X, Filter, ArrowUpDown, MessageCircle, DollarSign, ShieldAlert, Sparkles } from 'lucide-react';
+import { CENTRALITA_EAR_OS } from '@/lib/constants/ear-os-ssot';
 
 interface InboxItem {
   id: string;
@@ -48,7 +49,7 @@ export function QronosAgentInbox({ className = '' }: { className?: string }) {
       actionPayload: {
         type: 'whatsapp',
         amount: '380,00 €',
-        recipient: '+34 693 048 440',
+        recipient: CENTRALITA_EAR_OS,
         details: 'Edwin Agudelo Solista de Gala · Equipo Bose 12W/pax · Enlace Stripe Price-Lock'
       }
     },

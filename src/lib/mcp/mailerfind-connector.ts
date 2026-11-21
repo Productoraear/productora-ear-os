@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { CENTRALITA_EAR_OS } from '@/lib/constants/ear-os-ssot';
 
 export interface MailerfindLead {
   id: string;
@@ -217,8 +218,8 @@ function generateCleanBusinessSlug(name: string): string {
 function resolveLeadPhone(raw: any, cleanSlug: string, isEdwinSovereign: boolean): { phone: string; whatsapp: string; type: MailerfindLead['phoneVerifiedType'] } {
   if (isEdwinSovereign) {
     return {
-      phone: '+34 693 693 048',
-      whatsapp: '+34 693 693 048',
+      phone: CENTRALITA_EAR_OS,
+      whatsapp: CENTRALITA_EAR_OS,
       type: 'SOVEREIGN_CENTRALITA'
     };
   }
@@ -683,7 +684,7 @@ export class MailerfindConnector {
         location: 'Zaragoza',
         province: 'Zaragoza',
         followers: 14200,
-        phone: '+34 677 334 112',
+        phone: '',
         email: 'contratacion@mariachimexicanto.es',
         website: 'https://mariachimexicanto.es',
         fitScore: 99
@@ -695,7 +696,7 @@ export class MailerfindConnector {
         location: 'Madrid',
         province: 'Madrid',
         followers: 18400,
-        phone: '+34 608 554 223',
+        phone: '',
         email: 'contacto@mariachitenampa.com',
         website: 'https://mariachitenampa.com',
         fitScore: 98
@@ -707,7 +708,7 @@ export class MailerfindConnector {
         location: 'Toledo',
         province: 'Toledo',
         followers: 12600,
-        phone: '+34 612 990 411',
+        phone: '',
         email: 'info@mariachisoltoledo.es',
         website: 'https://mariachisoltoledo.es',
         fitScore: 97
@@ -719,7 +720,7 @@ export class MailerfindConnector {
         location: 'Sevilla',
         province: 'Sevilla',
         followers: 21900,
-        phone: '+34 654 892 011',
+        phone: '',
         email: 'reservas@brasasyolivo.es',
         website: 'https://brasasyolivo.es',
         fitScore: 95
@@ -731,7 +732,7 @@ export class MailerfindConnector {
         location: 'Valencia',
         province: 'Valencia',
         followers: 31000,
-        phone: '+34 670 119 443',
+        phone: '',
         email: 'pedidos@maestrosdelarroz.es',
         website: 'https://maestrosdelarroz.es',
         fitScore: 96
@@ -743,7 +744,7 @@ export class MailerfindConnector {
         location: 'Toledo',
         province: 'Toledo',
         followers: 48500,
-        phone: '+34 689 421 905',
+        phone: '',
         email: 'eventos@cigarraldelasmercedes.com',
         website: 'https://cigarraldelasmercedes.com',
         fitScore: 98
@@ -755,7 +756,7 @@ export class MailerfindConnector {
         location: 'Torrelodones',
         province: 'Madrid',
         followers: 32400,
-        phone: '+34 610 882 144',
+        phone: '',
         email: 'info@elpendolero.com',
         website: 'https://elpendolero.com',
         fitScore: 97
@@ -767,7 +768,7 @@ export class MailerfindConnector {
         location: 'Toledo',
         province: 'Toledo',
         followers: 9800,
-        phone: '+34 645 220 981',
+        phone: '',
         email: 'tecnica@toledoproaudio.com',
         website: 'https://toledoproaudio.com',
         fitScore: 94
@@ -779,7 +780,7 @@ export class MailerfindConnector {
         location: 'Madrid',
         province: 'Madrid',
         followers: 38900,
-        phone: '+34 699 432 108',
+        phone: '',
         email: 'hola@fotografiaemocional.es',
         website: 'https://fotografiaemocional.es',
         fitScore: 96
@@ -791,7 +792,7 @@ export class MailerfindConnector {
         location: 'Las Cabezas de San Juan',
         province: 'Sevilla',
         followers: 41200,
-        phone: '+34 622 781 990',
+        phone: '',
         email: 'weddings@haciendasanrafael.com',
         website: 'https://haciendasanrafael.com',
         fitScore: 98
@@ -803,7 +804,7 @@ export class MailerfindConnector {
         location: 'Madrid',
         province: 'Madrid',
         followers: 18400,
-        phone: '+34 608 554 223',
+        phone: '',
         email: 'contacto@mariachitenampa.com',
         website: 'https://mariachitenampa.com',
         fitScore: 97
@@ -815,7 +816,7 @@ export class MailerfindConnector {
         location: 'Valencia',
         province: 'Valencia',
         followers: 31000,
-        phone: '+34 670 119 443',
+        phone: '',
         email: 'pedidos@maestrosdelarroz.es',
         website: 'https://maestrosdelarroz.es',
         fitScore: 96
@@ -827,7 +828,7 @@ export class MailerfindConnector {
         location: 'Toledo',
         province: 'Toledo',
         followers: 53100,
-        phone: '+34 648 991 230',
+        phone: '',
         email: 'bodas@cigarraldelangel.com',
         website: 'https://cigarraldelangel.com',
         fitScore: 99
@@ -839,7 +840,7 @@ export class MailerfindConnector {
         location: 'Zaragoza',
         province: 'Zaragoza',
         followers: 11200,
-        phone: '+34 639 881 204',
+        phone: '',
         email: 'produccion@galasonido.es',
         website: 'https://galasonido.es',
         fitScore: 93
@@ -870,7 +871,7 @@ export class MailerfindConnector {
         followersCount: acc.followers,
         claimedProfileSlug: cleanSlug,
         fitScore: acc.fitScore,
-        phoneVerifiedType: 'DIRECT_VENDOR'
+        phoneVerifiedType: 'MAPS_IDENTIFIED'
       };
     });
   }
@@ -928,8 +929,6 @@ export class MailerfindConnector {
 
     names.slice(0, limit).forEach((name, idx) => {
       const cleanSlug = name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9\- ]/g, '').replace(/\s+/g, '-');
-      const randomPhone = `+34 6${Math.floor(10000000 + Math.random() * 89999999)}`;
-      const randomEmail = `contacto@${cleanSlug.slice(0, 15)}.es`;
 
       leads.push({
         id: `mf-lead-${slugProvince}-${idx + 1}`,
@@ -938,10 +937,10 @@ export class MailerfindConnector {
         platform: idx % 2 === 0 ? 'google_maps' : 'instagram',
         location,
         province,
-        phone: randomPhone,
-        whatsapp: randomPhone,
-        email: randomEmail,
-        isEmailVerified: true,
+        phone: '',
+        whatsapp: '',
+        email: '',
+        isEmailVerified: false,
         website: `https://www.${cleanSlug.slice(0, 15)}.es`,
         instagramHandle: `@${cleanSlug.slice(0, 18).replace(/-/g, '_')}`,
         followersCount: idx % 2 === 0 ? undefined : Math.floor(1200 + Math.random() * 8500),

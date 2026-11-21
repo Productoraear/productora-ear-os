@@ -25,8 +25,9 @@ import QRCode from 'qrcode';
 
 function Test1EurContent() {
   const searchParams = useSearchParams();
-  // Número de pruebas: placeholder no dialable (nunca una línea real).
-  const clientPhone = searchParams.get('telefono') || '600000000';
+  const rawPhone = searchParams.get('telefono')?.trim() || '';
+  const clientPhoneDigits = rawPhone.replace(/\D/g, '');
+  const hasClientPhone = clientPhoneDigits.length >= 9;
   const clientName = searchParams.get('nombre') || 'Cliente Exclusivo';
   const eventDate = searchParams.get('fecha') || '31 de Octubre de 2026';
   const statusParam = searchParams.get('status');
@@ -144,7 +145,7 @@ function Test1EurContent() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          clientPhone,
+          clientPhone: rawPhone || undefined,
           clientName,
           eventDate,
           signature: signatureData,
@@ -166,17 +167,21 @@ function Test1EurContent() {
   };
 
   // WhatsApp share URL for direct client transmission
+  const phoneQuery = rawPhone ? `telefono=${encodeURIComponent(rawPhone)}&` : '';
   const shareUrl = typeof window !== 'undefined'
-    ? `${window.location.origin}/reservar/test-1eur?telefono=${encodeURIComponent(clientPhone)}&fecha=${encodeURIComponent(eventDate)}`
-    : `https://productoraear.com/reservar/test-1eur?telefono=${encodeURIComponent(clientPhone)}&fecha=${encodeURIComponent(eventDate)}`;
+    ? `${window.location.origin}/reservar/test-1eur?${phoneQuery}fecha=${encodeURIComponent(eventDate)}`
+    : `https://productoraear.com/reservar/test-1eur?${phoneQuery}fecha=${encodeURIComponent(eventDate)}`;
 
   const whatsappMessage = encodeURIComponent(
     `Hola! Aquí tienes tu enlace exclusivo de reserva con pre-firma de Edwin Agudelo y bloqueo de fecha (31 de Octubre). Depósito 1,00 €:\n\n${shareUrl}`
   );
-  const whatsappShareLink = `https://wa.me/34${clientPhone.replace(/\D/g, '')}?text=${whatsappMessage}`;
+  const waDigits = clientPhoneDigits.startsWith('34') ? clientPhoneDigits : `34${clientPhoneDigits}`;
+  const whatsappShareLink = hasClientPhone
+    ? `https://wa.me/${waDigits}?text=${whatsappMessage}`
+    : `${CENTRALITA.whatsapp}?text=${whatsappMessage}`;
 
   // ── Reto 3: Streaming criptográfico SHA-256 (firma biométrica en vivo) ──
-  const contractPayload = `${clientName}|${clientPhone}|${eventDate}|${sigSeed}`;
+  const contractPayload = `${clientName}|${rawPhone || CENTRALITA.phone}|${eventDate}|${sigSeed}`;
   const contractHash = sha256Hex(contractPayload);
 
   const [qrUrl, setQrUrl] = useState<string | null>(null);
@@ -230,7 +235,7 @@ function Test1EurContent() {
           </div>
           <div className="flex justify-between items-center text-xs text-white/50">
             <span>Teléfono Vinculado:</span>
-            <span className="font-mono text-white">+{clientPhone}</span>
+            <span className="font-mono text-white">{hasClientPhone ? `+${rawPhone}` : CENTRALITA.display}</span>
           </div>
         </div>
 
@@ -321,7 +326,7 @@ function Test1EurContent() {
               <span className="text-white/50 flex items-center gap-2">
                 <Phone className="w-4 h-4 text-[#ecb613]" /> Teléfono Cliente:
               </span>
-              <span className="font-mono text-white font-bold">+{clientPhone}</span>
+              <span className="font-mono text-white font-bold">{hasClientPhone ? `+${rawPhone}` : CENTRALITA.display}</span>
             </div>
 
             <div className="flex justify-between items-center py-2 border-b border-white/5">

@@ -55,6 +55,7 @@ import { SovereignMobileHUD } from "@/components/sclass/SovereignMobileHUD";
 // propio componente se autoexcluye de /admin y /panel.
 import { FloatingWhatsAppCta } from "@/components/ui/FloatingWhatsAppCta";
 import { SovereignConciergeWidget } from "@/components/concierge/SovereignConciergeWidget";
+import { AdminConciergeBridge } from "@/components/admin/AdminConciergeBridge";
 import { AdminOnlyOmniConsole } from "@/components/agents/AdminOnlyOmniConsole";
 import { GeoStructuredData } from "@/components/seo/GeoStructuredData";
 import { VimumeThemeInjector } from "@/components/theme/VimumeThemeInjector";
@@ -173,7 +174,13 @@ export default function RootLayout({
                               <SovereignFooter />
                               <SovereignMobileHUD />
                               <FloatingWhatsAppCta />
-                              <SovereignConciergeWidget />
+                              <SovereignConciergeWidget
+                                scraperSlot={
+                                  <React.Suspense fallback={null}>
+                                    <AdminConciergeBridge />
+                                  </React.Suspense>
+                                }
+                              />
                               <React.Suspense fallback={null}>
                                 <AdminOnlyOmniConsole />
                               </React.Suspense>

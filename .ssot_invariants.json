@@ -1,0 +1,61 @@
+{
+  "ts": "2026-11-21T17:34:17.349Z",
+  "ssot_hash_computed": "cefa76c2c6a3f92f57acf74f654932c02bf66774502102cb4f932520aaa64b2b",
+  "ssot_hash_known_good": "cefa76c2c6a3f92f57acf74f654932c02bf66774502102cb4f932520aaa64b2b",
+  "ssot_hash_match": true,
+  "guard_violations": [],
+  "guard_ok": true,
+  "checks": [
+    {
+      "id": "INV-01",
+      "ok": true,
+      "detail": "tarifa base = 350"
+    },
+    {
+      "id": "INV-02",
+      "ok": true,
+      "detail": "split = 0.8/0.1/0.1 (suma 1.0000)"
+    },
+    {
+      "id": "INV-03",
+      "ok": true,
+      "detail": "deposito = 100"
+    },
+    {
+      "id": "INV-04",
+      "ok": true,
+      "detail": "techo B2G = 14250 / limite LCSP = 15000"
+    },
+    {
+      "id": "INV-12",
+      "ok": true,
+      "detail": "centralita = +34 693 693 048"
+    },
+    {
+      "id": "INV-13",
+      "ok": true,
+      "detail": "rider = 75 dB / 12 W-pax"
+    },
+    {
+      "id": "LOGISTICA",
+      "ok": true,
+      "detail": "1.5 EUR/km desde km 50"
+    },
+    {
+      "id": "HOTEL",
+      "ok": true,
+      "detail": "hotel = 120"
+    },
+    {
+      "id": "IVA",
+      "ok": true,
+      "detail": "IVA = 0.21"
+    },
+    {
+      "id": "STANDARD",
+      "ok": true,
+      "detail": "estandar = 550"
+    }
+  ],
+  "all_pass": true
+}

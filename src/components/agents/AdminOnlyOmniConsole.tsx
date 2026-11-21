@@ -1,22 +1,17 @@
-'use client';
-
-import React from 'react';
-import { usePathname } from 'next/navigation';
-import { OmniAgentConsoleModal } from '@/components/agents/OmniAgentConsoleModal';
+import type React from 'react';
+import { requireAdminFromHeaders } from '@/lib/security/adminGuard';
+import { OmniAgentConsoleGate } from './OmniAgentConsoleGate';
 
 /**
  * Aislamiento de la consola Omni (AGENTS.md §1.2): la consola de supervisión con
  * trazas de daemon, voz y bus de agentes es una herramienta INTERNA del CEO.
- * Nunca se monta en la web pública; el cliente se atiende por WhatsApp.
+ * Poda estricta en servidor: sólo se instancia si la sesión admin verifica en servidor.
  */
-const INTERNAL_PREFIXES: readonly string[] = ['/admin', '/panel/agentes'];
-
-export function AdminOnlyOmniConsole(): React.JSX.Element | null {
-  const pathname = usePathname();
-  const isInternal: boolean =
-    typeof pathname === 'string' &&
-    INTERNAL_PREFIXES.some((prefix: string) => pathname === prefix || pathname.startsWith(`${prefix}/`));
-  if (!isInternal) return null;
-  return <OmniAgentConsoleModal />;
+export async function AdminOnlyOmniConsole(): Promise<React.JSX.Element | null> {
+  const auth = await requireAdminFromHeaders();
+  if (!auth.ok) {
+    return null;
+  }
+  return <OmniAgentConsoleGate />;
 }
 

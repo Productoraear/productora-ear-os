@@ -12,7 +12,6 @@ import {
   Phone,
   ArrowRight,
   ShieldCheck,
-  Link2,
   Loader2,
   CalendarDays,
   Mic,
@@ -25,8 +24,14 @@ import {
   ShoppingCart,
 } from 'lucide-react';
 import { CENTRALITA_EAR_OS } from '@/lib/constants/ear-os-ssot';
-import { OTZARRETA_ENTITY } from '@/lib/constants/otzarreta-entity';
+import {
+  OTZARRETA_ENTITY,
+  OTZARRETA_SEATING_PRESET,
+  OTZARRETA_WEDDING_MENUS,
+  OTZARRETA_WEDDING_MENUS_CLAIM,
+} from '@/lib/constants/otzarreta-entity';
 import { resolveVoiceProfile, type VoiceProfile } from '@/lib/voice/voice-profile-engine';
+import { primeSpeechSynthesis, speakNatural, stopSpeaking } from '@/lib/voice/naturalVoice';
 import { useCart, type ExtendedServiceCategory } from '@/components/checkout/CartContext';
 
 const CLEAN_PHONE: string = CENTRALITA_EAR_OS.replace(/\D/g, '');
@@ -38,7 +43,6 @@ interface RouteContextConfig {
   category: string;
   providerName: string;
   suggestedWa: string;
-  showScraper?: boolean;
 }
 
 interface ChatMessage {
@@ -65,6 +69,19 @@ interface ChatMessage {
   };
 }
 
+/**
+ * RUTAS DE LA FICHA INSIGNIA (Otzarreta).
+ * La entidad tiene dos puertas vivas: el dossier `/otzarreta` y su agenda
+ * `/calendario/<kind>/restaurante-otzarreta`. Si sólo se reconoce la primera,
+ * quien llega por la agenda (que es lo que enlazan los CTA) pierde los chips
+ * de contexto y el agente responde como una conserjería genérica.
+ */
+const OTZARRETA_SURFACE_PATTERN = /(?:^|\/)(?:otzarreta|restaurante-otzarreta)(?:\/|$)/i;
+
+function isOtzarretaSurfaceRoute(pathname: string): boolean {
+  return OTZARRETA_SURFACE_PATTERN.test(pathname);
+}
+
 function getContextForRoute(pathname: string): RouteContextConfig {
   if (pathname.includes('/reservar/solista') || pathname.includes('/artistas/e78903') || pathname.includes('/edwin-agudelo')) {
     return {
@@ -86,32 +103,41 @@ function getContextForRoute(pathname: string): RouteContextConfig {
       suggestedWa: 'Hola Edwin, represento a un ayuntamiento/entidad pública y deseo tramitar expediente B2G bajo Art. 118 LCSP.',
     };
   }
-  if (pathname.includes('/portal/proveedor') || pathname.includes('/fichas') || pathname.includes('/proveedores')) {
+  if (pathname.includes('/proveedores')) {
     return {
-      title: 'Homologación de Proveedores',
-      badge: 'Traslado Soberano · S-Class',
-      greeting: '¿Vienes de Bodas.net? Pega tu enlace o habla con la Centralita para homologar tu ficha en EAR OS gratis.',
+      title: 'Directorio de Proveedores EAR OS',
+      badge: 'Catálogo Verificado · S-Class',
+      greeting: 'Bienvenido al directorio de proveedores homologados en EAR OS. ¿Buscas fincas, restaurantes, música en directo o disponibilidad para tu evento?',
       category: 'Proveedor',
-      providerName: 'Portal Proveedores EAR OS',
-      suggestedWa: 'Hola, soy proveedor de eventos y deseo solicitar la homologación de mi ficha en EAR OS.',
-      showScraper: true,
+      providerName: 'Directorio Proveedores EAR OS',
+      suggestedWa: 'Hola, estoy consultando el directorio de proveedores en EAR OS y necesito asesoramiento.',
     };
   }
-  if (pathname.includes('/otzarreta')) {
+  if (pathname.includes('/portal/proveedor') || pathname.includes('/fichas')) {
+    return {
+      title: 'Portal de Proveedores · EAR OS',
+      badge: 'Gestión Soberana · S-Class',
+      greeting: 'Conserjería de soporte para proveedores homologados. Contacta con la Centralita oficial para cualquier gestión de tu ficha.',
+      category: 'Proveedor',
+      providerName: 'Portal Proveedores EAR OS',
+      suggestedWa: 'Hola, soy proveedor de eventos y deseo solicitar asistencia en EAR OS.',
+    };
+  }
+  if (isOtzarretaSurfaceRoute(pathname)) {
     return {
       title: 'Ezkertza Berria & Otzarreta · Derio',
-      badge: '7 Menús 2026 desde 100 €',
-      greeting: 'Bienvenido al Caserío Restaurante Ezkertza Berria & Otzarreta (Derio · Bizkaia). Soy el Maître Digital de sala de Eduardo Martínez. ¿Deseas consultar nuestros 7 menús oficiales de boda (desde 100 € + IVA), parrilla al carbón o aforos?',
+      badge: OTZARRETA_WEDDING_MENUS_CLAIM,
+      greeting: `Bienvenido al Caserío Restaurante Ezkertza Berria & Otzarreta en Derio (tradición desde ${OTZARRETA_ENTITY.foundedYear}). Alta brasa de carbón de encina y sarmiento, ${OTZARRETA_WEDDING_MENUS.length} ${OTZARRETA_WEDDING_MENUS_CLAIM}, salón acristalado interior (${OTZARRETA_SEATING_PRESET.interiorSalon.capacityPax} comensales), jardín exterior (${OTZARRETA_SEATING_PRESET.exteriorGarden.capacityPax} comensales) y ${OTZARRETA_SEATING_PRESET.parkingSpaces} plazas de párking privado.`,
       category: 'Fincas',
       providerName: 'Ezkertza Berria & Otzarreta / Eduardo Martínez',
-      suggestedWa: 'Hola Eduardo, estoy en la ficha de Ezkertza Berria & Otzarreta y deseo consultar disponibilidad y menús para mi evento.',
+      suggestedWa: 'Hola, estoy en la ficha de Ezkertza Berria & Otzarreta (Derio) y deseo consultar disponibilidad y menús para mi evento.',
     };
   }
   if (pathname.includes('/fincas')) {
     return {
       title: 'Fincas & Espacios Homologados',
       badge: 'Garantía Acústica S-Class',
-      greeting: 'Bienvenido al catálogo de Fincas Homologadas. ¿Buscas aforo, limitador acústico o menús de temporada 2026 de Otzarreta?',
+      greeting: `Bienvenido al catálogo de Fincas Homologadas. ¿Buscas aforo, limitador acústico o ${OTZARRETA_WEDDING_MENUS_CLAIM} en Otzarreta (Derio ${OTZARRETA_ENTITY.foundedYear})?`,
       category: 'Fincas',
       providerName: 'Fincas Homologadas',
       suggestedWa: 'Hola, estoy valorando fincas en EAR OS y deseo consultar aforo y condiciones técnicas.',
@@ -151,7 +177,11 @@ function getContextForRoute(pathname: string): RouteContextConfig {
   };
 }
 
-export function SovereignConciergeWidget() {
+export function SovereignConciergeWidget({
+  scraperSlot = null,
+}: {
+  readonly scraperSlot?: React.ReactNode;
+}) {
   const pathname = usePathname() ?? '/';
   const router = useRouter();
   const { addItem, setIsOpen: setCartOpen } = useCart();
@@ -173,22 +203,14 @@ export function SovereignConciergeWidget() {
   const [ttsEnabled, setTtsEnabled] = useState(true);
   const [isSpeaking, setIsSpeaking] = useState(false);
 
-  // Scraper simulator state
-  const [scraperUrl, setScraperUrl] = useState('');
-  const [isScraping, setIsScraping] = useState(false);
-  const [scrapeResult, setScrapeResult] = useState<{
-    photos: number;
-    menuPrice: number;
-    capacity: number;
-    name: string;
-  } | null>(null);
-
   const popoverRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const recognitionRef = useRef<any>(null);
+  const handleSendMessageRef = useRef<(textOverride?: string) => Promise<void>>(async () => {});
 
   const routeContext = useMemo(() => getContextForRoute(pathname), [pathname]);
+  const isOtzarretaSurface = useMemo(() => isOtzarretaSurfaceRoute(pathname), [pathname]);
   const activeVoiceProfile: VoiceProfile = useMemo(() => resolveVoiceProfile(pathname), [pathname]);
 
   // Initialize Speech Recognition & Greeting
@@ -207,10 +229,10 @@ export function SovereignConciergeWidget() {
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         recognition.onresult = (event: any) => {
-          const transcript = event.results[0][0].transcript;
+          const transcript = event.results?.[0]?.[0]?.transcript;
           if (transcript && transcript.trim()) {
             setInputQuery(transcript);
-            void handleSendMessage(transcript);
+            void handleSendMessageRef.current(transcript);
           }
           setIsListening(false);
         };
@@ -269,31 +291,24 @@ export function SovereignConciergeWidget() {
 
   // Stop TTS speech
   const stopSpeech = useCallback(() => {
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-      setIsSpeaking(false);
-    }
+    stopSpeaking();
+    setIsSpeaking(false);
   }, []);
 
-  // Speak text with TTS calibrated by Multi-Tenant Voice Profile
+  // Speak text with natural Spanish Web Speech API engine (waitForVoices + es-ES + watchdogs)
   const speakText = useCallback(
     (text: string) => {
-      if (!ttsEnabled || typeof window === 'undefined' || !('speechSynthesis' in window)) return;
-      try {
-        window.speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = activeVoiceProfile.fallbackLang || 'es-ES';
-        utterance.rate = activeVoiceProfile.speedMultiplier || 1.0;
-        utterance.pitch = activeVoiceProfile.pitch || 1.0;
-        utterance.onstart = () => setIsSpeaking(true);
-        utterance.onend = () => setIsSpeaking(false);
-        utterance.onerror = () => setIsSpeaking(false);
-        window.speechSynthesis.speak(utterance);
-      } catch {
-        setIsSpeaking(false);
-      }
+      if (!ttsEnabled || typeof window === 'undefined') return;
+      setIsSpeaking(true);
+      void speakNatural(text)
+        .catch(() => {
+          // Silencio controlado si el motor de voz del navegador no responde
+        })
+        .finally(() => {
+          setIsSpeaking(false);
+        });
     },
-    [ttsEnabled, activeVoiceProfile]
+    [ttsEnabled]
   );
 
   // Toggle voice recognition
@@ -304,14 +319,16 @@ export function SovereignConciergeWidget() {
       setIsListening(false);
     } else {
       stopSpeech();
+      primeSpeechSynthesis();
       try {
+        recognitionRef.current.lang = activeVoiceProfile.fallbackLang || 'es-ES';
         recognitionRef.current.start();
         setIsListening(true);
       } catch {
         setIsListening(false);
       }
     }
-  }, [isListening, stopSpeech]);
+  }, [isListening, stopSpeech, activeVoiceProfile.fallbackLang]);
 
   const notifyWebhook = useCallback(
     (action: string, extraData?: Record<string, unknown>) => {
@@ -348,11 +365,43 @@ export function SovereignConciergeWidget() {
     [pathname, routeContext, selectedDate, selectedSlot]
   );
 
+  // Mensaje de recuperación: si la API no responde, la conversación NO puede
+  // quedarse muda. Se ofrece el canal oficial con el texto del cliente ya
+  // redactado (el agente humano recibe contexto, no una consulta ciega).
+  const pushRecoveryMessage = useCallback(
+    (failedQuestion: string) => {
+      const recoveryText =
+        'Ahora mismo no he podido confirmarte ese dato desde la Conserjería. Para no hacerte esperar, sigue la conversación con un agente humano por WhatsApp: recibirá tu pregunta tal cual y responde con voz o audio.';
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: `assistant-recovery-${Date.now()}`,
+          role: 'assistant',
+          text: recoveryText,
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          action: {
+            type: 'whatsapp',
+            label: `Hablar con un agente (${CENTRALITA_EAR_OS})`,
+            url: `https://wa.me/${CLEAN_PHONE}?text=${encodeURIComponent(
+              `Hola, vengo de ${pathname} y mi consulta es: "${failedQuestion.slice(0, 140)}"`
+            )}`,
+          },
+        },
+      ]);
+      notifyWebhook('concierge_api_failure', { question: failedQuestion.slice(0, 140) });
+    },
+    [notifyWebhook, pathname]
+  );
+
   // Send message to conversational API
   const handleSendMessage = useCallback(
     async (textOverride?: string) => {
       const q = (textOverride || inputQuery).trim();
       if (!q || isSending) return;
+
+      if (ttsEnabled) {
+        primeSpeechSynthesis();
+      }
 
       const userMsg: ChatMessage = {
         id: `user-${Date.now()}`,
@@ -366,7 +415,7 @@ export function SovereignConciergeWidget() {
       setIsSending(true);
 
       try {
-        const detectedSlug = pathname.includes('/otzarreta') ? 'otzarreta' : '';
+        const detectedSlug = isOtzarretaSurface ? 'otzarreta' : '';
         const historyPayload = messages
           .filter((m) => m.id !== 'initial-greeting')
           .slice(-8)
@@ -414,28 +463,42 @@ export function SovereignConciergeWidget() {
                 quantity: 1,
               });
             }
+            return;
           }
         }
+
+        // BUG P0 2026-11-21 «chip muerto»: cualquier respuesta no utilizable
+        // (HTTP != 2xx, `success:false` o cuerpo vacío) se tragaba en silencio y
+        // el chip parecía no responder. Nunca más: se pinta un aviso con el canal
+        // humano ya abierto, de modo que la conversación siempre avanza.
+        pushRecoveryMessage(q);
       } catch (err) {
+        // Igual que arriba: un fallo de red no puede dejar al cliente a oscuras.
         console.warn('Error en consulta de concierge:', err);
+        pushRecoveryMessage(q);
       } finally {
         setIsSending(false);
       }
     },
-    [inputQuery, isSending, messages, pathname, routeContext, speakText, addItem]
+    [inputQuery, isSending, messages, pathname, routeContext, speakText, addItem, isOtzarretaSurface, pushRecoveryMessage, ttsEnabled]
   );
 
-  // Construct WhatsApp destination URL
+  useEffect(() => {
+    handleSendMessageRef.current = handleSendMessage;
+  }, [handleSendMessage]);
+
+  // Construct WhatsApp destination URL with contextual route, date and latest query
   const waUrl = useMemo(() => {
     let msg = routeContext.suggestedWa;
     if (selectedDate) {
       msg += ` He preseleccionado la fecha ${selectedDate} en turno ${selectedSlot.toUpperCase()}.`;
     }
-    if (scrapeResult) {
-      msg += ` [Enlace analizado: ${scraperUrl} | Aforo: ${scrapeResult.capacity} pax | Menú: ${scrapeResult.menuPrice} €]`;
+    const lastUserMessage = [...messages].reverse().find((m) => m.role === 'user')?.text;
+    if (lastUserMessage) {
+      msg += ` Consulta actual (${pathname}): "${lastUserMessage.slice(0, 140)}"`;
     }
     return `https://wa.me/${CLEAN_PHONE}?text=${encodeURIComponent(msg)}`;
-  }, [routeContext.suggestedWa, selectedDate, selectedSlot, scrapeResult, scraperUrl]);
+  }, [routeContext.suggestedWa, selectedDate, selectedSlot, messages, pathname]);
 
   const handleWhatsAppClick = useCallback(() => {
     notifyWebhook('whatsapp_click');
@@ -450,71 +513,6 @@ export function SovereignConciergeWidget() {
       window.open('/portal/proveedor', '_blank');
     }
   }, [notifyWebhook, pathname]);
-
-  const handleScrapeSimulate = useCallback(() => {
-    if (!scraperUrl.trim()) return;
-    setIsScraping(true);
-    setScrapeResult(null);
-
-    setTimeout(() => {
-      setIsScraping(false);
-      const isE78903 = scraperUrl.includes('e78903') || scraperUrl.toLowerCase().includes('productora-ear');
-      if (isE78903) {
-        setScrapeResult({
-          name: 'Productora EAR / Edwin Agudelo (Solista e78903)',
-          photos: 24,
-          menuPrice: 550,
-          capacity: 250,
-        });
-        notifyWebhook('sovereign_showcase_migration', {
-          showcaseUrl: scraperUrl,
-          providerId: 'e78903',
-          providerName: 'Productora EAR / Edwin Agudelo',
-          category: 'MUSICA_DIRECTO',
-        });
-      } else {
-        setScrapeResult({
-          name: scraperUrl.replace(/^https?:\/\//i, '').split('/')[0] || 'Escaparate Detectado',
-          photos: 14,
-          menuPrice: 145,
-          capacity: 350,
-        });
-        notifyWebhook('scraper_link_analyzed', { link: scraperUrl });
-      }
-    }, 600);
-  }, [scraperUrl, notifyWebhook]);
-
-  const handlePatientZeroPreset = useCallback(
-    (preset: 'edwin' | 'otzarreta') => {
-      setIsScraping(false);
-      if (preset === 'edwin') {
-        const canonicalUrl = 'https://www.bodas.net/musica/productora-ear--e78903';
-        setScraperUrl(canonicalUrl);
-        setScrapeResult({
-          name: 'Productora EAR / Edwin Agudelo (Solista e78903)',
-          photos: 24,
-          menuPrice: 550,
-          capacity: 250,
-        });
-        notifyWebhook('sovereign_showcase_migration', {
-          showcaseUrl: canonicalUrl,
-          providerId: 'e78903',
-          providerName: 'Productora EAR / Edwin Agudelo',
-          category: 'MUSICA_DIRECTO',
-        });
-      } else {
-        setScraperUrl('https://productoraear.com/otzarreta');
-        setScrapeResult({
-          name: 'Eduardo Martínez (Otzarreta / Ezkertza Berria · Derio)',
-          photos: 32,
-          menuPrice: 145,
-          capacity: 350,
-        });
-        notifyWebhook('patient_zero_preset', { preset: 'otzarreta_derio' });
-      }
-    },
-    [notifyWebhook]
-  );
 
   // Exclude from admin back-office routes
   if (!mounted || pathname.startsWith('/admin') || pathname.startsWith('/panel')) {
@@ -549,6 +547,22 @@ export function SovereignConciergeWidget() {
             </div>
 
             <div className="flex items-center gap-1">
+              {/* Handoff al AGENTE humano por WhatsApp (voz o nota de audio).
+                  Requisito del CEO: el canal conversacional por WhatsApp es el
+                  agente; el widget no puede ser un chatbot cerrado. El mensaje
+                  viaja ya redactado con el contexto exacto de la página. */}
+              <a
+                href={waUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => notifyWebhook('whatsapp_agent_handoff')}
+                className="rounded-lg p-1.5 text-emerald-300 transition-colors hover:bg-emerald-500/15 hover:text-emerald-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613]"
+                title="Hablar con un agente por WhatsApp (admite nota de voz)"
+                aria-label="Hablar con un agente por WhatsApp"
+              >
+                <MessageSquare size={16} />
+              </a>
+
               {/* Speaker TTS Toggle */}
               <button
                 type="button"
@@ -581,7 +595,7 @@ export function SovereignConciergeWidget() {
 
           {/* Quick Prompts Bar */}
           <div className="flex shrink-0 items-center gap-1.5 overflow-x-auto border-b border-white/[0.08] bg-[#0A0A0E] px-3 py-2 text-xs">
-            {pathname.includes('/otzarreta') ? (
+            {isOtzarretaSurface ? (
               <>
                 <button
                   type="button"
@@ -592,24 +606,24 @@ export function SovereignConciergeWidget() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => handleSendMessage('¿Cómo es la parrilla de carbón de encina de la casa?')}
+                  onClick={() => handleSendMessage('¿Cómo es la parrilla de carbón de encina y sarmiento desde 1902?')}
                   className="whitespace-nowrap rounded-full border border-white/[0.10] px-3 py-1.5 text-[#C9C4B8] transition-colors hover:border-[#ecb613]/50 hover:text-[#F4F1EA] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613]"
                 >
-                  Parrilla y brasa
+                  Brasa carbón y sarmiento
                 </button>
                 <button
                   type="button"
-                  onClick={() => handleSendMessage('¿Cuál es el aforo del salón y del jardín?')}
+                  onClick={() => handleSendMessage('¿Cuál es el aforo del salón acristalado interior y del jardín exterior?')}
                   className="whitespace-nowrap rounded-full border border-white/[0.10] px-3 py-1.5 text-[#C9C4B8] transition-colors hover:border-[#ecb613]/50 hover:text-[#F4F1EA] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613]"
                 >
-                  Aforo de 50 a 350
+                  Salón {OTZARRETA_SEATING_PRESET.interiorSalon.capacityPax} · Jardín {OTZARRETA_SEATING_PRESET.exteriorGarden.capacityPax}
                 </button>
                 <button
                   type="button"
-                  onClick={() => handleSendMessage('¿Cómo llego al caserío y cuánto párking hay?')}
+                  onClick={() => handleSendMessage('¿Cómo llego al caserío en Derio (1902) y cuánto párking privado hay?')}
                   className="whitespace-nowrap rounded-full border border-white/[0.10] px-3 py-1.5 text-[#C9C4B8] transition-colors hover:border-[#ecb613]/50 hover:text-[#F4F1EA] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613]"
                 >
-                  Cómo llegar
+                  Cómo llegar · {OTZARRETA_SEATING_PRESET.parkingSpaces} párking
                 </button>
               </>
             ) : pathname.includes('/seating-planner') ? (
@@ -661,10 +675,10 @@ export function SovereignConciergeWidget() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => handleSendMessage('¿Cómo traslado mi escaparate de Bodas.net a EAR OS?')}
+                  onClick={() => handleSendMessage('¿Cómo puedo bloquear mi fecha con el depósito deducible de 100 €?')}
                   className="whitespace-nowrap rounded-full border border-white/[0.10] px-3 py-1.5 text-[#C9C4B8] transition-colors hover:border-[#ecb613]/50 hover:text-[#F4F1EA] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613]"
                 >
-                  Traslado de escaparate
+                  Bloquear mi fecha
                 </button>
               </>
             )}
@@ -744,16 +758,13 @@ export function SovereignConciergeWidget() {
                         </button>
                       )}
 
-                      {m.action.type === 'scraper' && (
+                      {m.action.type === 'scraper' && scraperSlot && (
                         <button
                           type="button"
                           onClick={() => setShowFastActions(true)}
-                          className="w-full py-1.5 px-2.5 rounded-lg bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 border border-purple-500/40 font-bold text-[11px] flex items-center justify-between transition-colors"
+                          className="w-full py-1.5 px-2.5 rounded-lg bg-[#ecb613]/20 hover:bg-[#ecb613]/30 text-amber-300 border border-[#ecb613]/40 font-bold text-[11px] flex items-center justify-between transition-colors"
                         >
-                          <span className="flex items-center gap-1.5">
-                            <Link2 size={13} />
-                            {m.action.label}
-                          </span>
+                          <span>{m.action.label}</span>
                           <ArrowRight size={13} />
                         </button>
                       )}
@@ -873,7 +884,13 @@ export function SovereignConciergeWidget() {
                 >
                   <div className="flex items-center gap-2">
                     <MessageSquare size={14} />
-                    <span>Hablar directo con Edwin</span>
+                    <span>
+                      {isOtzarretaSurface
+                        ? 'Hablar con Conserjería por WhatsApp'
+                        : routeContext.category === 'Solista'
+                          ? 'Hablar directo con Edwin'
+                          : 'Hablar con Centralita por WhatsApp'}
+                    </span>
                   </div>
                   <ArrowRight size={13} />
                 </button>
@@ -891,48 +908,7 @@ export function SovereignConciergeWidget() {
                   <ArrowRight size={13} />
                 </button>
 
-                {/* Scraper Simulator */}
-                <div className="pt-2 border-t border-zinc-800 space-y-1.5">
-                  <div className="text-[10px] text-zinc-400 font-mono">Convertidor de escaparate (Bodas.net):</div>
-                  <div className="flex gap-1.5">
-                    <button
-                      type="button"
-                      onClick={() => handlePatientZeroPreset('edwin')}
-                      className="rounded border border-[#ecb613]/25 bg-white/[0.05] px-2 py-1 text-xs text-[#ecb613] transition-colors duration-160 ease-hallmark hover:bg-white/[0.10]"
-                    >
-                      Edwin Agudelo
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handlePatientZeroPreset('otzarreta')}
-                      className="rounded border border-[#ecb613]/25 bg-white/[0.05] px-2 py-1 text-xs text-[#ecb613] transition-colors duration-160 ease-hallmark hover:bg-white/[0.10]"
-                    >
-                      Otzarreta
-                    </button>
-                  </div>
-                  <div className="flex gap-1.5">
-                    <input
-                      type="url"
-                      placeholder="https://www.bodas.net/..."
-                      value={scraperUrl}
-                      onChange={(e) => setScraperUrl(e.target.value)}
-                      className="min-w-0 flex-1 rounded-lg border border-white/[0.12] bg-[#0F0F16] px-2.5 py-1.5 text-xs text-[#F4F1EA] placeholder:text-[#6F6B62] focus:border-[#ecb613] focus:outline-none"
-                    />
-                    <button
-                      type="button"
-                      onClick={handleScrapeSimulate}
-                      disabled={isScraping || !scraperUrl.trim()}
-                      className="px-2.5 py-1 bg-[#ecb613] hover:bg-amber-400 text-black font-bold rounded-lg text-xs disabled:opacity-50 flex items-center gap-1"
-                    >
-                      {isScraping ? <Loader2 size={11} className="animate-spin" /> : 'Analizar'}
-                    </button>
-                  </div>
-                  {scrapeResult && (
-                    <div className="p-2 bg-emerald-950/40 border border-emerald-500/30 rounded-lg text-emerald-300 text-[10px]">
-                      <span className="font-bold">{scrapeResult.name}:</span> Ficha lista para homologación oficial.
-                    </div>
-                  )}
-                </div>
+                {scraperSlot}
               </div>
             )}
           </div>
@@ -986,7 +962,7 @@ export function SovereignConciergeWidget() {
               <ShieldCheck size={11} className="text-[#ecb613]" />
               <span>Garantía S-Class EAR OS</span>
             </div>
-            <a href={`tel:${CLEAN_PHONE}`} className="hover:text-[#ecb613] transition-colors flex items-center gap-1">
+            <a href={`tel:+${CLEAN_PHONE}`} className="hover:text-[#ecb613] transition-colors flex items-center gap-1">
               <Phone size={9} />
               <span>{CENTRALITA_EAR_OS}</span>
             </a>

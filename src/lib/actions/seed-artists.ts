@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { Role } from "@prisma/client";
 import { revalidatePath } from "next/cache";
+import { CENTRALITA } from "@/lib/phone-constants";
 
 /**
  * 🏛️ ARTIST EDWIN AGUDELO SYSTEM SEEDER (S-CLASS INTEGRITY)
@@ -20,7 +21,7 @@ export async function seedArtistEdwin() {
         rank: "NIVEL_4_COMANDANTE",
         isPacienteCero: true,
         displayName: "Edwin Agudelo",
-        phone: "+34600000000",
+        phone: CENTRALITA.phone,
       },
       create: {
         email: "productoraear@gmail.com",
@@ -28,7 +29,7 @@ export async function seedArtistEdwin() {
         rank: "NIVEL_4_COMANDANTE",
         isPacienteCero: true,
         displayName: "Edwin Agudelo",
-        phone: "+34600000000",
+        phone: CENTRALITA.phone,
       },
     });
     console.log(`✅ [SEED_ARTIST] Usuario Master configurado (ID: ${user.id})`);

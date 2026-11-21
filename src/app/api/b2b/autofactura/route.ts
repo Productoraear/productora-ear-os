@@ -5,6 +5,7 @@ import {
   B2BCommissionEvent,
   calculateB2BCommission
 } from '@/lib/b2b-billing-engine';
+import { CENTRALITA_EAR_OS } from '@/lib/constants/ear-os-ssot';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -18,6 +19,7 @@ export async function POST(req: NextRequest) {
       iban = 'ES9121000418450200051332',
       direccionFiscal = 'Carretera de Toledo km 24, Madrid',
       tipoPartner = 'FINCA_HOMOLOGADA',
+      telefono,
       eventos = []
     } = body;
 
@@ -28,7 +30,7 @@ export async function POST(req: NextRequest) {
       tipoPartner,
       direccionFiscal,
       emailFacturacion: 'administracion@finca.es',
-      telefono: '+34 912 345 678',
+      telefono: typeof telefono === 'string' && telefono.trim() ? telefono.trim() : CENTRALITA_EAR_OS,
       iban,
       polizaRC: {
         numero: 'POL-RC-300K-VERIF',

@@ -20,6 +20,7 @@ import {
   ShieldCheck,
   Bot
 } from 'lucide-react';
+import { CENTRALITA } from '@/lib/phone-constants';
 
 interface Solicitud {
   id: string;
@@ -55,7 +56,6 @@ export const ProSolicitudesTab: React.FC = () => {
       horaSolicitud: '13:29',
       estado: 'ATENDIDA',
       ultimoMensaje: 'hola buena tardes, aun esta interesada?',
-      telefono: '+34600000001',
       comensales: '100 pax',
       lugar: 'Madrid / Toledo'
     },
@@ -69,7 +69,6 @@ export const ProSolicitudesTab: React.FC = () => {
       estado: 'ATENDIDA',
       comensales: '70-110 comensales',
       ultimoMensaje: '¿En qué momento os viene mejor hablar? O hacer una videollamada.',
-      telefono: '+34600000002',
       lugar: 'Finca Toledo'
     },
     {
@@ -81,7 +80,6 @@ export const ProSolicitudesTab: React.FC = () => {
       horaSolicitud: '21:28',
       estado: 'ATENDIDA',
       ultimoMensaje: 'Mi nombre es Edwin, David encantado de saludarte',
-      telefono: '+34600000003',
       comensales: '120 pax',
       lugar: 'Madrid'
     },
@@ -94,7 +92,6 @@ export const ProSolicitudesTab: React.FC = () => {
       horaSolicitud: '13:55',
       estado: 'ATENDIDA',
       ultimoMensaje: 'Genial , donde vives?',
-      telefono: '+34600000004',
       comensales: '85 pax',
       lugar: 'Toledo'
     },
@@ -106,8 +103,8 @@ export const ProSolicitudesTab: React.FC = () => {
       fechaSolicitud: '26/02/2025',
       horaSolicitud: '00:40',
       estado: 'ATENDIDA',
-      ultimoMensaje: 'Mi número de teléfono es 693 693 048, disponible 24 horas',
-      telefono: '+34693693048',
+      ultimoMensaje: `Mi número de teléfono es ${CENTRALITA.display}, disponible 24 horas`,
+      telefono: CENTRALITA.phone,
       comensales: '95 pax',
       lugar: 'Madrid'
     },
@@ -121,7 +118,6 @@ export const ProSolicitudesTab: React.FC = () => {
       estado: 'ATENDIDA',
       comensales: '70 comensales',
       ultimoMensaje: 'No estuvo muy receptivo al inicio, pendiente de llamada de cierre.',
-      telefono: '+34600000006',
       lugar: 'Madrid'
     },
     {
@@ -133,7 +129,6 @@ export const ProSolicitudesTab: React.FC = () => {
       horaSolicitud: '20:03',
       estado: 'ATENDIDA',
       ultimoMensaje: 'No tenemos la idea de un concierto heavy, más bien una voz con guitarra acústica de gala...',
-      telefono: '+34600000007',
       comensales: '60 pax',
       lugar: 'Madrid'
     },
@@ -146,7 +141,6 @@ export const ProSolicitudesTab: React.FC = () => {
       horaSolicitud: '22:52',
       estado: 'ATENDIDA',
       ultimoMensaje: 'Dime cuál es el horario que mejor os viene y agendamos sin compromiso...',
-      telefono: '+34600000008',
       comensales: '110 pax',
       lugar: 'Toledo'
     },
@@ -159,7 +153,6 @@ export const ProSolicitudesTab: React.FC = () => {
       horaSolicitud: '20:42',
       estado: 'CONTRATADA',
       ultimoMensaje: 'Muchas gracias Edwin, fecha confirmada y bloqueada.',
-      telefono: '+34600000009',
       comensales: '140 pax',
       lugar: 'Madrid (Navidad)'
     },
@@ -172,7 +165,6 @@ export const ProSolicitudesTab: React.FC = () => {
       horaSolicitud: '09:46',
       estado: 'DESCARTADA',
       ultimoMensaje: 'Fecha ocupada previamente por otro evento S-Class.',
-      telefono: '+34600000010',
       comensales: '90 pax',
       lugar: 'Toledo'
     }
@@ -209,7 +201,7 @@ export const ProSolicitudesTab: React.FC = () => {
       } else if (aiTone === 'urgencia') {
         reply = `Hola ${item.novios}, te escribo personalmente porque la fecha del ${item.fechaEvento} es de altísima demanda y solo mantenemos un evento por jornada para asegurar excelencia acústica S-Class. Para congelar la tarifa oficial de 350,00 € y bloquear la fecha, operamos con un depósito protegido de 100,00 € en Stripe (Price-Lock). ¿Cuándo podemos hablar 5 minutos?`;
       } else {
-        reply = `Hola ${item.novios}, gracias por tu contacto. Nuestra propuesta para el ${item.fechaEvento} incluye show de 1 hora en directo (2 pases de 30 min), microfonía Shure Beta 87A y sonorización Bose F1 812 (12 W/pax). Además, el 10% del importe se destina a sesiones terapéuticas VIMUME con certificado oficial deducible hasta el 80% en IRPF (Ley 49/2002). Puedes contactarme directo al +34 693 693 048.`;
+        reply = `Hola ${item.novios}, gracias por tu contacto. Nuestra propuesta para el ${item.fechaEvento} incluye show de 1 hora en directo (2 pases de 30 min), microfonía Shure Beta 87A y sonorización Bose F1 812 (12 W/pax). Además, el 10% del importe se destina a sesiones terapéuticas VIMUME con certificado oficial deducible hasta el 80% en IRPF (Ley 49/2002). Puedes contactarme directo al ${CENTRALITA.display}.`;
       }
       setGeneratedReply(reply);
       setIsGeneratingAi(false);
@@ -495,7 +487,7 @@ export const ProSolicitudesTab: React.FC = () => {
 
                     <div className="flex gap-2">
                       <a
-                        href={`https://wa.me/34693693048?text=${encodeURIComponent(generatedReply)}`}
+                        href={`${CENTRALITA.whatsapp}?text=${encodeURIComponent(generatedReply)}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex-1 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-[0_0_15px_rgba(16,185,129,0.3)]"
@@ -503,7 +495,7 @@ export const ProSolicitudesTab: React.FC = () => {
                         <Send className="w-3.5 h-3.5" /> Enviar WhatsApp
                       </a>
                       <a
-                        href="tel:+34693693048"
+                        href={CENTRALITA.tel}
                         className="p-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white border border-zinc-700 transition-all flex items-center justify-center"
                         title="Llamar"
                       >

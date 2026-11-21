@@ -1,3 +1,5 @@
+import { CENTRALITA_EAR_OS } from '@/lib/constants/ear-os-ssot';
+
 export interface ServiceOffering {
   id: string;
   categoria: 'particular' | 'corporativo' | 'digital';
@@ -63,11 +65,11 @@ export const MANAGEMENT_CONTACT = {
   managerGeneral: {
     nombre: 'Adriana Lenis',
     rol: 'Manager General',
-    telefono: '+34 659 116 376'
+    telefono: CENTRALITA_EAR_OS
   },
   jefaPrensa: {
     nombre: 'Eliana Tovar',
     rol: 'Jefa de Prensa',
-    telefono: '+34 679 286 157'
+    telefono: CENTRALITA_EAR_OS
   }
 };

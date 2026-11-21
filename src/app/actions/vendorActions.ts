@@ -7,6 +7,7 @@ import {
   SPLIT_SOBERANO,
   computeSovereignLogistics,
 } from '@/lib/pricing/sovereign-pricing';
+import { CENTRALITA_EAR_OS } from '@/lib/constants/ear-os-ssot';
 
 export interface PromotionItem {
   id: string;
@@ -75,7 +76,7 @@ const DEFAULT_INBOX: VendorInboxItem[] = [
   {
     id: 'lead-101',
     clientName: 'María Fernández & Carlos',
-    clientPhone: '+34 612 345 678',
+    clientPhone: CENTRALITA_EAR_OS,
     eventDate: '2026-10-18',
     location: 'Finca La Gaivota (Madrid)',
     budget: 470.00,
@@ -86,7 +87,7 @@ const DEFAULT_INBOX: VendorInboxItem[] = [
   {
     id: 'lead-102',
     clientName: 'Laura & Javier',
-    clientPhone: '+34 687 112 233',
+    clientPhone: CENTRALITA_EAR_OS,
     eventDate: '2026-11-05',
     location: 'Jardines La Cartuja (Toledo)',
     budget: 350.00,
@@ -97,7 +98,7 @@ const DEFAULT_INBOX: VendorInboxItem[] = [
   {
     id: 'lead-103',
     clientName: 'Residencia Los Olivos (VIMUME B2G)',
-    clientPhone: '+34 693 693 048',
+    clientPhone: CENTRALITA_EAR_OS,
     eventDate: '2026-10-12',
     location: 'Méntrida (Toledo)',
     budget: 650.00,

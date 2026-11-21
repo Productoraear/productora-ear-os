@@ -21,17 +21,21 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const ROOT = process.cwd();
-const SCAN_DIRS = ['src/app/(public)', 'src/components', 'src/features', 'src/app/artistas', 'src/app/fincas'];
+const SCAN_DIRS = ['src/app', 'src/components', 'src/features'];
 
-/** Superficies internas excluidas (el operador sí ve el número). */
+/** Superficies internas excluidas (ancladas para no excluir src/features/vendor ni rutas públicas). */
 const EXCLUDED_SEGMENTS = [
-  `${path.sep}(admin)${path.sep}`,
-  `${path.sep}admin${path.sep}`,
-  `${path.sep}(vendor)${path.sep}`,
-  `${path.sep}vendor${path.sep}`,
-  `${path.sep}api${path.sep}`,
-  `${path.sep}(artist)${path.sep}`,
-  `${path.sep}(dashboard)${path.sep}`,
+  `${path.sep}src${path.sep}app${path.sep}(admin)${path.sep}`,
+  `${path.sep}src${path.sep}app${path.sep}admin${path.sep}`,
+  `${path.sep}src${path.sep}app${path.sep}(vendor)${path.sep}`,
+  `${path.sep}src${path.sep}app${path.sep}(artist)${path.sep}`,
+  `${path.sep}src${path.sep}app${path.sep}(dashboard)${path.sep}`,
+  `${path.sep}src${path.sep}app${path.sep}(portal)${path.sep}`,
+  `${path.sep}src${path.sep}app${path.sep}api${path.sep}`,
+  `${path.sep}src${path.sep}adn_vault`,
+  // Archivos legacy sin llamadores en src/ (0 callers), fuera de alcance M2:
+  `${path.sep}src${path.sep}app${path.sep}components${path.sep}ProveedorDirectory.tsx`,
+  `${path.sep}src${path.sep}app${path.sep}components${path.sep}SClass${path.sep}ArsenalTechnical.tsx`,
 ];
 
 /** Variables permitidas: ya han pasado por el contact gate. */
@@ -62,8 +66,8 @@ const SOVEREIGN_ALLOWED_DIGITS = new Set([
   '34679286157', // Línea de prensa VIMUME (titularidad EAR OS)
 ]);
 
-/** Formatos admitidos de un teléfono español (móvil/fijo). */
-const PHONE_LITERAL_RE = /(?:\+34[\s.-]?)?\b[679]\d{2}[\s.-]?\d{3}[\s.-]?\d{3}\b/g;
+/** Formatos admitidos de un teléfono español (móvil/fijo, con o sin espacio tras +34/34). */
+const PHONE_LITERAL_RE = /(?:(?:\+|00)?34[\s.-]?)?(?<!\d)[679]\d{2}[\s.-]?\d{3}[\s.-]?\d{3}(?!\d)/g;
 
 /** Link directo (`wa.me`/`tel:`) con cualquier número. */
 const PHONE_LINK_RE = /(?:wa\.me\/|tel:)\+?(\d{9,15})/gi;
@@ -156,10 +160,10 @@ function scanPeajeLeaks(line) {
   let linkMatch = PHONE_LINK_RE.exec(line);
   while (linkMatch !== null) {
     const raw = digitsOf(linkMatch[1]);
-    if (!SOVEREIGN_ALLOWED_DIGITS.has(normalize(raw)) && !isDummy(raw)) {
+    if (!SOVEREIGN_ALLOWED_DIGITS.has(normalize(raw))) {
       findings.push({
         id: 'SUPPLIER_CONTACT_LINK',
-        description: 'Enlace wa.me/tel: con línea ajena a EAR OS (fuga de peaje)',
+        description: 'Enlace wa.me/tel: con línea ajena a EAR OS o dummy (fuga de peaje)',
       });
       break;
     }
@@ -275,6 +279,58 @@ for (const dir of SCAN_DIRS) {
       });
     }
   }
+}
+
+/* ── Higiene global src/ · Bloqueo de líneas personales, typos y mocks INV-06/12 ── */
+const HYGIENE_EXEMPT_FILES = [
+  `${path.sep}src${path.sep}adn_vault`,
+  `${path.sep}src${path.sep}data${path.sep}payloads_test`,
+  `${path.sep}src${path.sep}lib${path.sep}constants${path.sep}otzarreta-entity.ts`,
+  `${path.sep}src${path.sep}lib${path.sep}constants${path.sep}fincas-catalog.ts`,
+  `${path.sep}src${path.sep}data${path.sep}quality-vip-solutions.ts`,
+  `${path.sep}src${path.sep}lib${path.sep}security${path.sep}sovereign-anti-fraud-sentinel.ts`,
+];
+
+const FORBIDDEN_HYGIENE_PATTERNS = [
+  {
+    id: 'PERSONAL_OR_TYPO_PHONE',
+    description: 'Número personal (659116376) o typo de centralita (693048440) en src/',
+    pattern: /(?:(?:\+|00)?34[\s.-]?)?(?<!\d)(?:659[\s.-]?116[\s.-]?376|693[\s.-]?048[\s.-]?440)(?!\d)/,
+  },
+  {
+    id: 'LIVE_DUMMY_PHONE_LINK',
+    description: 'Enlace tel:/wa.me con número ficticio 60000000x en src/',
+    pattern: /(?:wa\.me\/|tel:)\+?(?:34)?60{7}\d/i,
+  },
+  {
+    id: 'MOCK_DUMMY_PHONE_LITERAL',
+    description: 'Teléfono mock/ficticio (600000000..010 / 612345678 / 912345678 / 611223344 / 622334455) en src/',
+    pattern: /(?:(?:\+|00)?34[\s.-]?)?(?<!\d)(?:600[\s.-]?000[\s.-]?0(?:0\d|10)|612[\s.-]?345[\s.-]?678|912[\s.-]?345[\s.-]?678|611[\s.-]?223[\s.-]?344|622[\s.-]?334[\s.-]?455)(?!\d)/,
+  },
+];
+
+for (const file of walk(path.join(ROOT, 'src'))) {
+  if (HYGIENE_EXEMPT_FILES.some((seg) => file.includes(seg))) continue;
+  const content = fs.readFileSync(file, 'utf8');
+  const lines = content.split(/\r?\n/);
+
+  lines.forEach((line, index) => {
+    const trimmed = line.trim();
+    if (trimmed.startsWith('//') || trimmed.startsWith('/*') || trimmed.startsWith('*')) return;
+    if (/placeholder\s*=/.test(line)) return;
+
+    for (const rule of FORBIDDEN_HYGIENE_PATTERNS) {
+      if (rule.id === 'MOCK_DUMMY_PHONE_LITERAL' && /\bej[.:]?|\bejemplo\b/i.test(line)) continue;
+      if (!rule.pattern.test(line)) continue;
+      violations.push({
+        rule: rule.id,
+        description: rule.description,
+        file: path.relative(ROOT, file),
+        line: index + 1,
+        snippet: trimmed.slice(0, 160),
+      });
+    }
+  });
 }
 
 /* ── Contrato del gate: el módulo debe existir y ser fail-closed ─────────── */

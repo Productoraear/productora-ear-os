@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { stripe } from '@/lib/payments';
 import { fireAndForgetN8n } from '@/lib/services/n8n-dispatcher';
+import { CENTRALITA } from '@/lib/phone-constants';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -11,7 +12,10 @@ const TEST_DEPOSIT_CENTS = 100; // 1,00 €
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json().catch(() => ({}));
-    const clientPhone = String(body.clientPhone || '659116376').trim();
+    const clientPhone =
+      typeof body.clientPhone === 'string' && body.clientPhone.trim().length > 0
+        ? body.clientPhone.trim()
+        : CENTRALITA.phone;
     const clientName = String(body.clientName || 'Cliente VIP').trim();
     const eventDate = String(body.eventDate || '2026-10-31').trim();
     const format = 'Edwin Agudelo (Solista Premium con pistas de estudio)';

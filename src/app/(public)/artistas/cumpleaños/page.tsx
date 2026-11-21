@@ -4,6 +4,7 @@ import { generateArtistSEOMeta, generateEventSchema } from '@/lib/artists/seo';
 import { Sparkles, Smile, Music2, Clock, Users, Calendar, ArrowRight, Phone } from 'lucide-react';
 import { ArtistPricingMatrix } from '@/app/components/artists/ArtistPricingMatrix';
 import { ArtistTestimonials } from '@/app/components/artists/ArtistTestimonials';
+import { CENTRALITA } from '@/lib/phone-constants';
 
 export const metadata: Metadata = generateArtistSEOMeta('cumpleaños', 'España');
 
@@ -245,7 +246,7 @@ export default function ArtistasCumpleañosPage(): React.JSX.Element {
                 />
               </a>
               <a
-                href="tel:+34600000000"
+                href={CENTRALITA.tel}
                 className="group inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white/[0.03] border border-white/10 text-white text-[11px] font-black uppercase tracking-[0.2em] transition-all duration-300 ease-out hover:bg-white/[0.06] hover:border-white/25 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
               >
                 <Phone

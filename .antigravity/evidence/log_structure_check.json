@@ -1,0 +1,56 @@
+{
+  "ts": "2026-11-21T17:40:15.437Z",
+  "totalLines": 6251,
+  "markersLeft": 0,
+  "hasOrphanIbanTail": true,
+  "lastHeadings": [
+    {
+      "n": 5839,
+      "l": "### FASE 2 Â· Barrera perimetral `.gitignore`"
+    },
+    {
+      "n": 5848,
+      "l": "### Evidence quintuple (EP-1)"
+    },
+    {
+      "n": 5859,
+      "l": "### Premortem G-8"
+    },
+    {
+      "n": 5873,
+      "l": "### Riesgo residual detectado (NO resuelto, se declara)"
+    },
+    {
+      "n": 5882,
+      "l": "### 2026-11-18T15:52:00Z Â· SOBERANIA_PORTADA_TRES_PUERTAS_ALIANZA_OTZARRETA_V32 â€” SANEAMIENTO PORTADA (3 ACCESOS) + RUTA /alianza-otzarreta + REGISTRO MEGA ORQUESTA TROPICAL"
+    },
+    {
+      "n": 5922,
+      "l": "### 2026-11-20T00:00:00Z Â· INGESTA_PROMPT_CORPUS_V1 â€” CORPUS DESTILADO ANTHROPIC (CC0-1.0)"
+    },
+    {
+      "n": 6073,
+      "l": "## 2026-11-21 · OPERACIÓN VAMPIRIZACIÓN TOTAL HALLMARK S-CLASS"
+    },
+    {
+      "n": 6167,
+      "l": "## Migración de hardware y arresto de derivas — auditoría de perímetro `D:\\EAR_OS_V2\\EAR_OS_V2`"
+    }
+  ],
+  "tail": [
+    "",
+    "**Reto espejo.** El CEO ordenó \"verificar el hash `cefa76c2…` intacto\". La cláusula más",
+    "exigente (AMD-2) es *verificar ese hash por una vía que no sea el verificador que lo declara*.",
+    "Ahí apareció la divergencia `81c7e7b4…` vs `cefa76c2…` que, bien leída, no es una brecha",
+    "sino la prueba de que el hash es canónico y no de bytes. Se documenta para que ningún futuro",
+    "auditor la confunda con una violación de INV-05.",
+    "",
+    "**Estado del árbol (CHG-4).** `git status` sin ficheros trackeados modificados por esta",
+    "sesión: rama `main`, HEAD `2a6c123c`, remoto `origin` →",
+    "`github.com/Productoraear/productora-ear-os.git`. Sin commit ni push: no había cambio de",
+    "producto que firmar, sólo evidencia y este registro.",
+    ""
+  ],
+  "ibanEntryIntact": true,
+  "galaEntryIntact": true
+}

@@ -82,7 +82,7 @@ export default function AirbnbPriceLockEscrow({ state, dispatch }: AirbnbPriceLo
           amount: ACG_SSOT.DEPOSITO_STRIPE_EUR,
           concept: `Depósito Price-Lock ACG: ${selectedArtist.name} (${selectedArtist.formatLabel})`,
           clientName: state.space.clientName || 'Cliente ACG',
-          clientPhone: state.space.clientPhone || '+34600000000',
+          clientPhone: state.space.clientPhone.trim() || undefined,
           metadata: {
             acgStep: 'espacio',
             artistId: selectedArtist.id,

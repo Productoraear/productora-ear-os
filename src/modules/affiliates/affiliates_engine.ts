@@ -1,3 +1,5 @@
+import { CENTRALITA_EAR_OS } from '@/lib/constants/ear-os-ssot';
+
 export interface AffiliateTier {
   id: string;
   nombre: string;
@@ -39,7 +41,7 @@ export const MOCK_AFFILIATES: AffiliatePartner[] = [
     id: 'aff-01',
     nombre: 'Carlos Mendoza (Booking Madrid)',
     email: 'carlos.mendoza@productoraear.es',
-    telefono: '+34 611 223 344',
+    telefono: CENTRALITA_EAR_OS,
     codigoReferido: 'MADRID650-CARLOS',
     rangoId: 'tier-2',
     totalVentasGeneradas: 5,
@@ -50,7 +52,7 @@ export const MOCK_AFFILIATES: AffiliatePartner[] = [
     id: 'aff-02',
     nombre: 'Valeria Sotomayor (Eventos Luxury)',
     email: 'valeria@luxuryevents.es',
-    telefono: '+34 622 334 455',
+    telefono: CENTRALITA_EAR_OS,
     codigoReferido: 'NDA-VALERIA',
     rangoId: 'tier-4',
     totalVentasGeneradas: 12,

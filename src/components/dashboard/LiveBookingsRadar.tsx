@@ -15,7 +15,8 @@ import {
     MapPin,
     ArrowUpRight
 } from 'lucide-react';
-import { DEPOSITO_STRIPE_EUR, SPLIT_SOBERANO } from '@/lib/constants/ear-os-ssot';
+import { CENTRALITA_EAR_OS, DEPOSITO_STRIPE_EUR, SPLIT_SOBERANO } from '@/lib/constants/ear-os-ssot';
+import { CENTRALITA } from '@/lib/phone-constants';
 
 export type BookingStatus =
     | 'PENDIENTE_PROVEEDOR'
@@ -51,7 +52,7 @@ const CANONICAL_INITIAL_BOOKINGS: LiveBookingItem[] = [
         id: 'LB-2026-001',
         requestId: 'REQ-EDW-2026-01',
         clientName: 'Alejandro Morales & Sofía Gil',
-        clientPhone: '+34 600 000 001',
+        clientPhone: CENTRALITA_EAR_OS,
         providerName: 'Edwin Agudelo • Solista Premium',
         providerId: 'edwin-agudelo',
         eventDate: '2026-11-14',
@@ -61,13 +62,13 @@ const CANONICAL_INITIAL_BOOKINGS: LiveBookingItem[] = [
         status: 'FIANZA_STRIPE_LOCKED',
         createdAt: new Date(Date.now() - 3600000).toISOString(),
         expiresAt: new Date(Date.now() + 3600000).toISOString(),
-        whatsappUrl: 'https://wa.me/34693693048?text=Consulta%20Reserva%20REQ-EDW-2026-01'
+        whatsappUrl: `${CENTRALITA.whatsapp}?text=Consulta%20Reserva%20REQ-EDW-2026-01`
     },
     {
         id: 'LB-2026-002',
         requestId: 'REQ-MAR-2026-02',
         clientName: 'Ayuntamiento de Méntrida (Festejos)',
-        clientPhone: '+34 600 000 002',
+        clientPhone: CENTRALITA_EAR_OS,
         providerName: 'Mariachi Imperial de Madrid',
         providerId: 'mariachi-imperial',
         eventDate: '2026-12-05',
@@ -77,13 +78,13 @@ const CANONICAL_INITIAL_BOOKINGS: LiveBookingItem[] = [
         status: 'ACCEPTED_BY_PROVIDER',
         createdAt: new Date(Date.now() - 1800000).toISOString(),
         expiresAt: new Date(Date.now() + 5400000).toISOString(),
-        whatsappUrl: 'https://wa.me/34693693048?text=Consulta%20Reserva%20REQ-MAR-2026-02'
+        whatsappUrl: `${CENTRALITA.whatsapp}?text=Consulta%20Reserva%20REQ-MAR-2026-02`
     },
     {
         id: 'LB-2026-003',
         requestId: 'REQ-VIM-2026-03',
         clientName: 'Residencia Los Nogales (Dirección)',
-        clientPhone: '+34 600 000 003',
+        clientPhone: CENTRALITA_EAR_OS,
         providerName: 'VIMUME Neuroacústica 40Hz',
         providerId: 'vimume-intervencion',
         eventDate: '2026-11-20',
@@ -93,7 +94,7 @@ const CANONICAL_INITIAL_BOOKINGS: LiveBookingItem[] = [
         status: 'PENDIENTE_PROVEEDOR',
         createdAt: new Date(Date.now() - 900000).toISOString(),
         expiresAt: new Date(Date.now() + 6300000).toISOString(),
-        whatsappUrl: 'https://wa.me/34693693048?text=Consulta%20Reserva%20REQ-VIM-2026-03'
+        whatsappUrl: `${CENTRALITA.whatsapp}?text=Consulta%20Reserva%20REQ-VIM-2026-03`
     }
 ];
 

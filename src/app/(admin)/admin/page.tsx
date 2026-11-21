@@ -1,11 +1,18 @@
 import React from 'react';
-import AdminDashboardClient from './AdminDashboardClient';
+import { redirect } from 'next/navigation';
+import { AdminDashboardGate } from './AdminDashboardGate';
 import { buildAdminCockpitSnapshot } from '@/lib/admin/cockpit-aggregator';
+import { requireAdminFromHeaders } from '@/lib/security/adminGuard';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export default async function AdminDashboardPage() {
+  const auth = await requireAdminFromHeaders();
+  if (!auth.ok) {
+    redirect('/login?from=/admin');
+  }
+
   const snapshot = await buildAdminCockpitSnapshot();
 
   const data = {
@@ -29,5 +36,5 @@ export default async function AdminDashboardPage() {
     })),
   };
 
-  return <AdminDashboardClient data={data} />;
+  return <AdminDashboardGate data={data} />;
 }

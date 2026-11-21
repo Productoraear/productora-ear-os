@@ -6,6 +6,7 @@ import { cookies } from 'next/headers';
  * que la UI (server component) pinte los controles correctos.
  */
 export async function canMutateCalendarEntity(slug: string): Promise<boolean> {
+  const normalizedSlug = slug.trim().toLowerCase();
   const adminToken = process.env.EAR_ADMIN_TOKEN?.trim();
   const cookieStore = await cookies();
   const adminCookie = cookieStore.get('ear_admin_token')?.value?.trim();
@@ -15,7 +16,10 @@ export async function canMutateCalendarEntity(slug: string): Promise<boolean> {
   if (sessionCookie) {
     try {
       const parsed = JSON.parse(sessionCookie) as { vendorSlug?: unknown };
-      if (typeof parsed.vendorSlug === 'string' && parsed.vendorSlug.trim().toLowerCase() === slug) {
+      if (
+        typeof parsed.vendorSlug === 'string' &&
+        parsed.vendorSlug.trim().toLowerCase() === normalizedSlug
+      ) {
         return true;
       }
     } catch {
@@ -23,5 +27,5 @@ export async function canMutateCalendarEntity(slug: string): Promise<boolean> {
     }
   }
 
-  return process.env.NODE_ENV !== 'production' && process.env.EAR_CALENDAR_ALLOW_ANON_WRITE !== '0';
+  return process.env.NODE_ENV !== 'production' && process.env.EAR_CALENDAR_ALLOW_ANON_WRITE === '1';
 }

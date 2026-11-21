@@ -45,9 +45,9 @@ export default function MunicipalFastTrackDrawer() {
 
   const mariachiCascade = useMemo(() => {
     return buildMariachiRelayCascade('BOOK-MAR-2026-01', province, [
-      { id: 'mariachi-1', name: 'Mariachi Imperial de España', phone: '+34 600 000 001' },
-      { id: 'mariachi-2', name: 'Mariachi Sol de Méntrida', phone: '+34 600 000 002' },
-      { id: 'mariachi-3', name: 'Mariachi Gala Real Madrid', phone: '+34 600 000 003' },
+      { id: 'mariachi-1', name: 'Mariachi Imperial de España', phone: CENTRALITA_EAR_OS },
+      { id: 'mariachi-2', name: 'Mariachi Sol de Méntrida', phone: CENTRALITA_EAR_OS },
+      { id: 'mariachi-3', name: 'Mariachi Gala Real Madrid', phone: CENTRALITA_EAR_OS },
     ]);
   }, [province]);
 

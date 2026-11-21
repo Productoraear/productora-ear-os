@@ -6159,5 +6159,89 @@ superficies"; el arnés de Hallmark exigía además **probar que el cliente las 
 prueba HTTP de producción reveló que ninguna de las dos entregas previas era visible. Sin
 ese reto, la entrega habría sido estéticamente correcta y comercialmente invisible.
 
+---
 
+## Migración de hardware y arresto de derivas — auditoría de perímetro `D:\EAR_OS_V2\EAR_OS_V2`
+**Orden.** DIRECTIVA CONSTITUCIONAL / CEO: reconocer el nuevo entorno portátil, prohibir
+la búsqueda de rutas históricas (workstation, GPU dedicada, discos no montados) y validar
+de forma autónoma las cuatro compuertas sobre el árbol presente en `D:\EAR_OS_V2\EAR_OS_V2`.
 
+**Confirmación de perímetro (ENV-01 · VERIFICADO).** CWD = `D:\EAR_OS_V2\EAR_OS_V2`.
+`.git`, `package.json`, `package-lock.json`, `tsconfig.json`, `eslint.config.mjs`,
+`node_modules/` (con `typescript/bin/tsc` y `tsx/dist/cli.mjs` reales), `src/`, `scripts/`,
+`prisma/`, `.env.local`, `.env.production` presentes. **`EAR_OS_V2/EAR_OS_V2` anidado:
+ausente** — no hay repositorio parásito. No se tocó ninguna ruta fuera de `D:\`.
+
+**Runtime medido (sonda, no supuesto).** Node `v26.12.1` · npm `11.20.0` · win32 x64 ·
+8 hilos · 15,8 GB RAM · host `DESKTOP-L7P16NG`. Sin GPU: ninguna compuerta de esta sesión
+requiere aceleración nativa (todas son estáticas: `tsc`, `eslint`, parseo de AST y SHA-256).
+
+**Compuertas ejecutadas (todas con Exit Code firmado en
+`.antigravity/evidence/gate_*.json`).**
+
+| Compuerta | Comando | Exit | Veredicto |
+|---|---|---|---|
+| G-1 | `tsc --noEmit` (tsconfig.json) | **0** | VERIFICADO · 0 bytes de diagnóstico |
+| G-2 | `eslint src/` (eslint.config.mjs) | **0** | VERIFICADO · 0 errores / 3534 warnings |
+| G-4 / INV-05 | `audit:ssot` → `baseline_ssot_integrity.ts` | **0** | VERIFICADO · `cefa76c2…aaa64b2b` |
+| INV-01/02/03/04/12/13 | `verify:pricing` | **0** | VERIFICADO · **31/31** PASS |
+| INV-09 | `audit_cta_trace_matrix.ts` | **0** | VERIFICADO · G01–G08 OK · VEREDICTO PASS |
+
+**Zona Cero — matiz metodológico declarado (no se maquilla).** El hash contractual
+`cefa76c2c6a3f92f57acf74f654932c02bf66774502102cb4f932520aaa64b2b` **no** es el SHA-256 de
+los bytes del fichero: `ssotIntegrityGuard.ts:113-116` lo calcula sobre la *serialización
+canónica* (`canonicalizeSsot()` → `stringifyCanonical()`), con números a 2 decimales y split
+a 4. Mi sonda inicial hasheó los bytes crudos y obtuvo `81c7e7b4…`, que **no** es una
+brecha: es otra entrada al mismo hash. Al re-verificar resolviendo el módulo real por `tsx`,
+`computeSsotHash() === KNOWN_GOOD_SSOT_HASH` y `validateSsotInvariants()` devuelve `[]`.
+Invariantes leídos del módulo (`scratch/ssot_invariants.ts`, 10/10): tarifa base **350** ·
+estándar **550** con 100 km · split **0,8/0,1/0,1** (suma 1,0000) · depósito **100** ·
+B2G **14.250** sobre techo LCSP **15.000** · centralita **+34 693 693 048** · rider
+**75 dB / 12 W-pax** · logística **1,50 €/km desde km 50** · hotel **120 €** · IVA **0,21**.
+
+**Nota sobre la orden recibida.** La directiva citaba `node scripts/audit_cta_trace_matrix.ts`
+como comando autónomo. Un `.ts` con `import` de `@/…` no lo ejecuta `node` directamente en
+Node 26 sin loader: el comando canónico real es `node ./node_modules/tsx/dist/cli.mjs
+scripts/audit_cta_trace_matrix.ts` (idéntico al script `audit:cta-matrix` de `package.json`).
+Se ejecutó esa forma y se declara el cambio de invocación.
+
+**Higiene.** Se ignoraron los volcados residuales (`*.log`, `build_audit_out.txt`,
+`gate_pricing_out.txt`, `tsc_w28.txt`, `_finalize_out.txt`, etc.) por orden expresa. Todo
+artefacto de sondeo temporal (`.probe*.txt`, `.status*.txt`, `.tsc_local_gate.log`) fue
+**eliminado** al cierre (`cleanup_probe_artifacts.json`); sólo quedan las firmas de
+compuerta en `.antigravity/evidence/`.
+
+**Hallazgo colateral (declarado, no corregido).** `eslint.config.mjs` convive con un
+`.eslintignore` heredado (87 B) que ESLint 9 ya no soporta: emite
+`ESLintIgnoreWarning: The ".eslintignore" file is no longer supported`. No bloquea (Exit 0)
+porque los `ignores` del flat config cubren el caso, pero es deuda de configuración: el
+`.eslintignore` debe eliminarse en una tarea atómica propia, no dentro de esta auditoría.
+
+**Premortem obligatorio (5 preguntas).**
+1. ¿Objetivo exacto? Sí: las cuatro compuertas pedidas, más `lint` (G-2), firmadas con Exit
+   Code en disco y con la Zona Cero verificada por dos vías independientes.
+2. Asunciones frágiles: (a) `node_modules/` fue copiado del equipo anterior — compila hoy,
+   pero un binario nativo de otro arch o un `npm ci` futuro pueden divergir; (b) el hash
+   canónico depende de `toFixed(2)`, de modo que un cambio de precisión en el SSOT cambia el
+   digest sin cambiar un solo euro; (c) `tsconfig.json` excluye `scripts/`, así que el verde
+   de `tsc` **no** cubre los verificadores de `scripts/`.
+3. Alternativa descartada: aceptar el `coincide: SÍ` de `audit:ssot` como prueba única.
+   Descartada por EP-3: era el propio script validándose a sí mismo. Se añadió la resolución
+   del módulo real, que es lo que produjo el matiz del punto anterior.
+4. Qué se rompería bajo carga: nada — las compuertas ejecutadas son estáticas y no levantan
+   servidor, base de datos ni red. La única medición de runtime (CLS/LCP/INP, INV-11) **no**
+   se ejecutó en esta sesión y así se declara.
+5. Consecuencia aceptada: se firma un entorno **local** sano, no un despliegue. Nada de esto
+   prueba producción; `GET https://www.productoraear.com/…` queda fuera del perímetro
+   ordenado y por tanto `SIN_EVIDENCIA` en esta sesión.
+
+**Reto espejo.** El CEO ordenó "verificar el hash `cefa76c2…` intacto". La cláusula más
+exigente (AMD-2) es *verificar ese hash por una vía que no sea el verificador que lo declara*.
+Ahí apareció la divergencia `81c7e7b4…` vs `cefa76c2…` que, bien leída, no es una brecha
+sino la prueba de que el hash es canónico y no de bytes. Se documenta para que ningún futuro
+auditor la confunda con una violación de INV-05.
+
+**Estado del árbol (CHG-4).** `git status` sin ficheros trackeados modificados por esta
+sesión: rama `main`, HEAD `2a6c123c`, remoto `origin` →
+`github.com/Productoraear/productora-ear-os.git`. Sin commit ni push: no había cambio de
+producto que firmar, sólo evidencia y este registro.

@@ -1,0 +1,82 @@
+{
+  "cwd": "D:\\EAR_OS_V2\\EAR_OS_V2",
+  "root": "D:/EAR_OS_V2/EAR_OS_V2",
+  "ts": "2026-11-21T17:27:11.976Z",
+  "checks": {
+    "package.json": {
+      "exists": true,
+      "kind": "file:18079B"
+    },
+    "package-lock.json": {
+      "exists": true,
+      "kind": "file:523124B"
+    },
+    "tsconfig.json": {
+      "exists": true,
+      "kind": "file:1233B"
+    },
+    "eslint.config.mjs": {
+      "exists": true,
+      "kind": "file:2122B"
+    },
+    "node_modules": {
+      "exists": true,
+      "kind": "dir"
+    },
+    "node_modules/typescript/bin/tsc": {
+      "exists": true,
+      "kind": "file:45B"
+    },
+    "node_modules/tsx/dist/cli.mjs": {
+      "exists": true,
+      "kind": "file:124418B"
+    },
+    "src": {
+      "exists": true,
+      "kind": "dir"
+    },
+    "scripts": {
+      "exists": true,
+      "kind": "dir"
+    },
+    "prisma": {
+      "exists": true,
+      "kind": "dir"
+    },
+    ".git": {
+      "exists": true,
+      "kind": "dir"
+    },
+    ".env.local": {
+      "exists": true,
+      "kind": "file:5320B"
+    },
+    ".env.production": {
+      "exists": true,
+      "kind": "file:1568B"
+    },
+    "EAR_OS_V2": {
+      "exists": false,
+      "kind": "missing"
+    }
+  },
+  "pkgScripts": {
+    "lint": "node ./node_modules/eslint/bin/eslint.js src/",
+    "typecheck": "node --max-old-space-size=6144 ./node_modules/typescript/bin/tsc --noEmit",
+    "typecheck:landings": "node ./node_modules/typescript/bin/tsc -p tsconfig.landings-dominance.json --noEmit",
+    "verify:pricing": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_pricing_ssot_unification.ts",
+    "verify:solista-pricing": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_solista_pricing.ts",
+    "typecheck:fichas": "node ./node_modules/typescript/bin/tsc -p tsconfig.fichas-grounding.json",
+    "typecheck:fichas:db": "node ./node_modules/typescript/bin/tsc -p tsconfig.fichas-db.json",
+    "audit:ssot": "node ./node_modules/tsx/dist/cli.mjs scripts/baseline_ssot_integrity.ts",
+    "seal:ssot": "npx tsx scripts/baseline_ssot_integrity.ts --seal",
+    "audit:residues": "node scripts/audit_heavy_residues.cjs",
+    "sim:event": "node scripts/simulate_100_services_event.mjs",
+    "typecheck:network": "node ./node_modules/typescript/bin/tsc -p tsconfig.mariachi-net.json",
+    "audit:phone": "node scripts/audit_phone_exposure.cjs",
+    "audit:cta-matrix": "node ./node_modules/tsx/dist/cli.mjs scripts/audit_cta_trace_matrix.ts",
+    "verify:provider-ctas": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_provider_ctas.ts",
+    "audit:omega-rojo": "node scripts/audit_omega_rojo_scorecard.cjs",
+    "audit:omega-rojo:strict": "node scripts/audit_omega_rojo_scorecard.cjs --strict"
+  }
+}

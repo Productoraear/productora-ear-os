@@ -1,0 +1,15 @@
+{
+  "gate": "ssotinv",
+  "cmd": "node D:/EAR_OS_V2/EAR_OS_V2/node_modules/tsx/dist/cli.mjs D:/EAR_OS_V2/EAR_OS_V2/scratch/ssot_invariants.ts",
+  "exit": 0,
+  "ms": 2375,
+  "bytes": 65,
+  "ts": "2026-11-21T17:34:17.537Z",
+  "tail": [
+    "{",
+    "  \"all_pass\": true,",
+    "  \"hash_match\": true,",
+    "  \"guard_ok\": true",
+    "}"
+  ]
+}

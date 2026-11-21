@@ -22,6 +22,7 @@ import {
   computeSovereignLogistics,
 } from '@/lib/pricing/logistics';
 import { VAT_RATE } from '@/lib/constants/ear-os-ssot';
+import { CENTRALITA } from '@/lib/phone-constants';
 
 function ExternalVendorEscrowCheckout({
   venueParam,
@@ -115,7 +116,7 @@ function ExternalVendorEscrowCheckout({
       `🔒 Depósito de Bloqueo: 100,00 € (Price-Lock SHA-256: ${priceLockHash})\n` +
       `🛡️ Póliza de RC: 1.000.000 € y Split 80/10/10 garantizado por EAR OS.`
     );
-    return `https://wa.me/34693693048?text=${text}`;
+    return `${CENTRALITA.whatsapp}?text=${text}`;
   }, [cleanVenueName, eventDate, effectivePackTitle, eventLocation, pax, totalWithVat, priceLockHash]);
 
   const handleStripeDeposit = async () => {
@@ -128,7 +129,7 @@ function ExternalVendorEscrowCheckout({
           amount: 100,
           concept: `Depósito Fianza Escrow: ${cleanVenueName} (${effectivePackTitle})`,
           clientName: clientName || 'Cliente Particular',
-          clientPhone: clientPhone || '+34600000000',
+          clientPhone: clientPhone.trim() || undefined,
           metadata: {
             providerName: cleanVenueName,
             packTitle: effectivePackTitle,
@@ -342,7 +343,7 @@ function ExternalVendorEscrowCheckout({
 
               <SovereignWhatsAppButton url={whatsappUrl} category="Checkout Presupuesto" className="w-full py-3.5 px-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold text-xs flex items-center justify-center gap-2 transition-colors text-center">
                 <Phone className="w-4 h-4 text-emerald-400" />
-                <span>Centralita Productora EAR (+34 693 693 048)</span>
+                <span>Centralita Productora EAR ({CENTRALITA.display})</span>
               </SovereignWhatsAppButton>
             </div>
 
@@ -431,7 +432,7 @@ function EdwinAgudeloGalaCheckout() {
       `🔒 Depósito S-Class: 100,00 € (Hash: ${priceLockHash})\n` +
       `⚡ Cortesia EAR: EDWIN150-OMEGA`
     );
-    return `https://wa.me/34693693048?text=${text}`;
+    return `${CENTRALITA.whatsapp}?text=${text}`;
   }, [eventDate, currentFormat, distanceKm, kmLogisticsCost, hotelSurcharge, pax, selectedVenue, totalWithVat, priceLockHash]);
 
   const handleStripeDeposit = async () => {
@@ -444,7 +445,7 @@ function EdwinAgudeloGalaCheckout() {
           amount: 100,
           concept: `Depósito S-Class Omega: ${currentFormat.name}`,
           clientName: clientName || 'Cliente Particular',
-          clientPhone: clientPhone || '+34600000000',
+          clientPhone: clientPhone.trim() || undefined,
           metadata: {
             format: selectedFormatId,
             distanceKm,

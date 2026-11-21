@@ -66,6 +66,9 @@ export const SOVEREIGN_DOMAINS: Readonly<Record<SovereignDomainId, SovereignDoma
       '/',
       '/fincas',
       '/otzarreta',
+      '/restaurante-otzarreta',
+      '/celebraciones',
+      '/calendario',
       '/proveedores',
       '/directorio',
       '/calculadora',
@@ -137,6 +140,7 @@ export const SOVEREIGN_DOMAINS: Readonly<Record<SovereignDomainId, SovereignDoma
     allowedPublicPrefixes: Object.freeze([
       '/',
       '/artistas',
+      '/calendario',
       '/reservar',
       '/checkout',
       '/contacto',

@@ -1,0 +1,11 @@
+{
+  "gate": "smoke",
+  "cmd": "node -e console.log('SMOKE_OK')",
+  "exit": 0,
+  "ms": 1924,
+  "bytes": 9,
+  "ts": "2026-11-21T17:25:42.516Z",
+  "tail": [
+    "SMOKE_OK"
+  ]
+}

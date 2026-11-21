@@ -1,17 +1,36 @@
 /**
  * PROVIDER CONTEXT RAG ENGINE (EAR OS v12.1 S-CLASS)
  * Contexto soberano y resolución RAG multi-tenant determinista por proveedor.
- * 
+ *
  * Regla Inviolable:
- * - Proveedor único: Restaurante Jatetxea Ezkertza Berria & Otzarreta (Derio · Bizkaia).
+ * - Proveedor único: Restaurante Jatetxea Ezkertza Berria & Otzarreta (Derio · Bizkaia, fundado en 1902).
  * - Sede exclusiva: Santo Domingo Hiribidea, 13, 48160 Derio (Bizkaia).
- * - Zarautz ELIMINADO TOTALMENTE (era un error de sede no operativa para bodas de Eduardo).
- * - Precios Canónicos 2026: 7 Menús Oficiales (Cantábrico 100 €, Paloma 125 €, Imperial 123,40 €, Temporada 142,50 €, Vasco 138 €, Ezkertza 155 €, Caserío Beko 173 €).
+ * - Carta vigente: 4 Menús de Gala (145 € / 155 € / 165 € / 185 € + IVA) derivados de `OTZARRETA_WEDDING_MENUS`.
+ * - Aforos oficiales: Salón acristalado interior (200 comensales), jardín exterior (350 comensales), 120 plazas de párking privado.
  */
 
-import { CENTRALITA_EAR_OS } from '@/lib/constants/ear-os-ssot';
+import { CENTRALITA_EAR_OS, DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
+import {
+  OTZARRETA_ENTITY,
+  OTZARRETA_SEATING_PRESET,
+  OTZARRETA_WEDDING_MENUS,
+  OTZARRETA_WEDDING_MENUS_CLAIM,
+  formatOtzarretaMenuPrice,
+} from '@/lib/constants/otzarreta-entity';
 
 const CLEAN_PHONE = CENTRALITA_EAR_OS.replace(/\D/g, '');
+const DEPOSIT_EUR_LABEL = DEPOSITO_STRIPE_EUR.toFixed(2).replace('.', ',');
+const CALENDAR_BLOCK_URL = '/calendario/catering/restaurante-otzarreta?intent=bloquear';
+
+/**
+ * Deep link de mapa de la ficha insignia.
+ * Fuente única: la sede canónica declarada en la cabecera de este módulo
+ * (Santo Domingo Hiribidea, 13 · 48160 Derio · Bizkaia). Cero geocodificación
+ * especulativa (AF-4: la cifra/dirección sale del SSOT del proveedor).
+ */
+export const OTZARRETA_MAPS_URL =
+  'https://www.google.com/maps/search/?api=1&query=' +
+  encodeURIComponent('Restaurante Otzarreta Ezkertza Berria, Santo Domingo Hiribidea 13, 48160 Derio, Bizkaia');
 
 export interface ProviderKnowledgeBase {
   slug: string;
@@ -43,72 +62,33 @@ export const OTZARRETA_KNOWLEDGE_BASE: ProviderKnowledgeBase = {
   slug: 'otzarreta',
   name: 'Restaurante Jatetxea Ezkertza Berria & Otzarreta',
   propertyControl: 'Eduardo Martínez (Dirección Gastronómica & Propiedad)',
-  location: 'Santo Domingo Hiribidea, 13, 48160 Derio (Bizkaia) · Valle del Txorierri',
+  location: `${OTZARRETA_ENTITY.fullAddress} · Valle del Txorierri`,
   territory: 'Exclusividad Comarcal Finca Fundadora Txorierri / Gran Bilbao',
-  role: 'Maître Digital y Jefe de Sala de Ezkertza Berria & Otzarreta (Derio)',
-  greeting: 'Bienvenido al Caserío Restaurante Ezkertza Berria & Otzarreta en Derio (Bizkaia). Soy el asistente de sala de Eduardo Martínez. ¿Deseas consultar nuestros 7 menús oficiales de boda 2026 (desde 100 € + IVA), disponibilidad o aforos?',
+  role: `Maître Digital y Jefe de Sala de Ezkertza Berria & Otzarreta (Derio ${OTZARRETA_ENTITY.foundedYear})`,
+  greeting: `Bienvenido al Caserío Restaurante Ezkertza Berria & Otzarreta en Derio (fundado en ${OTZARRETA_ENTITY.foundedYear}). Alta brasa de carbón de encina y sarmiento, ${OTZARRETA_WEDDING_MENUS.length} ${OTZARRETA_WEDDING_MENUS_CLAIM}, salón acristalado interior (${OTZARRETA_SEATING_PRESET.interiorSalon.capacityPax} comensales), jardín exterior (${OTZARRETA_SEATING_PRESET.exteriorGarden.capacityPax} comensales) y ${OTZARRETA_SEATING_PRESET.parkingSpaces} plazas de párking privado. ¿Qué deseas consultar?`,
   phone: CENTRALITA_EAR_OS,
   capacity: {
     min: 50,
-    diningRoom: 200,
-    estateMax: 350,
+    diningRoom: OTZARRETA_SEATING_PRESET.interiorSalon.capacityPax,
+    estateMax: OTZARRETA_SEATING_PRESET.exteriorGarden.capacityPax,
   },
-  menus: [
-    {
-      name: 'Menú Cantábrico',
-      price: 100,
-      description: 'El clásico atlántico: Marisco a la plancha individual, merluza en salsa verde o bacalao al pil-pil y taco de entrecotte a la brasa.',
-      badge: '100 € + IVA · CLÁSICO NUPCIAL'
-    },
-    {
-      name: 'Menú Paloma',
-      price: 125,
-      description: 'Cortador de jamón en vivo en jardines, parrillada de marisco, trancha de rodaballo salvaje y lechazo asado de Castilla.',
-      badge: '125 € + IVA · PARRILLA & MAR'
-    },
-    {
-      name: 'Menú Especial Imperial',
-      price: 123.4,
-      description: 'Oferta especial con regalo: 1 h de Barra Libre + 1 h de DJ en directo. Nécoras con rape, foie micuit, milhojas de bacalao con txangurro y solomillo trufado.',
-      badge: 'OFERTA 123,40 € + IVA (Tarifa 138,40 €)'
-    },
-    {
-      name: 'Menú Temporada',
-      price: 142.5,
-      description: 'Cortador de jamón ibérico incluido, 1/2 bogavante del país, almejas gallegas, rape o lubina salvaje y cordero lechal o láminas de buey gallego.',
-      badge: '142,50 € + IVA · ALTA COCINA VASCA'
-    },
-    {
-      name: 'Menú Vasco',
-      price: 138,
-      description: 'El pack más completo: 2 h Barra Libre + 2 h DJ + Autobús 55 pax + Decoración floral + Degustación 6 pax. Cóctel 5 cucharas, milhojas de bacalao o rape salvaje, y chuleta (500 g) o solomillo con hongos.',
-      badge: 'OFERTA 138,00 € + IVA (Tarifa 153 €)'
-    },
-    {
-      name: 'Menú Ezkertza',
-      price: 155,
-      description: 'El festín de los reyes del marisco: Chuletón de 1 Kg a la brasa, 1/2 bogavante del Cantábrico, cigala, gambas de Huelva y almeja fina gallega.',
-      badge: '155 € + IVA · CHULETÓN & BOGAVANTE'
-    },
-    {
-      name: 'Menú Caserío Ezkertza Beko',
-      price: 173,
-      description: 'La cumbre gastronómica: Möet & Chandon oficial para todo el banquete, txangurro a la donostiarra, huevo a baja temperatura, lubina salvaje y chuletón de 1 Kg a la brasa.',
-      badge: '173 € + IVA · MÖET & CHANDON SUPREME'
-    }
-  ],
+  menus: OTZARRETA_WEDDING_MENUS.map((menu) => ({
+    name: menu.name,
+    price: menu.priceEur ?? 0,
+    description: menu.note,
+    badge: `${formatOtzarretaMenuPrice(menu.priceEur) ?? 'Consultar'} + IVA`,
+  })),
   culinaryHighlights: [
-    'Parrilla vasca tradicional de carbón de encina dirigida por Eduardo Martínez',
+    `Alta brasa de carbón de encina y sarmiento dirigida por Eduardo Martínez (tradición desde ${OTZARRETA_ENTITY.foundedYear})`,
     'Chuletones de 1 Kg y carnes de ganado mayor con maduración certificada',
     'Pescados salvajes del Cantábrico (rodaballo, rape, lubina, bacalao)',
-    'Jardines botánicos con carpa y oficiante civil (solo 1 evento al día)',
-    'Parking privado gratuito propio en el caserío con 150 plazas',
-    'Comedores climatizados e insonorizados con sonido homologado Bose S-Class (Ley 37/2003)'
+    `Salón acristalado interior (${OTZARRETA_SEATING_PRESET.interiorSalon.capacityPax} comensales) y jardín exterior (${OTZARRETA_SEATING_PRESET.exteriorGarden.capacityPax} comensales) con 1 sola boda al día`,
+    `Parking privado gratuito en el caserío con ${OTZARRETA_SEATING_PRESET.parkingSpaces} plazas`,
+    'Comedores climatizados e insonorizados con sonido homologado Bose S-Class (Ley 37/2003)',
   ],
   acousticsPolicy:
     'Sonorización homologada Bose S-Class con refuerzo calibrado para discursos y banquete según Ley 37/2003 del Ruido (rango 80–85 dBA). Cero sanciones ni cortes intempestivos.',
-  depositPolicy:
-    'Bloqueo oficial de fecha con depósito Stripe garantizado de 100 € (100% deducible del presupuesto final del banquete).',
+  depositPolicy: `Bloqueo oficial de fecha con depósito Stripe garantizado de ${DEPOSIT_EUR_LABEL} € (100% deducible del presupuesto final del banquete).`,
   reviewsCount: 23,
 };
 
@@ -129,26 +109,101 @@ export interface ProviderResolutionResult {
 export function resolveOtzarretaQuery(rawQuery: string): ProviderResolutionResult {
   const q = rawQuery.toLowerCase().trim();
 
-  // 1. Menús y gastronomía
+  // 0. CÓMO LLEGAR · accesos · mapa (chip «Cómo llegar»).
+  // Debe resolverse ANTES de cualquier otra rama porque la pregunta real del
+  // chip es «¿Cómo llego al caserío y cuánto párking hay?»: contiene «cuánto»
+  // (rama de precios) y «párking» (rama de aforo), y antes se contestaba con
+  // la lista de menús — el chip parecía muerto. Medido 2026-11-21.
+  if (
+    q.includes('como llegar') ||
+    q.includes('cómo llegar') ||
+    q.includes('como llego') ||
+    q.includes('cómo llego') ||
+    q.includes('llegar') ||
+    q.includes('llego') ||
+    q.includes('acceso') ||
+    q.includes('mapa') ||
+    q.includes('gps') ||
+    q.includes('ubicacion') ||
+    q.includes('ubicación')
+  ) {
+    return {
+      handled: true,
+      reply:
+        `El Caserío Restaurante Ezkertza Berria & Otzarreta (fundado en ${OTZARRETA_ENTITY.foundedYear}) está en ${OTZARRETA_ENTITY.fullAddress}: 8 minutos desde Bilbao por el Corredor del Txorierri (N-637) y 5 minutos del Aeropuerto de Bilbao (Loiu), con campa de acceso directo y parking privado gratuito de ${OTZARRETA_SEATING_PRESET.parkingSpaces} plazas vigiladas. Pulsa «Abrir ruta en Google Maps» y tendrás el itinerario listo para el día del evento.`,
+      action: {
+        type: 'whatsapp',
+        label: 'Abrir ruta en Google Maps',
+        url: OTZARRETA_MAPS_URL,
+      },
+      shouldEscalate: false,
+    };
+  }
+
+  // 1. Brasas, carnes, parrilla al carbón de encina y sarmiento (antes de menús si no piden precio/carta)
+  const asksMenuOrPrice =
+    q.includes('menu') ||
+    q.includes('menú') ||
+    q.includes('precio') ||
+    q.includes('carta') ||
+    q.includes('cubierto') ||
+    q.includes('145') ||
+    q.includes('155') ||
+    q.includes('165') ||
+    q.includes('185');
+
+  if (
+    !asksMenuOrPrice &&
+    (q.includes('brasa') ||
+      q.includes('chuleta') ||
+      q.includes('chuleton') ||
+      q.includes('chuletón') ||
+      q.includes('parrilla') ||
+      q.includes('encina') ||
+      q.includes('sarmiento') ||
+      q.includes('carne') ||
+      q.includes('pescado') ||
+      q.includes('rodaballo') ||
+      q.includes('bogavante'))
+  ) {
+    return {
+      handled: true,
+      reply:
+        `En Ezkertza Berria & Otzarreta (Derio, tradición desde ${OTZARRETA_ENTITY.foundedYear}), Eduardo Martínez dirige la alta brasa de carbón de encina y sarmiento al minuto: chuletones de 1 Kg de ganado mayor con maduración certificada, pescados salvajes del Cantábrico a la brasa y mariscos nobles (bogavante, cigalas, almejas gallegas), en nuestro salón acristalado interior (${OTZARRETA_SEATING_PRESET.interiorSalon.capacityPax} comensales) o jardín exterior (${OTZARRETA_SEATING_PRESET.exteriorGarden.capacityPax} comensales) con ${OTZARRETA_SEATING_PRESET.parkingSpaces} plazas de párking privado.`,
+      action: {
+        type: 'whatsapp',
+        label: `Consultar detalles de parrilla (${CENTRALITA_EAR_OS})`,
+        url: `https://wa.me/${CLEAN_PHONE}?text=${encodeURIComponent('Hola, deseo consultar las opciones de alta brasa de carbón y sarmiento para mi banquete en Ezkertza Berria & Otzarreta (Derio).')}`,
+      },
+      shouldEscalate: false,
+    };
+  }
+
+  // 2. Menús de Gala vigentes (145 € - 185 € + IVA) y gastronomía
   if (
     q.includes('menu') ||
     q.includes('menú') ||
     q.includes('precio') ||
-    q.includes('cuanto') ||
-    q.includes('cuánto') ||
-    q.includes('100') ||
-    q.includes('125') ||
-    q.includes('123') ||
-    q.includes('138') ||
-    q.includes('142') ||
+    q.includes('cuanto cuesta') ||
+    q.includes('cuánto cuesta') ||
+    q.includes('cuanto vale') ||
+    q.includes('cuánto vale') ||
+    q.includes('cuanto sale') ||
+    q.includes('cuánto sale') ||
+    q.includes('145') ||
     q.includes('155') ||
-    q.includes('173') ||
+    q.includes('165') ||
+    q.includes('185') ||
+    q.includes('tradicion') ||
+    q.includes('tradición') ||
+    q.includes('asador') ||
+    q.includes('ezkertza') ||
+    q.includes('soberano') ||
+    q.includes('gala') ||
     q.includes('cubierto') ||
     q.includes('comida') ||
     q.includes('plato') ||
     q.includes('carta') ||
-    q.includes('sarmiento') ||
-    q.includes('asador') ||
     q.includes('celiac') ||
     q.includes('celíac') ||
     q.includes('alergia') ||
@@ -158,7 +213,7 @@ export function resolveOtzarretaQuery(rawQuery: string): ProviderResolutionResul
       return {
         handled: true,
         reply:
-          'En Ezkertza Berria & Otzarreta (Derio), la seguridad alimentaria es absoluta. Contamos con protocolos e instalaciones adaptadas para celíacos (100% sin gluten con pan y postres dedicados), intolerancias y menús infantiles/veganos sin coste adicional. Todo supervisado directamente por Eduardo Martínez.',
+          `En Ezkertza Berria & Otzarreta (Derio ${OTZARRETA_ENTITY.foundedYear}), la seguridad alimentaria es absoluta. Contamos con protocolos e instalaciones adaptadas para celíacos (100% sin gluten con pan y postres dedicados), intolerancias y menús infantiles/veganos sin coste adicional. Todo supervisado directamente por Eduardo Martínez.`,
         action: {
           type: 'dossier',
           label: 'Ver garantías de cocina y alérgenos',
@@ -168,74 +223,65 @@ export function resolveOtzarretaQuery(rawQuery: string): ProviderResolutionResul
       };
     }
 
-    if (q.includes('155') || q.includes('sarmiento') || q.includes('ezkertza')) {
+    if (q.includes('155') || q.includes('asador')) {
       return {
         handled: true,
         reply:
-          'El Menú Ezkertza / Asador al Sarmiento (155,00 € + IVA) es la cúspide gastronómica del caserío: incluye 1/2 bogavante del Cantábrico por persona, cigala XXL, sorbete de limón al txakoli y Chuletón de 1 Kg de ganado mayor a la brasa con carbón de encina y sarmiento, bodega reserva y tarta nupcial. Exclusividad de 1 evento/día y parking de 150 plazas.',
+          `El Menú Asador (155,00 € + IVA) tiene como eje la alta brasa de carbón de encina y sarmiento de Eduardo Martínez en nuestro caserío de Derio (desde ${OTZARRETA_ENTITY.foundedYear}): chuletones de 1 Kg de ganado mayor y piezas del Cantábrico con exclusividad de 1 boda al día, salón acristalado interior (${OTZARRETA_SEATING_PRESET.interiorSalon.capacityPax} comensales), jardín exterior (${OTZARRETA_SEATING_PRESET.exteriorGarden.capacityPax} comensales) y ${OTZARRETA_SEATING_PRESET.parkingSpaces} plazas de párking privado.`,
         action: {
           type: 'date_picker',
-          label: 'Bloquear fecha con fianza de 100 € (Deducible)',
+          label: `Bloquear fecha con fianza de ${DEPOSITO_STRIPE_EUR} € (Deducible)`,
+          url: CALENDAR_BLOCK_URL,
         },
         shouldEscalate: true,
       };
     }
 
+    if (q.includes('165') || q.includes('ezkertza')) {
+      return {
+        handled: true,
+        reply:
+          `El Menú Ezkertza (165,00 € + IVA) es el menú insignia del caserío en Derio (tradición desde ${OTZARRETA_ENTITY.foundedYear}), con las piezas nobles de la casa y alta brasa de carbón y sarmiento. Disponéis de salón acristalado interior (${OTZARRETA_SEATING_PRESET.interiorSalon.capacityPax} comensales), jardín exterior (${OTZARRETA_SEATING_PRESET.exteriorGarden.capacityPax} comensales) y ${OTZARRETA_SEATING_PRESET.parkingSpaces} plazas de párking privado.`,
+        action: {
+          type: 'date_picker',
+          label: `Bloquear fecha con fianza de ${DEPOSITO_STRIPE_EUR} € (Deducible)`,
+          url: CALENDAR_BLOCK_URL,
+        },
+        shouldEscalate: true,
+      };
+    }
+
+    const menuLines = OTZARRETA_WEDDING_MENUS.map(
+      (menu) => `• ${menu.name}: ${formatOtzarretaMenuPrice(menu.priceEur) ?? 'Consultar'} + IVA (${menu.note})`
+    ).join('\n');
+
     return {
       handled: true,
       reply:
-        'En Restaurante Ezkertza Berria & Otzarreta en Derio disponemos de 7 menús oficiales de boda 2026 creados por Eduardo Martínez:\n' +
-        '• Menú Cantábrico: 100,00 € + IVA (Marisco individual, pescado noble y entrecotte brasa)\n' +
-        '• Menú Paloma: 125,00 € + IVA (Cortador jamón en vivo, rodaballo y lechazo)\n' +
-        '• Menú Especial Imperial: 123,40 € + IVA (🎁 Oferta con 1h barra libre + 1h DJ)\n' +
-        '• Menú Temporada: 142,50 € + IVA (Bogavante, almejas gallegas, rape y solomillo/buey)\n' +
-        '• Menú Vasco: 138,00 € + IVA (🎁 Oferta pack: 2h barra libre + 2h DJ + Autobús 55 pax + chuleta 500g)\n' +
-        '• Menú Ezkertza: 155,00 € + IVA (Chuletón 1 Kg brasa + 1/2 bogavante + cigala)\n' +
-        '• Menú Caserío Ezkertza Beko: 173,00 € + IVA (Champagne Möet & Chandon + chuletón 1 Kg + txangurro)\n' +
-        'Todos los menús incluyen cóctel de bienvenida, bodega selecta, tarta nupcial y alternativas para celíacos. Puedes bloquear tu fecha con 100 € deducibles.',
+        `En Restaurante Ezkertza Berria & Otzarreta en Derio (tradición desde ${OTZARRETA_ENTITY.foundedYear}) ofrecemos nuestros ${OTZARRETA_WEDDING_MENUS.length} menús oficiales de gala (${OTZARRETA_WEDDING_MENUS_CLAIM}), elaborados sobre alta brasa de carbón de encina y sarmiento por Eduardo Martínez:\n` +
+        `${menuLines}\n` +
+        `Disponemos de salón acristalado interior (${OTZARRETA_SEATING_PRESET.interiorSalon.capacityPax} comensales), jardín exterior (${OTZARRETA_SEATING_PRESET.exteriorGarden.capacityPax} comensales) y ${OTZARRETA_SEATING_PRESET.parkingSpaces} plazas de párking privado. Puedes bloquear tu fecha con ${DEPOSITO_STRIPE_EUR} € deducibles.`,
       action: {
         type: 'dossier',
-        label: 'Ver los 7 Menús Oficiales en el Simulador',
+        label: `Ver los ${OTZARRETA_WEDDING_MENUS.length} Menús de Gala en el Simulador`,
         url: '/otzarreta',
       },
       shouldEscalate: false,
     };
   }
 
-  // 2. Brasas, carnes, parrilla y producto
-  if (
-    q.includes('brasa') ||
-    q.includes('chuleta') ||
-    q.includes('chuleton') ||
-    q.includes('chuletón') ||
-    q.includes('asador') ||
-    q.includes('parrilla') ||
-    q.includes('encina') ||
-    q.includes('carne') ||
-    q.includes('pescado') ||
-    q.includes('rodaballo') ||
-    q.includes('bogavante')
-  ) {
-    return {
-      handled: true,
-      reply:
-        'En Ezkertza Berria & Otzarreta (Derio), Eduardo Martínez dirige la auténtica parrilla vasca al carbón de encina al minuto: chuletones de 1 Kg de ganado mayor con maduración controlada, pescados salvajes del Cantábrico a la brasa y mariscos nobles (bogavante, cigalas, almejas gallegas). Cero catering recalentado en cubetas.',
-      action: {
-        type: 'whatsapp',
-        label: 'Consultar detalles de parrilla con Eduardo',
-        url: `https://wa.me/${CLEAN_PHONE}?text=${encodeURIComponent('Hola Eduardo, deseo consultar las opciones de parrilla al carbón y carnes para mi banquete en Ezkertza Berria & Otzarreta.')}`,
-      },
-      shouldEscalate: false,
-    };
-  }
-
-  // 3. Aforo, capacidad, jardines y espacios
+  // 3. Aforo, capacidad, salón interior, jardín exterior y párking
   if (
     q.includes('aforo') ||
     q.includes('capacidad') ||
     q.includes('invitados') ||
     q.includes('cuantas personas') ||
     q.includes('espacio') ||
+    q.includes('salon') ||
+    q.includes('salón') ||
+    q.includes('interior') ||
+    q.includes('exterior') ||
+    q.includes('comedor') ||
     q.includes('jardin') ||
     q.includes('jardín') ||
     q.includes('carpa') ||
@@ -249,7 +295,7 @@ export function resolveOtzarretaQuery(rawQuery: string): ProviderResolutionResul
     return {
       handled: true,
       reply:
-        'En Restaurante Ezkertza Berria & Otzarreta (Derio) la política es de exclusividad absoluta: solo se celebra 1 boda o evento al día. La finca cuenta con aforo oficial de hasta 350 comensales, jardines botánicos con carpa y oficiante civil, salones climatizados e insonorizados y parking privado gratuito de 150 plazas vigiladas.',
+        `En Restaurante Ezkertza Berria & Otzarreta (Derio, tradición desde ${OTZARRETA_ENTITY.foundedYear}) celebramos solo 1 boda o evento al día con exclusividad total: ${OTZARRETA_SEATING_PRESET.interiorSalon.label.toLowerCase()} interior (${OTZARRETA_SEATING_PRESET.interiorSalon.capacityPax} comensales, ${OTZARRETA_SEATING_PRESET.interiorSalon.standardRange}), jardín exterior con carpa (${OTZARRETA_SEATING_PRESET.exteriorGarden.capacityPax} comensales, ${OTZARRETA_SEATING_PRESET.exteriorGarden.standardRange}) y párking privado gratuito de ${OTZARRETA_SEATING_PRESET.parkingSpaces} plazas vigiladas.`,
       action: {
         type: 'dossier',
         label: 'Ver Ficha de Espacios y Aforo',
@@ -259,7 +305,7 @@ export function resolveOtzarretaQuery(rawQuery: string): ProviderResolutionResul
     };
   }
 
-  // 4. Ubicación en Derio, accesos, cómo llegar
+  // 4. Ubicación en Derio, accesos
   if (
     q.includes('donde') ||
     q.includes('dónde') ||
@@ -267,14 +313,13 @@ export function resolveOtzarretaQuery(rawQuery: string): ProviderResolutionResul
     q.includes('dirección') ||
     q.includes('derio') ||
     q.includes('bizkaia') ||
-    q.includes('llegar') ||
     q.includes('aeropuerto') ||
     q.includes('bilbao')
   ) {
     return {
       handled: true,
       reply:
-        'El Caserío Restaurante Ezkertza Berria & Otzarreta se encuentra en Santo Domingo Hiribidea, 13, 48160 Derio (Bizkaia). Está a 8 minutos de Bilbao por el Corredor del Txorierri (N-637) y a 5 minutos del Aeropuerto de Bilbao (Loiu), con campa de acceso directo y parking propio de 150 plazas.',
+        `El Caserío Restaurante Ezkertza Berria & Otzarreta (fundado en ${OTZARRETA_ENTITY.foundedYear}) se encuentra en ${OTZARRETA_ENTITY.fullAddress}. Está a 8 minutos de Bilbao por el Corredor del Txorierri (N-637) y a 5 minutos del Aeropuerto de Bilbao (Loiu), con campa de acceso directo y párking privado propio de ${OTZARRETA_SEATING_PRESET.parkingSpaces} plazas.`,
       action: {
         type: 'whatsapp',
         label: 'Solicitar ruta GPS y visita técnica',
@@ -300,10 +345,11 @@ export function resolveOtzarretaQuery(rawQuery: string): ProviderResolutionResul
     return {
       handled: true,
       reply:
-        'En Ezkertza Berria & Otzarreta solo se celebra una boda al día para garantizar exclusividad total. Puedes solicitar una visita técnica guiada al caserío y bloquear tu fecha con el depósito garantizado de 100,00 € (Stripe Price-Lock), deducible al 100% del presupuesto final del banquete.',
+        `En Ezkertza Berria & Otzarreta (Derio ${OTZARRETA_ENTITY.foundedYear}) solo se celebra una boda al día para garantizar exclusividad total. Puedes solicitar una visita técnica guiada al caserío y bloquear tu fecha en el calendario con el depósito garantizado de ${DEPOSIT_EUR_LABEL} € (Stripe Price-Lock), deducible al 100% del presupuesto final del banquete.`,
       action: {
         type: 'date_picker',
-        label: 'Consultar Fecha de Boda / Banquete',
+        label: `Bloquear fecha con depósito de ${DEPOSITO_STRIPE_EUR} €`,
+        url: CALENDAR_BLOCK_URL,
       },
       shouldEscalate: true,
     };
@@ -323,11 +369,11 @@ export function resolveOtzarretaQuery(rawQuery: string): ProviderResolutionResul
     return {
       handled: true,
       reply:
-        'El caserío cuenta con sonorización homologada Bose S-Class (Ley 37/2003) sin problemas acústicos. Menús como el Especial Imperial (123,40 €) incluyen 1h de DJ, y el Menú Vasco (138 €) incluye 2h de DJ profesional + 2h de barra libre + autobús. Para ceremonias líricas o directos exclusivos, colabora la producción de Edwin Agudelo.',
+        `El caserío cuenta con sonorización homologada Bose S-Class (Ley 37/2003, 80–85 dBA) sin cortes ni sanciones acústicas, tanto en el salón acristalado interior (${OTZARRETA_SEATING_PRESET.interiorSalon.capacityPax} comensales) como en las zonas exteriores. Para música en directo, DJ o ceremonias, coordinamos la producción técnica oficial a través de la Centralita.`,
       action: {
         type: 'whatsapp',
-        label: 'Consultar sonorización y música (+34 693 693 048)',
-        url: `https://wa.me/${CLEAN_PHONE}?text=${encodeURIComponent('Hola, me interesa consultar el pack de sonido y DJ para mi banquete en Ezkertza Berria & Otzarreta.')}`,
+        label: `Consultar sonorización y música (${CENTRALITA_EAR_OS})`,
+        url: `https://wa.me/${CLEAN_PHONE}?text=${encodeURIComponent('Hola, me interesa consultar la sonorización y música para mi banquete en Ezkertza Berria & Otzarreta (Derio).')}`,
       },
       shouldEscalate: false,
     };
@@ -337,10 +383,10 @@ export function resolveOtzarretaQuery(rawQuery: string): ProviderResolutionResul
   return {
     handled: true,
     reply:
-      'Estás en contacto con la Conserjería de Ezkertza Berria & Otzarreta en Derio (Bizkaia). Puedo informarte con exactitud sobre nuestros 7 menús oficiales de boda (desde 100 € a 173 € + IVA), parrilla al carbón de encina de Eduardo Martínez, aforo de 350 comensales o agendar tu visita técnica al caserío.',
+      `Estás en contacto con la Conserjería de Ezkertza Berria & Otzarreta en Derio (tradición desde ${OTZARRETA_ENTITY.foundedYear}). Puedo informarte con exactitud sobre nuestros ${OTZARRETA_WEDDING_MENUS.length} menús de gala (${OTZARRETA_WEDDING_MENUS_CLAIM}), alta brasa de carbón y sarmiento, salón acristalado interior (${OTZARRETA_SEATING_PRESET.interiorSalon.capacityPax} comensales), jardín exterior (${OTZARRETA_SEATING_PRESET.exteriorGarden.capacityPax} comensales) y ${OTZARRETA_SEATING_PRESET.parkingSpaces} plazas de párking privado.`,
     action: {
       type: 'whatsapp',
-      label: 'Hablar con la Conserjería (+34 693 693 048)',
+      label: `Hablar con la Conserjería (${CENTRALITA_EAR_OS})`,
       url: `https://wa.me/${CLEAN_PHONE}?text=${encodeURIComponent(`Hola, estoy en la ficha de Ezkertza Berria & Otzarreta (Derio) y deseo consultar sobre: "${rawQuery.slice(0, 100)}"`)}`,
     },
     shouldEscalate: false,

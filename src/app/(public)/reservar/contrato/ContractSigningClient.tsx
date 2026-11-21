@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import Link from 'next/link';
 import {
     FileCheck2,
@@ -44,6 +44,23 @@ export interface ContractSigningInitial {
 export const CONTRACT_PENDING_LABEL = 'Pendiente de confirmar';
 export const CONTRACT_UNRESOLVED_PROVIDER = 'Proveedor por confirmar';
 
+const ISO_DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
+
+function deriveContractDepositIdempotencyKey(seed: string): string {
+    let h1 = 0x811c9dc5;
+    let h2 = 0x9e3779b9;
+    for (let i = 0; i < seed.length; i += 1) {
+        const code = seed.charCodeAt(i);
+        h1 ^= code;
+        h1 = Math.imul(h1, 0x01000193);
+        h2 ^= code + i;
+        h2 = Math.imul(h2, 0x85ebca6b);
+    }
+    const part1 = (h1 >>> 0).toString(16).padStart(8, '0');
+    const part2 = (h2 >>> 0).toString(16).padStart(8, '0');
+    return `cal_${part1}${part2}`;
+}
+
 export function ContractSigningClient({
     initial,
 }: {
@@ -69,10 +86,92 @@ export function ContractSigningClient({
     const [clientSignature, setClientSignature] = useState<SignatureData | null>(null);
     const [isAgreed, setIsAgreed] = useState(false);
     const [finalContractSealed, setFinalContractSealed] = useState(false);
+    const [depositEmail, setDepositEmail] = useState('');
+    const [depositLoading, setDepositLoading] = useState(false);
+    const [depositError, setDepositError] = useState<string | null>(null);
+
+    const canTriggerDepositCheckout = Boolean(
+        initial.providerSlug && ISO_DATE_PATTERN.test(eventDate),
+    );
+
+    const depositIdempotencyKey = useMemo(
+        () =>
+            deriveContractDepositIdempotencyKey(
+                `servicios|${initial.providerSlug ?? ''}|${eventDate}|${depositEmail.trim().toLowerCase()}`,
+            ),
+        [initial.providerSlug, eventDate, depositEmail],
+    );
 
     const handleSealContract = () => {
         if (!clientSignature || !isAgreed) return;
         setFinalContractSealed(true);
+    };
+
+    const handleContractDepositCheckout = async () => {
+        if (!initial.providerSlug || !ISO_DATE_PATTERN.test(eventDate)) return;
+        setDepositError(null);
+
+        const trimmedEmail = depositEmail.trim();
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+            setDepositError('Indica un correo electrónico válido para emitir el depósito.');
+            return;
+        }
+
+        const safeClientName =
+            clientName.trim().length >= 2 && clientName !== 'Contratante por identificar'
+                ? clientName.trim()
+                : 'Cliente Contrato EAR';
+
+        setDepositLoading(true);
+        try {
+            const res = await fetch(
+                `/api/calendar/servicios/${encodeURIComponent(initial.providerSlug)}/deposit`,
+                {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        eventDate,
+                        clientName: safeClientName,
+                        clientEmail: trimmedEmail,
+                        intent: 'bloquear',
+                        idempotencyKey: depositIdempotencyKey,
+                    }),
+                },
+            );
+            const json = (await res.json().catch(() => ({}))) as {
+                ok?: boolean;
+                url?: string;
+                error?: string;
+                message?: string;
+            };
+
+            if (res.ok && json.ok && typeof json.url === 'string' && json.url.length > 0) {
+                window.location.assign(json.url);
+                return;
+            }
+
+            if (res.status === 503) {
+                setDepositError(
+                    json.message ??
+                        json.error ??
+                        `Pasarela Stripe no disponible. Contacta en ${CENTRALITA_EAR_OS}.`,
+                );
+                return;
+            }
+
+            if (res.status === 409) {
+                setDepositError(
+                    json.error ?? 'La fecha indicada ya está comprometida en la agenda del proveedor.',
+                );
+                return;
+            }
+
+            setDepositError(json.error ?? 'No se pudo iniciar la sesión de depósito.');
+        } catch {
+            setDepositError('Error de red al conectar con la pasarela Stripe.');
+        } finally {
+            setDepositLoading(false);
+        }
     };
 
     return (
@@ -224,6 +323,52 @@ export function ContractSigningClient({
                         </li>
                     </ul>
                 </div>
+
+                {/* Bloqueo Transaccional de Depósito en Stripe */}
+                {canTriggerDepositCheckout && (
+                    <div className="bg-[#09090d]/80 border border-[#ecb613]/30 rounded-2xl p-6 backdrop-blur-md space-y-3">
+                        <div className="flex flex-wrap items-center justify-between gap-2">
+                            <h2 className="text-xs font-semibold text-[#ecb613] uppercase tracking-wider flex items-center gap-2">
+                                <Lock className="w-4 h-4" />
+                                Depósito Vinculante Price-Lock ({DEPOSITO_STRIPE_EUR} €)
+                            </h2>
+                            <span className="text-[11px] font-mono text-gray-400">
+                                Fecha: {eventDate}
+                            </span>
+                        </div>
+                        <div className="flex flex-col sm:flex-row gap-3">
+                            <input
+                                type="email"
+                                value={depositEmail}
+                                onChange={(e) => {
+                                    setDepositEmail(e.target.value);
+                                    setDepositError(null);
+                                }}
+                                placeholder="Correo electrónico para recibo Stripe *"
+                                aria-label="Correo electrónico para depósito"
+                                maxLength={160}
+                                className="flex-1 rounded-xl border border-white/15 bg-black/50 px-3.5 py-2.5 text-xs font-mono text-white placeholder:text-zinc-500 focus:border-[#ecb613] focus:outline-none"
+                            />
+                            <button
+                                type="button"
+                                onClick={() => void handleContractDepositCheckout()}
+                                disabled={depositLoading}
+                                className="px-5 py-2.5 rounded-xl font-bold text-xs font-mono uppercase tracking-wider bg-[#ecb613] text-black hover:bg-[#f5d273] disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
+                            >
+                                <Lock className="w-3.5 h-3.5" />
+                                {depositLoading
+                                    ? 'Abriendo Stripe…'
+                                    : `Bloquear Fecha con ${DEPOSITO_STRIPE_EUR} €`}
+                            </button>
+                        </div>
+                        {depositError && (
+                            <p className="text-xs font-mono text-rose-300 flex items-center gap-1.5">
+                                <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                                <span>{depositError}</span>
+                            </p>
+                        )}
+                    </div>
+                )}
 
                 {/* Pad de Firma Digital */}
                 {!finalContractSealed ? (
