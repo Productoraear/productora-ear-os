@@ -6,18 +6,17 @@ import {
   MapPin,
   Award,
   Phone,
-  Sparkles,
   CreditCard,
   ArrowRight,
   CheckCircle2,
   XCircle,
   TrendingUp,
-  Users,
   Building2,
-  CalendarCheck
 } from 'lucide-react';
 import { CENTRALITA_EAR_OS, DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
-import { OTZARRETA_ENTITY } from '@/lib/constants/otzarreta-entity';
+import {
+  OTZARRETA_ENTITY,
+} from '@/lib/constants/otzarreta-entity';
 import {
   SOVEREIGN_DEMAND_CHANNEL,
   buildDemandWhatsappUrl,
@@ -26,6 +25,7 @@ import {
   supplierLineMask
 } from '@/lib/providers/sovereign-lead-gate';
 import { EzkertzaVenueLanding as EzkertzaVenueListing } from '@/components/otzarreta/EzkertzaVenueLanding';
+import BentoMenuSection from '@/components/otzarreta/BentoMenuSection';
 import { SovereignWhatsAppButton } from '@/components/shared/SovereignWhatsAppButton';
 import {
   AudioReactiveVisualizer,
@@ -171,107 +171,108 @@ export default async function OtzarretaFlagshipPage({
       />
 
       {/* â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â” */}
-      {/* 1. HERO S-CLASS CINEMATOGRÃFICO                        */}
-      {/* â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â” */}
-      <section className="relative px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        {/* Glow de fondo */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-amber-600/15 rounded-full blur-[140px] pointer-events-none" />
+      {/* 1. HERO EDITORIAL · FOTOGRAFÍA A SANGRE + TITULAR DISPLAY      */}
+      {/* ═══════════════════════════════════════════════════════════════ */}
+      <section className="relative mx-auto max-w-[1520px] px-4 sm:px-6 lg:px-8">
+        <div className="relative overflow-hidden rounded-[28px] border border-white/[0.08] bg-[#0A0A0E]">
+          {/* Fotografía a sangre. `fetchPriority` alto porque es el LCP. */}
+          <img
+            src={OTZARRETA_ENTITY.scrapedAssets.facade}
+            alt="Fachada del caserío Restaurante Otzarreta en Derio (Bizkaia)"
+            className="h-[clamp(380px,58svh,600px)] w-full object-cover"
+            fetchPriority="high"
+            decoding="async"
+          />
+          {/* Velo inferior hacia el negro Aura Onyx: legibilidad sin lavar la foto. */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-gradient-to-t from-[#030305] via-[#030305]/70 to-[#030305]/10"
+          />
+          {/* Grano mineral: superficie con textura, jamás un orbe borroso. */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 opacity-[0.16] mix-blend-overlay"
+            style={{
+              backgroundImage:
+                'url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27140%27 height=%27140%27%3E%3Cfilter id=%27n%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%270.85%27 numOctaves=%273%27/%3E%3C/filter%3E%3Crect width=%27140%27 height=%27140%27 filter=%27url(%23n)%27 opacity=%270.5%27/%3E%3C/svg%3E")',
+            }}
+          />
 
-        <div className="space-y-6 text-center max-w-4xl mx-auto">
-          {/* Badge de Gastronomía Soberana */}
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-500/10 via-[#ecb613]/10 to-amber-500/10 border border-[#ecb613]/30 text-[#ecb613] text-xs font-mono tracking-wider shadow-lg shadow-[#ecb613]/5">
-            <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
-            <span>ALTA GASTRONOMÍA VASCA & BRASAS · DERIO (BIZKAIA)</span>
-          </div>
+          <div className="absolute inset-x-0 bottom-0 p-6 sm:p-10 lg:p-14">
+            <div className="max-w-3xl space-y-6">
+              <h1 className="font-syne text-[clamp(2.1rem,5.2vw,4.25rem)] font-black leading-[1.02] tracking-[-0.03em] text-[#F4F1EA] [overflow-wrap:break-word]">
+                Asador Tradicional Otzarreta
+                <span className="mt-1 block text-[clamp(1rem,1.8vw,1.375rem)] font-medium leading-snug tracking-normal text-[#C9C4B8]">
+                  Derio, Bizkaia desde 1902
+                </span>
+              </h1>
 
-          <div className="flex justify-center mb-2">
-            <img
-              src="https://www.ezkertzaberria.com/wp-content/uploads/2021/04/LOGO-EZKERTZA-2.jpg"
-              alt="Logo Oficial Restaurante Otzarreta"
-              className="h-16 sm:h-20 object-contain rounded-xl bg-white/5 p-2 border border-white/10"
-            />
-          </div>
+              <p className="max-w-[60ch] text-[0.9375rem] leading-relaxed text-[#D6D2C7] sm:text-base">
+                Parrilla de carbón de encina y sarmiento, salón acristalado para 50 a 350 comensales y
+                jardines con carpa para la ceremonia civil, bajo la dirección de Eduardo Martínez.
+              </p>
 
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight font-sans leading-[1.08]">
-            Restaurante Otzarreta
-            <span className="block text-xl sm:text-3xl lg:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] via-amber-200 to-[#ecb613] font-serif italic font-normal mt-2">
-              Parrilla Vasca de Autor & Banquetes Nupciales en Derio
-            </span>
-          </h1>
+              {/* Tres píldoras de gala: filo de 1 px, cristal, sin iconos. */}
+              <ul className="flex flex-wrap gap-2">
+                {[
+                  'Parrilla de carbón y sarmiento',
+                  'Jardín y salón acristalado',
+                  'Párking privado de 150 plazas',
+                ].map((pill) => (
+                  <li
+                    key={pill}
+                    className="rounded-full border border-white/[0.12] bg-white/[0.04] px-4 py-1.5 text-[0.8125rem] text-[#EDEAE2] backdrop-blur-md"
+                  >
+                    {pill}
+                  </li>
+                ))}
+              </ul>
 
-          <p className="text-gray-300 text-base sm:text-lg lg:text-xl max-w-3xl mx-auto leading-relaxed">
-            El caserío definitivo para bodas inolvidables: <strong>350 comensales</strong> en comedores climatizados e insonorizados,
-            jardines botánicos con carpa y oficiante civil, parking privado gratuito de <strong>150 plazas</strong> y la auténtica parrilla al
-            carbón de encina de <strong>Eduardo Martínez (Dirección Gastronómica de Restaurante Otzarreta)</strong>.
-          </p>
-
-          {/* CTA Group */}
-          <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
-            <a
-              href={calendarBlockHref}
-              className="px-8 py-4 rounded-2xl bg-gradient-to-r from-[#ecb613] via-[#f7cb45] to-[#ecb613] text-black font-extrabold text-sm sm:text-base hover:brightness-110 transition-all shadow-xl shadow-[#ecb613]/25 flex items-center gap-2.5 hover:scale-[1.02] active:scale-[0.98]"
-            >
-              <CreditCard className="w-5 h-5" />
-              <span>Bloquear Fecha con {DEPOSITO_STRIPE_EUR} € (Deducible)</span>
-            </a>
-
-            <SovereignWhatsAppButton
-              url={whatsappConciergeUrl}
-              providerName="Restaurante Otzarreta"
-              category="Finca y Banquetes"
-              className="px-6 py-4 rounded-2xl bg-[#09090d]/80 text-white font-semibold text-sm sm:text-base hover:bg-white/10 transition-all border border-white/15 flex items-center gap-2.5 backdrop-blur-md"
-            >
-              <Phone className="w-5 h-5 text-emerald-400" />
-              <span>Hablar con Conserjería VIP</span>
-            </SovereignWhatsAppButton>
-
-            <a
-              href={calendarVisitHref}
-              className="px-6 py-4 rounded-2xl bg-[#00E5FF]/10 text-[#7DF0FF] font-semibold text-sm sm:text-base hover:bg-[#00E5FF]/20 transition-all border border-[#00E5FF]/40 flex items-center gap-2.5 backdrop-blur-md"
-            >
-              <CalendarCheck className="w-5 h-5" />
-              <span>Solicitar visita técnica</span>
-            </a>
-
-            <Link
-              href={contractHref}
-              className="text-[11px] font-mono text-zinc-400 hover:text-[#ecb613] underline decoration-dotted underline-offset-4 transition-colors"
-            >
-              Ver condiciones del depósito deducible ({DEPOSITO_STRIPE_EUR} €) y split 80/10/10
-            </Link>
-          </div>
-
-          {/* PEAJE SOBERANO: canal Ãºnico y lÃ­nea del recinto protegida */}
-          <p className="max-w-3xl mx-auto text-[11px] sm:text-xs text-gray-500 font-mono leading-relaxed pt-1">
-            Conserjería única: {SOVEREIGN_DEMAND_CHANNEL.telDisplay} · Línea directa de la casa{' '}
-            {supplierLineMask(OTZARRETA_ENTITY.primaryPhone)} (verificada) — se facilita al confirmar
-            la visita técnica.
-          </p>
-
-          {/* Micro TelemetrÃ­a de GarantÃ­a */}
-          <div className="flex flex-wrap items-center justify-center gap-6 pt-4 text-xs text-gray-400 font-mono">
-            <div className="flex items-center gap-1.5">
-              <MapPin className="w-3.5 h-3.5 text-[#ecb613]" />
-              <span>Santo Domingo Hiribidea, 13 · Derio (Bizkaia)</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <Users className="w-3.5 h-3.5 text-blue-400" />
-              <span>Aforo Oficial: 350 Comensales</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Acústica Legal Homologada (Ley 37/2003)</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <Award className="w-3.5 h-3.5 text-amber-400" />
-              <span>Split Soberano 80/10/10</span>
+              <div className="flex flex-wrap items-center gap-3 pt-1">
+                <a
+                  href={calendarBlockHref}
+                  className="inline-flex min-h-[48px] items-center rounded-xl bg-[#ecb613] px-6 text-sm font-bold text-[#120D00] transition-colors duration-150 ease-out hover:bg-[#f7cb45] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
+                >
+                  Asegurar fecha, fianza deducible {DEPOSITO_STRIPE_EUR} €
+                </a>
+                <a
+                  href={calendarVisitHref}
+                  className="inline-flex min-h-[48px] items-center rounded-xl border border-white/[0.16] px-6 text-sm font-semibold text-[#F4F1EA] transition-colors duration-150 ease-out hover:border-white/40 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
+                >
+                  Reservar visita técnica
+                </a>
+              </div>
             </div>
           </div>
         </div>
+
+        {/* Datos de la casa: una sola línea de hechos verificables. */}
+        <dl className="mt-6 grid grid-cols-2 gap-x-8 gap-y-4 border-y border-white/[0.08] py-5 sm:grid-cols-4">
+          {[
+            { term: 'Aforo', detail: '50 a 350 comensales' },
+            { term: 'Párking', detail: '150 plazas en recinto cerrado' },
+            { term: 'Menús', detail: `Desde ${OTZARRETA_ENTITY.weddingPriceFromEur} € + IVA` },
+            { term: 'Conserjería', detail: CENTRALITA_EAR_OS },
+          ].map((fact) => (
+            <div key={fact.term}>
+              <dt className="text-xs text-[#8E8A80]">{fact.term}</dt>
+              <dd className="mt-1 text-sm font-semibold text-[#F4F1EA]">{fact.detail}</dd>
+            </div>
+          ))}
+        </dl>
+
+        <p className="mt-3 max-w-[75ch] text-xs leading-relaxed text-[#8E8A80]">
+          Línea directa de la casa {supplierLineMask(OTZARRETA_ENTITY.primaryPhone)} (verificada): se
+          facilita al confirmar la visita técnica.
+        </p>
       </section>
 
-      {/* â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â” */}
+      {/* ═══════════════════════════════════════════════════════════════ */}
+      {/* 2. CARTA DE MENÚS · REJILLA BENTO S-CLASS */}
+      <BentoMenuSection blockHref={calendarBlockHref} contractHref={contractHref} />
+
       {/* 2. GALERÃA · RETIRADA EN W47_T02     */}
+      {/* â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â” */}
       {/* â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â” */}
       {/* W47_T02 · sección 2 eliminada: galería duplicada que amputaba verticales como novios-1022x1536. */}
 

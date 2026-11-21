@@ -39,6 +39,7 @@
     "landings:all": "npm run landings:otzarreta && npm run landings:centralita && npm run landings:ear-eventos",
     "typecheck:landings": "node ./node_modules/typescript/bin/tsc -p tsconfig.landings-dominance.json --noEmit",
     "audit:contrast": "node scripts/audit_wcag_contrast_live.cjs",
+    "audit:contrast:hallmark": "node scripts/audit_hallmark_contrast.cjs",
     "audit:contrast:core": "node scripts/audit_wcag_contrast_live.cjs --routes=/,/proveedores,/otzarreta,/encargos,/reservar/solista,/vimume,/fincas,/directorio,/calculadora,/artistas",
     "audit:visual": "node scripts/visual_prototype_audit.cjs",
     "audit:visual:full": "node scripts/visual_prototype_audit.cjs --shots=full --strict",

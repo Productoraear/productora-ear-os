@@ -29,6 +29,7 @@ import {
   fixtureMetrics,
   guestAtSeat,
   rotatedBounds,
+  type DietaryTag,
   type SeatingPlan,
 } from '@/lib/seating/seating-plan';
 import FixtureGlyph from './FixtureGlyph';
@@ -201,40 +202,64 @@ export default function SeatingBoard({
 
 
   return (
-    <section aria-label="Plano interactivo del salón" className="space-y-2 print:hidden">
-      <div className="overflow-x-auto rounded-2xl border border-white/10 bg-[#08080b] p-3">
-        <div
-          ref={boardRef}
-          data-testid="seating-board"
-          onPointerMove={handlePointerMove}
-          onPointerUp={handlePointerUp}
-          onPointerCancel={handlePointerUp}
-          onPointerDown={(event) => {
-            // Clic en el vacío = deseleccionar (gesto esperado en un lienzo).
-            if (event.target === event.currentTarget) onSelect(null);
-          }}
-          className="relative mx-auto touch-none select-none rounded-xl bg-[#030305]"
-          style={{ width: extent.width, height: extent.height }}
-        >
-          {/* Rejilla milimétrica: 1 m fuerte, 0,5 m tenue. */}
+    <section aria-label="Plano interactivo del salón" className="space-y-3 print:hidden">
+      <div className="rounded-2xl border border-[#1E1E26] bg-[#0F0F16] p-3 sm:p-4">
+        {/* Regla superior: la escala real del lienzo, rotulada como un plano técnico. */}
+        <div className="mb-2 flex items-center justify-between px-1 text-xs text-[#8E8A80]">
+          <span>Lienzo de sala, rejilla de 1 m</span>
+          <span className="tabular-nums">
+            {Math.round(extent.width / METERS_TO_PX)} × {Math.round(extent.height / METERS_TO_PX)} m
+          </span>
+        </div>
+
+        {/* Barra de herramientas flotante: cristal sobre el plano, no ocupa sitio. */}
+        <div className="pointer-events-none sticky top-20 z-20 mb-2 flex justify-center">
+          <div className="pointer-events-auto flex flex-wrap items-center gap-x-4 gap-y-1 rounded-full border border-white/[0.12] bg-[#08080C]/80 px-5 py-2 text-xs text-[#C9C4B8] backdrop-blur-xl">
+            <span className="tabular-nums">{plan.tables.length} mesas</span>
+            <span className="tabular-nums">{plan.fixtures.length} zonas</span>
+            <span className="tabular-nums">{plan.pax} pax objetivo</span>
+            {selectedId !== null ? <span className="text-[#ecb613]">elemento activo</span> : null}
+          </div>
+        </div>
+
+        <div className="overflow-x-auto">
           <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0"
-            style={{
-              backgroundImage: [
-                'linear-gradient(to right, rgba(255,255,255,0.13) 1px, transparent 1px)',
-                'linear-gradient(to bottom, rgba(255,255,255,0.13) 1px, transparent 1px)',
-                'linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px)',
-                'linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px)',
-              ].join(', '),
-              backgroundSize: [
-                `${METERS_TO_PX}px ${METERS_TO_PX}px`,
-                `${METERS_TO_PX}px ${METERS_TO_PX}px`,
-                `${METERS_TO_PX / 2}px ${METERS_TO_PX / 2}px`,
-                `${METERS_TO_PX / 2}px ${METERS_TO_PX / 2}px`,
-              ].join(', '),
+            ref={boardRef}
+            data-testid="seating-board"
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerUp}
+            onPointerCancel={handlePointerUp}
+            onPointerDown={(event) => {
+              // Clic en el vacío = deseleccionar (gesto esperado en un lienzo).
+              if (event.target === event.currentTarget) onSelect(null);
             }}
-          />
+            className="relative mx-auto touch-none select-none rounded-lg border border-[#1E1E26] bg-[#0F0F16]"
+            style={{ width: extent.width, height: extent.height }}
+          >
+            {/* Rejilla blueprint: 1 m firme, 0,5 m tenue, 0,1 m apenas visible. */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0"
+              style={{
+                backgroundImage: [
+                  'linear-gradient(to right, rgba(236,182,19,0.10) 1px, transparent 1px)',
+                  'linear-gradient(to bottom, rgba(236,182,19,0.10) 1px, transparent 1px)',
+                  'linear-gradient(to right, rgba(255,255,255,0.09) 1px, transparent 1px)',
+                  'linear-gradient(to bottom, rgba(255,255,255,0.09) 1px, transparent 1px)',
+                  'linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px)',
+                  'linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px)',
+                ].join(', '),
+                backgroundSize: [
+                  `${METERS_TO_PX}px ${METERS_TO_PX}px`,
+                  `${METERS_TO_PX}px ${METERS_TO_PX}px`,
+                  `${METERS_TO_PX / 2}px ${METERS_TO_PX / 2}px`,
+                  `${METERS_TO_PX / 2}px ${METERS_TO_PX / 2}px`,
+                  `${METERS_TO_PX / 10}px ${METERS_TO_PX / 10}px`,
+                  `${METERS_TO_PX / 10}px ${METERS_TO_PX / 10}px`,
+                ].join(', '),
+              }}
+            />
+
 
           {/* Mobiliario primero: queda por debajo de las mesas. */}
           {plan.fixtures.map((fixture) => (
@@ -258,6 +283,12 @@ export default function SeatingBoard({
             const occupants = Array.from({ length: table.seats }, (_unused, seat) =>
               guestAtSeat(plan, table.id, seat),
             );
+            // Dietas de la mesa, sin repetir: lo que la cocina necesita ver de un vistazo.
+            const tableDietary = Array.from(
+              new Set(
+                occupants.flatMap((guest) => (guest?.dietary ?? []) as readonly DietaryTag[]),
+              ),
+            );
             return (
               <div
                 key={table.id}
@@ -279,6 +310,7 @@ export default function SeatingBoard({
                   metersToPx={METERS_TO_PX}
                   selected={selectedId === table.id}
                   occupants={occupants}
+                  dietary={tableDietary}
                   onSelect={onSelect}
                   onSeatClick={onSeatClick}
                 />
@@ -287,15 +319,17 @@ export default function SeatingBoard({
           })}
 
           {plan.tables.length === 0 && plan.fixtures.length === 0 ? (
-            <p className="absolute inset-0 flex items-center justify-center px-6 text-center text-xs text-zinc-500">
+            <p className="absolute inset-0 flex items-center justify-center px-6 text-center text-sm text-[#8E8A80]">
               Sin mesas. Añade una redonda, rectangular o presidencial, o una zona de evento.
             </p>
           ) : null}
+          </div>
         </div>
       </div>
 
-      <p className="font-mono text-[9px] uppercase tracking-wider text-zinc-600">
-        arrastra para mover · snap {SNAP_STEP_M} m · selecciona una mesa para sentar invitados en sus sillas
+      <p className="text-xs text-[#8E8A80]">
+        Arrastra para mover, el plano cierra a {SNAP_STEP_M} m. Selecciona una mesa para sentar invitados
+        en sus sillas.
       </p>
     </section>
   );

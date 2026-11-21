@@ -47,6 +47,86 @@ export type OtzarretaService =
     | 'reservas'
     | 'bodega';
 
+/**
+ * Menú oficial de boda/celebración publicado en el dossier 2026 de la casa.
+ *
+ * FUENTE ÚNICA DE VERDAD (Directiva CEO 2026-11-21): el Bento de `/otzarreta`
+ * y el system prompt del Concierge (`/api/concierge/chat`) leen de ESTE array.
+ * Prohibido re-hardcodear nombres o importes en cualquiera de las dos
+ * superficies: una sola edición aquí propaga el cambio a las dos.
+ *
+ * Reglas de honestidad aplicadas:
+ *  - `priceEur` sólo se rellena con importe de dossier oficial. `null` = la casa
+ *    no publica precio unitario de ese menú; se declara en la UI, jamás se estima.
+ *  - El suelo público («desde X € + IVA») NO vive aquí: se lee de
+ *    `weddingPriceFromEur` para que no existan dos cifras que puedan divergir.
+ */
+export interface OtzarretaWeddingMenu {
+    /** Nombre comercial exacto del menú. */
+    readonly name: string;
+    /** Importe por comensal sin IVA según dossier; `null` si no publicado. */
+    readonly priceEur: number | null;
+    /** Descripción de una línea: qué distingue a este menú. */
+    readonly note: string;
+    /** Complementos incluidos declarados en el dossier (vacío si no consta). */
+    readonly extras: readonly string[];
+}
+
+/** Catálogo oficial de menús de celebración (orden de carta, de clásico a gala). */
+export const OTZARRETA_WEDDING_MENUS: readonly OtzarretaWeddingMenu[] = Object.freeze([
+    {
+        name: 'Cantábrico',
+        priceEur: 100,
+        note: 'Pescado salvaje del Cantábrico a la brasa de encina.',
+        extras: Object.freeze([]),
+    },
+    {
+        name: 'Especial Imperial',
+        priceEur: 123.4,
+        note: 'Banquete de gala con barra libre y música.',
+        extras: Object.freeze(['1 h de barra libre', '1 h de DJ']),
+    },
+    {
+        name: 'Paloma',
+        priceEur: 125,
+        note: 'Clásico de la casa para celebraciones de mediodía.',
+        extras: Object.freeze([]),
+    },
+    {
+        name: 'Vasco',
+        priceEur: 138,
+        note: 'Pack completo de banquete con barra libre, DJ y transporte.',
+        extras: Object.freeze(['2 h de barra libre', '2 h de DJ', 'Autobús para 55 pax']),
+    },
+    {
+        name: 'Especial Temporada',
+        priceEur: 142.5,
+        note: 'Producto de mercado y huerta de cada estación.',
+        extras: Object.freeze([]),
+    },
+    {
+        name: 'Ezkertza',
+        priceEur: 155,
+        note: 'Menú insignia: chuletón de ganado mayor y medio bogavante.',
+        extras: Object.freeze(['Chuletón de 1 kg', '½ bogavante']),
+    },
+    {
+        name: 'Caserío Beko',
+        priceEur: 173,
+        note: 'El más alto de la casa, con champán de maison.',
+        extras: Object.freeze(['Moët & Chandon']),
+    },
+] as const);
+
+/**
+ * Etiqueta de precio legible para copy público (`123,40 €`) o `null`.
+ * Formateo es-ES explícito: el separador decimal es coma, nunca punto.
+ */
+export function formatOtzarretaMenuPrice(priceEur: number | null): string | null {
+    if (priceEur === null) return null;
+    return `${priceEur.toFixed(2).replace('.', ',')} €`;
+}
+
 /** Ficha canónica e inmutable del proveedor. */
 export const OTZARRETA_ENTITY = Object.freeze({
     /** Identificador estable usado por checkout y telemetría. */
@@ -111,6 +191,8 @@ export const OTZARRETA_ENTITY = Object.freeze({
     parkingSpaces: 150,
     /** Plazas de la sede canónica en Derio (Bizkaia). */
     groupParkingSpaces: 150,
+    /** Catálogo oficial de menús de celebración (fuente única: Bento + Concierge). */
+    weddingMenus: OTZARRETA_WEDDING_MENUS,
     /** Sede canónica única bajo la gerencia de Eduardo Martínez en Derio (Bizkaia). */
     affiliatedVenues: Object.freeze([
         {

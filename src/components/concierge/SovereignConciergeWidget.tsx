@@ -9,9 +9,7 @@ import {
   MessageSquare,
   Calendar,
   FileText,
-  CheckCircle2,
   Phone,
-  Clock,
   ArrowRight,
   ShieldCheck,
   Link2,
@@ -27,6 +25,7 @@ import {
   ShoppingCart,
 } from 'lucide-react';
 import { CENTRALITA_EAR_OS } from '@/lib/constants/ear-os-ssot';
+import { OTZARRETA_ENTITY } from '@/lib/constants/otzarreta-entity';
 import { resolveVoiceProfile, type VoiceProfile } from '@/lib/voice/voice-profile-engine';
 import { useCart, type ExtendedServiceCategory } from '@/components/checkout/CartContext';
 
@@ -528,31 +527,18 @@ export function SovereignConciergeWidget() {
           role="dialog"
           aria-modal="true"
           aria-label="Conserjería IA Productora EAR"
-          className="pointer-events-auto mb-3 w-[calc(100vw-2rem)] sm:w-[420px] h-[580px] max-h-[85vh] bg-[#09090d]/98 backdrop-blur-2xl border border-[#ecb613]/40 rounded-2xl shadow-[0_15px_50px_rgba(0,0,0,0.9)] text-white flex flex-col animate-in fade-in slide-in-from-bottom-5 duration-200 overflow-hidden"
+          className="pointer-events-auto mb-3 flex h-[min(600px,85svh)] w-[calc(100%-2rem)] max-w-[420px] flex-col overflow-hidden rounded-2xl border border-white/[0.10] bg-[#08080C] text-[#F4F1EA] backdrop-blur-xl"
         >
           {/* Header */}
-          <div className="p-3.5 border-b border-zinc-800/80 bg-gradient-to-r from-[#0d0d14] via-[#09090d] to-[#121008] flex items-center justify-between shrink-0">
+          <div className="flex shrink-0 items-center justify-between border-b border-white/[0.08] px-4 py-3">
             <div className="flex items-center gap-2.5">
-              <div className="relative">
-                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#ecb613]/20 to-amber-900/30 border border-[#ecb613]/50 flex items-center justify-center text-[#ecb613] shadow-[0_0_15px_rgba(236,182,19,0.2)]">
-                  <Bot size={20} className={isSpeaking ? 'animate-bounce text-amber-300' : 'animate-pulse'} />
-                </div>
-                <span className="absolute -bottom-0.5 -right-0.5 flex h-2.5 w-2.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 border border-black"></span>
-                </span>
+              <div className="relative flex h-9 w-9 items-center justify-center rounded-xl border border-[#ecb613]/30 bg-[#101018] text-[#ecb613]">
+                <Bot size={18} />
+                <span className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full border-2 border-[#08080C] bg-[#3FCF8E]" />
               </div>
               <div>
-                <h3 className="text-xs sm:text-sm font-bold text-white tracking-wide font-montserrat leading-tight">
-                  {routeContext.title}
-                </h3>
-                <div className="flex items-center gap-1.5 text-[10px] text-zinc-400 font-mono">
-                  <span className="text-[#ecb613] font-semibold">{routeContext.badge}</span>
-                  <span>•</span>
-                  <span className="flex items-center gap-0.5 text-emerald-400">
-                    <Clock size={10} /> &lt; 1 min
-                  </span>
-                </div>
+                <h3 className="text-sm font-semibold leading-tight text-[#F4F1EA]">{routeContext.title}</h3>
+                <p className="text-xs leading-tight text-[#8E8A80]">Maître de sala · responde en menos de un minuto</p>
               </div>
             </div>
 
@@ -565,7 +551,7 @@ export function SovereignConciergeWidget() {
                   setTtsEnabled((prev) => !prev);
                 }}
                 className={`p-1.5 rounded-lg transition-colors ${
-                  ttsEnabled ? 'text-amber-400 bg-amber-500/10 hover:bg-amber-500/20' : 'text-zinc-500 hover:text-zinc-300'
+                  ttsEnabled ? 'text-[#ecb613] bg-[#ecb613]/10 hover:bg-[#ecb613]/20' : 'text-[#8E8A80] hover:text-[#C9C4B8]'
                 }`}
                 title={ttsEnabled ? 'Voz activada (clic para silenciar)' : 'Voz desactivada (clic para activar)'}
                 aria-label="Alternar voz del asistente"
@@ -579,7 +565,7 @@ export function SovereignConciergeWidget() {
                   setIsOpen(false);
                   stopSpeech();
                 }}
-                className="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800/60 transition-colors"
+                className="rounded-lg p-1.5 text-[#C9C4B8] transition-colors hover:bg-white/[0.06] hover:text-[#F4F1EA]"
                 aria-label="Cerrar Conserjería"
               >
                 <X size={18} />
@@ -588,36 +574,36 @@ export function SovereignConciergeWidget() {
           </div>
 
           {/* Quick Prompts Bar */}
-          <div className="px-3 py-2 bg-black/60 border-b border-zinc-800/60 flex items-center gap-1.5 overflow-x-auto scrollbar-none shrink-0 text-[10px] font-mono">
+          <div className="flex shrink-0 items-center gap-1.5 overflow-x-auto border-b border-white/[0.08] bg-[#0A0A0E] px-3 py-2 text-xs">
             {pathname.includes('/otzarreta') ? (
               <>
                 <button
                   type="button"
-                  onClick={() => handleSendMessage('¿Cuáles son los 7 menús de boda oficiales y precios en Ezkertza Berria?')}
-                  className="px-2 py-1 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-amber-300 whitespace-nowrap transition-colors border border-zinc-700/60"
+                  onClick={() => handleSendMessage('¿Qué menús de celebración tienen y a partir de qué precio?')}
+                  className="whitespace-nowrap rounded-full border border-white/[0.10] px-3 py-1.5 text-[#C9C4B8] transition-colors hover:border-[#ecb613]/50 hover:text-[#F4F1EA] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613]"
                 >
-                  🍖 7 Menús desde 100 €
+                  Menús desde {OTZARRETA_ENTITY.weddingPriceFromEur} €
                 </button>
                 <button
                   type="button"
-                  onClick={() => handleSendMessage('¿Cómo es la parrilla al carbón de encina y las carnes en Derio?')}
-                  className="px-2 py-1 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-amber-300 whitespace-nowrap transition-colors border border-zinc-700/60"
+                  onClick={() => handleSendMessage('¿Cómo es la parrilla de carbón de encina de la casa?')}
+                  className="whitespace-nowrap rounded-full border border-white/[0.10] px-3 py-1.5 text-[#C9C4B8] transition-colors hover:border-[#ecb613]/50 hover:text-[#F4F1EA] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613]"
                 >
-                  🥩 Parrilla y Brasa Derio
+                  Parrilla y brasa
                 </button>
                 <button
                   type="button"
-                  onClick={() => handleSendMessage('¿Cuál es el aforo del caserío y comedores en Derio?')}
-                  className="px-2 py-1 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-amber-300 whitespace-nowrap transition-colors border border-zinc-700/60"
+                  onClick={() => handleSendMessage('¿Cuál es el aforo del salón y del jardín?')}
+                  className="whitespace-nowrap rounded-full border border-white/[0.10] px-3 py-1.5 text-[#C9C4B8] transition-colors hover:border-[#ecb613]/50 hover:text-[#F4F1EA] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613]"
                 >
-                  👥 Aforo (50-350 pax)
+                  Aforo de 50 a 350
                 </button>
                 <button
                   type="button"
-                  onClick={() => handleSendMessage('¿Cómo llegar al caserío en Derio y cuántas plazas de parking tiene?')}
-                  className="px-2 py-1 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-amber-300 whitespace-nowrap transition-colors border border-zinc-700/60"
+                  onClick={() => handleSendMessage('¿Cómo llego al caserío y cuánto párking hay?')}
+                  className="whitespace-nowrap rounded-full border border-white/[0.10] px-3 py-1.5 text-[#C9C4B8] transition-colors hover:border-[#ecb613]/50 hover:text-[#F4F1EA] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613]"
                 >
-                  📍 Derio (150 parkings)
+                  Cómo llegar
                 </button>
               </>
             ) : pathname.includes('/seating-planner') ? (
@@ -625,23 +611,23 @@ export function SovereignConciergeWidget() {
                 <button
                   type="button"
                   onClick={() => handleSendMessage('¿Cómo configuro mesas redondas de 8 a 12 comensales?')}
-                  className="px-2 py-1 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-amber-300 whitespace-nowrap transition-colors border border-zinc-700/60"
+                  className="whitespace-nowrap rounded-full border border-white/[0.10] px-3 py-1.5 text-[#C9C4B8] transition-colors hover:border-[#ecb613]/50 hover:text-[#F4F1EA] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613]"
                 >
-                  🪑 Mesas de 8 a 12 pax
+                  Mesas de 8 a 12 pax
                 </button>
                 <button
                   type="button"
                   onClick={() => handleSendMessage('¿Cómo se exporta el plano de mesas en SVG y PDF?')}
-                  className="px-2 py-1 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-amber-300 whitespace-nowrap transition-colors border border-zinc-700/60"
+                  className="whitespace-nowrap rounded-full border border-white/[0.10] px-3 py-1.5 text-[#C9C4B8] transition-colors hover:border-[#ecb613]/50 hover:text-[#F4F1EA] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613]"
                 >
-                  📐 Exportar plano SVG
+                  Exportar el plano
                 </button>
                 <button
                   type="button"
                   onClick={() => handleSendMessage('¿Cuál es el aforo máximo de invitados en el salón?')}
-                  className="px-2 py-1 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-amber-300 whitespace-nowrap transition-colors border border-zinc-700/60"
+                  className="whitespace-nowrap rounded-full border border-white/[0.10] px-3 py-1.5 text-[#C9C4B8] transition-colors hover:border-[#ecb613]/50 hover:text-[#F4F1EA] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613]"
                 >
-                  👥 Aforo máximo salón
+                  Aforo máximo
                 </button>
               </>
             ) : (
@@ -649,53 +635,54 @@ export function SovereignConciergeWidget() {
                 <button
                   type="button"
                   onClick={() => handleSendMessage('¿Cuáles son las tarifas de Edwin Agudelo?')}
-                  className="px-2 py-1 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-amber-300 whitespace-nowrap transition-colors border border-zinc-700/60"
+                  className="whitespace-nowrap rounded-full border border-white/[0.10] px-3 py-1.5 text-[#C9C4B8] transition-colors hover:border-[#ecb613]/50 hover:text-[#F4F1EA] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613]"
                 >
-                  🎵 Tarifas Edwin (350 €)
+                  Tarifas de solista
                 </button>
                 <button
                   type="button"
                   onClick={() => handleSendMessage('¿Cómo es la contratación B2G para Ayuntamientos bajo Art. 118 LCSP?')}
-                  className="px-2 py-1 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-amber-300 whitespace-nowrap transition-colors border border-zinc-700/60"
+                  className="whitespace-nowrap rounded-full border border-white/[0.10] px-3 py-1.5 text-[#C9C4B8] transition-colors hover:border-[#ecb613]/50 hover:text-[#F4F1EA] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613]"
                 >
-                  🏛️ Licitación B2G Art. 118
+                  Contrato menor B2G
                 </button>
                 <button
                   type="button"
-                  onClick={() => handleSendMessage('¿Cuáles son los menús y aforo de Finca Otzarreta?')}
-                  className="px-2 py-1 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-amber-300 whitespace-nowrap transition-colors border border-zinc-700/60"
+                  onClick={() => handleSendMessage('¿Cuáles son los menús y el aforo de Restaurante Otzarreta?')}
+                  className="whitespace-nowrap rounded-full border border-white/[0.10] px-3 py-1.5 text-[#C9C4B8] transition-colors hover:border-[#ecb613]/50 hover:text-[#F4F1EA] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613]"
                 >
-                  🏰 Menús Otzarreta (145 €)
+                  Menús de Otzarreta
                 </button>
                 <button
                   type="button"
                   onClick={() => handleSendMessage('¿Cómo traslado mi escaparate de Bodas.net a EAR OS?')}
-                  className="px-2 py-1 rounded-full bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-amber-300 whitespace-nowrap transition-colors border border-zinc-700/60"
+                  className="whitespace-nowrap rounded-full border border-white/[0.10] px-3 py-1.5 text-[#C9C4B8] transition-colors hover:border-[#ecb613]/50 hover:text-[#F4F1EA] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613]"
                 >
-                  🔄 Traslado Bodas.net
+                  Traslado de escaparate
                 </button>
               </>
             )}
           </div>
 
+
           {/* Chat Messages Stream */}
-          <div className="flex-1 p-3.5 space-y-3 overflow-y-auto text-xs font-montserrat">
+          <div className="flex-1 space-y-4 overflow-y-auto p-4 text-sm">
             {messages.map((m) => (
               <div
                 key={m.id}
-                className={`flex flex-col ${m.role === 'user' ? 'items-end' : 'items-start'} animate-in fade-in duration-150`}
+                className={`flex flex-col ${m.role === 'user' ? 'items-end' : 'items-start'}`}
               >
                 <div
-                  className={`max-w-[88%] p-3 rounded-2xl leading-relaxed text-xs ${
+                  className={`max-w-[88%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
                     m.role === 'user'
-                      ? 'bg-gradient-to-r from-emerald-600/90 to-teal-700/90 text-white rounded-br-none shadow-md'
-                      : 'bg-zinc-900/95 border border-zinc-800 text-zinc-200 rounded-bl-none shadow-sm'
+                      ? 'rounded-br-md bg-[#141C18] text-[#EAF6EF]'
+                      : 'rounded-bl-md border border-white/[0.08] bg-[#0F0F16] text-[#EDEAE2]'
                   }`}
                 >
                   {m.role === 'assistant' && (
-                    <div className="flex items-center gap-1 text-[#ecb613] font-mono text-[9px] uppercase font-bold mb-1">
-                      <Sparkles size={11} />
-                      <span>Agente EAR OS</span>
+                    <div className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-[#ecb613]">
+                      <Sparkles size={12} aria-hidden="true" />
+                      <span>Maître de sala</span>
                     </div>
                   )}
                   <p className="whitespace-pre-wrap">{m.text}</p>
@@ -790,7 +777,7 @@ export function SovereignConciergeWidget() {
                     </div>
                   )}
                 </div>
-                <span className="text-[9px] text-zinc-500 mt-1 font-mono px-1">{m.timestamp}</span>
+                <span className="mt-1 px-1 text-xs text-[#6F6B62]">{m.timestamp}</span>
               </div>
             ))}
 
@@ -806,7 +793,7 @@ export function SovereignConciergeWidget() {
 
           {/* Interactive Date Picker Toggle Section */}
           {showDatePicker && (
-            <div className="p-3 bg-zinc-900/95 border-t border-amber-500/30 shrink-0 space-y-2 animate-in fade-in">
+            <div className="shrink-0 space-y-2 border-t border-white/[0.10] bg-[#0C0C12] p-3">
               <div className="flex items-center justify-between text-zinc-200 font-bold text-[11px]">
                 <span className="flex items-center gap-1 text-[#ecb613]">
                   <CalendarDays size={13} /> Seleccionar Fecha del Evento
@@ -837,7 +824,7 @@ export function SovereignConciergeWidget() {
                     className={`py-1 text-[10px] font-mono uppercase font-bold rounded-md border transition-all ${
                       selectedSlot === slot
                         ? 'bg-[#ecb613] text-black border-[#ecb613]'
-                        : 'bg-zinc-800 text-zinc-300 border-zinc-700 hover:bg-zinc-700'
+                        : 'bg-white/[0.06] text-[#C9C4B8] border-white/[0.12] hover:bg-white/[0.10]'
                     }`}
                   >
                     {slot}
@@ -871,7 +858,7 @@ export function SovereignConciergeWidget() {
             </button>
 
             {showFastActions && (
-              <div className="p-3 space-y-2 bg-zinc-950/90 border-t border-zinc-800 text-xs animate-in fade-in">
+              <div className="space-y-2 border-t border-white/[0.08] bg-[#08080C] p-3 text-xs">
                 {/* Botón WhatsApp */}
                 <button
                   type="button"
@@ -889,7 +876,7 @@ export function SovereignConciergeWidget() {
                 <button
                   type="button"
                   onClick={handleDossierClick}
-                  className="w-full p-2 bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-200 font-bold rounded-xl flex items-center justify-between text-[11px] transition-colors"
+                  className="flex w-full items-center justify-between rounded-xl border border-white/[0.10] bg-[#0F0F16] p-2.5 text-xs font-semibold text-[#F4F1EA] transition-colors hover:bg-white/[0.05]"
                 >
                   <div className="flex items-center gap-2">
                     <FileText size={14} className="text-[#ecb613]" />
@@ -905,14 +892,14 @@ export function SovereignConciergeWidget() {
                     <button
                       type="button"
                       onClick={() => handlePatientZeroPreset('edwin')}
-                      className="px-2 py-0.5 rounded bg-zinc-800 hover:bg-zinc-700 text-[#ecb613] font-mono text-[9px] border border-amber-500/20"
+                      className="rounded border border-[#ecb613]/25 bg-white/[0.05] px-2 py-1 text-xs text-[#ecb613] transition-colors hover:bg-white/[0.10]"
                     >
                       🎵 Edwin Agudelo
                     </button>
                     <button
                       type="button"
                       onClick={() => handlePatientZeroPreset('otzarreta')}
-                      className="px-2 py-0.5 rounded bg-zinc-800 hover:bg-zinc-700 text-[#ecb613] font-mono text-[9px] border border-amber-500/20"
+                      className="rounded border border-[#ecb613]/25 bg-white/[0.05] px-2 py-1 text-xs text-[#ecb613] transition-colors hover:bg-white/[0.10]"
                     >
                       🏰 Otzarreta
                     </button>
@@ -923,7 +910,7 @@ export function SovereignConciergeWidget() {
                       placeholder="https://www.bodas.net/..."
                       value={scraperUrl}
                       onChange={(e) => setScraperUrl(e.target.value)}
-                      className="flex-1 bg-zinc-900 border border-zinc-700 rounded-lg px-2 py-1 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-[#ecb613]"
+                      className="min-w-0 flex-1 rounded-lg border border-white/[0.12] bg-[#0F0F16] px-2.5 py-1.5 text-xs text-[#F4F1EA] placeholder:text-[#6F6B62] focus:border-[#ecb613] focus:outline-none"
                     />
                     <button
                       type="button"
@@ -960,7 +947,7 @@ export function SovereignConciergeWidget() {
                 className={`p-2 rounded-xl transition-all ${
                   isListening
                     ? 'bg-rose-500 text-white animate-pulse shadow-[0_0_12px_rgba(244,63,94,0.6)]'
-                    : 'bg-zinc-800 text-zinc-300 hover:text-amber-400 hover:bg-zinc-700'
+                    : 'bg-white/[0.06] text-[#C9C4B8] hover:bg-white/[0.10] hover:text-[#F4F1EA]'
                 }`}
                 title={isListening ? 'Escuchando tu voz... Clic para parar' : 'Hablar por voz (Speech-to-Text)'}
                 aria-label="Hablar por micrófono"
@@ -974,7 +961,7 @@ export function SovereignConciergeWidget() {
               value={inputQuery}
               onChange={(e) => setInputQuery(e.target.value)}
               placeholder={isListening ? 'Escuchando tu voz...' : 'Pregunta o escribe tu consulta...'}
-              className="flex-1 bg-zinc-900 border border-zinc-700/80 rounded-xl px-3 py-2 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-[#ecb613] transition-colors"
+              className="min-w-0 flex-1 rounded-xl border border-white/[0.12] bg-[#0F0F16] px-3 py-2 text-sm text-[#F4F1EA] placeholder:text-[#6F6B62] transition-colors focus:border-[#ecb613] focus:outline-none"
             />
 
             <button
@@ -1010,36 +997,24 @@ export function SovereignConciergeWidget() {
           setIsOpen((prev) => !prev);
           if (isOpen) stopSpeech();
         }}
-        aria-label="Abrir Conserjería IA Productora EAR"
-        className="pointer-events-auto group relative flex items-center gap-3 bg-[#09090d]/95 hover:bg-[#12121a] border border-[#ecb613]/50 hover:border-[#ecb613] p-2.5 sm:p-3 rounded-full shadow-[0_8px_32px_rgba(236,182,19,0.25)] hover:shadow-[0_8px_36px_rgba(236,182,19,0.45)] transition-all duration-300 hover:scale-105"
+        aria-label="Abrir el Maître de Sala"
+        className="pointer-events-auto flex min-h-[56px] items-center gap-3 rounded-full border border-[#ecb613]/35 bg-[#08080C] px-2 py-2 transition-colors duration-150 ease-out hover:border-[#ecb613]/70 hover:bg-[#0C0C12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
       >
-        {/* Pulsing indicator */}
-        <div className="relative flex items-center justify-center">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#ecb613] via-amber-400 to-amber-200 text-black flex items-center justify-center shadow-md">
-            {isOpen ? <X size={20} className="font-bold" /> : <Bot size={22} />}
-          </div>
+        {/* Indicador: punto verde estático, sin pulso continuo. */}
+        <span className="relative flex h-10 w-10 items-center justify-center rounded-full border border-[#ecb613]/30 bg-[#101018] text-[#ecb613]">
+          {isOpen ? <X size={18} /> : <Bot size={20} />}
           {!isOpen && (
-            <span className="absolute -top-0.5 -right-0.5 flex h-3.5 w-3.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500 border-2 border-[#09090d]"></span>
-            </span>
+            <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-[#08080C] bg-[#3FCF8E]" />
           )}
-        </div>
+        </span>
 
-        {/* Text pill for desktop & hover */}
-        <div className="hidden sm:flex flex-col text-left pr-2">
-          <div className="flex items-center gap-1.5">
-            <span className="text-xs font-bold text-white tracking-wide font-montserrat">
-              Agente EAR OS
-            </span>
-            <span className="px-1.5 py-0.2 text-[9px] font-mono font-bold uppercase rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-              En línea
-            </span>
-          </div>
-          <span className="text-[10px] text-zinc-400 font-mono">
-            Voz & Chat 24/7
+        {/* Etiqueta: quién responde, no promesas vacías. */}
+        <span className="hidden pr-3 text-left sm:flex sm:flex-col">
+          <span className="text-sm font-semibold leading-tight text-[#F4F1EA]">Maître de Sala</span>
+          <span className="text-xs leading-tight text-[#8E8A80]">
+            {isOpen ? 'Conversación abierta' : 'En línea'}
           </span>
-        </div>
+        </span>
       </button>
     </div>
   );

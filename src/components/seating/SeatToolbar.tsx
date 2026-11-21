@@ -75,7 +75,7 @@ function IconButton({
   const palette =
     tone === 'danger'
       ? 'border-[#FF2B44]/40 text-[#FF2B44] hover:border-[#FF2B44]'
-      : 'border-white/15 text-zinc-300 hover:border-white/40 hover:text-white';
+      : 'border-white/[0.14] text-zinc-300 hover:border-white/40 hover:text-white';
   return (
     <button
       type="button"
@@ -93,7 +93,7 @@ function IconButton({
 /** Cabecera común de la toolbar. */
 function ToolbarHeader({ selection, onDeselect }: { readonly selection: SelectionDescriptor; readonly onDeselect: () => void }) {
   return (
-    <header className="flex flex-wrap items-center gap-3 border-b border-white/10 pb-3">
+    <header className="flex flex-wrap items-center gap-3 border-b border-white/[0.10] pb-3">
       <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-[#ecb613]">
         {selection.kind === 'table' ? 'Mesa seleccionada' : 'Zona seleccionada'}
       </span>
@@ -101,7 +101,7 @@ function ToolbarHeader({ selection, onDeselect }: { readonly selection: Selectio
       <button
         type="button"
         onClick={onDeselect}
-        className="ml-auto font-mono text-[10px] uppercase tracking-wider text-zinc-500 transition-colors hover:text-white"
+        className="ml-auto font-mono text-[10px] uppercase tracking-wider text-[#8E8A80] transition-colors hover:text-white"
       >
         Cerrar
       </button>
@@ -113,7 +113,7 @@ function ToolbarHeader({ selection, onDeselect }: { readonly selection: Selectio
 function ControlGroup({ title, children }: { readonly title: string; readonly children: React.ReactNode }) {
   return (
     <div className="min-w-0 space-y-1.5">
-      <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-zinc-500">{title}</p>
+      <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-[#8E8A80]">{title}</p>
       <div className="flex flex-wrap items-center gap-1.5">{children}</div>
     </div>
   );
@@ -145,7 +145,7 @@ function RotationControls({
           className={`rounded-md border px-2 py-1 font-mono text-[10px] transition-colors ${
             rotation === deg
               ? 'border-[#ecb613] text-[#ecb613]'
-              : 'border-white/15 text-zinc-400 hover:border-white/40 hover:text-white'
+              : 'border-white/[0.14] text-[#C9C4B8] hover:border-white/40 hover:text-white'
           }`}
         >
           {deg}°
@@ -154,7 +154,7 @@ function RotationControls({
       <IconButton label="Girar 45 grados a la derecha" onClick={() => onRotateBy(id, 45)}>
         <RotateCw size={12} strokeWidth={1.75} />
       </IconButton>
-      <label className="flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-wider text-zinc-500">
+      <label className="flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-wider text-[#8E8A80]">
         Libre
         <input
           type="range"
@@ -246,9 +246,9 @@ export default function SeatToolbar({
     return (
       <section
         aria-live="polite"
-        className="rounded-2xl border border-white/10 bg-white/[0.02] px-4 py-3 print:hidden"
+        className="rounded-2xl border border-white/[0.10] bg-white/[0.02] px-4 py-3 print:hidden"
       >
-        <p className="text-xs text-zinc-500">
+        <p className="text-xs text-[#8E8A80]">
           Selecciona una mesa o una zona del plano para rotarla, cambiar sus plazas o su tamaño.
         </p>
       </section>
@@ -256,7 +256,7 @@ export default function SeatToolbar({
   }
 
   return (
-    <section aria-live="polite" className="space-y-4 rounded-2xl border border-white/10 bg-[#0a0a0a] p-4 print:hidden">
+    <section aria-live="polite" className="space-y-4 rounded-2xl border border-white/[0.10] bg-[#0A0A0E] p-4 print:hidden">
       <ToolbarHeader selection={selection} onDeselect={onDeselect} />
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -276,7 +276,7 @@ export default function SeatToolbar({
                   className={`rounded-md border px-2 py-1 text-[10px] font-bold uppercase tracking-wider transition-colors ${
                     table.shape === shape
                       ? 'border-[#00E5FF] text-[#00E5FF]'
-                      : 'border-white/15 text-zinc-400 hover:border-white/40 hover:text-white'
+                      : 'border-white/[0.14] text-[#C9C4B8] hover:border-white/40 hover:text-white'
                   }`}
                 >
                   {shapeLabel[shape]}
@@ -287,26 +287,26 @@ export default function SeatToolbar({
         ) : null}
       </div>
 
-      <div className="flex flex-wrap items-center gap-2 border-t border-white/10 pt-3">
+      <div className="flex flex-wrap items-center gap-2 border-t border-white/[0.10] pt-3">
         {table !== null ? (
           <label className="flex items-center gap-2">
-            <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-zinc-500">Etiqueta</span>
+            <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-[#8E8A80]">Etiqueta</span>
             <input
               type="text"
               value={table.label}
               maxLength={40}
               onChange={(event) => onRename(table.id, event.target.value)}
               aria-label="Nombre de la mesa"
-              className="w-44 rounded-md border border-white/15 bg-black/60 px-2 py-1 font-mono text-[11px] text-white outline-none focus:border-[#00E5FF]"
+              className="w-44 rounded-md border border-white/[0.14] bg-black/60 px-2 py-1 font-mono text-[11px] text-white outline-none focus:border-[#00E5FF]"
             />
           </label>
         ) : (
-          <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-zinc-500">
+          <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-[#8E8A80]">
             {fixture !== null ? 'Zona de evento' : ''}
           </span>
         )}
 
-        <span className="ml-auto font-mono text-[9px] uppercase tracking-wider text-zinc-600">
+        <span className="ml-auto font-mono text-[9px] uppercase tracking-wider text-[#6F6B62]">
           giro {selection.rotation}° · escala {Math.round(selection.scale * 100)} %
         </span>
         <IconButton label={`Eliminar ${selection.label} del plano`} onClick={() => onRemove(selection.id)} tone="danger">

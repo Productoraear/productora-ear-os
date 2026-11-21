@@ -125,41 +125,42 @@ export default function SeatingHeaderActions({
   }, [plan, router]);
 
   return (
-    <section className="space-y-3 rounded-2xl border border-[#ecb613]/30 bg-[#ecb613]/5 p-4 print:hidden">
+    <section className="space-y-3 rounded-2xl border border-[#ecb613]/30 bg-[#ecb613]/[0.04] p-5 print:hidden">
       <div className="flex flex-wrap items-center gap-2">
         <button
           type="button"
           onClick={downloadSvg}
-          className="inline-flex items-center gap-2 rounded-xl border border-white/20 px-3 py-2 text-xs font-bold uppercase tracking-wider text-white transition-colors hover:border-white/50"
+          className="inline-flex min-h-[48px] items-center gap-2 rounded-xl border border-white/[0.16] px-4 text-sm font-semibold text-[#F4F1EA] transition-colors duration-150 ease-out hover:border-white/40 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
         >
-          <FileDown size={14} strokeWidth={1.75} aria-hidden="true" />
-          Descargar plano / tarjetas de sitio
+          <FileDown size={15} strokeWidth={1.75} aria-hidden="true" />
+          Descargar plano y tarjetas de sitio
         </button>
         <button
           type="button"
           onClick={() => window.print()}
-          className="inline-flex items-center gap-2 rounded-xl border border-white/20 px-3 py-2 text-xs font-bold uppercase tracking-wider text-zinc-300 transition-colors hover:border-white/50"
+          className="inline-flex min-h-[48px] items-center gap-2 rounded-xl border border-white/[0.16] px-4 text-sm font-semibold text-[#C9C4B8] transition-colors duration-150 ease-out hover:border-white/40 hover:text-[#F4F1EA] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
         >
-          <Printer size={14} strokeWidth={1.75} aria-hidden="true" />
-          Imprimir / PDF A4
+          <Printer size={15} strokeWidth={1.75} aria-hidden="true" />
+          Imprimir hoja A4 de cocina
         </button>
 
         <button
           type="button"
           onClick={blockAndReserve}
-          className="ml-auto inline-flex items-center gap-2 rounded-xl bg-[#ecb613] px-4 py-2 text-xs font-bold uppercase tracking-wider text-black transition-colors hover:bg-[#f5c94a] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
+          className="ml-auto inline-flex min-h-[48px] items-center gap-2 rounded-xl bg-[#ecb613] px-5 text-sm font-bold text-[#120D00] transition-colors duration-150 ease-out hover:bg-[#f7cb45] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
         >
-          <Lock size={14} strokeWidth={2} aria-hidden="true" />
+          <Lock size={15} strokeWidth={2} aria-hidden="true" />
           {lockState === 'blocked' ? 'Abriendo presupuesto…' : 'Bloquear distribución y reservar fecha'}
         </button>
       </div>
 
-      <p className="text-[11px] leading-relaxed text-zinc-400">
+      <p className="max-w-[75ch] text-xs leading-relaxed text-[#C9C4B8]">
         <span className="font-bold text-[#ecb613]">
           Herramienta Seating Planner Pro ({toolValueEur} €) incluida de cortesía
         </span>{' '}
-        con tu depósito de reserva de <span className="font-mono text-white">{depositEur} €</span>, 100 % deducible
-        del importe del evento. Bloquear la distribución vincula el plano a tu expediente y a la fecha.
+        con tu depósito de reserva de <span className="tabular-nums text-[#F4F1EA]">{depositEur} €</span>, 100 %
+        deducible del importe del evento. Bloquear la distribución vincula el plano a tu expediente y a la
+        fecha.
       </p>
     </section>
   );

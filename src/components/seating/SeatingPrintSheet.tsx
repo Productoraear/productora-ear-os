@@ -183,7 +183,7 @@ function TableIndex({ plan, shapeLabel }: SeatingPrintSheetProps) {
               </td>
               <td className="py-1">
                 {guests.length === 0 ? (
-                  <span className="italic text-neutral-500">sin asignar</span>
+                  <span className="italic text-neutral-700">sin asignar</span>
                 ) : (
                   guests
                     .map((guest) => {
@@ -202,7 +202,7 @@ function TableIndex({ plan, shapeLabel }: SeatingPrintSheetProps) {
         })}
         {tables.length === 0 ? (
           <tr>
-            <td colSpan={4} className="py-2 italic text-neutral-500">
+            <td colSpan={4} className="py-2 italic text-neutral-700">
               El plano no tiene mesas.
             </td>
           </tr>
@@ -269,7 +269,7 @@ function UnseatedList({ plan }: { readonly plan: SeatingPlan }) {
       <h3 className="text-[10px] font-bold uppercase tracking-wider text-black">
         Sin mesa asignada ({unseated.length})
       </h3>
-      <p className="mt-1 text-[9px] leading-snug text-neutral-700">
+      <p className="mt-1 text-[10px] leading-snug text-neutral-800">
         {unseated.map((guest) => `${guest.name} (${GUEST_TAG_STYLE[guest.tag].label})`).join(' · ')}
       </p>
     </section>
@@ -287,10 +287,10 @@ export default function SeatingPrintSheet({ plan, shapeLabel }: SeatingPrintShee
   return (
     <div className="seating-print-sheet hidden bg-white p-8 text-black print:block">
       <header className="mb-4 border-b-2 border-black pb-2">
-        <h1 className="text-lg font-bold uppercase tracking-tight">
+        <h1 className="font-syne text-xl font-black tracking-tight">
           Plano de mesas · {plan.eventName || 'Evento sin nombre'}
         </h1>
-        <p className="mt-1 font-mono text-[10px] uppercase tracking-wider text-neutral-700">
+        <p className="mt-1 text-[10px] tracking-wider text-neutral-800">
           {plan.tables.length} mesas · {plan.pax} pax previstos · {tally} invitados anotados ·{' '}
           {plan.fixtures.length} zonas
         </p>
@@ -309,7 +309,7 @@ export default function SeatingPrintSheet({ plan, shapeLabel }: SeatingPrintShee
 
       <UnseatedList plan={plan} />
 
-      <footer className="mt-6 border-t border-neutral-400 pt-2 font-mono text-[8px] uppercase tracking-wider text-neutral-600">
+      <footer className="mt-6 border-t border-neutral-400 pt-2 text-[10px] tracking-wider text-neutral-800">
         Productora EAR · plano organizativo, no cotiza · escala 1 m = 12 mm
       </footer>
     </div>

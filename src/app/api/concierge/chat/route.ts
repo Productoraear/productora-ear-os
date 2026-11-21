@@ -14,6 +14,26 @@ import { assembleMultiVaultRAGContext } from '@/lib/rag/multi-vault-aggregator';
 import { buildAgentMinimumStandardBlock } from '@/lib/agents/agent-minimum-standard';
 import { resolveCityDistance } from '@/lib/agents/geo';
 import { computeSoloQuote } from '@/lib/agents/pricing';
+import {
+  OTZARRETA_WEDDING_MENUS,
+  formatOtzarretaMenuPrice,
+} from '@/lib/constants/otzarreta-entity';
+
+/**
+ * Línea de menús oficiales del prompt.
+ *
+ * Se DERIVA de `OTZARRETA_WEDDING_MENUS` (fuente única compartida con el Bento
+ * de `/otzarreta`). Antes estaba escrita a mano aquí y ya había divergido del
+ * catálogo: un cambio de precio obligaba a editar dos ficheros y el olvido
+ * publicaba dos precios distintos (INV-10 / AF-4).
+ */
+function buildWeddingMenusPromptLine(): string {
+  return OTZARRETA_WEDDING_MENUS.map((menu) => {
+    const price = formatOtzarretaMenuPrice(menu.priceEur);
+    const extras = menu.extras.length > 0 ? ` con ${menu.extras.join(', ')}` : '';
+    return price === null ? `${menu.name} (precio a consultar)` : `${menu.name} (${price}${extras})`;
+  }).join(', ');
+}
 
 /**
  * Disparo HITL 90% a Telegram cuando un lead alcanza alta cualificación.
@@ -39,7 +59,7 @@ async function dispatchTelegramHITLNotification(lead: {
     `🏛️ *Finca / Espacio:* ${lead.venue}\n` +
     `📅 *Fecha Solicitada:* ${lead.date || 'No especificada'}\n` +
     `👥 *Comensales:* ${lead.pax || 'Pendiente'}\n` +
-    `🍷 *Menú Interés:* ${lead.menu || 'Asador Sarmiento / Ezkertza (155 €)'}\n` +
+    `🍷 *Menú Interés:* ${lead.menu || 'Sin menú confirmado en el hilo'}\n` +
     `🎯 *Intención:* ${lead.intent}\n` +
     `📍 *Origen:* ${lead.source}\n` +
     `━━━━━━━━━━━━━━━━━━━━━━\n` +
@@ -286,7 +306,7 @@ BASE DE CONOCIMIENTO REAL DE PRODUCTORA EAR (SSOT INMUTABLE):
 - Aforo: hasta 350 comensales (banquetes habituales de 50 a 200 invitados).
 - PARKING: Parking privado gratuito dentro del caserío con más de 150 plazas vigiladas.
 - Cocina y Parrilla: Alta gastronomía vasca de brasa al carbón de encina dirigida por Eduardo Martínez (chuletones de 1 Kg de ganado mayor, rodaballos salvajes, bogavante, rape, mariscos).
-- 7 Menús Oficiales de Boda 2026: Cantábrico (100 € + IVA), Paloma (125 €), Especial Imperial (123,40 € con 1h barra libre y 1h DJ gratis), Temporada (142,50 €), Vasco (138 € pack completo con 2h barra libre, 2h DJ y autobús 55 pax), Ezkertza (155 € con chuletón 1 Kg y 1/2 bogavante), Caserío Beko (173 € con Möet & Chandon).
+- 7 Menús Oficiales de Boda 2026 (fuente única: OTZARRETA_WEDDING_MENUS): ${buildWeddingMenusPromptLine()}. Todos los importes son por comensal SIN IVA; cita el importe exacto y aclara «+ IVA».
 - Bloqueo de fecha: Depósito Stripe Price-Lock garantizado de ${DEPOSITO_STRIPE_EUR} € (100% deducible del total).
 
 2. Música, Solista y Artistas Exclusivos (Fórmula Oficial SSOT — PROHIBIDO CITAR 550 €):

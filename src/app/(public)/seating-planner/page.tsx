@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowRight, Ruler, ShieldCheck } from 'lucide-react';
+import { ArrowRight, ShieldCheck } from 'lucide-react';
 import SeatingPlanner from '@/components/seating/SeatingPlanner';
 import {
   CENTRALITA_EAR_OS,
@@ -58,66 +58,99 @@ export default async function SeatingPlannerPage({ searchParams }: { searchParam
   const shape: TableShape = shapeParam !== null && isTableShapeValue(shapeParam) ? shapeParam : 'round';
 
   return (
-    <main className="min-h-screen bg-[#030305] px-4 pb-24 pt-32 text-zinc-200 md:px-8">
-      <div className="mx-auto max-w-6xl space-y-8">
-        <header className="space-y-4">
-          <p className="inline-flex items-center gap-2 rounded-full border border-[#00E5FF]/30 bg-[#00E5FF]/5 px-4 py-1.5 font-mono text-[10px] uppercase tracking-[0.3em] text-[#00E5FF]">
-            <Ruler size={12} /> Herramienta operativa · plano métrico
-          </p>
-          <h1 className="font-syne text-3xl font-black uppercase leading-tight tracking-tight text-white sm:text-5xl">
-            Planifica los asientos sobre tu presupuesto sellado
-          </h1>
-          <p className="max-w-3xl text-sm leading-relaxed text-zinc-400">
-            Mesas redondas, rectangulares y presidenciales sobre una rejilla de un metro. El aforo se valida contra la
-            ficha del espacio y el plano se comparte por enlace o se imprime para la finca. Sin re-teclear un solo
-            dato: el aforo llega desde tu presupuesto.
-          </p>
+    <main className="min-h-screen overflow-x-clip bg-[#030305] px-4 pb-24 pt-32 text-[#D6D2C7] md:px-8">
+      <div className="mx-auto max-w-[1520px] space-y-10">
+        <header className="grid gap-8 lg:grid-cols-12 lg:items-end">
+          <div className="lg:col-span-8">
+            <h1 className="font-syne text-[clamp(2rem,4.6vw,3.5rem)] font-black leading-[1.04] tracking-[-0.025em] text-[#F4F1EA] [overflow-wrap:break-word]">
+              Planifica las mesas sobre tu presupuesto sellado
+            </h1>
+            <p className="mt-4 max-w-[68ch] text-sm leading-relaxed text-[#C9C4B8] sm:text-base">
+              Mesas redondas, rectangulares y presidenciales sobre una rejilla de un metro. El aforo se
+              valida contra la ficha del espacio y el plano se comparte por enlace o se imprime para la
+              brigada de sala, sin re-teclear un solo dato.
+            </p>
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <a
+                href="#plano"
+                className="inline-flex min-h-[48px] items-center rounded-xl bg-[#ecb613] px-6 text-sm font-bold text-[#120D00] transition-colors duration-150 ease-out hover:bg-[#f7cb45] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
+              >
+                Abrir el plano táctil
+              </a>
+              <Link
+                href="/presupuesto"
+                className="inline-flex min-h-[48px] items-center gap-2 rounded-xl border border-white/[0.16] px-6 text-sm font-semibold text-[#F4F1EA] transition-colors duration-150 ease-out hover:border-white/40 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
+              >
+                Abrir presupuesto <ArrowRight size={15} aria-hidden="true" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Ficha técnica del lienzo: datos del SSOT, no copy. */}
+          <dl className="grid grid-cols-3 gap-4 border-t border-white/[0.08] pt-5 lg:col-span-4 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
+            <div>
+              <dt className="text-xs text-[#8E8A80]">Rejilla</dt>
+              <dd className="mt-1 font-syne text-lg font-bold tabular-nums text-[#F4F1EA]">1 m</dd>
+            </div>
+            <div>
+              <dt className="text-xs text-[#8E8A80]">Plazas</dt>
+              <dd className="mt-1 font-syne text-lg font-bold tabular-nums text-[#F4F1EA]">2 a 12</dd>
+            </div>
+            <div>
+              <dt className="text-xs text-[#8E8A80]">Salida</dt>
+              <dd className="mt-1 font-syne text-lg font-bold text-[#F4F1EA]">A4 y SVG</dd>
+            </div>
+          </dl>
         </header>
 
-        <SeatingPlanner
-          initialPax={pax}
-          initialVenueCapacity={venueCapacity}
-          initialShape={shape}
-          initialEventName=""
-          catalogValueEur={EUR_FORMAT.format(SEATING_PLANNER_CATALOG_VALUE_EUR)}
-          depositEur={EUR_FORMAT.format(DEPOSITO_STRIPE_EUR)}
-          phoneE164={CENTRALITA_EAR_OS}
-        />
+        <div id="plano" className="scroll-mt-28">
+          <SeatingPlanner
+            initialPax={pax}
+            initialVenueCapacity={venueCapacity}
+            initialShape={shape}
+            initialEventName=""
+            catalogValueEur={EUR_FORMAT.format(SEATING_PLANNER_CATALOG_VALUE_EUR)}
+            depositEur={EUR_FORMAT.format(DEPOSITO_STRIPE_EUR)}
+            phoneE164={CENTRALITA_EAR_OS}
+          />
+        </div>
 
         {/* Evidencia operativa: cifras leídas del SSOT, no de copy. */}
-        <section className="grid gap-3 sm:grid-cols-3">
-          <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-4">
-            <p className="font-mono text-[10px] uppercase tracking-widest text-zinc-500">Split soberano</p>
-            <p className="mt-1 font-mono text-sm text-white">
+        <section className="grid gap-4 sm:grid-cols-3">
+          <div className="rounded-2xl border border-[#1E1E26] bg-[#0A0A0E] p-6">
+            <p className="text-xs text-[#8E8A80]">Split soberano</p>
+            <p className="mt-2 font-syne text-xl font-black tabular-nums text-[#F4F1EA]">
               {Math.round(SPLIT_SOBERANO.artista * 100)} / {Math.round(SPLIT_SOBERANO.earOs * 100)} /{' '}
               {Math.round(SPLIT_SOBERANO.vimume * 100)}
             </p>
-            <p className="mt-1 text-[11px] text-zinc-500">Artista · infraestructura · VIMUME</p>
+            <p className="mt-1 text-xs text-[#C9C4B8]">Artista, infraestructura y VIMUME</p>
           </div>
-          <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-4">
-            <p className="font-mono text-[10px] uppercase tracking-widest text-zinc-500">Rider acústico</p>
-            <p className="mt-1 font-mono text-sm text-white">
-              {WATTS_PER_PAX} W/pax · &lt; {LIMITE_SPL_DB} dB SPL
+          <div className="rounded-2xl border border-[#1E1E26] bg-[#0A0A0E] p-6">
+            <p className="text-xs text-[#8E8A80]">Rider acústico</p>
+            <p className="mt-2 font-syne text-xl font-black tabular-nums text-[#F4F1EA]">
+              {WATTS_PER_PAX} W/pax, &lt; {LIMITE_SPL_DB} dB SPL
             </p>
-            <p className="mt-1 text-[11px] text-zinc-500">Ley 37/2003 · limitador telemático</p>
+            <p className="mt-1 text-xs text-[#C9C4B8]">Ley 37/2003, limitador telemático</p>
           </div>
-          <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-4">
-            <p className="font-mono text-[10px] uppercase tracking-widest text-zinc-500">Canal único</p>
-            <p className="mt-1 font-mono text-sm text-white">{CENTRALITA_EAR_OS}</p>
-            <p className="mt-1 text-[11px] text-zinc-500">Revisión humana del plano</p>
+          <div className="rounded-2xl border border-[#1E1E26] bg-[#0A0A0E] p-6">
+            <p className="text-xs text-[#8E8A80]">Canal único</p>
+            <p className="mt-2 font-syne text-xl font-black tabular-nums text-[#F4F1EA]">
+              {CENTRALITA_EAR_OS}
+            </p>
+            <p className="mt-1 text-xs text-[#C9C4B8]">Revisión humana del plano</p>
           </div>
         </section>
 
-        <section className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-5">
-          <p className="flex items-center gap-2 text-xs text-zinc-400">
-            <ShieldCheck size={14} className="text-emerald-400" />
+        <section className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-[#1E1E26] bg-[#0A0A0E] p-6">
+          <p className="flex items-center gap-2 text-xs leading-relaxed text-[#C9C4B8]">
+            <ShieldCheck size={15} className="shrink-0 text-[#57d99a]" aria-hidden="true" />
             El plano no cotiza: organiza. Cualquier importe del evento nace del presupuesto sellado.
           </p>
           <Link
             href="/presupuesto"
-            className="inline-flex items-center gap-2 rounded-xl bg-[#ecb613] px-4 py-2 text-xs font-bold uppercase tracking-wider text-black transition-colors hover:bg-[#f5c94a]"
+            className="inline-flex min-h-[48px] items-center gap-2 rounded-xl bg-[#ecb613] px-6 text-sm font-bold text-[#120D00] transition-colors duration-150 ease-out hover:bg-[#f7cb45] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
           >
-            Abrir presupuesto <ArrowRight size={14} />
+            Abrir presupuesto <ArrowRight size={15} aria-hidden="true" />
           </Link>
         </section>
       </div>

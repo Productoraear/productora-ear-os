@@ -70,14 +70,14 @@ function TallyBar({ tally }: { readonly tally: SeatingGuestPanelProps['tally'] }
     { label: 'Asientos', value: tally.seated + tally.freeSeats, tone: 'text-white' },
     { label: 'Sentados', value: tally.seated, tone: 'text-[#00E5FF]' },
     { label: 'RSVP', value: tally.confirmed, tone: 'text-[#57d99a]' },
-    { label: 'Libres', value: tally.freeSeats, tone: 'text-zinc-400' },
+    { label: 'Libres', value: tally.freeSeats, tone: 'text-[#C9C4B8]' },
   ];
   return (
-    <dl className="grid grid-cols-4 gap-2 rounded-xl border border-white/10 bg-black/40 p-2.5">
+    <dl className="grid grid-cols-4 gap-2 rounded-xl border border-[#1E1E26] bg-[#0F0F16] p-3">
       {items.map((item) => (
         <div key={item.label} className="text-center">
-          <dd className={`font-mono text-sm font-bold ${item.tone}`}>{item.value}</dd>
-          <dt className="font-mono text-[8px] uppercase tracking-[0.15em] text-zinc-500">{item.label}</dt>
+          <dd className={`font-syne text-base font-black tabular-nums ${item.tone}`}>{item.value}</dd>
+          <dt className="text-xs text-[#8E8A80]">{item.label}</dt>
         </div>
       ))}
     </dl>
@@ -106,7 +106,7 @@ function QuickAddForm({ onAddGuest }: { readonly onAddGuest: (name: string, tag:
           placeholder="Nombre del invitado"
           maxLength={40}
           aria-label="Nombre del invitado"
-          className="min-w-0 flex-1 rounded-lg border border-white/15 bg-black/60 px-2.5 py-1.5 text-xs text-white outline-none placeholder:text-zinc-600 focus:border-[#00E5FF]"
+          className="min-w-0 flex-1 rounded-lg border border-white/[0.14] bg-black/60 px-2.5 py-1.5 text-xs text-white outline-none placeholder:text-[#6F6B62] focus:border-[#00E5FF]"
         />
         <button
           type="submit"
@@ -124,7 +124,7 @@ function QuickAddForm({ onAddGuest }: { readonly onAddGuest: (name: string, tag:
             onClick={() => setTag(candidate)}
             aria-pressed={tag === candidate}
             className={`inline-flex items-center gap-1 rounded-md border px-1.5 py-1 font-mono text-[9px] uppercase tracking-wider transition-colors ${
-              tag === candidate ? 'border-white/50 text-white' : 'border-white/10 text-zinc-500 hover:text-zinc-300'
+              tag === candidate ? 'border-white/50 text-white' : 'border-white/[0.10] text-[#8E8A80] hover:text-zinc-300'
             }`}
           >
             <TagDot tag={candidate} />
@@ -188,7 +188,7 @@ function GuestRow({
         aria-label={`Marcar RSVP de ${guest.name} como ${isConfirmed ? 'pendiente' : 'confirmado'}`}
         aria-pressed={isConfirmed}
         className={`rounded border px-1 py-0.5 font-mono text-[8px] uppercase tracking-wider transition-colors ${
-          isConfirmed ? 'border-[#57d99a] text-[#57d99a]' : 'border-white/15 text-zinc-500 hover:text-zinc-300'
+          isConfirmed ? 'border-[#57d99a] text-[#57d99a]' : 'border-white/[0.14] text-[#8E8A80] hover:text-zinc-300'
         }`}
       >
         {isConfirmed ? 'RSVP' : 'Pend.'}
@@ -211,7 +211,7 @@ function GuestRow({
           onChange={(event) => {
             if (event.target.value !== '') onSeatInFirstFree(guest.id, event.target.value);
           }}
-          className="rounded border border-white/15 bg-black/60 px-1 py-0.5 font-mono text-[9px] text-white outline-none focus:border-[#00E5FF]"
+          className="rounded border border-white/[0.14] bg-black/60 px-1 py-0.5 font-mono text-[9px] text-white outline-none focus:border-[#00E5FF]"
         >
           <option value="">Sentar en…</option>
           {tables.map((table) => (
@@ -226,7 +226,7 @@ function GuestRow({
         type="button"
         onClick={() => onRemoveGuest(guest.id)}
         aria-label={`Quitar a ${guest.name} de la lista`}
-        className="rounded p-0.5 text-zinc-600 transition-colors hover:text-[#FF2B44]"
+        className="rounded p-0.5 text-[#6F6B62] transition-colors hover:text-[#FF2B44]"
       >
         <Trash2 size={10} strokeWidth={1.75} />
       </button>
@@ -247,9 +247,9 @@ function PanelBody(props: SeatingGuestPanelProps) {
       <TallyBar tally={tally} />
 
       {/* Resumen de Cocina: Alergias e Intolerancias */}
-      <div className="rounded-xl border border-white/10 bg-black/40 p-2.5 space-y-1.5">
+      <div className="rounded-xl border border-white/[0.10] bg-black/40 p-2.5 space-y-1.5">
         <div className="flex items-center justify-between text-[10px]">
-          <span className="flex items-center gap-1.5 font-mono uppercase tracking-wider text-zinc-400">
+          <span className="flex items-center gap-1.5 font-mono uppercase tracking-wider text-[#C9C4B8]">
             <UtensilsCrossed size={11} className="text-[#ecb613]" />
             Cocina & Alergias
           </span>
@@ -264,7 +264,7 @@ function PanelBody(props: SeatingGuestPanelProps) {
                 <span
                   key={tag}
                   title={DIETARY_INFO[tag].label}
-                  className="inline-flex items-center gap-1 rounded bg-white/5 border border-white/10 px-1.5 py-0.5 font-mono text-[9px] text-zinc-300"
+                  className="inline-flex items-center gap-1 rounded bg-white/5 border border-white/[0.10] px-1.5 py-0.5 font-mono text-[9px] text-zinc-300"
                 >
                   <span className="text-[#ecb613] font-bold">{count}x</span>
                   <span>{DIETARY_INFO[tag].badge}</span>
@@ -273,7 +273,7 @@ function PanelBody(props: SeatingGuestPanelProps) {
             })}
           </div>
         ) : (
-          <p className="font-mono text-[9px] text-zinc-600">0 restricciones declaradas</p>
+          <p className="font-mono text-[9px] text-[#6F6B62]">0 restricciones declaradas</p>
         )}
       </div>
 
@@ -310,7 +310,7 @@ function PanelBody(props: SeatingGuestPanelProps) {
           />
         ))}
         {sorted.length === 0 ? (
-          <li className="rounded-lg border border-dashed border-white/10 px-2 py-4 text-center text-[11px] text-zinc-600">
+          <li className="rounded-lg border border-dashed border-white/[0.10] px-2 py-4 text-center text-[11px] text-[#6F6B62]">
             Sin invitados. Añade el primero o arrastra nombres al plano.
           </li>
         ) : null}
@@ -333,17 +333,17 @@ export default function SeatingGuestPanel(props: SeatingGuestPanelProps) {
       className={`shrink-0 print:hidden ${open ? 'w-full lg:w-80' : 'w-full lg:w-10'}`}
     >
       {open ? (
-        <section className="space-y-3 rounded-2xl border border-white/10 bg-[#0a0a0a] p-3">
+        <section className="space-y-3 rounded-2xl border border-[#1E1E26] bg-[#0A0A0E] p-4">
           <header className="flex items-center gap-2">
-            <Users size={13} strokeWidth={1.75} className="text-[#00E5FF]" aria-hidden="true" />
-            <h2 className="font-syne text-xs font-black uppercase tracking-tight text-white">Lista de invitados</h2>
-            <span className="ml-auto font-mono text-[9px] text-zinc-500">{tally.listed} anotados</span>
+            <Users size={13} strokeWidth={1.75} className="text-[#ecb613]" aria-hidden="true" />
+            <h2 className="font-syne text-xs font-black uppercase tracking-tight text-[#F4F1EA]">Lista de invitados</h2>
+            <span className="ml-auto text-xs tabular-nums text-[#8E8A80]">{tally.listed} anotados</span>
             <button
               type="button"
               onClick={onToggle}
               aria-label="Plegar la lista de invitados"
               aria-expanded
-              className="rounded p-0.5 text-zinc-500 transition-colors hover:text-white"
+              className="rounded p-0.5 text-[#8E8A80] transition-colors hover:text-white"
             >
               <ChevronLeft size={14} strokeWidth={1.75} />
             </button>
@@ -356,7 +356,7 @@ export default function SeatingGuestPanel(props: SeatingGuestPanelProps) {
           onClick={onToggle}
           aria-label={`Desplegar la lista de invitados (${tally.listed} anotados)`}
           aria-expanded={false}
-          className="flex w-full items-center justify-center gap-1.5 rounded-2xl border border-white/10 bg-[#0a0a0a] px-2 py-3 font-mono text-[9px] uppercase tracking-[0.2em] text-zinc-400 transition-colors hover:text-white lg:h-full lg:flex-col lg:py-4"
+          className="flex w-full items-center justify-center gap-1.5 rounded-2xl border border-[#1E1E26] bg-[#0A0A0E] px-2 py-3 text-xs text-[#C9C4B8] transition-colors duration-150 ease-out hover:text-[#F4F1EA] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305] lg:h-full lg:flex-col lg:py-4"
         >
           <ChevronRight size={14} strokeWidth={1.75} />
           <span className="lg:[writing-mode:vertical-rl]">Invitados · {tally.listed}</span>

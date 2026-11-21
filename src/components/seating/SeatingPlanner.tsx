@@ -365,47 +365,49 @@ export default function SeatingPlanner({
       {/* ── Barra de aforo en vivo: asientos montados vs pedido vs RSVP ────── */}
       <section
         aria-live="polite"
-        className={`flex flex-wrap items-center gap-x-5 gap-y-2 rounded-2xl border p-4 font-mono text-xs ${
-          validation.ok ? 'border-emerald-500/30 bg-emerald-500/5' : 'border-[#FF2B44]/40 bg-[#FF2B44]/5'
+        className={`flex flex-wrap items-center gap-x-5 gap-y-2 rounded-2xl border p-4 text-xs ${
+          validation.ok
+            ? 'border-[#57d99a]/30 bg-[#57d99a]/[0.05]'
+            : 'border-[#FF2B44]/40 bg-[#FF2B44]/[0.05]'
         }`}
       >
-        <span className="flex items-center gap-1.5 text-white">
-          <Users size={14} className="text-[#00E5FF]" aria-hidden="true" />
-          {validation.seats} asientos · objetivo {plan.pax} pax
+        <span className="flex items-center gap-1.5 font-semibold tabular-nums text-[#F4F1EA]">
+          <Users size={14} className="text-[#ecb613]" aria-hidden="true" />
+          {validation.seats} asientos, objetivo {plan.pax} pax
         </span>
-        <span className="flex items-center gap-1.5 text-[#00E5FF]">
-          <CircleDot size={13} aria-hidden="true" />
-          {tally.seated} sentados · {tally.freeSeats} libres
+        <span className="flex items-center gap-1.5 tabular-nums text-[#C9C4B8]">
+          <CircleDot size={13} className="text-[#ecb613]" aria-hidden="true" />
+          {tally.seated} sentados, {tally.freeSeats} libres
         </span>
-        <span className="flex items-center gap-1.5 text-[#57d99a]">
+        <span className="flex items-center gap-1.5 tabular-nums text-[#57d99a]">
           <Check size={13} aria-hidden="true" />
           {tally.confirmed} RSVP confirmados ({tally.confirmedSeated} ya sentados)
         </span>
 
         {validation.missingSeats > 0 ? (
-          <span className="flex items-center gap-1.5 text-[#FF2B44]">
+          <span className="flex items-center gap-1.5 font-semibold tabular-nums text-[#FF2B44]">
             <AlertTriangle size={14} aria-hidden="true" /> faltan {validation.missingSeats} asientos
           </span>
         ) : (
-          <span className="flex items-center gap-1.5 text-emerald-400">
+          <span className="flex items-center gap-1.5 font-semibold text-[#57d99a]">
             <Check size={14} aria-hidden="true" /> aforo cubierto
           </span>
         )}
 
         {validation.unseatedGuests > 0 ? (
-          <span className="flex items-center gap-1.5 text-[#ecb613]">
+          <span className="flex items-center gap-1.5 tabular-nums text-[#ecb613]">
             <AlertTriangle size={14} aria-hidden="true" /> {validation.unseatedGuests} invitados sin asiento
           </span>
         ) : null}
 
         {validation.exceedsVenue ? (
-          <span className="flex items-center gap-1.5 text-[#FF2B44]">
-            <AlertTriangle size={14} aria-hidden="true" /> el espacio admite {plan.venueCapacity} · sobran{' '}
+          <span className="flex items-center gap-1.5 tabular-nums text-[#FF2B44]">
+            <AlertTriangle size={14} aria-hidden="true" /> el espacio admite {plan.venueCapacity}, sobran{' '}
             {validation.overflow}
           </span>
         ) : null}
 
-        <span className="ml-auto text-zinc-500">
+        <span className="ml-auto text-[#8E8A80]">
           {storageState === 'saved'
             ? 'Autoguardado en este navegador'
             : storageState === 'unavailable'
@@ -414,56 +416,60 @@ export default function SeatingPlanner({
         </span>
       </section>
 
-      {hydrateNotice !== null ? <p className="text-xs text-zinc-500 print:hidden">{hydrateNotice}</p> : null}
+      {hydrateNotice !== null ? <p className="text-xs text-[#8E8A80] print:hidden">{hydrateNotice}</p> : null}
 
-      {/* ── CAJA DE HERRAMIENTAS: mesas y zonas de evento ─────────────────── */}
-      <section className="flex flex-wrap items-center gap-2 print:hidden">
-        {(['round', 'rectangular', 'presidential'] as const).map((shape) => (
+      {/* ── CAJA DE HERRAMIENTAS: barra flotante de cristal ───────────────── */}
+      <section className="sticky top-[4.5rem] z-30 print:hidden">
+        <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-white/[0.10] bg-[#08080C]/85 p-2.5 backdrop-blur-xl">
+          {(['round', 'rectangular', 'presidential'] as const).map((shape) => (
+            <button
+              key={shape}
+              type="button"
+              onClick={() => handleAddTable(shape)}
+              title={SHAPE_HINT[shape]}
+              className="inline-flex min-h-[40px] items-center gap-1.5 rounded-xl border border-white/[0.14] bg-white/[0.04] px-3 text-xs font-semibold text-[#F4F1EA] transition-colors duration-150 ease-out hover:border-[#ecb613]/60 hover:bg-[#ecb613]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
+            >
+              <Plus size={13} strokeWidth={2} aria-hidden="true" /> {SHAPE_LABEL[shape]}
+            </button>
+          ))}
+
+          <span className="mx-1 h-6 w-px bg-white/10" aria-hidden="true" />
+
+          {FIXTURE_KINDS.map((kind) => (
+            <button
+              key={kind}
+              type="button"
+              onClick={() => handleAddFixture(kind)}
+              className="inline-flex min-h-[40px] items-center gap-1.5 rounded-xl border border-white/[0.08] px-2.5 text-xs text-[#C9C4B8] transition-colors duration-150 ease-out hover:border-[#ecb613]/50 hover:text-[#F4F1EA] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
+            >
+              <Plus size={11} strokeWidth={2} aria-hidden="true" /> {FIXTURE_SPEC[kind].label}
+            </button>
+          ))}
+
+          <span className="mx-1 hidden h-6 w-px bg-white/10 sm:block" aria-hidden="true" />
+
           <button
-            key={shape}
             type="button"
-            onClick={() => handleAddTable(shape)}
-            title={SHAPE_HINT[shape]}
-            className="inline-flex items-center gap-1.5 rounded-xl border border-white/15 bg-white/5 px-3 py-2 text-xs font-bold uppercase tracking-wider text-white transition-colors hover:border-[#00E5FF]/60"
+            onClick={resetPlan}
+            className="inline-flex min-h-[40px] items-center gap-1.5 rounded-xl border border-white/[0.14] px-3 text-xs font-semibold text-[#C9C4B8] transition-colors duration-150 ease-out hover:border-white/40 hover:text-[#F4F1EA] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
           >
-            <Plus size={13} strokeWidth={2} aria-hidden="true" /> {SHAPE_LABEL[shape]}
+            <RotateCcw size={13} strokeWidth={1.75} aria-hidden="true" /> Recalcular
           </button>
-        ))}
-
-        <span className="mx-1 h-6 w-px bg-white/10" aria-hidden="true" />
-
-        {FIXTURE_KINDS.map((kind) => (
           <button
-            key={kind}
             type="button"
-            onClick={() => handleAddFixture(kind)}
-            className="inline-flex items-center gap-1.5 rounded-xl border border-white/10 px-2.5 py-2 text-[10px] font-bold uppercase tracking-wider text-zinc-300 transition-colors hover:border-[#ecb613]/60 hover:text-white"
+            onClick={share}
+            className="inline-flex min-h-[40px] items-center gap-1.5 rounded-xl border border-[#ecb613]/40 px-3 text-xs font-semibold text-[#ecb613] transition-colors duration-150 ease-out hover:border-[#ecb613] hover:bg-[#ecb613]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
           >
-            <Plus size={11} strokeWidth={2} aria-hidden="true" /> {FIXTURE_SPEC[kind].label}
+            <Link2 size={13} strokeWidth={1.75} aria-hidden="true" />
+            {shareState === 'copied' ? 'Enlace copiado' : 'Compartir plano'}
           </button>
-        ))}
+        </div>
 
-        <span className="mx-1 h-6 w-px bg-white/10" aria-hidden="true" />
-
-        <button
-          type="button"
-          onClick={resetPlan}
-          className="inline-flex items-center gap-1.5 rounded-xl border border-white/15 px-3 py-2 text-xs font-bold uppercase tracking-wider text-zinc-300 transition-colors hover:border-white/40"
-        >
-          <RotateCcw size={13} strokeWidth={1.75} aria-hidden="true" /> Recalcular
-        </button>
-        <button
-          type="button"
-          onClick={share}
-          className="inline-flex items-center gap-1.5 rounded-xl border border-[#00E5FF]/40 px-3 py-2 text-xs font-bold uppercase tracking-wider text-[#00E5FF] transition-colors hover:border-[#00E5FF]"
-        >
-          <Link2 size={13} strokeWidth={1.75} aria-hidden="true" />
-          {shareState === 'copied' ? 'Enlace copiado' : 'Compartir plano'}
-        </button>
         {shareState === 'error' ? (
-          <span className="inline-flex items-center gap-1.5 text-xs text-[#FF2B44]">
-            <Copy size={12} aria-hidden="true" /> El navegador bloqueó el portapapeles: copia la barra de direcciones.
-          </span>
+          <p className="mt-2 inline-flex items-center gap-1.5 text-xs text-[#FF2B44]">
+            <Copy size={12} aria-hidden="true" /> El navegador bloqueó el portapapeles: copia la barra de
+            direcciones.
+          </p>
         ) : null}
       </section>
 
@@ -510,15 +516,15 @@ export default function SeatingPlanner({
       </div>
 
       {/* ── Pie comercial: canal directo sin barrera económica ─────────────── */}
-      <section className="flex flex-wrap items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.02] p-4 print:hidden">
-        <p className="text-xs text-zinc-400">
+      <section className="flex flex-wrap items-center gap-3 rounded-2xl border border-[#1E1E26] bg-[#0A0A0E] p-5 print:hidden">
+        <p className="max-w-[62ch] text-xs leading-relaxed text-[#C9C4B8]">
           El plano vive en tu navegador y en el enlace que generes. Guardarlo vinculado a tu fecha exige el depósito
-          de <span className="font-mono text-white">{depositEur} €</span>, deducible del total del evento.
+          de <span className="tabular-nums font-semibold text-[#F4F1EA]">{depositEur} €</span>, deducible del total del evento.
         </p>
         <SovereignWhatsAppButton
           url={whatsappHref}
           category="Planificador de Mesas"
-          className="ml-auto inline-flex items-center gap-2 rounded-xl border border-white/15 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white transition-colors hover:border-white/40"
+          className="ml-auto inline-flex min-h-[48px] items-center gap-2 rounded-xl border border-white/[0.16] px-5 text-sm font-semibold text-[#F4F1EA] transition-colors duration-150 ease-out hover:border-white/40 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
         >
           Consultar por WhatsApp
         </SovereignWhatsAppButton>

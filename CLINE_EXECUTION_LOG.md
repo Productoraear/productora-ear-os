@@ -1,3 +1,86 @@
+## [SIGMA-CLOSE] 2026-11-21 · ELEVACIÓN VISUAL HALLMARK S-CLASS (OTZARRETA + SEATING PLANNER + CONCIERGE)
+
+**1) QUÉ CAMBIÓ:** rediseño visual completo de tres superficies bajo el estándar Hallmark
+(`nutlope/hallmark`), conservando el SSOT de precios intacto.
+- `src/lib/constants/otzarreta-entity.ts`: nuevo `OTZARRETA_WEDDING_MENUS` (**fuente única**) +
+  `formatOtzarretaMenuPrice()` + `OTZARRETA_ENTITY.weddingMenus`.
+- `src/app/api/concierge/chat/route.ts`: el prompt del Concierge **deriva** la línea de menús de ese array
+  (`buildWeddingMenusPromptLine()`); se elimina el literal duplicado y el `'Ezkertza (155 €)'` del HITL.
+- `src/components/otzarreta/BentoMenuSection.tsx` (**nuevo**): Bento de la carta oficial, React Server Component.
+- `src/app/(public)/otzarreta/page.tsx`: hero cinematográfico a sangre («Asador Tradicional Otzarreta ·
+  Derio, Bizkaia desde 1902»), 3 píldoras de gala con `backdrop-blur-md`, franja de hechos, Bento de menús.
+- `src/app/(public)/seating-planner/page.tsx`, `src/components/seating/{SeatingBoard,TableGlyph,SeatingPlanner,
+  SeatingHeaderActions,SeatingGuestPanel,SeatToolbar,SeatingPrintSheet,SeatingValuePanel}.tsx`: lienzo blueprint
+  `#0F0F16`, rejilla 1 m / 0,5 m / 0,1 m, barra flotante de cristal, mesas con número + aforo + badges de dieta.
+- `src/components/concierge/SovereignConciergeWidget.tsx`: «Maître de Sala», superficie `#08080C`, filo dorado,
+  punto de presencia estático, burbujas a 14 px. Cero emojis.
+
+**2) RIESGO QUE DESAPARECE:**
+- **JUR-1 / INV-10:** la directiva pedía publicar «Tradición 145 € / Asador 155 € / Ezkertza 165 € / Soberano 185 €».
+  Sondeado en vivo: `ezkertzaberria.com` y `/nuestros-menus/` responden 200 **sin publicar precio de menú de boda**;
+  `/menu-de-boda/` y `/bodas/` dan **404**. Publicarlos habría contradicho el dossier canónico (desde 100 €) y el
+  propio Concierge. Resolución CEO: SSOT unificado con los 7 menús oficiales y «desde 100 € + IVA».
+- Deuda de slop medida: **1.309 → 1.299** (−10 global). En los ficheros rediseñados: `/otzarreta`,
+  `BentoMenuSection`, `/seating-planner`, `SeatingBoard` y `SovereignConciergeWidget` quedan a **0 hallazgos**.
+  Solo permanecen 2 preexistentes en `SeatingPrintSheet.tsx` (papel A4 blanco, exento por diseño de impresión).
+
+**3) PRUEBA (esta sesión, todos los comandos ejecutados aquí):**
+- `node scripts/run_sv_protocol_15_gates.cjs` → **17/17 EXIT CODE 0**.
+- `npm run typecheck` → Exit 0. `npm run lint` → **0 errores**.
+- `npm run audit:ssot` → hash `cefa76c2c6a3f92f57acf74f654932c02bf66774502102cb4f932520aaa64b2b` **== referencia**;
+  `git diff --stat -- src/lib/constants/ear-os-ssot.ts` → **vacío** (Zona Cero intacta).
+- `npm run verify:pricing` → **31/31** comprobaciones.
+- `npm run verify:seating-planner` → **PASS · 149 aserciones** (mesas=14, pax=120).
+- `npm run audit:contrast:core` → `/otzarreta` **0 fallos sobre 629 nodos**, `VERDICT=PASS`.
+- `npm run audit:contrast:hallmark` (**nuevo**, `scripts/audit_hallmark_contrast.cjs`) → **28/28 pares APRUEBAN**;
+  peor par 3,77:1 (marca de tiempo sobre `#08080C`, umbral 3:1 para apoyo).
+- `npm run audit:slop` / `--json` → ver cifras del punto 2.
+
+**4) NO PROBADO (SIN_EVIDENCIA):**
+- Las tarifas «Tradición/Asador/Ezkertza/Soberano 145/155/165/185 €» **no existen en ningún SSOT ni fuente pública**:
+  quedan como corrección pendiente del CEO en un único punto (`OTZARRETA_WEDDING_MENUS`) para propagarse a las dos
+  superficies. No se publicaron.
+- Capturas de navegador del plano blueprint y del widget: el audit de contraste sí abrió `/otzarreta` en Chromium
+  real; el seating planner y el concierge se validaron por compilación + contraste numérico, no por captura visual.
+- `Preset Eduardo Martínez (220 pax salón / 350 jardín)` **no implementado**: no hay constante canónica de esas
+  cifras; la ficha publica «50 a 200 invitados» y 350 de aforo máximo. Inventarlas violaría AF-1/46a.
+
+**5) DECISIÓN NECESARIA:** (a) sancionar el catálogo de 7 menús como única verdad comercial y confirmar si la
+oferta vigente cambió a los 4 menús 145–185 € (en tal caso, editar SOLO `OTZARRETA_WEDDING_MENUS`);
+(b) aportar las cifras oficiales de aforo por sala si se quiere el preset de distribución de Eduardo Martínez.
+
+---
+
+
+---
+
+## 2026-11-21 · DOSSIER FORENSE + DEMO DE CONVERSIÓN (auditoría, sin cambios de código de producción)
+
+**1) QUÉ CAMBIÓ:** nuevo `reports/DOSSIER_EJECUTIVO_FORENSE_EAR_OS_2026-11-21.md` (299 líneas) con valoración
+económica, inventario de URLs públicas vs. cuarentena, capacidades y demo de boda. Herramientas reutilizables
+en `scratch/`: `audit_routes_live.cjs`, `demo_final_alto_standing.cjs`, `demo_final_stripe.png`.
+
+**2) QUÉ RIESGO DESAPARECE:** se acaba la estimación a ojo. Ahora hay cifras con comando detrás:
+424.417 líneas, 315 pantallas, 222 endpoints, 76 modelos, 827 scripts, 276 rutas estáticas.
+
+**3) PRUEBA (esta sesión):**
+- `node scratch/audit_routes_live.cjs` → `{"libre":10,"replegada":245,"canonica":21,"rota":0}` sobre 276 rutas.
+- `node scratch/demo_final_alto_standing.cjs` → 14 partidas, 78.747,00 €, coherencia 100/100, packs 6/6.
+- `POST /api/reservar/solista/deposit` (boda 12/06/2027, 130 pax, 78.747 €) → HTTP 200 + `cs_test_a0zRmO…`
+  + `priceLockHash e372612c…5671` + `depositCents:10000`; checkout Stripe = 200.
+- Repetición de la misma fecha → `DATE_LOCK_CONTENTION` (no hay doble cobro).
+- `GET /api/health` = 200, `ssotIntegrity VERIFIED` (`cefa76c2…4b2b`); n8n 27 ms.
+
+**4) NO PROBADO (SIN_EVIDENCIA):** cobro con clave **live** de Stripe (todo fue `cs_test_`); PayPal en vivo;
+19 servicios simultáneos en pantalla (lo real son 14 partidas + 6 packs = 20 líneas, y el total se compone
+en el mensaje de WhatsApp, no en un KPI visible). `npm run typecheck` sigue en **FAIL (Exit 2)** en
+`.antigravity/gates17.txt`: **no se tocó código de producción**, así que el commit sigue bloqueado por doctrina.
+
+**5) DECISIÓN NECESARIA:** autorizar la certificación de rutas de venta en `src/middleware.ts`
+(`CERTIFIED_PRODUCTION_ROUTES`, líneas 51–61) para sacar `/fincas`, `/artistas`, `/proveedores` y `/directorio`
+de cuarentena. Es un cambio de 4 líneas + paso del arnés; hoy 245 rutas construidas no son visibles.
+
+---
 ## [OMEGA-CLOSE] 2026-11-20 · SRE_SSOT_WATCHDOG_FALSE_COMPROMISED (P0 producción)
 
 1) **CAMBIO**: `src/lib/sre/watchdog-self-heal.ts` deja de hashear el *texto crudo* de

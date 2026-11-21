@@ -18,8 +18,10 @@
 
 import React from 'react';
 import {
+  DIETARY_INFO,
   GUEST_TAG_STYLE,
   TABLE_METRICS,
+  type DietaryTag,
   type SeatingGuest,
   type SeatingTable,
   type TableShape,
@@ -34,7 +36,22 @@ export interface TableGlyphProps {
   readonly occupants: readonly (SeatingGuest | null)[];
   readonly onSelect: (id: string) => void;
   readonly onSeatClick: (tableId: string, seatIndex: number) => void;
+  /** Dietas especiales sentadas en esta mesa: cocina de un vistazo en el lienzo. */
+  readonly dietary?: readonly DietaryTag[];
 }
+
+/** Color sobrio por dieta: un solo tono, sin degradado ni icono (UNSLOP §4). */
+const DIETARY_HEX: Readonly<Record<DietaryTag, string>> = Object.freeze({
+  celiaco: '#E8B34B',
+  vegano: '#7FC28A',
+  vegetariano: '#8FC27F',
+  'sin-lactosa': '#C9A2D6',
+  'alergia-marisco': '#7FB0D6',
+  'alergia-frutos-secos': '#D69A7F',
+  embarazada: '#9AB8C9',
+  infantil: '#A8A29A',
+  otro: '#8E8A80',
+});
 
 /** Radio del asiento en píxeles. Constante: la silueta no cambia de tamaño. */
 const SEAT_RADIUS_PX = 7;
@@ -94,6 +111,7 @@ export default function TableGlyph({
   occupants,
   onSelect,
   onSeatClick,
+  dietary = [],
 }: TableGlyphProps) {
   const metrics = TABLE_METRICS[table.shape];
   const boxW = Math.round(metrics.width * table.scale * metersToPx);
@@ -102,9 +120,12 @@ export default function TableGlyph({
   const viewH = boxH + GLYPH_PAD_PX * 2;
   const seats = seatPositions(table.shape, table.seats, boxW, boxH);
 
-  const stroke = selected ? '#ecb613' : '#00E5FF';
-  const fill = selected ? 'rgba(236,182,19,0.12)' : 'rgba(0,229,255,0.06)';
+  const occupied = occupants.filter((guest) => guest !== null).length;
+  const stroke = selected ? '#ecb613' : 'rgba(236,182,19,0.55)';
+  const fill = selected ? 'rgba(236,182,19,0.14)' : 'rgba(236,182,19,0.05)';
   const labelRoom = boxW / 9;
+  // Número de mesa: el ordinal de la etiqueta si lo tiene, si no el aforo.
+  const tableNumber = table.label.match(/\d+/)?.[0] ?? null;
 
   return (
     <svg
@@ -201,25 +222,55 @@ export default function TableGlyph({
       {/* Etiqueta FUERA del grupo rotado: nunca se ladea, siempre legible. */}
       <text
         x={boxW / 2}
-        y={boxH / 2 - 1}
+        y={boxH / 2 - 2}
         textAnchor="middle"
-        className="pointer-events-none font-mono"
-        fontSize={Math.max(8, Math.min(11, labelRoom))}
-        fontWeight={700}
-        fill="#ffffff"
+        className="pointer-events-none"
+        fontSize={Math.max(9, Math.min(13, labelRoom))}
+        fontWeight={800}
+        fill="#F4F1EA"
       >
-        {table.label.length > 14 ? `${table.label.slice(0, 13)}…` : table.label}
+        {tableNumber !== null ? `Mesa ${tableNumber}` : table.label.length > 14 ? `${table.label.slice(0, 13)}…` : table.label}
       </text>
+      {/* Aforo estricto y ocupación real: la cifra que usa la brigada de sala. */}
       <text
         x={boxW / 2}
-        y={boxH / 2 + 11}
+        y={boxH / 2 + 10}
         textAnchor="middle"
-        className="pointer-events-none font-mono"
+        className="pointer-events-none tabular-nums"
         fontSize={Math.max(7, Math.min(9, labelRoom))}
-        fill="#00E5FF"
+        fill="#ecb613"
       >
-        {table.seats} plazas
+        {table.seats} pax, {occupied} sentados
       </text>
+
+      {/* Badges de cocina: dietas especiales de esta mesa, en columna a la izquierda. */}
+      {dietary.length > 0
+        ? dietary.slice(0, 4).map((tag, index) => (
+            <g key={`diet-${tag}`} className="pointer-events-none">
+              <rect
+                x={2}
+                y={2 + index * 12}
+                width={14}
+                height={11}
+                rx={2}
+                fill={DIETARY_HEX[tag]}
+                fillOpacity={0.16}
+                stroke={DIETARY_HEX[tag]}
+                strokeWidth={0.75}
+              />
+              <text
+                x={9}
+                y={10.5 + index * 12}
+                textAnchor="middle"
+                fontSize={7}
+                fontWeight={700}
+                fill={DIETARY_HEX[tag]}
+              >
+                {DIETARY_INFO[tag].badge}
+              </text>
+            </g>
+          ))
+        : null}
     </svg>
   );
 }

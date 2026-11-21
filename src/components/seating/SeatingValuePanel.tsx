@@ -55,9 +55,9 @@ function OwnershipNotice({
 }) {
   if (payer === 'client') {
     return (
-      <div className="flex items-start gap-2.5 rounded-xl border border-white/10 bg-white/[0.02] p-3">
+      <div className="flex items-start gap-2.5 rounded-xl border border-white/[0.10] bg-white/[0.02] p-3">
         <Info size={14} className="mt-0.5 shrink-0 text-[#00E5FF]" aria-hidden="true" />
-        <p className="text-[11px] leading-relaxed text-zinc-400">
+        <p className="text-[11px] leading-relaxed text-[#C9C4B8]">
           <span className="font-bold text-white">Ruta sin depósito.</span> El acceso al plano se
           factura a <span className="font-mono text-white">{formatCents(tariff.plannerToolCents)} EUR</span>. Con el
           depósito de <span className="font-mono text-white">{depositEur} EUR</span> (100 % deducible)
@@ -121,12 +121,12 @@ function BreakdownTable({ valuation }: { readonly valuation: SeatingValuation })
       <table className="w-full border-collapse text-left">
         <caption className="sr-only">Desglose del coste del plano de mesas</caption>
         <thead>
-          <tr className="border-b border-white/10">
+          <tr className="border-b border-white/[0.10]">
             {headings.map((heading, index) => (
               <th
                 key={heading}
                 scope="col"
-                className={`py-2 font-mono text-[9px] uppercase tracking-[0.2em] text-zinc-500 ${index === 0 ? '' : 'text-right'}`}
+                className={`py-2 font-mono text-[9px] uppercase tracking-[0.2em] text-[#8E8A80] ${index === 0 ? '' : 'text-right'}`}
               >
                 {heading}
               </th>
@@ -139,8 +139,8 @@ function BreakdownTable({ valuation }: { readonly valuation: SeatingValuation })
               <th scope="row" className="py-2 pr-3 text-[11px] font-medium text-zinc-300">
                 {line.label}
               </th>
-              <td className="py-2 text-right font-mono text-[11px] text-zinc-500">{line.quantity}</td>
-              <td className="py-2 text-right font-mono text-[11px] text-zinc-500">
+              <td className="py-2 text-right font-mono text-[11px] text-[#8E8A80]">{line.quantity}</td>
+              <td className="py-2 text-right font-mono text-[11px] text-[#8E8A80]">
                 {formatCents(line.unitCents)}
               </td>
               <td className="py-2 text-right font-mono text-[11px] text-white">
@@ -150,7 +150,7 @@ function BreakdownTable({ valuation }: { readonly valuation: SeatingValuation })
           ))}
           {breakdown.lines.length === 0 ? (
             <tr>
-              <td colSpan={4} className="py-3 text-center text-[11px] text-zinc-500">
+              <td colSpan={4} className="py-3 text-center text-[11px] text-[#8E8A80]">
                 Sin conceptos: el plano no tiene mesas todavía.
               </td>
             </tr>
@@ -170,7 +170,7 @@ export default function SeatingValuePanel({ plan, print, payer, tariff, depositE
   return (
     <section
       aria-labelledby="seating-value-title"
-      className="space-y-4 rounded-2xl border border-white/10 bg-[#0a0a0a] p-5"
+      className="space-y-4 rounded-2xl border border-white/[0.10] bg-[#0A0A0E] p-5"
     >
       <header className="flex flex-wrap items-baseline justify-between gap-2">
         <div>
@@ -184,7 +184,7 @@ export default function SeatingValuePanel({ plan, print, payer, tariff, depositE
             Desglose elemento a elemento
           </h3>
         </div>
-        <span className="font-mono text-[9px] uppercase tracking-wider text-zinc-600">
+        <span className="font-mono text-[9px] uppercase tracking-wider text-[#6F6B62]">
           huella <span className="text-[#00E5FF]">{hashValuation(valuation)}</span>
         </span>
       </header>
@@ -192,9 +192,9 @@ export default function SeatingValuePanel({ plan, print, payer, tariff, depositE
       <OwnershipNotice payer={payer} depositEur={depositEur} tariff={activeTariff} />
       <BreakdownTable valuation={valuation} />
 
-      <dl className="space-y-1.5 border-t border-white/10 pt-3">
+      <dl className="space-y-1.5 border-t border-white/[0.10] pt-3">
         <div className="flex items-center justify-between text-[11px]">
-          <dt className="text-zinc-500">Subtotal</dt>
+          <dt className="text-[#8E8A80]">Subtotal</dt>
           <dd className="font-mono text-zinc-300">{formatCents(breakdown.subtotalCents)}</dd>
         </div>
         {breakdown.discountApplied ? (
@@ -206,15 +206,15 @@ export default function SeatingValuePanel({ plan, print, payer, tariff, depositE
             <dd className="font-mono text-[#00E5FF]">-{formatCents(breakdown.discountCents)}</dd>
           </div>
         ) : null}
-        <div className="flex items-center justify-between border-t border-white/10 pt-2">
-          <dt className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">
+        <div className="flex items-center justify-between border-t border-white/[0.10] pt-2">
+          <dt className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#8E8A80]">
             Total del plano
           </dt>
           <dd className="font-mono text-lg font-bold text-white">{formatCents(breakdown.totalCents)}</dd>
         </div>
       </dl>
 
-      <div className="flex flex-wrap gap-2 font-mono text-[9px] uppercase tracking-wider text-zinc-600">
+      <div className="flex flex-wrap gap-2 font-mono text-[9px] uppercase tracking-wider text-[#6F6B62]">
         <span>{valuation.tables} mesas</span>
         <span aria-hidden="true">·</span>
         <span>{valuation.seats} asientos montados</span>
