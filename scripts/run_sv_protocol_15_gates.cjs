@@ -24,7 +24,10 @@ const gates = [
   // compuertas anteriores lo detectó porque todas medían invariantes de DATOS.
   // Este auditor es el único que verifica que una ruta pública sirve su propio
   // contenido (y que las herramientas de proveedor están aisladas del cliente).
-  'npm run audit:metacompiler-enterprise',
+  // M4 2026-11-21: se ejecuta en modo SONDA (`:probe`, contra el servidor de
+  // preview http://127.0.0.1:3007). Un gate que sólo lee código no puede
+  // certificar alcanzabilidad: MC-F0 es P0 y exige una petición HTTP real.
+  'npm run audit:metacompiler-enterprise:probe',
   // Contract-tests de la superficie de venta (P0 2026-11-21): alcanzabilidad de
   // rutas públicas y respuesta con hecho verificado de cada chip del agente.
   'npm run verify:middleware-reachability',

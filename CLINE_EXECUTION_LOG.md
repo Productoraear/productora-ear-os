@@ -6245,3 +6245,33 @@ auditor la confunda con una violación de INV-05.
 sesión: rama `main`, HEAD `2a6c123c`, remoto `origin` →
 `github.com/Productoraear/productora-ear-os.git`. Sin commit ni push: no había cambio de
 producto que firmar, sólo evidencia y este registro.
+
+---
+
+## 2026-11-21 · FASE M4 · CIERRE DE ARNÉS Y DISPOSICIÓN DEL COMMIT (bloque SOSPECHOSO)
+
+**Mandato.** Ejecutar la suite E2E de 102 pruebas, el auditor del metacompilador y el arnés
+constitucional completo; formalizar el cierre con commit local.
+
+**Acta completa:** `.antigravity/reports/M4_ACTA_SIGMA_CLOSE_2026-11-21.md` (SIGMA://CLOSE/v1,
+quíntupla EP-1, premortem G-8). Este registro sólo resume y enlaza.
+
+**Estado: `SOSPECHOSO`.** Compuertas 22/22 Exit 0, pero la suite E2E arroja 72 PASS / 30 FAIL.
+SIG-1: un fallo obliga a SOSPECHOSO.
+
+- Suite E2E: 102 ejecutados · `PASS 72` · `FAIL 30` (T1 33/42 · T2 33/44 · T3 5/10 · T4 1/6).
+- Metacompilador: candidato **VERDE 25/25** (sonda real en :3007); producción **ROJO**, MC-F2..F5
+  = `307 -> /celebraciones`. Producción sirve `buildSha=2a6c123c`: M1-M3 **no desplegado**.
+- Arnés: `tsc --noEmit` 0 · `audit:ssot` 0 (hash `cefa76c2...4b2b`) · `verify:pricing` 0 (31/31) ·
+  `audit:integrity` 0 (15/15) · `verify:confianza` 0 (QUINTUPLA OK) · `audit:residues` 0 ·
+  `run_sv_protocol_15_gates.cjs` **22/22 Exit 0**.
+- Ledger reparado **por append-only** (EP-4): 7 filas con clave `estado` y `url:null` quedaron
+  superseded por 7 filas canónicas re-medidas (`scratch/repair_ledger_quintupla.cjs`).
+- Auditor corregido en 4 aserciones obsoletas (MC-C1/C2/D1/F0) + `--base-url`; compuerta SV en
+  modo sonda (`audit:metacompiler-enterprise:probe`).
+- **Commit NO ejecutado**: el mensaje pedido afirma "verify 102 e2e contract suite" y el hecho es
+  72/30; además `de080d6c` ya contiene M1-M3 **y las correcciones del auditor** (mismo blob `a9c2ee03...`), y no hay firma GPG (`%G?=N`). Sin push
+  (`origin/main` = `2a6c123c`).
+- P0 abiertos: mutación anónima de calendario fuera de producción · 9 fugas de chunk admin ·
+  `Edwin Agudelo` en `/proveedores?cat=finca` · concierge 500 con JSON malformado · copy derogado
+  en `/otzarreta` · `/reservar/contrato` en sitemap pero fuera de la lista certificada.

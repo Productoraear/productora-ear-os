@@ -109,6 +109,7 @@
     "audit:integrity": "node ./node_modules/tsx/dist/cli.mjs scripts/audit_platform_integrity_sota.ts",
     "audit:metacompiler-enterprise": "node scripts/audit_metacompiler_enterprise.cjs",
     "audit:metacompiler-enterprise:live": "node scripts/audit_metacompiler_enterprise.cjs --live",
+    "audit:metacompiler-enterprise:probe": "node scripts/audit_metacompiler_enterprise.cjs --base-url=http://127.0.0.1:3007",
     "verify:middleware-reachability": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_middleware_reachability.ts",
     "verify:concierge-chips": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_concierge_chips.ts",
     "verify:webgl-lifecycle": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_webgl_lifecycle.ts",
