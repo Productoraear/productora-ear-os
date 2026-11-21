@@ -6367,3 +6367,70 @@ SIG-1: un fallo obliga a SOSPECHOSO.
 - P0 abiertos: mutación anónima de calendario fuera de producción · 9 fugas de chunk admin ·
   `Edwin Agudelo` en `/proveedores?cat=finca` · concierge 500 con JSON malformado · copy derogado
   en `/otzarreta` · `/reservar/contrato` en sitemap pero fuera de la lista certificada.
+
+---
+
+## 2026-11-21 · CIERRE SRE-SEC-01 · CONSOLIDACIÓN DEL COMMIT (OPCIÓN 1 SANCIONADA)
+
+**Mandato.** Directiva del CEO: consolidar en local el bloque SRE-SEC-01 rechazando el uso de
+`git add -f` sobre rutas ignoradas. Commit autorizado `8a3c394c`.
+
+**Estado: `VERIFICADO`**
+
+### Divergencia detectada y resuelta (antes de indexar)
+
+El mandato original listaba 7 rutas. El sondeo `Test-Path` + `git check-ignore -v` reveló:
+
+| Ruta | Hallazgo | Acción |
+|---|---|---|
+| `scratch/scorecard-omega-rojo.json` | NO EXISTE en disco | Excluida |
+| `scratch/METACOMPILER_ENTERPRISE_AUDIT.json` | `.gitignore:48` (`scratch/`) | Excluida |
+| `.agents/mcp_config.json` | `.gitignore:244` | Excluida |
+| `.abacusai/mcp.json` | `.gitignore:159` (`.abacusai/`) | Excluida |
+
+El mandato omitía además 2 artefactos de evidencia modificados (`.antigravity/`) que se añadieron
+para no desincronizar la prueba de su cambio (EP-4).
+
+### Evidencia (quíntupla EP-1)
+
+```
+CLAIM{SRE-SEC-01-commit} :: cmd="git commit -m 'sec(sre): enforce fail-closed option b on mcp, purge plaintext secrets and install hygiene gate'" :: exit=0 :: url=n/a :: sha256=8a3c394cc47bef3f5025bbfdf68a08621a0dc4da :: ts=2026-11-21T23:49Z
+CLAIM{SRE-SEC-01-gate}   :: cmd="node scripts/audit_mcp_secret_hygiene.cjs" :: exit=0 :: RESULTADO=LIMPIO checks=3 failures=0 :: ts=2026-11-21T23:48Z
+CLAIM{SRE-SEC-01-g1}     :: cmd="npm run typecheck" :: exit=0 :: 0 errores :: ts=2026-11-21T23:47Z
+CLAIM{SRE-SEC-01-sec3}   :: cmd="git diff --cached | Select-String 'sk_[A-Za-z0-9]{20,}'" :: exit=0 :: 0 coincidencias :: ts=2026-11-21T23:49Z
+CLAIM{SRE-SEC-01-inv05}  :: cmd="git diff --name-only a05cfa44 HEAD -- '*ear-os-ssot*'" :: exit=0 :: 0 ficheros (Zona Cero intacta) :: ts=2026-11-21T23:50Z
+```
+
+### Contenido del commit `8a3c394c` (5 ficheros, +249 / -5)
+
+```
+ .antigravity/evidence/scorecard_omega_diamante.json      |   4 +-
+ .antigravity/reports/omega_rojo_scorecard.json           |   4 +-
+ CLINE_EXECUTION_LOG.md                                   |  92 +++++++++++++
+ package.json                                             |   3 +-
+ scripts/audit_mcp_secret_hygiene.cjs                     | 151 +++++++++++++++++++++
+```
+
+### Gates
+
+| Gate | Comando | Resultado |
+|---|---|---|
+| G-0 | `Test-Path` de las 7 rutas | PASS (4 desviaciones detectadas y corregidas) |
+| G-1 | `npm run typecheck` | **PASS · Exit 0** |
+| G-4 | `git diff a05cfa44 HEAD -- '*ear-os-ssot*'` | **PASS · 0 ficheros (INV-05)** |
+| SEC-3 | barrido de patrones de secreto en staging | **PASS · 0 coincidencias** |
+| CHG-4 | `git status` + numstat | **PASS · 0 binarios, 0 ficheros > 1 MB** |
+| G-2/G-3/G-5/G-6/G-7 | lint / 17 puertas / sim:event / omega-rojo / CLS | `SIN_EVIDENCIA` en esta sesión (no invocados por el mandato) |
+
+### Hipótesis y asunciones frágiles declaradas
+
+- `H1`: Las dos menciones a `21st_sk_c81f` dentro del log son referencias **truncadas con elipsis**
+  (9 caracteres, muy por debajo de cualquier umbral de secreto válido), no la clave operativa.
+- `H2`: El gate `audit:mcp-hygiene` escanea configuraciones **ignoradas** (`.agents/`, `.abacusai/`).
+  Su utilidad reside en proteger el disco local del CEO, no el historial del repo. Es la barrera
+  correcta, pero **no se ejecuta en CI** salvo que se cablee a `gate:prepush`.
+- `H3`: El push a `origin/main` queda **fuera** de este mandato. `origin/main` sigue en `a05cfa44`.
+
+**siguiente_paso:** cablear `audit:mcp-hygiene` dentro de `npm run gate:prepush` para que la
+barrera SEC-3 sea bloqueante y no sólo consultiva (la Option B sólo tiene valor si es obligatoria).
+
