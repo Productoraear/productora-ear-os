@@ -6434,3 +6434,122 @@ CLAIM{SRE-SEC-01-inv05}  :: cmd="git diff --name-only a05cfa44 HEAD -- '*ear-os-
 **siguiente_paso:** cablear `audit:mcp-hygiene` dentro de `npm run gate:prepush` para que la
 barrera SEC-3 sea bloqueante y no sólo consultiva (la Option B sólo tiene valor si es obligatoria).
 
+
+
+---
+
+## [SRE-SEC-02] 2026-11-22 · `audit:mcp-hygiene` CABLEADO EN `gate:prepush` (FAIL-CLOSED)
+
+**1) QUÉ CAMBIÓ:** `package.json:102` — el alias `audit:mcp-hygiene` (declarado en `package.json:72`)
+pasa a formar parte de la cadena `gate:prepush`, en **segunda posición**, inmediatamente después de
+`audit_queue_counter_integrity.cjs` y **antes de todo el resto de la cadena** (incluida `audit:ssot`,
+`lint` y `tsc --noEmit`). Política fail-closed: un secreto en texto plano o una `url` con `/webhook/`
+en cualquier configuración MCP aborta el prepush con Exit Code 1 en < 1 s, antes de gastar minutos
+en la cadena larga. Cierra el `siguiente_paso` pendiente de `SRE-SEC-01` (H2: "la Option B sólo tiene
+valor si es obligatoria").
+- **NO** se tocó la Zona Cero (`src/lib/ear-os-ssot.ts`): hash `cefa76c2…` == referencia `KNOWN_GOOD`.
+- **NO** se tocó `.github/workflows/deploy-ghcr.yml` ni `.clinerules`.
+
+### Evidencia (quíntupla EP-1)
+
+```
+CLAIM{SRE-SEC-02-wire}    :: cmd="Select-String package.json -Pattern 'mcp-hygiene'" :: exit=0 ::
+                             lineas=72,102 :: sha256=2F25AFCB6B366B36C338236BAC0F213D2FE54232D1B560EA19EE2589B79F8007 ::
+                             ts=2026-11-22T00:21+01:00
+CLAIM{SRE-SEC-02-gate}    :: cmd="node scripts/audit_mcp_secret_hygiene.cjs" :: exit=0 ::
+                             RESULTADO=LIMPIO checks=3 failures=0 :: ts=2026-11-22T00:21+01:00
+CLAIM{SRE-SEC-02-reach}   :: cmd="node scripts/audit_gate_coverage.cjs --json" :: exit=0 ::
+                             reachableAliases 32 -> 33 (antes/después del cableado) :: ts=2026-11-22T00:21+01:00
+CLAIM{SRE-SEC-02-neg1}    :: cmd="(canario literal en .agents/mcp_config.json) node scripts/audit_mcp_secret_hygiene.cjs"
+                             :: exit=1 :: "SECRETO EN TEXTO PLANO (21st/OpenAI-style key)" + "valor literal, debe ser ${env:VAR}"
+                             :: ts=2026-11-22T00:21+01:00
+CLAIM{SRE-SEC-02-neg2}    :: cmd="(canario url /webhook/) node scripts/audit_mcp_secret_hygiene.cjs"
+                             :: exit=1 :: "url apunta a /webhook/ (disparo n8n desde MCP prohibido · OPCIÓN B)"
+                             :: ts=2026-11-22T00:21+01:00
+CLAIM{SRE-SEC-02-restore} :: cmd="Get-FileHash .agents/mcp_config.json" :: exit=0 ::
+                             sha256=4802EE278AB57B582D22497DCDA3997A4B374A88D259A85EC79F1F9C4D47DBCE (== original) ::
+                             ts=2026-11-22T00:21+01:00
+CLAIM{SRE-SEC-02-chain}   :: cmd="cmd /c \"npm run gate:prepush > log 2>&1 & echo EXIT_PREPUSH=%ERRORLEVEL%\"" ::
+                             exit=0 :: 38 pasos > 0 · 33 scripts npm · EXIT_PREPUSH=0 · 0 errores reales ::
+                             ts=2026-11-22T00:18:57Z
+CLAIM{SRE-SEC-02-g1}      :: cmd="npm run typecheck" :: exit=0 :: ts=2026-11-22T00:21+01:00
+CLAIM{SRE-SEC-02-g4}      :: cmd="npm run audit:ssot" :: exit=0 ::
+                             hash=cefa76c2c6a3f92f57acf74f654932c02bf66774502102cb4f932520aaa64b2b (== KNOWN_GOOD) ::
+                             ts=2026-11-22T00:21+01:00
+CLAIM{SRE-SEC-02-omega}   :: cmd="npm run audit:omega-rojo" :: exit=0 ::
+                             OMEGA_ROJO_ITEMS=20 VERIFICADO=20 · VERDICT=VERDE :: ts=2026-11-22T00:18:57Z
+CLAIM{SRE-SEC-02-cls}     :: cmd="node scripts/audit_cls_budget.cjs" :: exit=0 :: CLS_BUDGET_VERDICT=PASS (0 violaciones)
+                             :: ts=2026-11-22T00:18:57Z
+```
+
+### Prueba de que la puerta ES bloqueante (no decorativa)
+
+El guardián **no acepta** ningún argumento `--config=` (verificado: `node … --config=…` devuelve
+`LIMPIO`, y falla abierto sólo porque el script lo ignora). Añadir ese flag sería una puerta trasera,
+así que la prueba de fuego se ejecuta sobre el fichero real que el guardián escanea, con copia de
+seguridad y restauración verificada por hash:
+
+| Canario inyectado en `.agents/mcp_config.json` | Detección | Exit |
+|---|---|---|
+| `env.CANARY_API_KEY = "sk_..."` (literal) | `SECRETO EN TEXTO PLANO (21st/OpenAI-style key)` + `valor literal, debe ser ${env:VAR}` | **1** |
+| `url = "https://…/webhook/canary-trigger"` | `url apunta a /webhook/ (disparo n8n desde MCP prohibido · OPCIÓN B)` | **1** |
+| restauración | SHA-256 `4802EE278AB57B582D22497DCDA3997A4B374A88D259A85EC79F1F9C4D47DBCE` == original | 0 |
+
+### Gates
+
+| Gate | Comando | Resultado |
+|---|---|---|
+| G-0 | `Select-String package.json -Pattern 'mcp-hygiene'` | PASS · líneas 72 y 102 |
+| G-1 | `npm run typecheck` (`tsc --noEmit`) | **PASS · Exit 0** |
+| G-2 | `npm run lint` | **PASS · Exit 0** (2 avisos preexistentes, 0 errores) |
+| G-3 | `npm run gate:prepush` | **PASS · EXIT_PREPUSH=0** (38 pasos, 33 scripts npm, 0 errores reales) |
+| G-4 | `npm run audit:ssot` | **PASS · Exit 0** · hash `cefa76c2…` == `KNOWN_GOOD` |
+| G-6 | `npm run audit:omega-rojo` | **PASS · 20/20 VERDE** |
+| G-7 | `node scripts/audit_cls_budget.cjs` | **PASS · 0 violaciones** |
+| G-8 | Premortem de 5 preguntas (abajo) | PASS |
+
+### Premortem obligatorio (§10 INC-2)
+
+1. **¿Objetivo exacto o primo hermano cosmético?** Exacto: la orden pedía integrar `audit:mcp-hygiene`
+   en `gate:prepush` con fail-closed. Está en la cadena real y su Exit 1 aborta el prepush (probado con
+   dos canarios). No es un paso `echo` ni un alias huérfano: `audit_gate_coverage` pasó de 32 a 33
+   alias alcanzables desde `gate:prepush`.
+2. **Asunciones frágiles:** (a) `package.json` está abierto en Cursor (PID 4156, arrancado 09:52); un
+   guardado del editor puede revertir la línea 102. (b) `gate:prepush` es local: no existe `.husky/`
+   ni `core.hooksPath`, así que la puerta depende de que el operador la invoque. (c) El guardián lee
+   configuraciones ignoradas por git, por lo que cambia con el disco, no con el repo.
+3. **Alternativa descartada:** cablearlo también en `.github/workflows/deploy-ghcr.yml` (job
+   `contract-gate`). **Descartada con motivo técnico:** en un runner limpio ninguna de las cinco rutas
+   escaneadas existe y el guardián haría `fail('ninguna configuración MCP encontrada … SIN_EVIDENCIA')`
+   → rompería el CI en verde legítimo. Se deja constancia como mejora futura condicionada a un modo
+   `--allow-absent` explícito.
+4. **Qué se rompe bajo carga:** el guardián es O(6 rutas), sin red y sincrónico: coste < 1 s y colocado
+   en 2.ª posición para abortar antes de gastar minutos. Riesgo real: un falso positivo por un token
+   con forma de secreto en un `args` (p. ej. `Bearer …`) bloquea el prepush; se detecta al primer push y
+   se corrige moviendo el valor a `${env:VAR}`, que es precisamente la política deseada.
+5. **Consecuencia que acepto al firmar:** quien clone el repo en otra máquina no hereda esta barrera
+   hasta correr el prepush localmente; y si Cursor sobreescribe `package.json`, el cableado desaparece
+   sin que CI lo note. Ambas quedan declaradas como `H1`/`H3`, no maquilladas.
+
+### Hipótesis y asunciones frágiles declaradas
+
+- `H1`: El guardián escanea configuraciones **ignoradas por git** (`.agents/mcp_config.json` vía
+  `.gitignore:244`, `.abacusai/mcp.json`). Su valor protege la **máquina del CEO**, no el historial:
+  `gate:prepush` es local, así que un rebase o un push desde otra máquina no está cubierto.
+- `H2`: `audit_gate_coverage.cjs` deriva sus filas de las tablas `| INV-n |` de `.clinerules`. El
+  cableado **no** aparece como fila INV (0 invariantes citan `audit:mcp-hygiene`), por lo que el
+  meta-auditor no puede detectar su des-cableado: `reachableAliases` 32 → 33 es la única evidencia, y
+  es un indicador **externo** al propio guardián. Un meta-guard que asevere la presencia literal del
+  alias en `gate:prepush` sería el siguiente escalón exigible.
+- `H3`: `package.json` es **compartido con Cursor** (PID 4156 `cmd`, arrancado 09:52). Si el editor está
+  en modo no-monitorizado, sobreescribiría la línea 102 con su copia en memoria. Verificado en disco con
+  `Select-String` (líneas 72 y 102) y re-verificado después del commit.
+- `H4`: El primer intento de capturar el Exit real con `npm run gate:prepush | Tee-Object` **reportó
+  `EXIT_PREPUSH=0` con un log incompleto y el exit code de `Tee-Object`, no el de npm** (fallo de
+  medición, no del gate). La evidencia válida es la segunda ejecución, con `cmd /c` y
+  `%ERRORLEVEL%` escrito en el propio log: `EXIT_PREPUSH=0` tras la línea final
+  `CLS_BUDGET_VERDICT=PASS`.
+
+**siguiente_paso:** forzar que la única puerta local viva en `package.json` (`gate:prepush`) tenga techo
+de tiempo y salida por fallo rápido ya resuelto, y añadir a `.clinerules` una fila `INV-22` que cite
+`npm run audit:mcp-hygiene` para que `npm run audit:gates` lo vigile de forma nativa.
