@@ -69,6 +69,7 @@
     "audit:ssot": "node ./node_modules/tsx/dist/cli.mjs scripts/baseline_ssot_integrity.ts",
     "seal:ssot": "npx tsx scripts/baseline_ssot_integrity.ts --seal",
     "audit:residues": "node scripts/audit_heavy_residues.cjs",
+    "audit:mcp-hygiene": "node scripts/audit_mcp_secret_hygiene.cjs",
     "audit:admin": "node scripts/audit_admin_control_forensics.cjs --strict --write",
     "audit:admin-ecosystem": "node scripts/audit_admin_ecosystem.cjs --write",
     "audit:vanity": "node scripts/audit_admin_vanity.cjs",

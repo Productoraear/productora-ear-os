@@ -5286,6 +5286,98 @@ siguiente_paso : cablear la rama PostgreSQL del candado en un entorno con DB rea
 ### Hallazgo forense principal (contradice la premisa de la orden)
 La orden atribuÃ­a el `exit code: 1` de la L60 del Dockerfile a **OOM**. La reproducciÃ³n medida demuestra que **el OOM era un sÃ­ntoma, no la causa**:
 
+---
+
+## 2026-11-21 · SRE-SEC-01 · RESOLUCIÓN MCP ↔ n8n (OPCIÓN B) + PURGA DE SECRETOS
+
+**Mandato.** Directiva Suprema del CEO (Edwin Agudelo): sanción formal de la **Opción B**
+(fail-closed). La capa de orquestación agéntica MCP **no** dispondrá de capacidad de disparo
+de webhooks n8n hacia dinero real o producción. Saneamiento de la configuración MCP local,
+purgado del secreto `21st` y verificación con `npm run audit:residues`.
+
+**Estado: `VERIFICADO`** (con un límite declarado, ver *hipótesis*).
+
+### 1 · Plano de ejecución (AS-IS conservado)
+
+| Aspecto | Comprobación | Resultado |
+|---|---|---|
+| n8n recibe sólo HTTP desde Next.js | `src/lib/services/n8n-dispatcher.ts:126,166` (`dispatchToN8n`, `fireAndForgetN8n`) | Sin cambios |
+| Superficie MCP sin disparo de webhooks | barrido `src/lib/mcp`, `src/lib/compiler`, `src/app/api/mcp`, `scripts/mcp` por `fireAndForgetN8n|dispatchToN8n` | **0 coincidencias** |
+| Puente bidireccional firmado | `src/app/api/webhooks/n8n-dispatch/route.ts:39-45` + HMAC `n8nHmacBridge` | Intacto (fuera de MCP) |
+
+Cero endpoints nuevos de disparo de webhook. Cero cambios en el bus transaccional.
+
+### 2 · Higiene y configuración de Cline
+
+| Cambio | Ruta | Detalle |
+|---|---|---|
+| Secreto literal eliminado | `src/../.agents/mcp_config.json:10-11` | `21st_sk_c81f…` → `${env:TWENTYFIRST_API_KEY}` (gitignored: nunca viajó al repo) |
+| Postura declarada | `C:\Users\Productora Ear\.cline\data\settings\cline_mcp_settings.json` | `mcpServers: {}` + bloque `_security` con `posture: FAIL_CLOSED_OPTION_B` |
+| Interpolación corregida | `.abacusai/mcp.json:12,40,48` | `${VAR}` (no resuelto por MCP) → `${env:VAR}` |
+| Barrera preventiva nueva | `scripts/audit_mcp_secret_hygiene.cjs` | Guardián SEC-3 + `npm run audit:mcp-hygiene` |
+
+Barrido de la clave en el workspace (vault, `.claude`, `.vscode`, `.agents`, `.abacusai`,
+`src`, `scripts`): **0 coincidencias** tras el cambio. `git grep '21st_sk_'`: sin coincidencias.
+
+### 3 · Evidencia (quíntupla EP-1)
+
+```
+CLAIM{SRE-SEC-01-a} :: cmd="npm run audit:residues"  :: exit=0 :: (47 candidatos evaluados, 0 violaciones de presupuesto)
+CLAIM{SRE-SEC-01-b} :: cmd="npm run audit:mcp-hygiene" :: exit=0 :: RESULTADO: LIMPIO · checks=3 · failures=0
+CLAIM{SRE-SEC-01-c} :: cmd="npm run audit:omega-rojo" :: exit=0 :: OMEGA_ROJO_SCORE=20/20 · VERDICT=VERDE
+CLAIM{SRE-SEC-01-d} :: cmd="node -e (validación config)" :: exit=0 :: SECRETO_EN_DISCO:false · CLINE JSON MCP_SERVERS=0
+CLAIM{SRE-SEC-01-e} :: cmd="guardián con secreto inyectado (prueba negativa)" :: exit=1 :: [FAIL] valor literal, debe ser ${env:VAR} → restaurado
+```
+
+### 4 · Premortem (G-8)
+
+1. **¿Cumple el objetivo exacto?** Sí: cero capacidad de disparo n8n desde MCP, cero secreto en
+   texto plano en las 3 configuraciones MCP auditables del perímetro.
+2. **¿Asunciones frágiles?** Que el cliente Cline resuelva `${env:VAR}` al lanzar servidores stdio.
+   El guardián **obliga** a la sintaxis pero no puede probar la resolución: si un servidor futuro
+   la ignora, arrancará sin credencial y fallará **cerrado**, no abierto. Correcto por diseño.
+3. **¿Alternativa descartada?** Opción A (herramienta MCP `dispatch_webhook`) — descartada por el
+   CEO: amplía superficie transaccional sin invariante que la cubra.
+4. **¿Qué se rompe bajo carga?** Nada del camino de dinero: no se tocó `n8n-dispatcher.ts` ni
+   ningún workflow. El guardián es local (no corre en el build de producción).
+5. **¿Qué acepto al firmar?** El secreto `21st` estuvo en disco en claro desde su creación y
+   **debe rotarse en el panel de 21st.dev**: la purga local no invalida una clave ya expuesta.
+
+### 5 · Hipótesis y pendientes
+
+- **HIP-1:** la clave `21st` debe considerarse **comprometida** (estuvo en claro en disco). La
+  rotación en el panel del proveedor es acción humana del CEO; el valor nuevo entra por variable
+  de entorno, nunca por fichero. `SIN_EVIDENCIA` de rotación efectiva desde esta sesión.
+- **HIP-2:** `scripts/install_mcps.py`, `scripts/setup_all_mcps.py` y `scripts/manage_mcp.cjs`
+  siguen con rutas/tokens placeholder de la máquina anterior (`C:/Users/M2-W10`, `H:\EAR_OS_V2`).
+  Son `FACHADA` heredada: no se ejecutaron ni se corrigen en este bloque (fuera de scope).
+- Configuraciones MCP deliberadamente **no activadas**: `mcpServers: {}` en Cline. Activarlas es
+  decisión del CEO con `ACTIVAR_MCPS_CLINE.bat` (que hoy apunta a una ruta inexistente).
+
+### 6 · SIGMA://CLOSE/v1
+
+```
+task_id        : SRE-SEC-01
+estado_bloque  : VERIFICADO
+hecho          : Purga del secreto 21st en .agents/mcp_config.json:10-11; postura FAIL_CLOSED_OPTION_B
+                 en cline_mcp_settings.json; corrección ${VAR}→${env:VAR} en .abacusai/mcp.json:12,40,48;
+                 nuevo scripts/audit_mcp_secret_hygiene.cjs + npm run audit:mcp-hygiene (package.json:72).
+cambios[]      : .agents/mcp_config.json · .abacusai/mcp.json · package.json
+                 · scripts/audit_mcp_secret_hygiene.cjs (nuevo)
+                 · C:\Users\Productora Ear\.cline\data\settings\cline_mcp_settings.json
+gates          : G0 PASS · G4 audit:ssot (no ejecutado en este bloque) SIN_EVIDENCIA
+                 · audit:residues PASS(0) · audit:omega-rojo PASS(20/20) · audit:mcp-hygiene PASS(0)
+                 · typecheck SIN_EVIDENCIA (sin cambios en .ts de src)
+omega_diamante : { score: "20/20", verdict: "VERDE", pendientes: ["rotación de clave 21st (humana)"] }
+hipotesis[]    : HIP-1 clave comprometida, rotación pendiente del CEO · HIP-2 scripts MCP heredados = FACHADA
+decision       : Opción A (MCP→webhook) descartada por directiva del CEO
+riesgos        : una clave revocada localmente sigue viva hasta que se rote en el proveedor
+reto_espejo    : no bastaba purgar: se añadió barrera ejecutable que aborta (Exit 1) si el patrón reaparece
+aprendizaje_ceo: quitar el secreto del fichero no lo revoca; sólo el panel del proveedor lo mata
+siguiente_paso : CEO rota la clave en 21st.dev y la inyecta como TWENTYFIRST_API_KEY de entorno
+```
+
+
 1. `Dockerfile:10` y `Dockerfile:16` **ya contenÃ­an** `NODE_OPTIONS="--max-old-space-size=2048"` â†’ la correcciÃ³n #1 pedida ya estaba aplicada desde `f946f9c2`. Nada que inyectar.
 2. `next.config.ts` **habÃ­a perdido** `cpus: 1` y `workerThreads: false`. Probado con `git log -S`: los aÃ±adiÃ³ `f946f9c2` y los **borrÃ³** `56ee94a2` (ancestro de HEAD). Sin `cpus`, `node_modules/next/dist/build/index.js:381` cae al **fallback de 4 workers** sobre 1 vCPU â‡’ saturaciÃ³n de hilos y heap agotado (pico medido **3.915 MB** antes del arreglo).
 3. **La causa real del exit 1**: dos rutas hacÃ­an `export { dynamic, runtime };` (reexport de `route-segment-config`), ilegal en Next 16 porque exige anÃ¡lisis **estÃ¡tico**:
