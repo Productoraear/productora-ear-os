@@ -2,12 +2,13 @@
 
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Sparkles, Zap, Heart, X, Check, ShieldCheck, ArrowRight, 
-  BookOpen, CreditCard, Sliders, MapPin, Users, Calendar, 
-  Sun, Moon, Volume2, Award, ChevronRight, CheckCircle2, RotateCcw
+import {
+  Sparkles, Zap, Heart, ShieldCheck,
+  BookOpen, CreditCard, Sliders, MapPin, Users,
+  Sun, Moon, Award, ChevronRight, CheckCircle2, RotateCcw
 } from 'lucide-react';
 import { createEliteCheckout } from '@/app/actions/checkoutActions';
+import { DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
 
 export interface FormatoArtistico {
   id: string;
@@ -175,11 +176,21 @@ export default function TinderMatcherClient() {
       if (budgetTier === 'PREMIUM' && formato.basePrice > 1000 && formato.basePrice <= 3000) score += 15;
       if (budgetTier === 'S_CLASS' && formato.basePrice > 2500) score += 15;
 
-      // Ensure clamped between 45% and 99%
-      const finalScore = Math.min(99, Math.max(45, score));
+      // ── INV-09 · La provincia DEJA DE SER DECORATIVA ──────────────────────
+      // Antes `province` solo se pintaba en la ficha: cambiarla no alteraba el
+      // orden. Ahora «Resto de España» y la provincia elegida penalizan los
+      // formatos que exigen desplazamiento lejano, que es el coste real.
+      if (province === 'Nacional') score -= 8;
+      else if (province !== 'Madrid') score -= 4;
+
+      // ── Anti-fachada: se elimina el suelo del 45 % ────────────────────────
+      // Antes se aplicaba `Math.max(45, ...)`, de modo que un formato que no
+      // encajaba en NADA seguía mostrando 45 % de afinidad. Ahora el resultado
+      // es honesto: un 12 % significa un 12 %.
+      const finalScore = Math.min(99, Math.max(0, score));
       return { ...formato, matchScore: finalScore };
     }).sort((a, b) => b.matchScore - a.matchScore);
-  }, [clientSegment, attendees, isOutdoor, budgetTier]);
+  }, [clientSegment, attendees, isOutdoor, budgetTier, province]);
 
   const topMatch = scoredFormats[0];
   const alternative1 = scoredFormats[1];
@@ -198,7 +209,6 @@ export default function TinderMatcherClient() {
   const handleFastTrackCheckout = async (card: FormatoArtistico) => {
     setIsProcessing(true);
     try {
-      const depositCents = Math.round(card.basePrice * 0.30); // 30% deposit
       const session = await createEliteCheckout({
         artistId: card.id,
         clientId: `client-${clientSegment.toLowerCase()}-${Date.now()}`,
@@ -378,8 +388,8 @@ export default function TinderMatcherClient() {
                     <span className="text-2xl font-black text-white">{matchSuccess.basePrice}€ <span className="text-xs text-zinc-400 font-normal">+ IVA</span></span>
                   </div>
                   <div className="text-right">
-                    <span className="text-[9px] text-[#d4a855] font-mono uppercase block">Depósito de Reserva (30%)</span>
-                    <span className="text-lg font-black text-[#d4a855]">{Math.round(matchSuccess.basePrice * 0.30)}€</span>
+                    <span className="text-[9px] text-[#d4a855] font-mono uppercase block">Depósito de Reserva (deducible)</span>
+                    <span className="text-lg font-black text-[#d4a855]">{DEPOSITO_STRIPE_EUR.toFixed(2)}€</span>
                   </div>
                 </div>
 
@@ -391,7 +401,7 @@ export default function TinderMatcherClient() {
                     className="w-full py-4 bg-[#d4a855] hover:bg-[#e0b666] text-black font-black uppercase text-xs tracking-widest rounded-2xl transition-all flex items-center justify-center gap-3 shadow-xl shadow-[#d4a855]/20 active:scale-95"
                   >
                     <CreditCard size={18} />
-                    {isProcessing ? 'Conectando Stripe...' : 'Reserva Express 1-Click (Bloqueo Inmediato 30%)'}
+                    {isProcessing ? 'Conectando Stripe...' : `Reserva Express 1-Click (Bloqueo ${DEPOSITO_STRIPE_EUR.toFixed(0)}€ deducible)`}
                   </button>
 
                   <a

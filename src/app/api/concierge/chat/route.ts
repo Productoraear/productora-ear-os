@@ -66,7 +66,7 @@ async function dispatchTelegramHITLNotification(lead: {
     `📍 *Origen:* ${lead.source}\n` +
     `━━━━━━━━━━━━━━━━━━━━━━\n` +
     `💬 *Resumen:* ${lead.summary}\n` +
-    `⚡ *Acción:* Intervención humana recomendada en < 5 min para formalizar fianza 100 €.`;
+    `⚡ *Acción:* Intervención humana recomendada en < 5 min para formalizar fianza ${DEPOSITO_STRIPE_EUR.toFixed(2).replace('.', ',')} €.`;
 
   try {
     const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
@@ -112,7 +112,7 @@ function evaluateQualificationThreshold(
         date: '24 de junio de 2027',
         pax: 'Estimado > 50 pax',
         menu: 'Menú Asador al Sarmiento / Ezkertza (155,00 € + IVA)',
-        intent: 'Bloqueo con fianza 100 € / Visita técnica de cierre',
+        intent: `Bloqueo con fianza ${DEPOSITO_STRIPE_EUR.toFixed(2).replace('.', ',')} € / Visita técnica de cierre`,
         source: 'Sovereign Concierge Widget (/otzarreta)',
         summary: currentMessage.slice(0, 160),
       },
@@ -579,10 +579,10 @@ function resolveDeterministicFallback(
     !pathname.includes('/otzarreta')
   ) {
     return {
-      reply: `Para banquetes${mem.city ? ` en **${mem.city}**` : ''}, el menú exacto se cotiza según el recinto o catering homologado que elijáis a través de la Conserjería EAR OS (${CENTRALITA_EAR_OS}); como referencia verificada en propiedad, en nuestro **Caserío Ezkertza Berria & Otzarreta (Derio · Bizkaia)** disponemos de 7 Menús Oficiales 2026 a la brasa de encina desde **100 € hasta 173 € + IVA**. ¿Prefieres que te enviemos propuestas de catering para ${mem.city || 'tu provincia'} o ver los menús oficiales de Otzarreta?`,
+      reply: `Para banquetes${mem.city ? ` en **${mem.city}**` : ''}, el menú exacto se cotiza según el recinto o catering homologado que elijáis a través de la Conserjería EAR OS (${CENTRALITA_EAR_OS}); como referencia verificada en propiedad, en nuestro **Caserío Ezkertza Berria & Otzarreta (Derio · Bizkaia)** disponemos de ${OTZARRETA_WEDDING_MENUS_CLAIM} a la brasa de encina. ¿Prefieres que te enviemos propuestas de catering para ${mem.city || 'tu provincia'} o ver los menús oficiales de Otzarreta?`,
       action: {
         type: 'dossier',
-        label: 'Ver 7 Menús Oficiales Ezkertza & Otzarreta (Derio)',
+        label: `Ver la carta de gala de Ezkertza & Otzarreta (Derio)`,
         url: '/otzarreta',
       },
       shouldEscalate: false,

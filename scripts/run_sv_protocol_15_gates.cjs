@@ -17,6 +17,8 @@ const gates = [
   'node scripts/verify_sonometro_pwa.cjs',
   'npm run audit:admin-ecosystem',
   'npm run verify:db-failure',
+  'npm run verify:iban',
+  'npm run audit:integrity',
   'npm run lint',
   'npm run typecheck'
 ];

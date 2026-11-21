@@ -190,6 +190,67 @@ check(
   'el prompt sigue con cifras literales',
 );
 
+/* ── A-bis-2 · MOTORES DE LANDING Y CONCIERGE SIN EL SUELO DEROGADO ──────── */
+
+/**
+ * Regresión 2026-11-21: la matriz de 126 landings (`otzarreta-126-cluster-engine`),
+ * el motor de dominancia y la respuesta conversacional del Concierge seguían
+ * publicando la horquilla de 2026 (100 € … 173 €) y «siete menús» mientras la
+ * ficha ya vendía 145–185 €. Este bloque lo impide de forma mecánica.
+ */
+const DERIVED_SURFACES: ReadonlyArray<{ readonly file: string; readonly label: string }> = [
+  { file: 'src/lib/seo/otzarreta-126-cluster-engine.ts', label: 'Matriz 126 landings' },
+  { file: 'src/lib/seo/otzarreta-dominance-engine.ts', label: 'Motor de dominancia (72 geográficas + 54 intención)' },
+  { file: 'src/app/api/concierge/chat/route.ts', label: 'Respuestas del Concierge' },
+  { file: 'src/app/(public)/otzarreta/[slug]/page.tsx', label: 'Landings /otzarreta/[slug]' },
+];
+
+const DEROGATED_PRICE_PATTERN =
+  /100(?:[.,]00)?\s*(?:\*\*)?\s*€|173(?:[.,]00)?\s*(?:€|\+)|142,50|123[.,]40|Cantábrico\s*\(?100|Caserío\s+Beko\s*\(?173|7\s+men[uú]s|siete men[uú]s/i;
+
+for (const surface of DERIVED_SURFACES) {
+  const source = read(surface.file);
+  check(
+    `A13 · ${surface.label} sin la horquilla derogada 2026`,
+    !DEROGATED_PRICE_PATTERN.test(source),
+    'quedan importes de 2026 en el copy derivado',
+  );
+  check(
+    `A14 · ${surface.label} anclado a la carta canónica`,
+    source.includes('OTZARRETA_WEDDING_MENUS') ||
+      source.includes('OTZARRETA_WEDDING_MENUS_CLAIM') ||
+      source.includes('OTZARRETA_126_MENU_RANGE'),
+    'no consume la fuente única',
+  );
+}
+
+const clusterSource = read('src/lib/seo/otzarreta-126-cluster-engine.ts');
+check(
+  'A15 · La matriz 126 deriva su horquilla del SSOT (a mano sólo el comentario que la explica)',
+  clusterSource.includes('export const OTZARRETA_126_MENU_RANGE') &&
+    clusterSource.includes('menuRange: OTZARRETA_126_MENU_RANGE'),
+  'menuRange sigue siendo un literal',
+);
+check(
+  'A16 · La matriz 126 no titula «7 menús»',
+  !/7\s+Men[uú]s|siete men[uú]s/i.test(clusterSource),
+  'quedan referencias al catálogo de 7 menús',
+);
+
+/* ── A-quater · CTAs DE PROVEEDOR: NADIE BLOQUEA LA AGENDA DE EDWIN ──────── */
+
+const slugPage = read('src/app/(public)/otzarreta/[slug]/page.tsx');
+check(
+  'A17 · /otzarreta/[slug] no envía «Bloquear Fecha» a /reservar/solista',
+  !/href=["']\/reservar\/solista/.test(slugPage),
+  'el CTA de la finca aterriza en la agenda del solista',
+);
+check(
+  'A18 · /otzarreta/[slug] resuelve el bloqueo con el motor por proveedor',
+  slugPage.includes('resolveProviderCalendarHref(OTZARRETA_ENTITY'),
+  'la ruta construye los href a mano',
+);
+
 /* ── A-ter · COTIZADOR DE /otzarreta/[slug] (carta canónica) ─────────────── */
 
 const explorerSource = read('src/components/otzarreta/OtzarretaExperienceExplorer.tsx');

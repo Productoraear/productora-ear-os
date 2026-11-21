@@ -1,3 +1,61 @@
+## [SIGMA-CLOSE] 2026-11-21 · SELLADO DEL ÁRBOL PENDIENTE SOBRE a0278b65 → PRODUCCIÓN SIN DEUDA
+
+**1) QUÉ CAMBIÓ:** el árbol de trabajo (12 ficheros modificados + 8 rutas nuevas sin versionar) se
+selló en **un único commit** encima de `a0278b65`, para que el push a `origin/main` no dejara ni un
+cambio fuera de control de versiones. Contenido real del bloque:
+- `src/lib/journey/couple-journey-engine.ts` (59 KB) + `src/components/journey/CoupleJourneyWizard.tsx`:
+  asistente del viaje de la pareja contra el **catálogo real** (1.547 fincas), puntuación acotada 0–100,
+  declaración de empate en el primer puesto y nota explícita de lo **no verificable**.
+- `src/components/home/JourneyPage.tsx`: los CTA `WA:` de la etapa **HOT** dejan de saltar a WhatsApp en
+  frío y abren primero el asistente (antes la pareja aterrizaba en un chat sin fecha, ni pax, ni zona).
+- `src/app/components/public/TinderMatcherClient.tsx`: se elimina el suelo del 45 % de cortesía (AF-1/AF-4),
+  la provincia pasa a pesar de verdad, y el depósito deja de ser «30 %» → `DEPOSITO_STRIPE_EUR` (INV-03).
+- `src/lib/seo/otzarreta-126-cluster-engine.ts` + `otzarreta-dominance-engine.ts` +
+  `src/app/(public)/otzarreta/[slug]/page.tsx`: los importes de las 126 landings se **derivan** de
+  `OTZARRETA_WEDDING_MENUS` (145/155/165/185 €), y el CTA de bloqueo deja de aterrizar en `/reservar/solista`
+  para usar `resolveProviderCalendarHref(OTZARRETA_ENTITY)` (ninguna finca bloquea la agenda de Edwin).
+- `src/app/api/concierge/chat/route.ts`: respuestas del Concierge sin literales derogados.
+- `scripts/verify_otzarreta_charter.ts`: +6 aserciones mecánicas nuevas (A13–A18) que impiden la regresión.
+- `scripts/verify_couple_journey.cjs` + alias `verify:journey` (39 aserciones contra el catálogo real).
+- `.antigravity/evidence/scorecard_omega_diamante.json` + `.antigravity/reports/omega_rojo_scorecard.json`:
+  refresco de evidencia (860 ficheros `"use client"`, 0 secretos).
+
+**2) QUÉ RIESGO DESAPARECE:** tres fugas de dinero en producción real — (a) copy de 126 URLs prometiendo
+el suelo derogado (100 €) mientras la ficha vendía desde 145 € (INV-10 / AF-4); (b) Tinder Matcher
+inventando un 45 % de afinidad y un depósito del 30 % que no es el Price-Lock de 100 € (INV-03);
+(c) CTAs de proveedor enviando a la agenda del solista (INV-09).
+
+**3) PRUEBA (ejecutada en esta sesión):** `npm run typecheck` → **Exit 0** · `npm run lint` → **Exit 0**
+(0 errores, 3534 warnings preexistentes) · `npm run verify:iban` → **Exit 0** (15/15) ·
+`npm run audit:integrity` → **Exit 0** (15/15) · `npm run verify:journey` → **Exit 0** (39 OK / 0 FAIL) ·
+`npm run audit:ssot` → **Exit 0** (hash `cefa76c2…` intacto, INV-05) · `npm run verify:pricing` → **Exit 0**
+(31/31) · `npm run audit:phone` → **Exit 0** (0 violaciones) · `npm run audit:cta-matrix` → **PASS** ·
+`npm run verify:provider-ctas` → **Exit 0** (0 violaciones) · `npm run audit:omega-rojo` →
+**20/20 VERDE** · `node scripts/audit_cls_budget.cjs` → **PASS** · `npm run audit:routes` → **0 conflictos**.
+
+**4) QUÉ NO ESTÁ PROBADO (declarado, no maquillado):**
+- **`npm run gate:prepush` completo**: el árbol arrastra deuda previa declarada y no bloqueante
+  (`audit:residues` INV-15 repo > 50 MB · `audit:orphan-imports` 189 imports rotos en zonas excluidas
+  de Next · `audit:tariff-copy` 6 menciones de 0,5 €/km ya santificadas). Se ejecutaron los gates
+  núcleo por separado, todos en verde; el prefijo agregado queda `SIN_EVIDENCIA` en esta sesión.
+- **`.claude/skills/hallmark` (187 ficheros, 6,75 MB)**: se deja **fuera** del commit. No es código de
+  la plataforma (es una skill de herramienta), y sus fixtures de slop (gradientes purple deliberados)
+  viajarían al repositorio de producción. Decisión declarada, no silencio.
+- **Push y deploy Coolify**: el `buildSha` público sólo se mide después de que Coolify reconstruya;
+  hasta entonces la promesa «en producción» es `SOSPECHOSO`.
+
+**5) PREMORTEM (G-8):**
+1) ¿Objetivo exacto? Sí: cero cambios sin commitear y push verificable a `origin/main`.
+2) Asunción frágil: el refresh de los dos JSON de scorecard se sella junto al código que lo genera; si
+   alguien re-ejecuta `audit:omega-rojo` sobre otro árbol, cambia sólo `generated_at` (ruido, no deriva).
+3) Alternativa descartada: commitear `.claude/skills` «por completitud». Descartada por CHG-3/INV-15:
+   añade 6,75 MB de fixtures ajenos al producto.
+4) Bajo carga: el asistente del viaje evalúa 1.547 fincas en memoria de cliente; medido en el verificador
+   como determinista y acotado, pero **sin prueba de navegador real en esta sesión**.
+5) Consecuencia al firmar: ningún cambio en ZONA CERO, ninguna tarifa tocada, ningún dato personal nuevo
+   en logs. Se acepta que el repo sigue por encima del presupuesto de 50 MB (deuda previa declarada).
+
+
 ## [SIGMA-CLOSE] 2026-11-21 · MOTOR IBAN ISO 13616 (BIGINT) + SENSOR ADVERSARIAL DE INTEGRIDAD
 
 **1) QUÉ CAMBIÓ:** ejecución de la **Opción 3 (YAGNI + rigor matemático)** ordenada por el Director

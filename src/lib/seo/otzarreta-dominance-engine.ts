@@ -11,8 +11,9 @@
  *
  * Doctrina aplicada sin excepciones:
  *  1. Entidad-first: sin proveedor verificado no hay URL.
- *  2. Cero invención: cada cifra (350 pax, 50-200 salón, 150 plazas de parking,
- *     menús 2026) proviene de la ficha canónica y del dossier oficial.
+ *  2. Cero invención: cada cifra (350 pax, 50-200 salón, 150 plazas de parking)
+ *     proviene de la ficha canónica; los importes de menú se derivan de
+ *     `OTZARRETA_WEDDING_MENUS` (jamás se escriben a mano en el copy).
  *  3. Precio/depósito/split: SIEMPRE desde `ear-os-ssot.ts` (cero hardcode).
  *  4. Determinismo: mismo slug → mismo copy, mismo `stripeSessionId`, mismo
  *     `provenanceHash`. N ejecuciones = bytes idénticos (idempotencia ACID).
@@ -22,7 +23,10 @@
  */
 
 import { createHash } from 'node:crypto';
-import { OTZARRETA_ENTITY } from '../constants/otzarreta-entity';
+import {
+    OTZARRETA_ENTITY,
+    OTZARRETA_WEDDING_MENUS,
+} from '../constants/otzarreta-entity';
 import {
     CENTRALITA_EAR_OS,
     DEPOSITO_STRIPE_EUR,
@@ -31,6 +35,41 @@ import {
     LOGISTICA_KM_EXENTOS,
     SPLIT_SOBERANO,
 } from '../constants/ear-os-ssot';
+
+/**
+ * Snippets de copy DERIVADOS de la carta vigente (`OTZARRETA_WEDDING_MENUS`).
+ *
+ * Ninguna variante de los bancos de abajo vuelve a escribir un importe: se
+ * interpola aquí. Antes estos literales vivían congelados en el copy de 2026 y la
+ * matriz seguía prometiendo el suelo antiguo cuando la ficha ya vendía desde
+ * 145 € (INV-10 / AF-4). Una sola edición en la entidad mueve las 126 URLs.
+ */
+function menuPriceLabel(index: number): string {
+    const price = OTZARRETA_WEDDING_MENUS[index]?.priceEur ?? null;
+    return price === null ? 'a consultar' : `${price.toFixed(2).replace('.', ',')} € + IVA`;
+}
+
+function menuName(index: number): string {
+    return OTZARRETA_WEDDING_MENUS[index]?.name ?? 'Menú de gala';
+}
+
+const WEDDING_MENU_COUNT = OTZARRETA_WEDDING_MENUS.length;
+
+/** Carta corta «Tradición 145,00 €, Asador 155,00 €…» (evaluada en uso, no al importar). */
+function weddingFloorNotes(): string {
+    return joinSpanish(
+        OTZARRETA_WEDDING_MENUS.map(
+            (menu) => `${menu.name.replace('Menú ', '')} ${menu.priceEur?.toFixed(2).replace('.', ',') ?? 'a consultar'} €`,
+        ),
+    );
+}
+
+function weddingHorquillaLabel(): string {
+    if (OTZARRETA_WEDDING_MENUS.length <= 1) return menuPriceLabel(0);
+    return `de ${menuPriceLabel(0)} a ${menuPriceLabel(OTZARRETA_WEDDING_MENUS.length - 1)}`;
+}
+
+const DEPOSIT_COPY_LABEL = `${DEPOSITO_STRIPE_EUR.toFixed(2).replace('.', ',')} €`;
 
 /** Vertical comercial del restaurante (4 × 18 municipios = 72 landings). */
 export type OtzarretaVerticalSlug =
@@ -327,7 +366,7 @@ export const OTZARRETA_INTENT_SEEDS: readonly OtzarretaIntentSeed[] = Object.fre
         keyword: 'menú de boda en Derio',
         vertical: 'bodas-gala',
         municipality: 'derio',
-        hook: 'los siete menús oficiales 2026 desde 100 € + IVA y los menús especiales se acuerdan antes de firmar',
+        hook: `los ${WEDDING_MENU_COUNT} menús de gala desde ${menuPriceLabel(0)} y los menús especiales se acuerdan antes de firmar`,
     },
     {
         slug: 'boda-jardin-derio',
@@ -677,14 +716,14 @@ export const OTZARRETA_INTENT_SEEDS: readonly OtzarretaIntentSeed[] = Object.fre
         keyword: 'precio de restaurante para bodas en Bizkaia',
         vertical: 'bodas-gala',
         municipality: null,
-        hook: 'tarifas transparentes de 100 € a 173 € + IVA por comensal y depósito de 100 € 100% deducible del total',
+        hook: `tarifas transparentes ${weddingHorquillaLabel()} por comensal y depósito de ${DEPOSIT_COPY_LABEL} 100% deducible del total`,
     },
     {
         slug: 'reservar-restaurante-otzarreta',
         keyword: 'reservar en Restaurante Otzarreta Derio',
         vertical: 'comuniones-empresa',
         municipality: 'derio',
-        hook: 'la fecha se bloquea en exclusiva (1 evento al día) mediante Conserjería EAR OS y depósito Stripe de 100 € deducible',
+        hook: `la fecha se bloquea en exclusiva (1 evento al día) mediante Conserjería EAR OS y depósito Stripe de ${DEPOSITO_STRIPE_EUR.toFixed(2).replace('.', ',')} € deducible`,
     },
 ]);
 
@@ -700,7 +739,7 @@ const OPENINGS: readonly string[] = Object.freeze([
     'Si la lista de invitados sale de {muni} y del Gran Bilbao, el punto de encuentro más práctico es Derio, en el corazón del Txorierri, con aparcamiento cerrado gratuito para toda la comitiva.',
     'Entre el enlace civil o religioso en {muni} y el banquete suele abrirse una espera incómoda; en los jardines botánicos de Derio ese tiempo se transforma en cóctel con cortador de jamón.',
     'Para {event} en {muni}, la dirección de Eduardo Martínez muestra primero los salones y jardines de Derio antes de cerrar menú, porque la logística manda tanto como el producto.',
-    '{muni} mantiene su propio pulso social y familiar; la cocina tradicional vasca y la brasa de encina en Derio responden con menús oficiales cerrados desde 100 € + IVA en bodas y 40 € en grupos.',
+    '{muni} mantiene su propio pulso social y familiar; la cocina tradicional vasca y la brasa de encina en Derio responden con menús de gala cerrados desde ' + menuPriceLabel(0) + '.',
     'La distancia real entre {muni} y Santo Domingo Hiribidea, 13 se mide en pocos minutos de autovía, una ventaja que permite disfrutar hasta el final sin depender de taxis urbanos.',
     'Un {event} en {muni} pierde ritmo cuando ceremonia, copas y cena se reparten en tres direcciones; en Derio todo ocurre dentro de la misma finca ajardinada y climatizada.',
     'Cuando parte de la familia reside en {muni} y otros invitados aterrizan en Loiu, Derio actúa como nodo central de Bizkaia con acceso directo desde el aeropuerto y la N-637.',
@@ -747,11 +786,14 @@ const ANGLES: readonly string[] = Object.freeze([
 const KITCHEN: readonly string[] = Object.freeze([
     'La cocina de Eduardo Martínez une la tradición vasca documentada desde 1902 y 1962 con la parrilla al carbón de encina y sarmiento en Derio.',
     'Lejos del catering recalentado en cubetas, cada chuletón de ganado mayor y cada rodaballo salvaje del Cantábrico pasan de la brasa viva al plato.',
-    'El dossier oficial 2026 fija siete menús nupciales cerrados (de 100 € a 173 € + IVA), comuniones de 55 € a 95 € y menús de grupo desde 40 €.',
+    'El dossier oficial vigente fija una carta cerrada de menús de gala ' +
+        `(${menuName(0)} ${menuPriceLabel(0)} … ${menuName(OTZARRETA_WEDDING_MENUS.length - 1)} ${menuPriceLabel(OTZARRETA_WEDDING_MENUS.length - 1)}) ` +
+        'junto a menús de comunión y de grupo, sin sorpresas al firmar.',
     'Cuatro generaciones de oficio respaldan una cocina de cazuela vasca y brasa directa apoyada en bodega seleccionada y servicio de sala propio.',
     'El recinto elabora, emplata y sirve en la misma finca de Derio, asegurando temperatura, punto de brasa y ritmo de mesa en banquetes de hasta 350 pax.',
-    'Desde el Menú Cantábrico (100 €) hasta el Menú Caserío Ezkertza Beko (173 € con txangurro y Möet & Chandon), cada partida es pública y trazable.',
-    'Opciones como el Menú Imperial o el Menú Vasco incorporan barra libre, DJ y autobús de 55 plazas incluidos en el presupuesto oficial de 2026.',
+    `Desde el ${menuName(0)} (${menuPriceLabel(0)}) hasta el ${menuName(OTZARRETA_WEDDING_MENUS.length - 1)} ` +
+        `(${menuPriceLabel(OTZARRETA_WEDDING_MENUS.length - 1)} con txangurro y parrilla al sarmiento), cada partida es pública y trazable.`,
+    'El tamaño de la carta es limitado y se sirve con barra libre, sesión de DJ y autobús de invitados incluidos según el menú de gala elegido.',
     'La cocina adapta menús identificados en mesa para celíacos, vegetarianos y alergias alimentarias sin perder la calidad del banquete principal.',
     'El comedor acristalado de 50 a 200 comensales y la carpa exterior hasta 350 plazas permiten celebrar con total holgura en cualquier estación.',
     'La tradición sidrera y de asador vasco convive en Derio con zona chill out, parque infantil homologado y ascensor accesible para personas mayores.',
@@ -998,7 +1040,7 @@ export type OtzarretaScope = 'municipal' | 'provincial';
 
 /**
  * Construye las 7 preguntas frecuentes con respuestas verificables del dossier oficial.
- * Incorpora los 7 menús de bodas 2026, comuniones, aforo en Derio y regalos oficiales.
+ * Incorpora la carta de gala vigente (derivada de `OTZARRETA_WEDDING_MENUS`), aforo en Derio y regalos oficiales.
  */
 function buildFaqs(context: CopyContext): readonly OtzarretaFaq[] {
     const depositLabel = `${DEPOSITO_STRIPE_EUR.toFixed(2).replace('.', ',')} €`;
@@ -1013,7 +1055,7 @@ function buildFaqs(context: CopyContext): readonly OtzarretaFaq[] {
                 '¿Qué presupuesto hay que prever para {event}?',
                 '¿Cómo se calcula el precio del banquete?',
             ]),
-            answer: `La casa dispone de tarifas oficiales cerradas para 2026: los menús nupciales parten de 100,00 € + IVA en el Menú Cantábrico (marisco individual, merluza o bacalao y entrecotte a la brasa), 125,00 € en el Menú Paloma (con cortador de jamón y rodaballo salvaje), 123,40 € en oferta Menú Imperial (con 1h barra libre y DJ gratis), 142,50 € en Menú Temporada (con cortador de jamón incluido), 138,00 € en Menú Vasco (con 2h barra libre, DJ y autobús de 55 plazas), 155,00 € en Menú Ezkertza (con chuletón de 1 Kg y bogavante) y 173,00 € en Menú Caserío Ezkertza Beko (con Möet & Chandon). Para comuniones hay menús de 55,00 € a 95,00 € (tarifas 2026) y para grupos desde 40,00 €. El depósito de ${depositLabel} bloquea la fecha y se descuenta íntegro del total.`,
+            answer: `La casa publica una carta cerrada de ${WEDDING_MENU_COUNT} menús de gala (${weddingFloorNotes()}), con el servicio de gala completo en el tramo alto. El depósito de ${depositLabel} bloquea la fecha en exclusiva y se descuenta íntegro de la liquidación final.`,
         },
         {
             question: ask('q-capacity', [
@@ -1112,8 +1154,8 @@ function buildSections(
     const techLine = fillTemplate(pick(TECH, context.slug, 'section-tech'), context);
     return [
         {
-            heading: 'Parrilla al carbón y cocina vasca desde 100 €/pax',
-            body: `${OTZARRETA_ENTITY.heritage} La oferta gastronómica incluye 7 menús nupciales oficiales desde 100 € + IVA en el Menú Cantábrico (marisco individual, merluza o bacalao y entrecotte a la brasa) hasta 173 € en el Menú Caserío Ezkertza Beko (con Möet & Chandon y chuletón de 1 Kg a la brasa), con comuniones desde 55 € y grupos desde 40 €. Hoy el servicio se apoya en ${spacesLabel}, sin cambiar de dirección entre ceremonia, aperitivo y banquete.`,
+            heading: `Parrilla al carbón y cocina vasca desde ${menuPriceLabel(0)} por comensal`,
+            body: `${OTZARRETA_ENTITY.heritage} La oferta gastronómica vigente se articula en ${WEDDING_MENU_COUNT} menús de gala (${weddingHorquillaLabel()}), con menús de comunión y de grupo complementarios. Hoy el servicio se apoya en ${spacesLabel}, sin cambiar de dirección entre ceremonia, aperitivo y banquete.`,
         },
         {
             heading: `Cómo se organiza ${context.vertical.shortLabel} en ${context.scope === 'provincial' ? 'Bizkaia' : context.municipality.name}`,

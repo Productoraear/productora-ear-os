@@ -10,6 +10,7 @@ import { CONNECTORS, DOORS, ECOSYSTEM_SECTORS } from '@/lib/catalog/ecosystem-on
 import type { DoorId } from '@/lib/catalog/ecosystem-ontology';
 import { JOURNEYS } from '@/lib/catalog/journey-content';
 import type { LeadTemp, TempCta } from '@/lib/catalog/journey-content';
+import { CoupleJourneyWizard } from '@/components/journey/CoupleJourneyWizard';
 
 type Mode = 'dark' | 'light';
 
@@ -39,12 +40,41 @@ function waUrl(text: string): string {
   return `https://wa.me/${digits}?text=${encodeURIComponent(text)}`;
 }
 
-function CtaLink({ cta, className, onClick }: { cta: TempCta; className: string; onClick?: () => void }): React.JSX.Element {
+/**
+ * ── FIX DEL VIAJE DEL CLIENTE ──────────────────────────────────────────────
+ * Antes: cualquier CTA con prefijo `WA:` (los de la etapa «Listo para cerrar»)
+ * abría WhatsApp directamente. Una pareja decidida aterrizaba en un chat sin
+ * provincia, sin fecha, sin invitados y sin presupuesto: el viaje moría justo
+ * antes de comprar.
+ *
+ * Ahora: los CTA de la etapa HOT abren primero el asistente, que recoge el
+ * brief, lo cruza contra el catálogo real y SOLO entonces ofrece el WhatsApp
+ * con todo el contexto dentro del mensaje. El resto de CTA (COLD/WARM) siguen
+ * siendo enlaces normales.
+ */
+function CtaLink({
+  cta,
+  className,
+  onClick,
+  openAssistant,
+}: {
+  cta: TempCta;
+  className: string;
+  onClick?: () => void;
+  openAssistant: () => void;
+}): React.JSX.Element {
   if (cta.href.startsWith('WA:')) {
     return (
-      <a href={waUrl(cta.href.slice(3))} target="_blank" rel="noopener noreferrer" className={className} onClick={onClick}>
+      <button
+        type="button"
+        onClick={() => {
+          onClick?.();
+          openAssistant();
+        }}
+        className={className}
+      >
         {cta.label} <ArrowRight className="h-4 w-4" />
-      </a>
+      </button>
     );
   }
   return (
@@ -63,6 +93,8 @@ export function JourneyPage({ door }: { door: DoorId }): React.JSX.Element {
   const [temp, setTemp] = useState<LeadTemp>('COLD');
   const [manualTemp, setManualTemp] = useState(false);
   const [active, setActive] = useState(0);
+  /** Incrementa cada vez que un CTA «Listo para cerrar» abre el asistente. */
+  const [assistantSignal, setAssistantSignal] = useState(0);
 
   const stepRefs = useRef<(HTMLElement | null)[]>([]);
   const heroRef = useRef<HTMLElement | null>(null);
@@ -119,6 +151,15 @@ export function JourneyPage({ door }: { door: DoorId }): React.JSX.Element {
 
   const goTo = useCallback((idx: number) => {
     stepRefs.current[idx]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, []);
+
+  /**
+   * Abre el asistente del viaje. El `prompt` del CTA ya no se envía a secas por
+   * WhatsApp: el asistente recoge provincia, fecha, invitados y presupuesto, y
+   * sólo después ofrece el WhatsApp con todo el contexto dentro.
+   */
+  const openAssistant = useCallback(() => {
+    setAssistantSignal((n) => n + 1);
   }, []);
 
   const stage = content.stages[active];
@@ -279,7 +320,12 @@ export function JourneyPage({ door }: { door: DoorId }): React.JSX.Element {
                 ))}
               </ul>
               <div className="mt-6">
-                <CtaLink cta={s.ctas[temp]} className={`inline-flex items-center gap-2 rounded-full px-5 py-3 text-[13px] font-medium ${gold}`} />
+                <CtaLink
+                  cta={s.ctas[temp]}
+                  onClick={() => undefined}
+                  openAssistant={openAssistant}
+                  className={`inline-flex items-center gap-2 rounded-full px-5 py-3 text-[13px] font-medium ${gold}`}
+                />
               </div>
             </motion.article>
           ))}
@@ -346,9 +392,20 @@ export function JourneyPage({ door }: { door: DoorId }): React.JSX.Element {
             <h2 className="text-[18px] font-semibold tracking-[-0.02em]">¿Hablamos?</h2>
             <p className="mt-1 text-[13px] leading-[1.5] text-[var(--muted)]">Respuesta humana por WhatsApp. Sin compromiso.</p>
           </div>
-          <CtaLink cta={stage.ctas[temp]} className={`inline-flex items-center gap-2 rounded-full px-6 py-3 text-[13px] font-medium ${gold}`} />
+          <CtaLink
+            cta={stage.ctas[temp]}
+            openAssistant={openAssistant}
+            className={`inline-flex items-center gap-2 rounded-full px-6 py-3 text-[13px] font-medium ${gold}`}
+          />
         </div>
       </section>
+
+      {/* Asistente del viaje: recoge el brief antes de ofrecer WhatsApp. */}
+      <CoupleJourneyWizard
+        openSignal={assistantSignal}
+        triggerLabel="Que el sistema me busque las fincas"
+        className={`inline-flex items-center gap-2 rounded-full px-6 py-3 text-[13px] font-medium ${gold}`}
+      />
     </div>
   );
 }

@@ -26,7 +26,14 @@ import {
   getOtzarreta126Slugs,
   type OtzarretaClusterLanding
 } from '@/lib/seo/otzarreta-126-cluster-engine';
+import {
+  resolveProviderCalendarHref,
+} from '@/lib/providers/provider-cta-engine';
 import { DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
+import {
+  OTZARRETA_ENTITY,
+  OTZARRETA_WEDDING_MENUS_CLAIM,
+} from '@/lib/constants/otzarreta-entity';
 import {
   SOVEREIGN_DEMAND_CHANNEL,
   buildDemandWhatsappUrl,
@@ -140,6 +147,11 @@ export default async function OtzarretaDynamicLandingPage({ params }: Props): Pr
   const clusterLanding = getOtzarreta126Landing(slug);
   const landing = clusterLanding ? null : getOtzarretaLanding(slug);
 
+  // CTAs por ENTIDAD (W48): ninguna landing de Otzarreta puede bloquear la agenda
+  // de Edwin Agudelo (`/reservar/solista`). El bloqueo aterriza en el calendario
+  // real del proveedor, gobernado por `provider-cta-engine`.
+  const blockHref = resolveProviderCalendarHref(OTZARRETA_ENTITY, { intent: 'bloquear' });
+
   if (!clusterLanding && !landing) {
     notFound();
   }
@@ -168,7 +180,7 @@ export default async function OtzarretaDynamicLandingPage({ params }: Props): Pr
           addressCountry: 'ES'
         },
         servesCuisine: 'Vasca Tradicional, Parrilla de Carbón y Sarmientos',
-        priceRange: '100€ - 185€'
+        priceRange: OTZARRETA_WEDDING_MENUS_CLAIM
       }
     ];
 
@@ -220,7 +232,7 @@ export default async function OtzarretaDynamicLandingPage({ params }: Props): Pr
 
             <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
               <a
-                href="/reservar/solista"
+                href={blockHref}
                 className="px-8 py-3.5 rounded-xl bg-[#ecb613] text-black font-extrabold text-sm hover:bg-[#ffe066] transition-all flex items-center gap-2 shadow-lg shadow-[#ecb613]/20"
               >
                 <CreditCard className="w-4 h-4" />
@@ -271,7 +283,7 @@ export default async function OtzarretaDynamicLandingPage({ params }: Props): Pr
               </div>
               <h2 className="text-lg font-bold text-white">Brasa Vasca & Parrilla Tradicional</h2>
               <p className="text-xs text-gray-400 leading-relaxed">
-                {clusterLanding.grillInfo}. Cortes nobles de vaca vieja gallega madurada, pescados salvajes a la brasa y productos km 0 con menús canónicos de 100 € a 185 € + IVA.
+                {clusterLanding.grillInfo}. Cortes nobles de vaca vieja gallega madurada, pescados salvajes a la brasa y productos km 0 con {OTZARRETA_WEDDING_MENUS_CLAIM}.
               </p>
             </div>
 
@@ -290,7 +302,7 @@ export default async function OtzarretaDynamicLandingPage({ params }: Props): Pr
           <div className="space-y-6">
             <div className="text-center">
               <span className="text-xs font-mono text-[#ecb613] uppercase tracking-wider">
-                PROPUESTA GASTRONÓMICA OFICIAL 2026
+                PROPUESTA GASTRONÓMICA OFICIAL · CARTA DE GALA VIGENTE
               </span>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-white mt-1">
                 Menús y Presupuesto Inmediato
@@ -379,7 +391,7 @@ export default async function OtzarretaDynamicLandingPage({ params }: Props): Pr
 
           <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
             <a
-              href="/reservar/solista"
+              href={blockHref}
               className="px-8 py-3.5 rounded-xl bg-[#ecb613] text-black font-extrabold text-sm hover:bg-[#ffe066] transition-all flex items-center gap-2 shadow-lg shadow-[#ecb613]/20"
             >
               <CreditCard className="w-4 h-4" />

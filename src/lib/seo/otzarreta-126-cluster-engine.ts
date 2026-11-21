@@ -9,12 +9,45 @@
  * - Parrilla vasca de brasa al carbón de encina y sarmiento de Eduardo Martínez.
  * - Parking privado cerrado para 150 vehículos.
  * - Aforo acristalado de 50 a 200 comensales (hasta 350 en carpa/jardín).
- * - 7 Menús oficiales canónicos (145 € a 185 € + IVA).
+ * - 4 Menús de Gala oficiales sanción 2027 (145 € a 185 € + IVA). Cero literales:
+ *   cada importe de esta matriz se DERIVA de `OTZARRETA_WEDDING_MENUS`, de modo
+ *   que subir el suelo en la entidad mueve las 126 landings a la vez (INV-10).
  * - Maître Digital 24/7 integrado en cada landing.
  * ══════════════════════════════════════════════════════════════════════════════
  */
 
-import { OTZARRETA_ENTITY } from '../constants/otzarreta-entity';
+import {
+  OTZARRETA_ENTITY,
+  OTZARRETA_WEDDING_MENUS,
+  OTZARRETA_WEDDING_MENUS_CLAIM,
+} from '../constants/otzarreta-entity';
+
+/** Importe es-ES con coma decimal y IVA declarado (`145,00 € + IVA`). */
+function euroLabel(priceEur: number | null): string {
+  if (priceEur === null) return 'a consultar';
+  return `${priceEur.toFixed(2).replace('.', ',')} € + IVA`;
+}
+
+/** Menú de gala por posición en la carta sancionada (`null` si no existe). */
+function weddingMenu(index: number): string {
+  return OTZARRETA_WEDDING_MENUS[index]?.name ?? 'Menú de gala';
+}
+
+/**
+ * Reclamo de horquilla que publica cada landing.
+ *
+ * Se DERIVA de la carta vigente: si el CEO cambia el suelo o el techo en
+ * `otzarreta-entity.ts`, las 126 landings lo publican al día siguiente sin tocar
+ * Publicar aquí un literal de 2026 era el bug: la matriz seguía prometiendo el
+ * suelo derogado mientras la ficha ya vendía desde 145 € (INV-10 / AF-4).
+ */
+export const OTZARRETA_126_MENU_RANGE: string = (() => {
+  const floor = OTZARRETA_WEDDING_MENUS[0]?.priceEur ?? null;
+  const ceiling = OTZARRETA_WEDDING_MENUS[OTZARRETA_WEDDING_MENUS.length - 1]?.priceEur ?? null;
+  if (floor === null || ceiling === null) return OTZARRETA_WEDDING_MENUS_CLAIM;
+  if (floor === ceiling) return `Menú de gala único a ${euroLabel(floor)}`;
+  return `Menús de Gala de ${euroLabel(floor)} a ${euroLabel(ceiling)}`;
+})();
 
 export interface OtzarretaBizkaiaMunicipality {
   readonly slug: string;
@@ -86,7 +119,7 @@ export const OTZARRETA_OCCASIONS: readonly OtzarretaOccasion[] = Object.freeze([
     h1Pattern: 'Bodas en Caserío cerca de {municipio} con Exclusividad y Párking',
     priority: 0.95,
     targetAudience: 'Parejas que buscan caserío vasco auténtico, 1 evento al día y cocina de brasa.',
-    menuRecommendation: 'Menú Asador al Sarmiento (155 € + IVA) con chuletón de 1 Kg y 1/2 bogavante.',
+    menuRecommendation: `${weddingMenu(1)} (${euroLabel(OTZARRETA_WEDDING_MENUS[1]?.priceEur ?? null)}) con chuletón de 1 Kg y 1/2 bogavante.`,
     capacityRange: '50 a 200 comensales (hasta 350 en carpa botánica)',
     keyBenefit: `Solo 1 boda al día en exclusiva, párking privado de ${OTZARRETA_ENTITY.parkingSpaces} plazas y parrilla al carbón.`,
   },
@@ -96,7 +129,7 @@ export const OTZARRETA_OCCASIONS: readonly OtzarretaOccasion[] = Object.freeze([
     h1Pattern: 'Ceremonias Civiles con Jardín y Carpa a minutos de {municipio}',
     priority: 0.92,
     targetAudience: 'Novios que desean ceremonia civil oficial al aire libre con cóctel en jardín.',
-    menuRecommendation: 'Menú Temporada (142,50 €) o Caserío Beko (173 € con Möet & Chandon).',
+    menuRecommendation: `Cóctel en jardín y banquete con ${weddingMenu(0)} (${euroLabel(OTZARRETA_WEDDING_MENUS[0]?.priceEur ?? null)}) o ${weddingMenu(3)} (${euroLabel(OTZARRETA_WEDDING_MENUS[3]?.priceEur ?? null)}).`,
     capacityRange: '50 a 350 invitados en exteriores ajardinados',
     keyBenefit: 'Jardines botánicos con carpa climatizada, sonido Bose y sin cortes acústicos.',
   },
@@ -106,7 +139,7 @@ export const OTZARRETA_OCCASIONS: readonly OtzarretaOccasion[] = Object.freeze([
     h1Pattern: `Comidas de Empresa cerca de {municipio} con Párking Privado para ${OTZARRETA_ENTITY.parkingSpaces} Vehículos`,
     priority: 0.90,
     targetAudience: 'Empresas, comités de dirección y reuniones corporativas de Zamudio, Bilbao y Bizkaia.',
-    menuRecommendation: 'Menús ejecutivos y banquetes de brasa desde 100 € hasta 155 € + IVA.',
+    menuRecommendation: `${weddingMenu(1)} (${euroLabel(OTZARRETA_WEDDING_MENUS[1]?.priceEur ?? null)}) en salones reservados con factura homologada B2B.`,
     capacityRange: 'Salones reservados desde 20 hasta 200 personas',
     keyBenefit: 'Párking cerrado para toda la flota, privacidad total y factura homologada B2B.',
   },
@@ -126,7 +159,7 @@ export const OTZARRETA_OCCASIONS: readonly OtzarretaOccasion[] = Object.freeze([
     h1Pattern: 'Comuniones con Jardines y Espacio Infantil cerca de {municipio}',
     priority: 0.89,
     targetAudience: 'Familias que buscan celebrar la primera comunión en un entorno seguro y campestre.',
-    menuRecommendation: 'Menú Cantábrico (100 €) o Menú Especial Imperial con animación.',
+    menuRecommendation: `${weddingMenu(0)} (${euroLabel(OTZARRETA_WEDDING_MENUS[0]?.priceEur ?? null)}) o ${weddingMenu(2)} con animación infantil.`,
     capacityRange: '30 a 150 comensales familiares',
     keyBenefit: 'Jardines botánicos seguros para niños, menú infantil artesanal y párking vigilado.',
   },
@@ -136,7 +169,7 @@ export const OTZARRETA_OCCASIONS: readonly OtzarretaOccasion[] = Object.freeze([
     h1Pattern: 'Bodas de Oro y Plata en Caserío Vasco a minutos de {municipio}',
     priority: 0.87,
     targetAudience: 'Homenajes y aniversarios de matrimonio con gastronomía tradicional de producto noble.',
-    menuRecommendation: 'Menú Caserío Ezkertza Beko (173 € + IVA) con txangurro y Möet & Chandon.',
+    menuRecommendation: `${weddingMenu(2)} (${euroLabel(OTZARRETA_WEDDING_MENUS[2]?.priceEur ?? null)}) con txangurro y parrilla al sarmiento.`,
     capacityRange: '25 a 120 comensales íntimos',
     keyBenefit: 'Accesibilidad para mayores, salones climatizados, sonido cálido y trato señorial.',
   },
@@ -181,7 +214,7 @@ function generateOtzarreta126Landings(): readonly OtzarretaClusterLanding[] {
           parkingInfo: `Párking propio cerrado y vigilado para ${OTZARRETA_ENTITY.parkingSpaces} vehículos.`,
           grillInfo: 'Parrilla vasca tradicional de carbón de encina y sarmiento dirigida por Eduardo Martínez.',
           capacityInfo: occasion.capacityRange,
-          menuRange: 'Menús oficiales canónicos de 100 € a 173 € / 185 € + IVA.',
+          menuRange: OTZARRETA_126_MENU_RANGE,
         })
       );
     }
