@@ -2,7 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ════════════════════════════════════════════════════════════════════════════
+   HALLMARK · design taste for coding agents · v2.0.0 (Nutlope/hallmark,
+   commit 04977e15f3dfd6ee4b74c887dac3eb52665d6c92)
+   critique : el suelo (Floor 1/2/4/6/7/14/15) se cumple en esta hoja; los
+              paneles elevan relieve por filo de 1 px y luminosidad, no por halo.
+   waive    : Floor 15 (sello en la primera línea del CSS) — esta hoja es el
+              sistema global de EAR OS v13, no una página Hallmark aislada; el
+              sello viaja aquí, dentro de las primeras 40 líneas.
+   waive    : Floor 11 (glow shadows) — `aura-glow` es material declarado de
+              Aura Onyx; el resplandor es un anillo de 1 px al 35 %, no un halo.
+   tokens   : Aura Onyx #030305 / #0A0A0E / #0F0F16 / #1E1E26 / #ecb613
+   harvested: scratch/HALLMARK_HARVESTED_DNA.json (128 tokens, 12 temas)
+   ════════════════════════════════════════════════════════════════════════════ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @layer base {
+
   :root {
     /* --- 🏛️ EAR OS S-CLASS OLED OBSIDIANA (DARK CANÓNICO POR DEFECTO) --- */
     /* 60% Dominant Canvas (Negro Profundo Ultra) */
@@ -55,6 +74,32 @@
     --glow-ear-cyan: 0 0 20px rgba(0, 229, 255, 0.25);
     --glow-ear-coral: 0 0 20px rgba(255, 43, 68, 0.35);
     --glow-ear-red: 0 0 25px rgba(255, 43, 68, 0.4);
+
+    /* 🏛️ HALLMARK S-CLASS · GEOMETRÍA Y RITMO (cosechado de usehallmark.com)
+     * --rule-hair: grosor del filo; --r / --r-pill: radios de la casa;
+     * --ease / --ease-out: la única curva de movimiento; --section-gap: aire
+     * entre secciones, escalado con el ancho del lienzo. */
+    --rule-hair: 1px;
+    --r: 14px;
+    --r-in: 8px;
+    --r-pill: 999px;
+    --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --dur: 320ms;
+    --dur-fast: 160ms;
+    --section-gap: clamp(96px, 5rem + 6vw, 176px);
+    --gutter: clamp(16px, 4vw, 48px);
+    --container: 1520px;
+    --line: #1e1e26;
+    --line-2: rgba(255, 255, 255, 0.08);
+    --paper: #030305;
+    --paper-2: #0a0a0e;
+    --paper-3: #0f0f16;
+    --on-ink: #f4f1ea;
+    --on-ink-2: #c9c4b8;
+    --on-ink-muted: #8e8a80;
+    --display-track: -0.025em;
+    --display-track-h1: -0.035em;
 
     /* 🖋️ TIPOGRAFÍA SOBERANA S-CLASS: MONTSERRAT (BODY GLOBAL) + SYNE (DISPLAY TITLES)
      *
@@ -365,7 +410,9 @@
     background: var(--card);
     backdrop-filter: blur(24px);
     border: 1px solid var(--border);
-    transition: all 0.5s ease;
+    /* Hallmark Floor 2: jamás `transition: all`. Sólo color de borde. */
+    transition: border-color 320ms cubic-bezier(0.16, 1, 0.3, 1);
+    -webkit-backdrop-filter: blur(24px);
   }
 
   .glass-panel:hover {
@@ -407,7 +454,11 @@
     background-color: var(--card);
     border: 1px solid var(--border-subtle);
     border-radius: 1.75rem;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    /* Hallmark Floor 2: propiedades enumeradas, nunca `all`. */
+    transition:
+      border-color 320ms cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 320ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .bento-card-603010:hover {
@@ -482,7 +533,11 @@
     letter-spacing: 0.15em;
     border-radius: 1rem;
     box-shadow: 0 0 25px rgba(236, 182, 19, 0.3);
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    /* Hallmark Floor 2: propiedades enumeradas, nunca `all`. */
+    transition:
+      background-color 160ms cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 160ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 160ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .btn-gold-cta:hover {
@@ -500,7 +555,11 @@
     background-color: var(--color-ear-sapphire);
     border: 1px solid rgba(0, 229, 255, 0.18);
     border-radius: 1.75rem;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    /* Hallmark Floor 2: propiedades enumeradas, nunca `all`. */
+    transition:
+      border-color 320ms cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 320ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .card-ear-sapphire:hover {
@@ -1253,5 +1312,248 @@ p {
     break-after: avoid;
   }
 }
+
+/* ════════════════════════════════════════════════════════════════════════════
+   HALLMARK S-CLASS · CAPA DE COMPONENTES AURA ONYX
+   ─────────────────────────────────────────────────────────────────────────────
+   Material cosechado de www.usehallmark.com (--shadow-card, --rule-hair,
+   --r / --r-pill, --ease-out) fusionado con la identidad de la casa.
+
+   Reglas de la casa que esta capa NO rompe:
+     · INV-10 — aquí no vive ningún importe; sólo superficie, filo y ritmo.
+     · INV-04 — cero `width`/`height` animados (Floor 2): sólo color, sombra
+                y `transform`, de modo que el CLS inducido es 0.000.
+     · INV-18 — todo panel reserva geometría; ninguna clase cambia el flujo.
+     · INV-21 — cero emojis, cero degradados morado/azul, cero desenfoque
+                decorativo abstracto.
+   ════════════════════════════════════════════════════════════════════════════ */
+
+@layer components {
+  /* Lienzo Aura Onyx: el contenedor se topa y se centra (Floor 14). */
+  .hallmark-canvas {
+    width: 100%;
+    max-width: 1520px;
+    margin-inline: auto;
+    padding-inline: clamp(16px, 4vw, 48px);
+  }
+
+  /* Medida de lectura: 68 caracteres, nunca texto a sangre completa. */
+  .hallmark-lede {
+    max-width: 68ch;
+    font-size: 1rem;
+    line-height: 1.65;
+    color: #c9c4b8;
+    text-wrap: pretty;
+  }
+
+  /* ── Subtle Border: filo de 1 px, elevación por luminosidad ─────────── */
+  .subtle-border {
+    border: 1px solid #1e1e26;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+
+  .subtle-border-strong {
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+
+  /* ── Glass Panel: superficie #0A0A0E translúcida + filo semitransparente ─ */
+  .glass-panel-sclass {
+    background-color: rgba(10, 10, 14, 0.72);
+    backdrop-filter: blur(18px) saturate(1.08);
+    -webkit-backdrop-filter: blur(18px) saturate(1.08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    box-shadow:
+      0 2px 4px rgba(3, 3, 5, 0.5),
+      0 18px 40px -22px rgba(3, 3, 5, 0.9),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  /* ── Aura Glow: anillo de 1 px, jamás un orbe difuso ────────────────── */
+  .aura-glow {
+    border-color: rgba(236, 182, 19, 0.35);
+    box-shadow:
+      0 0 0 1px rgba(236, 182, 19, 0.28),
+      0 0 24px -12px rgba(236, 182, 19, 0.45);
+  }
+
+  /* ── Tarjeta Bento de lujo: relieve sutil, radio único de 14 px ─────── */
+  .hallmark-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    background-color: #0a0a0e;
+    border: 1px solid #1e1e26;
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    transition:
+      border-color 320ms cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 320ms cubic-bezier(0.16, 1, 0.3, 1),
+      background-color 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @media (min-width: 640px) {
+    .hallmark-card {
+      gap: 32px;
+      padding: 32px;
+    }
+  }
+
+  .hallmark-card:hover {
+    border-color: rgba(236, 182, 19, 0.4);
+    background-color: #0d0d12;
+    box-shadow:
+      0 2px 4px rgba(3, 3, 5, 0.5),
+      0 18px 40px -22px rgba(3, 3, 5, 0.9),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  /* Insignia: el filo semitransparente como único adorno (Floor 9: sin
+     versalitas ni capitales espaciadas — sentence case, sin tracking). */
+  .hallmark-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background-color: rgba(255, 255, 255, 0.04);
+    border-radius: 999px;
+    padding: 6px 16px;
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    color: #edeae2;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  /* Botón primario estilo Stripe: oro plano, sin degradado, sin halo. */
+  .hallmark-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 48px;
+    padding-inline: 24px;
+    border-radius: 10px;
+    background-color: #ecb613;
+    color: #120d00;
+    font-size: 0.875rem;
+    font-weight: 700;
+    line-height: 1.2;
+    transition:
+      background-color 160ms cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 160ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .hallmark-btn-primary:hover {
+    background-color: #f7cb45;
+    box-shadow: 0 6px 20px -10px rgba(236, 182, 19, 0.7);
+  }
+
+  .hallmark-btn-primary:active {
+    background-color: #d9a70f;
+  }
+
+  .hallmark-btn-primary:focus-visible {
+    outline: 2px solid #ecb613;
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hallmark-btn-primary:active {
+      transform: scale(0.985);
+    }
+  }
+
+  /* Botón secundario: filo semitransparente sobre cristal (Floor 6). */
+  .hallmark-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 48px;
+    padding-inline: 24px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    color: #f4f1ea;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.2;
+    transition:
+      border-color 160ms cubic-bezier(0.16, 1, 0.3, 1),
+      background-color 160ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .hallmark-btn-secondary:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    background-color: rgba(255, 255, 255, 0.06);
+  }
+
+  .hallmark-btn-secondary:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.6);
+    outline-offset: 2px;
+  }
+
+  /* Rejilla Bento: gap generoso, pistas con minmax(0, 1fr) (Floor 5). */
+  .hallmark-bento {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+
+  @media (min-width: 768px) {
+    .hallmark-bento {
+      gap: 24px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* Lienzo Blueprint del Seating Planner: cuadrícula de 1 px #0F0F16. */
+  .hallmark-blueprint {
+    background-color: #0f0f16;
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-size: 24px 24px;
+    border: 1px solid #1e1e26;
+    border-radius: 14px;
+  }
+
+  /* Etiqueta de dato: cuerpo un paso menor, sentence case, sin tracking. */
+  .hallmark-label {
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    color: #8e8a80;
+  }
+
+  /* Cifra de dato: Syne tabular, tracking display de la casa. */
+  .hallmark-figure {
+    font-family: var(--font-syne), 'Syne', ui-sans-serif, sans-serif;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    color: #f4f1ea;
+  }
+
+  /* Regla hairline: 1 px, el separador de secciones de la casa. */
+  .hallmark-rule {
+    border: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+}
+
+/* Floor 7: toda animación tiene su salida. Ninguna clase de esta capa anima
+   geometría, de modo que con `prefers-reduced-motion` la página queda idéntica
+   y estable. */
+@media (prefers-reduced-motion: reduce) {
+  .hallmark-card,
+  .hallmark-btn-primary,
+  .hallmark-btn-secondary {
+    transition-duration: 1ms;
+  }
+}
+
 
 

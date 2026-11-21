@@ -1,3 +1,75 @@
+## [SIGMA-CLOSE] 2026-11-21 · MOTOR IBAN ISO 13616 (BIGINT) + SENSOR ADVERSARIAL DE INTEGRIDAD
+
+**1) QUÉ CAMBIÓ:** ejecución de la **Opción 3 (YAGNI + rigor matemático)** ordenada por el Director
+Generalista: validador formal mod-97 BigInt **sin** conversor legacy BBAN/CCC, más el sensor adversarial.
+- `src/lib/finance/iban-iso13616.ts` (NUEVO, 167 líneas): fuente única de verdad del IBAN.
+  · `isValidIBAN(iban)` función pura y total: sanea (`[\s\-.]` → fuera, mayúsculas), ventana 15–34,
+    gramática `^[A-Z]{2}[0-9]{2}[A-Z0-9]+$`, **longitud estricta por país** vía
+    `IBAN_LENGTH_BY_COUNTRY` (90 países del registro SWIFT; ES = 24), reordena país+DC al final,
+    convierte A=10…Z=35 y verifica `BigInt(numerico) % 97n === 1n`. Jamás lanza (try/catch + `false`).
+  · Exporta además `normalizeIban`, `expectedIbanLength`, `computeIbanCheckDigits`, `formatIban`,
+    `IbanSchema` (Zod, SEC-4) e `Iban`.
+  · **No se construyó conversor CCC**: cero deuda muerta, orden expresa del CEO.
+- `src/lib/finance/__tests__/iban-iso13616.test.ts` (NUEVO, 303 líneas): property-based con `fast-check`,
+  **1.000 iteraciones por propiedad**, 15 aserciones en verde (ver §4).
+- `scripts/audit_platform_integrity_sota.ts` (NUEVO, 574 líneas): sensor adversarial de 15 invariantes
+  (A1–A3 red de rutas · B1–B3 precios `/otzarreta` · C1–C7 SSOT). Cumple AF-1: `--json` emite
+  `probed/source:"live"/mode:"REAL"/checkedAt`.
+- `package.json`: alias `verify:iban` y `audit:integrity`, ambos **cableados en `gate:prepush`**.
+- `scripts/run_sv_protocol_15_gates.cjs`: de 17 a **19 puertas** (+`verify:iban`, +`audit:integrity`).
+- `package-lock.json`: `fast-check` añadido a devDependencies (0 dependencias en runtime).
+
+**2) QUÉ RIESGO DESAPARECE:** hoy `validateIbanIso13616` (en `trojan-horse-schema`) aceptaba cualquier IBAN
+de longitud legal sin tabla por país, y **nadie lo probaba con entradas hostiles**. Ahora toda la plataforma
+dispone de un motor con longitud estricta por país, 15 propiedades matemáticas y una sonda que verifica en
+cada gate que adulterar un dígito rompe el MOD-97.
+
+**3) PRUEBA:** `npm run verify:iban` → Exit 0 (15/15) · `npm run audit:integrity` → Exit 0 (15/15) ·
+`node scripts/run_sv_protocol_15_gates.cjs` → **19/19 EXIT CODE 0** · `npm run typecheck` Exit 0 ·
+`npm run lint` Exit 0 (0 errores) · `npm run audit:ssot` Exit 0 (hash `cefa76c2…` intacto, INV-05) ·
+`npm run audit:gates` Exit 0 (`ORPHAN=0`, `MISSING=0`).
+
+**4) QUÉ NO ESTÁ PROBADO (declarado, no maquillado):**
+- **E2E HTTP real** de las URLs del sitemap: el sensor mide **estática del árbol de rutas**, no hace
+  peticiones a producción. Un 200/404 en vivo queda `SIN_EVIDENCIA` en esta sesión.
+- **Corpus de IBAN por país**: las propiedades P1/P2 se generan con DC **calculados** por nuestro propio
+  `computeIbanCheckDigits`, no con un validador externo independiente. Hay 10 IBAN reales de referencia
+  (semilla) que sí anclan la implementación fuera del bucle.
+- **`fast-check` no corre bajo `vitest`/`jest`**: el repo no tiene runner; el test se ejecuta como script
+  `tsx` con `node:assert`, igual que el resto de `src/**/__tests__/`.
+
+**5) HALLAZGOS DEL SENSOR (evidencia real, 2026-11-21):**
+- **A1 VERIFICADO**: las 50 rutas estáticas del sitemap resuelven a página o a dueño dinámico real
+  (`/bodas/[provincia]/[servicio]/[municipio]` sirve las 4 de `GSC_VERIFIED_MONEY_ROUTES`).
+- **A2 VERIFICADO**: 24 segmentos de primer nivel, 121 prefijos con página; `api`, `actions`, `components`,
+  `context`, `data` y los metadatos (`sitemap*.xml`, `pages/`) **no son rutas** y quedan fuera del censo.
+- **A3 VERIFICADO**: 139 `href` internos literales en 1.885 ficheros → **0 rotos** (INV-09).
+- **A1c VERIFICADO**: ninguna URL del sitemap excede la profundidad del árbol (máx. 4 segmentos).
+- **A1b VERIFICADO con 0 expedientes**: 15 promesas se sirven por dueño dinámico y las 15 tienen el slug
+  referenciado en el código. **Se declara la limitación**: A1b no puede hoy distinguir "slug vivo" de
+  "slug citado en otro sitio"; su verde es de *existencia*, no de *contenido publicado*.
+
+**6) PREMORTEM (G-8):**
+1) ¿Objetivo exacto? Sí: `isValidIBAN` + `IbanSchema` + fast-check + sensor. **No** se entregó el primo
+   cosmético (conversor CCC) porque el CEO lo descartó por YAGNI.
+2) Asunciones frágiles: (a) `IBAN_LENGTH_BY_COUNTRY` transcrita a mano del registro SWIFT — si un país
+   cambia longitud, hay que actualizar la tabla; (b) el matcher de rutas asume que Next no resuelve
+   grupos `(...)` como segmento (correcto, verificado en disco).
+3) Alternativa descartada: validar con `Number` y dividir en trozos (el clásico mod-97 por bloques).
+   Descartada porque añade bucles y off-by-one sin necesidad: BigInt es exacto y más simple de auditar.
+4) Bajo carga: el sensor recorre 1.885 ficheros y 314 rutas en ~2 s de I/O local; no entra en el
+   runtime de la app, sólo en el gate. Coste de build: **0** (no se importa desde `src/app`).
+5) Consecuencia al firmar: ningún cambio en ZONA CERO (hash intacto), ningún cambio de tarifas, ningún
+   dato personal en logs. El riesgo asumido es que `trojan-horse-schema` conserve su validador legacy
+   hasta que se decida migrarlo (deuda declarada, no silenciada).
+
+**7) DECISIÓN PENDIENTE DEL CEO:** ¿migramos `trojan-horse-schema.validateIbanIso13616` para que
+delegue en `@/lib/finance/iban-iso13616` (una sola fuente de verdad), o lo dejamos hasta el próximo bloque?
+Hoy existen **dos** validadores de IBAN aptos; eso es deuda de duplicidad (INV-10 aplicado a código, no a copy).
+
+- La carpeta `src/lib/providers/trojan-horse-schema.ts` **sigue con su validador legacy**: este bloque
+  **no refactorizó ese consumidor** (fuera de scope); ambos validadores coexisten hoy.
+
 ## [SIGMA-CLOSE] 2026-11-21 · SANCIÓN CEO: CARTA DE GALA 2027 (145–185 €) + PRESET CANÓNICO DE AFORO
 
 **1) QUÉ CAMBIÓ:** ejecución de las 3 decisiones formales del Director Generalista sobre Restaurante
@@ -5878,4 +5950,156 @@ Estado: VERIFICADO (17/17 + 31/31). Sin tocar la ZONA CERO.
 5) DECISION: autorizar el baseline de la BD (prisma migrate resolve + deploy, o db push). Hasta entonces conectores y ontologia funcionan en memoria declarada, no persistidos.
 
 Detalle forense completo: .antigravity/METACOMPILER_COMMAND_CENTER_CLOSE.md
+
+
+[OMEGA-CLOSE] 2026-11-21 · IBAN_ISO13616_BIGINT_PROPERTY_TESTING + SENSOR_ADVERSARIAL_INTEGRIDAD
+
+Orden ejecutada: Resolución del Director Generalista — OPCIÓN 3 (YAGNI): validador formal
+mod-97 BigInt sin conversor legacy BBAN/CCC.
+
+1) CAMBIO: `src/lib/finance/iban-iso13616.ts` (fundido) expone `isValidIBAN`, `normalizeIban`,
+   `computeIbanCheckDigits`, `formatIban`, `expectedIbanLength`, `IbanSchema`. Algoritmo ISO
+   13616 literal: saneado -> gramática `^[A-Z]{2}[0-9]{2}[A-Z0-9]+$` -> longitud estricta por
+   país (tabla SWIFT; ES=24) -> rotación de los 4 primeros al final -> A=10..Z=35 (charCode-55)
+   -> `BigInt(numerico) % 97n === 1n`. Se eliminó del test el bloque P1b duplicado que vivía
+   DESPUÉS de `process.exit(0)` (código muerto, FLUENCY-4).
+2) RIESGO QUE DESAPARECE: un IBAN con un dígito adulterado podía pasar a liquidación del Split
+   Soberano (dinero real saliendo a una cuenta errónea). Ahora el 100% de los mutantes de 1
+   dígito se rechazan y la aritmética es exacta sobre ~112 bits (un `Number` de 53 bits
+   validaría basura).
+3) PRUEBA: `npm run verify:iban` = 15/15 propiedades × 1.000 iteraciones, Exit 0 · `npm run
+   audit:integrity` = 15/15 invariantes, Exit 0 · `node scripts/run_sv_protocol_15_gates.cjs` =
+   19/19 Exit 0 · `npm run audit:ssot` = hash cefa76c2... == referencia · `npm run
+   audit:omega-rojo` = 20/20 VERDE · typecheck Exit 0 · eslint Exit 0.
+   Prueba de que el sensor NO es fachada: se inyectó una deriva 185 € -> 195 € en
+   `otzarreta-entity.ts` y el sensor pasó a 12/15 con B1/B2/B3 SOSPECHOSO y Exit 1; SSOT
+   restaurado y `git diff` vacío.
+4) NO PROBADO: el IBAN no está cableado aún a ningún formulario/server action real (no hay
+   boundary externo consumiendo `IbanSchema` en esta sesión). La aceptación de IBANs de países
+   fuera de la tabla se resuelve por la ventana genérica 15–34, sin verificar MOD-97 de país
+   desconocido contra registro SWIFT en vivo.
+5) DECISIÓN: se descartó el conversor CCC/BBAN (deuda sin valor: SEPA opera con IBAN formado)
+   y se descartó validar con `Number` (pérdida de dígitos). Se descartó también un test de
+   mutación sobre el DC en moneda extranjera: el DC ES se valida con los dos dígitos de control
+   calculados por la propia norma, no con un oráculo externo.
+
+Premortem (5 preguntas):
+  1) Objetivo exacto: SÍ. La orden pedía `isValidIBAN`, `IbanSchema`, `fast-check` ≥1.000
+     iteraciones y el sensor de integridad. Todo existe en disco y ejecuta Exit 0. No se
+     entregó un "primo hermano cosmético": se probó con IBANs del registro SWIFT (ES, DE, GB,
+     FR, IT, NL, BE, PT, AT, NO).
+  2) Asunciones frágiles: (a) la tabla de longitudes por país es estática y copiada del registro
+     SWIFT — si un país cambia de longitud no se entera sola; (b) `computeIbanCheckDigits` se
+     usa en tests como oráculo de fixtures, no como aceptador de datos de usuario; (c) el
+     sensor recorre `src/` con regex sobre `href=` — un enlace construido por concatenación
+     (`'/artistas/' + slug`) no se audita (los interpolados se excluyen a propósito).
+  3) Alternativa descartada: motor de validación por librería externa (`ibantools`). Descartada
+     por SEC-3/SEC-4: añadir una dependencia de terceros con lógica bancaria sin auditoría
+     interna cuando la norma son 20 líneas de BigInt es riesgo sin contrapartida.
+  4) Qué se rompería bajo carga: nada nuevo — `isValidIBAN` es O(n) sobre ≤34 chars, sin red,
+     sin base de datos. El sensor es O(ficheros) y sólo corre en el arnés, nunca en request.
+  5) Consecuencia aceptada: al firmar este commit acepto que la tabla de longitudes es un
+     contrato manual: si el CEO da de alta un IBAN de un país ausente de la tabla, se valida
+     por ventana 15–34 y no por longitud exacta. Coste: falsos negativos imposibles, falsos
+     positivos sólo si un país no listado tiene longitud distinta a la genérica — se mitiga
+     añadiendo la entrada a `IBAN_LENGTH_BY_COUNTRY`.
+
+Estado: VERIFICADO (19/19 puertas + 15/15 propiedades + 15/15 invariantes + 20/20 Ω-Diamante).
+Sin tocar la ZONA CERO (`ear-os-ssot.ts` hash intacto).
+
+---
+
+## 2026-11-21 · OPERACIÓN VAMPIRIZACIÓN TOTAL HALLMARK S-CLASS
+
+**Cambio.** Se ingiere el ADN de `Nutlope/hallmark` v2.0.0 (commit `04977e15`) y de
+`www.usehallmark.com`, y se eleva el frente visual de las tres superficies de impacto.
+
+**Artefactos y ficheros tocados (rutas exactas).**
+- `scripts/harvest_hallmark_dna.cjs` (nuevo) → `scratch/HALLMARK_HARVESTED_DNA.json`
+  (128 tokens de sitio, 12 temas `--d-*`, 50 cabeceras de tema del paquete, 21
+  macroestructuras, sha256 del HTML `bf40f84d…` y del CSS `03677b0c…`).
+- `tailwind.config.cjs`: escala `rounded-card/panel/well/pill`, `shadow-elevation-1/2/3`,
+  `shadow-inset-hairline[-gold]`, `ease-hallmark[-in]`, `duration-160/320`,
+  `tracking-display[-tight/-tighter]`, `spacing` 4 px + `contour`/`measure`/`gutter`,
+  `bg-blueprint` + `bg-blueprint-major`.
+- `src/app/globals.css`: sello Hallmark en cabecera (líneas 5–17), tokens `--rule-hair`,
+  `--r`, `--ease`, `--ease-out`, `--section-gap`, `--line`, `--paper*`, `--on-ink*`;
+  capa `@layer components` con `.hallmark-*`, `.subtle-border`, `.glass-panel-sclass`,
+  `.aura-glow`; **eliminados 4 `transition: all`** (Floor 2) en `.glass-panel`,
+  `.bento-card-603010`, `.card-ear-sapphire`, `.btn-gold-cta`.
+- `src/app/(public)/otzarreta/page.tsx`: hero (insignias `hallmark-badge`, CTAs
+  `hallmark-btn-primary/secondary`, `rounded-panel`, `shadow-elevation-3`), retirado el
+  degradado de texto oro (`bg-clip-text` + `italic`, REFLEX 2b) y el import muerto
+  `AudioReactiveVisualizer`.
+- `src/components/otzarreta/BentoMenuSection.tsx`: rejilla Bento de los 4 menús con
+  `.hallmark-card`, insignia con `.aura-glow`, filete de oro `shadow-inset-hairline-gold`.
+- `src/app/(public)/seating-planner/page.tsx`: lienzo `.hallmark-blueprint` (cuadrícula
+  de 1 px sobre `#0F0F16`), fichas de evidencia `.hallmark-card`, cifras `.hallmark-figure`,
+  etiquetas `.hallmark-label`.
+- `src/components/seating/SeatingBoard.tsx` + `SeatingPlanner.tsx`: paneles y barra
+  flotante sobre `.glass-panel-sclass`.
+- `src/components/concierge/SovereignConciergeWidget.tsx`: burbuja flotante discreta
+  (`min-h-[52px]`, 14 px, `shadow-elevation-1`), **3 emojis eliminados** (Floor 30a),
+  **3 `transition-all` eliminados** (Floor 10a), `animate-pulse` con
+  `motion-reduce:animate-none` (Floor 27).
+- `DESIGN.md` § 6: taxonomía Aura Onyx Hallmark · Linear Dark Minimal · Editorial Gourmet.
+- `scripts/audit_cls_budget.cjs`: `/otzarreta` añadida al `ROUTE_FILE_MAP` y a la lista
+  por defecto (antes no estaba auditada).
+- `src/middleware.ts`: `'/otzarreta'` certificada (ver premortem 2).
+
+**Bugs de producto corregidos (medidos en producción, no supuestos).**
+1. `www.productoraear.com/otzarreta` → `308` → **`/celebraciones`** (`<title>Celebraciones
+   privadas…</title>`). El rediseño de `eb52196f` y `1d21a66a` nunca llegó a un cliente.
+2. `www.productoraear.com/restaurante-otzarreta` → `200` con `<title>Productora EAR ::
+   Alquiler de Equipos de Sonido…</title>`: el alias tampoco entregaba la ficha.
+   Causa raíz: `restaurante-otzarreta → redirect('/otzarreta')` y `/otzarreta` fuera de
+   `CERTIFIED_PRODUCTION_ROUTES` ⇒ el gate la replegaba a `/celebraciones`.
+
+**Evidencia (esta sesión).**
+- `node scripts/harvest_hallmark_dna.cjs` → `HARVEST=VERIFICADO`, Exit 0.
+- `npm run typecheck` → Exit 0 · `npm run audit:ssot` → `cefa76c2…` coincide, Exit 0.
+- `node scripts/run_sv_protocol_15_gates.cjs` → **19/19 Exit 0**.
+- `npm run audit:omega-rojo` → **20/20 VERDE**.
+- `npx tsx scripts/verify_otzarreta_charter.ts` → **42/42 PASS**.
+- `npm run verify:route-gating-hmac` → **31/31 PASS**.
+- `node scripts/audit_cls_budget.cjs` → 5 rutas, 8 reglas, **0 violaciones**.
+- `node scripts/audit_hallmark_contrast.cjs` → **28/28 pares PASS**, peor par 3.77:1.
+- Dev server: `GET /otzarreta` 200, `<title>Restaurante Otzarreta | Bodas, Asador &
+  Banquetes en Derio (Bizkaia)</title>`; markup con `hallmark-badge`×6,
+  `hallmark-btn-primary`×4, `hallmark-card`×8, `aura-glow`×2, `shadow-elevation-3`×2;
+  CSS compilado con `.hallmark-btn-primary`×6, `.aura-glow`×5, `.hallmark-card`×4,
+  `.hallmark-blueprint`×1, `.rounded-panel`×1, `.shadow-elevation-3`×1.
+
+**sloplint (honestidad de alcance).** Sobre los 6 ficheros: **0 FAIL** en las reglas
+10a/26a/26b/27/30a/2b (los `transition-all` y los emoji de las regiones tocadas quedan a
+cero). Persisten 182 FAIL, todos de las reglas 48/67/63/54 —literales `text-[#…]` y
+etiquetas en versalitas espaciadas— **heredados** del corpus preexistente: el baseline de
+`otzarreta/page.tsx` + `BentoMenuSection.tsx` ya arrojaba 91 FAIL y el rediseño **reduce**
+los de la regla 48 de 68 a 63. Se declara abierto, no "pasado".
+
+**Premortem obligatorio (5 preguntas).**
+1. ¿Objetivo exacto? Sí en las tres superficies ordenadas; **no** en el resto del corpus
+   (`sloplint` sigue rojo por literales heredados), y se declara.
+2. Asunciones frágiles: (a) el HTML de `usehallmark.com` puede cambiar sin aviso — el
+   artefacto guarda `sha256` y fecha para detectar la deriva; (b) `next/font` debe exponer
+   `--font-src-*` o `Syne`/`Inter` caen al fallback de `--font-*`; (c) certificar
+   `/otzarreta` abre una ruta al público: se hizo porque el CEO la ordenó y el alias ya la
+   declaraba canónica (`alternates.canonical`), pero **aumenta la superficie indexable**.
+3. Alternativa descartada: reescribir cada literal de color a token para poner `sloplint` a
+   cero (Floor 1). Descartada por FLUENCY-2 (>5 ficheros, riesgo alto sobre rutas de venta);
+   los tokens `--on-ink*`/`--line` ya dejan la puerta abierta a hacerlo por lotes aparte.
+4. Qué se rompe bajo carga: nada nuevo — las clases añadidas sólo alteran `color`, `border`,
+   `box-shadow` y `backdrop-filter` sobre superficies existentes; ninguna anima geometría,
+   de modo que el CLS inducido es 0.000 (medido: 0 violaciones en 5 rutas).
+   `backdrop-filter` en la barra sticky es el único coste de GPU y ya existía.
+5. Consecuencia aceptada: se firma con 182 hallazgos `sloplint` heredados y con
+   `/otzarreta` ahora certificada; el despliegue a Coolify debe revalidarse con
+   `GET https://www.productoraear.com/otzarreta` → `200` con `<title>Restaurante Otzarreta`.
+
+**Reto espejo.** Se aplicó la cláusula más exigente (AMD-2): la orden pedía "elevar las
+superficies"; el arnés de Hallmark exigía además **probar que el cliente las ve**. La
+prueba HTTP de producción reveló que ninguna de las dos entregas previas era visible. Sin
+ese reto, la entrega habría sido estéticamente correcta y comercialmente invisible.
+
+
 

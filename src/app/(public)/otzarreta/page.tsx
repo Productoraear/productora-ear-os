@@ -32,7 +32,6 @@ import { EzkertzaVenueLanding as EzkertzaVenueListing } from '@/components/otzar
 import BentoMenuSection from '@/components/otzarreta/BentoMenuSection';
 import { SovereignWhatsAppButton } from '@/components/shared/SovereignWhatsAppButton';
 import {
-  AudioReactiveVisualizer,
   HorizonXGlow
 } from '@/components/harvested';
 import {
@@ -180,7 +179,8 @@ export default async function OtzarretaFlagshipPage({
       {/* 1. HERO EDITORIAL · FOTOGRAFÍA A SANGRE + TITULAR DISPLAY      */}
       {/* ═══════════════════════════════════════════════════════════════ */}
       <section className="relative mx-auto max-w-[1520px] px-4 sm:px-6 lg:px-8">
-        <div className="relative overflow-hidden rounded-[28px] border border-white/[0.08] bg-[#0A0A0E]">
+        <div className="relative overflow-hidden rounded-panel border border-white/[0.08] bg-[#0A0A0E] shadow-elevation-3">
+
           {/* Fotografía a sangre. `fetchPriority` alto porque es el LCP. */}
           <img
             src={OTZARRETA_ENTITY.scrapedAssets.facade}
@@ -206,7 +206,7 @@ export default async function OtzarretaFlagshipPage({
 
           <div className="absolute inset-x-0 bottom-0 p-6 sm:p-10 lg:p-14">
             <div className="max-w-3xl space-y-6">
-              <h1 className="font-syne text-[clamp(2.1rem,5.2vw,4.25rem)] font-black leading-[1.02] tracking-[-0.03em] text-[#F4F1EA] [overflow-wrap:break-word]">
+              <h1 className="font-syne text-[clamp(2.1rem,5.2vw,4.25rem)] font-black leading-[1.02] tracking-display-tight text-[#F4F1EA] [overflow-wrap:break-word] [min-width:0]">
                 Asador Tradicional Otzarreta
                 <span className="mt-1 block text-[clamp(1rem,1.8vw,1.375rem)] font-medium leading-snug tracking-normal text-[#C9C4B8]">
                   Derio, Bizkaia desde 1902
@@ -219,17 +219,15 @@ export default async function OtzarretaFlagshipPage({
                 comensales en {OTZARRETA_SEATING_PRESET.exteriorGarden.label.toLowerCase()}, bajo la dirección de Eduardo Martínez.
               </p>
 
-              {/* Tres píldoras de gala: filo de 1 px, cristal, sin iconos. */}
+              {/* Tres insignias de gala: filo de 1 px semitransparente sobre
+                  cristal, sentence case, sin iconos ni versalitas (Floor 9). */}
               <ul className="flex flex-wrap gap-2">
                 {[
                   'Parrilla de carbón y sarmiento',
                   'Jardín y salón acristalado',
                   `Párking privado más de ${OTZARRETA_SEATING_PRESET.parkingSpaces} plazas`,
                 ].map((pill) => (
-                  <li
-                    key={pill}
-                    className="rounded-full border border-white/[0.12] bg-white/[0.04] px-4 py-1.5 text-[0.8125rem] text-[#EDEAE2] backdrop-blur-md"
-                  >
+                  <li key={pill} className="hallmark-badge">
                     {pill}
                   </li>
                 ))}
@@ -238,19 +236,20 @@ export default async function OtzarretaFlagshipPage({
               <div className="flex flex-wrap items-center gap-3 pt-1">
                 <a
                   href={calendarBlockHref}
-                  className="inline-flex min-h-[48px] items-center rounded-xl bg-[#ecb613] px-6 text-sm font-bold text-[#120D00] transition-colors duration-150 ease-out hover:bg-[#f7cb45] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
+                  className="hallmark-btn-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ecb613] active:scale-[0.985] motion-reduce:active:scale-100"
                 >
                   Asegurar fecha, fianza deducible {DEPOSITO_STRIPE_EUR} €
                 </a>
                 <a
                   href={calendarVisitHref}
-                  className="inline-flex min-h-[48px] items-center rounded-xl border border-white/[0.16] px-6 text-sm font-semibold text-[#F4F1EA] transition-colors duration-150 ease-out hover:border-white/40 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
+                  className="hallmark-btn-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/60 active:bg-white/[0.1] motion-reduce:transition-none"
                 >
                   Reservar visita técnica
                 </a>
               </div>
             </div>
           </div>
+
         </div>
 
         {/* Datos de la casa: una sola línea de hechos verificables. */}
@@ -307,8 +306,8 @@ export default async function OtzarretaFlagshipPage({
             </div>
             <h2 className="text-3xl sm:text-5xl font-extrabold text-white leading-tight">
               Por Qué EAR OS Rinde Más que un Directorio Pasivo
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] via-amber-200 to-[#ecb613] text-2xl sm:text-4xl mt-2 font-serif italic">
-                Cero Fuga de Parejas y 126 Landings Propias
+              <span className="mt-2 block font-syne text-2xl font-bold tracking-display text-[#ecb613] sm:text-4xl">
+                Cero fuga de parejas y 126 landings propias
               </span>
             </h2>
             <p className="text-gray-300 text-sm sm:text-base max-w-3xl mx-auto leading-relaxed">

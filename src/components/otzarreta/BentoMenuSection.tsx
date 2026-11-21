@@ -55,35 +55,33 @@ export default function BentoMenuSection({
       <div className="max-w-[65ch]">
         <h2
           id="carta-menus-title"
-          className="font-syne text-[clamp(1.75rem,3.4vw,2.75rem)] font-black leading-[1.06] tracking-[-0.02em] text-[#F4F1EA]"
+          className="font-syne text-[clamp(1.75rem,3.4vw,2.75rem)] font-black leading-[1.06] tracking-display text-[#F4F1EA] [overflow-wrap:break-word]"
         >
           {OTZARRETA_WEDDING_MENUS_CLAIM}
         </h2>
-        <p className="mt-3 text-sm leading-relaxed text-[#C9C4B8] sm:text-base">
+        <p className="mt-3 max-w-[68ch] text-sm leading-relaxed text-[#C9C4B8] sm:text-base">
           Carta de gala vigente con {OTZARRETA_WEDDING_MENUS.length} menús. Cada importe es por
           comensal y sin IVA; el menú se cierra en la visita técnica con la Conserjería.
         </p>
       </div>
 
-      <ul className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {/* Bento real: el menú insignia ocupa dos columnas en escritorio; las
+          pistas usan minmax(0, 1fr) para que las cifras nunca desborden. */}
+      <ul className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
         {OTZARRETA_WEDDING_MENUS.map((menu) => {
           const isFlagship = menu.name === flagship.name;
           const price = formatOtzarretaMenuPrice(menu.priceEur);
           return (
             <li
               key={menu.name}
-              className={`flex flex-col justify-between gap-6 rounded-2xl border bg-[#0A0A0E] p-6 transition-colors duration-200 ease-out sm:p-8 ${
-                isFlagship
-                  ? 'border-[#ecb613]/45 md:col-span-2'
-                  : 'border-[#1E1E26] hover:border-[#ecb613]/35'
-              }`}
+              className={`hallmark-card ${isFlagship ? 'md:col-span-2 lg:col-span-2 aura-glow' : ''}`}
             >
               <div className="space-y-2">
                 <div className="flex flex-wrap items-baseline justify-between gap-3">
-                  <h3 className="font-syne text-lg font-bold tracking-tight text-[#F4F1EA] sm:text-xl">
+                  <h3 className="min-w-0 font-syne text-lg font-bold tracking-display text-[#F4F1EA] [overflow-wrap:break-word] sm:text-xl">
                     {menu.name}
                   </h3>
-                  <p className="shrink-0 font-syne text-xl font-black tabular-nums tracking-tight text-[#ecb613] sm:text-2xl">
+                  <p className="shrink-0 font-syne text-xl font-black tabular-nums tracking-display text-[#ecb613] sm:text-2xl">
                     {price ?? 'A consultar'}
                   </p>
                 </div>
@@ -95,7 +93,7 @@ export default function BentoMenuSection({
                   {menu.extras.map((extra) => (
                     <li
                       key={extra}
-                      className="rounded-md border border-[#1E1E26] bg-white/[0.03] px-2.5 py-1 text-xs text-[#D6D2C7]"
+                      className="rounded-well border border-[#1E1E26] bg-white/[0.03] px-2.5 py-1 text-xs text-[#D6D2C7]"
                     >
                       {extra}
                     </li>
@@ -109,7 +107,7 @@ export default function BentoMenuSection({
         })}
       </ul>
 
-      <div className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-[#ecb613]/30 bg-[#ecb613]/[0.04] p-6 sm:p-8">
+      <div className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-card border border-[#ecb613]/30 bg-[#ecb613]/[0.04] p-6 shadow-inset-hairline-gold sm:p-8">
         <div className="max-w-[58ch]">
           <p className="text-sm font-semibold text-[#F4F1EA]">{OTZARRETA_WEDDING_MENUS_CLAIM}</p>
           <p className="mt-1 text-xs leading-relaxed text-[#C9C4B8]">
@@ -117,7 +115,7 @@ export default function BentoMenuSection({
             100 % de la liquidación final.{' '}
             <Link
               href={contractHref}
-              className="underline decoration-dotted underline-offset-4 transition-colors hover:text-[#ecb613] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
+              className="underline decoration-dotted underline-offset-4 transition-colors duration-160 ease-hallmark hover:text-[#ecb613] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ecb613] active:text-[#f7cb45]"
             >
               Condiciones del depósito y split 80/10/10
             </Link>
@@ -125,7 +123,7 @@ export default function BentoMenuSection({
         </div>
         <a
           href={blockHref}
-          className="inline-flex min-h-[48px] items-center rounded-xl bg-[#ecb613] px-6 text-sm font-bold text-[#120D00] transition-colors duration-150 ease-out hover:bg-[#f7cb45] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
+          className="hallmark-btn-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ecb613] active:scale-[0.985] motion-reduce:active:scale-100"
         >
           Asegurar fecha, fianza deducible {DEPOSITO_STRIPE_EUR} €
         </a>
@@ -133,3 +131,4 @@ export default function BentoMenuSection({
     </section>
   );
 }
+

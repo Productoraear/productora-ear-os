@@ -54,6 +54,12 @@ const CERTIFIED_PRODUCTION_ROUTES: readonly string[] = Object.freeze([
   '/celebraciones',
   '/profesionales',
   '/restaurante-otzarreta',
+  // `/restaurante-otzarreta` es un alias que hace `redirect('/otzarreta')`
+  // (src/app/(public)/restaurante-otzarreta/page.tsx). Sin certificar el
+  // destino, el viaje era alias → /otzarreta → GATE → /celebraciones: la ficha
+  // insignia del asador NUNCA llegaba a un cliente real (medido en producción
+  // el 2026-11-21). Se certifica el destino para que el alias aterrice en la ficha.
+  '/otzarreta',
   '/seating-planner',
   '/presupuesto',
   '/portal/proveedor',

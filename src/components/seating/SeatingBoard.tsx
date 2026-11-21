@@ -203,7 +203,7 @@ export default function SeatingBoard({
 
   return (
     <section aria-label="Plano interactivo del salón" className="space-y-3 print:hidden">
-      <div className="rounded-2xl border border-[#1E1E26] bg-[#0F0F16] p-3 sm:p-4">
+      <div className="rounded-card border border-[#1E1E26] bg-[#0F0F16] p-3 shadow-inset-hairline sm:p-4">
         {/* Regla superior: la escala real del lienzo, rotulada como un plano técnico. */}
         <div className="mb-2 flex items-center justify-between px-1 text-xs text-[#8E8A80]">
           <span>Lienzo de sala, rejilla de 1 m</span>
@@ -214,7 +214,7 @@ export default function SeatingBoard({
 
         {/* Barra de herramientas flotante: cristal sobre el plano, no ocupa sitio. */}
         <div className="pointer-events-none sticky top-20 z-20 mb-2 flex justify-center">
-          <div className="pointer-events-auto flex flex-wrap items-center gap-x-4 gap-y-1 rounded-full border border-white/[0.12] bg-[#08080C]/80 px-5 py-2 text-xs text-[#C9C4B8] backdrop-blur-xl">
+          <div className="glass-panel-sclass pointer-events-auto flex flex-wrap items-center gap-x-4 gap-y-1 rounded-pill px-5 py-2 text-xs text-[#C9C4B8]">
             <span className="tabular-nums">{plan.tables.length} mesas</span>
             <span className="tabular-nums">{plan.fixtures.length} zonas</span>
             <span className="tabular-nums">{plan.pax} pax objetivo</span>

@@ -123,13 +123,71 @@ module.exports = {
         "glow-ear-coral": "0 0 20px rgba(255, 43, 68, 0.35)",
         "glow-ear-red": "0 0 25px rgba(255, 43, 68, 0.4)",
         "glow-ear-sapphire": "0 10px 40px -10px rgba(3, 3, 5, 0.8)",
+        // 🏛️ HALLMARK S-CLASS ELEVATION · relieve por luminosidad y filo interno
+        // de 1 px, nunca por halo difuso. Valores del ADN cosechado en
+        // scratch/HALLMARK_HARVESTED_DNA.json (--shadow-card del sitio).
+        "elevation-1":
+          "0 1px 2px rgba(3, 3, 5, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.04)",
+        "elevation-2":
+          "0 2px 4px rgba(3, 3, 5, 0.5), 0 18px 40px -22px rgba(3, 3, 5, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.05)",
+        "elevation-3":
+          "0 2px 4px rgba(3, 3, 5, 0.55), 0 30px 60px -28px rgba(3, 3, 5, 0.95), inset 0 1px 0 rgba(255, 255, 255, 0.06)",
+        "inset-hairline": "inset 0 0 0 1px rgba(255, 255, 255, 0.08)",
+        "inset-hairline-gold": "inset 0 0 0 1px rgba(236, 182, 19, 0.28)",
+      },
+      borderRadius: {
+        // Un radio por nivel de anidamiento (invariante de página Hallmark).
+        card: "14px",
+        panel: "20px",
+        well: "8px",
+        pill: "999px",
+      },
+      transitionTimingFunction: {
+        // Curva única de la casa, cosechada del sitio (--ease-out).
+        hallmark: "cubic-bezier(0.16, 1, 0.3, 1)",
+        "hallmark-in": "cubic-bezier(0.2, 0.7, 0.2, 1)",
+      },
+      transitionDuration: {
+        "160": "160ms",
+        "320": "320ms",
+      },
+      spacing: {
+        // Escala de 4 px del ADN (--s-1 … --s-10), nombres propios para no
+        // colisionar con la escala numérica de Tailwind.
+        "s-1": "4px",
+        "s-2": "8px",
+        "s-3": "12px",
+        "s-4": "16px",
+        "s-5": "24px",
+        "s-6": "32px",
+        "s-7": "48px",
+        "s-8": "64px",
+        "s-9": "96px",
+        "s-10": "128px",
+        gutter: "clamp(16px, 4vw, 48px)",
+        contour: "1520px",
+        measure: "1240px",
+      },
+      letterSpacing: {
+        // Tracking ajustado de la tipografía display del sitio.
+        display: "-0.025em",
+        "display-tight": "-0.035em",
+        "display-tighter": "-0.04em",
       },
       backgroundImage: {
         "grad-ear-sapphire": "linear-gradient(185deg, #030305 0%, #000000 100%)",
         "grad-ear-cyan-blue": "linear-gradient(135deg, #00E5FF 0%, #00B8D4 100%)",
         "grad-ear-red": "linear-gradient(135deg, #FF6B7D 0%, #FF2B44 50%, #E11D48 75%, #9F1239 100%)",
         "grad-ear-blue": "linear-gradient(135deg, #66F0FF 0%, #00E5FF 35%, #00B8D4 70%, #00E5FF 100%)",
+        // Blueprint del Seating Planner: cuadrícula de 1 px (--grid-line).
+        blueprint:
+          "linear-gradient(to right, rgba(255, 255, 255, 0.045) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.045) 1px, transparent 1px)",
       },
+      backgroundSize: {
+        blueprint: "24px 24px",
+        "blueprint-major": "96px 96px",
+      },
+
       fontFamily: {
         montserrat: ["var(--font-montserrat)", "Montserrat", "sans-serif"],
         body: ["var(--font-montserrat)", "Montserrat", "sans-serif"],

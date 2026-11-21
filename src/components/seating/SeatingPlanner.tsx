@@ -365,7 +365,7 @@ export default function SeatingPlanner({
       {/* ── Barra de aforo en vivo: asientos montados vs pedido vs RSVP ────── */}
       <section
         aria-live="polite"
-        className={`flex flex-wrap items-center gap-x-5 gap-y-2 rounded-2xl border p-4 text-xs ${
+        className={`flex flex-wrap items-center gap-x-5 gap-y-2 rounded-card border p-4 text-xs shadow-inset-hairline ${
           validation.ok
             ? 'border-[#57d99a]/30 bg-[#57d99a]/[0.05]'
             : 'border-[#FF2B44]/40 bg-[#FF2B44]/[0.05]'
@@ -420,7 +420,7 @@ export default function SeatingPlanner({
 
       {/* ── CAJA DE HERRAMIENTAS: barra flotante de cristal ───────────────── */}
       <section className="sticky top-[4.5rem] z-30 print:hidden">
-        <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-white/[0.10] bg-[#08080C]/85 p-2.5 backdrop-blur-xl">
+        <div className="glass-panel-sclass flex flex-wrap items-center gap-2 p-2.5">
           {(['round', 'rectangular', 'presidential'] as const).map((shape) => (
             <button
               key={shape}

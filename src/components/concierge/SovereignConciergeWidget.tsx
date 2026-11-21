@@ -527,7 +527,7 @@ export function SovereignConciergeWidget() {
           role="dialog"
           aria-modal="true"
           aria-label="Conserjería IA Productora EAR"
-          className="pointer-events-auto mb-3 flex h-[min(600px,85svh)] w-[calc(100%-2rem)] max-w-[420px] flex-col overflow-hidden rounded-2xl border border-white/[0.10] bg-[#08080C] text-[#F4F1EA] backdrop-blur-xl"
+          className="pointer-events-auto mb-3 flex h-[min(600px,85svh)] w-[calc(100%-2rem)] max-w-[420px] flex-col overflow-hidden rounded-card border border-white/[0.10] bg-[#08080C] text-[#F4F1EA] shadow-elevation-2 backdrop-blur-xl"
         >
           {/* Header */}
           <div className="flex shrink-0 items-center justify-between border-b border-white/[0.08] px-4 py-3">
@@ -765,7 +765,7 @@ export function SovereignConciergeWidget() {
                             setCartOpen(true);
                             router.push(m.action?.url || '/checkout/presupuesto');
                           }}
-                          className="w-full py-2 px-3 rounded-xl bg-[#ecb613] hover:bg-amber-400 text-black font-black text-[11px] flex items-center justify-between transition-all shadow-[0_0_15px_rgba(236,182,19,0.3)] cursor-pointer"
+                          className="w-full py-2 px-3 rounded-well bg-[#ecb613] hover:bg-[#f7cb45] text-black font-black text-[11px] flex items-center justify-between transition-colors duration-160 ease-hallmark cursor-pointer"
                         >
                           <span className="flex items-center gap-1.5">
                             <ShoppingCart size={13} />
@@ -782,9 +782,9 @@ export function SovereignConciergeWidget() {
             ))}
 
             {isSending && (
-              <div className="flex items-center gap-2 text-zinc-400 text-xs py-1 animate-pulse">
-                <Loader2 size={14} className="animate-spin text-[#ecb613]" />
-                <span className="font-mono text-[10px]">Consultando Centralita...</span>
+              <div className="flex items-center gap-2 text-zinc-400 text-xs py-1">
+                <Loader2 size={14} className="animate-spin motion-reduce:animate-none text-[#ecb613]" />
+                <span className="font-mono text-[10px]">Consultando Centralita…</span>
               </div>
             )}
 
@@ -821,7 +821,7 @@ export function SovereignConciergeWidget() {
                     key={slot}
                     type="button"
                     onClick={() => setSelectedSlot(slot)}
-                    className={`py-1 text-[10px] font-mono uppercase font-bold rounded-md border transition-all ${
+                    className={`rounded-well border py-1 font-mono text-[10px] uppercase font-bold transition-colors duration-160 ease-hallmark ${
                       selectedSlot === slot
                         ? 'bg-[#ecb613] text-black border-[#ecb613]'
                         : 'bg-white/[0.06] text-[#C9C4B8] border-white/[0.12] hover:bg-white/[0.10]'
@@ -853,8 +853,8 @@ export function SovereignConciergeWidget() {
               onClick={() => setShowFastActions((prev) => !prev)}
               className="w-full px-3 py-1.5 flex items-center justify-between text-[10px] font-mono text-zinc-400 hover:text-zinc-200 uppercase font-bold"
             >
-              <span>⚡ Acciones Rápidas (1 Clic)</span>
-              {showFastActions ? <ChevronDown size={14} /> : <ChevronUp size={14} />}
+              <span>Acciones rápidas (1 clic)</span>
+              {showFastActions ? <ChevronDown size={14} aria-hidden="true" /> : <ChevronUp size={14} aria-hidden="true" />}
             </button>
 
             {showFastActions && (
@@ -892,16 +892,16 @@ export function SovereignConciergeWidget() {
                     <button
                       type="button"
                       onClick={() => handlePatientZeroPreset('edwin')}
-                      className="rounded border border-[#ecb613]/25 bg-white/[0.05] px-2 py-1 text-xs text-[#ecb613] transition-colors hover:bg-white/[0.10]"
+                      className="rounded border border-[#ecb613]/25 bg-white/[0.05] px-2 py-1 text-xs text-[#ecb613] transition-colors duration-160 ease-hallmark hover:bg-white/[0.10]"
                     >
-                      🎵 Edwin Agudelo
+                      Edwin Agudelo
                     </button>
                     <button
                       type="button"
                       onClick={() => handlePatientZeroPreset('otzarreta')}
-                      className="rounded border border-[#ecb613]/25 bg-white/[0.05] px-2 py-1 text-xs text-[#ecb613] transition-colors hover:bg-white/[0.10]"
+                      className="rounded border border-[#ecb613]/25 bg-white/[0.05] px-2 py-1 text-xs text-[#ecb613] transition-colors duration-160 ease-hallmark hover:bg-white/[0.10]"
                     >
-                      🏰 Otzarreta
+                      Otzarreta
                     </button>
                   </div>
                   <div className="flex gap-1.5">
@@ -944,9 +944,9 @@ export function SovereignConciergeWidget() {
               <button
                 type="button"
                 onClick={toggleListening}
-                className={`p-2 rounded-xl transition-all ${
+                className={`rounded-well p-2 transition-colors duration-160 ease-hallmark ${
                   isListening
-                    ? 'bg-rose-500 text-white animate-pulse shadow-[0_0_12px_rgba(244,63,94,0.6)]'
+                    ? 'bg-rose-500 text-white animate-pulse motion-reduce:animate-none shadow-[0_0_12px_rgba(244,63,94,0.6)]'
                     : 'bg-white/[0.06] text-[#C9C4B8] hover:bg-white/[0.10] hover:text-[#F4F1EA]'
                 }`}
                 title={isListening ? 'Escuchando tu voz... Clic para parar' : 'Hablar por voz (Speech-to-Text)'}
@@ -998,19 +998,19 @@ export function SovereignConciergeWidget() {
           if (isOpen) stopSpeech();
         }}
         aria-label="Abrir el Maître de Sala"
-        className="pointer-events-auto flex min-h-[56px] items-center gap-3 rounded-full border border-[#ecb613]/35 bg-[#08080C] px-2 py-2 transition-colors duration-150 ease-out hover:border-[#ecb613]/70 hover:bg-[#0C0C12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
+        className="pointer-events-auto flex min-h-[52px] items-center gap-3 rounded-pill border border-white/[0.12] bg-[#08080C]/92 px-2 py-1.5 shadow-elevation-1 transition-colors duration-160 ease-hallmark hover:border-[#ecb613]/50 hover:bg-[#0C0C12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
       >
-        {/* Indicador: punto verde estático, sin pulso continuo. */}
-        <span className="relative flex h-10 w-10 items-center justify-center rounded-full border border-[#ecb613]/30 bg-[#101018] text-[#ecb613]">
-          {isOpen ? <X size={18} /> : <Bot size={20} />}
+        {/* Indicador: punto verde estático, sin pulso continuo (Floor 10). */}
+        <span className="relative flex h-9 w-9 items-center justify-center rounded-full border border-[#ecb613]/30 bg-[#101018] text-[#ecb613]">
+          {isOpen ? <X size={17} /> : <Bot size={18} />}
           {!isOpen && (
             <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-[#08080C] bg-[#3FCF8E]" />
           )}
         </span>
 
-        {/* Etiqueta: quién responde, no promesas vacías. */}
+        {/* Etiqueta: quién responde, no promesas vacías. 14 px limpios. */}
         <span className="hidden pr-3 text-left sm:flex sm:flex-col">
-          <span className="text-sm font-semibold leading-tight text-[#F4F1EA]">Maître de Sala</span>
+          <span className="text-[0.875rem] font-semibold leading-tight text-[#F4F1EA]">Maître de Sala</span>
           <span className="text-xs leading-tight text-[#8E8A80]">
             {isOpen ? 'Conversación abierta' : 'En línea'}
           </span>

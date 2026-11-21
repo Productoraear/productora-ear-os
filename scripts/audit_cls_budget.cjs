@@ -45,7 +45,8 @@ for (const arg of args) {
 }
 
 if (routes.length === 0) {
-  routes = ['/experiencia', '/seating-planner', '/', '/reservar/solista'];
+  routes = ['/experiencia', '/seating-planner', '/otzarreta', '/', '/reservar/solista'];
+
 }
 
 /** Mapa canónico de rutas a ficheros fuente de la ruta */
@@ -58,6 +59,10 @@ const ROUTE_FILE_MAP = {
     'src/app/(public)/seating-planner/page.tsx',
     'src/components/seating/SeatingPlanner.tsx',
     'src/components/seating/SeatingBoard.tsx'
+  ],
+  '/otzarreta': [
+    'src/app/(public)/otzarreta/page.tsx',
+    'src/components/otzarreta/BentoMenuSection.tsx'
   ],
   '/reservar/solista': [
     'src/app/reservar/solista/page.tsx'

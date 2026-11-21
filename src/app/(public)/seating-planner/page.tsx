@@ -74,7 +74,7 @@ export default async function SeatingPlannerPage({ searchParams }: { searchParam
       <div className="mx-auto max-w-[1520px] space-y-10">
         <header className="grid gap-8 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-8">
-            <h1 className="font-syne text-[clamp(2rem,4.6vw,3.5rem)] font-black leading-[1.04] tracking-[-0.025em] text-[#F4F1EA] [overflow-wrap:break-word]">
+            <h1 className="font-syne text-[clamp(2rem,4.6vw,3.5rem)] font-black leading-[1.04] tracking-display-tight text-[#F4F1EA] [overflow-wrap:break-word] [min-width:0]">
               Planifica las mesas sobre tu presupuesto sellado
             </h1>
             <p className="mt-4 max-w-[68ch] text-sm leading-relaxed text-[#C9C4B8] sm:text-base">
@@ -85,13 +85,13 @@ export default async function SeatingPlannerPage({ searchParams }: { searchParam
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <a
                 href="#plano"
-                className="inline-flex min-h-[48px] items-center rounded-xl bg-[#ecb613] px-6 text-sm font-bold text-[#120D00] transition-colors duration-150 ease-out hover:bg-[#f7cb45] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
+                className="hallmark-btn-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ecb613] active:scale-[0.985] motion-reduce:active:scale-100"
               >
                 Abrir el plano táctil
               </a>
               <Link
                 href="/presupuesto"
-                className="inline-flex min-h-[48px] items-center gap-2 rounded-xl border border-white/[0.16] px-6 text-sm font-semibold text-[#F4F1EA] transition-colors duration-150 ease-out hover:border-white/40 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
+                className="hallmark-btn-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/60 active:bg-white/[0.1] motion-reduce:transition-none"
               >
                 Abrir presupuesto <ArrowRight size={15} aria-hidden="true" />
               </Link>
@@ -101,21 +101,24 @@ export default async function SeatingPlannerPage({ searchParams }: { searchParam
           {/* Ficha técnica del lienzo: datos del SSOT, no copy. */}
           <dl className="grid grid-cols-3 gap-4 border-t border-white/[0.08] pt-5 lg:col-span-4 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
             <div>
-              <dt className="text-xs text-[#8E8A80]">Rejilla</dt>
-              <dd className="mt-1 font-syne text-lg font-bold tabular-nums text-[#F4F1EA]">1 m</dd>
+              <dt className="hallmark-label text-xs">Rejilla</dt>
+              <dd className="mt-1 font-syne text-lg font-bold tabular-nums tracking-display text-[#F4F1EA]">1 m</dd>
             </div>
             <div>
-              <dt className="text-xs text-[#8E8A80]">Plazas</dt>
-              <dd className="mt-1 font-syne text-lg font-bold tabular-nums text-[#F4F1EA]">2 a 12</dd>
+              <dt className="hallmark-label text-xs">Plazas</dt>
+              <dd className="mt-1 font-syne text-lg font-bold tabular-nums tracking-display text-[#F4F1EA]">2 a 12</dd>
             </div>
             <div>
-              <dt className="text-xs text-[#8E8A80]">Salida</dt>
-              <dd className="mt-1 font-syne text-lg font-bold text-[#F4F1EA]">A4 y SVG</dd>
+              <dt className="hallmark-label text-xs">Salida</dt>
+              <dd className="mt-1 font-syne text-lg font-bold tracking-display text-[#F4F1EA]">A4 y SVG</dd>
             </div>
           </dl>
         </header>
 
-        <div id="plano" className="scroll-mt-28">
+        {/* Lienzo Blueprint: cuadrícula de 1 px sobre #0F0F16, radio único de
+            14 px y filo hairline. `scroll-mt` reserva la altura de la barra
+            fija para que el salto del ancla no reordene el flujo (CLS 0). */}
+        <div id="plano" className="hallmark-blueprint scroll-mt-28 p-2 sm:p-3">
           <SeatingPlanner
             initialPax={pax}
             initialVenueCapacity={venueCapacity}
@@ -129,48 +132,46 @@ export default async function SeatingPlannerPage({ searchParams }: { searchParam
 
         {/* Evidencia operativa: cifras leídas del SSOT, no de copy. */}
         <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="rounded-2xl border border-[#1E1E26] bg-[#0A0A0E] p-6">
-            <p className="text-xs text-[#8E8A80]">Aforo canónico Otzarreta</p>
-            <p className="mt-2 font-syne text-xl font-black tabular-nums text-[#F4F1EA]">
+          <div className="hallmark-card">
+            <p className="hallmark-label">Aforo canónico Otzarreta</p>
+            <p className="hallmark-figure text-xl font-black">
               {OTZARRETA_SEATING_PRESET.interiorSalon.capacityPax} /{' '}
               {OTZARRETA_SEATING_PRESET.exteriorGarden.capacityPax}
             </p>
-            <p className="mt-1 text-xs text-[#C9C4B8]">
+            <p className="text-xs leading-relaxed text-[#C9C4B8]">
               {OTZARRETA_SEATING_PRESET.interiorSalon.label} y {OTZARRETA_SEATING_PRESET.exteriorGarden.label}
             </p>
           </div>
-          <div className="rounded-2xl border border-[#1E1E26] bg-[#0A0A0E] p-6">
-            <p className="text-xs text-[#8E8A80]">Split soberano</p>
-            <p className="mt-2 font-syne text-xl font-black tabular-nums text-[#F4F1EA]">
+          <div className="hallmark-card">
+            <p className="hallmark-label">Split soberano</p>
+            <p className="hallmark-figure text-xl font-black">
               {Math.round(SPLIT_SOBERANO.artista * 100)} / {Math.round(SPLIT_SOBERANO.earOs * 100)} /{' '}
               {Math.round(SPLIT_SOBERANO.vimume * 100)}
             </p>
-            <p className="mt-1 text-xs text-[#C9C4B8]">Artista, infraestructura y VIMUME</p>
+            <p className="text-xs leading-relaxed text-[#C9C4B8]">Artista, infraestructura y VIMUME</p>
           </div>
-          <div className="rounded-2xl border border-[#1E1E26] bg-[#0A0A0E] p-6">
-            <p className="text-xs text-[#8E8A80]">Rider acústico</p>
-            <p className="mt-2 font-syne text-xl font-black tabular-nums text-[#F4F1EA]">
+          <div className="hallmark-card">
+            <p className="hallmark-label">Rider acústico</p>
+            <p className="hallmark-figure text-xl font-black">
               {WATTS_PER_PAX} W/pax, &lt; {LIMITE_SPL_DB} dB SPL
             </p>
-            <p className="mt-1 text-xs text-[#C9C4B8]">Ley 37/2003, limitador telemático</p>
+            <p className="text-xs leading-relaxed text-[#C9C4B8]">Ley 37/2003, limitador telemático</p>
           </div>
-          <div className="rounded-2xl border border-[#1E1E26] bg-[#0A0A0E] p-6">
-            <p className="text-xs text-[#8E8A80]">Canal único</p>
-            <p className="mt-2 font-syne text-xl font-black tabular-nums text-[#F4F1EA]">
-              {CENTRALITA_EAR_OS}
-            </p>
-            <p className="mt-1 text-xs text-[#C9C4B8]">Revisión humana del plano</p>
+          <div className="hallmark-card">
+            <p className="hallmark-label">Canal único</p>
+            <p className="hallmark-figure text-xl font-black tabular-nums">{CENTRALITA_EAR_OS}</p>
+            <p className="text-xs leading-relaxed text-[#C9C4B8]">Revisión humana del plano</p>
           </div>
         </section>
 
-        <section className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-[#1E1E26] bg-[#0A0A0E] p-6">
+        <section className="flex flex-wrap items-center justify-between gap-4 rounded-card border border-[#1E1E26] bg-[#0A0A0E] p-6 shadow-inset-hairline">
           <p className="flex items-center gap-2 text-xs leading-relaxed text-[#C9C4B8]">
             <ShieldCheck size={15} className="shrink-0 text-[#57d99a]" aria-hidden="true" />
             El plano no cotiza: organiza. Cualquier importe del evento nace del presupuesto sellado.
           </p>
           <Link
             href="/presupuesto"
-            className="inline-flex min-h-[48px] items-center gap-2 rounded-xl bg-[#ecb613] px-6 text-sm font-bold text-[#120D00] transition-colors duration-150 ease-out hover:bg-[#f7cb45] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
+            className="hallmark-btn-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ecb613] active:scale-[0.985] motion-reduce:active:scale-100"
           >
             Abrir presupuesto <ArrowRight size={15} aria-hidden="true" />
           </Link>
