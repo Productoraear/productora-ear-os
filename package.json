@@ -85,6 +85,7 @@
     "verify:domains": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_domain_isolation.ts",
     "probe:cron": "node scripts/cron_secret_probe.cjs",
     "deploy:freshness": "node scripts/prod_deploy_freshness.cjs",
+    "verify:prod-alignment": "node scripts/verify_prod_alignment.cjs",
     "verify:build-memory": "node scripts/verify_build_memory_budget.cjs",
     "verify:route-segment-config": "node scripts/verify_route_segment_config.cjs",
     "verify:seating-planner": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_seating_planner.ts",
