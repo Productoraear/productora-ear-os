@@ -1,5 +1,8 @@
 'use client';
 
+import CustomerJourneyCanvas from '@/components/admin/CustomerJourneyCanvas';
+import AdminOperationsConsole from '@/components/admin/AdminOperationsConsole';
+
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import {
@@ -25,8 +28,8 @@ import {
   Loader2
 } from 'lucide-react';
 import {
-  DOCTRINA_CEO_EMPRESARIO,
-  DOCTRINA_ARTISTA_SOBERANO,
+  ORACLE_PERSONA_CATALOG,
+  getOracleDoctrine,
   refineQueryWithOracle,
   type OraclePersona,
   type OracleRefinedResult
@@ -34,6 +37,13 @@ import {
 import type { CompiledDAGResult } from '@/lib/compiler/omega-intent-compiler';
 import { MetaCompilerFsmPanel } from '@/components/admin/MetaCompilerFsmPanel';
 import { MetaCompilerCommandCenter } from '@/components/admin/MetaCompilerCommandCenter';
+
+
+
+
+
+
+
 import {
   MASTER_OBJECTIVES,
   MASTER_TACTICS,
@@ -92,6 +102,30 @@ type GpuStatusPayload = {
   loadedModels: Array<{ name: string; vramMB: number; contextSize: number }>;
 };
 
+// Ejemplo de orden por rol: cada placeholder apunta a una decisión real del rol.
+const PERSONA_PLACEHOLDER: Record<OraclePersona, string> = {
+  CEO: 'Diseñar una estrategia de sobredemanda para captar 20 fincas de bodas en Valencia y Sevilla sin pagar a directorios…',
+  ARTISTA: 'Negociar con una pareja indecisa que pide rebajar el caché sin devaluar la solvencia de Edwin Agudelo…',
+  CTO: 'Endurecer el endpoint de salud para que no declare OK sin sonda real y cablear la nueva puerta al arnés…',
+  CFO: 'Conciliar los depósitos de Stripe con el ledger y detectar cobros huérfanos del último trimestre…',
+  CMO: 'Publicar la landing de bodas en Toledo con claim verificable y CTA al depósito deducible…',
+  COO: 'Reordenar la logística de portes desde Méntrida y fijar el punto HITL de las cancelaciones…',
+  LEGAL: 'Revisar el expediente B2G para no rebasar el umbral del Art. 118 LCSP y adjuntar el rider acústico…',
+  ENGINEER: 'Refactorizar este componente en componentes hoja con tipos estrictos y CLS bajo…'
+};
+
+// Icono por rol del Oráculo: derivado del catálogo, nunca de una lista paralela.
+const PERSONA_ICON: Record<OraclePersona, typeof Crown> = {
+  CEO: Crown,
+  ARTISTA: Music2,
+  CTO: Cpu,
+  CFO: Gauge,
+  CMO: Flame,
+  COO: RefreshCw,
+  LEGAL: ShieldAlert,
+  ENGINEER: Code2
+};
+
 export default function MasterCompilerPage() {
   const [prompt, setPrompt] = useState('');
   const [mode, setMode] = useState<CompileMode>('OMEGA_FULLSTACK');
@@ -129,7 +163,7 @@ export default function MasterCompilerPage() {
   const [lastLatency, setLastLatency] = useState<number | null>(null);
   const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
 
-  const activeDoctrine = oraclePersona === 'CEO' ? DOCTRINA_CEO_EMPRESARIO : DOCTRINA_ARTISTA_SOBERANO;
+  const activeDoctrine = useMemo(() => getOracleDoctrine(oraclePersona), [oraclePersona]);
   const readiness = useMemo(() => evaluatePromptReadiness(prompt), [prompt]);
 
   const handleApplyTemplate = (tpl: MasterExecutiveTemplate) => {
@@ -361,6 +395,96 @@ export default function MasterCompilerPage() {
         <span>IA &amp; GPU</span>
         <span>/</span>
         <span className="text-[#ecb613]">Oráculo &amp; Compilador Maestro</span>
+        <span>/</span>
+        <span className="text-[#00E5FF]">Taste Engine &amp; Canvas</span>
+      </div>
+
+      {/* Taste Engine & Canvas Panel */}
+      <div className="p-5 rounded-3xl bg-[#09090f] border border-zinc-800/80 shadow-2xl">
+        <h2 className="text-xl font-bold font-syne tracking-tight text-white uppercase mb-4">
+          Taste Engine & Canvas
+        </h2>
+        
+        {/* Color Palette Selector */}
+        <div className="mb-6">
+          <h3 className="text-sm font-mono uppercase text-zinc-400 mb-2">Selector de Paleta</h3>
+          <div className="flex flex-wrap gap-2">
+            <button 
+              className="px-3 py-2 rounded-lg bg-[#030305] border border-[#ecb613] text-[#ecb613] text-xs font-mono"
+              onClick={() => {
+                document.documentElement.style.setProperty('--ear-bg-void', '#030305');
+                document.documentElement.style.setProperty('--ear-accent-gold', '#ecb613');
+              }}
+            >
+              OLED S-Class
+            </button>
+            <button 
+              className="px-3 py-2 rounded-lg bg-[#030305] border border-[#00E5FF] text-[#00E5FF] text-xs font-mono"
+              onClick={() => {
+                document.documentElement.style.setProperty('--ear-bg-void', '#030305');
+                document.documentElement.style.setProperty('--ear-accent-gold', '#00E5FF');
+              }}
+            >
+              Cyber Telemetría
+            </button>
+            <button 
+              className="px-3 py-2 rounded-lg bg-[#09090d] border border-[#FF2B44] text-[#FF2B44] text-xs font-mono"
+              onClick={() => {
+                document.documentElement.style.setProperty('--ear-bg-void', '#09090d');
+                document.documentElement.style.setProperty('--ear-accent-gold', '#FF2B44');
+              }}
+            >
+              Alerta / Bloqueo
+            </button>
+            <input 
+              type="color" 
+              className="w-10 h-10 rounded-lg border border-zinc-700"
+              onChange={(e) => {
+                document.documentElement.style.setProperty('--ear-accent-gold', e.target.value);
+              }}
+            />
+          </div>
+        </div>
+
+        {/* Typography Selector */}
+        <div className="mb-6">
+          <h3 className="text-sm font-mono uppercase text-zinc-400 mb-2">Conmutador Tipográfico</h3>
+          <div className="flex flex-wrap gap-2">
+            <button 
+              className="px-3 py-2 rounded-lg bg-zinc-950 border border-zinc-700 text-xs font-mono"
+              onClick={() => {
+                document.documentElement.style.setProperty('--font-display', 'Syne');
+                document.documentElement.style.setProperty('--font-body', 'Inter');
+              }}
+            >
+              Syne & Inter
+            </button>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-mono text-zinc-400">Tamaño:</span>
+              <select 
+                className="px-3 py-2 rounded-lg bg-zinc-950 border border-zinc-700 text-xs font-mono"
+                onChange={(e) => {
+                  document.documentElement.style.setProperty('--font-base', `${e.target.value}px`);
+                }}
+              >
+                <option value="14">14px</option>
+                <option value="16">16px</option>
+                <option value="18">18px</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        {/* Live Preview */}
+        <div className="mt-6 p-4 rounded-xl bg-zinc-950 border border-zinc-800">
+          <h3 className="text-sm font-mono uppercase text-zinc-400 mb-2">Previsualización en Vivo</h3>
+          <div className="p-4 rounded-lg bg-[var(--ear-bg-void)] border border-[var(--ear-accent-gold)]">
+            <h4 className="text-lg font-syne text-white mb-2">Ejemplo de Título</h4>
+            <p className="text-sm font-inter text-zinc-300 mb-4">Este es un texto de ejemplo para mostrar la fuente seleccionada.</p>
+            <button className="px-4 py-2 rounded-lg bg-[var(--ear-accent-gold)] text-black font-bold">Botón Primario</button>
+            <div className="mt-2 inline-block px-2 py-1 rounded bg-zinc-800 border border-zinc-700 text-xs font-mono">100 € Stripe</div>
+          </div>
+        </div>
       </div>
 
       {/* Header S-Class */}
@@ -383,53 +507,71 @@ export default function MasterCompilerPage() {
             Exit Code 0
           </div>
         </div>
+
+// Inside the MasterCompilerPage component, add the CustomerJourneyCanvas component below the Oracle Insight Preview Card section.
+{oracleResult && (
+  <div className="p-4 rounded-2xl bg-[#090910] border border-[#ecb613]/30 space-y-3">
+    <div className="flex items-center justify-between text-xs font-mono">
+      <span className="text-[#ecb613] font-bold flex items-center gap-1.5">
+        <Crown className="w-3.5 h-3.5 text-[#ecb613]" /> Guía Maestra S-Class (Control 100% Autónomo CEO)
+      </span>
+      <span className="text-[10px] text-zinc-500 font-mono">Doctrina Exit Code 0</span>
+    </div>
+  </div>
+)}
+
+<CustomerJourneyCanvas />
+<AdminOperationsConsole />
       </div>
 
-      {/* Selector Soberano del Oráculo: Modo CEO vs Modo Artista */}
-      <div className="p-5 rounded-2xl bg-gradient-to-r from-[#09090f] via-[#0b0b14] to-[#08080c] border border-zinc-800/80 shadow-2xl relative overflow-hidden">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
-          <div className="space-y-1">
-            <div className="flex items-center gap-2 text-xs font-mono text-zinc-400 uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5 text-[#ecb613]" />
-              <span>Prisma Cognitivo del Oráculo</span>
-            </div>
-            <h3 className="text-lg font-bold font-['Syne'] text-white">
-              {oraclePersona === 'CEO' ? '👑 Modo CEO & Empresario de Alto Standing' : '🎸 Modo Artista Soberano & Mentoría Musical'}
-            </h3>
-            <p className="text-xs text-zinc-400 max-w-2xl">
-              {activeDoctrine.nombre}
-            </p>
+      {/* Selector Soberano del Oráculo: 8 roles reales del sistema */}
+      <div className="p-5 rounded-2xl bg-[#09090f] border border-zinc-800/80 shadow-2xl relative overflow-hidden">
+        <div className="space-y-1 relative z-10">
+          <div className="flex items-center gap-2 text-xs font-mono text-zinc-400 uppercase tracking-wider">
+            <Sparkles className="w-3.5 h-3.5 text-[#ecb613]" />
+            <span>Prisma Cognitivo del Oráculo · {ORACLE_PERSONA_CATALOG.length} roles</span>
           </div>
+          <h3 className="text-lg font-bold font-['Syne'] text-white">
+            {ORACLE_PERSONA_CATALOG.find((p) => p.id === oraclePersona)?.label ?? oraclePersona}
+          </h3>
+          <p className="text-xs text-zinc-400 max-w-2xl">{activeDoctrine.nombre}</p>
+        </div>
 
-          <div className="flex items-center gap-2 bg-zinc-950/90 p-1.5 rounded-xl border border-zinc-800">
-            <button
-              onClick={() => {
-                setOraclePersona('CEO');
-                setOracleResult(null);
-              }}
-              className={`px-4 py-2.5 rounded-lg text-xs font-mono font-bold flex items-center gap-2 transition ${oraclePersona === 'CEO'
-                ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20'
-                : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
+        {/* Matriz de roles: una fila por persona del contrato cerrado */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-4 mt-4 border-t border-zinc-800/60">
+          {ORACLE_PERSONA_CATALOG.map((descriptor) => {
+            const Icon = PERSONA_ICON[descriptor.id];
+            const isActive = oraclePersona === descriptor.id;
+            return (
+              <button
+                key={descriptor.id}
+                type="button"
+                onClick={() => {
+                  setOraclePersona(descriptor.id);
+                  setOracleResult(null);
+                }}
+                aria-pressed={isActive}
+                title={`${descriptor.label} · ${descriptor.purpose}`}
+                className={`min-h-[64px] px-3 py-2.5 rounded-xl text-left transition border ${
+                  isActive
+                    ? 'bg-[#ecb613] text-black border-[#ecb613] shadow-lg shadow-[#ecb613]/20'
+                    : 'bg-zinc-950/80 text-zinc-300 hover:text-white hover:bg-zinc-900 border-zinc-800'
                 }`}
-            >
-              <Crown className="w-3.5 h-3.5" />
-              <span>Modo CEO / Empresario</span>
-            </button>
-
-            <button
-              onClick={() => {
-                setOraclePersona('ARTISTA');
-                setOracleResult(null);
-              }}
-              className={`px-4 py-2.5 rounded-lg text-xs font-mono font-bold flex items-center gap-2 transition ${oraclePersona === 'ARTISTA'
-                ? 'bg-gradient-to-r from-amber-500 to-rose-500 text-white shadow-lg shadow-rose-500/20'
-                : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
-                }`}
-            >
-              <Music2 className="w-3.5 h-3.5" />
-              <span>Modo Artista Soberano</span>
-            </button>
-          </div>
+              >
+                <span className="flex items-center gap-1.5 text-[11px] font-mono font-bold uppercase tracking-wide">
+                  <Icon className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-black' : 'text-[#ecb613]'}`} />
+                  <span className="truncate">{descriptor.label}</span>
+                </span>
+                <span
+                  className={`mt-1 block text-[10px] leading-snug line-clamp-2 ${
+                    isActive ? 'text-black/70' : 'text-zinc-500'
+                  }`}
+                >
+                  {descriptor.purpose}
+                </span>
+              </button>
+            );
+          })}
         </div>
 
         {/* Levers Pills */}
@@ -717,11 +859,7 @@ export default function MasterCompilerPage() {
             <textarea
               value={prompt}
               onChange={e => setPrompt(e.target.value)}
-              placeholder={
-                oraclePersona === 'CEO'
-                  ? "Ejemplo: Diseñar una estrategia de sobredemanda para captar 20 fincas de bodas en Valencia y Sevilla sin pagar a directorios..."
-                  : "Ejemplo: Negociar con una pareja indecisa que pide rebajar el caché de 350 € sin devaluar la solvencia de Edwin Agudelo..."
-              }
+              placeholder={PERSONA_PLACEHOLDER[oraclePersona]}
               rows={7}
               className="w-full p-4 rounded-xl bg-zinc-950 border border-zinc-800 text-sm text-zinc-200 placeholder:text-zinc-600 focus:outline-none focus:border-[#ecb613] transition resize-none"
             />

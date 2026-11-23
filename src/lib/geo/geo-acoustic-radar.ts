@@ -1,11 +1,12 @@
+import type { SpanishProvince } from './spanish-provinces';
+
 /**
- * EAR OS V2 — MASTER GEO-ACOUSTIC RADAR & FLEET DISPATCHER (Reto 3)
- * ==================================================================
- * Motor de cálculo acústico y logístico S-Class para despacho de flota:
+ * Geo Acoustic Radar: Core module for EAR OS V2
+ *
  * - Potencia acústica: 12 W/pax con mínimos por tipo de venue.
  * - Sistemas Bose homologados: S1 Pro / F1 Model 812 + Subwoofer Array.
  * - Rider Acústico: Shure Beta 87A / Axient RF / GLXD4.
- * - Logística S-Class desde Hub Central Méntrida (Toledo): 1,50 €/km desde km 50.
+ * - Logística S-Class desde Hub Central Méntrida: 1,50 €/km desde km 50.
  * - Suplemento hotelero (+120 €) si distancia > 200 km o fin >= 03:00 AM.
  * - Límite VIMUME B2G: < 75 dB SPL (forzado a 74 dB en residencias de mayores).
  * - Blindaje Criptográfico: SHA-256 Verification Hash (64 chars hex).
@@ -51,7 +52,7 @@ export interface VenueAcousticInput {
   venueName: string;
   venueType: 'SALON_BODA' | 'FINCA_EXTERIOR' | 'IGLESIA' | 'RESIDENCIA_MAYORES' | 'PLAZA_PUBLICA';
   guestCount: number;
-  destinationProvince: string;
+  destinationProvince: SpanishProvince;
   distanceKmFromMentrida: number;
   eventEndHour?: string;
   isVimumeContext?: boolean;
@@ -185,7 +186,7 @@ export function runGeoAcousticDiagnostics(): GeoAcousticDiagnosticResult {
       venueName: 'Boda Estándar Salón',
       venueType: 'SALON_BODA',
       guestCount: 150,
-      destinationProvince: 'Toledo',
+      destinationProvince: 'Ávila',
       distanceKmFromMentrida: 80,
     };
     const t1 = calculateGeoAcousticRadar(t1Input);
@@ -219,7 +220,7 @@ export function runGeoAcousticDiagnostics(): GeoAcousticDiagnosticResult {
       venueName: 'Residencia Mayores VIMUME',
       venueType: 'RESIDENCIA_MAYORES',
       guestCount: 30,
-      destinationProvince: 'Toledo',
+      destinationProvince: 'Ávila',
       distanceKmFromMentrida: 15,
       isVimumeContext: true,
     };
@@ -284,7 +285,7 @@ export function runGeoAcousticDiagnostics(): GeoAcousticDiagnosticResult {
       venueName: 'Verificación Criptográfica',
       venueType: 'SALON_BODA',
       guestCount: 100,
-      destinationProvince: 'Madrid',
+      destinationProvince: 'Segovia',
       distanceKmFromMentrida: 60,
     };
     const t4 = calculateGeoAcousticRadar(t4Input);

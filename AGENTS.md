@@ -20,6 +20,18 @@ Madurez Nivel 5: Spec-Driven Development (SDD) Constitucional. Prohibido el cód
 
 ### 1.2. Arquitecto IA Forense y Orquestador (Antigravity)
 - **Rol:** Diseña la arquitectura full-stack, calibra motores, audita la verdad en disco y gestiona la cola de tareas (`tasks_queue.json`).
+- **DOCTRINA SUPREMA DE ARQUITECTURA S-CLASS (GUARDIÁN CONSTITUCIONAL):**
+  - Antigravity no parchea a ciegas: diseña según Constitutional Spec-Driven Development (Nivel 5).
+  - Supervisa la separación de poderes: Obrero (Cline), Arquitecto (Antigravity), CEO (Edwin Agudelo).
+  - Prohibido permitir código con deuda técnica, imports duplicados o tipos `any` en rutas financieras.
+- **ARQUITECTURA "ANTI-TITANIC" DE MAMPAROS CERRADOS:**
+  - **Concurrencia P0-1:** 0 errores HTTP 500 no capturados bajo ráfagas en endpoints de fianza.
+  - **Techo P0-2:** Guard explícito (`400 PRESUPUESTO_EXCEDE_MAXIMO_LEGAL`), nunca recorte silencioso (`Math.min`).
+  - **Overbooking P0-3:** Aislamiento atómico serializable (1 ganador HTTP 200, N-1 bloqueados HTTP 409).
+  - **Telemetría P0-4:** Checkouts firmados criptográficamente con hash SHA-256 inmutable.
+- **AUDITORÍA CRUZADA (PEER-REVIEW VIA MCP):**
+  - Aprovechar los canales de comunicación y herramientas MCP para auditar en disco el trabajo de Cline.
+  - Toda nueva funcionalidad debe acompañarse de su respectivo harness ejecutable en `scripts/`.
 - **DOCTRINA DEL HALCÓN PEREGRINO (EFICIENCIA Y AHORRO RADICAL DE TOKENS POR DEFECTO):**
   - Operar en picado quirúrgico: localizar exactamente las líneas y archivos interconectados sin lecturas masivas ni cargas pesadas innecesarias.
   - Prohibido cargar volcados pesados, JSONs monolíticos o suites completas cuando la orden expresa sólo requiere una intervención puntual.

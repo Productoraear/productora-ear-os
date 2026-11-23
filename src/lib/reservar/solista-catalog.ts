@@ -61,25 +61,42 @@ export const ARTIST_FORMATS: readonly SClassArtistFormat[] = Object.freeze([
     badge: 'Artista Insignia',
     img: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=600&auto=format&fit=crop',
     description:
-      'Voz lírica de alta tesitura para ceremonias nupciales, boleros de gala y grandes celebraciones. Microfonía Shure Axient de estudio.',
+      'Voz lírica de alta tesitura para ceremonias nupciales, boleros de gala y grandes celebraciones. Microfonía Shure Axient de estudio. Tarifa base inviolable: 350 €.',
     repertoire: ['Ave María (Schubert)', 'O Sole Mio', 'Nessun Dorma', 'Bésame Mucho', 'Por Ti Volaré'],
     rider: 'Bose S1 Pro / F1 + Shure Beta 87A',
   },
   {
-    id: 'mariachi-gala-oro',
-    ssotFormatId: 'cuarteto',
-    name: MARIACHI_FORMAT_BY_ID.cuarteto.name,
-    role: '4 músicos · Trompeta, vihuela, guitarrón y violín',
+    id: 'mariachi-duo-serenata',
+    ssotFormatId: 'solista',
+    name: 'Mariachi Imperial de Bilbao - Dúo Serenata',
+    role: '2 músicos · Voz y vihuela',
     category: 'mariachi',
-    baseRate: MARIACHI_FORMAT_BY_ID.cuarteto.basePrice,
-    members: MARIACHI_FORMAT_BY_ID.cuarteto.members,
+    baseRate: 350.0,
+    members: 2,
+    rating: 4.9,
+    reviews: 41,
+    badge: 'Serenata Express',
+    img: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=600&auto=format&fit=crop',
+    description:
+      'Dúo serenata del Mariachi Imperial de Bilbao con voz y vihuela. Repertorio: El Rey, Si nos dejan, Volver Volver, Cielito Lindo. Ideal para sorpresas y aniversarios.',
+    repertoire: ['El Rey', 'Si nos dejan', 'Volver Volver', 'Cielito Lindo'],
+    rider: 'Equipamiento acústico portátil',
+  },
+  {
+    id: 'mariachi-trio-490',
+    ssotFormatId: 'cuarteto',
+    name: 'Mariachi Imperial de Bilbao - Trío Banquete',
+    role: '3 músicos · Trompeta, vihuela y guitarrón',
+    category: 'mariachi',
+    baseRate: 490.0,
+    members: 3,
     rating: 4.9,
     reviews: 34,
     badge: 'Favorito Bodas',
     img: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=600&auto=format&fit=crop',
     description:
-      'Cuarteto ranchero con auténtico traje charro de gala: trompeta solista, vihuela, guitarrón y violín. Serenatas, cócteles de bienvenida y sorpresas nupciales.',
-    repertoire: ['El Rey', 'Si Nos Dejan', 'Volver Volver', 'Cielito Lindo', 'La Bikina'],
+      'Trío de Mariachi Imperial de Bilbao con traje charro de gala: trompeta solista, vihuela y guitarrón. Ideal para cócteles, banquetes y serenatas nupciales.',
+    repertoire: ['El Rey', 'Si nos dejan', 'Volver Volver', 'Cielito Lindo'],
     rider: 'Rider acústico puro + refuerzo Bose',
   },
   {
@@ -95,8 +112,8 @@ export const ARTIST_FORMATS: readonly SClassArtistFormat[] = Object.freeze([
     badge: 'Top Selección',
     img: 'https://images.unsplash.com/photo-1465847899084-d164df4dedc6?q=80&w=600&auto=format&fit=crop',
     description:
-      'Formación de gala: 2 trompetas, 2 violines, vihuela y guitarrón, con dirección y voz de Edwin Agudelo. Sonoridad y presencia inigualables.',
-    repertoire: ['Serenata Huasteca', 'Amor Eterno', 'Échame a Mí la Culpa', 'Sombras'],
+      'Mariachi Imperial de Bilbao: 2 trompetas, 2 violines, vihuela y guitarrón, con dirección y voz de Edwin Agudelo. Repertorio: El Rey, Si nos dejan, Volver Volver, Cielito Lindo, Gorbea, boleros y rancheras de sobremesa.',
+    repertoire: ['El Rey', 'Si nos dejan', 'Volver Volver', 'Cielito Lindo', 'Gorbea'],
     rider: 'Bose F1 Model 812 (12 W/pax) + Microfonía inalámbrica',
   },
   {
@@ -195,7 +212,7 @@ export const ARTIST_FORMAT_BY_ID: Readonly<Record<string, SClassArtistFormat>> =
 export const ARTIST_FORMAT_BY_SSOT_ID: Readonly<Record<MariachiFormatId, SClassArtistFormat>> =
   Object.freeze({
     solista: ARTIST_FORMAT_BY_ID['edwin-solista'],
-    cuarteto: ARTIST_FORMAT_BY_ID['mariachi-gala-oro'],
+    cuarteto: ARTIST_FORMAT_BY_ID['mariachi-trio-490'],
     gala: ARTIST_FORMAT_BY_ID['mariachi-imperial'],
     monumental: ARTIST_FORMAT_BY_ID['mariachi-gran-ensamble'],
   });
