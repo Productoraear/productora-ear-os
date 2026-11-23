@@ -82,6 +82,38 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
+        // ── SIN CACHÉ SOBERANA (CHG-1 · producción Bare-Metal Coolify) ────────
+        // El panel del CEO y sus APIs sirven datos de tesorería, licitaciones y
+        // telemetría que cambian con cada escritura. Un CDN o un service worker
+        // intermedio que cachee /admin devuelve al CEO una cifra vieja como si
+        // fuera actual: eso es una FACHADA (AF-1). Estas dos reglas se declaran
+        // ANTES de "/:path*" porque Next.js resuelve por la primera regla que
+        // define la misma cabecera.
+        source: "/admin/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0",
+          },
+          { key: "Pragma", value: "no-cache" },
+          { key: "Expires", value: "0" },
+          // El panel nunca se indexa ni se comparte como resultado de búsqueda.
+          { key: "X-Robots-Tag", value: "noindex, nofollow" },
+        ],
+      },
+      {
+        // APIs administrativas: ninguna respuesta puede quedar en caché.
+        source: "/api/admin/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0",
+          },
+          { key: "Pragma", value: "no-cache" },
+          { key: "Expires", value: "0" },
+        ],
+      },
+      {
         // U13 · Superficie de Verdad Pública (`/confianza`).
         // JUR-5 exige poder retirar un claim en < 10 minutos. max-age=0 evita
         // que el navegador congele el registro; s-maxage=300 + stale-while-

@@ -50,6 +50,11 @@ const AFFILIATE_COOKIE_OPTIONS = {
  */
 const CERTIFIED_PRODUCTION_ROUTES: readonly string[] = Object.freeze([
   '/',
+  '/artistas',
+  '/mariachis', // Added
+  '/reservar/solista', // Added
+  '/otzarreta',
+  '/calendario',
   '/gobiernos',
   '/celebraciones',
   '/profesionales',
@@ -59,16 +64,7 @@ const CERTIFIED_PRODUCTION_ROUTES: readonly string[] = Object.freeze([
   // destino, el viaje era alias → /otzarreta → GATE → /celebraciones: la ficha
   // insignia del asador NUNCA llegaba a un cliente real (medido en producción
   // el 2026-11-21). Se certifica el destino para que el alias aterrice en la ficha.
-  '/otzarreta',
-  // ── CELEBRACIONES ES UN DESTINO, JAMÁS UN EMBUDO ────────────────────────
-  // Fallo P0 medido en producción el 2026-11-21: `/calendario/catering/
-  // restaurante-otzarreta?intent=ver|bloquear` y `/proveedores?cat=finca`
-  // devolvían `307 -> /celebraciones` (cabecera `x-ear-route-gating`). El
-  // escaparate canibalizaba las URLs de conversión, de modo que los botones
-  // de /celebraciones parecían «muertos»: el cliente nunca llegaba a la ficha
-  // ni al directorio. Ambas son superficies de venta certificadas.
   '/proveedores',
-  '/calendario',
   '/seating-planner',
   '/presupuesto',
   '/portal/proveedor',
@@ -164,6 +160,172 @@ function hasValidAdminSession(request: NextRequest): boolean {
 export function middleware(request: NextRequest) {
   const url = request.nextUrl;
   const rawHost = request.headers.get('x-forwarded-host') || request.headers.get('host') || url.host;
+
+  // 0. CANDADO DE SEGURIDAD SSL (HSTS & HTTPS Enforcement)
+  // En producción, forzar redirección 301 inmediata si el tráfico entra sin cifrar (HTTP)
+  const proto = request.headers.get('x-forwarded-proto');
+  const isLocalhost =
+    rawHost.includes('localhost') ||
+    rawHost.includes('127.0.0.1') ||
+    rawHost.includes(':3007') ||
+    rawHost.startsWith('82.29.179.172:8000');
+  if (proto === 'http' && !isLocalhost) {
+    const httpsUrl = new URL(request.url);
+    httpsUrl.protocol = 'https:';
+    httpsUrl.host = rawHost;
+    const sslRedirect = NextResponse.redirect(httpsUrl, 301);
+    sslRedirect.headers.set('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
+    sslRedirect.headers.set('X-Content-Type-Options', 'nosniff');
+    return sslRedirect;
+  }
+
+  // 0.5. GEO-BLOQUEO ADVERSARIAL S-CLASS: RESTRICCIÓN DE TRÁFICO DESDE COLOMBIA (CO)
+  const clientCountry =
+    request.headers.get('cf-ipcountry') ||
+    request.headers.get('x-vercel-ip-country') ||
+    request.headers.get('x-country-code') ||
+    request.headers.get('geoip-country-code') ||
+    request.headers.get('x-geo-country');
+
+  if (clientCountry && clientCountry.trim().toUpperCase() === 'CO') {
+    if (url.pathname.startsWith('/api/')) {
+      return NextResponse.json(
+        {
+          error: 'GEO_RESTRICTED',
+          message: 'Acceso restringido para el territorio de Colombia (CO). Operativa exclusiva en España y UE.',
+          country: 'CO',
+        },
+        {
+          status: 403,
+          headers: {
+            'x-ear-geoblock': 'restricted-territory-CO',
+            'x-robots-tag': 'noindex, nofollow',
+            'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
+            'X-Content-Type-Options': 'nosniff',
+          },
+        }
+      );
+    }
+
+    return new NextResponse(
+      `<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Acceso Restringido por Zona Geográfica · Productora EAR</title>
+  <style>
+    body {
+      background: #050507;
+      color: #f4f4f5;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 24px;
+      box-sizing: border-box;
+    }
+    .card {
+      max-width: 520px;
+      width: 100%;
+      background: #09090d;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 40px 32px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      color: #f87171;
+      font-size: 11px;
+      font-family: monospace;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin: 0 0 12px;
+      color: #ffffff;
+    }
+    p {
+      color: #a1a1aa;
+      font-size: 14px;
+      line-height: 1.6;
+      margin: 0 0 20px;
+    }
+    .legal-box {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 12px;
+      color: #71717a;
+      line-height: 1.5;
+      margin-bottom: 24px;
+      text-align: left;
+    }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 24px;
+      background: #ecb613;
+      color: #000000;
+      font-weight: 700;
+      font-size: 13px;
+      text-decoration: none;
+      border-radius: 12px;
+      transition: background 0.2s;
+    }
+    .cta-btn:hover {
+      background: #ffd643;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="badge">
+      <span>🛡️ Geo-Restricción Activa · CO (Colombia)</span>
+    </div>
+    <h1>Acceso No Disponible en su Territorio</h1>
+    <p>
+      El acceso a productoraear.com y sus plataformas satélite se encuentra restringido para conexiones detectadas desde Colombia.
+    </p>
+    <div class="legal-box">
+      <strong>Ámbito Contractual Soberano:</strong><br/>
+      Nuestros servicios de contratación artística, espacios para bodas y catering operan exclusivamente dentro del territorio nacional de España y el marco regulatorio de la Unión Europea (Art. 118 LCSP).
+    </div>
+    <a href="https://wa.me/34693693048?text=Consulta%20Institucional%20Internacional" class="cta-btn">
+      Atención Centralita (+34 693 693 048)
+    </a>
+  </div>
+</body>
+</html>`,
+      {
+        status: 403,
+        headers: {
+          'content-type': 'text/html; charset=utf-8',
+          'x-ear-geoblock': 'restricted-territory-CO',
+          'x-robots-tag': 'noindex, nofollow',
+          'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
+          'X-Content-Type-Options': 'nosniff',
+        },
+      }
+    );
+  }
 
   // 1. Resolución de la unidad de negocio soberana por Host (W49_T02)
   const vertical = resolveVerticalFromHost(rawHost);
@@ -273,18 +435,19 @@ export function middleware(request: NextRequest) {
     },
   });
   response.headers.set('x-ear-vertical', vertical.id);
+  response.headers.set('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
+  response.headers.set('X-Content-Type-Options', 'nosniff');
   return response;
 }
 
 export const config = {
   matcher: [
     /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
+     * Match all request paths except for:
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+    '/((?!_next/static|_next/image|favicon.ico).*)',
   ],
 };

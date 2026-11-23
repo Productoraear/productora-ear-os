@@ -50,12 +50,12 @@ export default function BentoMenuSection({
     <section
       id="carta-menus"
       aria-labelledby="carta-menus-title"
-      className="mx-auto mt-20 max-w-[1520px] px-4 sm:px-6 lg:px-8"
+      className="mx-auto mt-16 w-full max-w-[1520px] px-4 sm:mt-20 sm:px-6 lg:px-8"
     >
       <div className="max-w-[65ch]">
         <h2
           id="carta-menus-title"
-          className="font-syne text-[clamp(1.75rem,3.4vw,2.75rem)] font-black leading-[1.06] tracking-display text-[#F4F1EA] [overflow-wrap:break-word]"
+          className="font-syne text-2xl font-black leading-[1.1] tracking-display text-[#F4F1EA] [overflow-wrap:break-word] sm:text-4xl md:text-[clamp(1.75rem,3.4vw,2.75rem)]"
         >
           {OTZARRETA_WEDDING_MENUS_CLAIM}
         </h2>
@@ -65,19 +65,28 @@ export default function BentoMenuSection({
         </p>
       </div>
 
-      {/* Bento real: el menú insignia ocupa dos columnas en escritorio; las
-          pistas usan minmax(0, 1fr) para que las cifras nunca desborden. */}
-      <ul className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
+      {/* CARTA MÓVIL (360–412 px): una tarjeta por menú, nunca columnas
+          apretadas de ~150 px. El carril horizontal con snap aparece solo si
+          la carta crece más allá de tres menús, para que el gesto de deslizar
+          tenga sentido. A partir de `md` se recupera la rejilla Bento real con
+          `minmax(0,1fr)`: las cifras tabulares nunca desbordan. */}
+      <ul
+        className={`mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3 ${
+          OTZARRETA_WEDDING_MENUS.length > 3
+            ? 'max-md:grid-flow-col max-md:auto-cols-[minmax(0,86%)] max-md:overflow-x-auto max-md:snap-x max-md:snap-mandatory max-md:pb-3 max-md:[scrollbar-width:none]'
+            : ''
+        }`}
+      >
         {OTZARRETA_WEDDING_MENUS.map((menu) => {
           const isFlagship = menu.name === flagship.name;
           const price = formatOtzarretaMenuPrice(menu.priceEur);
           return (
             <li
               key={menu.name}
-              className={`hallmark-card ${isFlagship ? 'md:col-span-2 lg:col-span-2 aura-glow' : ''}`}
+              className={`hallmark-card min-w-0 max-md:snap-center ${isFlagship ? 'md:col-span-2 lg:col-span-2 aura-glow' : ''}`}
             >
               <div className="space-y-2">
-                <div className="flex flex-wrap items-baseline justify-between gap-3">
+                <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
                   <h3 className="min-w-0 font-syne text-lg font-bold tracking-display text-[#F4F1EA] [overflow-wrap:break-word] sm:text-xl">
                     {menu.name}
                   </h3>
@@ -107,8 +116,8 @@ export default function BentoMenuSection({
         })}
       </ul>
 
-      <div className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-card border border-[#ecb613]/30 bg-[#ecb613]/[0.04] p-6 shadow-inset-hairline-gold sm:p-8">
-        <div className="max-w-[58ch]">
+      <div className="mt-6 flex flex-col gap-4 rounded-card border border-[#ecb613]/30 bg-[#ecb613]/[0.04] p-5 shadow-inset-hairline-gold sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:p-8">
+        <div className="min-w-0 max-w-[58ch]">
           <p className="text-sm font-semibold text-[#F4F1EA]">{OTZARRETA_WEDDING_MENUS_CLAIM}</p>
           <p className="mt-1 text-xs leading-relaxed text-[#C9C4B8]">
             La fianza de {DEPOSITO_STRIPE_EUR} € sella la fecha en la agenda de la casa y se descuenta al
@@ -123,7 +132,7 @@ export default function BentoMenuSection({
         </div>
         <a
           href={blockHref}
-          className="hallmark-btn-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ecb613] active:scale-[0.985] motion-reduce:active:scale-100"
+          className="hallmark-btn-primary min-h-[48px] w-full px-4 text-center text-[0.8125rem] leading-tight sm:w-auto sm:px-6 sm:text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ecb613] active:scale-[0.985] motion-reduce:active:scale-100"
         >
           Asegurar fecha, fianza deducible {DEPOSITO_STRIPE_EUR} €
         </a>

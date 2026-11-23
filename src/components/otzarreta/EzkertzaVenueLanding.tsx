@@ -139,34 +139,37 @@ export function EzkertzaVenueLanding({
         <section
             id="ficha-ezkertza-derio"
             aria-label="Landing del venue Restaurante Ezkertza Berria"
-            className="relative px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto my-16"
+            className="relative mx-auto my-12 w-full max-w-7xl px-4 sm:my-16 sm:px-6 lg:px-8"
         >
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: venueJsonLd() }} />
 
-            {/* ━━━ 1. HERO: CARRUSEL CON TODAS LAS IMÁGENES VAMPIRIZADAS ━━━ */}
-            <div className="relative h-[560px] sm:h-[640px] rounded-3xl overflow-hidden border border-white/10 bg-black/40">
+            {/* ━━━ 1. HERO: CARRUSEL CON TODAS LAS IMÁGENES VAMPIRIZADAS ━━━
+                Alto fluido: 560 px fijos aplastaban los CTAs en 360 px. */}
+            <div className="relative min-h-[600px] w-full overflow-hidden rounded-3xl border border-white/10 bg-black/40 sm:min-h-[640px]">
                 <CinematicVanguardCarousel
                     images={photos}
                     title={`Galería de ${EZKERTZA_DERIO_VENUE.name}`}
-                    className="h-full w-full"
+                    className="absolute inset-0 h-full w-full"
                     aspectRatio="wide"
                     defaultMode="cinema"
                     autoPlayInterval={5500}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#030305] via-[#030305]/35 to-transparent pointer-events-none" />
-                <div className="absolute inset-x-0 bottom-0 p-6 sm:p-10 pointer-events-none">
-                    <div className="flex flex-col lg:flex-row lg:items-end gap-6 lg:justify-between">
-                        <div className="space-y-3 max-w-2xl">
-                            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#ecb613]/15 border border-[#ecb613]/40 text-[#ecb613] text-xs font-mono tracking-wider backdrop-blur-md">
-                                <MapPin className="w-4 h-4" />
-                                {EZKERTZA_DERIO_VENUE.municipality} · {EZKERTZA_DERIO_VENUE.provinceAlias}
+                <div className="absolute inset-x-0 bottom-0 p-4 sm:p-10 pointer-events-none">
+                    <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between lg:gap-6">
+                        <div className="min-w-0 max-w-2xl space-y-3">
+                            <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-[#ecb613]/40 bg-[#ecb613]/15 px-3 py-1.5 text-[11px] font-mono tracking-wider text-[#ecb613] backdrop-blur-md sm:px-4 sm:text-xs">
+                                <MapPin className="w-4 h-4 shrink-0" />
+                                <span className="min-w-0 truncate">
+                                    {EZKERTZA_DERIO_VENUE.municipality} · {EZKERTZA_DERIO_VENUE.provinceAlias}
+                                </span>
                             </span>
-                            <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight drop-shadow-lg">
+                            <h2 className="text-2xl font-extrabold leading-tight tracking-tight text-white drop-shadow-lg [overflow-wrap:break-word] sm:text-5xl">
                                 {EZKERTZA_DERIO_VENUE.name}
                             </h2>
-                            <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+                            <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
                                 <div className="flex items-center gap-2">
-                                    <span className="text-2xl font-extrabold text-white">
+                                    <span className="text-xl font-extrabold text-white sm:text-2xl">
                                         {formatRating(EZKERTZA_DERIO_VENUE.rating)}
                                     </span>
                                     <StarRow rating={EZKERTZA_DERIO_VENUE.rating} />
@@ -180,22 +183,22 @@ export function EzkertzaVenueLanding({
                                 </span>
                             </div>
                         </div>
-                        <div className="flex flex-col gap-3 w-full sm:w-auto pointer-events-auto">
+                        <div className="pointer-events-auto flex w-full flex-col gap-3 sm:w-auto">
                             <a
                                 href={blockHref}
                                 data-ear-track="deposit-lock"
-                                className="px-7 py-4 rounded-2xl bg-gradient-to-r from-[#ecb613] via-[#f7cb45] to-[#ecb613] text-black font-extrabold text-sm hover:brightness-110 transition-all shadow-xl shadow-[#ecb613]/25 flex items-center justify-center gap-2.5 hover:scale-[1.02] active:scale-[0.98]"
+                                className="flex min-h-[48px] w-full items-center justify-center gap-2.5 rounded-2xl bg-gradient-to-r from-[#ecb613] via-[#f7cb45] to-[#ecb613] px-5 py-4 text-sm font-extrabold text-black shadow-xl shadow-[#ecb613]/25 transition-all hover:brightness-110 active:scale-[0.98] sm:w-auto sm:px-7"
                             >
-                                <CalendarCheck className="w-5 h-5" />
+                                <CalendarCheck className="w-5 h-5 shrink-0" />
                                 Solicitar presupuesto
                             </a>
                             <a
                                 href={whatsappUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="px-7 py-4 rounded-2xl bg-[#09090d]/85 text-white font-semibold text-sm hover:bg-white/10 transition-all border border-white/15 flex items-center justify-center gap-2.5 backdrop-blur-md"
+                                className="flex min-h-[48px] w-full items-center justify-center gap-2.5 rounded-2xl border border-white/15 bg-[#09090d]/85 px-5 py-4 text-sm font-semibold text-white backdrop-blur-md transition-all hover:bg-white/10 sm:w-auto sm:px-7"
                             >
-                                <MessageCircle className="w-5 h-5 text-emerald-400" />
+                                <MessageCircle className="w-5 h-5 shrink-0 text-emerald-400" />
                                 Consultar disponibilidad
                             </a>
                         </div>
@@ -220,21 +223,21 @@ export function EzkertzaVenueLanding({
             />
 
             {/* ━━━ 2. PRUEBA SOCIAL INMEDIATA ━━━ */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
-                <div className="p-4 rounded-2xl border border-white/10 bg-[#09090d]/80 text-center">
-                    <p className="text-2xl font-extrabold text-white">{formatRating(EZKERTZA_DERIO_VENUE.rating)}</p>
+            <div className="mt-4 grid grid-cols-2 gap-3 md:grid-cols-4">
+                <div className="min-w-0 rounded-2xl border border-white/10 bg-[#09090d]/80 p-3 text-center sm:p-4">
+                    <p className="text-xl font-extrabold text-white sm:text-2xl">{formatRating(EZKERTZA_DERIO_VENUE.rating)}</p>
                     <p className="text-[11px] font-mono text-gray-500">Valoración media</p>
                 </div>
-                <div className="p-4 rounded-2xl border border-white/10 bg-[#09090d]/80 text-center">
-                    <p className="text-2xl font-extrabold text-white">{EZKERTZA_DERIO_VENUE.reviewCount}</p>
+                <div className="min-w-0 rounded-2xl border border-white/10 bg-[#09090d]/80 p-3 text-center sm:p-4">
+                    <p className="text-xl font-extrabold text-white sm:text-2xl">{EZKERTZA_DERIO_VENUE.reviewCount}</p>
                     <p className="text-[11px] font-mono text-gray-500">Opiniones</p>
                 </div>
-                <div className="p-4 rounded-2xl border border-white/10 bg-[#09090d]/80 text-center">
-                    <p className="text-2xl font-extrabold text-[#ecb613]">{EZKERTZA_DERIO_VENUE.recommendationPercent}%</p>
+                <div className="min-w-0 rounded-2xl border border-white/10 bg-[#09090d]/80 p-3 text-center sm:p-4">
+                    <p className="text-xl font-extrabold text-[#ecb613] sm:text-2xl">{EZKERTZA_DERIO_VENUE.recommendationPercent}%</p>
                     <p className="text-[11px] font-mono text-gray-500">Recomiendan</p>
                 </div>
-                <div className="p-4 rounded-2xl border border-white/10 bg-[#09090d]/80 text-center">
-                    <p className="text-2xl font-extrabold text-white">{EZKERTZA_DERIO_VENUE.guestRange}</p>
+                <div className="min-w-0 rounded-2xl border border-white/10 bg-[#09090d]/80 p-3 text-center sm:p-4">
+                    <p className="text-xl font-extrabold text-white sm:text-2xl">{EZKERTZA_DERIO_VENUE.guestRange}</p>
                     <p className="text-[11px] font-mono text-gray-500">Aforo banquete</p>
                 </div>
             </div>
@@ -243,21 +246,21 @@ export function EzkertzaVenueLanding({
             <div className="mt-16">
                 {unlocked ? (
                     <div className="space-y-4">
-                        <h3 className="text-2xl font-extrabold text-white">
+                        <h3 className="text-xl font-extrabold leading-tight text-white [overflow-wrap:break-word] sm:text-2xl">
                             Lo que cuentan las parejas
                         </h3>
                         <VenueReviewsCarousel reviews={EZKERTZA_DERIO_VENUE.reviews} />
                     </div>
                 ) : (
-                    <div className="rounded-3xl border border-[#ecb613]/25 bg-gradient-to-r from-[#141209] to-[#09090d] p-8 sm:p-10 flex flex-col sm:flex-row items-start gap-6">
-                        <div className="w-12 h-12 rounded-2xl bg-[#ecb613]/10 border border-[#ecb613]/30 flex items-center justify-center shrink-0">
+                    <div className="flex flex-col items-start gap-5 rounded-3xl border border-[#ecb613]/25 bg-gradient-to-r from-[#141209] to-[#09090d] p-5 sm:flex-row sm:p-10 sm:gap-6">
+                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-[#ecb613]/30 bg-[#ecb613]/10">
                             <Lock className="w-6 h-6 text-[#ecb613]" />
                         </div>
-                        <div className="space-y-2">
+                        <div className="min-w-0 space-y-2">
                             <h3 className="text-lg font-bold text-white">
                                 Ficha profunda bajo llave soberana
                             </h3>
-                            <p className="text-sm text-gray-300 leading-relaxed max-w-3xl">
+                            <p className="max-w-3xl text-sm text-gray-300 leading-relaxed">
                                 Las reseñas íntegras, las bodas reales, las promociones y los
                                 menús detallados de la ficha se publican únicamente cuando la
                                 alianza con el caserío está activa. Lo que ves hoy procede de
@@ -281,8 +284,8 @@ export function EzkertzaVenueLanding({
             {/* ━━━ 4. ESPACIOS · SERVICIOS · LOCALIZACIÓN ━━━ */}
             {/* El vídeo oficial ya se sirve como enlace soberano (sin iframe ni cookies de
                 terceros) desde EzkertzaCinematicJourney: RGPD/SEC-7 sin duplicar el player. */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
-                <div className="p-6 rounded-3xl border border-white/10 bg-[#09090d]/80 space-y-4">
+            <div className="mt-6 grid grid-cols-1 gap-5 lg:grid-cols-3 lg:gap-6">
+                <div className="min-w-0 space-y-4 rounded-3xl border border-white/10 bg-[#09090d]/80 p-5 sm:p-6">
                     <h3 className="text-base font-bold text-white">Espacios</h3>
                     <ul className="space-y-3">
                         {EZKERTZA_DERIO_VENUE.spaces.map((space, index) => {
@@ -296,7 +299,7 @@ export function EzkertzaVenueLanding({
                         })}
                     </ul>
                 </div>
-                <div className="p-6 rounded-3xl border border-white/10 bg-[#09090d]/80 space-y-4">
+                <div className="min-w-0 space-y-4 rounded-3xl border border-white/10 bg-[#09090d]/80 p-5 sm:p-6">
                     <h3 className="text-base font-bold text-white">Servicios</h3>
                     <ul className="space-y-3">
                         {EZKERTZA_DERIO_VENUE.services.map((service, index) => {
@@ -310,7 +313,7 @@ export function EzkertzaVenueLanding({
                         })}
                     </ul>
                 </div>
-                <div className="p-6 rounded-3xl border border-white/10 bg-[#09090d]/80 space-y-4">
+                <div className="min-w-0 space-y-4 rounded-3xl border border-white/10 bg-[#09090d]/80 p-5 sm:p-6">
                     <h3 className="text-base font-bold text-white">Datos de interés</h3>
                     <ul className="space-y-3">
                         {EZKERTZA_DERIO_VENUE.datosDeInteres.map((item) => (
@@ -325,7 +328,7 @@ export function EzkertzaVenueLanding({
 
             {/* ━━━ 6. MENÚS Y PROMOS EN ACORDEÓN (gated) ━━━ */}
             <div className="mt-16 space-y-3">
-                <h3 className="text-2xl font-extrabold text-white">Menús y promociones</h3>
+                <h3 className="text-xl font-extrabold leading-tight text-white [overflow-wrap:break-word] sm:text-2xl">Menús y promociones</h3>
                 {unlocked ? (
                     <>
                         {EZKERTZA_DERIO_VENUE.promos.map((promo) => (
@@ -385,7 +388,7 @@ export function EzkertzaVenueLanding({
 
             {/* ━━━ 7. FAQ EN ACORDEÓN (cero scroll infinito) ━━━ */}
             <div className="mt-16 space-y-3">
-                <h3 className="text-2xl font-extrabold text-white">Preguntas frecuentes</h3>
+                <h3 className="text-xl font-extrabold leading-tight text-white [overflow-wrap:break-word] sm:text-2xl">Preguntas frecuentes</h3>
                 {EZKERTZA_DERIO_VENUE.faqs.map((faq) => (
                     <details
                         key={faq.question}
@@ -401,10 +404,10 @@ export function EzkertzaVenueLanding({
             </div>
 
             {/* ━━━ 8. MAPA + LOGÍSTICA ━━━ */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-16">
-                <div className="p-6 sm:p-8 rounded-3xl border border-white/10 bg-[#09090d]/80 space-y-4">
+            <div className="mt-12 grid grid-cols-1 gap-5 lg:grid-cols-2 lg:gap-6 sm:mt-16">
+                <div className="min-w-0 space-y-4 rounded-3xl border border-white/10 bg-[#09090d]/80 p-5 sm:p-8">
                     <h3 className="text-base font-bold text-white flex items-center gap-2">
-                        <MapPin className="w-4 h-4 text-[#ecb613]" />
+                        <MapPin className="w-4 h-4 shrink-0 text-[#ecb613]" />
                         Dónde estamos
                     </h3>
                     <p className="text-sm text-gray-300 leading-relaxed">
@@ -415,22 +418,22 @@ export function EzkertzaVenueLanding({
                         data-ear-track="map-route"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-white/15 text-white text-xs font-semibold hover:border-[#ecb613]/50 hover:bg-white/5 transition-all duration-300 ease-out"
+                        className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-xl border border-white/15 px-5 py-2.5 text-xs font-semibold text-white transition-all duration-300 ease-out hover:border-[#ecb613]/50 hover:bg-white/5"
                     >
-                        <ExternalLink className="w-4 h-4 text-[#ecb613]" />
+                        <ExternalLink className="w-4 h-4 shrink-0 text-[#ecb613]" />
                         Abrir mapa
                     </a>
                 </div>
-                <div className="p-6 sm:p-8 rounded-3xl border border-white/10 bg-[#09090d]/80 space-y-4">
+                <div className="min-w-0 space-y-4 rounded-3xl border border-white/10 bg-[#09090d]/80 p-5 sm:p-8">
                     <h3 className="text-base font-bold text-white flex items-center gap-2">
-                        <Bus className="w-4 h-4 text-[#00E5FF]" />
+                        <Bus className="w-4 h-4 shrink-0 text-[#00E5FF]" />
                         Accesos y logística
                     </h3>
                     <ul className="space-y-3">
                         {EZKERTZA_DERIO_VENUE.location.map((item) => (
                             <li key={item} className="flex items-center gap-2.5 text-sm text-gray-300">
-                                <CheckCircle2 className="w-4 h-4 text-[#ecb613] shrink-0" />
-                                {item}
+                                <CheckCircle2 className="w-4 h-4 shrink-0 text-[#ecb613]" />
+                                <span className="min-w-0">{item}</span>
                             </li>
                         ))}
                     </ul>
@@ -445,31 +448,31 @@ export function EzkertzaVenueLanding({
             <PartnerShowcaseMetricsPanel />
 
             {/* ━━━ 9. CTA FINAL: VISITA TÉCNICA ━━━ */}
-            <div className="mt-16 rounded-3xl border border-[#ecb613]/25 bg-gradient-to-r from-[#141209] via-[#0e0e14] to-[#09090d] p-8 sm:p-12 text-center space-y-6">
-                <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
+            <div className="mt-12 space-y-6 rounded-3xl border border-[#ecb613]/25 bg-gradient-to-r from-[#141209] via-[#0e0e14] to-[#09090d] p-5 text-center sm:mt-16 sm:p-12">
+                <h3 className="text-xl font-extrabold leading-tight text-white [overflow-wrap:break-word] sm:text-3xl">
                     Reserva tu visita técnica al caserío
                 </h3>
-                <p className="text-sm text-gray-300 max-w-2xl mx-auto leading-relaxed">
+                <p className="mx-auto max-w-2xl text-sm leading-relaxed text-gray-300">
                     Conoce los jardines, la carpa de ceremonias y los salones en una visita
                     privada, y deja tu fecha bloqueada con depósito 100% deducible del
                     presupuesto final.
                 </p>
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                <div className="flex w-full flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
                     <a
                         href={visitHref}
                         data-ear-track="visit-request"
-                        className="px-8 py-4 rounded-2xl bg-gradient-to-r from-[#ecb613] via-[#f7cb45] to-[#ecb613] text-black font-extrabold text-sm hover:brightness-110 transition-all shadow-xl shadow-[#ecb613]/25 hover:scale-[1.02] active:scale-[0.98] inline-flex items-center gap-2.5"
+                        className="inline-flex min-h-[48px] w-full items-center justify-center gap-2.5 rounded-2xl bg-gradient-to-r from-[#ecb613] via-[#f7cb45] to-[#ecb613] px-6 py-4 text-sm font-extrabold text-black shadow-xl shadow-[#ecb613]/25 transition-all hover:brightness-110 active:scale-[0.98] sm:w-auto sm:px-8"
                     >
-                        <CalendarCheck className="w-5 h-5" />
+                        <CalendarCheck className="w-5 h-5 shrink-0" />
                         Pedir visita técnica
                     </a>
                     <a
                         href={whatsappUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-8 py-4 rounded-2xl bg-[#09090d]/80 border border-white/15 text-white font-semibold text-sm hover:bg-white/10 transition-all backdrop-blur-md inline-flex items-center gap-2.5"
+                        className="inline-flex min-h-[48px] w-full items-center justify-center gap-2.5 rounded-2xl border border-white/15 bg-[#09090d]/80 px-6 py-4 text-sm font-semibold text-white backdrop-blur-md transition-all hover:bg-white/10 sm:w-auto sm:px-8"
                     >
-                        <MessageCircle className="w-5 h-5 text-emerald-400" />
+                        <MessageCircle className="w-5 h-5 shrink-0 text-emerald-400" />
                         Consultar por WhatsApp
                     </a>
                 </div>

@@ -675,46 +675,47 @@ export function OtzarretaExperienceExplorer(): React.JSX.Element {
   );
 
   return (
-    <section id="calculadora" className="space-y-12 scroll-mt-32">
-      {/* Navegación por Pestañas Principales */}
-      <div className="flex flex-wrap items-center justify-center gap-2 p-1.5 rounded-2xl bg-white/[0.04] border border-white/10 max-w-xl mx-auto backdrop-blur-md">
+    <section id="calculadora" className="min-w-0 space-y-8 scroll-mt-32 sm:space-y-12">
+      {/* Navegación por Pestañas Principales — apiladas a ancho completo en
+          móvil (360–412 px): nunca dos pestañas comprimidas en una fila. */}
+      <div className="mx-auto flex w-full max-w-xl flex-col items-stretch gap-1.5 rounded-2xl border border-white/10 bg-white/[0.04] p-1.5 backdrop-blur-md sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-2">
         <button
           type="button"
           onClick={() => setActiveTab('menus')}
-          className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 ${
+          className={`flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all sm:w-auto sm:px-5 ${
             activeTab === 'menus'
               ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20 font-bold'
               : 'text-gray-400 hover:text-white hover:bg-white/[0.06]'
           }`}
         >
-          <Utensils className="w-4 h-4" />
-          <span>Menús Oficiales 2026</span>
+          <Utensils className="w-4 h-4 shrink-0" />
+          <span className="min-w-0 text-center">Menús Oficiales 2026</span>
         </button>
 
         <button
           type="button"
           onClick={() => setActiveTab('calculadora')}
-          className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 ${
+          className={`flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all sm:w-auto sm:px-5 ${
             activeTab === 'calculadora'
               ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20 font-bold'
               : 'text-gray-400 hover:text-white hover:bg-white/[0.06]'
           }`}
         >
-          <Sparkles className="w-4 h-4" />
-          <span>Simulador & Cotizador</span>
+          <Sparkles className="w-4 h-4 shrink-0" />
+          <span className="min-w-0 text-center">Simulador & Cotizador</span>
         </button>
 
         <button
           type="button"
           onClick={() => setActiveTab('acustica')}
-          className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 ${
+          className={`flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all sm:w-auto sm:px-5 ${
             activeTab === 'acustica'
               ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20 font-bold'
               : 'text-gray-400 hover:text-white hover:bg-white/[0.06]'
           }`}
         >
-          <ShieldCheck className="w-4 h-4" />
-          <span>Blindaje Legal & Acústico</span>
+          <ShieldCheck className="w-4 h-4 shrink-0" />
+          <span className="min-w-0 text-center">Blindaje Legal & Acústico</span>
         </button>
       </div>
 
@@ -722,11 +723,11 @@ export function OtzarretaExperienceExplorer(): React.JSX.Element {
       {activeTab === 'menus' && (
         <div className="space-y-8 animate-fadeIn">
           {/* Sub-pestañas de categoría (Bodas, Comuniones, Grupos) */}
-          <div className="flex justify-center gap-2">
+          <div className="flex flex-col gap-2 sm:flex-row sm:justify-center">
             {[
-              { id: 'bodas', label: '💍 Bodas & Banquetes 2026', count: 7 },
-              { id: 'comuniones', label: '🕊️ Comuniones 2025/2027', count: 4 },
-              { id: 'grupos', label: '👥 Grupos & Empresa MICE', count: 2 }
+              { id: 'bodas', label: 'Bodas & Banquetes 2026', count: 7 },
+              { id: 'comuniones', label: 'Comuniones 2025/2027', count: 4 },
+              { id: 'grupos', label: 'Grupos & Empresa MICE', count: 2 }
             ].map((cat) => (
               <button
                 key={cat.id}
@@ -736,19 +737,21 @@ export function OtzarretaExperienceExplorer(): React.JSX.Element {
                   const firstOfCat = CANONICAL_OTZARRETA_MENUS.find((m) => m.category === cat.id);
                   if (firstOfCat) setSelectedMenuId(firstOfCat.id);
                 }}
-                className={`px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all border ${
+                className={`min-h-[44px] w-full rounded-xl border px-4 py-2 text-xs font-mono font-bold transition-all sm:w-auto ${
                   activeCategory === cat.id
                     ? 'bg-amber-500/20 border-amber-500 text-amber-300'
                     : 'bg-zinc-900/60 border-zinc-800 text-zinc-400 hover:text-zinc-200'
                 }`}
               >
-                {cat.label}
+                {cat.label} · {cat.count}
               </button>
             ))}
           </div>
 
-          {/* Selector de paquetes */}
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {/* Selector de paquetes: TARJETA ÚNICA por vista en móvil con carril
+              deslizable y snap; rejilla 3/4 columnas solo desde `md`. Un
+              contenedor de ~150 px jamás debe sostener precio + nota. */}
+          <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-3 [scrollbar-width:none] md:grid md:grid-cols-3 md:overflow-visible md:pb-0 lg:grid-cols-4 [&::-webkit-scrollbar]:hidden">
             {availableMenus.map((menu) => {
               const isSelected = menu.id === selectedMenuId;
               return (
@@ -756,23 +759,23 @@ export function OtzarretaExperienceExplorer(): React.JSX.Element {
                   key={menu.id}
                   type="button"
                   onClick={() => setSelectedMenuId(menu.id)}
-                  className={`text-left p-5 rounded-2xl transition-all border flex flex-col justify-between ${
+                  className={`flex min-h-[168px] w-[86%] shrink-0 snap-center flex-col justify-between rounded-2xl border p-4 text-left transition-all sm:w-[64%] md:w-auto md:min-h-0 md:shrink ${
                     isSelected
                       ? 'bg-gradient-to-b from-[#ecb613]/15 to-[#09090d] border-[#ecb613] shadow-xl shadow-[#ecb613]/10 ring-1 ring-[#ecb613]'
                       : 'bg-[#09090d]/80 border-white/10 hover:border-white/30 hover:bg-white/[0.02]'
                   }`}
                 >
-                  <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-[10px] font-mono tracking-wider px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-[#ecb613]">
+                  <div className="min-w-0">
+                    <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
+                      <span className="min-w-0 break-words text-[10px] font-mono tracking-wider px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-[#ecb613]">
                         {menu.tag.split('·')[0]}
                       </span>
-                      <span className="text-lg font-extrabold text-[#ecb613] font-mono">
+                      <span className="shrink-0 whitespace-nowrap text-lg font-extrabold text-[#ecb613] font-mono">
                         {menu.pricePerPax} €
                         <span className="text-[10px] text-zinc-400 font-normal"> /pax</span>
                       </span>
                     </div>
-                    <h3 className="text-base font-bold text-white mb-1">{menu.name}</h3>
+                    <h3 className="text-base font-bold leading-tight text-white mb-1 [overflow-wrap:break-word]">{menu.name}</h3>
                     <p className="text-xs text-zinc-400 line-clamp-2 leading-relaxed">{menu.subtitle}</p>
                   </div>
                   {menu.bonus && (
@@ -786,27 +789,27 @@ export function OtzarretaExperienceExplorer(): React.JSX.Element {
           </div>
 
           {/* Ficha Detallada del Menú Seleccionado */}
-          <div className="rounded-3xl bg-[#09090d]/90 border border-white/10 p-6 md:p-10 backdrop-blur-md space-y-8">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-white/10">
-              <div>
-                <span className="inline-flex items-center gap-2 text-xs font-mono text-[#ecb613] uppercase tracking-wider mb-2">
-                  <Flame className="w-4 h-4 text-orange-500" />
-                  Parrilla Tradicional Eduardo Martínez · Capacidad hasta 350 Personas
+          <div className="min-w-0 space-y-8 rounded-3xl border border-white/10 bg-[#09090d]/90 p-4 backdrop-blur-md sm:p-6 md:p-10">
+            <div className="flex flex-col justify-between gap-4 border-b border-white/10 pb-6 md:flex-row md:items-center">
+              <div className="min-w-0">
+                <span className="mb-2 inline-flex items-start gap-2 text-xs font-mono uppercase tracking-wider text-[#ecb613]">
+                  <Flame className="w-4 h-4 shrink-0 text-orange-500" />
+                  <span className="min-w-0">Parrilla Tradicional Eduardo Martínez · Capacidad hasta 350 Personas</span>
                 </span>
-                <h3 className="text-2xl md:text-3xl font-extrabold text-white flex items-center gap-3">
-                  <span>{currentMenu.name}</span>
+                <h3 className="flex flex-wrap items-center gap-2 text-xl font-extrabold leading-tight text-white [overflow-wrap:break-word] md:text-3xl">
+                  <span className="min-w-0">{currentMenu.name}</span>
                   {currentMenu.bonus && (
-                    <span className="text-xs font-mono px-3 py-1 rounded-full bg-emerald-900/60 text-emerald-300 border border-emerald-600">
+                    <span className="text-[10px] font-mono px-2.5 py-1 rounded-full bg-emerald-900/60 text-emerald-300 border border-emerald-600">
                       OFERTA ESPECIAL
                     </span>
                   )}
                 </h3>
-                <p className="text-sm text-zinc-200 mt-1">{currentMenu.subtitle}</p>
+                <p className="mt-1 text-sm text-zinc-200">{currentMenu.subtitle}</p>
               </div>
               <div className="flex items-center gap-4">
-                <div className="text-right">
+                <div className="text-left md:text-right">
                   <div className="text-xs text-zinc-300 font-mono">Tarifa Oficial + IVA</div>
-                  <div className="text-3xl font-extrabold text-[#ecb613] font-mono">{currentMenu.pricePerPax} €</div>
+                  <div className="text-2xl font-extrabold text-[#ecb613] font-mono md:text-3xl">{currentMenu.pricePerPax} €</div>
                   <div className="text-[10px] text-zinc-300 font-mono font-medium">Mínimo 80 pax para ofertas de boda</div>
                 </div>
               </div>
@@ -899,27 +902,27 @@ export function OtzarretaExperienceExplorer(): React.JSX.Element {
             </div>
 
             {/* Acciones de Reserva */}
-            <div className="pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
-              <div className="text-xs text-zinc-200 flex items-center gap-2 font-medium">
-                <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                <span>Bloqueo oficial con depósito garantizado de {DEPOSITO_STRIPE_EUR} € (Deducible al 100%)</span>
+            <div className="flex flex-col gap-4 border-t border-white/10 pt-6 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
+              <div className="flex min-w-0 items-start gap-2 text-xs font-medium text-zinc-200">
+                <ShieldCheck className="w-4 h-4 shrink-0 text-emerald-400" />
+                <span className="min-w-0">Bloqueo oficial con depósito garantizado de {DEPOSITO_STRIPE_EUR} € (Deducible al 100%)</span>
               </div>
-              <div className="flex flex-wrap items-center gap-3">
+              <div className="flex w-full flex-col items-stretch gap-3 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center">
                 <SovereignWhatsAppButton
                   url={`https://wa.me/${CENTRALITA_EAR_OS.replace(/\D/g, '')}?text=${whatsappMessage}`}
                   providerName="Ezkertza Berria & Otzarreta"
                   category="Finca y Banquetes"
                   estimatedTotal={totalEstimated}
-                  className="px-5 py-2.5 rounded-xl bg-[#25D366] text-black font-bold text-xs hover:brightness-110 transition-all flex items-center gap-2 shadow-lg"
+                  className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl bg-[#25D366] px-5 py-2.5 text-xs font-bold text-black shadow-lg transition-all hover:brightness-110 sm:w-auto"
                 >
-                  <Phone className="w-4 h-4" />
+                  <Phone className="w-4 h-4 shrink-0" />
                   Consultar Disponibilidad
                 </SovereignWhatsAppButton>
                 <a
                   href={resolveProviderCalendarHref({ slug: 'restaurante-otzarreta', category: 'catering' }, { intent: 'bloquear' })}
-                  className="px-5 py-2.5 rounded-xl bg-[#ecb613] text-black font-extrabold text-xs hover:bg-[#ffe066] transition-all flex items-center gap-2 shadow-lg shadow-[#ecb613]/20"
+                  className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl bg-[#ecb613] px-5 py-2.5 text-xs font-extrabold text-black shadow-lg shadow-[#ecb613]/20 transition-all hover:bg-[#ffe066] sm:w-auto"
                 >
-                  <CreditCard className="w-4 h-4" />
+                  <CreditCard className="w-4 h-4 shrink-0" />
                   Bloquear Fecha ({DEPOSITO_STRIPE_EUR} €)
                 </a>
               </div>
@@ -930,12 +933,12 @@ export function OtzarretaExperienceExplorer(): React.JSX.Element {
 
       {/* PESTAÑA 2: SIMULADOR & COTIZADOR INTERACTIVO */}
       {activeTab === 'calculadora' && (
-        <div className="rounded-3xl bg-[#09090d]/90 border border-white/10 p-6 md:p-10 backdrop-blur-md space-y-8 animate-fadeIn">
+        <div className="animate-fadeIn space-y-8 rounded-3xl border border-white/10 bg-[#09090d]/90 p-4 backdrop-blur-md sm:p-6 md:p-10">
           <div>
             <span className="text-xs font-mono text-[#ecb613] uppercase tracking-wider">
               COTIZADOR TRANSPARENTE EN TIEMPO REAL · TARIFAS OFICIALES 2026
             </span>
-            <h3 className="text-2xl md:text-3xl font-bold text-white mt-1">
+            <h3 className="mt-1 text-xl font-bold leading-tight text-white [overflow-wrap:break-word] md:text-3xl">
               Simulador de Banquete, Servicios & Presupuesto
             </h3>
             <p className="text-sm text-zinc-400 mt-1">
@@ -947,13 +950,13 @@ export function OtzarretaExperienceExplorer(): React.JSX.Element {
             {/* Controles de Configuración (2 columnas) */}
             <div className="lg:col-span-2 space-y-6">
               {/* Selector de Comensales (30 a 350 pax reales) */}
-              <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
-                <div className="flex items-center justify-between">
-                  <label htmlFor="guest-slider" className="text-sm font-bold text-white flex items-center gap-2">
-                    <Users className="w-4 h-4 text-[#ecb613]" />
+              <div className="space-y-4 rounded-2xl border border-white/10 bg-white/[0.02] p-4 sm:p-6">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <label htmlFor="guest-slider" className="flex min-w-0 items-center gap-2 text-sm font-bold text-white">
+                    <Users className="w-4 h-4 shrink-0 text-[#ecb613]" />
                     Número de Comensales
                   </label>
-                  <span className="text-2xl font-extrabold text-[#ecb613] font-mono">{guestCount} pax</span>
+                  <span className="shrink-0 font-mono text-xl font-extrabold text-[#ecb613] sm:text-2xl">{guestCount} pax</span>
                 </div>
                 <input
                   id="guest-slider"
@@ -963,48 +966,48 @@ export function OtzarretaExperienceExplorer(): React.JSX.Element {
                   step="5"
                   value={guestCount}
                   onChange={(e) => setGuestCount(Number(e.target.value))}
-                  className="w-full accent-[#ecb613] cursor-pointer"
+                  className="h-11 w-full cursor-pointer accent-[#ecb613]"
                 />
-                <div className="flex justify-between text-[11px] text-zinc-500 font-mono">
-                  <span>20 pax (Mínimo grupos)</span>
-                  <span>110 pax (Boda media)</span>
-                  <span>350 pax (Aforo completo)</span>
+                <div className="flex justify-between gap-2 font-mono text-[10px] text-zinc-500 sm:text-[11px]">
+                  <span>20 pax</span>
+                  <span>110 pax</span>
+                  <span>350 pax</span>
                 </div>
               </div>
 
               {/* Selector de Menú Activo */}
-              <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/10 space-y-3">
-                <label className="text-sm font-bold text-white flex items-center gap-2">
-                  <Utensils className="w-4 h-4 text-[#ecb613]" />
+              <div className="min-w-0 space-y-3 rounded-2xl border border-white/10 bg-white/[0.02] p-4 sm:p-6">
+                <label className="flex items-center gap-2 text-sm font-bold text-white">
+                  <Utensils className="w-4 h-4 shrink-0 text-[#ecb613]" />
                   Propuesta Gastronómica Seleccionada
                 </label>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
+                <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 md:grid-cols-3">
                   {CANONICAL_OTZARRETA_MENUS.filter((m) => m.category === activeCategory).map((m) => (
                     <button
                       key={m.id}
                       type="button"
                       onClick={() => setSelectedMenuId(m.id)}
-                      className={`p-3 rounded-xl text-left border transition-all ${
+                      className={`min-h-[48px] rounded-xl border p-3 text-left transition-all ${
                         m.id === selectedMenuId
                           ? 'border-[#ecb613] bg-[#ecb613]/10 text-white'
                           : 'border-white/10 bg-white/[0.02] text-zinc-400 hover:text-white'
                       }`}
                     >
-                      <div className="text-xs font-bold truncate">{m.name}</div>
-                      <div className="text-xs font-mono text-[#ecb613] mt-0.5">{m.pricePerPax} €/pax</div>
+                      <div className="truncate text-xs font-bold">{m.name}</div>
+                      <div className="mt-0.5 font-mono text-xs text-[#ecb613]">{m.pricePerPax} €/pax</div>
                     </button>
                   ))}
                 </div>
               </div>
 
               {/* Extras Oficiales del Dossier */}
-              <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
-                <div className="text-sm font-bold text-white flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-[#ecb613]" />
+              <div className="min-w-0 space-y-4 rounded-2xl border border-white/10 bg-white/[0.02] p-4 sm:p-6">
+                <div className="flex items-center gap-2 text-sm font-bold text-white">
+                  <Sparkles className="w-4 h-4 shrink-0 text-[#ecb613]" />
                   Servicios Adicionales Oficiales del Restaurante
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                   {OFFICIAL_EXTRAS.map((extra) => {
                     const isChecked = Boolean(selectedExtras[extra.id]);
                     return (
@@ -1038,7 +1041,7 @@ export function OtzarretaExperienceExplorer(): React.JSX.Element {
 
             {/* Resumen de Presupuesto en Tiempo Real (1 columna) */}
             <div className="space-y-6">
-              <div className="p-6 rounded-2xl bg-zinc-950 border border-white/10 space-y-6 sticky top-28">
+              <div className="space-y-6 rounded-2xl border border-white/10 bg-zinc-950 p-4 sm:p-6 lg:sticky lg:top-28">
                 <div className="border-b border-zinc-800 pb-4">
                   <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-500">
                     RESUMEN DE ESTIMACIÓN
@@ -1047,27 +1050,27 @@ export function OtzarretaExperienceExplorer(): React.JSX.Element {
                 </div>
 
                 <div className="space-y-3 text-xs font-mono">
-                  <div className="flex justify-between text-zinc-300">
-                    <span>
+                  <div className="flex justify-between gap-3 text-zinc-300">
+                    <span className="min-w-0 break-words">
                       {currentMenu.name} ({guestCount} pax)
                     </span>
-                    <span>{baseMenuTotal.toLocaleString('es-ES')} €</span>
+                    <span className="shrink-0 whitespace-nowrap">{baseMenuTotal.toLocaleString('es-ES')} €</span>
                   </div>
 
                   {OFFICIAL_EXTRAS.map((extra) => {
                     if (!selectedExtras[extra.id]) return null;
                     const cost = extra.perPax ? extra.price * guestCount : extra.price;
                     return (
-                      <div key={extra.id} className="flex justify-between text-zinc-400">
-                        <span className="truncate pr-2">{extra.name}</span>
-                        <span>{cost.toLocaleString('es-ES')} €</span>
+                      <div key={extra.id} className="flex justify-between gap-3 text-zinc-400">
+                        <span className="min-w-0 truncate">{extra.name}</span>
+                        <span className="shrink-0 whitespace-nowrap">{cost.toLocaleString('es-ES')} €</span>
                       </div>
                     );
                   })}
 
-                  <div className="pt-4 border-t border-zinc-800 flex justify-between text-sm font-bold text-white">
-                    <span>TOTAL ESTIMADO (+IVA)</span>
-                    <span className="text-xl font-extrabold text-[#ecb613]">
+                  <div className="flex flex-wrap items-end justify-between gap-2 border-t border-zinc-800 pt-4 text-sm font-bold text-white">
+                    <span className="min-w-0">TOTAL ESTIMADO (+IVA)</span>
+                    <span className="shrink-0 whitespace-nowrap text-xl font-extrabold text-[#ecb613]">
                       {totalEstimated.toLocaleString('es-ES')} €
                     </span>
                   </div>
@@ -1087,9 +1090,9 @@ export function OtzarretaExperienceExplorer(): React.JSX.Element {
                 <div className="space-y-2.5">
                   <a
                     href={resolveProviderCalendarHref({ slug: 'restaurante-otzarreta', category: 'catering' }, { intent: 'bloquear' })}
-                    className="w-full py-3.5 rounded-xl bg-[#ecb613] text-black font-extrabold text-xs hover:bg-[#ffe066] transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#ecb613]/20"
+                    className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl bg-[#ecb613] px-4 py-3.5 text-center text-xs font-extrabold text-black shadow-lg shadow-[#ecb613]/20 transition-all hover:bg-[#ffe066]"
                   >
-                    <CreditCard className="w-4 h-4" />
+                    <CreditCard className="w-4 h-4 shrink-0" />
                     Bloquear Fecha ({DEPOSITO_STRIPE_EUR} €)
                   </a>
                   <SovereignWhatsAppButton
@@ -1097,9 +1100,9 @@ export function OtzarretaExperienceExplorer(): React.JSX.Element {
                     providerName="Ezkertza Berria & Otzarreta"
                     category="Finca y Banquetes"
                     estimatedTotal={totalEstimated}
-                    className="w-full py-3 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-200 hover:text-white hover:border-[#25D366] text-xs font-mono font-bold transition-all flex items-center justify-center gap-2"
+                    className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-3 text-center text-xs font-mono font-bold text-zinc-200 transition-all hover:border-[#25D366] hover:text-white"
                   >
-                    <Phone className="w-3.5 h-3.5 text-[#25D366]" />
+                    <Phone className="w-3.5 h-3.5 shrink-0 text-[#25D366]" />
                     Consultar por WhatsApp
                   </SovereignWhatsAppButton>
                 </div>
@@ -1111,12 +1114,12 @@ export function OtzarretaExperienceExplorer(): React.JSX.Element {
 
       {/* PESTAÑA 3: BLINDAJE ACÚSTICO LEGAL */}
       {activeTab === 'acustica' && (
-        <div className="rounded-3xl bg-[#09090d]/90 border border-white/10 p-6 md:p-10 backdrop-blur-md space-y-6 animate-fadeIn">
+        <div className="animate-fadeIn space-y-6 rounded-3xl border border-white/10 bg-[#09090d]/90 p-4 backdrop-blur-md sm:p-6 md:p-10">
           <div>
             <span className="text-xs font-mono text-[#ecb613] uppercase tracking-wider">
               TELEMETRÍA & LEY 37/2003 DEL RUIDO
             </span>
-            <h3 className="text-2xl md:text-3xl font-bold text-white mt-1">
+            <h3 className="mt-1 text-xl font-bold leading-tight text-white [overflow-wrap:break-word] md:text-3xl">
               Garantía de Presión Sonora y Cumplimiento Normativo
             </h3>
             <p className="text-sm text-zinc-400 mt-1">
@@ -1125,26 +1128,28 @@ export function OtzarretaExperienceExplorer(): React.JSX.Element {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
-            <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/10 space-y-3">
-              <div className="text-xs font-mono text-[#ecb613] uppercase">PRESIÓN SONORA LÍMITE</div>
-              <div className="text-3xl font-extrabold text-white font-mono">85 - 90 dBA</div>
+          <div className="grid grid-cols-1 gap-4 pt-4 md:grid-cols-3 md:gap-6">
+            <div className="min-w-0 space-y-3 rounded-2xl border border-white/10 bg-white/[0.02] p-4 sm:p-6">
+              <div className="flex flex-wrap items-baseline justify-between gap-2">
+                <div className="text-xs font-mono uppercase text-[#ecb613]">PRESIÓN SONORA LÍMITE</div>
+              </div>
+              <div className="text-2xl font-extrabold text-white font-mono sm:text-3xl">85 - 90 dBA</div>
               <p className="text-xs text-zinc-400 leading-relaxed font-sans">
                 Limitador acústico calibrado para exteriores y salones según Ley 37/2003, con corte suave sin interrupción de la fiesta.
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/10 space-y-3">
+            <div className="min-w-0 space-y-3 rounded-2xl border border-white/10 bg-white/[0.02] p-4 sm:p-6">
               <div className="text-xs font-mono text-emerald-400 uppercase">POTENCIA REQUERIDA (12 W/PAX)</div>
-              <div className="text-3xl font-extrabold text-white font-mono">{acousticWatts} Watts RMS</div>
+              <div className="text-2xl font-extrabold text-white font-mono sm:text-3xl">{acousticWatts} W RMS</div>
               <p className="text-xs text-zinc-400 leading-relaxed font-sans">
                 Cálculo basado en {guestCount} invitados para una cobertura acústica impecable y sin distorsión.
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/10 space-y-3">
+            <div className="min-w-0 space-y-3 rounded-2xl border border-white/10 bg-white/[0.02] p-4 sm:p-6">
               <div className="text-xs font-mono text-cyan-400 uppercase">EQUIPO HOMOLOGADO</div>
-              <div className="text-xl font-bold text-white font-mono">Bose F1 Model 812</div>
+              <div className="font-mono text-lg font-bold text-white sm:text-xl">Bose F1 Model 812</div>
               <p className="text-xs text-zinc-400 leading-relaxed font-sans">
                 Matriz lineal flexible con subwoofers dobles de 1.000W que focalizan el sonido dentro del recinto sin fugas al entorno.
               </p>

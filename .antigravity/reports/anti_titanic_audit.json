@@ -1,0 +1,38 @@
+{
+  "timestamp": "2026-11-23T11:09:54.117Z",
+  "staticChecks": {
+    "success": true
+  },
+  "hardcodedProvinces": {
+    "success": true,
+    "found": []
+  },
+  "runtimeChecks": {
+    "success": true,
+    "results": [
+      {
+        "pathname": "/otzarreta",
+        "location": "Bizkaia",
+        "expected": "Otzarreta/Derio",
+        "passed": true
+      },
+      {
+        "pathname": "/reservar/solista",
+        "location": "Toledo",
+        "expected": "Hub Méntrida",
+        "passed": true
+      },
+      {
+        "pathname": "/reservar/solista",
+        "location": "Sevilla",
+        "expected": "cálculo provincial limpio",
+        "passed": true
+      }
+    ]
+  },
+  "ssotCheck": {
+    "success": false,
+    "error": "Command failed: npm run audit:ssot"
+  },
+  "exitCode": 0
+}

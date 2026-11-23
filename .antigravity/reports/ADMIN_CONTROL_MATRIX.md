@@ -49,6 +49,7 @@
 | session/route.ts | POST+DELETE+GET | SIN GUARD | no | no |
 | skills/route.ts | GET+POST | requireAdmin | sí | no |
 | sysinfo/route.ts | GET | requireAdmin | sí | no |
+| system/run-script/route.ts | POST | SIN GUARD | no | no |
 | tasks/inject/route.ts | GET+POST | requireAdmin | sí | no |
 | telemetry/route.ts | GET | requireAdmin | sí | no |
 | therapists/route.ts | GET+PATCH+POST | requireAdmin | sí | sí |
@@ -77,4 +78,4 @@
 | stripeConnectActions.ts | SIN GUARD | sí |
 | vendorAuthActions.ts | SIN GUARD | sí |
 
-**RESUMEN**: 13 enlaces UI→API en /admin/control · 0 fachadas/401 · 36 endpoints mapeados.
+**RESUMEN**: 13 enlaces UI→API en /admin/control · 0 fachadas/401 · 37 endpoints mapeados.

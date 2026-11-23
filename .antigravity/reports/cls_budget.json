@@ -6,7 +6,7 @@
   "disclaimer": "Presupuesto estático de layout-shift (SIMULADO_LAB); el CLS p75 real de campo exige sonda RUM sobre PostgreSQL.",
   "rulesCount": 8,
   "totalViolations": 0,
-  "checkedAt": "2026-11-12T09:02:47.126Z",
+  "checkedAt": "2026-11-21T23:49:56.841Z",
   "routes": [
     {
       "route": "/experiencia",
@@ -25,6 +25,17 @@
         "src/app/(public)/seating-planner/page.tsx",
         "src/components/seating/SeatingPlanner.tsx",
         "src/components/seating/SeatingBoard.tsx"
+      ],
+      "violationsCount": 0,
+      "violations": [],
+      "budget": 0.05,
+      "verdict": "PASS"
+    },
+    {
+      "route": "/otzarreta",
+      "filesChecked": [
+        "src/app/(public)/otzarreta/page.tsx",
+        "src/components/otzarreta/BentoMenuSection.tsx"
       ],
       "violationsCount": 0,
       "violations": [],

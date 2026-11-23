@@ -142,6 +142,12 @@ export async function POST(request: Request) {
 
     const body = await request.json();
     const { message, provinceSlug, categorySlug, pathname } = body;
+    // Ensure Otzarreta context is detected
+    const isOtzarreta = 
+      pathname?.includes('otzarreta') || 
+      message?.toLowerCase()?.includes('otzarreta') || 
+      message?.toLowerCase()?.includes('derio') || 
+      message?.toLowerCase()?.includes('ezkertza');
 
     if (!message || typeof message !== 'string') {
       return NextResponse.json({ error: 'Mensaje inválido' }, { status: 400 });
@@ -185,7 +191,7 @@ export async function POST(request: Request) {
         }
       }
     }
-    detectedProv = detectedProv || 'madrid';
+    detectedProv = detectedProv || null; // No fallback a Madrid, solo se usa la provincia detectada o null
 
     let detectedCat = categorySlug;
     if (!detectedCat) {
@@ -243,7 +249,11 @@ export async function POST(request: Request) {
    - Si el cliente menciona un género o formato musical, oriéntale a /proveedores?categoria=musica o a /presupuesto.
    - Cierra SIEMPRE invitando al presupuesto y al WhatsApp oficial ${CENTRALITA_EAR_OS}.`;
 
-    const systemPrompt = `Eres el Concierge Inteligente de Productora EAR para Edwin Agudelo y la Red de Fincas y Proveedores de Gala.
+    const systemPrompt = `Eres el Concierge Inteligente de Productora EAR para Edwin Agudelo y la Red de Fincas y Proveedores de Gala.${
+  pathname.includes('/otzarreta')
+    ? '\n\n---\nROL ESPECIAL: Maître Digital del Asador Restaurante Otzarreta en Derio (Bizkaia)\nMenús Oficiales:\n1. Menú Tradición: 145,00 € + IVA\n2. Menú Asador: 155,00 € + IVA\n3. Menú Ezkertza: 165,00 € + IVA\n4. Menú Soberano: 185,00 € + IVA\nDatos Físicos:\n- Parrilla tradicional de carbón de encina y sarmiento.\n- Aforo: Comedor acristalado 50 a 200 comensales (ampliable a 350 con jardín y carpa).\n- Párking privado para más de 120 vehículos.\n- Ceremonia civil exterior en jardín.\n- Alérgenos: Protocolo de cocina limpia sin gluten para celíacos y menú vegetariano.\n- Cláusula Boda Exclusiva: \"Una sola boda por día. Toda la finca y salones en exclusiva\".\n- Acústica de fiesta: Protocolo preventivo según Ley 37/2003 (< 75 dB).\n---\n'
+    : ''
+}
 DIRECTIVA INMUTABLE (HUMANO, EMPÁTICO Y RESOLUTIVO — CERO LORO):
 0. HILO CONDUCTOR (OBLIGATORIO):
    - Recibes el historial de la conversación. Úsalo: si el cliente ya dijo fecha, provincia o tipo de evento, NO se lo vuelvas a preguntar.

@@ -170,12 +170,13 @@ export default function VenueExperienceHub({
         <div
             data-audiencia={audiencia}
             data-evento={evento}
-            className="mt-6 rounded-3xl border border-white/10 bg-[#09090d]/80 backdrop-blur-md p-6 sm:p-8 space-y-8"
+            className="mt-6 min-w-0 space-y-8 rounded-3xl border border-white/10 bg-[#09090d]/80 p-4 backdrop-blur-md sm:p-8"
         >
-            {/* Selector de audiencia: el segmento elegido es la temperatura */}
+            {/* Selector de audiencia: una sola columna táctil en móvil (360–412 px),
+                fila centrada a partir de sm. */}
             <div className="space-y-3">
                 <div
-                    className="flex flex-wrap items-center justify-center gap-2"
+                    className="flex flex-col items-stretch justify-center gap-2 sm:flex-row sm:flex-wrap sm:items-center"
                     role="tablist"
                     aria-label="Tipo de cliente"
                 >
@@ -189,13 +190,13 @@ export default function VenueExperienceHub({
                                 role="tab"
                                 aria-selected={isActive}
                                 onClick={() => selectAudiencia(tab.id)}
-                                className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 ease-out flex items-center gap-2 ${
+                                className={`flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold transition-all duration-300 ease-out sm:w-auto ${
                                     isActive
                                         ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20'
                                         : 'text-gray-400 hover:text-white hover:bg-white/[0.06]'
                                 }`}
                             >
-                                <TabIcon className="w-4 h-4" />
+                                <TabIcon className="w-4 h-4 shrink-0" />
                                 {tab.label}
                             </button>
                         );
@@ -225,9 +226,9 @@ export default function VenueExperienceHub({
             </div>
 
             {/* Copia del segmento: solo bebe de la ficha del proveedor */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center rounded-2xl border border-white/5 bg-white/[0.02] p-6">
-                <div className="lg:col-span-2 space-y-3">
-                    <h3 className="text-2xl font-extrabold text-white">{copy.headline}</h3>
+            <div className="grid grid-cols-1 items-center gap-6 rounded-2xl border border-white/5 bg-white/[0.02] p-4 sm:p-6 lg:grid-cols-3">
+                <div className="min-w-0 space-y-3 lg:col-span-2">
+                    <h3 className="text-xl font-extrabold leading-tight text-white [overflow-wrap:break-word] sm:text-2xl">{copy.headline}</h3>
                     <p className="text-sm text-gray-300 leading-relaxed">{copy.subhead}</p>
                     {copy.bullets.length > 0 && (
                         <ul className="space-y-1.5">
@@ -237,36 +238,36 @@ export default function VenueExperienceHub({
                                     className="flex items-start gap-2 text-xs text-gray-400"
                                 >
                                     <Flame className="w-3.5 h-3.5 text-[#ecb613] shrink-0 mt-0.5" />
-                                    <span>{bullet}</span>
+                                    <span className="min-w-0">{bullet}</span>
                                 </li>
                             ))}
                         </ul>
                     )}
                 </div>
-                <div className="flex flex-col gap-3">
+                <div className="flex w-full flex-col gap-3">
                     <a
                         href={copy.ctaPrimaryHref}
                         target={isExternalPrimary ? '_blank' : undefined}
                         rel={isExternalPrimary ? 'noopener noreferrer' : undefined}
-                        className="px-5 py-3 rounded-xl bg-gradient-to-r from-[#ecb613] via-[#f7cb45] to-[#ecb613] text-black font-extrabold text-sm text-center hover:brightness-110 transition-all inline-flex items-center justify-center gap-2"
+                        className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#ecb613] via-[#f7cb45] to-[#ecb613] px-5 py-3 text-center text-sm font-extrabold text-black transition-all hover:brightness-110"
                     >
-                        <CalendarCheck className="w-4 h-4" />
-                        {copy.ctaPrimaryLabel}
+                        <CalendarCheck className="w-4 h-4 shrink-0" />
+                        <span className="min-w-0">{copy.ctaPrimaryLabel}</span>
                     </a>
                     <a
                         href={visitHref}
-                        className="px-5 py-3 rounded-xl bg-[#09090d]/80 border border-white/15 text-white font-semibold text-sm text-center hover:bg-white/10 transition-all inline-flex items-center justify-center gap-2"
+                        className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl border border-white/15 bg-[#09090d]/80 px-5 py-3 text-center text-sm font-semibold text-white transition-all hover:bg-white/10"
                     >
-                        <ArrowRight className="w-4 h-4" />
+                        <ArrowRight className="w-4 h-4 shrink-0" />
                         Visita técnica
                     </a>
                     <a
                         href={copy.conciergeHref}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-5 py-3 rounded-xl border border-emerald-500/30 bg-emerald-950/30 text-emerald-300 font-semibold text-sm text-center hover:bg-emerald-950/50 transition-all inline-flex items-center justify-center gap-2"
+                        className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl border border-emerald-500/30 bg-emerald-950/30 px-5 py-3 text-center text-sm font-semibold text-emerald-300 transition-all hover:bg-emerald-950/50"
                     >
-                        <MessageCircle className="w-4 h-4" />
+                        <MessageCircle className="w-4 h-4 shrink-0" />
                         Hablar con la Conserjería
                     </a>
                 </div>
@@ -279,7 +280,7 @@ export default function VenueExperienceHub({
                 <OtzarretaExperienceExplorer />
             </div>
 
-            <p className="text-center text-[10px] font-mono text-gray-600">
+            <p className="text-center text-[10px] font-mono leading-relaxed text-gray-600 [overflow-wrap:anywhere]">
                 TEMPERATURA DE LEAD · {audiencia.toUpperCase()} · {evento.toUpperCase()} · {menuCount} MENÚS EN SIMULADOR · FUENTE ÚNICA: FICHA DEL PROVEEDOR
             </p>
         </div>

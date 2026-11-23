@@ -140,7 +140,229 @@ export function resolveOtzarretaQuery(rawQuery: string): ProviderResolutionResul
     };
   }
 
-  // 1. Brasas, carnes, parrilla al carbón de encina y sarmiento (antes de menús si no piden precio/carta)
+  // 1b. Acústica, decibelios, volumen, policía, ley del ruido, fiesta nocturna
+  if (
+    q.includes('volumen') ||
+    q.includes('ruido') ||
+    q.includes('decibelio') ||
+    q.includes('policia') ||
+    q.includes('policía') ||
+    q.includes('vecino') ||
+    q.includes('ley 37') ||
+    q.includes('06:00') ||
+    q.includes('canera') ||
+    q.includes('cañera') ||
+    (q.includes('dj') && (q.includes('noche') || q.includes('hora') || q.includes('fiesta') || q.includes('exterior')))
+  ) {
+    return {
+      handled: true,
+      reply:
+        `En Restaurante Otzarreta la fiesta y el baile están garantizados en nuestro salón acristalado interior (${OTZARRETA_SEATING_PRESET.interiorSalon.capacityPax} comensales), operando bajo un estricto protocolo de monitorización sonométrica preventiva conforme a la Ley 37/2003 del Ruido (< 75 dB SPL en confort acústico). En exteriores y jardín priorizamos ceremonia civil y cóctel; el baile nocturno se traslada al salón interior para que disfrutéis sin riesgo de interrupciones municipales ni quejas vecinales.`,
+      action: {
+        type: 'date_picker',
+        label: `Bloquear fecha en el calendario (${DEPOSITO_STRIPE_EUR} € deducibles)`,
+        url: CALENDAR_BLOCK_URL,
+      },
+      shouldEscalate: true,
+    };
+  }
+
+  // 1c. Alérgenos, celíacos, veganos, sin gluten, recargos o suplementos especiales
+  if (
+    q.includes('celiac') ||
+    q.includes('celíac') ||
+    q.includes('alergia') ||
+    q.includes('alérgeno') ||
+    q.includes('gluten') ||
+    q.includes('vegano') ||
+    q.includes('suplemento') ||
+    q.includes('recargo') ||
+    q.includes('especial')
+  ) {
+    return {
+      handled: true,
+      reply:
+        `En Restaurante Otzarreta el suplemento por menú especial es de 0,00 €. Adaptamos el banquete completo con protocolo estricto de cocina limpia sin gluten para celíacos, alternativas gastronómicas para veganos/vegetarianos y menú infantil específico, al mismo precio cerrado del menú contratado y sin sobrecostes. Podéis gestionar cada caso directamente en el Seating Planner digital de vuestra boda.`,
+      action: {
+        type: 'dossier',
+        label: 'Ver garantías de cocina y alérgenos en el Dossier',
+        url: '/otzarreta',
+      },
+      shouldEscalate: false,
+    };
+  }
+
+  // 1d. Chuleta a la brasa, punto de la carne, tandas sincronizadas (Parrilla de Brasa vs Horno de regeneración)
+  if (
+    q.includes('fria') ||
+    q.includes('fría') ||
+    q.includes('cocida') ||
+    (q.includes('chuleta') && (q.includes('como') || q.includes('cómo') || q.includes('punto') || q.includes('servis') || q.includes('servís')))
+  ) {
+    return {
+      handled: true,
+      reply:
+        `Es el sello de identidad de la casa: en Otzarreta no recalentamos carne en hornos de regeneración. Nuestra parrilla tradicional trabaja con carbón de encina y sarmiento al momento. En el Menú Asador (155,00 € + IVA) la chuleta madurada se pasa por la brasa vista y se trincha al instante para servirla en plato caliente en tandas sincronizadas de sala para todos los comensales.`,
+      action: {
+        type: 'date_picker',
+        label: `Bloquear fecha con fianza de ${DEPOSITO_STRIPE_EUR} € (Deducible)`,
+        url: CALENDAR_BLOCK_URL,
+      },
+      shouldEscalate: true,
+    };
+  }
+
+  // 1e. Solapamiento de bodas / Exclusividad («Día en Exclusiva»)
+  if (
+    q.includes('otra boda') ||
+    q.includes('solap') ||
+    q.includes('mediodia') ||
+    q.includes('mediodía') ||
+    q.includes('tarde') ||
+    q.includes('comiendo al lado') ||
+    q.includes('compartid') ||
+    (q.includes('exclusiv') && (q.includes('boda') || q.includes('dia') || q.includes('día')))
+  ) {
+    return {
+      handled: true,
+      reply:
+        `Rotundamente no. Otzarreta opera bajo la cláusula estricta de Boda Única en Exclusiva. Toda la finca, los jardines para la ceremonia civil, el párking privado y los salones quedan reservados al 100% para vosotros durante todo el día. Jamás solapamos dos bodas ni permitimos comensales ajenos en vuestros espacios.`,
+      action: {
+        type: 'date_picker',
+        label: `Bloquear Día en Exclusiva (Fianza ${DEPOSITO_STRIPE_EUR} €)`,
+        url: CALENDAR_BLOCK_URL,
+      },
+      shouldEscalate: true,
+    };
+  }
+
+  // 1f. Autobuses, párking y arcén
+  if (
+    q.includes('autobus') ||
+    q.includes('autobús') ||
+    q.includes('autobuses') ||
+    q.includes('autobúses') ||
+    q.includes('arcen') ||
+    q.includes('arcén') ||
+    (q.includes('parking') && (q.includes('coche') || q.includes('entran') || q.includes('70') || q.includes('100') || q.includes('120')))
+  ) {
+    return {
+      handled: true,
+      reply:
+        `Disponemos de párking privado y asfaltado dentro de la propia finca con capacidad para más de 120 vehículos y zona de maniobra y estacionamiento reservada para autobuses de gran tonelaje a pie de entrada. Vuestros invitados acceden directamente a los jardines sin caminar por arcenes ni carreteras de Derio.`,
+      action: {
+        type: 'whatsapp',
+        label: 'Abrir ruta en Google Maps',
+        url: OTZARRETA_MAPS_URL,
+      },
+      shouldEscalate: false,
+    };
+  }
+
+  // 1g. Lluvia, Plan B y Ceremonia exterior
+  if (
+    q.includes('lluvia') ||
+    q.includes('llueve') ||
+    q.includes('chaparron') ||
+    q.includes('chaparrón') ||
+    q.includes('tiempo') ||
+    q.includes('mal tiempo') ||
+    q.includes('plan b')
+  ) {
+    return {
+      handled: true,
+      reply:
+        `Tenemos el Plan B garantizado sin coste extra. Si el tiempo no acompaña en el jardín exterior, la ceremonia civil se traslada de inmediato a nuestro porche/carpa cubierta o al área acristalada con vistas a la naturaleza, conservando el montaje floral y la sonorización de ceremonia sin sobrecostes de última hora.`,
+      action: {
+        type: 'dossier',
+        label: 'Ver espacios y Plan B en Dossier',
+        url: '/otzarreta',
+      },
+      shouldEscalate: false,
+    };
+  }
+
+  // 1h. Horario de barra libre, recena caliente
+  if (
+    q.includes('recena') ||
+    q.includes('cuantas horas') ||
+    q.includes('cuántas horas') ||
+    (q.includes('barra libre') && (q.includes('hora') || q.includes('marcas') || q.includes('bebiendo')))
+  ) {
+    return {
+      handled: true,
+      reply:
+        `Los menús oficiales incluyen de serie la barra libre tras el banquete con primeras marcas (sin garrafón). Para la recena nocturna, la cocina de brasas prepara opciones calientes como mini-hamburguesas de buey, pulguitas ibéricas y caldo tradicional, ampliable por horas adicionales según el ritmo de vuestra fiesta.`,
+      action: {
+        type: 'date_picker',
+        label: `Bloquear fecha en el calendario (${DEPOSITO_STRIPE_EUR} € deducibles)`,
+        url: CALENDAR_BLOCK_URL,
+      },
+      shouldEscalate: true,
+    };
+  }
+
+  // 1i. Seating Planner, cancelación de invitados a última hora
+  if (
+    q.includes('seating') ||
+    q.includes('se me caen') ||
+    q.includes('cancela') ||
+    q.includes('descomponer') ||
+    (q.includes('invitados') && (q.includes('dias') || q.includes('días') || q.includes('mesas') || q.includes('quitan') || q.includes('caen')))
+  ) {
+    return {
+      handled: true,
+      reply:
+        `Con nuestro Seating Planner interactivo (incluido sin coste con la reserva) podéis reorganizar invitados entre mesas (rango de 2 a 12 comensales) y marcar el estado RSVP en segundos sin descomponer el plano general. El número definitivo de cubiertos de cocina se confirma en la fecha límite pactada de la semana del evento.`,
+      action: {
+        type: 'dossier',
+        label: 'Explorar Seating Planner en la ficha',
+        url: '/otzarreta',
+      },
+      shouldEscalate: false,
+    };
+  }
+
+  // 1j. Letra pequeña, fianza de 100 €, ¿es a fondo perdido?
+  if (
+    (q.includes('100') || q.includes('fianza') || q.includes('deposito') || q.includes('depósito')) &&
+    (q.includes('pierde') || q.includes('letra pequena') || q.includes('letra pequeña') || q.includes('truco') || q.includes('prueba') || q.includes('gusta'))
+  ) {
+    return {
+      handled: true,
+      reply:
+        `Es un Price-Lock 100% deducible. No es un coste adicional ni un peaje: esos 100,00 € se descuentan íntegramente de la liquidación final de vuestro banquete. Su función es bloquear atómicamente la fecha en el calendario para que ningún otro novio pueda quitaros el sábado mientras realizáis la prueba de menú y formalizáis los detalles.`,
+      action: {
+        type: 'date_picker',
+        label: `🔒 Bloquear Día en Exclusiva (Fianza ${DEPOSITO_STRIPE_EUR} €)`,
+        url: CALENDAR_BLOCK_URL,
+      },
+      shouldEscalate: true,
+    };
+  }
+
+  // 1k. Pago en B, sin factura, quitar el IVA
+  if (
+    q.includes('en b') ||
+    q.includes('en negro') ||
+    q.includes('sin factura') ||
+    q.includes('quitar el iva') ||
+    q.includes('quitais el iva') ||
+    q.includes('quitáis el iva') ||
+    q.includes('efectivo')
+  ) {
+    return {
+      handled: true,
+      reply:
+        `Restaurante Otzarreta opera bajo la más estricta legalidad tributaria y contractual. Toda contratación cuenta con presupuesto formal, contrato digital con validez jurídica y factura oficial desglosada con su IVA correspondiente (10% en banquete). Es la única garantía de que vuestro evento está blindado con seguro de responsabilidad civil y trazabilidad bancaria completa.`,
+      action: {
+        type: 'whatsapp',
+        label: `Consultar con Dirección (${CENTRALITA_EAR_OS})`,
+        url: `https://wa.me/${CLEAN_PHONE}?text=${encodeURIComponent('Hola Eduardo, deseo consultar las condiciones contractuales y de facturación formal para nuestra boda en Otzarreta.')}`,
+      },
+      shouldEscalate: false,
+    };
+  }
   const asksMenuOrPrice =
     q.includes('menu') ||
     q.includes('menú') ||

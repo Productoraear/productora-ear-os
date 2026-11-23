@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { VenueAcousticInput, GeoAcousticOutput } from '@/lib/geo/geo-acoustic-radar';
+import { ALL_SPANISH_PROVINCES, type SpanishProvince } from '@/lib/geo/spanish-provinces';
 import { calculateGeoAcousticRadar } from '@/lib/geo/geo-acoustic-radar';
 import { computeLogisticsFee } from '@/lib/affiliate/affiliateCommissionEngine';
 
@@ -22,7 +23,7 @@ function isVenueAcousticInput(body: unknown): body is VenueAcousticInput {
   if (typeof b.venueName !== 'string' || b.venueName.trim().length === 0) return false;
   if (typeof b.venueType !== 'string' || !VALID_VENUE_TYPES.includes(b.venueType as VenueAcousticInput['venueType'])) return false;
   if (typeof b.guestCount !== 'number' || !Number.isFinite(b.guestCount) || b.guestCount < 1) return false;
-  if (typeof b.destinationProvince !== 'string' || b.destinationProvince.trim().length === 0) return false;
+  if (typeof b.destinationProvince !== 'string' || !ALL_SPANISH_PROVINCES.includes(b.destinationProvince as SpanishProvince)) return false;
   if (typeof b.distanceKmFromMentrida !== 'number' || !Number.isFinite(b.distanceKmFromMentrida) || b.distanceKmFromMentrida < 0) return false;
 
   if (b.eventEndHour !== undefined && typeof b.eventEndHour !== 'string') return false;
@@ -48,7 +49,7 @@ export async function POST(req: Request) {
             venueName: 'string',
             venueType: VALID_VENUE_TYPES.join(' | '),
             guestCount: 'number >= 1',
-            destinationProvince: 'string',
+            destinationProvince: 'una de las 52 provincias homologadas (SpanishProvince)',
             distanceKmFromMentrida: 'number >= 0',
             eventEndHour: "string (formato 'HH:mm') [opcional]",
             isVimumeContext: 'boolean [opcional]',

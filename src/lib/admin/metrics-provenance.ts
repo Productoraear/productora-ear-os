@@ -30,6 +30,12 @@ export interface AdminMetric {
 }
 
 /**
+ * Timestamp canónico inmutable para métricas estáticas / vacías.
+ * Evita desincronizaciones de hidratación (hydration mismatch) entre SSR y cliente.
+ */
+export const STATIC_METRIC_TIMESTAMP = '2026-01-01T00:00:00.000Z';
+
+/**
  * Genera una métrica vacía cuando la sonda no se ejecutó o el backend está desconectado.
  * Garantía: value === 0, probed === false, source === 'empty'.
  */
@@ -38,7 +44,8 @@ export function emptyMetric(
   label: string,
   ref: string,
   unit = '',
-  formattedOverride?: string
+  formattedOverride?: string,
+  checkedAt?: string
 ): AdminMetric {
   return {
     key,
@@ -49,7 +56,7 @@ export function emptyMetric(
     source: 'empty',
     probed: false,
     mode: 'REAL',
-    checkedAt: new Date().toISOString(),
+    checkedAt: checkedAt ?? STATIC_METRIC_TIMESTAMP,
     ref,
   };
 }
@@ -70,7 +77,7 @@ export function liveMetric(
   formattedValue?: string
 ): AdminMetric {
   if (!probed) {
-    return emptyMetric(key, label, ref, unit, formattedValue ? '0' : undefined);
+    return emptyMetric(key, label, ref, unit, formattedValue ? '0' : undefined, checkedAt);
   }
 
   return {
@@ -82,7 +89,7 @@ export function liveMetric(
     source: 'live',
     probed: true,
     mode,
-    checkedAt: checkedAt ?? new Date().toISOString(),
+    checkedAt: checkedAt ?? STATIC_METRIC_TIMESTAMP,
     ref,
   };
 }
@@ -97,7 +104,8 @@ export function staticMetric(
   ref: string,
   unit = '',
   manifestSha256?: string,
-  formattedValue?: string
+  formattedValue?: string,
+  checkedAt?: string
 ): AdminMetric {
   return {
     key,
@@ -108,7 +116,7 @@ export function staticMetric(
     source: 'static',
     probed: true,
     mode: 'REAL',
-    checkedAt: new Date().toISOString(),
+    checkedAt: checkedAt ?? STATIC_METRIC_TIMESTAMP,
     ref,
     manifestSha256,
   };

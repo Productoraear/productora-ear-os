@@ -260,13 +260,13 @@ export function EzkertzaCinematicJourney({
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {MOMENTOS.map((momento, index) => (
                     <figure key={momento.titulo} className="rounded-3xl border border-white/10 bg-[#030305] overflow-hidden">
-                        <div className="flex h-48 sm:h-56 items-center justify-center bg-[#030305]">
+                        <div className="flex h-48 w-full items-center justify-center overflow-hidden bg-[#030305] sm:h-56">
                             <img
                                 src={momento.src}
                                 alt={`${EZKERTZA_DERIO_VENUE.name} · ${momento.titulo}`}
                                 loading={index === 0 ? 'eager' : 'lazy'}
                                 decoding="async"
-                                className="h-full w-auto max-w-none object-contain"
+                                className="h-full max-h-full w-auto max-w-full object-contain"
                             />
                         </div>
                         <figcaption className="p-4 border-t border-white/10">
@@ -292,14 +292,14 @@ export function EzkertzaCinematicJourney({
                     className="mt-3 flex gap-4 overflow-x-auto snap-x snap-mandatory pb-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#ecb613] rounded-2xl"
                 >
                     {FOTOS_PANORAMICAS.map((foto, index) => (
-                        <figure key={foto} className="snap-center shrink-0 min-w-[16rem]">
-                            <div className="flex h-52 sm:h-72 items-center justify-center rounded-2xl border border-white/10 bg-[#030305] overflow-hidden">
+                        <figure key={foto} className="w-[85%] max-w-sm shrink-0 snap-center sm:w-[16rem]">
+                            <div className="flex h-52 items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-[#030305] sm:h-72">
                                 <img
                                     src={foto}
                                     alt={`Instalaciones de ${EZKERTZA_DERIO_VENUE.name} · imagen ${index + 1}`}
                                     loading="lazy"
                                     decoding="async"
-                                    className="h-full w-auto max-w-none object-contain"
+                                    className="h-full max-h-full w-auto max-w-full object-contain"
                                 />
                             </div>
                         </figure>

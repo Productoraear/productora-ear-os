@@ -16,6 +16,15 @@
    harvested: scratch/HALLMARK_HARVESTED_DNA.json (128 tokens, 12 temas)
    ════════════════════════════════════════════════════════════════════════════ */
 
+:root {
+  /* Tokens de Diseño Dinámicos para EAR OS */
+  --ear-bg-void: #030305;
+  --ear-bg-surface: #09090d;
+  --ear-accent-gold: #ecb613;
+  --ear-accent-ruby: #FF2B44;
+  --ear-accent-cyan: #00E5FF;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -46,11 +55,11 @@
     --primary-aura: rgba(255, 43, 68, 0.28);
 
     /* 💎 PALETA CORPORATIVA DIAMOND EAR OS */
-    --color-ear-cyan: #00E5FF;
-    --color-ear-blue: #00E5FF;
-    --color-ear-sapphire: #030305;
-    --color-ear-sapphire-dark: #050507;
-    --color-ear-coral: #FF2B44;
+    --color-ear-cyan: var(--ear-accent-cyan, #00E5FF);
+    --color-ear-blue: var(--ear-accent-cyan, #00E5FF);
+    --color-ear-sapphire: var(--ear-bg-void, #030305);
+    --color-ear-sapphire-dark: var(--ear-bg-surface, #050507);
+    --color-ear-coral: var(--ear-accent-ruby, #FF2B44);
 
     /* 💎 PALETA SOBERANA DIAMANTE ROJO (PRODUCTORA EAR / FUEGO / PASIÓN) */
     --color-ear-red-primary: #E11D48;

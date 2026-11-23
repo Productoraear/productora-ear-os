@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { requireAdmin } from '@/lib/security/adminGuard';
 import { compileIntentToDAG } from '@/lib/compiler/omega-intent-compiler';
 import type { CompileEngine, CompileMode } from '@/lib/compiler/omega-intent-compiler';
-import { refineQueryWithOracle, type OraclePersona } from '@/lib/oracle/quantum-oracle-engine';
+import { refineQueryWithOracle, isOraclePersona, ORACLE_PERSONA_IDS, type OraclePersona } from '@/lib/oracle/quantum-oracle-engine';
 import { forgeMasterPrompt, type ForgeMode, type ForgedMasterPrompt } from '@/lib/compiler/prompt-maestro-forge';
 import {
   MASTER_OBJECTIVE_IDS,
@@ -22,7 +22,10 @@ const MAX_INTENT_LENGTH = 20_000;
 const MAX_PROMPT_LENGTH = 20_000;
 const MAX_MODEL_LENGTH = 128;
 
-const ORACLE_PERSONAS = ['CEO', 'ARTISTA', 'CTO', 'CFO', 'CMO', 'COO', 'LEGAL', 'ENGINEER'] as const;
+// Contrato CERRADO de personas: la fuente única es el motor del Oráculo
+// (`ORACLE_PERSONA_IDS`). Antes esta ruta declaraba su propia lista de ocho y
+// el motor solo implementaba dos → seis modos devolvían doctrina de CEO.
+const ORACLE_PERSONAS = ORACLE_PERSONA_IDS;
 const COMPILE_MODES = [
   'OMEGA_FULLSTACK',
   'QUIRURGICO',
@@ -90,8 +93,10 @@ function resolveForgeMode(mode: CompileMode | 'SURGICAL' | 'ARCHIVAL_SWEEP'): Fo
 }
 
 function resolveOraclePersona(value: CompileIntentBody['oraclePersona']): OraclePersona {
+  // Zod ya restringe el enum; el type-guard es la segunda barrera (SEC-4) y
+  // garantiza que nunca se degrade una persona desconocida a doctrina de CEO.
   if (!value) return 'CEO';
-  return value as OraclePersona;
+  return isOraclePersona(value) ? value : 'CEO';
 }
 
 export async function POST(req: NextRequest): Promise<NextResponse> {

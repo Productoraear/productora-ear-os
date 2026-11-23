@@ -1,0 +1,472 @@
+{
+  "probed": true,
+  "source": "live",
+  "mode": "LAB_OBSERVED",
+  "checkedAt": "2026-11-22T01:08:36.916Z",
+  "base": "http://127.0.0.1:3007",
+  "build": {
+    "buildId": "yi5KK9_8w1f6Y5yBxBDvK",
+    "standaloneServerMtime": "2026-11-22T01:06:56.412Z"
+  },
+  "clsBudget": 0.05,
+  "disclaimer": "CLS observado en laboratorio sobre primera carga (hadRecentInput descartado). NO es el p75 de campo: el p75 exige RUM/CrUX con tráfico real.",
+  "viewports": [
+    {
+      "id": "mobile-360",
+      "width": 360,
+      "height": 740,
+      "dpr": 3
+    },
+    {
+      "id": "mobile-390",
+      "width": 390,
+      "height": 844,
+      "dpr": 3
+    }
+  ],
+  "routes": {
+    "/otzarreta": {
+      "url": "http://127.0.0.1:3007/otzarreta",
+      "viewports": {
+        "mobile-360": {
+          "viewport": "mobile-360",
+          "width": 360,
+          "height": 740,
+          "status": 200,
+          "probed": true,
+          "source": "live",
+          "mode": "LAB_OBSERVED",
+          "checkedAt": "2026-11-22T01:08:40.303Z",
+          "readyStateAtMeasure": "complete",
+          "firstPaint": {
+            "innerWidth": 360,
+            "clientWidth": 360,
+            "scrollWidth": 360,
+            "bodyScrollWidth": 360,
+            "horizontalScrollPx": 0,
+            "bodyHorizontalScrollPx": 0,
+            "htmlOverflowX": "hidden",
+            "bodyOverflowX": "hidden",
+            "scrollHeight": 23021,
+            "readyState": "interactive",
+            "atMs": 1530
+          },
+          "settled": {
+            "innerWidth": 360,
+            "clientWidth": 360,
+            "scrollWidth": 360,
+            "bodyScrollWidth": 360,
+            "horizontalScrollPx": 0,
+            "bodyHorizontalScrollPx": 0,
+            "htmlOverflowX": "hidden",
+            "bodyOverflowX": "hidden",
+            "scrollHeight": 23021,
+            "readyState": "complete",
+            "atMs": 2042
+          },
+          "hydration": {
+            "longTaskCount": 2,
+            "longTaskMaxMs": 421,
+            "lastLongTaskEndMs": 1523,
+            "mainThreadFreeAtMs": 1723,
+            "measuredAtMs": 2042,
+            "quietGapMs": 200,
+            "longTasks": [
+              {
+                "start": 868,
+                "duration": 421
+              },
+              {
+                "start": 1415,
+                "duration": 108
+              }
+            ]
+          },
+          "cls": {
+            "observed": 0,
+            "budget": 0.05,
+            "withinBudget": true,
+            "hadRecentInputFiltered": true,
+            "sources": []
+          },
+          "navigation": {
+            "domContentLoadedMs": 1412,
+            "loadEventMs": 1640,
+            "transferBytes": 96024
+          },
+          "timeOriginIso": "2026-11-22T01:08:38.261Z"
+        },
+        "mobile-390": {
+          "viewport": "mobile-390",
+          "width": 390,
+          "height": 844,
+          "status": 200,
+          "probed": true,
+          "source": "live",
+          "mode": "LAB_OBSERVED",
+          "checkedAt": "2026-11-22T01:08:41.732Z",
+          "readyStateAtMeasure": "complete",
+          "firstPaint": {
+            "innerWidth": 390,
+            "clientWidth": 390,
+            "scrollWidth": 390,
+            "bodyScrollWidth": 390,
+            "horizontalScrollPx": 0,
+            "bodyHorizontalScrollPx": 0,
+            "htmlOverflowX": "hidden",
+            "bodyOverflowX": "hidden",
+            "scrollHeight": 22347,
+            "readyState": "interactive",
+            "atMs": 722
+          },
+          "settled": {
+            "innerWidth": 390,
+            "clientWidth": 390,
+            "scrollWidth": 390,
+            "bodyScrollWidth": 390,
+            "horizontalScrollPx": 0,
+            "bodyHorizontalScrollPx": 0,
+            "htmlOverflowX": "hidden",
+            "bodyOverflowX": "visible",
+            "scrollHeight": 26908,
+            "readyState": "complete",
+            "atMs": 1290
+          },
+          "hydration": {
+            "longTaskCount": 4,
+            "longTaskMaxMs": 358,
+            "lastLongTaskEndMs": 1053,
+            "mainThreadFreeAtMs": 1253,
+            "measuredAtMs": 1290,
+            "quietGapMs": 200,
+            "longTasks": [
+              {
+                "start": 175,
+                "duration": 358
+              },
+              {
+                "start": 627,
+                "duration": 67
+              },
+              {
+                "start": 910,
+                "duration": 70
+              },
+              {
+                "start": 980,
+                "duration": 73
+              }
+            ]
+          },
+          "cls": {
+            "observed": 0,
+            "budget": 0.05,
+            "withinBudget": true,
+            "hadRecentInputFiltered": true,
+            "sources": []
+          },
+          "navigation": {
+            "domContentLoadedMs": 706,
+            "loadEventMs": 729,
+            "transferBytes": 96024
+          },
+          "timeOriginIso": "2026-11-22T01:08:40.443Z"
+        }
+      }
+    },
+    "/calendario/catering/restaurante-otzarreta": {
+      "url": "http://127.0.0.1:3007/calendario/catering/restaurante-otzarreta",
+      "viewports": {
+        "mobile-360": {
+          "viewport": "mobile-360",
+          "width": 360,
+          "height": 740,
+          "status": 200,
+          "probed": true,
+          "source": "live",
+          "mode": "LAB_OBSERVED",
+          "checkedAt": "2026-11-22T01:08:42.830Z",
+          "readyStateAtMeasure": "complete",
+          "firstPaint": {
+            "innerWidth": 360,
+            "clientWidth": 360,
+            "scrollWidth": 360,
+            "bodyScrollWidth": 360,
+            "horizontalScrollPx": 0,
+            "bodyHorizontalScrollPx": 0,
+            "htmlOverflowX": "hidden",
+            "bodyOverflowX": "hidden",
+            "scrollHeight": 3305,
+            "readyState": "interactive",
+            "atMs": 475
+          },
+          "settled": {
+            "innerWidth": 360,
+            "clientWidth": 360,
+            "scrollWidth": 360,
+            "bodyScrollWidth": 360,
+            "horizontalScrollPx": 0,
+            "bodyHorizontalScrollPx": 0,
+            "htmlOverflowX": "hidden",
+            "bodyOverflowX": "visible",
+            "scrollHeight": 3305,
+            "readyState": "complete",
+            "atMs": 999
+          },
+          "hydration": {
+            "longTaskCount": 3,
+            "longTaskMaxMs": 149,
+            "lastLongTaskEndMs": 792,
+            "mainThreadFreeAtMs": 992,
+            "measuredAtMs": 999,
+            "quietGapMs": 200,
+            "longTasks": [
+              {
+                "start": 278,
+                "duration": 149
+              },
+              {
+                "start": 489,
+                "duration": 65
+              },
+              {
+                "start": 717,
+                "duration": 75
+              }
+            ]
+          },
+          "cls": {
+            "observed": 0,
+            "budget": 0.05,
+            "withinBudget": true,
+            "hadRecentInputFiltered": true,
+            "sources": []
+          },
+          "navigation": {
+            "domContentLoadedMs": 286,
+            "loadEventMs": 575,
+            "transferBytes": 24034
+          },
+          "timeOriginIso": "2026-11-22T01:08:41.831Z"
+        },
+        "mobile-390": {
+          "viewport": "mobile-390",
+          "width": 390,
+          "height": 844,
+          "status": 200,
+          "probed": true,
+          "source": "live",
+          "mode": "LAB_OBSERVED",
+          "checkedAt": "2026-11-22T01:08:43.851Z",
+          "readyStateAtMeasure": "complete",
+          "firstPaint": {
+            "innerWidth": 390,
+            "clientWidth": 390,
+            "scrollWidth": 390,
+            "bodyScrollWidth": 390,
+            "horizontalScrollPx": 0,
+            "bodyHorizontalScrollPx": 0,
+            "htmlOverflowX": "hidden",
+            "bodyOverflowX": "hidden",
+            "scrollHeight": 3178,
+            "readyState": "complete",
+            "atMs": 378
+          },
+          "settled": {
+            "innerWidth": 390,
+            "clientWidth": 390,
+            "scrollWidth": 390,
+            "bodyScrollWidth": 390,
+            "horizontalScrollPx": 0,
+            "bodyHorizontalScrollPx": 0,
+            "htmlOverflowX": "hidden",
+            "bodyOverflowX": "visible",
+            "scrollHeight": 3178,
+            "readyState": "complete",
+            "atMs": 901
+          },
+          "hydration": {
+            "longTaskCount": 2,
+            "longTaskMaxMs": 61,
+            "lastLongTaskEndMs": 602,
+            "mainThreadFreeAtMs": 802,
+            "measuredAtMs": 900,
+            "quietGapMs": 200,
+            "longTasks": [
+              {
+                "start": 167,
+                "duration": 58
+              },
+              {
+                "start": 541,
+                "duration": 61
+              }
+            ]
+          },
+          "cls": {
+            "observed": 0,
+            "budget": 0.05,
+            "withinBudget": true,
+            "hadRecentInputFiltered": true,
+            "sources": []
+          },
+          "navigation": {
+            "domContentLoadedMs": 367,
+            "loadEventMs": 370,
+            "transferBytes": 24033
+          },
+          "timeOriginIso": "2026-11-22T01:08:42.950Z"
+        }
+      }
+    },
+    "/reservar/solista": {
+      "url": "http://127.0.0.1:3007/reservar/solista",
+      "viewports": {
+        "mobile-360": {
+          "viewport": "mobile-360",
+          "width": 360,
+          "height": 740,
+          "status": 200,
+          "probed": true,
+          "source": "live",
+          "mode": "LAB_OBSERVED",
+          "checkedAt": "2026-11-22T01:08:45.052Z",
+          "readyStateAtMeasure": "complete",
+          "firstPaint": {
+            "innerWidth": 360,
+            "clientWidth": 360,
+            "scrollWidth": 360,
+            "bodyScrollWidth": 360,
+            "horizontalScrollPx": 0,
+            "bodyHorizontalScrollPx": 0,
+            "htmlOverflowX": "hidden",
+            "bodyOverflowX": "hidden",
+            "scrollHeight": 2425,
+            "readyState": "interactive",
+            "atMs": 540
+          },
+          "settled": {
+            "innerWidth": 360,
+            "clientWidth": 360,
+            "scrollWidth": 360,
+            "bodyScrollWidth": 360,
+            "horizontalScrollPx": 0,
+            "bodyHorizontalScrollPx": 0,
+            "htmlOverflowX": "hidden",
+            "bodyOverflowX": "visible",
+            "scrollHeight": 8222,
+            "readyState": "complete",
+            "atMs": 1091
+          },
+          "hydration": {
+            "longTaskCount": 2,
+            "longTaskMaxMs": 63,
+            "lastLongTaskEndMs": 884,
+            "mainThreadFreeAtMs": 1084,
+            "measuredAtMs": 1091,
+            "quietGapMs": 200,
+            "longTasks": [
+              {
+                "start": 593,
+                "duration": 63
+              },
+              {
+                "start": 828,
+                "duration": 56
+              }
+            ]
+          },
+          "cls": {
+            "observed": 0,
+            "budget": 0.05,
+            "withinBudget": true,
+            "hadRecentInputFiltered": true,
+            "sources": []
+          },
+          "navigation": {
+            "domContentLoadedMs": 439,
+            "loadEventMs": 675,
+            "transferBytes": 26867
+          },
+          "timeOriginIso": "2026-11-22T01:08:43.961Z"
+        },
+        "mobile-390": {
+          "viewport": "mobile-390",
+          "width": 390,
+          "height": 844,
+          "status": 200,
+          "probed": true,
+          "source": "live",
+          "mode": "LAB_OBSERVED",
+          "checkedAt": "2026-11-22T01:08:46.053Z",
+          "readyStateAtMeasure": "complete",
+          "firstPaint": {
+            "innerWidth": 390,
+            "clientWidth": 390,
+            "scrollWidth": 390,
+            "bodyScrollWidth": 390,
+            "horizontalScrollPx": 0,
+            "bodyHorizontalScrollPx": 0,
+            "htmlOverflowX": "hidden",
+            "bodyOverflowX": "hidden",
+            "scrollHeight": 2478,
+            "readyState": "interactive",
+            "atMs": 224
+          },
+          "settled": {
+            "innerWidth": 390,
+            "clientWidth": 390,
+            "scrollWidth": 390,
+            "bodyScrollWidth": 390,
+            "horizontalScrollPx": 0,
+            "bodyHorizontalScrollPx": 0,
+            "htmlOverflowX": "hidden",
+            "bodyOverflowX": "visible",
+            "scrollHeight": 8331,
+            "readyState": "complete",
+            "atMs": 900
+          },
+          "hydration": {
+            "longTaskCount": 2,
+            "longTaskMaxMs": 62,
+            "lastLongTaskEndMs": 351,
+            "mainThreadFreeAtMs": 551,
+            "measuredAtMs": 900,
+            "quietGapMs": 200,
+            "longTasks": [
+              {
+                "start": 233,
+                "duration": 62
+              },
+              {
+                "start": 297,
+                "duration": 54
+              }
+            ]
+          },
+          "cls": {
+            "observed": 0,
+            "budget": 0.05,
+            "withinBudget": true,
+            "hadRecentInputFiltered": true,
+            "sources": []
+          },
+          "navigation": {
+            "domContentLoadedMs": 98,
+            "loadEventMs": 363,
+            "transferBytes": 26867
+          },
+          "timeOriginIso": "2026-11-22T01:08:45.153Z"
+        }
+      }
+    }
+  },
+  "totals": {
+    "routes": 3,
+    "rows": 6,
+    "rowsWithError": 0,
+    "rowsOverBudget": 0,
+    "maxObservedCls": 0
+  },
+  "sha256": "9021db534f2b23ff8dcbcc569e6cd1635cd5686467b436776ae7696c53cb84d5"
+}

@@ -136,64 +136,66 @@ export function PartnerShowcaseMetricsPanel({
         }`}
     >
       {/* Cabecera de Alto Standing para Eduardo */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-8 border-b border-white/10">
-        <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-mono uppercase tracking-wider mb-3">
-            <Award className="w-3.5 h-3.5" /> Ficha de Alianza Estratégica · Exclusividad Bizkaia
+      <div className="flex flex-col gap-6 border-b border-white/10 pb-6 md:flex-row md:items-center md:justify-between md:pb-8">
+        <div className="min-w-0">
+          <div className="mb-3 inline-flex max-w-full items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1 text-[10px] font-mono uppercase tracking-wider text-amber-400 sm:text-xs">
+            <Award className="w-3.5 h-3.5 shrink-0" />
+            <span className="min-w-0">Ficha de Alianza Estratégica · Exclusividad Bizkaia</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight font-serif">
+          <h2 className="font-serif text-xl font-extrabold leading-tight tracking-tight text-white [overflow-wrap:break-word] sm:text-3xl lg:text-4xl">
             Escaparate & Telemetría Soberana <span className="text-[#ecb613]">Ezkertza Berria</span>
           </h2>
-          <p className="text-sm sm:text-base text-zinc-400 mt-1 max-w-2xl">
+          <p className="mt-1 max-w-2xl text-sm text-zinc-400 sm:text-base">
             Preparado exclusivamente para <strong className="text-zinc-200">{snapshot.proprietorName}</strong>.
             Cero intermediarios, cero comisiones de portal y 100% de protección de marca frente a competidores.
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex w-full flex-wrap items-center gap-3 md:w-auto">
           <button
             onClick={handleOpenWhatsAppProposal}
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-gradient-to-r from-[#ecb613] to-amber-600 text-black font-bold text-sm tracking-wide shadow-lg shadow-amber-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+            className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#ecb613] to-amber-600 px-4 py-3 text-center text-sm font-bold tracking-wide text-black shadow-lg shadow-amber-500/20 transition-all hover:scale-[1.02] active:scale-[0.98] sm:w-auto sm:px-5"
           >
-            <MessageCircle className="w-4 h-4 fill-current" />
+            <MessageCircle className="w-4 h-4 shrink-0 fill-current" />
             Activar Llave con Edwin (WhatsApp)
           </button>
         </div>
       </div>
 
-      {/* Selector de Pestañas con Acentos OLED */}
-      <div className="flex items-center gap-2 sm:gap-4 my-6 overflow-x-auto pb-2 border-b border-zinc-800">
+      {/* Selector de Pestañas con Acentos OLED — apilado a ancho completo en
+          móvil; carril horizontal solo desde `sm`. */}
+      <div className="my-6 flex flex-col gap-2 border-b border-zinc-800 pb-2 sm:flex-row sm:items-center sm:gap-4">
         <button
           onClick={() => setActiveTab('rendimiento')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${activeTab === 'rendimiento'
+          className={`flex min-h-[44px] w-full items-center gap-2 rounded-xl px-3 py-2.5 text-xs font-medium transition-all sm:w-auto sm:px-4 sm:text-sm ${activeTab === 'rendimiento'
             ? 'bg-[#ecb613] text-black font-bold shadow-md shadow-amber-500/20'
             : 'text-zinc-400 hover:text-white hover:bg-zinc-900/60'
             }`}
         >
-          <TrendingUp className="w-4 h-4" />
-          1. Rendimiento de Tu Escaparate
+          <TrendingUp className="w-4 h-4 shrink-0" />
+          <span className="min-w-0 text-left sm:whitespace-nowrap">1. Rendimiento de Tu Escaparate</span>
         </button>
 
         <button
           onClick={() => setActiveTab('comparativa')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${activeTab === 'comparativa'
+          className={`flex min-h-[44px] w-full items-center gap-2 rounded-xl px-3 py-2.5 text-xs font-medium transition-all sm:w-auto sm:px-4 sm:text-sm ${activeTab === 'comparativa'
             ? 'bg-[#ecb613] text-black font-bold shadow-md shadow-amber-500/20'
             : 'text-zinc-400 hover:text-white hover:bg-zinc-900/60'
             }`}
         >
-          <BarChart3 className="w-4 h-4" />
-          2. Comparativa vs. Tráfico Global EAR OS
+          <BarChart3 className="w-4 h-4 shrink-0" />
+          <span className="min-w-0 text-left sm:whitespace-nowrap">2. Comparativa vs. Tráfico Global EAR OS</span>
         </button>
 
         <button
           onClick={() => setActiveTab('gestion')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${activeTab === 'gestion'
+          className={`flex min-h-[44px] w-full items-center gap-2 rounded-xl px-3 py-2.5 text-xs font-medium transition-all sm:w-auto sm:px-4 sm:text-sm ${activeTab === 'gestion'
             ? 'bg-[#ecb613] text-black font-bold shadow-md shadow-amber-500/20'
             : 'text-zinc-400 hover:text-white hover:bg-zinc-900/60'
             }`}
         >
-          <Key className="w-4 h-4" />
-          3. Área Privada de Gestión 2026
+          <Key className="w-4 h-4 shrink-0" />
+          <span className="min-w-0 text-left sm:whitespace-nowrap">3. Área Privada de Gestión 2026</span>
         </button>
       </div>
 
@@ -281,12 +283,12 @@ export function PartnerShowcaseMetricsPanel({
                 const pct = picoSemanal > 0 ? Math.min(100, Math.round((item.visitas / picoSemanal) * 100)) : 0;
                 return (
                   <div key={item.semana} className="space-y-1">
-                    <div className="flex items-center justify-between text-xs font-mono">
-                      <span className="text-zinc-300 font-bold">{item.semana}</span>
-                      <div className="flex items-center gap-4 text-zinc-400">
-                        <span>{item.visitas} visitas</span>
-                        <span className="text-amber-400">{item.simulacionesMenus} simulaciones</span>
-                        <span className="text-emerald-400">{item.solicitudesBloqueo} bloqueos</span>
+                    <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 font-mono text-[11px] sm:text-xs">
+                      <span className="shrink-0 font-bold text-zinc-300">{item.semana}</span>
+                      <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-0.5 text-zinc-400">
+                        <span className="whitespace-nowrap">{item.visitas} visitas</span>
+                        <span className="whitespace-nowrap text-amber-400">{item.simulacionesMenus} simulaciones</span>
+                        <span className="whitespace-nowrap text-emerald-400">{item.solicitudesBloqueo} bloqueos</span>
                       </div>
                     </div>
                     <div className="w-full h-2.5 rounded-full bg-zinc-900 overflow-hidden flex">
@@ -309,14 +311,14 @@ export function PartnerShowcaseMetricsPanel({
               </h3>
               <div className="space-y-4">
                 {snapshot.origenesTop.map((geo) => (
-                  <div key={geo.municipio} className="flex items-start justify-between gap-4 pb-3 border-b border-zinc-900 last:border-0 last:pb-0">
-                    <div>
-                      <div className="text-sm font-semibold text-white">{geo.municipio}</div>
-                      <div className="text-xs text-zinc-400 mt-0.5">{geo.intencion}</div>
+                  <div key={geo.municipio} className="flex flex-wrap items-start justify-between gap-3 border-b border-zinc-900 pb-3 last:border-0 last:pb-0">
+                    <div className="min-w-0">
+                      <div className="text-sm font-semibold text-white [overflow-wrap:break-word]">{geo.municipio}</div>
+                      <div className="mt-0.5 text-xs text-zinc-400">{geo.intencion}</div>
                     </div>
-                    <div className="text-right">
-                      <div className="text-sm font-mono font-bold text-[#ecb613]">{geo.porcentaje}%</div>
-                      <div className="text-[11px] text-zinc-500 font-mono">{geo.sesiones} sesiones</div>
+                    <div className="shrink-0 text-right">
+                      <div className="font-mono text-sm font-bold text-[#ecb613]">{geo.porcentaje}%</div>
+                      <div className="whitespace-nowrap font-mono text-[11px] text-zinc-500">{geo.sesiones} sesiones</div>
                     </div>
                   </div>
                 ))}
@@ -347,9 +349,9 @@ export function PartnerShowcaseMetricsPanel({
                 </ul>
               </div>
 
-              <div className="mt-6 pt-4 border-t border-zinc-800 flex items-center justify-between text-xs text-zinc-400 font-mono">
-                <span>Estado: <span className="text-emerald-400 font-bold">Activo en Modo Presentación</span></span>
-                <span>Propietario: Eduardo</span>
+              <div className="mt-6 flex flex-col gap-2 border-t border-zinc-800 pt-4 font-mono text-xs text-zinc-400 sm:flex-row sm:items-center sm:justify-between">
+                <span className="min-w-0">Estado: <span className="text-emerald-400 font-bold">Activo en Modo Presentación</span></span>
+                <span className="shrink-0 whitespace-nowrap">Propietario: Eduardo</span>
               </div>
             </div>
           </div>
@@ -474,8 +476,8 @@ export function PartnerShowcaseMetricsPanel({
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
-              <div className="px-4 py-2.5 rounded-xl bg-black border border-zinc-700 font-mono text-xs text-amber-300 w-full sm:w-auto text-center">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+              <div className="w-full min-w-0 break-all rounded-xl border border-zinc-700 bg-black px-4 py-2.5 text-center font-mono text-xs text-amber-300 sm:w-auto">
                 EAR-SOV-EZKERTZA-2026-SHA256-LOCK
               </div>
               <button
@@ -554,12 +556,12 @@ export function PartnerShowcaseMetricsPanel({
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto">
+            <div className="flex w-full flex-col items-stretch gap-3 md:w-auto md:flex-row md:items-center">
               <button
                 onClick={handleOpenWhatsAppProposal}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-[#ecb613] hover:bg-amber-400 text-black font-extrabold text-base tracking-wide transition shadow-xl shadow-amber-500/20"
+                className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-2xl bg-[#ecb613] px-5 py-4 text-center text-sm font-extrabold tracking-wide text-black shadow-xl shadow-amber-500/20 transition hover:bg-amber-400 sm:w-auto sm:px-8 sm:text-base"
               >
-                <MessageCircle className="w-5 h-5 fill-current" />
+                <MessageCircle className="w-5 h-5 shrink-0 fill-current" />
                 Hablar Directo con Edwin (+34 693 693 048)
               </button>
             </div>

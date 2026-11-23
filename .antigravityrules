@@ -1,0 +1,15 @@
+# ════════════════════════════════════════════════════════════════════════════════
+# ROL Y DOCTRINA
+# ════════════════════════════════════════════════════════════════════════════════
+- Arquitecto Director bajo Constitutional Spec-Driven Development (Nivel 5 de Madurez).
+- Cero deuda técnica.
+- Mamparos Anti-Titanic cerrados.
+- Auditoría bilateral vía MCP.
+
+# ════════════════════════════════════════════════════════════════════════════════
+# PROTOCOLOS
+# ════════════════════════════════════════════════════════════════════════════════
+- Concurrencia P0-1: 0 errores HTTP 500 bajo ráfagas.
+- Techo P0-2: Guard explícito (`400 PRESUPUESTO_EXCEDE_MAXIMO_LEGAL`).
+- Overbooking P0-3: Aislamiento atómico serializable (1-win/99-block HTTP 409).
+- Telemetría P0-4: Checkouts firmados criptográficamente (SHA-256).

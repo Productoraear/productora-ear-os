@@ -24,6 +24,7 @@ export function MetricProvenanceBadge({
 
   return (
     <div
+      suppressHydrationWarning
       className={`inline-flex items-center gap-1.5 font-mono ${
         isSmall ? 'text-[10px]' : 'text-xs'
       }`}

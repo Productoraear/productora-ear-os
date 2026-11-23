@@ -456,7 +456,7 @@ export function SovereignConciergeWidget({
             if (
               data.action?.type === 'add_to_cart' &&
               data.action.cartItem &&
-              /quiero reservar|reservar la fecha|bloquear la fecha|bloquear fecha|añadir al carrito|anadir al carrito|contratar/i.test(q)
+              /quiero reservar|reservar la fecha|bloquear la fecha|bloquear fecha|añadir al carrito|anadir al carrito|contratar|disponibilidad|precio|menú/i.test(q)
             ) {
               addItem({
                 ...data.action.cartItem,
