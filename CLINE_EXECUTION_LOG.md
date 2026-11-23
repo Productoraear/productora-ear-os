@@ -6859,3 +6859,40 @@ excluidos      : src/app/api/admin/system/run-script/route.ts (ejecuta comandos 
 riesgos        : (1) Coolify no auto-despliega: sin COOLIFY_API_TOKEN/webhook el commit no se sirve. (2) AdminOperationsConsole (commiteado) llama a /api/admin/system/run-script, que NO está en el commit: devolverá 404 hasta decisión de seguridad. (3) El commit incluye la validación estricta de 52 provincias en tipos de geo-acoustic-radar pero NO la ruta acoustic-calculate que la aplica en servidor.
 decision       : run-script excluido por SEC-1 (default-deny) y INV-07; requiere requireAdmin + allowlist + decisión del CEO
 siguiente_paso : disparar despliegue en Coolify y repetir la sonda de frescura
+
+### SIGMA://CLOSE/v1 - SCROLLYTELLING HOME V14 (5 ESTRATOS Z-0..100)
+task_id        : SCROLLYTELLING_HOME_V14_ENTERPRISE
+estado_bloque  : SOSPECHOSO (gate run_sv_protocol_15_gates con 2 FALLOS, ver gates)
+capas_espacio  : Z-0 SovereignSpatialCanvas.tsx | Z-5 AtmosphericGlowLayers.tsx | Z-20 DomainParallaxStage.tsx | Z-40 SpatialBentoHub.tsx | Z-90 SpatialHomeDock.tsx (+ SovereignDock.tsx stackClassName)
+home_page      : src/app/page.tsx (4 actos: hero, gastronomia/musica/B2G, conversion)
+ssot_integrity : cefa76c2c6a3f92f57acf74f654932c02bf66774502102cb4f932520aaa64b2b INTACTO (npm run audit:ssot / tsx scripts/baseline_ssot_integrity.ts, exit=0)
+typescript     : tsc --noEmit exit=0 (ts=2026-11-23T16:56:36Z)
+lint           : eslint src/components/spatial + SovereignDock + page.tsx exit=0
+gates          : run_sv_protocol_15_gates exit=1 | FALLAN: audit:http (AdminOperationsConsole run-script, deuda previa no tocada) y audit:metacompiler-enterprise:probe (sondea productoraear.com produccion, no local)
+gates_directiva: 22/22 NO CONFIRMADO. AGENTS.md cita 17 puertas; el script reporta sus propias puertas. No declarado 22/22.
+g05_fix        : page.tsx perdio pt-24 al reescribir; restaurado (audit:cta-matrix G05 PASS, VEREDICTO PASS)
+orphan_imports: node scripts/audit_orphan_imports.cjs HEAD exit=0, BROKEN_REACHABLE=0 (archivos nuevos no cuentan hasta commit)
+verify_spatial : tsx scripts/verify_spatial_budget.ts exit=0 (6 casos PASS)
+SIN_EVIDENCIA : INP<50ms, CLS=0.000 (no medidos con Lighthouse/CrUX); 18.000W RMS, pantallas P2.9, DIR3, RC 1M EUR como cifra, celiacos 0 EUR, hash SHA-256 de sesion en dock: sin fuente en disco, NO implementados.
+hipotesis[]    : menus 145/155/165/185 EUR vienen de otzarreta-entity.ts (no del SSOT); 1,50 EUR/km viene de ear-os-ssot.ts LOGISTICA_EUR_PER_KM; dock usa /presupuesto (/cotizador no existe).
+premortem       : (1) el hero usa motion-reduce y canvas pausado; falta medir INP en campo. (2) SovereignDock.tsx sin commit base. (3) gate rojo impide deploy.
+siguiente_paso : medir CLS/INP en navegador y resolver audit:http antes de commit.
+
+
+### SIGMA://CLOSE/v1 - CERTIFICACIÓN ESPACIAL SCROLLYTELLING HOME
+task_id        : SCROLLYTELLING_SPATIAL_V14_VERIFICATION
+estado_bloque  : SOSPECHOSO (arnés con 2 FAIL; no es VERIFICADO_LOCAL)
+ts             : 2026-11-23T17:14:30Z
+archivos_creados: src/components/spatial/{AtmosphericGlowLayers,DomainParallaxStage,SovereignSpatialCanvas,SovereignWebGLStage,SpatialBentoHub,SpatialHeroBackdrop,SpatialHomeDock}.tsx ; src/components/vanguardia/{AmbientGlowOrb,CinematicParticleHero,MagneticCta,ParticleField,SeatingPlannerPreview,SovereignBentoGrid,SovereignDock,TiltReviewCard,vanguardia-theme}.ts(x) (existen en disco)
+ssot_hash      : cefa76c2c6a3f92f57acf74f654932c02bf66774502102cb4f932520aaa64b2b (INTACTO) · cmd=npm run audit:ssot · exit=0 · coincide=SÍ
+tsc_no_emit    : node ./node_modules/typescript/bin/tsc --noEmit · exit=0
+baseline_direct: node scripts/baseline_ssot_integrity.ts · exit=1 (ERR_MODULE_NOT_FOUND: el script requiere tsx; el comando canónico es npm run audit:ssot)
+gates_protocol : node scripts/run_sv_protocol_15_gates.cjs · exit=1 · 20/22 PASS · FAIL: audit:http, audit:metacompiler-enterprise:probe
+  - audit:http: ORPHAN_HTTP AdminOperationsConsole.tsx:63 -> /api/admin/system/run-script; la ruta src/app/api/admin/system/run-script/route.ts está SIN TRACKEAR (git ls-files = 0). Deuda previa, no tocada.
+  - audit:metacompiler-enterprise:probe: 5 FAIL P0 (MC-F1..F5) sondeando PRODUCCIÓN (productoraear.com/celebraciones, /proveedores). No es verificación local.
+orphan_imports : node scripts/audit_orphan_imports.cjs HEAD · exit=0 · BROKEN_REACHABLE=0 (archivos nuevos no cuentan hasta commit)
+observaciones  : (1) 22/22 NO declarado: el script reporta 22 comandos, 20 PASS. (2) Sin Lighthouse/CrUX: CLS/INP no medidos en este bloque. (3) Escaneo de secretos (STRIPE_SECRET/prisma/process.env) en spatial/vanguardia/page.tsx: 0 coincidencias. (4) 'use client' presente en todo componente con useEffect/onClick/useState; AtmosphericGlowLayers y AmbientGlowOrb son server-safe sin hooks.
+hipotesis[]    : el router admin/system sin commit rompe audit:http en HEAD; el probe de producción depende de deploy pendiente.
+decision       : no se tocó audit:http ni el probe; arreglarlos excede el scope de esta tarea.
+premortem      : (1) cosmético vs real: la parte WebGL no se midió en navegador. (2) frágil: depende de tsx y de HEAD. (3) bloquea deploy mientras run-script no esté en commit o el probe no esté en verde.
+siguiente_paso : commitear src/app/api/admin/system/ (o retirarlo del consumidor) y re-ejecutar run_sv_protocol_15_gates.cjs hasta exit=0.
