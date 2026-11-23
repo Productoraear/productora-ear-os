@@ -6842,3 +6842,20 @@ zona_cero      : src/lib/constants/ear-os-ssot.ts sha256=81C7E7B45538426D49B2045
 queue_sha256   : F0053F36E185215A223C48926779F4005E0D65E9CB67799CB507DE814F91FF0E
 ts             : 2026-11-23T13:04:02Z
 relevo_listo   : DEEPSEEK_READY_FOR_LOCAL_EXECUTION
+
+
+### SIGMA://CLOSE/v1 - CERTIFICACIÓN TOTAL DE PRODUCCIÓN
+task_id        : PROD_DEPLOY_S_CLASS_EXCELLENCE
+estado_bloque  : SOSPECHOSO_STALE (código en origin/main; contenedor vivo sirve el SHA anterior)
+commit_sha     : 6f74bf4e63f188440876a33856c1be4cd4018ddb
+git_push       : origin/main (Exit Code 0) · `git ls-remote origin refs/heads/main` = 6f74bf4e63f188440876a33856c1be4cd4018ddb
+sonda_frescura : VERDICT=STALE (Exit 4) · `node scripts/prod_deploy_freshness.cjs --expect=6f74bf4e63f188440876a33856c1be4cd4018ddb --wait=180` · 13 intentos · /api/health buildSha=a05cfa44c00f0f8e47d8d21bc7a42e437c7fb371
+smoke          : `node scripts/prod_smoke_intake.cjs` Exit 0 (landing 200, intake 401 esperado) · medido sobre la build ANTERIOR, no sobre 6f74bf4
+salud_rutas    : Home 200, /otzarreta 200, /api/health 200, /reservar/solista 307 (build vieja: la certificación de ruta está en este commit). Selector 52 Provincias: SIN_EVIDENCIA en vivo
+zona_cero_hash : cefa76c2c6a3f92f57acf74f654932c02bf66774502102cb4f932520aaa64b2b (INTACTO · `npm run audit:ssot` Exit 0)
+gates          : tsc --noEmit Exit 0 (árbol de trabajo Y índice aislado vía checkout-index) · run_sv_protocol_15_gates 22/22 Exit 0 · audit_orphan_imports HEAD BROKEN_REACHABLE=0 Exit 0
+cambios[]      : 17 archivos, 2116 inserciones, 197 borrados (commit 6f74bf4)
+excluidos      : src/app/api/admin/system/run-script/route.ts (ejecuta comandos de shell SIN autenticación; el matcher de middleware excluye /api) · next.config.ts · src/middleware.ts · src/app/(public)/calendario · src/app/(public)/otzarreta · src/app/api/geo/acoustic-calculate/route.ts · src/lib/rag/provider-context.ts · demás modificaciones fuera de la lista nominal de la ola
+riesgos        : (1) Coolify no auto-despliega: sin COOLIFY_API_TOKEN/webhook el commit no se sirve. (2) AdminOperationsConsole (commiteado) llama a /api/admin/system/run-script, que NO está en el commit: devolverá 404 hasta decisión de seguridad. (3) El commit incluye la validación estricta de 52 provincias en tipos de geo-acoustic-radar pero NO la ruta acoustic-calculate que la aplica en servidor.
+decision       : run-script excluido por SEC-1 (default-deny) y INV-07; requiere requireAdmin + allowlist + decisión del CEO
+siguiente_paso : disparar despliegue en Coolify y repetir la sonda de frescura
