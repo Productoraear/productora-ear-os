@@ -285,3 +285,7 @@ graphify-out/
 # Un .xlsx/.pdf emitido por un cartucho es una salida de taller, no fuente.
 .antigravity/skills-out/
 
+# Volcados forenses masivos (>100MB, consumo local / NotebookLM)
+EAR_OS_GENOMA_TOTAL_*.md
+!EAR_OS_GENOMA_TOTAL_ARQUITECTURA_FORENSE_SOTA.md
+
