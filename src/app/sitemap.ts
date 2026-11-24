@@ -71,6 +71,8 @@ const STATIC_ROUTES: StaticRoute[] = [
     { path: '/academia', priority: 0.9, changeFrequency: 'daily' },
     { path: '/calculadora', priority: 0.9, changeFrequency: 'weekly' },
     { path: '/cotizador', priority: 0.9, changeFrequency: 'weekly' },
+    { path: '/seating-planner', priority: 0.95, changeFrequency: 'daily' },
+    { path: '/catalogo-luces', priority: 0.95, changeFrequency: 'daily' },
     { path: '/presupuesto', priority: 0.85, changeFrequency: 'weekly' },
     { path: '/checkout/presupuesto', priority: 0.85, changeFrequency: 'weekly' },
     { path: '/vimume', priority: 0.95, changeFrequency: 'daily' },

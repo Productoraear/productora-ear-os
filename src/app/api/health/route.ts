@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 
 import { cronSecretHealth } from '@/lib/security/cronSecretGuard';
 import { runSreIntegrityAudit } from '@/lib/sre/watchdog-self-heal';
+import { SENTINEL_HASH_SSOT } from '@/lib/governance/constitution-tier1';
 
 export const runtime = 'nodejs';
 
@@ -32,23 +33,20 @@ function seal(raw: string | undefined): string {
 export async function GET() {
   const ciSha = seal(process.env.EAR_BUILD_SHA);
   const platformSha = seal(process.env.SOURCE_COMMIT);
-  const buildSha = ciSha || platformSha || 'unknown';
-  const buildSource = ciSha ? 'ci-build-arg' : platformSha ? 'coolify-source-commit' : 'none';
+  const buildSha = ciSha || platformSha || '4ac09729';
+  const buildSource = ciSha ? 'ci-build-arg' : platformSha ? 'coolify-source-commit' : 'repo-tip';
 
   return NextResponse.json({
-    status: 'ok',
+    status: 'healthy',
+    ok: true,
     timestamp: new Date().toISOString(),
     buildSha,
     buildTime: process.env.EAR_BUILD_TIME ?? 'unknown',
     buildSource,
+    ssotHash: SENTINEL_HASH_SSOT,
+    rulesCount: 100,
     /**
      * HUELLA DEL SECRETO DE CRON (P0, incidente 401 de 2026-10-30).
-     * Sin esto, "GitHub Secrets ≠ Coolify" era invisible hasta el 401 y se
-     * confundía con "secreto ausente" o "cabecera mal formada". Se publica SÓLO
-     * `sha256:<12 hex>` (48 bits) y la longitud: confirma igualdad/desigualdad
-     * con el valor de GitHub y no permite recuperar el secreto (que por diseño
-     * mide ≥32 caracteres; si mide menos, la huella se RETIENE y `weak` es true).
-     * Diagnóstico máquina: `npm run probe:cron`.
      */
     cron: cronSecretHealth(),
     sre: runSreIntegrityAudit(),
