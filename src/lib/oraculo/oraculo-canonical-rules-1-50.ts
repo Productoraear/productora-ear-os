@@ -16,7 +16,7 @@
 
 export interface OraculoCanonicalRule {
   readonly id: number;
-  readonly block: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
+  readonly block: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
   readonly blockTitle: string;
   readonly title: string;
   readonly directive: string;
