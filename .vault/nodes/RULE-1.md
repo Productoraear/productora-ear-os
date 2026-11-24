@@ -27,7 +27,7 @@ integrityHash: "a01e6f33055d2a87"
 ```
 
 ## Dependencias Salientes (Outgoing)
-_Ninguna dependencia saliente directa._
+- **governs->executes** -> [[DATASET-INTENT-DAG]]
 
 ## Dependencias Entrantes (Incoming / Governed by)
 - [[SSOT-EAR-OS]] -> **governs->executes**

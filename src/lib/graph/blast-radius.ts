@@ -16,7 +16,7 @@
 
 import rawTopology from './control-plane-topology.json';
 
-export type TopologyNodeType = 'route' | 'api' | 'data' | 'constitutional' | 'domain';
+export type TopologyNodeType = 'route' | 'api' | 'data' | 'constitutional' | 'domain' | 'dataset';
 export type CriticalityLevel = 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW';
 export type RelationshipType = 'caller->callee' | 'reads->writes' | 'governs->executes' | 'depends_on';
 

@@ -41,6 +41,7 @@ const TYPE_COLORS: Record<TopologyNodeType, { fill: string; stroke: string; glow
   route: { fill: '#2563eb', stroke: '#3b82f6', glow: 'rgba(59, 130, 246, 0.4)', label: 'Ruta Front (Next.js)' },
   api: { fill: '#7c3aed', stroke: '#8b5cf6', glow: 'rgba(139, 92, 246, 0.4)', label: 'Endpoint API (Back)' },
   data: { fill: '#e11d48', stroke: '#f43f5e', glow: 'rgba(244, 63, 94, 0.4)', label: 'Modelo Prisma (Datos)' },
+  dataset: { fill: '#0891b2', stroke: '#06b6d4', glow: 'rgba(6, 182, 212, 0.4)', label: 'Dataset Elevado (Zod/JSON)' },
 };
 
 interface VisualNode extends TopologyNode {
@@ -236,9 +237,9 @@ export default function AdminWarRoomPage(): React.JSX.Element {
     { label: 'RULE-53 (Paciente Cero)', id: 'RULE-53' },
     { label: 'RULE-64 (Fianza Stripe)', id: 'RULE-64' },
     { label: 'SSOT-PRICING (Zona Cero)', id: 'SSOT-PRICING' },
+    { label: 'DATASET-LUCES (652 Refs)', id: 'DATASET-LUCES-NAVIDAD' },
     { label: 'API-STRIPE (Checkout)', id: 'API-STRIPE' },
     { label: 'OTZARRETA (Fincas 2026)', id: 'DOMAIN-OTZARRETA' },
-    { label: 'CATALOGO-LUCES (652 Refs)', id: 'DOMAIN-CATALOGO-LUCES' },
   ];
 
   return (
@@ -341,7 +342,7 @@ export default function AdminWarRoomPage(): React.JSX.Element {
           <div className="p-3 bg-neutral-900/80 border-b border-neutral-800 flex flex-wrap items-center justify-between gap-3 text-xs">
             <div className="flex items-center gap-2">
               <span className="text-neutral-400 font-mono">Tipo:</span>
-              {(['ALL', 'constitutional', 'domain', 'route', 'api', 'data'] as const).map((typeKey) => (
+              {(['ALL', 'constitutional', 'domain', 'dataset', 'route', 'api', 'data'] as const).map((typeKey) => (
                 <button
                   key={typeKey}
                   onClick={() => setSelectedTypeFilter(typeKey)}
@@ -405,6 +406,10 @@ export default function AdminWarRoomPage(): React.JSX.Element {
               <div className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
                 <span>Dominio (Paciente Cero / Otzarreta)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-cyan-500"></span>
+                <span>Datasets Elevados (Zod / JSON)</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-blue-500"></span>

@@ -29,6 +29,7 @@ integrityHash: "0dc9b1a56cfb45d5"
 ## Dependencias Salientes (Outgoing)
 - **governs->executes** -> [[DOMAIN-CATALOGO-LUCES]]
 - **governs->executes** -> [[GATE-B2G-FAST-TRACK]]
+- **governs->executes** -> [[DATASET-B2G-OPPORTUNITIES]]
 
 ## Dependencias Entrantes (Incoming / Governed by)
 - [[SSOT-EAR-OS]] -> **governs->executes**

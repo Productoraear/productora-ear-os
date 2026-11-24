@@ -343,6 +343,89 @@ if (fs.existsSync(PRISMA_SCHEMA)) {
 }
 
 // ----------------------------------------------------------------------------
+// D2. Nodos de Datasets Elevados (Schema Lifting / Activos Tipados)
+// ----------------------------------------------------------------------------
+const elevatedDatasets = [
+  {
+    id: 'DATASET-LUCES-NAVIDAD',
+    name: 'Catálogo Oficial Luces Navidad 2026 (652 Refs)',
+    file: 'src/data/luces_navidad_2026_ear.json',
+    crit: 'HIGH',
+    itemCount: 652,
+    aliases: ['LUCES-NAVIDAD', 'DATASET-LUCES', 'LUCES-2026'],
+  },
+  {
+    id: 'DATASET-B2G-OPPORTUNITIES',
+    name: 'Base de Oportunidades Licitaciones B2G LCSP',
+    file: 'src/data/b2g_opportunities_database.json',
+    crit: 'HIGH',
+    itemCount: 4,
+    aliases: ['B2G-OPPORTUNITIES', 'DATASET-B2G'],
+  },
+  {
+    id: 'DATASET-INTENT-DAG',
+    name: 'DAG de Intenciones del Oráculo CEO',
+    file: 'src/data/intent-dag.json',
+    crit: 'CRITICAL',
+    itemCount: 1,
+    aliases: ['INTENT-DAG', 'ORACULO-INTENTS'],
+  },
+  {
+    id: 'DATASET-STRATEGIC-FRAMEWORKS',
+    name: 'Frameworks Estratégicos EAR OS S-Class',
+    file: 'src/data/EAR_OS_STRATEGIC_FRAMEWORKS.json',
+    crit: 'HIGH',
+    itemCount: 1,
+    aliases: ['STRATEGIC-FRAMEWORKS', 'FRAMEWORKS-EAR'],
+  },
+];
+
+elevatedDatasets.forEach((ds) => {
+  const fullPath = path.join(ROOT, ds.file);
+  if (fs.existsSync(fullPath)) {
+    const raw = fs.readFileSync(fullPath, 'utf8');
+    const hash = computeHash(raw);
+
+    addNode({
+      id: ds.id,
+      name: ds.name,
+      type: 'dataset',
+      path: rel(fullPath),
+      integrityHash: hash,
+      criticality: ds.crit,
+      metadata: {
+        itemCount: ds.itemCount,
+        schemaContract: 'src/types/transductive-schemas.ts',
+        validatedZod: true,
+        transductiveElevation: 'TIER-1',
+      },
+    });
+
+    ds.aliases.forEach((al) => addAlias(al, ds.id));
+  }
+});
+
+// Aristas de datasets
+if (nodesMap.has('DATASET-LUCES-NAVIDAD')) {
+  addEdge('DOMAIN-CATALOGO-LUCES', 'DATASET-LUCES-NAVIDAD', 'depends_on', 3);
+  if (nodesMap.has('RULE-61')) addEdge('RULE-61', 'DATASET-LUCES-NAVIDAD', 'governs->executes', 3);
+  if (nodesMap.has('RULE-63')) addEdge('RULE-63', 'DATASET-LUCES-NAVIDAD', 'governs->executes', 3);
+  if (nodesMap.has('RULE-67')) addEdge('RULE-67', 'DATASET-LUCES-NAVIDAD', 'governs->executes', 3);
+  if (nodesMap.has('RULE-70')) addEdge('RULE-70', 'DATASET-LUCES-NAVIDAD', 'governs->executes', 3);
+}
+if (nodesMap.has('DATASET-INTENT-DAG')) {
+  addEdge('SSOT-EAR-OS', 'DATASET-INTENT-DAG', 'governs->executes', 3);
+  if (nodesMap.has('RULE-1')) addEdge('RULE-1', 'DATASET-INTENT-DAG', 'governs->executes', 2);
+}
+if (nodesMap.has('DATASET-B2G-OPPORTUNITIES')) {
+  if (nodesMap.has('RULE-62')) addEdge('RULE-62', 'DATASET-B2G-OPPORTUNITIES', 'governs->executes', 3);
+  if (nodesMap.has('GATE-B2G-FAST-TRACK')) addEdge('GATE-B2G-FAST-TRACK', 'DATASET-B2G-OPPORTUNITIES', 'governs->executes', 2);
+}
+if (nodesMap.has('DATASET-STRATEGIC-FRAMEWORKS')) {
+  addEdge('SSOT-EAR-OS', 'DATASET-STRATEGIC-FRAMEWORKS', 'governs->executes', 2);
+}
+
+// ----------------------------------------------------------------------------
 // E. Nodos de Ejecución (Back / APIs) y Nodos de Ruta (Front / Páginas)
 // ----------------------------------------------------------------------------
 const ROUTE_EXTS = new Set(['.tsx', '.ts', '.jsx', '.js']);
@@ -503,6 +586,7 @@ const nodesByType = {
   data: 0,
   constitutional: 0,
   domain: 0,
+  dataset: 0,
 };
 
 const critDist = {

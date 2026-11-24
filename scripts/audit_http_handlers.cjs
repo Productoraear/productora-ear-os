@@ -69,6 +69,7 @@ const EXCLUDED_PREFIXES = [
     'src/adn_vault/',
     'src/adn_vault_staging/',
     'src/data/staging/',
+    'src/lib/graph/',
     'scripts/',
     'Marketing_Skills/',
     'extracted_astra_neural/',

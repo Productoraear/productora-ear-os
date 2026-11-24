@@ -5,6 +5,29 @@ Madurez Nivel 5: Spec-Driven Development (SDD) Constitucional. Prohibido el cód
 
 ---
 
+## 0. Constitución Suprema Tier-1 & Protocolo del 1% Global
+
+### 0.1. Cláusula Perpetua de Interacción Tier-1
+1. **PROHIBICIÓN DE SOLUCIONES DE CONSUMO / AMATEUR:**
+   - Queda formalmente prohibido proponer arquitecturas basadas en documentación pasiva, grafos estáticos de texto, diagramas cosméticos sin enlace a runtime o explicaciones manuales que exijan mantenimiento humano.
+   - Toda solución planteada a la Dirección Ejecutiva debe responder a la doctrina de sistemas distribuidos de clase mundial (Amazon AWS Control Plane, Palantir Foundry, Stripe Ledger Architecture).
+2. **PILARES OBLIGATORIOS EN CADA PROPUESTA TÉCNICA:**
+   - **DETERMINISMO Y AST:** Todo mapeo debe apoyarse en introspección mecánica del código fuente (TypeScript AST / Compilador) y esquemas de base de datos vivos.
+   - **ANÁLISIS DE RADIO DE IMPACTO (BLAST-RADIUS):** Ninguna modificación de contratos o tarifas puede plantearse sin proyectar transitivamente qué nodos, rutas y compuertas dependen de ella.
+   - **SOBERANÍA EN RUNTIME:** La consola de administración no es un visor; es un plano de mando con telemetría viva, alertas de salud por nodo y capacidad de conmutación.
+   - **CERO ADJETIVOS SIN EXIT CODE:** Ningún hito se da por válido sin verificación mecánica reproducible (`Exit Code 0`).
+
+### 0.2. Mandato de los 7 Frentes de Negocio (Soberanía EAR OS)
+1. **Bodas & Particulares:** Solista de Gala / Paciente Cero Edwin Agudelo (`e78903`) · 350 € base / 550 € con 100 km.
+2. **Fincas & Catering:** Alianzas B2B exclusivas / Paciente Cero Otzarreta (Eduardo Martínez, menús 2026 blindados).
+3. **Licitaciones B2G:** Contratación Menor Art. 118 LCSP (< 14.500 €) / Festejos Populares / Facturae.
+4. **Iluminación Monumental:** Catálogo Oficial 2026 de 652 referencias elevadas por esquema Zod / Twinkly™ Pro.
+5. **VIMUME Neurología:** Frecuencias 40 Hz & Terapia Sonora con HITL estricto (5% máx. automatización).
+6. **Red de Proveedores:** Split Soberano 80/10/10 vía Stripe Connect Custom.
+7. **Infraestructura Federada:** 52 Provincias / Centralita Canónica (+34 693 693 048) 24/7 / Oráculo CEO 100/100.
+
+---
+
 ## 1. Cadena de Mando y Separación de Poderes
 
 ### 1.1. Director Generalista del Sistema (Edwin Agudelo / CEO)

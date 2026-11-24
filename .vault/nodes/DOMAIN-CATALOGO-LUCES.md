@@ -26,7 +26,7 @@ integrityHash: "97defa8abecdbdad"
 ```
 
 ## Dependencias Salientes (Outgoing)
-_Ninguna dependencia saliente directa._
+- **depends_on** -> [[DATASET-LUCES-NAVIDAD]]
 
 ## Dependencias Entrantes (Incoming / Governed by)
 - [[SSOT-EAR-OS]] -> **governs->executes**

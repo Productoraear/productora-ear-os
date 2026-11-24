@@ -1,20 +1,21 @@
 {
   "schema_version": "1.0.0",
-  "generated_at": "2026-11-24T17:06:56.448Z",
-  "execution_duration_ms": 358.01,
+  "generated_at": "2026-11-24T17:35:18.327Z",
+  "execution_duration_ms": 428.93,
   "stats": {
-    "total_nodes": 739,
-    "total_edges": 533,
+    "total_nodes": 743,
+    "total_edges": 544,
     "nodes_by_type": {
       "route": 320,
       "api": 225,
       "data": 76,
       "constitutional": 113,
-      "domain": 5
+      "domain": 5,
+      "dataset": 4
     },
     "criticality_distribution": {
-      "CRITICAL": 113,
-      "HIGH": 219,
+      "CRITICAL": 114,
+      "HIGH": 222,
       "MEDIUM": 407,
       "LOW": 0
     }
@@ -376,6 +377,15 @@
     "MARIACHILEAD": "DATA-MODEL-MariachiLead",
     "MODEL-SYSTEMAUTOMATIONCONFIG": "DATA-MODEL-SystemAutomationConfig",
     "SYSTEMAUTOMATIONCONFIG": "DATA-MODEL-SystemAutomationConfig",
+    "LUCES-NAVIDAD": "DATASET-LUCES-NAVIDAD",
+    "DATASET-LUCES": "DATASET-LUCES-NAVIDAD",
+    "LUCES-2026": "DATASET-LUCES-NAVIDAD",
+    "B2G-OPPORTUNITIES": "DATASET-B2G-OPPORTUNITIES",
+    "DATASET-B2G": "DATASET-B2G-OPPORTUNITIES",
+    "INTENT-DAG": "DATASET-INTENT-DAG",
+    "ORACULO-INTENTS": "DATASET-INTENT-DAG",
+    "STRATEGIC-FRAMEWORKS": "DATASET-STRATEGIC-FRAMEWORKS",
+    "FRAMEWORKS-EAR": "DATASET-STRATEGIC-FRAMEWORKS",
     "API-STRIPE": "API-/api/webhooks/whatsapp-concierge",
     "STRIPE": "API-/api/webhooks/whatsapp-concierge"
   },
@@ -3098,6 +3108,62 @@
       }
     },
     {
+      "id": "DATASET-LUCES-NAVIDAD",
+      "name": "Catálogo Oficial Luces Navidad 2026 (652 Refs)",
+      "type": "dataset",
+      "path": "src/data/luces_navidad_2026_ear.json",
+      "integrityHash": "2f93e6a032a4494d",
+      "criticality": "HIGH",
+      "metadata": {
+        "itemCount": 652,
+        "schemaContract": "src/types/transductive-schemas.ts",
+        "validatedZod": true,
+        "transductiveElevation": "TIER-1"
+      }
+    },
+    {
+      "id": "DATASET-B2G-OPPORTUNITIES",
+      "name": "Base de Oportunidades Licitaciones B2G LCSP",
+      "type": "dataset",
+      "path": "src/data/b2g_opportunities_database.json",
+      "integrityHash": "e8a990806c54ffd6",
+      "criticality": "HIGH",
+      "metadata": {
+        "itemCount": 4,
+        "schemaContract": "src/types/transductive-schemas.ts",
+        "validatedZod": true,
+        "transductiveElevation": "TIER-1"
+      }
+    },
+    {
+      "id": "DATASET-INTENT-DAG",
+      "name": "DAG de Intenciones del Oráculo CEO",
+      "type": "dataset",
+      "path": "src/data/intent-dag.json",
+      "integrityHash": "5770c7f4199fb560",
+      "criticality": "CRITICAL",
+      "metadata": {
+        "itemCount": 1,
+        "schemaContract": "src/types/transductive-schemas.ts",
+        "validatedZod": true,
+        "transductiveElevation": "TIER-1"
+      }
+    },
+    {
+      "id": "DATASET-STRATEGIC-FRAMEWORKS",
+      "name": "Frameworks Estratégicos EAR OS S-Class",
+      "type": "dataset",
+      "path": "src/data/EAR_OS_STRATEGIC_FRAMEWORKS.json",
+      "integrityHash": "43395aa4a5af94d5",
+      "criticality": "HIGH",
+      "metadata": {
+        "itemCount": 1,
+        "schemaContract": "src/types/transductive-schemas.ts",
+        "validatedZod": true,
+        "transductiveElevation": "TIER-1"
+      }
+    },
+    {
       "id": "ROUTE-/admin/afiliados",
       "name": "/admin/afiliados",
       "type": "route",
@@ -3354,12 +3420,12 @@
       "name": "/admin/oracle-compiler",
       "type": "route",
       "path": "src/app/(admin)/admin/oracle-compiler/page.tsx",
-      "integrityHash": "4fe69348ee075c56",
+      "integrityHash": "650aa2762b5fa645",
       "criticality": "HIGH",
       "metadata": {
         "pathname": "/admin/oracle-compiler",
         "isDynamic": false,
-        "isClient": false,
+        "isClient": true,
         "category": "ADMIN"
       }
     },
@@ -3564,7 +3630,7 @@
       "name": "/admin/war-room",
       "type": "route",
       "path": "src/app/(admin)/admin/war-room/page.tsx",
-      "integrityHash": "4c4eeca5b8ca7e3d",
+      "integrityHash": "b0f41a50c04ab220",
       "criticality": "HIGH",
       "metadata": {
         "pathname": "/admin/war-room",
@@ -12408,6 +12474,86 @@
       "metadata": {}
     },
     {
+      "id": "DOMAIN-CATALOGO-LUCES->DATASET-LUCES-NAVIDAD:depends_on",
+      "source": "DOMAIN-CATALOGO-LUCES",
+      "target": "DATASET-LUCES-NAVIDAD",
+      "relationship": "depends_on",
+      "weight": 3,
+      "metadata": {}
+    },
+    {
+      "id": "RULE-61->DATASET-LUCES-NAVIDAD:governs->executes",
+      "source": "RULE-61",
+      "target": "DATASET-LUCES-NAVIDAD",
+      "relationship": "governs->executes",
+      "weight": 3,
+      "metadata": {}
+    },
+    {
+      "id": "RULE-63->DATASET-LUCES-NAVIDAD:governs->executes",
+      "source": "RULE-63",
+      "target": "DATASET-LUCES-NAVIDAD",
+      "relationship": "governs->executes",
+      "weight": 3,
+      "metadata": {}
+    },
+    {
+      "id": "RULE-67->DATASET-LUCES-NAVIDAD:governs->executes",
+      "source": "RULE-67",
+      "target": "DATASET-LUCES-NAVIDAD",
+      "relationship": "governs->executes",
+      "weight": 3,
+      "metadata": {}
+    },
+    {
+      "id": "RULE-70->DATASET-LUCES-NAVIDAD:governs->executes",
+      "source": "RULE-70",
+      "target": "DATASET-LUCES-NAVIDAD",
+      "relationship": "governs->executes",
+      "weight": 3,
+      "metadata": {}
+    },
+    {
+      "id": "SSOT-EAR-OS->DATASET-INTENT-DAG:governs->executes",
+      "source": "SSOT-EAR-OS",
+      "target": "DATASET-INTENT-DAG",
+      "relationship": "governs->executes",
+      "weight": 3,
+      "metadata": {}
+    },
+    {
+      "id": "RULE-1->DATASET-INTENT-DAG:governs->executes",
+      "source": "RULE-1",
+      "target": "DATASET-INTENT-DAG",
+      "relationship": "governs->executes",
+      "weight": 2,
+      "metadata": {}
+    },
+    {
+      "id": "RULE-62->DATASET-B2G-OPPORTUNITIES:governs->executes",
+      "source": "RULE-62",
+      "target": "DATASET-B2G-OPPORTUNITIES",
+      "relationship": "governs->executes",
+      "weight": 3,
+      "metadata": {}
+    },
+    {
+      "id": "GATE-B2G-FAST-TRACK->DATASET-B2G-OPPORTUNITIES:governs->executes",
+      "source": "GATE-B2G-FAST-TRACK",
+      "target": "DATASET-B2G-OPPORTUNITIES",
+      "relationship": "governs->executes",
+      "weight": 2,
+      "metadata": {}
+    },
+    {
+      "id": "SSOT-EAR-OS->DATASET-STRATEGIC-FRAMEWORKS:governs->executes",
+      "source": "SSOT-EAR-OS",
+      "target": "DATASET-STRATEGIC-FRAMEWORKS",
+      "relationship": "governs->executes",
+      "weight": 2,
+      "metadata": {}
+    },
+    {
       "id": "SSOT-EAR-OS->ROUTE-/admin/compiler:governs->executes",
       "source": "SSOT-EAR-OS",
       "target": "ROUTE-/admin/compiler",
@@ -12435,6 +12581,14 @@
       "id": "SSOT-EAR-OS->ROUTE-/admin/legal:governs->executes",
       "source": "SSOT-EAR-OS",
       "target": "ROUTE-/admin/legal",
+      "relationship": "governs->executes",
+      "weight": 2,
+      "metadata": {}
+    },
+    {
+      "id": "SSOT-EAR-OS->ROUTE-/admin/oracle-compiler:governs->executes",
+      "source": "SSOT-EAR-OS",
+      "target": "ROUTE-/admin/oracle-compiler",
       "relationship": "governs->executes",
       "weight": 2,
       "metadata": {}

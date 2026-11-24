@@ -24,7 +24,7 @@ integrityHash: "6b3b457a75f3f5b7"
 ```
 
 ## Dependencias Salientes (Outgoing)
-_Ninguna dependencia saliente directa._
+- **governs->executes** -> [[DATASET-B2G-OPPORTUNITIES]]
 
 ## Dependencias Entrantes (Incoming / Governed by)
 - [[SSOT-EAR-OS]] -> **governs->executes**

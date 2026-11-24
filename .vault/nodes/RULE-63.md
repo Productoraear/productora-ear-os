@@ -28,6 +28,7 @@ integrityHash: "0dc9b1a56cfb45d5"
 
 ## Dependencias Salientes (Outgoing)
 - **governs->executes** -> [[DOMAIN-CATALOGO-LUCES]]
+- **governs->executes** -> [[DATASET-LUCES-NAVIDAD]]
 
 ## Dependencias Entrantes (Incoming / Governed by)
 - [[SSOT-EAR-OS]] -> **governs->executes**
