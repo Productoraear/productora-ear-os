@@ -22,77 +22,77 @@ interface Props {
 const CATEGORY_COVERS: Record<string, { page: number; image: string; desc: string }> = {
   "Motivos 3D Gigantes": {
     page: 2,
-    image: "/images/navidad_2026/page_2.jpg",
+    image: "/assets/catalogo-luces/page_2.jpg",
     desc: "Carrozas, portales de osos, pingüinos y muñecos de nieve transitables"
   },
   "Conos y Árboles Gigantes 3D": {
     page: 15,
-    image: "/images/navidad_2026/page_15.jpg",
+    image: "/assets/catalogo-luces/page_15.jpg",
     desc: "Estructuras cónicas y árboles monumentales para plazas consistoriales"
   },
   "Motivos 2D y Arcos de Calle": {
     page: 35,
-    image: "/images/navidad_2026/page_35.jpg",
+    image: "/assets/catalogo-luces/page_35.jpg",
     desc: "Arcos de calle transversales, motivos para báculos de farola y avenidas"
   },
   "Esferas 3D Plegables": {
     page: 20,
-    image: "/images/navidad_2026/page_20.jpg",
+    image: "/assets/catalogo-luces/page_20.jpg",
     desc: "Esferas transitables y bolas luminosas 3D de gran volumen"
   },
   "Árboles y Almendros LED": {
     page: 50,
-    image: "/images/navidad_2026/page_50.jpg",
+    image: "/assets/catalogo-luces/page_50.jpg",
     desc: "Árboles escultóricos con ramas micro-LED blanco cálido y puro"
   },
   "Twinkly Pro Smart LED": {
     page: 70,
-    image: "/images/navidad_2026/page_70.jpg",
+    image: "/assets/catalogo-luces/page_70.jpg",
     desc: "Tecnología mapeable direccionable RGB+AWW con control cloud"
   },
   "Cortinas y Mallas LED": {
     page: 85,
-    image: "/images/navidad_2026/page_85.jpg",
+    image: "/assets/catalogo-luces/page_85.jpg",
     desc: "Cascadas de luz y mallas de alta densidad para fachadas y arbolado"
   },
   "Guirnaldas Profesionales": {
     page: 95,
-    image: "/images/navidad_2026/page_95.jpg",
+    image: "/assets/catalogo-luces/page_95.jpg",
     desc: "Cordones LED estancos IP67 de alta resistencia mecánica y climática"
   },
   "Elementos Decorativos y Bolas": {
     page: 110,
-    image: "/images/navidad_2026/page_110.jpg",
+    image: "/assets/catalogo-luces/page_110.jpg",
     desc: "Motivos decorativos autónomos para suelo y galerías comerciales"
   },
   "Motivos Plásticos / Biodegradables": {
     page: 125,
-    image: "/images/navidad_2026/page_125.jpg",
+    image: "/assets/catalogo-luces/page_125.jpg",
     desc: "Diseños sostenibles en biopolímeros reciclables para licitaciones verdes"
   },
   "Accesorios y Montaje": {
     page: 140,
-    image: "/images/navidad_2026/page_140.jpg",
+    image: "/assets/catalogo-luces/page_140.jpg",
     desc: "Fuentes de alimentación 24V/230V, conectores estancos y controladores"
   },
   "Iluminación de Farolas y Columnas": {
     page: 25,
-    image: "/images/navidad_2026/page_35.jpg",
+    image: "/assets/catalogo-luces/page_35.jpg",
     desc: "Banderolas verticales LED para báculos de farola y avenidas urbanas"
   },
   "Guirnaldas, Cortinas y Cielo LED": {
     page: 85,
-    image: "/images/navidad_2026/page_85.jpg",
+    image: "/assets/catalogo-luces/page_85.jpg",
     desc: "Cascadas de luz, mallas de alta densidad y cielos luminosos para plazas"
   },
   "Árboles Gigantes y Estructuras Cónicas": {
     page: 15,
-    image: "/images/navidad_2026/page_15.jpg",
+    image: "/assets/catalogo-luces/page_15.jpg",
     desc: "Estructuras cónicas y árboles monumentales transitables"
   },
   "Portales y Esculturas Transitables": {
     page: 4,
-    image: "/images/navidad_2026/page_4.jpg",
+    image: "/assets/catalogo-luces/page_4.jpg",
     desc: "Portales de osos, túneles walk-through y carrozas monumentales transitables"
   }
 };
@@ -227,7 +227,7 @@ export default function ChristmasLightingCatalogView({ products, categories, ini
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
           {categories.map((cat) => {
-            const cover = CATEGORY_COVERS[cat] || { image: '/images/demetrio/page_2.jpg', desc: cat };
+            const cover = CATEGORY_COVERS[cat] || { image: '/assets/catalogo-luces/page_2.jpg', desc: cat };
             const count = products.filter(p => p.category === cat).length;
             const isSelected = selectedCategory === cat;
 
@@ -524,6 +524,12 @@ export default function ChristmasLightingCatalogView({ products, categories, ini
                   <img
                     src={modalTab === 'product' ? (activeModalProduct.image || activeModalProduct.pageImage) : (activeModalProduct.pageImage || activeModalProduct.image)}
                     alt={activeModalProduct.name}
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      if (activeModalProduct.pageImage && !target.src.includes(activeModalProduct.pageImage)) {
+                        target.src = activeModalProduct.pageImage;
+                      }
+                    }}
                     className="w-full h-full object-contain max-h-[420px] rounded-xl transition-all duration-300"
                   />
                   {modalTab === 'page' && (

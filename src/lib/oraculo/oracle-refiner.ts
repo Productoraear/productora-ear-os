@@ -34,8 +34,15 @@ import {
   ORACULO_RULES_BLOQUE_6,
   type OraculoCanonicalRuleBloque6,
 } from '@/lib/oraculo/oraculo-canonical-rules-51-60';
+import {
+  ORACULO_RULES_BLOQUE_7,
+  type OraculoCanonicalRuleBloque7,
+} from '@/lib/oraculo/oraculo-canonical-rules-61-70';
 
-export type AnyOraculoRule = OraculoCanonicalRule | OraculoCanonicalRuleBloque6;
+export type AnyOraculoRule =
+  | OraculoCanonicalRule
+  | OraculoCanonicalRuleBloque6
+  | OraculoCanonicalRuleBloque7;
 
 export type OracleObjective =
   | 'BODAS'
@@ -183,18 +190,22 @@ Pilares del Posicionamiento Aristocrático:
 ${raw ? `Resolución táctica a la visión planteada: "${raw}". Se ordena aterrizar esta directiva en código y flujos ejecutables.` : 'La estrategia general debe traducirse en micro-compromisos claros y verificables al céntimo.'}`;
   }
 
-  // Selección de Reglas Canónicas aplicables (Base 1-50 + Bloque 6: 51-60)
-  const allAvailableRules: readonly AnyOraculoRule[] = [...ORACULO_RULES_BASE, ...ORACULO_RULES_BLOQUE_6];
+  // Selección de Reglas Canónicas aplicables (Base 1-50 + Bloque 6: 51-60 + Bloque 7: 61-70)
+  const allAvailableRules: readonly AnyOraculoRule[] = [
+    ...ORACULO_RULES_BASE,
+    ...ORACULO_RULES_BLOQUE_6,
+    ...ORACULO_RULES_BLOQUE_7,
+  ];
 
   let ruleIds: number[] = [];
   if (input.objective === 'BODAS') {
-    ruleIds = [1, 5, 23, 31, 32, 34, 36, 51, 54, 55, 60];
+    ruleIds = [1, 5, 23, 31, 32, 34, 36, 51, 54, 55, 60, 61, 63, 64, 70];
   } else if (input.objective === 'PROVEEDOR') {
-    ruleIds = [1, 4, 13, 14, 19, 37, 38, 53, 57, 59];
+    ruleIds = [1, 4, 13, 14, 19, 37, 38, 53, 57, 59, 61, 65, 66, 67];
   } else if (input.objective === 'B2G') {
-    ruleIds = [1, 20, 41, 44, 46, 47, 48, 49, 58, 60];
+    ruleIds = [1, 20, 41, 44, 46, 47, 48, 49, 58, 60, 61, 62, 63, 65, 66, 68, 69];
   } else {
-    ruleIds = [1, 2, 6, 8, 10, 15, 51, 52, 59, 60];
+    ruleIds = [1, 2, 6, 8, 10, 15, 51, 52, 59, 60, 61, 62, 64, 68, 69, 70];
   }
 
   const appliedCanonicalRules = allAvailableRules.filter((r) => ruleIds.includes(r.id));
@@ -212,7 +223,7 @@ ${raw || 'Consolidar la estrategia de alta conversión y fidelización sin inter
 [TEXTO DE ALTA CONVERSIÓN HOMOLOGADO (PEPITA DE ORO)]:
 ${pepitaDeOro}
 
-[REGLAS COGNITIVAS DEL ORÁCULO APLICADAS (BASE 1-60)]:
+[REGLAS COGNITIVAS DEL ORÁCULO APLICADAS (BASE 1-70)]:
 ${appliedCanonicalRules.map((r) => `- Regla ${r.id} (${r.title}): ${r.directive}`).join('\n')}
 
 [INVARIANTES CONSTITUCIONALES APLICADOS]:

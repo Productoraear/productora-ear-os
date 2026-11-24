@@ -9,7 +9,7 @@ import ChristmasLightingCatalogView from '@/features/catalog/ui/ChristmasLightin
 const SITE_URL = 'https://productoraear.com';
 const CANONICAL_PATH = '/arsenal/luces-navidad';
 const CANONICAL_URL = `${SITE_URL}${CANONICAL_PATH}`;
-const OG_IMAGE = '/images/demetrio/page_2.jpg';
+const OG_IMAGE = '/assets/catalogo-luces/page_2.jpg';
 
 const PRODUCT_COUNT = CHRISTMAS_LIGHTING_PRODUCTS.length;
 const CATEGORY_COUNT = CHRISTMAS_LIGHTING_CATEGORIES.length;

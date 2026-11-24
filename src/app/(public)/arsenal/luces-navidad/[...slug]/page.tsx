@@ -10,7 +10,7 @@ import ChristmasLightingCatalogView from '@/features/catalog/ui/ChristmasLightin
 import LightingDetailActions from '@/features/catalog/ui/LightingDetailActions';
 
 const SITE_URL = 'https://productoraear.com';
-const DEFAULT_OG_IMAGE = '/images/demetrio/page_2.jpg';
+const DEFAULT_OG_IMAGE = '/assets/catalogo-luces/page_2.jpg';
 
 interface PageProps {
   params: Promise<{
@@ -289,8 +289,14 @@ export default async function LucesNavidadCatchAllPage({ params }: PageProps) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8">
             <div className="lg:col-span-7 relative rounded-2xl overflow-hidden bg-black border border-white/10 flex items-center justify-center p-2 min-h-[450px]">
               <img
-                src={product.image}
+                src={product.image || product.pageImage}
                 alt={product.name}
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  if (product.pageImage && !target.src.includes(product.pageImage)) {
+                    target.src = product.pageImage;
+                  }
+                }}
                 className="w-full h-full object-contain max-h-[600px] rounded-xl"
               />
               <div className="absolute top-4 left-4">
