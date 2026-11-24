@@ -298,8 +298,8 @@ export default function MasterCompilerPage(): React.JSX.Element {
               </span>
             ))}
           </div>
-          <span className="text-[10px] text-[#ecb613] bg-[#ecb613]/10 px-2 py-0.5 rounded-full border border-[#ecb613]/30 font-bold">
-            {refinedResult.appliedCanonicalRules.length} Reglas Canónicas Activas (Base 1-70)
+          <span className="text-[10px] text-[#ecb613] bg-[#ecb613]/10 px-2 py-0.5 rounded-full border border-[#ecb613]/30 font-bold uppercase">
+            {refinedResult.appliedCanonicalRules.length} Reglas Canónicas Activas (Base 1-80)
           </span>
         </div>
       </section>
