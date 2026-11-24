@@ -1,0 +1,3220 @@
+{
+  "meta": {
+    "generated_at": "2026-09-15T14:27:25.088Z",
+    "scope": "src/"
+  },
+  "stats": {
+    "filesScanned": 999,
+    "linesScanned": 165982,
+    "facadeHits": 437,
+    "secretHits": 0
+  },
+  "findings": {
+    "facades": [
+      {
+        "file": "src/app/(admin)/admin/call-center/page.tsx",
+        "line": 251,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Buscar por nombre, municipio, provincia...\""
+      },
+      {
+        "file": "src/app/(admin)/admin/call-center/page.tsx",
+        "line": 254,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-zinc-900/80 border border-zinc-800 rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder-zinc-50"
+      },
+      {
+        "file": "src/app/(admin)/admin/call-center/page.tsx",
+        "line": 571,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Escribe aquí observaciones, tarifas negociadas, nombre de la persona de contacto...\""
+      },
+      {
+        "file": "src/app/(admin)/admin/command-center/page.tsx",
+        "line": 276,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej: ¿Cómo crear una oferta irresistible y captar atención en los primeros 3 segundos?\""
+      },
+      {
+        "file": "src/app/(admin)/admin/command-center/page.tsx",
+        "line": 277,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"flex-1 px-4 py-2.5 rounded-xl bg-black/60 border border-white/15 text-xs font-mono text-white placeholder:tex"
+      },
+      {
+        "file": "src/app/(admin)/admin/command-center/page.tsx",
+        "line": 316,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Filtrar herramientas...\""
+      },
+      {
+        "file": "src/app/(admin)/admin/command-center/page.tsx",
+        "line": 319,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"px-3.5 py-1.5 rounded-xl bg-white/5 border border-white/10 text-xs font-mono text-white placeholder:text-zinc"
+      },
+      {
+        "file": "src/app/(admin)/admin/journey-heatmap/page.tsx",
+        "line": 114,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Buscar por intención o ID...\""
+      },
+      {
+        "file": "src/app/(admin)/admin/journey-heatmap/page.tsx",
+        "line": 117,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-[#050508] border border-[#1a1a24] rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder-zinc-500"
+      },
+      {
+        "file": "src/app/(admin)/admin/proveedores/page.tsx",
+        "line": 148,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Buscar proveedor por nombre, municipio, teléfono, servicio...\""
+      },
+      {
+        "file": "src/app/(admin)/admin/proveedores/page.tsx",
+        "line": 149,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full pl-10 pr-4 py-2.5 bg-zinc-900/60 border border-zinc-800 rounded-xl text-xs text-white placeholder-zinc"
+      },
+      {
+        "file": "src/app/(admin)/admin/proveedores/page.tsx",
+        "line": 201,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "{/* Imagen o Placeholder */}"
+      },
+      {
+        "file": "src/app/(admin)/admin/sourcing/page.tsx",
+        "line": 227,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Buscar por centro, municipio, teléfono...\""
+      },
+      {
+        "file": "src/app/(admin)/admin/sourcing/page.tsx",
+        "line": 230,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-white/5 border border-white/10 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-zinc-500 fo"
+      },
+      {
+        "file": "src/app/(admin)/admin/voice-studio/page.tsx",
+        "line": 307,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej: Carmen y Manuel\""
+      },
+      {
+        "file": "src/app/(admin)/admin/voice-studio/page.tsx",
+        "line": 308,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full px-3.5 py-2.5 rounded-lg border border-[#262638] bg-[#050507] text-sm text-white placeholder-zinc-600 "
+      },
+      {
+        "file": "src/app/(admin)/admin/voice-studio/page.tsx",
+        "line": 382,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full px-3.5 py-2.5 rounded-lg border border-[#262638] bg-[#050507] text-sm text-white placeholder-zinc-600 "
+      },
+      {
+        "file": "src/app/(admin)/command-center/page.tsx",
+        "line": 276,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej: ¿Cómo crear una oferta irresistible y captar atención en los primeros 3 segundos?\""
+      },
+      {
+        "file": "src/app/(admin)/command-center/page.tsx",
+        "line": 277,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"flex-1 px-4 py-2.5 rounded-xl bg-black/60 border border-white/15 text-xs font-mono text-white placeholder:tex"
+      },
+      {
+        "file": "src/app/(admin)/command-center/page.tsx",
+        "line": 316,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Filtrar herramientas...\""
+      },
+      {
+        "file": "src/app/(admin)/command-center/page.tsx",
+        "line": 319,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"px-3.5 py-1.5 rounded-xl bg-white/5 border border-white/10 text-xs font-mono text-white placeholder:text-zinc"
+      },
+      {
+        "file": "src/app/(admin)/sourcing/page.tsx",
+        "line": 275,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Buscar por centro, municipio, teléfono...\""
+      },
+      {
+        "file": "src/app/(admin)/sourcing/page.tsx",
+        "line": 278,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-white/5 border border-white/10 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-zinc-500 fo"
+      },
+      {
+        "file": "src/app/(admin)/voice-studio/page.tsx",
+        "line": 307,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej: Carmen y Manuel\""
+      },
+      {
+        "file": "src/app/(admin)/voice-studio/page.tsx",
+        "line": 308,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full px-3.5 py-2.5 rounded-lg border border-[#262638] bg-[#050507] text-sm text-white placeholder-zinc-600 "
+      },
+      {
+        "file": "src/app/(admin)/voice-studio/page.tsx",
+        "line": 382,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full px-3.5 py-2.5 rounded-lg border border-[#262638] bg-[#050507] text-sm text-white placeholder-zinc-600 "
+      },
+      {
+        "file": "src/app/(dashboard)/giras/page.tsx",
+        "line": 41,
+        "pattern": "MOCK",
+        "sev": "high",
+        "snippet": "// Mock data derived from EarFleetMap_legacy_v2.tsx"
+      },
+      {
+        "file": "src/app/(label)/artists/dashboard/page.tsx",
+        "line": 76,
+        "pattern": "HARDCODE",
+        "sev": "high",
+        "snippet": "`Rol simulado cambiado a [${role.toUpperCase()}]. Claims de seguridad re-evaluados.`"
+      },
+      {
+        "file": "src/app/(public)/(auth)/login/page.tsx",
+        "line": 203,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"••••••••••••••••\""
+      },
+      {
+        "file": "src/app/(public)/(auth)/login/page.tsx",
+        "line": 262,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"ej. 1524\""
+      },
+      {
+        "file": "src/app/(public)/artistas/dashboard/page.tsx",
+        "line": 428,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej: DJ Edwin Agudelo\""
+      },
+      {
+        "file": "src/app/(public)/artistas/dashboard/page.tsx",
+        "line": 440,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"71758247K\""
+      },
+      {
+        "file": "src/app/(public)/artistas/dashboard/page.tsx",
+        "line": 450,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"SGAE-2026-0988\""
+      },
+      {
+        "file": "src/app/(public)/artistas/dashboard/page.tsx",
+        "line": 462,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"booking@productoraear.com\""
+      },
+      {
+        "file": "src/app/(public)/artistas/reclamar-regalias/page.tsx",
+        "line": 375,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej: DJ Edwin Agudelo\""
+      },
+      {
+        "file": "src/app/(public)/artistas/reclamar-regalias/page.tsx",
+        "line": 385,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"71758247K\""
+      },
+      {
+        "file": "src/app/(public)/artistas/reclamar-regalias/page.tsx",
+        "line": 395,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"booking@productoraear.com\""
+      },
+      {
+        "file": "src/app/(public)/artistas/reclamar-regalias/page.tsx",
+        "line": 414,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej: Finca La Concepción\""
+      },
+      {
+        "file": "src/app/(public)/artistas/reclamar-regalias/page.tsx",
+        "line": 424,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"B-29884102\""
+      },
+      {
+        "file": "src/app/(public)/artistas/reclamar-regalias/page.tsx",
+        "line": 434,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"eventos@fincalaconcepcion.com\""
+      },
+      {
+        "file": "src/app/(public)/checkout/presupuesto/page.tsx",
+        "line": 225,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"ej. Madrid, Toledo, Finca...\""
+      },
+      {
+        "file": "src/app/(public)/checkout/presupuesto/page.tsx",
+        "line": 294,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Nombre o Persona de Contacto\""
+      },
+      {
+        "file": "src/app/(public)/checkout/presupuesto/page.tsx",
+        "line": 301,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Teléfono / WhatsApp (ej: +34 600 000 000)\""
+      },
+      {
+        "file": "src/app/(public)/checkout/presupuesto/page.tsx",
+        "line": 759,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Nombre Oficial (Persona o Razón Social)\""
+      },
+      {
+        "file": "src/app/(public)/checkout/presupuesto/page.tsx",
+        "line": 762,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-black border border-white/10 rounded-xl pl-11 pr-4 py-3.5 text-white text-sm font-medium focus:outl"
+      },
+      {
+        "file": "src/app/(public)/checkout/presupuesto/page.tsx",
+        "line": 771,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Teléfono Directo / WhatsApp\""
+      },
+      {
+        "file": "src/app/(public)/checkout/presupuesto/page.tsx",
+        "line": 774,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-black border border-white/10 rounded-xl pl-11 pr-4 py-3.5 text-white text-sm font-medium focus:outl"
+      },
+      {
+        "file": "src/app/(public)/contacto/page.tsx",
+        "line": 207,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej. Carmen Rodríguez o Ayto. de Madrid\""
+      },
+      {
+        "file": "src/app/(public)/contacto/page.tsx",
+        "line": 218,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"contacto@organizacion.com\""
+      },
+      {
+        "file": "src/app/(public)/contacto/page.tsx",
+        "line": 231,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"+34 600 000 000\""
+      },
+      {
+        "file": "src/app/(public)/contacto/page.tsx",
+        "line": 252,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Indica fecha estimada, municipio, número de invitados o requisitos técnicos...\""
+      },
+      {
+        "file": "src/app/(public)/dossier/page.tsx",
+        "line": 154,
+        "pattern": "TODO",
+        "sev": "low",
+        "snippet": "VER TODO <ChevronRight size={14} />"
+      },
+      {
+        "file": "src/app/(public)/encargos/page.tsx",
+        "line": 221,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej. Mi madre Elena / Mis abuelos Carmen y Manuel\""
+      },
+      {
+        "file": "src/app/(public)/encargos/page.tsx",
+        "line": 224,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-sm focus:ring-1 focus:ring-amber-500 outl"
+      },
+      {
+        "file": "src/app/(public)/encargos/page.tsx",
+        "line": 231,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej. De sus hijos / De toda la familia\""
+      },
+      {
+        "file": "src/app/(public)/encargos/page.tsx",
+        "line": 234,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-sm focus:ring-1 focus:ring-amber-500 outl"
+      },
+      {
+        "file": "src/app/(public)/encargos/page.tsx",
+        "line": 247,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Incluye anécdotas concretas: lugares significativos, años compartidos, apodos cariñosos, dificultades super"
+      },
+      {
+        "file": "src/app/(public)/encargos/page.tsx",
+        "line": 250,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-black/50 border border-white/10 rounded-xl p-4 text-sm focus:ring-1 focus:ring-amber-500 outline-no"
+      },
+      {
+        "file": "src/app/(public)/estudio-diseno/page.tsx",
+        "line": 375,
+        "pattern": "HARDCODE",
+        "sev": "high",
+        "snippet": "{/* Control Interactivo: Slop Simulado vs Impecable */}"
+      },
+      {
+        "file": "src/app/(public)/marketplace/page.tsx",
+        "line": 60,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "{/* Placeholder para futuras secciones del marketplace */}"
+      },
+      {
+        "file": "src/app/(public)/panel/afiliado/page.tsx",
+        "line": 91,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Email de afiliado...\""
+      },
+      {
+        "file": "src/app/(public)/panel/afiliado/page.tsx",
+        "line": 216,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Importe en €\""
+      },
+      {
+        "file": "src/app/(public)/proyectos/vimume/protocolo/page.tsx",
+        "line": 111,
+        "pattern": "DATA_FAKE",
+        "sev": "med",
+        "snippet": "<p className=\"text-white/40 text-sm italic\">Ejemplo de entregable institucional generado por el sistema.</p>"
+      },
+      {
+        "file": "src/app/(public)/reclamar-perfil/page.tsx",
+        "line": 275,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej. Finca Las Tenadas, Zalacain...\""
+      },
+      {
+        "file": "src/app/(public)/vampiro/page.tsx",
+        "line": 264,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Buscar por nombre, provincia o servicio (ej. Catering Asturias, Fotógrafo Madrid)...\""
+      },
+      {
+        "file": "src/app/(public)/vampiro/page.tsx",
+        "line": 267,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-[#050505] border border-white/10 rounded-xl pl-11 pr-4 py-3 text-sm text-white placeholder:text-whi"
+      },
+      {
+        "file": "src/app/(public)/vimume/asociaciones/page.tsx",
+        "line": 225,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Nombre de la AFA / Entidad\""
+      },
+      {
+        "file": "src/app/(public)/vimume/asociaciones/page.tsx",
+        "line": 228,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"px-3.5 py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs text-white focus:outline-none focus:border"
+      },
+      {
+        "file": "src/app/(public)/vimume/asociaciones/page.tsx",
+        "line": 233,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Teléfono o Email de contacto\""
+      },
+      {
+        "file": "src/app/(public)/vimume/asociaciones/page.tsx",
+        "line": 236,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"px-3.5 py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs text-white focus:outline-none focus:border"
+      },
+      {
+        "file": "src/app/(public)/vimume/asociaciones/page.tsx",
+        "line": 271,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej: AFA Madrid Norte\""
+      },
+      {
+        "file": "src/app/(public)/vimume/asociaciones/page.tsx",
+        "line": 274,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full px-3.5 py-2 bg-white/5 border border-white/10 rounded-xl text-xs text-white focus:outline-none focus:b"
+      },
+      {
+        "file": "src/app/(public)/vimume/asociaciones/page.tsx",
+        "line": 285,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"G-12345678\""
+      },
+      {
+        "file": "src/app/(public)/vimume/asociaciones/page.tsx",
+        "line": 288,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full px-3.5 py-2 bg-white/5 border border-white/10 rounded-xl text-xs text-white focus:outline-none focus:b"
+      },
+      {
+        "file": "src/app/(public)/vimume/asociaciones/page.tsx",
+        "line": 310,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"D. / Dña. Nombre y Apellidos\""
+      },
+      {
+        "file": "src/app/(public)/vimume/asociaciones/page.tsx",
+        "line": 313,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full px-3.5 py-2 bg-white/5 border border-white/10 rounded-xl text-xs text-white focus:outline-none focus:b"
+      },
+      {
+        "file": "src/app/(public)/vimume/contacto/page.tsx",
+        "line": 181,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej. Sebastián Díaz\""
+      },
+      {
+        "file": "src/app/(public)/vimume/contacto/page.tsx",
+        "line": 192,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej. Residencia Nuestra Señora\""
+      },
+      {
+        "file": "src/app/(public)/vimume/contacto/page.tsx",
+        "line": 204,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"contacto@entidad.com\""
+      },
+      {
+        "file": "src/app/(public)/vimume/contacto/page.tsx",
+        "line": 231,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Describa brevemente cómo VIMUME puede aportar valor a su contexto específico.\""
+      },
+      {
+        "file": "src/app/(public)/vimume/familia/page.tsx",
+        "line": 158,
+        "pattern": "HARDCODE",
+        "sev": "high",
+        "snippet": "{/* Ficha Resumen & QR Simulado */}"
+      },
+      {
+        "file": "src/app/(public)/vimume/familia/page.tsx",
+        "line": 267,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej. Carmen Gómez Pérez\""
+      },
+      {
+        "file": "src/app/(public)/vimume/familia/page.tsx",
+        "line": 268,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder:text-white/30 fo"
+      },
+      {
+        "file": "src/app/(public)/vimume/familia/page.tsx",
+        "line": 283,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder:text-white/30 fo"
+      },
+      {
+        "file": "src/app/(public)/vimume/familia/page.tsx",
+        "line": 295,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej. Residencia Municipal Los Álamos\""
+      },
+      {
+        "file": "src/app/(public)/vimume/familia/page.tsx",
+        "line": 296,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder:text-white/30 fo"
+      },
+      {
+        "file": "src/app/(public)/vimume/familia/page.tsx",
+        "line": 325,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"+34 600 000 000\""
+      },
+      {
+        "file": "src/app/(public)/vimume/familia/page.tsx",
+        "line": 326,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder:text-white/30 fo"
+      },
+      {
+        "file": "src/app/(public)/vimume/familia/page.tsx",
+        "line": 371,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Título (Ej. Dos Gardenias)\""
+      },
+      {
+        "file": "src/app/(public)/vimume/familia/page.tsx",
+        "line": 372,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-black border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder:text-white/30 "
+      },
+      {
+        "file": "src/app/(public)/vimume/familia/page.tsx",
+        "line": 381,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Artista (Ej. Antonio Machín)\""
+      },
+      {
+        "file": "src/app/(public)/vimume/familia/page.tsx",
+        "line": 382,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-black border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder:text-white/30 "
+      },
+      {
+        "file": "src/app/(public)/vimume/familia/page.tsx",
+        "line": 390,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Recuerdo (Ej. Se conocieron bailándola)\""
+      },
+      {
+        "file": "src/app/(public)/vimume/familia/page.tsx",
+        "line": 391,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-black border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder:text-white/30 "
+      },
+      {
+        "file": "src/app/(public)/vimume/hermes/dashboard/page.tsx",
+        "line": 605,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-[#141414] border border-white/5 rounded-2xl py-4 px-6 text-xs text-white placeholder:text-zinc-700 "
+      },
+      {
+        "file": "src/app/(public)/vimume/hermes/dashboard/page.tsx",
+        "line": 606,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"terapeuta@productoraear.com\""
+      },
+      {
+        "file": "src/app/(public)/vimume/hermes/dashboard/page.tsx",
+        "line": 617,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-[#141414] border border-white/5 rounded-2xl py-4 px-6 text-xs text-white placeholder:text-zinc-700 "
+      },
+      {
+        "file": "src/app/(public)/vimume/hermes/dashboard/page.tsx",
+        "line": 618,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"••••••••\""
+      },
+      {
+        "file": "src/app/(public)/vimume/hermes/dashboard/page.tsx",
+        "line": 662,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"0000\""
+      },
+      {
+        "file": "src/app/(public)/vimume/hermes/dashboard/page.tsx",
+        "line": 1119,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"BUSCAR PACIENTE O DIAGNÓSTICO...\""
+      },
+      {
+        "file": "src/app/(public)/vimume/hermes/dashboard/page.tsx",
+        "line": 1122,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-[#141414] border border-white/5 rounded-2xl py-3 pl-12 pr-6 text-[10px] font-black uppercase tracki"
+      },
+      {
+        "file": "src/app/(public)/vimume/hermes/dashboard/page.tsx",
+        "line": 1885,
+        "pattern": "HARDCODE",
+        "sev": "high",
+        "snippet": "Use los controles de abajo para mutar el rol y el centro activo en caliente. Observe cómo cambia la estructura del token"
+      },
+      {
+        "file": "src/app/(public)/vimume/hermes/dashboard/page.tsx",
+        "line": 1897,
+        "pattern": "HARDCODE",
+        "sev": "high",
+        "snippet": "addAuditLog('CLAIM_MUTATE_CENTER', `Cambio de centro activo simulado a: ${c.toUpperCase()}`, 'SUCCESS');"
+      },
+      {
+        "file": "src/app/(public)/vimume/hermes/dashboard/page.tsx",
+        "line": 2001,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej: Reducir apatía temporal...\""
+      },
+      {
+        "file": "src/app/(public)/vimume/hermes/dashboard/page.tsx",
+        "line": 2004,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-[#141414] border border-white/5 rounded-2xl py-4 px-6 text-xs text-white placeholder:text-zinc-700 "
+      },
+      {
+        "file": "src/app/(public)/vimume/hermes/dashboard/page.tsx",
+        "line": 2049,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"••••\""
+      },
+      {
+        "file": "src/app/(public)/vimume/hermes/dashboard/page.tsx",
+        "line": 2050,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className={`w-full bg-[#141414] border rounded-xl py-3 px-4 text-xs text-center text-white placeholder:text-zinc-700 tra"
+      },
+      {
+        "file": "src/app/(public)/vimume/hermes/dashboard/page.tsx",
+        "line": 2100,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej: Manuel Agudelo...\""
+      },
+      {
+        "file": "src/app/(public)/vimume/hermes/dashboard/page.tsx",
+        "line": 2103,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-[#141414] border border-white/5 rounded-2xl py-4 px-6 text-xs text-white placeholder:text-zinc-700 "
+      },
+      {
+        "file": "src/app/(public)/vimume/proveedores-senior/page.tsx",
+        "line": 193,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Empresa o Marca Patrocinadora\""
+      },
+      {
+        "file": "src/app/(public)/vimume/proveedores-senior/page.tsx",
+        "line": 196,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"px-3.5 py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs text-white focus:outline-none focus:border"
+      },
+      {
+        "file": "src/app/(public)/vimume/proveedores-senior/page.tsx",
+        "line": 201,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Email de RSC o Marketing\""
+      },
+      {
+        "file": "src/app/(public)/vimume/proveedores-senior/page.tsx",
+        "line": 204,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"px-3.5 py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs text-white focus:outline-none focus:border"
+      },
+      {
+        "file": "src/app/(public)/vimume/proveedores-senior/page.tsx",
+        "line": 240,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej: Sennheiser Medical / Audika\""
+      },
+      {
+        "file": "src/app/(public)/vimume/proveedores-senior/page.tsx",
+        "line": 243,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full px-3.5 py-2 bg-white/5 border border-white/10 rounded-xl text-xs text-white focus:outline-none focus:b"
+      },
+      {
+        "file": "src/app/(public)/vimume/proveedores-senior/page.tsx",
+        "line": 270,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Detalles de presión acústica, compatibilidad Bluetooth o ergonomía para mayores...\""
+      },
+      {
+        "file": "src/app/(public)/vimume/proveedores-senior/page.tsx",
+        "line": 273,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full px-3.5 py-2 bg-white/5 border border-white/10 rounded-xl text-xs text-white focus:outline-none focus:b"
+      },
+      {
+        "file": "src/app/(public)/vimume/proveedores-senior/page.tsx",
+        "line": 284,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Teléfono o Email directo\""
+      },
+      {
+        "file": "src/app/(public)/vimume/proveedores-senior/page.tsx",
+        "line": 287,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full px-3.5 py-2 bg-white/5 border border-white/10 rounded-xl text-xs text-white focus:outline-none focus:b"
+      },
+      {
+        "file": "src/app/(vendor)/vendor/login/page.tsx",
+        "line": 69,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"ej. alberto-navarro o info@empresa.com\""
+      },
+      {
+        "file": "src/app/(vendor)/vendor/login/page.tsx",
+        "line": 71,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"appearance-none block w-full px-4 py-3.5 border border-white/10 rounded-2xl placeholder-zinc-600 focus:outlin"
+      },
+      {
+        "file": "src/app/(vendor)/vendor/login/page.tsx",
+        "line": 113,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"• • • • • •\""
+      },
+      {
+        "file": "src/app/(vendor)/vendor/login/page.tsx",
+        "line": 115,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"appearance-none block w-full px-4 py-3.5 border border-white/10 rounded-2xl placeholder-zinc-700 focus:outlin"
+      },
+      {
+        "file": "src/app/actions/smartLockActions.ts",
+        "line": 124,
+        "pattern": "DUMMY",
+        "sev": "high",
+        "snippet": "if (stripeApiKey && !stripeApiKey.includes('dummy')) {"
+      },
+      {
+        "file": "src/app/actions/smartLockActions.ts",
+        "line": 187,
+        "pattern": "MOCK",
+        "sev": "high",
+        "snippet": "// Direct fallback if Stripe key is in test/mock mode"
+      },
+      {
+        "file": "src/app/actions/smartLockActions.ts",
+        "line": 191,
+        "pattern": "MOCK",
+        "sev": "high",
+        "snippet": "smartLockId: `MOCK-${Date.now()}`,"
+      },
+      {
+        "file": "src/app/api/providers/opt-out/route.ts",
+        "line": 151,
+        "pattern": "DATA_FAKE",
+        "sev": "med",
+        "snippet": "color: #000000;"
+      },
+      {
+        "file": "src/app/api/providers/opt-out/route.ts",
+        "line": 311,
+        "pattern": "DATA_FAKE",
+        "sev": "med",
+        "snippet": "color: #000000;"
+      },
+      {
+        "file": "src/app/api/providers/opt-out/route.ts",
+        "line": 388,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "<input required type=\"text\" id=\"ownerName\" placeholder=\"Ej. Juan Pérez García\" />"
+      },
+      {
+        "file": "src/app/api/providers/opt-out/route.ts",
+        "line": 404,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "<input required type=\"text\" id=\"cifNif\" placeholder=\"Ej. B12345678 / 12345678X\" />"
+      },
+      {
+        "file": "src/app/api/providers/opt-out/route.ts",
+        "line": 408,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "<input required type=\"text\" id=\"contactPhone\" placeholder=\"${provInfo.maskedPhone}\" />"
+      },
+      {
+        "file": "src/app/api/providers/opt-out/route.ts",
+        "line": 434,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "<input type=\"text\" id=\"inputOtp\" maxlength=\"6\" placeholder=\"000000\" style=\"text-align:center; font-size:18px; letter-spa"
+      },
+      {
+        "file": "src/app/api/providers/opt-out/route.ts",
+        "line": 434,
+        "pattern": "DATA_FAKE",
+        "sev": "med",
+        "snippet": "<input type=\"text\" id=\"inputOtp\" maxlength=\"6\" placeholder=\"000000\" style=\"text-align:center; font-size:18px; letter-spa"
+      },
+      {
+        "file": "src/app/budget/page.tsx",
+        "line": 131,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Presupuesto Total (€)\""
+      },
+      {
+        "file": "src/app/components/artistas/TheSignalOnboarding.tsx",
+        "line": 123,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej: Trío Imperial de Madrid\""
+      },
+      {
+        "file": "src/app/components/artistas/TheSignalOnboarding.tsx",
+        "line": 134,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"https://...\""
+      },
+      {
+        "file": "src/app/components/artists/ArtistBookingFlow.tsx",
+        "line": 137,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej. Carmen Rodríguez\""
+      },
+      {
+        "file": "src/app/components/artists/ArtistBookingFlow.tsx",
+        "line": 148,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej. +34 600 000 000\""
+      },
+      {
+        "file": "src/app/components/artists/ArtistBookingFlow.tsx",
+        "line": 193,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej. Ayuntamiento de Medinaceli\""
+      },
+      {
+        "file": "src/app/components/artists/ArtistBookingFlow.tsx",
+        "line": 204,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej. P4211300F\""
+      },
+      {
+        "file": "src/app/components/artists/ArtistBookingFlow.tsx",
+        "line": 218,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej. Carlos García\""
+      },
+      {
+        "file": "src/app/components/artists/ArtistBookingFlow.tsx",
+        "line": 229,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej. festejos@medinaceli.es\""
+      },
+      {
+        "file": "src/app/components/artists/ArtistBookingFlow.tsx",
+        "line": 240,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej. +34 975 326 000\""
+      },
+      {
+        "file": "src/app/components/artists/ArtistSEOSwarm.tsx",
+        "line": 220,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Buscar combinación activa por ciudad o intención...\""
+      },
+      {
+        "file": "src/app/components/artists/ArtistSEOSwarm.tsx",
+        "line": 349,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej. Cantalapiedra, Salamanca\""
+      },
+      {
+        "file": "src/app/components/Home.tsx",
+        "line": 7,
+        "pattern": "MOCK",
+        "sev": "high",
+        "snippet": "// Mock de datos de artistas (En fase Beta esto vendrá de Supabase/AuraWallet)"
+      },
+      {
+        "file": "src/app/components/InstitutionalBookingModal.tsx",
+        "line": 230,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ayuntamiento / Entidad (ej: Ayto. de Pozuelo)\""
+      },
+      {
+        "file": "src/app/components/InstitutionalBookingModal.tsx",
+        "line": 238,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Cargo (ej: Concejal de Festejos, Director)\""
+      },
+      {
+        "file": "src/app/components/InstitutionalBookingModal.tsx",
+        "line": 246,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Email Institucional (@ayto.es)\""
+      },
+      {
+        "file": "src/app/components/InstitutionalBookingModal.tsx",
+        "line": 254,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Teléfono Directo de Contacto\""
+      },
+      {
+        "file": "src/app/components/layout/SovereignFooter.tsx",
+        "line": 303,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Buscar provincia o comunidad...\""
+      },
+      {
+        "file": "src/app/components/layout/SovereignFooter.tsx",
+        "line": 304,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full pl-8 pr-3 py-1.5 rounded-xl bg-white/5 border border-white/10 focus:border-[#ecb613] text-xs text-whit"
+      },
+      {
+        "file": "src/app/components/OracleSearch.tsx",
+        "line": 28,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Interrogar al Oráculo...\""
+      },
+      {
+        "file": "src/app/components/Privacy.tsx",
+        "line": 34,
+        "pattern": "DATA_FAKE",
+        "sev": "med",
+        "snippet": "Somos los únicos propietarios de la información recopilada en este sitio. Su información de identificación personal no s"
+      },
+      {
+        "file": "src/app/components/ProveedorDirectory.tsx",
+        "line": 210,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Buscar por nombre, finca, servicio...\""
+      },
+      {
+        "file": "src/app/components/public/AtmosphereMatcherClient.tsx",
+        "line": 151,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Elegir Fecha\""
+      },
+      {
+        "file": "src/app/components/public/DiscoverySearch.tsx",
+        "line": 82,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Provincia, Ciudad o Código Postal...\""
+      },
+      {
+        "file": "src/app/components/public/DiscoverySearch.tsx",
+        "line": 83,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-transparent border-none outline-none text-foreground text-sm font-bold placeholder:text-muted-foreg"
+      },
+      {
+        "file": "src/app/components/ReservationSystem.tsx",
+        "line": 21,
+        "pattern": "MOCK",
+        "sev": "high",
+        "snippet": "// Mock Data for Admin View"
+      },
+      {
+        "file": "src/app/components/ReservationSystem.tsx",
+        "line": 98,
+        "pattern": "MOCK",
+        "sev": "high",
+        "snippet": "{/* Mock Calendar */}"
+      },
+      {
+        "file": "src/app/components/ReservationSystem.tsx",
+        "line": 149,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "<input type=\"text\" placeholder=\"Nombre\" className=\"bg-black/50 border border-white/20 p-3 rounded text-white focus:borde"
+      },
+      {
+        "file": "src/app/components/ReservationSystem.tsx",
+        "line": 150,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "<input type=\"text\" placeholder=\"Apellidos\" className=\"bg-black/50 border border-white/20 p-3 rounded text-white focus:bo"
+      },
+      {
+        "file": "src/app/components/ReservationSystem.tsx",
+        "line": 152,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "<input type=\"email\" placeholder=\"Email Corporativo\" className=\"w-full bg-black/50 border border-white/20 p-3 rounded tex"
+      },
+      {
+        "file": "src/app/components/ReservationSystem.tsx",
+        "line": 153,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "<input type=\"tel\" placeholder=\"Teléfono\" className=\"w-full bg-black/50 border border-white/20 p-3 rounded text-white foc"
+      },
+      {
+        "file": "src/app/components/ReservationSystem.tsx",
+        "line": 154,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "<textarea placeholder=\"Notas especiales (Alergias, requerimientos técnicos...)\" className=\"w-full bg-black/50 border bor"
+      },
+      {
+        "file": "src/app/components/ReservationSystem.tsx",
+        "line": 222,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Buscar reserva, cliente o ID...\""
+      },
+      {
+        "file": "src/app/components/SClass/ArsenalTechnical.tsx",
+        "line": 209,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Buscar por nombre, etiquetas, categoría o descripción...\""
+      },
+      {
+        "file": "src/app/components/SClass/AstraOraclePanel.tsx",
+        "line": 95,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej: Madrid, España\""
+      },
+      {
+        "file": "src/app/components/SClass/AstraOraclePanel.tsx",
+        "line": 109,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej: Ibiza, Islas Baleares\""
+      },
+      {
+        "file": "src/app/components/SClass/Sidebar.tsx",
+        "line": 208,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Filtrar pestañas (ej. flota, artistas, b2g)...\""
+      },
+      {
+        "file": "src/app/components/SClass/Sidebar.tsx",
+        "line": 209,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full pl-8 pr-3 py-1.5 rounded-xl bg-white/[0.03] border border-white/10 text-white placeholder:text-zinc-60"
+      },
+      {
+        "file": "src/app/components/SClass/TheSignalFunnel.tsx",
+        "line": 149,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "<input name=\"videoLink\" value={artistData.videoLink} onChange={handleInputChange} type=\"url\" className=\"w-full bg-black/"
+      },
+      {
+        "file": "src/app/components/SClass/TheSignalFunnel.tsx",
+        "line": 153,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "<input name=\"metrics\" value={artistData.metrics} onChange={handleInputChange} type=\"text\" className=\"w-full bg-black/40 "
+      },
+      {
+        "file": "src/app/components/SClass/TheSignalFunnel.tsx",
+        "line": 172,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "<textarea name=\"linchpin\" value={artistData.linchpin} onChange={handleInputChange} rows={4} className=\"w-full bg-black/4"
+      },
+      {
+        "file": "src/app/components/SClass/TheSignalFunnel.tsx",
+        "line": 176,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "<input name=\"email\" value={artistData.email} onChange={handleInputChange} type=\"email\" className=\"w-full bg-black/40 bor"
+      },
+      {
+        "file": "src/app/components/SClassScreens/EmanagerStudioMaster.tsx",
+        "line": 191,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "{/* Background \"Video\" Placeholder */}"
+      },
+      {
+        "file": "src/app/components/SClassScreens/PortalDashboard.tsx",
+        "line": 103,
+        "pattern": "MOCK",
+        "sev": "high",
+        "snippet": "{/* Financial Snapshot (Mocked from Cluster 02) */}"
+      },
+      {
+        "file": "src/app/components/sections/CostCalculator.tsx",
+        "line": 91,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "<input type=\"text\" value={destination} onChange={(e) => setDestination(e.target.value)} placeholder=\"Ej: Madrid IFEMA, E"
+      },
+      {
+        "file": "src/app/components/TheEarSignal.tsx",
+        "line": 260,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "<input name=\"videoLink\" value={formData.videoLink} onChange={handleInputChange} type=\"url\" className=\"w-full bg-black/60"
+      },
+      {
+        "file": "src/app/components/TheEarSignal.tsx",
+        "line": 264,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "<input name=\"metrics\" value={formData.metrics} onChange={handleInputChange} type=\"text\" className=\"w-full bg-black/60 bo"
+      },
+      {
+        "file": "src/app/components/TheEarSignal.tsx",
+        "line": 281,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "<textarea name=\"linchpin\" value={formData.linchpin} onChange={handleInputChange} rows={3} className=\"w-full bg-black/60 "
+      },
+      {
+        "file": "src/app/components/TheEarSignal.tsx",
+        "line": 285,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "<textarea name=\"whyIncomparable\" value={formData.whyIncomparable} onChange={handleInputChange} rows={3} className=\"w-ful"
+      },
+      {
+        "file": "src/app/components/TheEarSignal.tsx",
+        "line": 313,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "<input name=\"monitoringSystem\" value={formData.monitoringSystem} onChange={handleInputChange} type=\"text\" className=\"w-f"
+      },
+      {
+        "file": "src/app/components/TheEarSignal.tsx",
+        "line": 333,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "<input name=\"showDurationMinutes\" value={formData.showDurationMinutes} onChange={handleInputChange} type=\"text\" classNam"
+      },
+      {
+        "file": "src/app/components/TheEarSignal.tsx",
+        "line": 337,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "<input name=\"repertoireDiversity\" value={formData.repertoireDiversity} onChange={handleInputChange} type=\"text\" classNam"
+      },
+      {
+        "file": "src/app/components/TheEarSignal.tsx",
+        "line": 387,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "<input name=\"suitGalaQuality\" value={formData.suitGalaQuality} onChange={handleInputChange} type=\"text\" className=\"w-ful"
+      },
+      {
+        "file": "src/app/components/TheEarSignal.tsx",
+        "line": 414,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "<input name=\"avgTicketPrice\" value={formData.avgTicketPrice} onChange={handleInputChange} type=\"text\" className=\"w-full "
+      },
+      {
+        "file": "src/app/components/TheEarSignal.tsx",
+        "line": 418,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "<input name=\"fanRetentionStrategy\" value={formData.fanRetentionStrategy} onChange={handleInputChange} type=\"text\" classN"
+      },
+      {
+        "file": "src/app/components/TheEarSignal.tsx",
+        "line": 438,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "<input name=\"institutionalExperience\" value={formData.institutionalExperience} onChange={handleInputChange} type=\"text\" "
+      },
+      {
+        "file": "src/app/components/TheEarSignal.tsx",
+        "line": 465,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "<input name=\"failoverReadiness\" value={formData.failoverReadiness} onChange={handleInputChange} type=\"text\" className=\"w"
+      },
+      {
+        "file": "src/app/components/TheEarSignal.tsx",
+        "line": 469,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "<input name=\"weatherResilienceProtocol\" value={formData.weatherResilienceProtocol} onChange={handleInputChange} type=\"te"
+      },
+      {
+        "file": "src/app/components/TheEarSignal.tsx",
+        "line": 489,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "<input name=\"fullName\" value={formData.fullName} onChange={handleInputChange} type=\"text\" className=\"w-full bg-black/60 "
+      },
+      {
+        "file": "src/app/components/TheEarSignal.tsx",
+        "line": 493,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "<input name=\"email\" value={formData.email} onChange={handleInputChange} type=\"email\" className=\"w-full bg-black/60 borde"
+      },
+      {
+        "file": "src/app/components/TheEarSignal.tsx",
+        "line": 497,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "<input name=\"phone\" value={formData.phone} onChange={handleInputChange} type=\"tel\" className=\"w-full bg-black/60 border "
+      },
+      {
+        "file": "src/app/components/ui/OmniSearchModal.tsx",
+        "line": 180,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Buscar bodas, chófer VIP, luces de navidad, artistas, licitaciones...\""
+      },
+      {
+        "file": "src/app/components/ui/OmniSearchModal.tsx",
+        "line": 181,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"flex-1 bg-transparent text-white text-base sm:text-lg placeholder-neutral-500 focus:outline-none font-medium\""
+      },
+      {
+        "file": "src/app/components/vimume/AffinityEngine.tsx",
+        "line": 52,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej. 1945\""
+      },
+      {
+        "file": "src/app/components/vimume/AffinityEngine.tsx",
+        "line": 64,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej. Madrid, Andalucía...\""
+      },
+      {
+        "file": "src/app/fincas/FincasNationalCatalogClient.tsx",
+        "line": 78,
+        "pattern": "DATA_FAKE",
+        "sev": "med",
+        "snippet": "{/* TARJETA DE EJEMPLO INTEGRADORA */}"
+      },
+      {
+        "file": "src/app/fincasparaboda/page.tsx",
+        "line": 181,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej. Finca El Romero\""
+      },
+      {
+        "file": "src/app/fincasparaboda/page.tsx",
+        "line": 184,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-[#050505] border border-[#333] focus:border-[#d4ac0d] rounded-xl px-4 py-3 text-white placeholder-g"
+      },
+      {
+        "file": "src/app/fincasparaboda/page.tsx",
+        "line": 195,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej. Méntrida, Toledo / Madrid\""
+      },
+      {
+        "file": "src/app/fincasparaboda/page.tsx",
+        "line": 198,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-[#050505] border border-[#333] focus:border-[#d4ac0d] rounded-xl px-4 py-3 text-white placeholder-g"
+      },
+      {
+        "file": "src/app/fincasparaboda/page.tsx",
+        "line": 211,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"+34 600 000 000\""
+      },
+      {
+        "file": "src/app/fincasparaboda/page.tsx",
+        "line": 214,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-[#050505] border border-[#333] focus:border-[#d4ac0d] rounded-xl px-4 py-3 text-white placeholder-g"
+      },
+      {
+        "file": "src/app/fincasparaboda/page.tsx",
+        "line": 225,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"propietario@tu-finca.com\""
+      },
+      {
+        "file": "src/app/fincasparaboda/page.tsx",
+        "line": 228,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-[#050505] border border-[#333] focus:border-[#d4ac0d] rounded-xl px-4 py-3 text-white placeholder-g"
+      },
+      {
+        "file": "src/app/fincasparaboda/page.tsx",
+        "line": 240,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej. 250 invitados / Casona rústica del siglo XIX con jardines\""
+      },
+      {
+        "file": "src/app/fincasparaboda/page.tsx",
+        "line": 243,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-[#050505] border border-[#333] focus:border-[#d4ac0d] rounded-xl px-4 py-3 text-white placeholder-g"
+      },
+      {
+        "file": "src/app/neural-journey/page.tsx",
+        "line": 12,
+        "pattern": "MOCK",
+        "sev": "high",
+        "snippet": "// Add more mock providers as needed"
+      },
+      {
+        "file": "src/app/onboarding/components/ArtistProfileForm.tsx",
+        "line": 94,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full rounded-2xl text-white focus:outline-0 focus:ring-1 focus:ring-[#ecb613]/50 border border-white/10 bg-"
+      },
+      {
+        "file": "src/app/onboarding/components/ArtistProfileForm.tsx",
+        "line": 95,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej: Chromatic Pulse\""
+      },
+      {
+        "file": "src/app/onboarding/components/ArtistProfileForm.tsx",
+        "line": 107,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full rounded-2xl text-white focus:outline-0 focus:ring-1 focus:ring-[#ecb613]/50 border border-white/10 bg-"
+      },
+      {
+        "file": "src/app/onboarding/components/ArtistProfileForm.tsx",
+        "line": 108,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"chromatic-pulse\""
+      },
+      {
+        "file": "src/app/onboarding/components/ArtistProfileForm.tsx",
+        "line": 120,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full rounded-2xl text-white focus:outline-0 focus:ring-1 focus:ring-[#ecb613]/50 border border-white/10 bg-"
+      },
+      {
+        "file": "src/app/onboarding/components/ArtistProfileForm.tsx",
+        "line": 121,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Describe tu proyecto musical en pocas palabras...\""
+      },
+      {
+        "file": "src/app/onboarding/components/ArtistProfileForm.tsx",
+        "line": 131,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full rounded-2xl text-white focus:outline-0 focus:ring-1 focus:ring-[#ecb613]/50 border border-white/10 bg-"
+      },
+      {
+        "file": "src/app/onboarding/components/ArtistProfileForm.tsx",
+        "line": 132,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Techno, Ambient, IDM (separados por coma)\""
+      },
+      {
+        "file": "src/app/page.tsx",
+        "line": 314,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder={`Pregunta sobre ${assistantContext}...`}"
+      },
+      {
+        "file": "src/app/page.tsx",
+        "line": 315,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"flex-1 bg-white/5 border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-zinc-500 foc"
+      },
+      {
+        "file": "src/app/studio/artist/config/page.tsx",
+        "line": 186,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"ES00 0000 0000 0000 0000 0000\""
+      },
+      {
+        "file": "src/app/studio/artist/config/page.tsx",
+        "line": 187,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full pl-10 pr-4 py-3 bg-neutral-950 border border-neutral-800 rounded-xl text-sm text-white font-mono focus"
+      },
+      {
+        "file": "src/components/admin/ChristmasLightingB2GPanel.tsx",
+        "line": 99,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Buscar por empresa, capacidad (3D, túneles, LED, arcos), CPV o provincia...\""
+      },
+      {
+        "file": "src/components/admin/ChristmasLightingB2GPanel.tsx",
+        "line": 102,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full pl-10 pr-4 py-3 rounded-2xl bg-[#09090f] border border-white/10 text-white text-xs placeholder:text-wh"
+      },
+      {
+        "file": "src/components/admin/FiturDiplomaticViewer.tsx",
+        "line": 253,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Buscar por país, entidad, delegado o stand (ej. Colombia, Marruecos, Pabellón 4)...\""
+      },
+      {
+        "file": "src/components/admin/FiturDiplomaticViewer.tsx",
+        "line": 256,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#06060a] border border-white/10 text-white placeholder-zinc-500 text-"
+      },
+      {
+        "file": "src/components/admin/MobileExperienceSelectorOLED.tsx",
+        "line": 781,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Pregunta a Astra...\""
+      },
+      {
+        "file": "src/components/admin/MobileFusionAdminStudio.tsx",
+        "line": 89,
+        "pattern": "TODO",
+        "sev": "low",
+        "snippet": "badge: 'TODO-EN-UNO',"
+      },
+      {
+        "file": "src/components/admin/OracleAmbientInterface.tsx",
+        "line": 248,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Pregunta al Oráculo sobre finanzas, rutas o B2G...\""
+      },
+      {
+        "file": "src/components/admin/OracleAmbientInterface.tsx",
+        "line": 250,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"flex-1 bg-black/60 border border-white/10 rounded-xl px-3 py-2 text-xs text-white placeholder-zinc-500 focus:"
+      },
+      {
+        "file": "src/components/Astra/EarConcierge.tsx",
+        "line": 104,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "// Contextual Placeholder"
+      },
+      {
+        "file": "src/components/Astra/EarConcierge.tsx",
+        "line": 105,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "let placeholder = 'Cmd+K para iniciar Concierge...';"
+      },
+      {
+        "file": "src/components/Astra/EarConcierge.tsx",
+        "line": 107,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder = 'Verificar fechas para el próximo evento...';"
+      },
+      {
+        "file": "src/components/Astra/EarConcierge.tsx",
+        "line": 109,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder = 'Solicitar dossier clínico VIMUME...';"
+      },
+      {
+        "file": "src/components/Astra/EarConcierge.tsx",
+        "line": 148,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder={placeholder}"
+      },
+      {
+        "file": "src/components/Astra/EarConcierge.tsx",
+        "line": 149,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-transparent text-lg text-white placeholder-gray-500 py-6 outline-none focus:ring-0 border-none\""
+      },
+      {
+        "file": "src/components/b2g/B2GInstitutionalPortal.tsx",
+        "line": 386,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej: Ayuntamiento de Toledo\""
+      },
+      {
+        "file": "src/components/b2g/B2GInstitutionalPortal.tsx",
+        "line": 396,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"P-4516800E\""
+      },
+      {
+        "file": "src/components/b2g/B2GInstitutionalPortal.tsx",
+        "line": 409,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"L01451688\""
+      },
+      {
+        "file": "src/components/b2g/B2GInstitutionalPortal.tsx",
+        "line": 421,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"L01451688\""
+      },
+      {
+        "file": "src/components/b2g/B2GInstitutionalPortal.tsx",
+        "line": 433,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"L01451688\""
+      },
+      {
+        "file": "src/components/budget/AddExpenseModal.tsx",
+        "line": 89,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-[#ecb613] focus:outline-none text-"
+      },
+      {
+        "file": "src/components/budget/AddExpenseModal.tsx",
+        "line": 90,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej: Señal Solista Edwin Agudelo (350 € Base)\""
+      },
+      {
+        "file": "src/components/budget/AddExpenseModal.tsx",
+        "line": 105,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-[#ecb613] focus:outline-none text-"
+      },
+      {
+        "file": "src/components/budget/AddExpenseModal.tsx",
+        "line": 106,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"0.00\""
+      },
+      {
+        "file": "src/components/budget/AddExpenseModal.tsx",
+        "line": 166,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl focus:border-[#ecb613] focus:outline-none tex"
+      },
+      {
+        "file": "src/components/budget/AddExpenseModal.tsx",
+        "line": 167,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Detalles sobre depósito Hold 100 €, acústica 12 W/pax o fechas...\""
+      },
+      {
+        "file": "src/components/chat/AIConciergeDock.tsx",
+        "line": 355,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Escribe: 'Finca para 180 pax en Toledo'...\""
+      },
+      {
+        "file": "src/components/chat/AIConciergeDock.tsx",
+        "line": 356,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"flex-1 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-zinc-500 text-xs fo"
+      },
+      {
+        "file": "src/components/fincas/FincasB2BPortal.tsx",
+        "line": 680,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej: Finca Monte Real\""
+      },
+      {
+        "file": "src/components/fincas/FincasB2BPortal.tsx",
+        "line": 691,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej: San Lorenzo de El Escorial (Madrid)\""
+      },
+      {
+        "file": "src/components/fincas/FincasB2BPortal.tsx",
+        "line": 702,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"B-12345678\""
+      },
+      {
+        "file": "src/components/fincas/FincasB2BPortal.tsx",
+        "line": 713,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Nombre y Apellidos\""
+      },
+      {
+        "file": "src/components/fincas/FincasB2BPortal.tsx",
+        "line": 778,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Mapfre, Allianz, Zurich...\""
+      },
+      {
+        "file": "src/components/fincas/FincasB2BPortal.tsx",
+        "line": 788,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"POL-RC-XXXXXX\""
+      },
+      {
+        "file": "src/components/marketplace/SovereignRosterGrid.tsx",
+        "line": 302,
+        "pattern": "HARDCODE",
+        "sev": "high",
+        "snippet": "{/* Reproductor de audio simulado */}"
+      },
+      {
+        "file": "src/components/neural/RoleInspector.tsx",
+        "line": 201,
+        "pattern": "DATA_FAKE",
+        "sev": "med",
+        "snippet": "color: '#000000'"
+      },
+      {
+        "file": "src/components/neural/SparringProvider.tsx",
+        "line": 45,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Aplica el Takeaway. Defiende el rider Bose F1. El tiempo corre...\""
+      },
+      {
+        "file": "src/components/neural/UberFleetVisualizer.tsx",
+        "line": 254,
+        "pattern": "DATA_FAKE",
+        "sev": "med",
+        "snippet": "<svg width=\"11\" height=\"11\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#000000\" stroke-width=\"3\" stroke-linecap=\"round\" str"
+      },
+      {
+        "file": "src/components/neural/UberFleetVisualizer.tsx",
+        "line": 289,
+        "pattern": "DATA_FAKE",
+        "sev": "med",
+        "snippet": "<svg width=\"15\" height=\"15\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"${isReassigned ? '#ffffff' : '#000000'}\" stroke-widt"
+      },
+      {
+        "file": "src/components/neural/UberFleetVisualizer.tsx",
+        "line": 437,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Buscar finca, municipio o seña...\""
+      },
+      {
+        "file": "src/components/neural/UberFleetVisualizer.tsx",
+        "line": 440,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-white/5 border border-white/10 rounded-xl pl-9 pr-4 py-2 text-xs font-mono text-white placeholder-z"
+      },
+      {
+        "file": "src/components/Omnibar.tsx",
+        "line": 36,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Buscar...\""
+      },
+      {
+        "file": "src/components/oraculo/OraculoPublicDrawer.tsx",
+        "line": 261,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder={isRateLimited ? 'Límite alcanzado temporalmente' : 'Escribe tu pregunta aquí...'}"
+      },
+      {
+        "file": "src/components/oraculo/OraculoPublicDrawer.tsx",
+        "line": 265,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"flex-1 bg-[#161622] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-gray-500 f"
+      },
+      {
+        "file": "src/components/programmatic/LaserTunnelFunnel.tsx",
+        "line": 496,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej. Madrid, Toledo, Barcelona, Finca...\""
+      },
+      {
+        "file": "src/components/programmatic/StripeSmartLockCta.tsx",
+        "line": 159,
+        "pattern": "DATA_FAKE",
+        "sev": "med",
+        "snippet": "className=\"p-8 rounded-3xl bg-gradient-to-b from-[#081226] via-[#040914] to-[#000000] border border-[#AAD6CD]/30 shadow-"
+      },
+      {
+        "file": "src/components/programmatic/StripeSmartLockCta.tsx",
+        "line": 213,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"tu@email.com\""
+      },
+      {
+        "file": "src/components/programmatic/StripeSmartLockCta.tsx",
+        "line": 217,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full px-5 py-3.5 bg-[#081226] border border-[#AAD6CD]/25 rounded-2xl text-sm font-mono text-white placehold"
+      },
+      {
+        "file": "src/components/programmatic/StripeSmartLockCta.tsx",
+        "line": 221,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"WhatsApp (+34 600 000 000) — Opcional\""
+      },
+      {
+        "file": "src/components/programmatic/StripeSmartLockCta.tsx",
+        "line": 224,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full px-5 py-3.5 bg-[#050505] border border-white/20 rounded-2xl text-sm font-mono text-white placeholder-z"
+      },
+      {
+        "file": "src/components/programmatic/StripeSmartLockCta.tsx",
+        "line": 271,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Describe brevemente tu situación: ¿Qué tipo de evento? ¿Se canceló otro proveedor? ¿Fecha exacta?\""
+      },
+      {
+        "file": "src/components/programmatic/StripeSmartLockCta.tsx",
+        "line": 273,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full px-5 py-3.5 bg-[#050505] border border-rose-500/30 rounded-2xl text-sm font-mono text-white placeholde"
+      },
+      {
+        "file": "src/components/providers/BentoFilterBar.tsx",
+        "line": 104,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Filtrar por nombre o servicio...\""
+      },
+      {
+        "file": "src/components/providers/BentoFilterBar.tsx",
+        "line": 107,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-[#0a0a0f] border border-[#1a1a1a] hover:border-[#258DCD]/50 rounded-xl pl-9 pr-8 py-2.5 text-xs tex"
+      },
+      {
+        "file": "src/components/providers/ClaimProviderModal.tsx",
+        "line": 194,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej. Roberto Sánchez\""
+      },
+      {
+        "file": "src/components/providers/ClaimProviderModal.tsx",
+        "line": 195,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-[#12121a] border border-white/10 rounded-xl pl-9 pr-3 py-2.5 text-white placeholder:text-zinc-600 f"
+      },
+      {
+        "file": "src/components/providers/ClaimProviderModal.tsx",
+        "line": 209,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"B-12345678\""
+      },
+      {
+        "file": "src/components/providers/ClaimProviderModal.tsx",
+        "line": 210,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-[#12121a] border border-white/10 rounded-xl pl-9 pr-3 py-2.5 text-white placeholder:text-zinc-600 f"
+      },
+      {
+        "file": "src/components/providers/ClaimProviderModal.tsx",
+        "line": 224,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"contacto@tuempresa.es\""
+      },
+      {
+        "file": "src/components/providers/ClaimProviderModal.tsx",
+        "line": 225,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-[#12121a] border border-white/10 rounded-xl pl-9 pr-3 py-2.5 text-white placeholder:text-zinc-600 f"
+      },
+      {
+        "file": "src/components/providers/ClaimProviderModal.tsx",
+        "line": 239,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"+34 600 000 000\""
+      },
+      {
+        "file": "src/components/providers/ClaimProviderModal.tsx",
+        "line": 240,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-[#12121a] border border-white/10 rounded-xl pl-9 pr-3 py-2.5 text-white placeholder:text-zinc-600 f"
+      },
+      {
+        "file": "src/components/providers/ClaimProviderModal.tsx",
+        "line": 254,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"https://www.tuempresa.es\""
+      },
+      {
+        "file": "src/components/providers/ClaimProviderModal.tsx",
+        "line": 255,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-[#12121a] border border-white/10 rounded-xl pl-9 pr-3 py-2.5 text-white placeholder:text-zinc-600 f"
+      },
+      {
+        "file": "src/components/providers/ClaimProviderModal.tsx",
+        "line": 298,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"000000\""
+      },
+      {
+        "file": "src/components/providers/ClaimProviderModal.tsx",
+        "line": 298,
+        "pattern": "DATA_FAKE",
+        "sev": "med",
+        "snippet": "placeholder=\"000000\""
+      },
+      {
+        "file": "src/components/sclass/Arsenal.tsx",
+        "line": 121,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Buscar por nombre, tags, ubicación...\""
+      },
+      {
+        "file": "src/components/sclass/AstraOracle.tsx",
+        "line": 257,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Consultar Bóveda RAG (Ads, Bodas, B2G, Whisper)...\""
+      },
+      {
+        "file": "src/components/sclass/AstraOracle.tsx",
+        "line": 260,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-black/60 border border-white/10 p-3 pr-10 rounded-xl text-xs text-white placeholder-white/30 outlin"
+      },
+      {
+        "file": "src/components/sclass/EditorialCuratedHeroSClass.tsx",
+        "line": 136,
+        "pattern": "TODO",
+        "sev": "low",
+        "snippet": "tag: 'MÉTODO PATENTADO',"
+      },
+      {
+        "file": "src/components/sclass/NeuroFunnelSClass.tsx",
+        "line": 447,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Tu WhatsApp o Teléfono (+34 600 000 000)\""
+      },
+      {
+        "file": "src/components/sclass/NeuroFunnelSClass.tsx",
+        "line": 451,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"flex-1 px-5 py-3.5 bg-[#050505] border border-white/20 rounded-2xl text-xs font-mono text-white placeholder-z"
+      },
+      {
+        "file": "src/components/sclass/TheSignal.tsx",
+        "line": 146,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "<input name=\"videoLink\" value={artistData.videoLink} onChange={handleInputChange} type=\"url\" className=\"w-full bg-black/"
+      },
+      {
+        "file": "src/components/sclass/TheSignal.tsx",
+        "line": 150,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "<input name=\"metrics\" value={artistData.metrics} onChange={handleInputChange} type=\"text\" className=\"w-full bg-black/40 "
+      },
+      {
+        "file": "src/components/sclass/TheSignal.tsx",
+        "line": 169,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "<textarea name=\"linchpin\" value={artistData.linchpin} onChange={handleInputChange} rows={4} className=\"w-full bg-black/4"
+      },
+      {
+        "file": "src/components/sclass/TheSignal.tsx",
+        "line": 173,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "<input name=\"email\" value={artistData.email} onChange={handleInputChange} type=\"email\" className=\"w-full bg-black/40 bor"
+      },
+      {
+        "file": "src/components/sclass/UniversalCommandPalette.tsx",
+        "line": 228,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Escribe un comando, ruta o consulta en los 9.569 nodos RAG...\""
+      },
+      {
+        "file": "src/components/sclass/UniversalCommandPalette.tsx",
+        "line": 231,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"flex-1 bg-transparent text-sm sm:text-base text-white placeholder-white/40 outline-none font-mono\""
+      },
+      {
+        "file": "src/components/stage/StageVisualizer3D.tsx",
+        "line": 123,
+        "pattern": "DATA_FAKE",
+        "sev": "med",
+        "snippet": "<stop offset=\"100%\" stopColor=\"#000000\" stopOpacity=\"0\" />"
+      },
+      {
+        "file": "src/components/ui/clean-minimal-sign-in.tsx",
+        "line": 56,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"tu@email.com\""
+      },
+      {
+        "file": "src/components/ui/clean-minimal-sign-in.tsx",
+        "line": 59,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full pl-10 pr-3 py-2.5 rounded-xl border border-white/10 focus:outline-none focus:ring-2 focus:ring-[#ecb61"
+      },
+      {
+        "file": "src/components/ui/clean-minimal-sign-in.tsx",
+        "line": 68,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"••••••••\""
+      },
+      {
+        "file": "src/components/ui/clean-minimal-sign-in.tsx",
+        "line": 71,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full pl-10 pr-10 py-2.5 rounded-xl border border-white/10 focus:outline-none focus:ring-2 focus:ring-[#ecb6"
+      },
+      {
+        "file": "src/components/vimume/AcousticVisualizer.tsx",
+        "line": 85,
+        "pattern": "HARDCODE",
+        "sev": "high",
+        "snippet": "// Onda suave de stand-by (latido basal a 40 Hz simulado)"
+      },
+      {
+        "file": "src/components/vimume/MecenazgoFiscalCalculator.tsx",
+        "line": 265,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Nombre o Razón Social\""
+      },
+      {
+        "file": "src/components/vimume/MecenazgoFiscalCalculator.tsx",
+        "line": 268,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"bg-zinc-900/80 border border-white/10 rounded-xl px-3 py-2 text-xs text-white placeholder:text-zinc-600 focus"
+      },
+      {
+        "file": "src/components/vimume/MecenazgoFiscalCalculator.tsx",
+        "line": 272,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"NIF / CIF del Donante\""
+      },
+      {
+        "file": "src/components/vimume/MecenazgoFiscalCalculator.tsx",
+        "line": 275,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"bg-zinc-900/80 border border-white/10 rounded-xl px-3 py-2 text-xs font-mono text-white placeholder:text-zinc"
+      },
+      {
+        "file": "src/context/AuthContext.tsx",
+        "line": 63,
+        "pattern": "MOCK",
+        "sev": "high",
+        "snippet": "// En producción redirigiría a login, aquí mantenemos el mock de acceso"
+      },
+      {
+        "file": "src/features/academy/ui/DaniAragonVault.tsx",
+        "line": 330,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Buscar tema formativo...\""
+      },
+      {
+        "file": "src/features/academy/ui/DaniAragonVault.tsx",
+        "line": 333,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-white/5 border border-white/10 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder:text-white/"
+      },
+      {
+        "file": "src/features/arsenal/ui/ArsenalTecnicoView.tsx",
+        "line": 206,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Buscar altavoces, pantallas 85, simuladores F1, fotomatón 360, proyectores...\""
+      },
+      {
+        "file": "src/features/arsenal/ui/ArsenalTecnicoView.tsx",
+        "line": 207,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full pl-11 pr-4 py-3.5 rounded-2xl bg-[#081226] border border-[#AAD6CD]/20 text-white placeholder-white/40 "
+      },
+      {
+        "file": "src/features/artists/ui/EdwinLegacyPlayer.tsx",
+        "line": 133,
+        "pattern": "DATA_FAKE",
+        "sev": "med",
+        "snippet": "description: 'Ejemplo de producción personalizada de Productora EAR. Arreglos y dedicatoria lírica para aniversarios y d"
+      },
+      {
+        "file": "src/features/artists/ui/EdwinVaultGalleryGrid.tsx",
+        "line": 112,
+        "pattern": "DATA_FAKE",
+        "sev": "med",
+        "snippet": "description: 'Ejemplo de producción exclusiva personalizada para aniversarios y declaraciones de amor únicas.'"
+      },
+      {
+        "file": "src/features/asset-vault/ui/AssetVaultLayout.tsx",
+        "line": 33,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"BUSCAR ACTIVO...\""
+      },
+      {
+        "file": "src/features/astra/components/AIAssistantModal.tsx",
+        "line": 82,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Paste dilemma, contract clause, strategic dilemma, or draft copy...\""
+      },
+      {
+        "file": "src/features/astra/components/AIAssistantModal.tsx",
+        "line": 84,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-black/40 border border-white/10 rounded-2xl p-4 text-sm text-white placeholder-zinc-500 focus:outli"
+      },
+      {
+        "file": "src/features/astra/components/CommandPalette.tsx",
+        "line": 60,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Search commands, tools, or press ESC to close...\""
+      },
+      {
+        "file": "src/features/astra/components/CommandPalette.tsx",
+        "line": 61,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-transparent text-white placeholder-zinc-500 focus:outline-none text-sm\""
+      },
+      {
+        "file": "src/features/astra/components/KnowledgeExplorerModal.tsx",
+        "line": 90,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Search mental models, keywords, or topics...\""
+      },
+      {
+        "file": "src/features/astra/components/KnowledgeExplorerModal.tsx",
+        "line": 91,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-black/40 border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-xs md:text-sm text-white placehol"
+      },
+      {
+        "file": "src/features/astra/components/ProjectsDashboard.tsx",
+        "line": 104,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Project Name (e.g. Master Release Global Campaign)\""
+      },
+      {
+        "file": "src/features/astra/components/ProjectsDashboard.tsx",
+        "line": 110,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Brief description & primary strategic objectives...\""
+      },
+      {
+        "file": "src/features/astra/components/SaveSessionModal.tsx",
+        "line": 65,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"e.g. Q3 Syndicate Restructuring\""
+      },
+      {
+        "file": "src/features/astra/components/ToolkitHub.tsx",
+        "line": 58,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Filter tools by keyword...\""
+      },
+      {
+        "file": "src/features/astra/components/ToolkitHub.tsx",
+        "line": 59,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-zinc-900/80 border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-xs md:text-sm text-white place"
+      },
+      {
+        "file": "src/features/astra/components/tools/CouncilOfMindsTool.tsx",
+        "line": 134,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej: ¿Debemos estructurar un nuevo formato de gira o licitación municipal B2G asegurando el Split 80/10/10 y"
+      },
+      {
+        "file": "src/features/astra/components/tools/CouncilOfMindsTool.tsx",
+        "line": 136,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white placeholder-zinc-500 focus:outline-none f"
+      },
+      {
+        "file": "src/features/astra/components/tools/RiskRadarTool.tsx",
+        "line": 91,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Riesgo detectado (ej. Plazo de pago en licitación)\""
+      },
+      {
+        "file": "src/features/astra/components/tools/RiskRadarTool.tsx",
+        "line": 98,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Protocolo de Mitigación / Cortafuegos\""
+      },
+      {
+        "file": "src/features/astra/components/tools/SWOTTool.tsx",
+        "line": 104,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Nueva Fortaleza...\""
+      },
+      {
+        "file": "src/features/astra/components/tools/SWOTTool.tsx",
+        "line": 135,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Nueva Debilidad...\""
+      },
+      {
+        "file": "src/features/astra/components/tools/SWOTTool.tsx",
+        "line": 166,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Nueva Oportunidad...\""
+      },
+      {
+        "file": "src/features/astra/components/tools/SWOTTool.tsx",
+        "line": 197,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Nueva Amenaza...\""
+      },
+      {
+        "file": "src/features/astra/components/tools/VisionBoardTool.tsx",
+        "line": 98,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej: Calibración Acústica de Gala\""
+      },
+      {
+        "file": "src/features/astra/components/tools/VisionBoardTool.tsx",
+        "line": 99,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-black/40 border border-white/10 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-zinc-500 fo"
+      },
+      {
+        "file": "src/features/astra/components/tools/VisionBoardTool.tsx",
+        "line": 108,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej: Elegancia sin estridencias y protocolo impecable.\""
+      },
+      {
+        "file": "src/features/astra/components/tools/VisionBoardTool.tsx",
+        "line": 109,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-black/40 border border-white/10 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-zinc-500 fo"
+      },
+      {
+        "file": "src/features/b2g/ui/B2GMemoryGenerator.tsx",
+        "line": 159,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white placeholder:text-white/30 "
+      },
+      {
+        "file": "src/features/b2g/ui/B2GMemoryGenerator.tsx",
+        "line": 169,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white placeholder:text-white/30 "
+      },
+      {
+        "file": "src/features/b2g/ui/B2GMemoryGenerator.tsx",
+        "line": 180,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white placeholder:text-white/30 "
+      },
+      {
+        "file": "src/features/b2g/ui/B2GMemoryGenerator.tsx",
+        "line": 190,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white placeholder:text-white/30 "
+      },
+      {
+        "file": "src/features/b2g/ui/B2GMemoryGenerator.tsx",
+        "line": 200,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white placeholder:text-white/30 "
+      },
+      {
+        "file": "src/features/b2g/ui/VimumeB2GCompiler.tsx",
+        "line": 150,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej: L01450078\""
+      },
+      {
+        "file": "src/features/bodas/ui/ThermodynamicNeuralTunnel.tsx",
+        "line": 851,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej: Nos casamos el próximo otoño en Madrid con unos 130 invitados. Queremos una ceremonia emotiva con músic"
+      },
+      {
+        "file": "src/features/bodas/ui/ThermodynamicNeuralTunnel.tsx",
+        "line": 852,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-black/60 border border-white/10 p-5 rounded-2xl text-white placeholder-white/20 text-sm sm:text-bas"
+      },
+      {
+        "file": "src/features/catalog/ui/ChristmasLightingCatalogView.tsx",
+        "line": 288,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Buscar por referencia (CR BEAR...), nombre o medidas...\""
+      },
+      {
+        "file": "src/features/catalog/ui/ChristmasLightingCatalogView.tsx",
+        "line": 291,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm text-white placeholder-neutral-"
+      },
+      {
+        "file": "src/features/contracts/ui/DigitalSignatureModal.tsx",
+        "line": 248,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej. Juan Pérez García\""
+      },
+      {
+        "file": "src/features/contracts/ui/DigitalSignatureModal.tsx",
+        "line": 251,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-black border border-white/10 rounded-xl pl-9 pr-3 py-2.5 text-xs text-white placeholder-neutral-600"
+      },
+      {
+        "file": "src/features/contracts/ui/DigitalSignatureModal.tsx",
+        "line": 263,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej. 12345678Z o B87910311\""
+      },
+      {
+        "file": "src/features/contracts/ui/DigitalSignatureModal.tsx",
+        "line": 266,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-black border border-white/10 rounded-xl pl-9 pr-3 py-2.5 text-xs text-white placeholder-neutral-600"
+      },
+      {
+        "file": "src/features/contracts/ui/DigitalSignatureModal.tsx",
+        "line": 276,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"ejemplo@entidad.es\""
+      },
+      {
+        "file": "src/features/contracts/ui/DigitalSignatureModal.tsx",
+        "line": 276,
+        "pattern": "DATA_FAKE",
+        "sev": "med",
+        "snippet": "placeholder=\"ejemplo@entidad.es\""
+      },
+      {
+        "file": "src/features/contracts/ui/DigitalSignatureModal.tsx",
+        "line": 279,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-black border border-white/10 rounded-xl px-3 py-2.5 text-xs text-white placeholder-neutral-600 focu"
+      },
+      {
+        "file": "src/features/contracts/ui/DigitalSignatureModal.tsx",
+        "line": 289,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej. Ayuntamiento de Toledo\""
+      },
+      {
+        "file": "src/features/contracts/ui/DigitalSignatureModal.tsx",
+        "line": 292,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-black border border-white/10 rounded-xl pl-9 pr-3 py-2.5 text-xs text-white placeholder-neutral-600"
+      },
+      {
+        "file": "src/features/finance/LedgerEngine.ts",
+        "line": 81,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "checkout_id: `SOV_${Date.now()}`, // Placeholder para Session ID de Stripe"
+      },
+      {
+        "file": "src/features/finance/ui/DonationPricer.tsx",
+        "line": 130,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej. 15, 75, 250...\""
+      },
+      {
+        "file": "src/features/finance/ui/MultiPricer.tsx",
+        "line": 976,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej. Carmen & Alejandro / Ayuntamiento\""
+      },
+      {
+        "file": "src/features/finance/ui/MultiPricer.tsx",
+        "line": 991,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"contacto@organizacion.es\""
+      },
+      {
+        "file": "src/features/finance/ui/MultiPricer.tsx",
+        "line": 1005,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"+34 600 000 000\""
+      },
+      {
+        "file": "src/features/finance/ui/PriceLockBadge.tsx",
+        "line": 19,
+        "pattern": "DATA_FAKE",
+        "sev": "med",
+        "snippet": "className=\"bg-gradient-to-b from-[#081226] via-[#040914] to-[#000000] border border-[#AAD6CD]/25 backdrop-blur-xl p-6 ro"
+      },
+      {
+        "file": "src/features/marketing/ui/LeadCaptureOverlay.tsx",
+        "line": 77,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"NOMBRE COMPLETO\""
+      },
+      {
+        "file": "src/features/marketing/ui/LeadCaptureOverlay.tsx",
+        "line": 88,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"EMAIL PROFESIONAL (@gob.es)\""
+      },
+      {
+        "file": "src/features/marketplace/ui/SmartMarketplaceNav.tsx",
+        "line": 231,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Busca por servicio, artista o categoría...\""
+      },
+      {
+        "file": "src/features/marketplace/ui/SmartMarketplaceNav.tsx",
+        "line": 232,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-transparent text-sm sm:text-base font-medium text-white placeholder-zinc-500 focus:outline-none cur"
+      },
+      {
+        "file": "src/features/marketplace/ui/SmartMarketplaceNav.tsx",
+        "line": 410,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Dónde (Provincia)\""
+      },
+      {
+        "file": "src/features/marketplace/ui/SmartMarketplaceNav.tsx",
+        "line": 411,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-transparent text-sm sm:text-base font-medium text-white placeholder-zinc-500 focus:outline-none cur"
+      },
+      {
+        "file": "src/features/search/NeuralFilters.tsx",
+        "line": 127,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder={labels.search}"
+      },
+      {
+        "file": "src/features/search/NeuralFilters.tsx",
+        "line": 128,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-white/5 border border-white/10 rounded-2xl py-6 pl-16 pr-6 text-sm font-medium focus:outline-none f"
+      },
+      {
+        "file": "src/features/spatial/GravityEngine.tsx",
+        "line": 63,
+        "pattern": "DUMMY",
+        "sev": "high",
+        "snippet": "const dummy = useMemo(() => new Object3D(), []);"
+      },
+      {
+        "file": "src/features/spatial/GravityEngine.tsx",
+        "line": 121,
+        "pattern": "DUMMY",
+        "sev": "high",
+        "snippet": "dummy.position.set(finalX, finalY, z);"
+      },
+      {
+        "file": "src/features/spatial/GravityEngine.tsx",
+        "line": 122,
+        "pattern": "DUMMY",
+        "sev": "high",
+        "snippet": "dummy.scale.setScalar(0.02 * (1 + intent));"
+      },
+      {
+        "file": "src/features/spatial/GravityEngine.tsx",
+        "line": 123,
+        "pattern": "DUMMY",
+        "sev": "high",
+        "snippet": "dummy.updateMatrix();"
+      },
+      {
+        "file": "src/features/spatial/GravityEngine.tsx",
+        "line": 124,
+        "pattern": "DUMMY",
+        "sev": "high",
+        "snippet": "meshRef.current.setMatrixAt(i, dummy.matrix);"
+      },
+      {
+        "file": "src/features/vimume/ui/VimumeOntologyExplorer.tsx",
+        "line": 117,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Buscar por concepto o nivel...\""
+      },
+      {
+        "file": "src/features/vimume/ui/VimumeOntologyExplorer.tsx",
+        "line": 120,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-black/60 border border-white/10 rounded-2xl py-2.5 pl-10 pr-4 text-xs font-mono text-white placehol"
+      },
+      {
+        "file": "src/lib/actions/claim-actions.ts",
+        "line": 116,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "// Clean up redundant placeholder ghost user account"
+      },
+      {
+        "file": "src/lib/actions/fleet-actions.ts",
+        "line": 98,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "latitude: 0, // Placeholder as it's an administrative event"
+      },
+      {
+        "file": "src/lib/actions/seed-fleet.ts",
+        "line": 8,
+        "pattern": "MOCK",
+        "sev": "high",
+        "snippet": "* Populates the system with high-fidelity mock units and waybills for testing."
+      },
+      {
+        "file": "src/lib/actions/telemetry-broadcaster.ts",
+        "line": 6,
+        "pattern": "MOCK",
+        "sev": "high",
+        "snippet": "* 🛰️ EAR OS / TELEMETRY BROADCASTER (MOCK DRIVER)"
+      },
+      {
+        "file": "src/lib/actions/telemetry-broadcaster.ts",
+        "line": 27,
+        "pattern": "MOCK",
+        "sev": "high",
+        "snippet": "heading: 0, // Simplified for mock"
+      },
+      {
+        "file": "src/lib/ai/HybridAIEngine.ts",
+        "line": 41,
+        "pattern": "DUMMY",
+        "sev": "high",
+        "snippet": "if (this.GEMINI_KEY && !this.GEMINI_KEY.includes('dummy')) {"
+      },
+      {
+        "file": "src/lib/api.ts",
+        "line": 29,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "const BASE_URL = '/api'; // Placeholder para URL real del backend"
+      },
+      {
+        "file": "src/lib/artists/claims.ts",
+        "line": 4,
+        "pattern": "HARDCODE",
+        "sev": "high",
+        "snippet": "* 🎫 Genera el payload simulado del token JWT firmado con claims de discográfica."
+      },
+      {
+        "file": "src/lib/aura-wallet.ts",
+        "line": 24,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "return true; // Placeholder implementation"
+      },
+      {
+        "file": "src/lib/aura-wallet.ts",
+        "line": 35,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "return Math.floor(Math.random() * 100); // Placeholder implementation"
+      },
+      {
+        "file": "src/lib/brand-palette.ts",
+        "line": 12,
+        "pattern": "DATA_FAKE",
+        "sev": "med",
+        "snippet": "pure: '#000000',"
+      },
+      {
+        "file": "src/lib/firebase.ts",
+        "line": 6,
+        "pattern": "HARDCODE",
+        "sev": "high",
+        "snippet": "// NÚCLEO DE IDENTIDAD S-CLASS (Hardcoded para Sesión de Despliegue)"
+      },
+      {
+        "file": "src/lib/orchestrators/deal-closer.ts",
+        "line": 212,
+        "pattern": "HARDCODE",
+        "sev": "high",
+        "snippet": "console.log('[DEAL-CLOSER DIAG] Mensaje simulado:', rawMessage);"
+      },
+      {
+        "file": "src/lib/phone-constants.ts",
+        "line": 4,
+        "pattern": "HARDCODE",
+        "sev": "high",
+        "snippet": "* Never hardcode the number elsewhere."
+      },
+      {
+        "file": "src/lib/providers/visibility.ts",
+        "line": 57,
+        "pattern": "HARDCODE",
+        "sev": "high",
+        "snippet": "// Veto inmutable hardcoded"
+      },
+      {
+        "file": "src/lib/searchIntentEngine.ts",
+        "line": 9,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "// Placeholder implementation"
+      },
+      {
+        "file": "src/lib/services/emailService.ts",
+        "line": 109,
+        "pattern": "DATA_FAKE",
+        "sev": "med",
+        "snippet": "<a href=\"${dossierUrl}\" style=\"background-color: #ecb613; color: #000000; font-weight: 900; font-size: 13px; text-transf"
+      },
+      {
+        "file": "src/lib/services/trello.ts",
+        "line": 76,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "if (makeWebhook && !makeWebhook.includes('placeholder')) {"
+      },
+      {
+        "file": "src/lib/services/webhook_dispatcher.ts",
+        "line": 18,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "// URL del Webhook de Make (Placeholder - Debe configurarse en .env)"
+      },
+      {
+        "file": "src/lib/services/webhook_dispatcher.ts",
+        "line": 19,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "private readonly MAKE_WEBHOOK_URL = process.env.NEXT_PUBLIC_MAKE_WEBHOOK_TRELLO || 'https://hook.us1.make.com/placeholde"
+      },
+      {
+        "file": "src/lib/telemetry.ts",
+        "line": 6,
+        "pattern": "TODO",
+        "sev": "low",
+        "snippet": "// TODO: Integrate with real-time telemetry pipeline (Astra/Supabase)"
+      },
+      {
+        "file": "src/modules/Nexus/LogisticsDashboard.tsx",
+        "line": 95,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "{/* Mapa / Telemetría (Placeholder Visual S-Class) */}"
+      },
+      {
+        "file": "src/modules/SClassScreens/AstraNeuralTwin.tsx",
+        "line": 105,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Ej: ¿Siguiente paso estratégico?\""
+      },
+      {
+        "file": "src/modules/SClassScreens/AstraNeuralTwin.tsx",
+        "line": 106,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-black/60 border border-white/10 rounded-xl px-4 py-3 text-xs text-white focus:border-[#d4a855]/50 f"
+      },
+      {
+        "file": "src/modules/SClassScreens/ConfiguradorBespoke.tsx",
+        "line": 85,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"NOMBRE DEL SOBERANO / CLIENTE\""
+      },
+      {
+        "file": "src/modules/SClassScreens/ConfiguradorBespoke.tsx",
+        "line": 88,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-black/60 border border-white/10 rounded-xl px-4 py-4 text-xs font-bold text-white focus:border-[#d4"
+      },
+      {
+        "file": "src/modules/SClassScreens/panels/AcademyPanel.tsx",
+        "line": 84,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Introduce tu valor...\""
+      },
+      {
+        "file": "src/modules/SClassScreens/panels/AcademyPanel.tsx",
+        "line": 85,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-black/40 border border-white/10 rounded-2xl px-8 py-5 text-white italic placeholder:text-white/5 fo"
+      },
+      {
+        "file": "src/modules/SClassScreens/panels/AstraNeuralBrain.tsx",
+        "line": 200,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Transmitir comando a la red neural...\""
+      },
+      {
+        "file": "src/modules/SClassScreens/panels/AstraNeuralBrain.tsx",
+        "line": 201,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"flex-1 bg-black/40 border border-white/10 rounded-full h-16 px-10 text-white italic focus:outline-none focus:"
+      },
+      {
+        "file": "src/modules/SClassScreens/panels/AstraNeuralTwinPanel.tsx",
+        "line": 64,
+        "pattern": "MOCK",
+        "sev": "high",
+        "snippet": "// Simulando respuesta IA (Pérdida temporal de servicio mock)"
+      },
+      {
+        "file": "src/modules/SClassScreens/panels/AstraNeuralTwinPanel.tsx",
+        "line": 163,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Emite tu consulta táctica al Gemelo Digital S-Class...\""
+      },
+      {
+        "file": "src/modules/SClassScreens/panels/AstraNeuralTwinPanel.tsx",
+        "line": 164,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-black/60 border border-white/10 rounded-[2rem] py-6 px-10 pr-20 text-white focus:outline-none focus"
+      },
+      {
+        "file": "src/modules/SClassScreens/panels/FinancialPanel.tsx",
+        "line": 105,
+        "pattern": "DATA_FAKE",
+        "sev": "med",
+        "snippet": "amount: parseStripeAmount(1000), // Ejemplo: 1000€"
+      },
+      {
+        "file": "src/modules/SClassScreens/panels/GrowthPulsePanel.tsx",
+        "line": 179,
+        "pattern": "MOCK",
+        "sev": "high",
+        "snippet": "{/* Tactical Graph Overlay (Mock) */}"
+      },
+      {
+        "file": "src/modules/SClassScreens/panels/HermesTrackerPanel.tsx",
+        "line": 64,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"LOCALIZAR ACTIVO...\""
+      },
+      {
+        "file": "src/modules/SClassScreens/panels/HermesTrackerPanel.tsx",
+        "line": 67,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-6 text-xs text-white placeholder:text-zinc-600 foc"
+      },
+      {
+        "file": "src/modules/SClassScreens/panels/HunterPanel.tsx",
+        "line": 93,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "// Placeholder para integración con el motor legacy si fuera necesario"
+      },
+      {
+        "file": "src/modules/SClassScreens/panels/HunterPanel.tsx",
+        "line": 125,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"URL DE INFILTRACIÓN...\""
+      },
+      {
+        "file": "src/modules/SClassScreens/panels/InfrastructurePanel.tsx",
+        "line": 75,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "{/* LARGE INFRA MAP PLACEHOLDER (Blueprint) */}"
+      },
+      {
+        "file": "src/modules/SClassScreens/panels/TacticalConsolidated.tsx",
+        "line": 102,
+        "pattern": "TODO",
+        "sev": "low",
+        "snippet": "<div className=\"text-4xl font-black italic text-[#4dff88]\">TODO DESPEJADO</div>"
+      },
+      {
+        "file": "src/modules/SClassScreens/panels/VimumeAtlas.tsx",
+        "line": 58,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Buscar átomo de sabiduría...\""
+      },
+      {
+        "file": "src/modules/SClassScreens/panels/VimumeDashboard.tsx",
+        "line": 107,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"BUSCAR PACIENTE...\""
+      },
+      {
+        "file": "src/modules/SClassScreens/panels/VimumeDashboard.tsx",
+        "line": 108,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full bg-white/5 border border-white/10 rounded-2xl py-3 pl-12 pr-6 text-[10px] font-black uppercase trackin"
+      },
+      {
+        "file": "src/modules/SClassScreens/panels/VimumeProjectsPanel.tsx",
+        "line": 103,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"BUSCAR EN LA BÓVEDA...\""
+      },
+      {
+        "file": "src/modules/SClassScreens/PRO_VIMUMEDASHBOARD_2.tsx",
+        "line": 98,
+        "pattern": "MOCK",
+        "sev": "high",
+        "snippet": "// --- MOCK DATA ---"
+      },
+      {
+        "file": "src/modules/SClassScreens/PRO_VIMUMEDASHBOARD_2.tsx",
+        "line": 203,
+        "pattern": "HARDCODE",
+        "sev": "high",
+        "snippet": "// Recalcular Stats (Simulado por ahora basado en los datos reales del snap)"
+      },
+      {
+        "file": "src/modules/SClassScreens/SovereignRegister.tsx",
+        "line": 135,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"Tu nombre profesional\""
+      },
+      {
+        "file": "src/modules/SClassScreens/SovereignRegister.tsx",
+        "line": 136,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full pl-11 pr-4 py-3 bg-neutral-950 border border-neutral-800 rounded-xl text-sm text-white focus:outline-n"
+      },
+      {
+        "file": "src/modules/SClassScreens/SovereignRegister.tsx",
+        "line": 153,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"tu@email.com\""
+      },
+      {
+        "file": "src/modules/SClassScreens/SovereignRegister.tsx",
+        "line": 154,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full pl-11 pr-4 py-3 bg-neutral-950 border border-neutral-800 rounded-xl text-sm text-white focus:outline-n"
+      },
+      {
+        "file": "src/modules/SClassScreens/SovereignRegister.tsx",
+        "line": 172,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"••••••••••••••••\""
+      },
+      {
+        "file": "src/modules/SClassScreens/SovereignRegister.tsx",
+        "line": 173,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full pl-11 pr-12 py-3 bg-neutral-950 border border-neutral-800 rounded-xl text-sm text-white focus:outline-"
+      },
+      {
+        "file": "src/modules/SClassScreens/SovereignRegister.tsx",
+        "line": 198,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "placeholder=\"••••••••••••••••\""
+      },
+      {
+        "file": "src/modules/SClassScreens/SovereignRegister.tsx",
+        "line": 199,
+        "pattern": "PLACEHOLDER",
+        "sev": "med",
+        "snippet": "className=\"w-full pl-11 pr-4 py-3 bg-neutral-950 border border-neutral-800 rounded-xl text-sm text-white focus:outline-n"
+      },
+      {
+        "file": "src/scripts/batch_nexus_link.ts",
+        "line": 13,
+        "pattern": "MOCK",
+        "sev": "high",
+        "snippet": "console.warn('[NEXUS BATCH] Archivo bodas_full.json no encontrado. Creando mock de 500 nodos para simular la vinculación"
+      },
+      {
+        "file": "src/scripts/phantomScraper.ts",
+        "line": 74,
+        "pattern": "DATA_FAKE",
+        "sev": "med",
+        "snippet": "phantom.executeOvertake('https://example.com').then(() => process.exit(0));"
+      }
+    ],
+    "secrets": [],
+    "zoneZero": [
+      {
+        "file": "src/lib/vimume/b2g-tender-engine.ts",
+        "present": true,
+        "bytes": 14262,
+        "lines": 329,
+        "intact": true
+      },
+      {
+        "file": "src/lib/astra/astra-conversation-engine.ts",
+        "present": true,
+        "bytes": 21317,
+        "lines": 497,
+        "intact": true
+      }
+    ],
+    "ssot": [
+      {
+        "desc": "Tarifa Base Solista 350,00 €",
+        "found": true,
+        "hits": [
+          {
+            "file": "src/lib/audio/voiceStudioEngine.ts",
+            "line": 283,
+            "snippet": "baseRateEur: 350.00,"
+          },
+          {
+            "file": "src/lib/audit/master-due-diligence-certifier.ts",
+            "line": 11,
+            "snippet": "*   §2 BUSINESS MOATS      — constantes inmutables: tarifa base Solista ≥ 350 €,"
+          },
+          {
+            "file": "src/lib/audit/master-due-diligence-certifier.ts",
+            "line": 56,
+            "snippet": "baseRateOk: boolean; // ≥ 350 €"
+          }
+        ]
+      },
+      {
+        "desc": "Split 80/10/10",
+        "found": true,
+        "hits": [
+          {
+            "file": "src/lib/astra/astra-conversation-engine.ts",
+            "line": 401,
+            "snippet": "*   Test 4: Split Soberano exacto 80% Artista / 10% EAR / 10% VIMUME."
+          },
+          {
+            "file": "src/lib/astra/astra-conversation-engine.ts",
+            "line": 487,
+            "snippet": "name: 'Split Soberano exacto 80% Artista / 10% EAR / 10% VIMUME',"
+          },
+          {
+            "file": "src/lib/astra/astra-conversation-engine.ts",
+            "line": 492,
+            "snippet": "cases.push({ id: 4, name: 'Split Soberano exacto 80% Artista / 10% EAR / 10% VIMUME', ok: false, det"
+          }
+        ]
+      },
+      {
+        "desc": "Depósito 100,00 €",
+        "found": true,
+        "hits": [
+          {
+            "file": "src/lib/actions/stripe-checkout.ts",
+            "line": 50,
+            "snippet": "depositValue: 100,"
+          },
+          {
+            "file": "src/lib/actions/stripe-checkout.ts",
+            "line": 65,
+            "snippet": "unit_amount: pricing.depositAmount * 100,"
+          },
+          {
+            "file": "src/lib/astra/astra-conversation-engine.ts",
+            "line": 5,
+            "snippet": "* Agudelo. Objetivo único: cerrar depósitos Stripe de 100 € en menos de"
+          }
+        ]
+      },
+      {
+        "desc": "Rider 12 W/pax",
+        "found": true,
+        "hits": [
+          {
+            "file": "src/lib/ai/HybridAIEngine.ts",
+            "line": 108,
+            "snippet": "content: 'Productora EAR garantiza infraestructura audiovisual S-Class con certificación acústica de"
+          },
+          {
+            "file": "src/lib/astra/astra-conversation-engine.ts",
+            "line": 40,
+            "snippet": "export const ACOUSTIC_POWER_PER_PAX_W = 12; // 12 W/pax homologados (Bose F1 / Shure Beta)"
+          },
+          {
+            "file": "src/lib/astra/astra-conversation-engine.ts",
+            "line": 435,
+            "snippet": "replyLower.includes('12 w') && // física acústica 12 W/pax"
+          }
+        ]
+      },
+      {
+        "desc": "B2G < 14.250 €",
+        "found": true,
+        "hits": [
+          {
+            "file": "src/lib/b2g-tender-engine.ts",
+            "line": 7,
+            "snippet": "* - Ajuste preventivo automático: 14.250,00 € (95% del límite para blindar reparos de intervención)."
+          },
+          {
+            "file": "src/lib/b2g-tender-engine.ts",
+            "line": 24,
+            "snippet": "export const SAFE_LCSP_CEILING = 14250.00; // 95% del límite de seguridad"
+          },
+          {
+            "file": "src/lib/b2g-tender-engine.ts",
+            "line": 113,
+            "snippet": "* Empaqueta y calcula una propuesta de Contrato Menor garantizando el techo de 14.990 € y ajuste a 1"
+          }
+        ]
+      },
+      {
+        "desc": "Logística 1,50 €/km",
+        "found": true,
+        "hits": [
+          {
+            "file": "src/lib/budget/index.ts",
+            "line": 11,
+            "snippet": "* Logística: 1,50 €/km desde Méntrida a partir del km 50"
+          },
+          {
+            "file": "src/lib/geo/geo-acoustic-radar.ts",
+            "line": 8,
+            "snippet": "* - Logística S-Class desde Hub Central Méntrida (Toledo): 1,50 €/km desde km 50."
+          },
+          {
+            "file": "src/lib/seo/searchIntentEngine.ts",
+            "line": 10,
+            "snippet": "//   - Logística: 1,50 €/km desde Méntrida a partir del km 50. +120 € (Hotel) si hora fin >= 3:00 AM"
+          }
+        ]
+      }
+    ]
+  }
+}

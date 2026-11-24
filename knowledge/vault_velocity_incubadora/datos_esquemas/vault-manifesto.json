@@ -1,0 +1,601 @@
+{
+  "version": "1.0.0-S-CLASS",
+  "generated_at": "2026-11-24T09:49:13.620Z",
+  "vault_root": "knowledge/vault_velocity_incubadora",
+  "total_files": 48,
+  "total_size_bytes": 725439,
+  "total_size_mb": "0.69",
+  "total_size_gb": "0.0007",
+  "files_by_extension": {
+    ".json": 26,
+    ".md": 17,
+    ".txt": 5
+  },
+  "inventory": [
+    {
+      "filename": "gate_pricing.json",
+      "vault_ref": "datos_esquemas/gate_pricing.json",
+      "sha256": "a25d386201174078877d101d3187a5e90abdc32ab29885f77c6195bff6a8e3bb",
+      "original_paths": [
+        ".antigravity/evidence/gate_pricing.json"
+      ],
+      "category": "datos_esquemas",
+      "ext": ".json",
+      "size_bytes": 2994,
+      "word_count": 0
+    },
+    {
+      "filename": "WAVE_38_PRICING_SSOT_UNIFICATION.md",
+      "vault_ref": "transcripciones/WAVE_38_PRICING_SSOT_UNIFICATION.md",
+      "sha256": "80ac5d400301095ce08a9d9dafb16b5e6512a355c6cc84fed6d4cc09b48c8c6b",
+      "original_paths": [
+        ".antigravity/reports/WAVE_38_PRICING_SSOT_UNIFICATION.md"
+      ],
+      "category": "transcripciones",
+      "ext": ".md",
+      "size_bytes": 8926,
+      "word_count": 1129
+    },
+    {
+      "filename": "comp.md",
+      "vault_ref": "transcripciones/comp.md",
+      "sha256": "597f16de607e136f93ea5829c9d82663223a1c1c0423d581b55fa0b51c08f37f",
+      "original_paths": [
+        ".claude/skills/hallmark/references/comp.md"
+      ],
+      "category": "transcripciones",
+      "ext": ".md",
+      "size_bytes": 7669,
+      "word_count": 1315
+    },
+    {
+      "filename": "git_diffstat_w38.txt",
+      "vault_ref": "transcripciones/git_diffstat_w38.txt",
+      "sha256": "83c96a40eb8e33cb1e90a645b4417dd3ad6f6790ffd95e7994f22cd529a279ac",
+      "original_paths": [
+        ".omni_tmp/git_diffstat_w38.txt"
+      ],
+      "category": "transcripciones",
+      "ext": ".txt",
+      "size_bytes": 1497,
+      "word_count": 103
+    },
+    {
+      "filename": "git_status_final.txt",
+      "vault_ref": "transcripciones/git_status_final.txt",
+      "sha256": "5eab692c3b5be2a8e03e5f96180403c6fa5f9e99f8ce1eb6127134acd57400b8",
+      "original_paths": [
+        ".omni_tmp/git_status_final.txt"
+      ],
+      "category": "transcripciones",
+      "ext": ".txt",
+      "size_bytes": 1469,
+      "word_count": 78
+    },
+    {
+      "filename": "pricing_final.txt",
+      "vault_ref": "transcripciones/pricing_final.txt",
+      "sha256": "537059f3288573b3cd9567ab56688d1f7762c55f7f3fee6bb6add3768ebffe0e",
+      "original_paths": [
+        ".omni_tmp/pricing_final.txt",
+        ".omni_tmp/pricing_final3.txt",
+        ".omni_tmp/pricing_v5.txt",
+        ".omni_tmp/pricing_v6.txt"
+      ],
+      "category": "transcripciones",
+      "ext": ".txt",
+      "size_bytes": 2150,
+      "word_count": 313
+    },
+    {
+      "filename": "[2026-09-04]_782dbedf.json",
+      "vault_ref": "datos_esquemas/[2026-09-04]_782dbedf.json",
+      "sha256": "747728ea417ecce03ee6733f57df6fdb84f8e16da9a99b4d9d5a0e8cf17d9be5",
+      "original_paths": [
+        "docs/02_PROVEEDORES_SCLASS/[2026-09-04]_782dbedf.json"
+      ],
+      "category": "datos_esquemas",
+      "ext": ".json",
+      "size_bytes": 5801,
+      "word_count": 0
+    },
+    {
+      "filename": "[2026-09-04]_bb92074c.json",
+      "vault_ref": "datos_esquemas/[2026-09-04]_bb92074c.json",
+      "sha256": "d857d623596db1d1e4c48f8cf3b93adb9e15185d9ca00c15f943500181dd7aa2",
+      "original_paths": [
+        "docs/02_PROVEEDORES_SCLASS/[2026-09-04]_bb92074c.json"
+      ],
+      "category": "datos_esquemas",
+      "ext": ".json",
+      "size_bytes": 12091,
+      "word_count": 0
+    },
+    {
+      "filename": "[2026-09-04]_d86aab2b.json",
+      "vault_ref": "datos_esquemas/[2026-09-04]_d86aab2b.json",
+      "sha256": "324d544eb1c96ef36bd3cbfed93be8451fdae32c574d0ac104a834514ea91e43",
+      "original_paths": [
+        "docs/02_PROVEEDORES_SCLASS/[2026-09-04]_d86aab2b.json"
+      ],
+      "category": "datos_esquemas",
+      "ext": ".json",
+      "size_bytes": 10814,
+      "word_count": 0
+    },
+    {
+      "filename": "[2026-09-04]_walkthrough.md",
+      "vault_ref": "transcripciones/[2026-09-04]_walkthrough.md",
+      "sha256": "27612d0bfb0f99d3545b2078f51b0855f6620a750cbe67abf8340db605c7e9f3",
+      "original_paths": [
+        "docs/02_PROVEEDORES_SCLASS/[2026-09-04]_walkthrough.md"
+      ],
+      "category": "transcripciones",
+      "ext": ".md",
+      "size_bytes": 3035,
+      "word_count": 410
+    },
+    {
+      "filename": "INCUBADORA_POWER_NUMBERS_INTEGRATION.md",
+      "vault_ref": "transcripciones/INCUBADORA_POWER_NUMBERS_INTEGRATION.md",
+      "sha256": "5b312f266e25afa302c4e0a9d343c41aecc67fba120ade3cef7e5b47215934d2",
+      "original_paths": [
+        "docs/architecture/INCUBADORA_POWER_NUMBERS_INTEGRATION.md"
+      ],
+      "category": "transcripciones",
+      "ext": ".md",
+      "size_bytes": 4362,
+      "word_count": 648
+    },
+    {
+      "filename": "VALUE_FIRST_PRICING_ENGINE.md",
+      "vault_ref": "transcripciones/VALUE_FIRST_PRICING_ENGINE.md",
+      "sha256": "9ca024f589c24320ab0761ccd82ca160034864392e481776681115469ef5d38f",
+      "original_paths": [
+        "docs/architecture/VALUE_FIRST_PRICING_ENGINE.md",
+        "src/data/vimume-brain/VALUE_FIRST_PRICING_ENGINE.md"
+      ],
+      "category": "transcripciones",
+      "ext": ".md",
+      "size_bytes": 3867,
+      "word_count": 498
+    },
+    {
+      "filename": "BRAND_MANUAL_SSOT.md",
+      "vault_ref": "transcripciones/BRAND_MANUAL_SSOT.md",
+      "sha256": "59b64d1bab4e69ffa4c1069900b2c26ca10effe3c71d9518346d162c65a2eec1",
+      "original_paths": [
+        "docs/BRAND_MANUAL_SSOT.md"
+      ],
+      "category": "transcripciones",
+      "ext": ".md",
+      "size_bytes": 2373,
+      "word_count": 335
+    },
+    {
+      "filename": "08 05 2026  00 19 h Resuming Supabase Infrastructure Sovereignty.md",
+      "vault_ref": "transcripciones/08 05 2026  00 19 h Resuming Supabase Infrastructure Sovereignty.md",
+      "sha256": "81e8fb78aeb7ff863278810725652e6649bdf635c1ab309e9bb8e1fe4b368de5",
+      "original_paths": [
+        "docs/contexto_historico/08 05 2026  00 19 h Resuming Supabase Infrastructure Sovereignty.md",
+        "src/data/vimume-brain/08 05 2026  00 19 h Resuming Supabase Infrastructure Sovereignty.md"
+      ],
+      "category": "transcripciones",
+      "ext": ".md",
+      "size_bytes": 22765,
+      "word_count": 2951
+    },
+    {
+      "filename": "EAR_REVENUE_OPERATING_SYSTEM.md",
+      "vault_ref": "transcripciones/EAR_REVENUE_OPERATING_SYSTEM.md",
+      "sha256": "3294f312e68aec4b4c9b99fbad2dbed967d174db23ab2accfb637bb59c39f9f3",
+      "original_paths": [
+        "docs/crm/EAR_REVENUE_OPERATING_SYSTEM.md"
+      ],
+      "category": "transcripciones",
+      "ext": ".md",
+      "size_bytes": 1092,
+      "word_count": 170
+    },
+    {
+      "filename": "EAR_OS_MASTER_AUDIT_200_QUESTIONS_SSOT.md",
+      "vault_ref": "transcripciones/EAR_OS_MASTER_AUDIT_200_QUESTIONS_SSOT.md",
+      "sha256": "d80737bcca6c0b3871aa1a6cdf31316890e0725c3bda1b142c3f28ec5296db45",
+      "original_paths": [
+        "docs/EAR_OS_MASTER_AUDIT_200_QUESTIONS_SSOT.md"
+      ],
+      "category": "transcripciones",
+      "ext": ".md",
+      "size_bytes": 53842,
+      "word_count": 7532
+    },
+    {
+      "filename": "EAR_OS_UNIFIED_KNOWLEDGE_GRAPH.md",
+      "vault_ref": "transcripciones/EAR_OS_UNIFIED_KNOWLEDGE_GRAPH.md",
+      "sha256": "ed49af8cc12cf00d684d4db97dfecebb2fc5833f09a3814316b902a8fee5ee2c",
+      "original_paths": [
+        "docs/EAR_OS_UNIFIED_KNOWLEDGE_GRAPH.md",
+        "src/data/vimume-brain/EAR_OS_UNIFIED_KNOWLEDGE_GRAPH.md"
+      ],
+      "category": "transcripciones",
+      "ext": ".md",
+      "size_bytes": 4047,
+      "word_count": 571
+    },
+    {
+      "filename": "KNOWLEDGE_CATEDRA_MAP.md",
+      "vault_ref": "transcripciones/KNOWLEDGE_CATEDRA_MAP.md",
+      "sha256": "b855cd65413181f6882bb90cca3fc13409969ed396e98fed59d78b77d1966abd",
+      "original_paths": [
+        "docs/KNOWLEDGE_CATEDRA_MAP.md"
+      ],
+      "category": "transcripciones",
+      "ext": ".md",
+      "size_bytes": 895,
+      "word_count": 100
+    },
+    {
+      "filename": "scratch_giants_results.txt",
+      "vault_ref": "transcripciones/scratch_giants_results.txt",
+      "sha256": "694749220e07140fa96355be3fff2c3ed9e2e145a3d9438122dd19d5907f1bb0",
+      "original_paths": [
+        "docs/scratch_giants_results.txt"
+      ],
+      "category": "transcripciones",
+      "ext": ".txt",
+      "size_bytes": 6588,
+      "word_count": 502
+    },
+    {
+      "filename": "08 05 2026  00 19 h Resuming Supabase Infrastructure Sovereignty_derived.md",
+      "vault_ref": "transcripciones/08 05 2026  00 19 h Resuming Supabase Infrastructure Sovereignty_derived.md",
+      "sha256": "bd01c05c783dc8bf426f93f5a29b62dcafcd0fc74c74cc08a89d01d0816fd1c4",
+      "original_paths": [
+        "docs/_derived/08 05 2026  00 19 h Resuming Supabase Infrastructure Sovereignty_derived.md",
+        "src/data/vimume-brain/08 05 2026  00 19 h Resuming Supabase Infrastructure Sovereignty_derived.md"
+      ],
+      "category": "transcripciones",
+      "ext": ".md",
+      "size_bytes": 23164,
+      "word_count": 2991
+    },
+    {
+      "filename": "141c8a1422d6e7112d62bd0863d644151714ae443eebc06cfed262b13bc10626.json",
+      "vault_ref": "datos_esquemas/141c8a1422d6e7112d62bd0863d644151714ae443eebc06cfed262b13bc10626.json",
+      "sha256": "f3f4df66264b293f6a29ed94621ddf4d10cf06e54e0b273f79d386cde964b8fe",
+      "original_paths": [
+        "graphify-out/cache/ast/v0.9.112-s48-gd93bdf18e146/141c8a1422d6e7112d62bd0863d644151714ae443eebc06cfed262b13bc10626.json"
+      ],
+      "category": "datos_esquemas",
+      "ext": ".json",
+      "size_bytes": 16207,
+      "word_count": 0
+    },
+    {
+      "filename": "25f58d7514a241c54c8d8d104d0798bf0477fcea60dc17ec79acd3f2de5c92b3.json",
+      "vault_ref": "datos_esquemas/25f58d7514a241c54c8d8d104d0798bf0477fcea60dc17ec79acd3f2de5c92b3.json",
+      "sha256": "b739d085778bdf16a90ee0d27981a4f8743874c77572308c397a48c060fc6009",
+      "original_paths": [
+        "graphify-out/cache/ast/v0.9.112-s48-gd93bdf18e146/25f58d7514a241c54c8d8d104d0798bf0477fcea60dc17ec79acd3f2de5c92b3.json"
+      ],
+      "category": "datos_esquemas",
+      "ext": ".json",
+      "size_bytes": 4189,
+      "word_count": 0
+    },
+    {
+      "filename": "27bc3d85fc42584f1f8f362595e45f69a4df1ba5e8fadb02472b3a4faa90495d.json",
+      "vault_ref": "datos_esquemas/27bc3d85fc42584f1f8f362595e45f69a4df1ba5e8fadb02472b3a4faa90495d.json",
+      "sha256": "9743cea4d07a06e48c2b73a3d7d271c9e41f1079e24e9a1a279a99c7fc102e48",
+      "original_paths": [
+        "graphify-out/cache/ast/v0.9.112-s48-gd93bdf18e146/27bc3d85fc42584f1f8f362595e45f69a4df1ba5e8fadb02472b3a4faa90495d.json"
+      ],
+      "category": "datos_esquemas",
+      "ext": ".json",
+      "size_bytes": 1327,
+      "word_count": 0
+    },
+    {
+      "filename": "2bf404cad7d5f27534fd53c5735fea6e4c5945253049480cdf7a297a2d30481a.json",
+      "vault_ref": "datos_esquemas/2bf404cad7d5f27534fd53c5735fea6e4c5945253049480cdf7a297a2d30481a.json",
+      "sha256": "137a22eb95a4ae0cd1db318e25fd8ede29e97e772043470b617587ef3abdfdb3",
+      "original_paths": [
+        "graphify-out/cache/ast/v0.9.112-s48-gd93bdf18e146/2bf404cad7d5f27534fd53c5735fea6e4c5945253049480cdf7a297a2d30481a.json"
+      ],
+      "category": "datos_esquemas",
+      "ext": ".json",
+      "size_bytes": 11153,
+      "word_count": 0
+    },
+    {
+      "filename": "344662abf4ad1cda126f0f8de1100b0e545a5a5e569321231167076166b6847b.json",
+      "vault_ref": "datos_esquemas/344662abf4ad1cda126f0f8de1100b0e545a5a5e569321231167076166b6847b.json",
+      "sha256": "34a14523f310071b02aee79ea704f2e6b27088ce5dfef71baa59b61e5536a3b3",
+      "original_paths": [
+        "graphify-out/cache/ast/v0.9.112-s48-gd93bdf18e146/344662abf4ad1cda126f0f8de1100b0e545a5a5e569321231167076166b6847b.json"
+      ],
+      "category": "datos_esquemas",
+      "ext": ".json",
+      "size_bytes": 7649,
+      "word_count": 0
+    },
+    {
+      "filename": "82c4800ef6cd57bddc3cd5ca183ce0d291bcf16ce5d207b457402f36ed525c95.json",
+      "vault_ref": "datos_esquemas/82c4800ef6cd57bddc3cd5ca183ce0d291bcf16ce5d207b457402f36ed525c95.json",
+      "sha256": "83abf359ff64732e88a9eb9a70be91a8c687f49394a32502a2078a3d8602041c",
+      "original_paths": [
+        "graphify-out/cache/ast/v0.9.112-s48-gd93bdf18e146/82c4800ef6cd57bddc3cd5ca183ce0d291bcf16ce5d207b457402f36ed525c95.json"
+      ],
+      "category": "datos_esquemas",
+      "ext": ".json",
+      "size_bytes": 13821,
+      "word_count": 0
+    },
+    {
+      "filename": "934b9494cd138a998859951dcc3dde6c6b7957d491929a4732d8c4a4ab71e46b.json",
+      "vault_ref": "datos_esquemas/934b9494cd138a998859951dcc3dde6c6b7957d491929a4732d8c4a4ab71e46b.json",
+      "sha256": "c3b5f1ac0ab2cc788803e51f3187f929557e60d2ab77b538d727bb14394004e2",
+      "original_paths": [
+        "graphify-out/cache/ast/v0.9.112-s48-gd93bdf18e146/934b9494cd138a998859951dcc3dde6c6b7957d491929a4732d8c4a4ab71e46b.json"
+      ],
+      "category": "datos_esquemas",
+      "ext": ".json",
+      "size_bytes": 1345,
+      "word_count": 0
+    },
+    {
+      "filename": "9f6a796a1e5d9e74003655ea7fa20b332b70204e8cc0c419f5f67d9659099011.json",
+      "vault_ref": "datos_esquemas/9f6a796a1e5d9e74003655ea7fa20b332b70204e8cc0c419f5f67d9659099011.json",
+      "sha256": "6b8c3a5c4780e4fbf888dbfce7c6a364122b094864ec073c40a23bc777b34460",
+      "original_paths": [
+        "graphify-out/cache/ast/v0.9.112-s48-gd93bdf18e146/9f6a796a1e5d9e74003655ea7fa20b332b70204e8cc0c419f5f67d9659099011.json"
+      ],
+      "category": "datos_esquemas",
+      "ext": ".json",
+      "size_bytes": 10155,
+      "word_count": 0
+    },
+    {
+      "filename": "a0e22387726b2508475db5665e602db4a0c72832b58695855f9ffa822df06f5f.json",
+      "vault_ref": "datos_esquemas/a0e22387726b2508475db5665e602db4a0c72832b58695855f9ffa822df06f5f.json",
+      "sha256": "530f4253b4ec52e61dd95081b6ced766b4933730e103c5b646bce40d6f376318",
+      "original_paths": [
+        "graphify-out/cache/ast/v0.9.112-s48-gd93bdf18e146/a0e22387726b2508475db5665e602db4a0c72832b58695855f9ffa822df06f5f.json"
+      ],
+      "category": "datos_esquemas",
+      "ext": ".json",
+      "size_bytes": 31855,
+      "word_count": 0
+    },
+    {
+      "filename": "ca3ac1f069597d059be9b8b53e015f284a24396c1b220846bb8f220bfd4a168f.json",
+      "vault_ref": "datos_esquemas/ca3ac1f069597d059be9b8b53e015f284a24396c1b220846bb8f220bfd4a168f.json",
+      "sha256": "d67323fe33c11f78c80645d6f616ee1d5bfd92129fb1f40fa9eb59a7db6375a0",
+      "original_paths": [
+        "graphify-out/cache/ast/v0.9.112-s48-gd93bdf18e146/ca3ac1f069597d059be9b8b53e015f284a24396c1b220846bb8f220bfd4a168f.json"
+      ],
+      "category": "datos_esquemas",
+      "ext": ".json",
+      "size_bytes": 8057,
+      "word_count": 0
+    },
+    {
+      "filename": "d91298fdca7a342dbb57fc0b2f2430ecf5662cc940fdcb99baa89a486c1dbe0c.json",
+      "vault_ref": "datos_esquemas/d91298fdca7a342dbb57fc0b2f2430ecf5662cc940fdcb99baa89a486c1dbe0c.json",
+      "sha256": "d3682a725a4c312299b504c0446ce9d93f4777d47165f0b06018b39a02177b07",
+      "original_paths": [
+        "graphify-out/cache/ast/v0.9.112-s48-gd93bdf18e146/d91298fdca7a342dbb57fc0b2f2430ecf5662cc940fdcb99baa89a486c1dbe0c.json"
+      ],
+      "category": "datos_esquemas",
+      "ext": ".json",
+      "size_bytes": 1670,
+      "word_count": 0
+    },
+    {
+      "filename": "fc0ffa932b5c9b35780cce3da6ef964fa20d510a7bfcbd4ef3ea27da0de0cbeb.json",
+      "vault_ref": "datos_esquemas/fc0ffa932b5c9b35780cce3da6ef964fa20d510a7bfcbd4ef3ea27da0de0cbeb.json",
+      "sha256": "64d5fdcd98ef1eacd1d2c7870a048cf82e19cea8c7fcc6e807e641a6f79f1be2",
+      "original_paths": [
+        "graphify-out/cache/ast/v0.9.112-s48-gd93bdf18e146/fc0ffa932b5c9b35780cce3da6ef964fa20d510a7bfcbd4ef3ea27da0de0cbeb.json"
+      ],
+      "category": "datos_esquemas",
+      "ext": ".json",
+      "size_bytes": 7476,
+      "word_count": 0
+    },
+    {
+      "filename": "fd7df0bdf5599b3846f78caecfaf0a241a509078d24c49b572479f50c55b2d96.json",
+      "vault_ref": "datos_esquemas/fd7df0bdf5599b3846f78caecfaf0a241a509078d24c49b572479f50c55b2d96.json",
+      "sha256": "4a76209bef3878d5f56a6430391c306f4efcddba92f505798150707b2ccbfec3",
+      "original_paths": [
+        "graphify-out/cache/ast/v0.9.112-s48-gd93bdf18e146/fd7df0bdf5599b3846f78caecfaf0a241a509078d24c49b572479f50c55b2d96.json"
+      ],
+      "category": "datos_esquemas",
+      "ext": ".json",
+      "size_bytes": 3025,
+      "word_count": 0
+    },
+    {
+      "filename": "MANIFIESTO_VALOR_POR_ROL_EAR_OS_v7.0.md",
+      "vault_ref": "transcripciones/MANIFIESTO_VALOR_POR_ROL_EAR_OS_v7.0.md",
+      "sha256": "987524656d44b62cf5d9ec971d87bdaa12e098c8dcb7f8282e5d2ec942635765",
+      "original_paths": [
+        "MANIFIESTO_VALOR_POR_ROL_EAR_OS_v7.0.md"
+      ],
+      "category": "transcripciones",
+      "ext": ".md",
+      "size_bytes": 40878,
+      "word_count": 5061
+    },
+    {
+      "filename": "forensic_code_sweep.json",
+      "vault_ref": "datos_esquemas/forensic_code_sweep.json",
+      "sha256": "fec02829f0881ec85c9a6fdda6b3fe1601a40537f2d38eccb27ec150ae689ad8",
+      "original_paths": [
+        "reports/forensic_code_sweep.json"
+      ],
+      "category": "datos_esquemas",
+      "ext": ".json",
+      "size_bytes": 116314,
+      "word_count": 0
+    },
+    {
+      "filename": "velocity_forensic_cross_match.json",
+      "vault_ref": "datos_esquemas/velocity_forensic_cross_match.json",
+      "sha256": "0e555931b488b45309448356e2920408944ab9a1eb9dee59566c3e8bf41672ce",
+      "original_paths": [
+        "reports/velocity_forensic_cross_match.json"
+      ],
+      "category": "datos_esquemas",
+      "ext": ".json",
+      "size_bytes": 17072,
+      "word_count": 0
+    },
+    {
+      "filename": "velocity_integrity_validation.json",
+      "vault_ref": "datos_esquemas/velocity_integrity_validation.json",
+      "sha256": "606eb67324bc27afc519acfcedadd5d84a69afe9365092adfa8375b1d1f83554",
+      "original_paths": [
+        "reports/velocity_integrity_validation.json"
+      ],
+      "category": "datos_esquemas",
+      "ext": ".json",
+      "size_bytes": 37030,
+      "word_count": 0
+    },
+    {
+      "filename": "velocity_local_perfect_inventory.json",
+      "vault_ref": "datos_esquemas/velocity_local_perfect_inventory.json",
+      "sha256": "50db21f46cc56313012aa620fe849488ab0d55459481e27eaea1764f4c8a96ad",
+      "original_paths": [
+        "reports/velocity_local_perfect_inventory.json"
+      ],
+      "category": "datos_esquemas",
+      "ext": ".json",
+      "size_bytes": 13547,
+      "word_count": 0
+    },
+    {
+      "filename": "velocity_media_master_catalog.json",
+      "vault_ref": "datos_esquemas/velocity_media_master_catalog.json",
+      "sha256": "cc068a2465fda72b47505921b2a553b8b140730c7047e130fc16071c0a069d3a",
+      "original_paths": [
+        "reports/velocity_media_master_catalog.json"
+      ],
+      "category": "datos_esquemas",
+      "ext": ".json",
+      "size_bytes": 11152,
+      "word_count": 0
+    },
+    {
+      "filename": "vbrand.txt",
+      "vault_ref": "transcripciones/vbrand.txt",
+      "sha256": "039de8a7bc3a52657b150e133080cd24f3b77bc3b31752988da2e64510c83701",
+      "original_paths": [
+        "scratch/vbrand.txt"
+      ],
+      "category": "transcripciones",
+      "ext": ".txt",
+      "size_bytes": 6649,
+      "word_count": 610
+    },
+    {
+      "filename": "EAR_OS_STRATEGIC_FRAMEWORKS.json",
+      "vault_ref": "datos_esquemas/EAR_OS_STRATEGIC_FRAMEWORKS.json",
+      "sha256": "43395aa4a5af94d5e137205f55a03de85aca23748b1b046944835ae03ed9639b",
+      "original_paths": [
+        "src/data/EAR_OS_STRATEGIC_FRAMEWORKS.json"
+      ],
+      "category": "datos_esquemas",
+      "ext": ".json",
+      "size_bytes": 8250,
+      "word_count": 0
+    },
+    {
+      "filename": "procede_vampirized.json",
+      "vault_ref": "datos_esquemas/procede_vampirized.json",
+      "sha256": "e30f482b6bfea4adac0df0bca7c1516db7ac6026b06d34879a1f9f4d67b46e84",
+      "original_paths": [
+        "src/data/governance/strategic_vault/procede_vampirized.json"
+      ],
+      "category": "datos_esquemas",
+      "ext": ".json",
+      "size_bytes": 10746,
+      "word_count": 0
+    },
+    {
+      "filename": "procede.md",
+      "vault_ref": "transcripciones/procede.md",
+      "sha256": "1f8a7501c810c08e8afee5d4f40fbb7a18d95a7da47cea3dc29a1575b78f98b6",
+      "original_paths": [
+        "src/data/staging/procede.md"
+      ],
+      "category": "transcripciones",
+      "ext": ".md",
+      "size_bytes": 4883,
+      "word_count": 687
+    },
+    {
+      "filename": "ArtifactUsage_F0F6_d49db7.json",
+      "vault_ref": "datos_esquemas/ArtifactUsage_F0F6_d49db7.json",
+      "sha256": "d49db7595cbea3bcb602e155d8fa83b502955ff7a99ef2f3dbb0f7c4c42d7c38",
+      "original_paths": [
+        "src/data/vimume-brain/ArtifactUsage_F0F6_d49db7.json"
+      ],
+      "category": "datos_esquemas",
+      "ext": ".json",
+      "size_bytes": 28182,
+      "word_count": 0
+    },
+    {
+      "filename": "Documentos_README_520_5ed842a6.md",
+      "vault_ref": "transcripciones/Documentos_README_520_5ed842a6.md",
+      "sha256": "c7c1cf249ea1e0237abcc6d47fce45794e840c00822cb54a9eb50253519de2ee",
+      "original_paths": [
+        "src/data/vimume-brain/Documentos_README_520_5ed842a6.md",
+        "src/data/vimume-brain/Documentos_README_520_5ed842a6_5ed842.md"
+      ],
+      "category": "transcripciones",
+      "ext": ".md",
+      "size_bytes": 9888,
+      "word_count": 1231
+    },
+    {
+      "filename": "INVENTARIO_MAESTRO_FUENTES_EAR.md",
+      "vault_ref": "transcripciones/INVENTARIO_MAESTRO_FUENTES_EAR.md",
+      "sha256": "a8ce2a189f291cbf3107272b929fb2b343cb0d5481489b72534c14ce3bfc88f2",
+      "original_paths": [
+        "src/data/vimume-brain/INVENTARIO_MAESTRO_FUENTES_EAR.md",
+        "src/data/vimume-brain/INVENTARIO_MAESTRO_FUENTES_EAR_a8ce2a.md"
+      ],
+      "category": "transcripciones",
+      "ext": ".md",
+      "size_bytes": 7991,
+      "word_count": 1188
+    },
+    {
+      "filename": "MISSION_TRACKER_f4d9e3.md",
+      "vault_ref": "transcripciones/MISSION_TRACKER_f4d9e3.md",
+      "sha256": "0376d39292ead10ea2da370db261b64d51fcc422fc50e99b941f8accc058a28b",
+      "original_paths": [
+        "src/data/vimume-brain/MISSION_TRACKER_f4d9e3.md"
+      ],
+      "category": "transcripciones",
+      "ext": ".md",
+      "size_bytes": 2483,
+      "word_count": 317
+    },
+    {
+      "filename": "session-2025-12-23T21-38-f30bf451_CFBB_0c259d.json",
+      "vault_ref": "datos_esquemas/session-2025-12-23T21-38-f30bf451_CFBB_0c259d.json",
+      "sha256": "c60bd8a39d2e952e38bc804c240eb4b5551ee6da29289924adec763fbbe480f2",
+      "original_paths": [
+        "src/data/vimume-brain/session-2025-12-23T21-38-f30bf451_CFBB_0c259d.json"
+      ],
+      "category": "datos_esquemas",
+      "ext": ".json",
+      "size_bytes": 113004,
+      "word_count": 0
+    }
+  ]
+}

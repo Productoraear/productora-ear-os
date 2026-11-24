@@ -41,6 +41,7 @@
 | managed-vendors/route.ts | GET+POST | SIN GUARD | no | sí |
 | mobile-studio/config/route.ts | GET+POST | requireAdmin | sí | no |
 | ollama-shield/route.ts | GET+POST | requireAdmin | sí | no |
+| oracle/dispatch-n8n/route.ts | POST | SIN GUARD | no | no |
 | oraculo/approve/route.ts | POST | requireAdmin | sí | no |
 | providers/route.ts | GET | requireAdmin | sí | no |
 | providers/toggle-visibility/route.ts | GET+POST | requireAdmin | sí | no |
@@ -78,4 +79,4 @@
 | stripeConnectActions.ts | SIN GUARD | sí |
 | vendorAuthActions.ts | SIN GUARD | sí |
 
-**RESUMEN**: 13 enlaces UI→API en /admin/control · 0 fachadas/401 · 37 endpoints mapeados.
+**RESUMEN**: 13 enlaces UI→API en /admin/control · 0 fachadas/401 · 38 endpoints mapeados.

@@ -1,3 +1,21 @@
+# SIGMA://CLOSE/v1
+- **Task ID:** BARRIDO_INTELIGENCIA_VAULT_VELOCITY_INCUBADORA_DESPEGUE
+- **Fecha:** 2026-11-24
+- **Autoridad Ordenante:** Director Generalista / CEO (Edwin Agudelo)
+- **Ejecutor:** Antigravity (Arquitecto Orquestador)
+- **Doctrina:** Halcón Peregrino · ZTLM (Zero-Token Local Mirroring) · Rigor Forense
+- **Resumen de Ejecución:**
+  1. Creación del script recolector `scripts/harvest_velocity_vault.cjs` con heurística de 15 términos clave y desduplicación estricta por SHA-256.
+  2. Bóveda centralizada creada en `knowledge/vault_velocity_incubadora/` con subdirectorios `transcripciones/`, `documentos/`, `datos_esquemas/` y `multimedia_meta/`.
+  3. Candidatos localizados: 57 archivos.
+  4. Archivos consolidados y desduplicados: 48 archivos únicos (26 JSON, 17 MD, 5 TXT) con tamaño consolidado de 0,69 MB (725.439 bytes).
+  5. Manifiesto oficial generado: `knowledge/vault_velocity_incubadora/MANIFESTO_RECURSOS.json`.
+  6. Sincronización en compilador: `src/lib/oraculo/velocity-knowledge-index.ts` con tipados inmutables y funciones de consulta para `/admin/compiler`.
+- **Compuertas Mecánicas:**
+  - `node ./node_modules/typescript/bin/tsc --noEmit` -> Exit Code 0.
+  - `npm run audit:ssot` -> Hash `cefa76c2c6a3f92f57acf74f654932c02bf66774502102cb4f932520aaa64b2b` (Coincide: SÍ, Invariantes: OK).
+- **Dictamen:** BÓVEDA VELOCITY / INCUBADORA CONSOLIDADA Y EXPUESTA AL COMPILADOR
+
 ### SIGMA://CLOSE/v1
 
 task_id        : ANTI_TITANIC_100_ENTERPRISE_CONSTITUTION
@@ -2838,6 +2856,36 @@ El paso 3 (abrir Wave 53) requiere un arreglo que ningÃºn comando de la orden 
 
 ```
 $ node scripts/prod_deploy_freshness.cjs --expect=77b8cee1 --wait=30
+HEALTH intento 1 http=200 buildSha=77b8cee1e9a394befe3f115f81e9772a5811c402
+                    buildSource=coolify-source-commit buildTime=unknown esperado=77b8cee
+VERDICT=FRESH produccion sirve el commit construido en este run.
+EXIT=0
+```
+
+`/api/health` en vivo: `status:"ok"`, `buildSha:"77b8cee1e9a394befe3f115f81e9772a5811c402"`,
+`buildSource:"coolify-source-commit"`, `cron.mode:"fail-closed"` con `CRON_SECRET` presente y `weak:true`.
+**Captura de Coolify y sonda coinciden: ya no hay desfase de despliegue. El bloqueo ya NO es el deploy.**
+
+```
+$ node scripts/prod_smoke_intake.cjs
+SMOKE_IMAGE_BUILD_ID=GhxSb-n1tPsN13GJHIoew (HTTP_200)
+[GET] /api/outreach/intake -> HTTP 401  PASS (guard cerrado por defecto)
+[PASS] Landing real (HTTP 200, 125717 bytes)
+SMOKE_RESULT=OK EXIT=0
+```
+
+### Paso 2 Â· Persistencia viva â†’ SOSPECHOSO (Exit 1), causa raÃ­z medida en el propio JSON
+
+```
+$ node scripts/verify_telemetry_persistence.cjs --remote
+MODO_REMOTE url=https://www.productoraear.com/api/telemetry/EXP-VERIFY-F6
+SONDA http=200 persisted=false mode=SIMULADO source=cache probed=true count=0
+lastError= Invalid `prisma.liveTelemetryPing.findMany()` invocation:
+           error: Environment variable not found: POSTGRES_PRISMA_URL. --> schema.prisma:7
+RESULTADO: SOSPECHOSO â€” producciÃ³n NO declara persistencia duradera.
+EXIT=1
+```
+
 HEALTH intento 1 http=200 buildSha=77b8cee1e9a394befe3f115f81e9772a5811c402
                     buildSource=coolify-source-commit buildTime=unknown esperado=77b8cee
 VERDICT=FRESH produccion sirve el commit construido en este run.

@@ -4,7 +4,7 @@
 > Fuente única de verdad: `src/lib/config/admin-navigation.ts`.
 
 - Módulos registrados en el SSOT: **30**
-- Páginas reales bajo (admin)/admin: **32**
+- Páginas reales bajo (admin)/admin: **33**
 - Violaciones: **0**
 
 ## Módulos registrados
@@ -57,6 +57,7 @@
 - `/admin/documentacion`
 - `/admin/flota`
 - `/admin/journey-heatmap`
+- `/admin/legal`
 - `/admin/licitaciones`
 - `/admin/mailerfind`
 - `/admin/manual-operaciones`

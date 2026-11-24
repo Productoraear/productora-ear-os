@@ -458,3 +458,319 @@ export function rankProviderTiers(
 
     return Object.freeze({ exact, premium15, stretch });
 }
+
+/* ════════════════════════════════════════════════════════════════════════════
+ * MOTOR DE LAS 14 PARTIDAS CARDINALES S-CLASS (BODAS & CELEBRACIONES)
+ * ════════════════════════════════════════════════════════════════════════════ */
+
+export interface CanonicalPartidaDef {
+    readonly id: string;
+    readonly name: string;
+    readonly weight: number;
+    readonly defaultHref: string;
+    readonly ctaLabel: string;
+}
+
+export const CANONICAL_14_PARTIDAS: readonly CanonicalPartidaDef[] = Object.freeze([
+    {
+        id: 'espacios_fincas',
+        name: 'Espacios & Fincas de Gala',
+        weight: 20,
+        defaultHref: '/otzarreta',
+        ctaLabel: 'Ver Ficha Otzarreta',
+    },
+    {
+        id: 'gastronomia_catering',
+        name: 'Gastronomía de Gala & Catering',
+        weight: 25,
+        defaultHref: '/otzarreta',
+        ctaLabel: 'Explorar Menús Asador',
+    },
+    {
+        id: 'musica_directo',
+        name: 'Música en Directo & Shows S-Class',
+        weight: 10,
+        defaultHref: '/reservar/solista',
+        ctaLabel: 'Ver Roster Edwin Agudelo',
+    },
+    {
+        id: 'fotografia_cinematografia',
+        name: 'Fotografía & Cinematografía',
+        weight: 10,
+        defaultHref: '/fotografia',
+        ctaLabel: 'Explorar Catálogo (+5€ fianza deducible)',
+    },
+    {
+        id: 'arte_floral_escenografia',
+        name: 'Arte Floral, Floristería & Escenografía',
+        weight: 5,
+        defaultHref: '/decoracion',
+        ctaLabel: 'Explorar Catálogo (+5€ fianza deducible)',
+    },
+    {
+        id: 'ceremonia_protocolo',
+        name: 'Ceremonia, Oficiantes & Protocolo',
+        weight: 3,
+        defaultHref: '/ceremonia',
+        ctaLabel: 'Explorar Catálogo (+5€ fianza deducible)',
+    },
+    {
+        id: 'novia_alta_costura',
+        name: 'Novia de Alta Costura & Atelier',
+        weight: 5,
+        defaultHref: '/atelier',
+        ctaLabel: 'Explorar Catálogo (+5€ fianza deducible)',
+    },
+    {
+        id: 'novio_sastreria',
+        name: 'Novio & Sastrería de Gala',
+        weight: 3,
+        defaultHref: '/sastreria',
+        ctaLabel: 'Explorar Catálogo (+5€ fianza deducible)',
+    },
+    {
+        id: 'logistica_flota_vip',
+        name: 'Logística, Autobuses & Flota VIP',
+        weight: 4,
+        defaultHref: '/logistica',
+        ctaLabel: 'Explorar Catálogo (+5€ fianza deducible)',
+    },
+    {
+        id: 'sonorizacion_led',
+        name: 'Sonorización, Iluminación & Pantallas LED',
+        weight: 4,
+        defaultHref: '/sonido',
+        ctaLabel: 'Explorar Catálogo (+5€ fianza deducible)',
+    },
+    {
+        id: 'alianzas_joyeria',
+        name: 'Alianzas & Joyería de Enlace',
+        weight: 2,
+        defaultHref: '/joyeria',
+        ctaLabel: 'Explorar Catálogo (+5€ fianza deducible)',
+    },
+    {
+        id: 'estilismo_spa',
+        name: 'Estilismo, Peluquería & Spa Nupcial',
+        weight: 3,
+        defaultHref: '/estilismo',
+        ctaLabel: 'Explorar Catálogo (+5€ fianza deducible)',
+    },
+    {
+        id: 'papeleria_minutas',
+        name: 'Papelería, Web Nupcial & Minutas',
+        weight: 2,
+        defaultHref: '/papeleria',
+        ctaLabel: 'Explorar Catálogo (+5€ fianza deducible)',
+    },
+    {
+        id: 'luna_miel',
+        name: 'Viaje de Novios (Luna de Miel)',
+        weight: 4,
+        defaultHref: '/viajes',
+        ctaLabel: 'Explorar Catálogo (+5€ fianza deducible)',
+    },
+]);
+
+export interface PartidaItem {
+    readonly id: string;
+    readonly name: string;
+    readonly weight: number;
+    readonly amountCents: number;
+    readonly locked: boolean;
+    readonly catalogHref: string;
+    readonly ctaLabel: string;
+    readonly isCustom?: boolean;
+}
+
+/**
+ * Distribuye céntimos enteros entre una lista de elementos libres con pesos,
+ * garantizando suma exacta al céntimo por el algoritmo de mayor resto.
+ */
+function distributeCentsByWeights(
+    totalCents: number,
+    items: readonly { readonly id: string; readonly weight: number }[],
+): Record<string, number> {
+    const result: Record<string, number> = {};
+    for (const item of items) {
+        result[item.id] = 0;
+    }
+
+    if (items.length === 0 || totalCents <= 0) {
+        return result;
+    }
+
+    const weightSum = items.reduce((acc, item) => acc + Math.max(1, item.weight), 0);
+    const remainders: { readonly id: string; readonly rest: number; readonly index: number }[] = [];
+    let assigned = 0;
+
+    for (let i = 0; i < items.length; i += 1) {
+        const item = items[i];
+        if (!item) continue;
+        const w = Math.max(1, item.weight);
+        const exact = totalCents * w;
+        const floored = Math.floor(exact / weightSum);
+        result[item.id] = floored;
+        assigned += floored;
+        remainders.push({ id: item.id, rest: exact % weightSum, index: i });
+    }
+
+    let pending = totalCents - assigned;
+    remainders.sort((a, b) => (b.rest - a.rest) || (a.index - b.index));
+
+    for (let i = 0; i < remainders.length && pending > 0; i += 1) {
+        const target = remainders[i];
+        if (target) {
+            result[target.id] = (result[target.id] ?? 0) + 1;
+            pending -= 1;
+        }
+    }
+
+    return result;
+}
+
+/**
+ * Crea la asignación inicial de las 14 Partidas Cardinales en céntimos enteros.
+ */
+export function create14PartidasAllocation(
+    totalEur: number,
+    customPartidasNames: readonly string[] = [],
+): PartidaItem[] {
+    const totalCents = eurToCents(totalEur);
+
+    const baseList: { id: string; name: string; weight: number; catalogHref: string; ctaLabel: string; isCustom?: boolean }[] =
+        CANONICAL_14_PARTIDAS.map((p) => ({
+            id: p.id,
+            name: p.name,
+            weight: p.weight,
+            catalogHref: p.defaultHref,
+            ctaLabel: p.ctaLabel,
+        }));
+
+    for (let i = 0; i < customPartidasNames.length; i += 1) {
+        const customName = customPartidasNames[i];
+        if (customName && customName.trim()) {
+            baseList.push({
+                id: `custom_${i}_${customName.toLowerCase().replace(/[^a-z0-9]/g, '_')}`,
+                name: customName.trim(),
+                weight: 4,
+                catalogHref: '/presupuesto',
+                ctaLabel: 'Explorar Catálogo (+5€ fianza deducible)',
+                isCustom: true,
+            });
+        }
+    }
+
+    const distributed = distributeCentsByWeights(totalCents, baseList);
+
+    return baseList.map((item) => ({
+        id: item.id,
+        name: item.name,
+        weight: item.weight,
+        amountCents: distributed[item.id] ?? 0,
+        locked: false,
+        catalogHref: item.catalogHref,
+        ctaLabel: item.ctaLabel,
+        isCustom: item.isCustom,
+    }));
+}
+
+/**
+ * Rebalancea las partidas al mover un slider libre, respetando los candados 🔒 al céntimo.
+ */
+export function rebalancePartidas(
+    partidas: readonly PartidaItem[],
+    changedId: string,
+    newAmountEur: number,
+    totalBudgetEur: number,
+): PartidaItem[] {
+    const totalCents = eurToCents(totalBudgetEur);
+    const targetCents = Math.max(0, eurToCents(newAmountEur));
+
+    const changedItem = partidas.find((p) => p.id === changedId);
+    if (!changedItem) return [...partidas];
+    if (changedItem.locked) {
+        throw new BudgetEngineError('LOCKED_CATEGORY', `La partida "${changedItem.name}" está bloqueada.`);
+    }
+
+    const lockedSum = partidas
+        .filter((p) => p.locked && p.id !== changedId)
+        .reduce((acc, p) => acc + p.amountCents, 0);
+
+    const availableForFree = Math.max(0, totalCents - lockedSum);
+    const clampedChangedCents = Math.min(targetCents, availableForFree);
+    const remainingForOtherFree = Math.max(0, availableForFree - clampedChangedCents);
+
+    const otherFreeItems = partidas.filter((p) => !p.locked && p.id !== changedId);
+    const distributedOther = distributeCentsByWeights(remainingForOtherFree, otherFreeItems);
+
+    return partidas.map((p) => {
+        if (p.id === changedId) {
+            return { ...p, amountCents: clampedChangedCents };
+        }
+        if (p.locked) {
+            return p;
+        }
+        return {
+            ...p,
+            amountCents: distributedOther[p.id] ?? 0,
+        };
+    });
+}
+
+/**
+ * Alterna el candado 🔒 de una partida congelando su importe al céntimo.
+ */
+export function togglePartidaLock(
+    partidas: readonly PartidaItem[],
+    targetId: string,
+): PartidaItem[] {
+    return partidas.map((p) => {
+        if (p.id === targetId) {
+            return { ...p, locked: !p.locked };
+        }
+        return p;
+    });
+}
+
+/**
+ * Añade una partida personalizada y rebalancea las desbloqueadas.
+ */
+export function addCustomPartidaToEngine(
+    partidas: readonly PartidaItem[],
+    customName: string,
+    totalBudgetEur: number,
+): PartidaItem[] {
+    const cleanName = customName.trim();
+    if (!cleanName) return [...partidas];
+
+    const totalCents = eurToCents(totalBudgetEur);
+    const newId = `custom_${Date.now()}_${cleanName.toLowerCase().replace(/[^a-z0-9]/g, '_')}`;
+
+    const newPartida: PartidaItem = {
+        id: newId,
+        name: cleanName,
+        weight: 4,
+        amountCents: 0,
+        locked: false,
+        catalogHref: '/presupuesto',
+        ctaLabel: 'Explorar Catálogo (+5€ fianza deducible)',
+        isCustom: true,
+    };
+
+    const nextList = [...partidas, newPartida];
+
+    const lockedSum = nextList
+        .filter((p) => p.locked)
+        .reduce((acc, p) => acc + p.amountCents, 0);
+
+    const freeItems = nextList.filter((p) => !p.locked);
+    const availableCents = Math.max(0, totalCents - lockedSum);
+    const distributed = distributeCentsByWeights(availableCents, freeItems);
+
+    return nextList.map((p) => {
+        if (p.locked) return p;
+        return { ...p, amountCents: distributed[p.id] ?? 0 };
+    });
+}
+

@@ -1,0 +1,152 @@
+Found 388 matching documents:
+
+File: H:\EAR_OS_V2\EAR_OS_V2\src\data\ear-rag-database.json
+  Giants matched (9): ['bodas.net', 'the knot', 'weddingwire', 'zola', 'hitched', 'matrimonio.com', 'mariages.net', 'withjoy', 'bark']
+  Has phrase: True
+  Size: 89,449,378 bytes
+
+File: H:\EAR_OS_V2\EAR_OS_V2\src\infrastructure\docs\archive\EAR_OS_OMEGA_CODEX.md
+  Giants matched (8): ['bodas.net', 'the knot', 'weddingwire', 'zola', 'hitched', 'matrimonio.com', 'mariages.net', 'withjoy']
+  Has phrase: True
+  Size: 55,287,649 bytes
+
+File: H:\EAR_OS_V2\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_36.md
+  Giants matched (8): ['bodas.net', 'the knot', 'weddingwire', 'zola', 'hitched', 'mariages.net', 'withjoy', 'gigsalad']
+  Has phrase: True
+  Size: 4,851,657 bytes
+
+File: H:\EAR_OS_V2\EAR_OS_V2\src\data\catalog\ADN_EAR_INDEX.json
+  Giants matched (7): ['bodas.net', 'the knot', 'weddingwire', 'hitched', 'matrimonio.com', 'mariages.net', 'gigsalad']
+  Has phrase: True
+  Size: 581,660,109 bytes
+
+File: H:\EAR_OS_V2\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_110.md
+  Giants matched (7): ['bodas.net', 'the knot', 'weddingwire', 'zola', 'hitched', 'matrimonio.com', 'mariages.net']
+  Has phrase: True
+  Size: 5,146,382 bytes
+
+File: H:\incubadora despegue\ESTRATEGIAS_Y_FRAMEWORKS\EAR_OS_MAESTRO_PROMPTS_PARTE_110.md
+  Giants matched (7): ['bodas.net', 'the knot', 'weddingwire', 'zola', 'hitched', 'matrimonio.com', 'mariages.net']
+  Has phrase: True
+  Size: 5,146,382 bytes
+
+File: H:\incubadora despegue\ESTRATEGIAS_Y_FRAMEWORKS\Gemini instrucciones para productora ear  levadas a antigravity.txt
+  Giants matched (7): ['bodas.net', 'the knot', 'weddingwire', 'zola', 'hitched', 'matrimonio.com', 'mariages.net']
+  Has phrase: True
+  Size: 5,065,799 bytes
+
+File: H:\EAR_OS_V2\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_38.md
+  Giants matched (7): ['bodas.net', 'the knot', 'weddingwire', 'zola', 'hitched', 'mariages.net', 'withjoy']
+  Has phrase: True
+  Size: 1,809,086 bytes
+
+File: H:\EAR_OS_V2\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_6.md
+  Giants matched (5): ['bodas.net', 'weddingwire', 'hitched', 'matrimonio.com', 'mariages.net']
+  Has phrase: True
+  Size: 2,406,978 bytes
+
+File: H:\EAR_OS_V2\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_19.md
+  Giants matched (5): ['bodas.net', 'weddingwire', 'hitched', 'matrimonio.com', 'mariages.net']
+  Has phrase: True
+  Size: 2,406,970 bytes
+
+File: H:\EAR_OS_V2\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_47.md
+  Giants matched (5): ['bodas.net', 'weddingwire', 'hitched', 'matrimonio.com', 'mariages.net']
+  Has phrase: True
+  Size: 2,406,933 bytes
+
+File: H:\incubadora despegue\TRANSCRIPCIONES_WHISPER\processed_transcriptions.json
+  Giants matched (4): ['bodas.net', 'the knot', 'weddingwire', 'zola']
+  Has phrase: True
+  Size: 377,270,481 bytes
+
+File: H:\EAR_OS_V2\EAR_OS_V2\docs\release\COMPREHENSIVE_FORENSIC_INVENTORY.json
+  Giants matched (3): ['bodas.net', 'zola', 'withjoy']
+  Has phrase: True
+  Size: 468,004,658 bytes
+
+File: H:\EAR_OS_V2\EAR_OS_V2\_auditoria\MAPA_SISTEMA_COMPLETO.json
+  Giants matched (3): ['bodas.net', 'zola', 'bark']
+  Has phrase: True
+  Size: 68,533,523 bytes
+
+File: H:\EAR_OS_V2\EAR_OS_V2\docs\g h l.txt
+  Giants matched (3): ['bodas.net', 'zola', 'withjoy']
+  Has phrase: True
+  Size: 65,298,799 bytes
+
+File: H:\EAR_OS_V2\EAR_OS_V2\docs\c.txt
+  Giants matched (3): ['bodas.net', 'zola', 'withjoy']
+  Has phrase: True
+  Size: 60,137,207 bytes
+
+File: H:\EAR_OS_V2\EAR_OS_V2\docs\release\CONVERSATION_EXPORT_BACKUP.md
+  Giants matched (3): ['bodas.net', 'zola', 'matrimonio.com']
+  Has phrase: True
+  Size: 3,572,519 bytes
+
+File: H:\EAR_OS_V2\EAR_OS_V2\docs\release\EAR_OS_SESSION_EXPORT_2026_08_17.md
+  Giants matched (3): ['bodas.net', 'zola', 'matrimonio.com']
+  Has phrase: True
+  Size: 3,572,519 bytes
+
+File: H:\EAR_OS_V2\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_35.md
+  Giants matched (3): ['bodas.net', 'the knot', 'zola']
+  Has phrase: True
+  Size: 2,949,275 bytes
+
+File: H:\EAR_OS_V2\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_97.md
+  Giants matched (3): ['bodas.net', 'the knot', 'zola']
+  Has phrase: True
+  Size: 1,414,512 bytes
+
+File: H:\EAR_OS_V2\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_94.md
+  Giants matched (3): ['bodas.net', 'the knot', 'zola']
+  Has phrase: True
+  Size: 1,323,401 bytes
+
+File: H:\EAR_OS_V2\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_62.md
+  Giants matched (3): ['bodas.net', 'the knot', 'zola']
+  Has phrase: True
+  Size: 988,282 bytes
+
+File: H:\EAR_OS_V2\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_115.md
+  Giants matched (3): ['bodas.net', 'the knot', 'zola']
+  Has phrase: True
+  Size: 930,394 bytes
+
+File: H:\EAR_OS_V2\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_78.md
+  Giants matched (3): ['bodas.net', 'the knot', 'zola']
+  Has phrase: True
+  Size: 900,218 bytes
+
+File: H:\EAR_OS_V2\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_1.md
+  Giants matched (3): ['bodas.net', 'the knot', 'zola']
+  Has phrase: True
+  Size: 789,362 bytes
+
+File: H:\EAR_OS_V2\EAR_OS_V2\incubadora\2026-05-18_PROMPTS_PARTE_1.md
+  Giants matched (3): ['bodas.net', 'the knot', 'zola']
+  Has phrase: True
+  Size: 789,362 bytes
+
+File: H:\EAR_OS_V2\EAR_OS_V2\data_vault\hallazgos_god_mode.txt
+  Giants matched (2): ['bodas.net', 'matrimonio.com']
+  Has phrase: True
+  Size: 21,543,518 bytes
+
+File: H:\EAR_OS_V2\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_117.md
+  Giants matched (2): ['bodas.net', 'matrimonio.com']
+  Has phrase: True
+  Size: 1,451,280 bytes
+
+File: H:\incubadora despegue\ESTRATEGIAS_Y_FRAMEWORKS\🎯 AUDITORÍA EXHAUSTIVA - PRODUCTORAEAR.COM.md
+  Giants matched (2): ['bodas.net', 'zola']
+  Has phrase: True
+  Size: 96,517 bytes
+
+File: H:\incubadora despegue\ESTRATEGIAS_Y_FRAMEWORKS\🎯 AUDITORÍA EXHAUSTIVA - PRODUCTORAEAR.COM_C360.md
+  Giants matched (2): ['bodas.net', 'zola']
+  Has phrase: True
+  Size: 96,517 bytes
+

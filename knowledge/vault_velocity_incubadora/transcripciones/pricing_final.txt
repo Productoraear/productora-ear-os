@@ -1,0 +1,55 @@
+[PRICE-LOCK DIAG] PASS | Caso 1 — Válido (Solista, 0 km, Standard) | esperado=VALID real=VALID
+[PRICE-LOCK DIAG] PASS | Caso 2 — Expirado (48 h) | esperado=EXPIRED real=EXPIRED
+[PRICE-LOCK DIAG] PASS | Caso 3 — Hash Falso (tampering) | esperado=HASH_MISMATCH real=HASH_MISMATCH
+[PRICE-LOCK DIAG] PASS | Caso 4 — Trío 100 km (split exacto) | esperado=VALID real=VALID
+[PRICE-LOCK DIAG] Resultado global: ALL PASS ✔
+✅ SSOT: tarifa base solista 350,00 €
+   BASE_SOLISTA=350
+✅ SSOT: depósito Stripe 100,00 €
+   DEPOSITO_STRIPE=100
+✅ SSOT: franquicia de 50 km
+   KM_EXENTOS=50
+✅ SSOT: tarifa logística sancionada 0,50 €/km
+   COSTE_KM=0.5
+✅ Franquicia: 40 km => desplazamiento 0 €
+   travelCost=0
+✅ Franquicia: 50 km => desplazamiento 0 €
+   travelCost=0
+✅ Tramo facturable: 100 km => 50 km × 0,50 € = 25 €
+   billableKm=50 · travelCost=25
+✅ Hotel: 200 km NO pernocta
+   requiresHotel=false
+✅ Hotel: 201 km SÍ pernocta (+120 €)
+   hotelSupplement=120
+✅ Hotel: fin a las 03:00 AM activa pernocta aunque sean 10 km
+   endHour=3 · hotel=120
+✅ Hotel: fin a las 02:59 AM NO activa pernocta
+   hotel=0
+✅ Orden: 0 km sin pernocta
+   total=0
+✅ Presupuesto: 350 € + 25 € logística = 375 €
+   totalBudget=375
+✅ Split 80/10/10 cierra al céntimo
+   suma=375
+✅ Price-Lock: hash SHA-256 determinista
+   hash=35c36e32449e77d2…
+✅ Blindaje NaN: distancia corrupta => 0 km (nunca NaN en Stripe)
+   total=350
+✅ Rider Bose F1 Elite: +150 € sobre el total canónico
+   total=525
+✅ Paridad centralita mariachi: misma logística que el SSOT
+   total=375 €
+✅ Paridad radar geo-acústico: kmCost idéntico al SSOT
+   kmCost=25 €
+✅ Paridad radar geo-acústico: pernocta por hora de fin
+   hotel=120 €
+✅ Paridad Deal-Closer: total firmado = motor soberano
+   total=625 € (esperado 625 €)
+✅ Price-Lock verifier: 4/4 casos PASS
+   suite runSelfDiagnostics()
+✅ Astra: 4/4 casos PASS
+   suite runAstraDiagnostics()
+✅ Anti-duplicidad: 0 motores logísticos paralelos en la ruta de venta
+   7 archivos limpios
+
+24/24 comprobaciones superadas · motor de precios unificado en el SSOT.

@@ -1,0 +1,25 @@
+﻿ .antigravity/OMEGA_STATE_JOURNAL.md          |    13 +-
+ .antigravity/tasks_queue.json                |    75 +-
+ package.json                                 |    11 +-
+ public/data/providers/catering.json          | 19734 +---------------------
+ public/data/providers/finca.json             | 22052 +------------------------
+ public/data/providers/manifest.json          |    12 +-
+ scripts/absorb_html_vault.cjs                |    24 +-
+ scripts/refine_fincas_provinces.cjs          |    60 +-
+ src/app/actions/checkoutActions.ts           |     8 +-
+ src/app/api/agents/chat/route.ts             |   232 +-
+ src/app/api/quote/generate-lock/route.ts     |    12 +-
+ src/components/Astra/EarConcierge.tsx        |   399 +-
+ src/lib/agents/chatGuard.ts                  |    54 +-
+ src/lib/astra/astra-conversation-engine.ts   |    23 +-
+ src/lib/availability/findNextDate.ts         |    14 +-
+ src/lib/compiler/deepseek-inference.ts       |   273 +-
+ src/lib/constants/ear-os-ssot.ts             |     9 +-
+ src/lib/geo/geo-acoustic-radar.ts            |    40 +-
+ src/lib/mariachi/mariachi-dispatch-engine.ts |    15 +-
+ src/lib/orchestrators/deal-closer.ts         |    30 +-
+ src/lib/pricing/price-lock-verifier.ts       |     6 +-
+ src/lib/pricing/sovereign-pricing.ts         |   147 +-
+ src/lib/security/ssotIntegrityGuard.ts       |     6 +-
+ src/lib/services/pricing/geo-pricer.ts       |    20 +-
+ 24 files changed, 1230 insertions(+), 42039 deletions(-)

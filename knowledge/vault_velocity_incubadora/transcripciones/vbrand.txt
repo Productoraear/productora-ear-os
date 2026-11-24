@@ -1,0 +1,129 @@
+﻿
+============================================================================
+1) Vault indices -> platform metadata (real, verifiable)
+============================================================================
+  La M├íquina de las Ideas/00_INDICE_La M├íquina de las Ideas.md
+      # ­ƒôÜ La M├íquina de las Ideas
+      **Categor├¡a:** 00_SERIES | **Total Clases Esperadas:** 4 Clases | **Duraci├│n:** 1h 14m
+      **URL Plataforma:** [https://space.velocitymedia.info/course/80/series](https://space.velocitymedia.info/course/80/series)
+  Copywriting/00_INDICE_Copywriting.md
+      # ­ƒôÜ Copywriting
+      **Categor├¡a:** 03_CURSOS | **Total Clases Esperadas:** 10 Clases | **Duraci├│n:** 1h 2m
+      **URL Plataforma:** [https://space.velocitymedia.info/course/72/cursos](https://space.velocitymedia.info/course/72/cursos)
+  La venta elegante/00_INDICE_La venta elegante.md
+      # ­ƒôÜ La venta elegante
+      **Categor├¡a:** 03_CURSOS | **Total Clases Esperadas:** 10 Clases | **Duraci├│n:** 1h 12m
+      **URL Plataforma:** [https://space.velocitymedia.info/course/71/cursos](https://space.velocitymedia.info/course/71/cursos)
+  Oportunidades R├ípidas/00_INDICE_Oportunidades R├ípidas.md
+      # ­ƒôÜ Oportunidades R├ípidas
+      **Categor├¡a:** 03_CURSOS | **Total Clases Esperadas:** 5 Clases | **Duraci├│n:** 40m
+      **URL Plataforma:** [https://space.velocitymedia.info/course/73/cursos](https://space.velocitymedia.info/course/73/cursos)
+  De la A a la Z para crear tu negocio de info producto/00_INDICE_De la A a la Z para crear tu negocio de info producto.md
+      # ­ƒôÜ De la A a la Z para crear tu negocio de info producto
+      **Categor├¡a:** 04_WORKSHOPS | **Total Clases Esperadas:** 6 Clases | **Duraci├│n:** 1h 22m
+      **URL Plataforma:** [N/A](N/A)
+  El Estratega/00_INDICE_El Estratega.md
+      # ­ƒôÜ El Estratega
+      **Categor├¡a:** 04_WORKSHOPS | **Total Clases Esperadas:** 4 Clases | **Duraci├│n:** 1h 19m
+      **URL Plataforma:** [N/A](N/A)
+  El Mentalista/00_INDICE_El Mentalista.md
+      # ­ƒôÜ El Mentalista
+      **Categor├¡a:** 04_WORKSHOPS | **Total Clases Esperadas:** 8 Clases | **Duraci├│n:** 2h 6m
+      **URL Plataforma:** [N/A](N/A)
+  Estrategias en Facebook Ads/00_INDICE_Estrategias en Facebook Ads.md
+      # ­ƒôÜ Estrategias en Facebook Ads
+      **Categor├¡a:** 04_WORKSHOPS | **Total Clases Esperadas:** 6 Clases | **Duraci├│n:** 45m
+      **URL Plataforma:** [N/A](N/A)
+  Funnels/00_INDICE_Funnels.md
+      # ­ƒôÜ Funnels
+      **Categor├¡a:** 04_WORKSHOPS | **Total Clases Esperadas:** 16 Clases | **Duraci├│n:** 4h 40m
+      **URL Plataforma:** [N/A](N/A)
+  Metodolog├¡a de Atenci├│n/00_INDICE_Metodolog├¡a de Atenci├│n.md
+      # ­ƒôÜ Metodolog├¡a de Atenci├│n
+      **Categor├¡a:** 04_WORKSHOPS | **Total Clases Esperadas:** 2 Clases | **Duraci├│n:** 1h 4m
+      **URL Plataforma:** [https://space.velocitymedia.info/course/88/workshops](https://space.velocitymedia.info/course/88/workshops)
+  Sprint IA para emprendedores/00_INDICE_Sprint IA para emprendedores.md
+      # ­ƒôÜ Sprint IA para emprendedores
+      **Categor├¡a:** 04_WORKSHOPS | **Total Clases Esperadas:** 6 Clases | **Duraci├│n:** 1h 57m
+      **URL Plataforma:** [N/A](N/A)
+
+============================================================================
+2) velocity_media_master_catalog.json -> programme inventory
+============================================================================
+  total_programmes=38
+
+  [Unknown]  n=14
+      - El Mentalista
+      - Clases de Crecimiento con Alexandra
+      - El Estratega
+      - Los Sabios
+      - El Libro Negro
+      - Bestseller
+      - De la A a la Z para crear tu negocio de info producto
+      - Estrategias en Facebook Ads
+      - Funnels
+      - Sprint IA para emprendedores
+      - El ABC para lanzar tu propio infoproducto
+      - AI Copywriting aplicado a tu negocio
+      - Lo que est├í funcionando en Marketing
+      - Dise├▒o de Propuesta Irresistible
+
+  [cortos]  n=1
+      - La Jugada
+
+  [cursos]  n=6
+      - La venta elegante
+      - Midas
+      - Copywriting
+      - Oportunidades R├ípidas
+      - De la A a la Z para crear
+      - Estrategias en Facebook A
+
+  [podcasts]  n=5
+      - Accelerate
+      - Sobredemanda
+      - Lo T├íctico
+      - Secretos del Mentalista
+      - Disparos
+
+  [series]  n=6
+      - Los Ganadores
+      - Pensar dos veces
+      - Ideas Transformadoras
+      - El Club 10X
+      - La Nueva Productividad
+      - La M├íquina de las Ideas
+
+  [workshops]  n=6
+      - Metodolog├¡a de Atenci├│n
+      - El ABC para lanzar tu pro
+      - Comunicaci├│n Disruptiva
+      - AI Copywriting aplicado a
+      - Lo que est├í funcionando e
+      - Inteligencia Artificial
+
+============================================================================
+3) coverage report summary
+============================================================================
+  summary={"total_catalog_programs": 38, "programs_with_local_files": 11, "programs_missing": 27, "coverage_rate_percent": 28.9, "total_matched_videos": 81, "total_local_size_gb": 6.02}
+  covered_programmes=['La M├íquina de las Ideas', 'La venta elegante', 'Copywriting', 'Oportunidades R├ípidas', 'Metodolog├¡a de Atenci├│n', 'El Mentalista', 'El Estratega', 'De la A a la Z para crear tu negocio de info producto', 'Estrategias en Facebook Ads', 'Funnels', 'Sprint IA para emprendedores']
+  missing_count=27
+
+============================================================================
+4) integrity report: what it claims
+============================================================================
+  keys=['total_evaluated', 'valid_verified_count', 'corrupted_count', 'valid_videos', 'corrupted_videos']
+    total_evaluated=81
+    valid_verified_count=81
+    corrupted_count=0
+  sample_valid_video_entries=2
+    La M├íquina de las Ideas :: Clase 2 Las ideas en tu planificaci├│n :: 23.0min
+    La M├íquina de las Ideas :: Clase 5 Generaci├│n de grandes ideas :: 33.3min
+
+============================================================================
+5) Repo intelligence files -> brand term hits
+============================================================================
+
+============================================================================
+6) DONE
+============================================================================

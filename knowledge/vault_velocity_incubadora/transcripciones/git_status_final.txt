@@ -1,0 +1,39 @@
+ M .antigravity/OMEGA_STATE_JOURNAL.md
+ M .antigravity/tasks_queue.json
+ M package.json
+ M public/data/providers/catering.json
+ M public/data/providers/finca.json
+ M public/data/providers/manifest.json
+ M scripts/absorb_html_vault.cjs
+ M scripts/refine_fincas_provinces.cjs
+ M src/app/actions/checkoutActions.ts
+ M src/app/api/agents/chat/route.ts
+ M src/app/api/quote/generate-lock/route.ts
+ M src/components/Astra/EarConcierge.tsx
+ M src/lib/agents/chatGuard.ts
+ M src/lib/astra/astra-conversation-engine.ts
+ M src/lib/availability/findNextDate.ts
+ M src/lib/compiler/deepseek-inference.ts
+ M src/lib/constants/ear-os-ssot.ts
+ M src/lib/geo/geo-acoustic-radar.ts
+ M src/lib/mariachi/mariachi-dispatch-engine.ts
+ M src/lib/orchestrators/deal-closer.ts
+ M src/lib/pricing/price-lock-verifier.ts
+ M src/lib/pricing/sovereign-pricing.ts
+ M src/lib/security/ssotIntegrityGuard.ts
+ M src/lib/services/pricing/geo-pricer.ts
+?? .antigravity/reports/WAVE_38_PRICING_SSOT_UNIFICATION.md
+?? scripts/audit_heavy_residues.cjs
+?? scripts/baseline_ssot_integrity.ts
+?? scripts/omega_register_wave_38.cjs
+?? scripts/resplit_edge_partition.cjs
+?? scripts/verify_consultation_memory.ts
+?? scripts/verify_pricing_ssot_unification.ts
+?? scripts/verify_web_grounding.ts
+?? src/app/api/b2g/radar/
+?? src/app/api/venues/
+?? src/lib/agents/consultationMemory.ts
+?? src/lib/agents/consultationTypes.ts
+?? src/lib/agents/webGrounding.ts
+?? src/lib/b2g/b2gLiveTenderRadar.ts
+?? src/lib/venues/

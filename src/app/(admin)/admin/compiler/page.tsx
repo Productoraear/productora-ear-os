@@ -1,1130 +1,382 @@
 'use client';
 
-import CustomerJourneyCanvas from '@/components/admin/CustomerJourneyCanvas';
-import AdminOperationsConsole from '@/components/admin/AdminOperationsConsole';
-
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import {
-  Terminal,
+  Crown,
+  Heart,
+  Landmark,
+  Building2,
+  Compass,
   Sparkles,
   Copy,
   Check,
   Send,
-  Cpu,
-  ShieldAlert,
-  Zap,
-  Code2,
-  Mic,
-  Cloud,
-  Square,
-  Crown,
-  Music2,
-  Flame,
+  FileCode,
+  BookOpen,
+  Scale,
+  Sliders,
   CheckCircle2,
-  BrainCircuit,
-  Gauge,
-  RefreshCw,
-  Loader2
+  ExternalLink,
+  ShieldCheck,
+  Zap,
+  type LucideIcon,
 } from 'lucide-react';
 import {
-  ORACLE_PERSONA_CATALOG,
-  getOracleDoctrine,
-  refineQueryWithOracle,
-  type OraclePersona,
-  type OracleRefinedResult
-} from '@/lib/oracle/quantum-oracle-engine';
-import type { CompiledDAGResult } from '@/lib/compiler/omega-intent-compiler';
-import { MetaCompilerFsmPanel } from '@/components/admin/MetaCompilerFsmPanel';
-import { MetaCompilerCommandCenter } from '@/components/admin/MetaCompilerCommandCenter';
+  refineWithVelocityOracle,
+  type OracleObjective,
+  type OracleRefinedOutput,
+} from '@/lib/oraculo/oracle-refiner';
+import { getVelocityVaultStats } from '@/lib/oraculo/velocity-knowledge-index';
 
+interface ObjectiveOption {
+  readonly id: OracleObjective;
+  readonly label: string;
+  readonly icon: LucideIcon;
+  readonly description: string;
+}
 
+const OBJECTIVES: readonly ObjectiveOption[] = [
+  {
+    id: 'BODAS',
+    label: 'Cierre de Novios / Bodas',
+    icon: Heart,
+    description: 'Propuesta de alta conversión, Otzarreta, menús cerrados y fianza deducible de 100€.',
+  },
+  {
+    id: 'PROVEEDOR',
+    label: 'Acuerdo Proveedor / Finca',
+    icon: Building2,
+    description: 'Alianzas de gala, retribución 80% artista y cero comisiones parásitas de directorios.',
+  },
+  {
+    id: 'B2G',
+    label: 'Licitación B2G',
+    icon: Landmark,
+    description: 'Contrato menor Art. 118 LCSP (< 14.250 €), Line Array 18k W y DIR3 para FACe.',
+  },
+  {
+    id: 'ESTRATEGIA',
+    label: 'Estrategia General',
+    icon: Compass,
+    description: 'Postura aristocrática, erradicación de adjetivos vacíos y control de marco.',
+  },
+];
 
+export default function MasterCompilerPage(): React.JSX.Element {
+  const [rawVision, setRawVision] = useState<string>('');
+  const [selectedObjective, setSelectedObjective] = useState<OracleObjective>('BODAS');
+  const [copiedPepita, setCopiedPepita] = useState<boolean>(false);
+  const [copiedMegaprompt, setCopiedMegaprompt] = useState<boolean>(false);
+  const [isDispatchingN8n, setIsDispatchingN8n] = useState<boolean>(false);
+  const [n8nStatusMessage, setN8nStatusMessage] = useState<string | null>(null);
 
+  // Estadísticas de la Bóveda de Velocity
+  const vaultStats = useMemo(() => getVelocityVaultStats(), []);
 
+  // Motor del Oráculo: reacciona en tiempo real o bajo demanda
+  const refinedResult: OracleRefinedOutput = useMemo(() => {
+    return refineWithVelocityOracle({
+      rawVision,
+      objective: selectedObjective,
+    });
+  }, [rawVision, selectedObjective]);
 
-
-import {
-  MASTER_OBJECTIVES,
-  MASTER_TACTICS,
-  MASTER_TARGETS,
-  MASTER_DOMAINS,
-  MASTER_STAKEHOLDERS,
-  MASTER_EXECUTIVE_TEMPLATES,
-  evaluatePromptReadiness,
-  type MasterExecutiveTemplate
-} from '@/lib/compiler/master-guide';
-
-type CompileMode = 'QUIRURGICO' | 'OMEGA_FULLSTACK';
-type CompileEngine = 'OLLAMA' | 'CLOUD';
-
-/** Contrato estructural del SpeechRecognition del navegador (cero `any`). */
-type SpeechRecognitionResultLike = {
-  transcript: string;
-};
-
-type SpeechRecognitionEventLike = {
-  results: Array<Array<SpeechRecognitionResultLike>>;
-};
-
-type SpeechRecognitionLike = {
-  lang: string;
-  continuous: boolean;
-  interimResults: boolean;
-  maxAlternatives: number;
-  onresult: ((event: SpeechRecognitionEventLike) => void) | null;
-  onend: (() => void) | null;
-  onerror: (() => void) | null;
-  start: () => void;
-  stop: () => void;
-};
-
-type SpeechRecognitionConstructor = new () => SpeechRecognitionLike;
-
-type WindowWithSpeech = Window & {
-  SpeechRecognition?: SpeechRecognitionConstructor;
-  webkitSpeechRecognition?: SpeechRecognitionConstructor;
-};
-
-type SelectableGpuModel = {
-  id: string;
-  label: string;
-  paramSize: string;
-  numCtx?: number;
-  role?: string;
-};
-
-type GpuStatusPayload = {
-  online: boolean;
-  usedVramMB: number;
-  totalVramMB: number;
-  freeVramMB: number;
-  loadedModels: Array<{ name: string; vramMB: number; contextSize: number }>;
-};
-
-// Ejemplo de orden por rol: cada placeholder apunta a una decisión real del rol.
-const PERSONA_PLACEHOLDER: Record<OraclePersona, string> = {
-  CEO: 'Diseñar una estrategia de sobredemanda para captar 20 fincas de bodas en Valencia y Sevilla sin pagar a directorios…',
-  ARTISTA: 'Negociar con una pareja indecisa que pide rebajar el caché sin devaluar la solvencia de Edwin Agudelo…',
-  CTO: 'Endurecer el endpoint de salud para que no declare OK sin sonda real y cablear la nueva puerta al arnés…',
-  CFO: 'Conciliar los depósitos de Stripe con el ledger y detectar cobros huérfanos del último trimestre…',
-  CMO: 'Publicar la landing de bodas en Toledo con claim verificable y CTA al depósito deducible…',
-  COO: 'Reordenar la logística de portes desde Méntrida y fijar el punto HITL de las cancelaciones…',
-  LEGAL: 'Revisar el expediente B2G para no rebasar el umbral del Art. 118 LCSP y adjuntar el rider acústico…',
-  ENGINEER: 'Refactorizar este componente en componentes hoja con tipos estrictos y CLS bajo…'
-};
-
-// Icono por rol del Oráculo: derivado del catálogo, nunca de una lista paralela.
-const PERSONA_ICON: Record<OraclePersona, typeof Crown> = {
-  CEO: Crown,
-  ARTISTA: Music2,
-  CTO: Cpu,
-  CFO: Gauge,
-  CMO: Flame,
-  COO: RefreshCw,
-  LEGAL: ShieldAlert,
-  ENGINEER: Code2
-};
-
-export default function MasterCompilerPage() {
-  const [prompt, setPrompt] = useState('');
-  const [mode, setMode] = useState<CompileMode>('OMEGA_FULLSTACK');
-  const [engine, setEngine] = useState<CompileEngine>('CLOUD');
-  const [oraclePersona, setOraclePersona] = useState<OraclePersona>('CEO');
-  const [selectedObjective, setSelectedObjective] = useState<string>('VENTAS');
-  const [selectedTactic, setSelectedTactic] = useState<string>('SOBREDEMANDA');
-  const [selectedTargetAgent, setSelectedTargetAgent] = useState<string>('CLINE');
-  const [selectedDomain, setSelectedDomain] = useState<string>('PRODUCTORA_EAR');
-  const [selectedStakeholder, setSelectedStakeholder] = useState<string>('CEO_INTERNO');
-  const [oracleResult, setOracleResult] = useState<OracleRefinedResult | null>(null);
-  const [isCompiling, setIsCompiling] = useState(false);
-  const [compiledData, setCompiledData] = useState<CompiledDAGResult | null>(null);
-  const [copied, setCopied] = useState(false);
-  const [copiedMaster, setCopiedMaster] = useState(false);
-  const [injected, setInjected] = useState(false);
-  const [isInjecting, setIsInjecting] = useState(false);
-  const [isListening, setIsListening] = useState(false);
-  const [selectedModel, setSelectedModel] = useState<string>('qwen3.8-27b-fast:latest');
-  const [forgeEnabled, setForgeEnabled] = useState<boolean>(true);
-  const [masterPrompt, setMasterPrompt] = useState<string | null>(null);
-  const [editableYaml, setEditableYaml] = useState<string>('');
-  const [editableTitle, setEditableTitle] = useState<string>('');
-  const [editableAction, setEditableAction] = useState<string>('');
-  const [editableFiles, setEditableFiles] = useState<string>('');
-  const [editableValidation, setEditableValidation] = useState<string>('npx tsc --noEmit -> Exit Code 0');
-  const [isEditingDag, setIsEditingDag] = useState<boolean>(false);
-  const [isEditingMaster, setIsEditingMaster] = useState<boolean>(true);
-  const [compileError, setCompileError] = useState<string | null>(null);
-  const [injectMessage, setInjectMessage] = useState<string | null>(null);
-  const [gpuStatus, setGpuStatus] = useState<GpuStatusPayload | null>(null);
-  const [gpuModels, setGpuModels] = useState<SelectableGpuModel[]>([]);
-  const [isPreloading, setIsPreloading] = useState<string | null>(null);
-  const [isRefreshingGpu, setIsRefreshingGpu] = useState(false);
-  const [lastLatency, setLastLatency] = useState<number | null>(null);
-  const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
-
-  const activeDoctrine = useMemo(() => getOracleDoctrine(oraclePersona), [oraclePersona]);
-  const readiness = useMemo(() => evaluatePromptReadiness(prompt), [prompt]);
-
-  const handleApplyTemplate = (tpl: MasterExecutiveTemplate) => {
-    setSelectedDomain(tpl.domain);
-    setSelectedStakeholder(tpl.stakeholder);
-    setSelectedObjective(tpl.objective);
-    setSelectedTactic(tpl.tactic);
-    setSelectedTargetAgent(tpl.targetAgent);
-    setPrompt(tpl.promptTemplate);
+  // Manejo de copia de la Pepita de Oro
+  const handleCopyPepita = async () => {
+    try {
+      await navigator.clipboard.writeText(refinedResult.pepitaDeOro);
+      setCopiedPepita(true);
+      setTimeout(() => setCopiedPepita(false), 2000);
+    } catch {
+      // Fallback
+    }
   };
 
-  const refreshGpuStatus = useCallback(async () => {
-    setIsRefreshingGpu(true);
+  // Manejo de copia del Megaprompt
+  const handleCopyMegaprompt = async () => {
     try {
-      const res = await fetch('/api/admin/gpu-status', { method: 'GET' });
-      const data = await res.json();
-      if (data?.ok) {
-        setGpuStatus(data.gpu ?? null);
-        const selectable: SelectableGpuModel[] = Array.isArray(data.selectableModels)
-          ? data.selectableModels
-          : [];
-        setGpuModels(selectable);
-      }
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setIsRefreshingGpu(false);
+      await navigator.clipboard.writeText(refinedResult.megaprompt);
+      setCopiedMegaprompt(true);
+      setTimeout(() => setCopiedMegaprompt(false), 2000);
+    } catch {
+      // Fallback
     }
-  }, []);
-
-  useEffect(() => {
-    void refreshGpuStatus();
-  }, [refreshGpuStatus]);
-
-  const handlePreloadModel = useCallback(async (modelId: string) => {
-    setIsPreloading(modelId);
-    try {
-      const res = await fetch('/api/admin/gpu-status', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ model: modelId })
-      });
-      const data = await res.json();
-      if (data?.ok) {
-        setGpuStatus(data.gpu ?? null);
-      }
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setIsPreloading(null);
-    }
-  }, []);
-
-  const handleRefineWithOracle = () => {
-    if (!prompt.trim()) return;
-    const refined = refineQueryWithOracle(prompt, oraclePersona);
-    setOracleResult(refined);
   };
 
-  const handleCompile = async () => {
-    if (!prompt.trim()) return;
-    setIsCompiling(true);
-    setInjected(false);
-    setInjectMessage(null);
-    setCompileError(null);
-    setMasterPrompt(null);
-    setLastLatency(null);
+  // Disparo al Webhook de n8n
+  const handleDispatchN8n = async () => {
+    setIsDispatchingN8n(true);
+    setN8nStatusMessage(null);
     try {
-      const res = await fetch('/api/admin/compile-intent', {
+      const res = await fetch('/api/admin/oracle/dispatch-n8n', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          intent: prompt,
           objective: selectedObjective,
-          tactic: selectedTactic,
-          targetAgent: selectedTargetAgent,
-          domain: selectedDomain,
-          stakeholder: selectedStakeholder,
-          mode,
-          engine,
-          oraclePersona,
-          model: selectedModel,
-          forge: forgeEnabled
-        })
+          input: rawVision,
+          pepitaDeOro: refinedResult.pepitaDeOro,
+          megaprompt: refinedResult.megaprompt,
+          matchedVaultDocs: refinedResult.matchedVaultDocs,
+        }),
       });
+
       const data = await res.json();
-      if (data.success && data.compiled) {
-        const comp: CompiledDAGResult = data.compiled;
-        setCompiledData(comp);
-        setEditableYaml(comp.yaml ?? '');
-        setEditableTitle(comp.jsonTask?.title ?? `B0.Omega: ${prompt.slice(0, 50)}`);
-        setEditableAction(comp.jsonTask?.action ?? prompt);
-        setEditableFiles(Array.isArray(comp.jsonTask?.files) ? comp.jsonTask.files.join('\n') : '');
-        setEditableValidation(comp.jsonTask?.validation ?? 'npx tsc --noEmit -> Exit Code 0');
-        if (data.oracle) {
-          setOracleResult(data.oracle);
-        }
-        if (typeof data.masterPrompt === 'string' && data.masterPrompt) {
-          setMasterPrompt(data.masterPrompt);
-        } else if (comp.jsonTask?.scaffold) {
-          setMasterPrompt(comp.jsonTask.scaffold);
-        }
-        if (typeof data.latencyMs === 'number') {
-          setLastLatency(data.latencyMs);
-        }
+      if (data.success) {
+        setN8nStatusMessage('✓ Payload despachado a n8n con éxito.');
       } else {
-        setCompileError(data?.error || `Error HTTP ${res.status} al compilar.`);
+        setN8nStatusMessage(`✗ Error n8n: ${data.error || 'Fallo desconocido'}`);
       }
-    } catch (e) {
-      console.error(e);
-      setCompileError(e instanceof Error ? e.message : 'Fallo de red al compilar.');
+    } catch {
+      setN8nStatusMessage('✗ Error de conexión con el webhook.');
     } finally {
-      setIsCompiling(false);
-      void refreshGpuStatus();
-    }
-  };
-
-  const toggleVoice = async () => {
-    const speechWindow = window as WindowWithSpeech;
-    const SpeechRecognition = speechWindow.SpeechRecognition ?? speechWindow.webkitSpeechRecognition;
-    if (!SpeechRecognition) return;
-
-    if (isListening) {
-      recognitionRef.current?.stop();
-      setIsListening(false);
-      return;
-    }
-
-    const recognition = new SpeechRecognition();
-    recognition.lang = 'es-ES';
-    recognition.continuous = false;
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
-    recognition.onresult = (event) => {
-      const transcript = event.results[0]?.[0]?.transcript ?? '';
-      setPrompt(prev => (prev ? prev + ' ' : '') + transcript);
-    };
-    recognition.onend = () => setIsListening(false);
-    recognition.onerror = () => setIsListening(false);
-    recognitionRef.current = recognition;
-    recognition.start();
-    setIsListening(true);
-  };
-
-  const yamlLines = useMemo(() => {
-    const yaml: string = editableYaml || compiledData?.yaml || '';
-    if (!yaml) return [];
-    return yaml.split('\n').map((line) => {
-      const trimmed = line.trimStart();
-      if (trimmed.startsWith('#')) {
-        return { text: line, className: 'text-zinc-500' };
-      }
-      if (/^[A-Z_]+:/.test(trimmed)) {
-        return { text: line, className: 'text-[#ecb613]' };
-      }
-      if (/-\s*STEP_\d+:/.test(line)) {
-        return { text: line, className: 'text-cyan-300' };
-      }
-      if (line.includes('"')) {
-        return { text: line, className: 'text-emerald-400' };
-      }
-      return { text: line, className: 'text-zinc-300' };
-    });
-  }, [editableYaml, compiledData]);
-
-  const handleCopyYAML = () => {
-    const textToCopy = editableYaml || compiledData?.yaml || '';
-    if (!textToCopy) return;
-    navigator.clipboard.writeText(textToCopy);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  const handleCopyMasterPrompt = () => {
-    if (!masterPrompt) return;
-    navigator.clipboard.writeText(masterPrompt);
-    setCopiedMaster(true);
-    setTimeout(() => setCopiedMaster(false), 2000);
-  };
-
-  const handleInjectQueue = async () => {
-    const baseTask = compiledData?.jsonTask;
-    const filesArray = editableFiles
-      .split('\n')
-      .map(f => f.trim())
-      .filter(Boolean);
-
-    const payloadTask = {
-      id: baseTask?.id || `omega-custom-${Date.now().toString().slice(-4)}`,
-      title: (editableTitle || baseTask?.title || `B0.Omega: ${prompt.slice(0, 50)}`).slice(0, 230),
-      status: 'QUEUED' as const,
-      description: (editableAction || prompt || baseTask?.description || 'Orden personalizada CEO').slice(0, 1900),
-      files: filesArray.length > 0 ? filesArray : (baseTask?.files ?? ['src/app/(admin)/admin/page.tsx']),
-      action: (editableAction || prompt || baseTask?.action || 'Ejecutar directiva CEO').slice(0, 1800),
-      scaffold: (masterPrompt || editableYaml || baseTask?.scaffold || prompt).slice(0, 7800),
-      done_when: (editableValidation || baseTask?.done_when || 'npx tsc --noEmit -> Exit Code 0').slice(0, 480),
-      validation: (editableValidation || baseTask?.validation || 'npx tsc --noEmit -> Exit Code 0').slice(0, 480),
-    };
-
-    setIsInjecting(true);
-    setInjectMessage(null);
-    try {
-      const res = await fetch('/api/admin/tasks/inject', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ task: payloadTask })
-      });
-      const data = await res.json();
-      if (data.ok || data.success) {
-        setInjected(true);
-        setInjectMessage(`Tarea inyectada en tasks_queue.json con ID: ${data.task?.id || payloadTask.id}`);
-      } else {
-        setInjectMessage(`Error al inyectar: ${data.error || 'Verifica tu sesión admin'}`);
-      }
-    } catch (e) {
-      console.error(e);
-      setInjectMessage('Error de red al inyectar en tasks_queue.json');
-    } finally {
-      setIsInjecting(false);
+      setIsDispatchingN8n(false);
+      setTimeout(() => setN8nStatusMessage(null), 4000);
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#030305] space-y-6 max-w-7xl mx-auto font-sans">
-      {/* Breadcrumb */}
-      <div className="flex items-center gap-2 text-xs font-mono text-zinc-500">
-        <Link href="/admin" className="hover:text-zinc-300 transition-colors">Admin</Link>
-        <span>/</span>
-        <span>IA &amp; GPU</span>
-        <span>/</span>
-        <span className="text-[#ecb613]">Oráculo &amp; Compilador Maestro</span>
-        <span>/</span>
-        <span className="text-[#00E5FF]">Taste Engine &amp; Canvas</span>
-      </div>
-
-      {/* Taste Engine & Canvas Panel */}
-      <div className="p-5 rounded-3xl bg-[#09090f] border border-zinc-800/80 shadow-2xl">
-        <h2 className="text-xl font-bold font-syne tracking-tight text-white uppercase mb-4">
-          Taste Engine & Canvas
-        </h2>
-        
-        {/* Color Palette Selector */}
-        <div className="mb-6">
-          <h3 className="text-sm font-mono uppercase text-zinc-400 mb-2">Selector de Paleta</h3>
-          <div className="flex flex-wrap gap-2">
-            <button 
-              className="px-3 py-2 rounded-lg bg-[#030305] border border-[#ecb613] text-[#ecb613] text-xs font-mono"
-              onClick={() => {
-                document.documentElement.style.setProperty('--ear-bg-void', '#030305');
-                document.documentElement.style.setProperty('--ear-accent-gold', '#ecb613');
-              }}
-            >
-              OLED S-Class
-            </button>
-            <button 
-              className="px-3 py-2 rounded-lg bg-[#030305] border border-[#00E5FF] text-[#00E5FF] text-xs font-mono"
-              onClick={() => {
-                document.documentElement.style.setProperty('--ear-bg-void', '#030305');
-                document.documentElement.style.setProperty('--ear-accent-gold', '#00E5FF');
-              }}
-            >
-              Cyber Telemetría
-            </button>
-            <button 
-              className="px-3 py-2 rounded-lg bg-[#09090d] border border-[#FF2B44] text-[#FF2B44] text-xs font-mono"
-              onClick={() => {
-                document.documentElement.style.setProperty('--ear-bg-void', '#09090d');
-                document.documentElement.style.setProperty('--ear-accent-gold', '#FF2B44');
-              }}
-            >
-              Alerta / Bloqueo
-            </button>
-            <input 
-              type="color" 
-              className="w-10 h-10 rounded-lg border border-zinc-700"
-              onChange={(e) => {
-                document.documentElement.style.setProperty('--ear-accent-gold', e.target.value);
-              }}
-            />
-          </div>
-        </div>
-
-        {/* Typography Selector */}
-        <div className="mb-6">
-          <h3 className="text-sm font-mono uppercase text-zinc-400 mb-2">Conmutador Tipográfico</h3>
-          <div className="flex flex-wrap gap-2">
-            <button 
-              className="px-3 py-2 rounded-lg bg-zinc-950 border border-zinc-700 text-xs font-mono"
-              onClick={() => {
-                document.documentElement.style.setProperty('--font-display', 'Syne');
-                document.documentElement.style.setProperty('--font-body', 'Inter');
-              }}
-            >
-              Syne & Inter
-            </button>
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-mono text-zinc-400">Tamaño:</span>
-              <select 
-                className="px-3 py-2 rounded-lg bg-zinc-950 border border-zinc-700 text-xs font-mono"
-                onChange={(e) => {
-                  document.documentElement.style.setProperty('--font-base', `${e.target.value}px`);
-                }}
-              >
-                <option value="14">14px</option>
-                <option value="16">16px</option>
-                <option value="18">18px</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        {/* Live Preview */}
-        <div className="mt-6 p-4 rounded-xl bg-zinc-950 border border-zinc-800">
-          <h3 className="text-sm font-mono uppercase text-zinc-400 mb-2">Previsualización en Vivo</h3>
-          <div className="p-4 rounded-lg bg-[var(--ear-bg-void)] border border-[var(--ear-accent-gold)]">
-            <h4 className="text-lg font-syne text-white mb-2">Ejemplo de Título</h4>
-            <p className="text-sm font-inter text-zinc-300 mb-4">Este es un texto de ejemplo para mostrar la fuente seleccionada.</p>
-            <button className="px-4 py-2 rounded-lg bg-[var(--ear-accent-gold)] text-black font-bold">Botón Primario</button>
-            <div className="mt-2 inline-block px-2 py-1 rounded bg-zinc-800 border border-zinc-700 text-xs font-mono">100 € Stripe</div>
-          </div>
-        </div>
-      </div>
-
-      {/* Header S-Class */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div className="min-h-screen bg-[#030305] text-zinc-100 font-sans p-4 sm:p-8 space-y-6">
+      {/* ════════════════════════════════════════════════════════════════════════ */}
+      {/* BARRA SUPERIOR DE MANDO DEL CEO                                          */}
+      {/* ════════════════════════════════════════════════════════════════════════ */}
+      <header className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-5 border-b border-white/10">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold font-syne tracking-tight text-white uppercase">
-            COMPILADOR MAESTRO &amp; ORÁCULO CUÁNTICO S-CLASS
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] font-mono text-xs font-bold uppercase tracking-wider mb-2">
+            <Crown className="w-3.5 h-3.5" />
+            <span>Consola de Decisión Ejecutiva · Antigravity &amp; Oráculo RAG</span>
+          </div>
+          <h1 className="font-[family-name:var(--font-src-syne)] font-black text-2xl sm:text-3xl text-white uppercase tracking-tight">
+            Compilador Soberano del CEO
           </h1>
-          <p className="text-xs font-mono text-zinc-400 mt-1">
-            Bóveda de Crecimiento &bull; <span className="text-[#ecb613]">tasks_queue.json</span> &bull; Doctrina Inmutable Exit Code 0
+          <p className="text-xs text-zinc-400 mt-0.5">
+            Filtrado aristocrático Halcón sobre la Bóveda Velocity ({vaultStats.totalFiles} recursos · {vaultStats.totalSizeMb} MB) e inyección constitucional de SSOT.
           </p>
         </div>
 
+        {/* Accesos a Secciones Secundarias Reubicadas */}
         <div className="flex flex-wrap items-center gap-2.5">
-          <div className="px-3.5 py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-xs font-mono text-emerald-400 font-bold flex items-center gap-2">
-            <Cpu className="w-3.5 h-3.5" />
-            <span>AMD RX 7900 XTX (24GB)</span>
+          <Link
+            href="/admin/legal"
+            className="px-3.5 py-1.5 rounded-xl border border-white/10 bg-white/5 font-mono text-xs text-zinc-300 hover:text-white hover:bg-white/10 transition-colors flex items-center gap-1.5"
+          >
+            <Scale className="w-3.5 h-3.5 text-emerald-400" />
+            <span>Módulo Legal &amp; Cookies</span>
+          </Link>
+          <Link
+            href="/admin/components"
+            className="px-3.5 py-1.5 rounded-xl border border-white/10 bg-white/5 font-mono text-xs text-zinc-300 hover:text-white hover:bg-white/10 transition-colors flex items-center gap-1.5"
+          >
+            <Sliders className="w-3.5 h-3.5 text-cyan-400" />
+            <span>Arena Componentes</span>
+          </Link>
+        </div>
+      </header>
+
+      {/* ════════════════════════════════════════════════════════════════════════ */}
+      {/* 1. PANEL SUPERIOR · ENTRADA DEL CEO (VISION INPUT)                       */}
+      {/* ════════════════════════════════════════════════════════════════════════ */}
+      <section className="rounded-3xl bg-[#09090d]/90 border border-white/10 p-5 sm:p-6 shadow-[0_20px_50px_rgba(0,0,0,0.85)] space-y-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <Sparkles className="w-4 h-4 text-[#ecb613]" />
+            <h2 className="font-mono text-xs font-bold text-white uppercase tracking-wider">
+              1. Entrada del CEO (Vision Input)
+            </h2>
           </div>
-          <div className="px-3.5 py-2 rounded-xl bg-[#ecb613]/10 border border-[#ecb613]/30 text-xs font-mono text-[#ecb613] font-bold">
-            Exit Code 0
-          </div>
+          <span className="text-[10px] font-mono text-zinc-500">
+            Ingresa ideas brutas, borradores, objeciones o pliegos para purgar y refinar.
+          </span>
         </div>
 
-// Inside the MasterCompilerPage component, add the CustomerJourneyCanvas component below the Oracle Insight Preview Card section.
-{oracleResult && (
-  <div className="p-4 rounded-2xl bg-[#090910] border border-[#ecb613]/30 space-y-3">
-    <div className="flex items-center justify-between text-xs font-mono">
-      <span className="text-[#ecb613] font-bold flex items-center gap-1.5">
-        <Crown className="w-3.5 h-3.5 text-[#ecb613]" /> Guía Maestra S-Class (Control 100% Autónomo CEO)
-      </span>
-      <span className="text-[10px] text-zinc-500 font-mono">Doctrina Exit Code 0</span>
-    </div>
-  </div>
-)}
+        {/* Selector de los 4 Objetivos Estratégicos */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
+          {OBJECTIVES.map((obj) => {
+            const isSelected = selectedObjective === obj.id;
+            const Icon = obj.icon;
 
-<CustomerJourneyCanvas />
-<AdminOperationsConsole />
-      </div>
-
-      {/* Selector Soberano del Oráculo: 8 roles reales del sistema */}
-      <div className="p-5 rounded-2xl bg-[#09090f] border border-zinc-800/80 shadow-2xl relative overflow-hidden">
-        <div className="space-y-1 relative z-10">
-          <div className="flex items-center gap-2 text-xs font-mono text-zinc-400 uppercase tracking-wider">
-            <Sparkles className="w-3.5 h-3.5 text-[#ecb613]" />
-            <span>Prisma Cognitivo del Oráculo · {ORACLE_PERSONA_CATALOG.length} roles</span>
-          </div>
-          <h3 className="text-lg font-bold font-['Syne'] text-white">
-            {ORACLE_PERSONA_CATALOG.find((p) => p.id === oraclePersona)?.label ?? oraclePersona}
-          </h3>
-          <p className="text-xs text-zinc-400 max-w-2xl">{activeDoctrine.nombre}</p>
-        </div>
-
-        {/* Matriz de roles: una fila por persona del contrato cerrado */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-4 mt-4 border-t border-zinc-800/60">
-          {ORACLE_PERSONA_CATALOG.map((descriptor) => {
-            const Icon = PERSONA_ICON[descriptor.id];
-            const isActive = oraclePersona === descriptor.id;
             return (
               <button
-                key={descriptor.id}
+                key={obj.id}
                 type="button"
-                onClick={() => {
-                  setOraclePersona(descriptor.id);
-                  setOracleResult(null);
-                }}
-                aria-pressed={isActive}
-                title={`${descriptor.label} · ${descriptor.purpose}`}
-                className={`min-h-[64px] px-3 py-2.5 rounded-xl text-left transition border ${
-                  isActive
-                    ? 'bg-[#ecb613] text-black border-[#ecb613] shadow-lg shadow-[#ecb613]/20'
-                    : 'bg-zinc-950/80 text-zinc-300 hover:text-white hover:bg-zinc-900 border-zinc-800'
+                onClick={() => setSelectedObjective(obj.id)}
+                className={`p-3 rounded-2xl border text-left transition-all ${
+                  isSelected
+                    ? 'bg-[#ecb613]/15 border-[#ecb613]/50 text-white shadow-[0_0_20px_rgba(236,182,19,0.25)]'
+                    : 'bg-white/[0.02] border-white/5 text-zinc-400 hover:text-white hover:bg-white/5'
                 }`}
               >
-                <span className="flex items-center gap-1.5 text-[11px] font-mono font-bold uppercase tracking-wide">
-                  <Icon className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-black' : 'text-[#ecb613]'}`} />
-                  <span className="truncate">{descriptor.label}</span>
-                </span>
-                <span
-                  className={`mt-1 block text-[10px] leading-snug line-clamp-2 ${
-                    isActive ? 'text-black/70' : 'text-zinc-500'
-                  }`}
-                >
-                  {descriptor.purpose}
-                </span>
+                <div className="flex items-center gap-2 mb-1">
+                  <Icon className={`w-4 h-4 ${isSelected ? 'text-[#ecb613]' : 'text-zinc-500'}`} />
+                  <span className="font-mono text-xs font-bold uppercase">{obj.label}</span>
+                </div>
+                <p className="text-[11px] font-sans text-zinc-400 line-clamp-2">
+                  {obj.description}
+                </p>
               </button>
             );
           })}
         </div>
 
-        {/* Levers Pills */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-4 mt-4 border-t border-zinc-800/60">
-          {activeDoctrine.principios.slice(0, 3).map((p, idx) => (
-            <div key={idx} className="p-2.5 rounded-lg bg-zinc-950/60 border border-zinc-800/60 text-[11px] font-mono text-zinc-300 flex items-start gap-2">
-              <CheckCircle2 className="w-3.5 h-3.5 text-[#ecb613] shrink-0 mt-0.5" />
-              <span className="line-clamp-2">{p}</span>
-            </div>
-          ))}
+        {/* Área de Texto de la Visión */}
+        <div>
+          <textarea
+            rows={4}
+            value={rawVision}
+            onChange={(e) => setRawVision(e.target.value)}
+            placeholder="Escribe aquí tu visión en bruto: ej. 'Los novios piden rebajar 100€ porque dicen que en otra finca les regalan la barra libre...'"
+            className="w-full p-4 rounded-2xl bg-black/60 border border-white/15 text-sm font-sans text-white placeholder-zinc-500 focus:outline-none focus:border-[#ecb613] transition-colors resize-y"
+          />
         </div>
-      </div>
+      </section>
 
-      {/* Main Grid Two-Column */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* Left Column: Input Prompt & Controls */}
-        <div className="lg:col-span-5 flex flex-col gap-4">
-          <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 flex flex-col gap-4">
-            <div className="flex items-center justify-between">
-              <label className="text-xs font-mono uppercase text-zinc-400 flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-[#ecb613]" /> Visión del Negocio
-              </label>
-              <div className="flex items-center gap-1 bg-zinc-950 p-1 rounded-lg border border-zinc-800">
-                {(['QUIRURGICO', 'OMEGA_FULLSTACK'] as const).map(m => (
-                  <button
-                    key={m}
-                    onClick={() => setMode(m)}
-                    className={'px-2.5 py-1 text-[10px] font-mono rounded-md transition ' + (mode === m ? 'bg-[#ecb613] text-black font-bold' : 'text-zinc-400 hover:text-white')}
-                  >
-                    {m === 'QUIRURGICO' ? 'Quirúrgico' : 'Omega Full-Stack'}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <label className="text-[10px] font-mono uppercase text-zinc-500">Motor de ejecución</label>
-              <div className="flex items-center gap-1 bg-zinc-950 p-1 rounded-lg border border-zinc-800 ml-auto">
-                {(['OLLAMA', 'CLOUD'] as const).map(e => (
-                  <button
-                    key={e}
-                    onClick={() => setEngine(e)}
-                    className={'px-2.5 py-1 text-[10px] font-mono rounded-md transition flex items-center gap-1 ' + (engine === e ? 'bg-[#ecb613] text-black font-bold' : 'text-zinc-400 hover:text-white')}
-                  >
-                    {e === 'OLLAMA' ? <Cpu className="w-3 h-3" /> : <Cloud className="w-3 h-3" />}
-                    {e === 'OLLAMA' ? 'Ollama Local' : 'Cloud Edge'}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* GPU Inference Control Panel */}
-            {engine === 'OLLAMA' && (
-              <div className="p-4 rounded-2xl bg-black/50 border border-cyan-500/20 space-y-3">
-                <div className="flex items-center justify-between">
-                  <label className="text-[10px] font-mono uppercase text-cyan-300 flex items-center gap-1.5">
-                    <Gauge className="w-3.5 h-3.5" /> Modelo GPU & Telemetría VRAM
-                  </label>
-                  <button
-                    onClick={() => void refreshGpuStatus()}
-                    disabled={isRefreshingGpu}
-                    className="p-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-cyan-300 transition disabled:opacity-50"
-                    title="Refrescar estado de la GPU"
-                  >
-                    <RefreshCw className={'w-3.5 h-3.5 ' + (isRefreshingGpu ? 'animate-spin' : '')} />
-                  </button>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                  <div className="p-2.5 rounded-lg bg-zinc-950 border border-zinc-800 text-center">
-                    <div className="text-[10px] font-mono text-zinc-500">VRAM Ocupada</div>
-                    <div className="text-sm font-mono text-cyan-300 font-bold">
-                      {gpuStatus ? ((gpuStatus.usedVramMB / 1024).toFixed(1) + ' GB') : '—'}
-                    </div>
-                  </div>
-                  <div className="p-2.5 rounded-lg bg-zinc-950 border border-zinc-800 text-center">
-                    <div className="text-[10px] font-mono text-zinc-500">VRAM Libre</div>
-                    <div className="text-sm font-mono text-emerald-400 font-bold">
-                      {gpuStatus ? ((gpuStatus.freeVramMB / 1024).toFixed(1) + ' GB') : '—'}
-                    </div>
-                  </div>
-                  <div className="p-2.5 rounded-lg bg-zinc-950 border border-zinc-800 text-center">
-                    <div className="text-[10px] font-mono text-zinc-500">Iteración</div>
-                    <div className="text-sm font-mono text-[#ecb613] font-bold">
-                      {lastLatency !== null ? (lastLatency + ' ms') : '—'}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-1.5">
-                  <span className="text-[10px] font-mono text-zinc-500">Modelo de razonamiento</span>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-1.5">
-                    {gpuModels.length === 0
-                      ? [
-                        { id: 'qwen3.8-27b-fast:latest', label: 'Qwen3.8 27B FAST', paramSize: '27B' },
-                        { id: 'ear-32b-architect:latest', label: 'EAR-32B Architect', paramSize: '32B' },
-                        { id: 'ear-14b-speed:latest', label: 'EAR-14B Speed', paramSize: '14B' }
-                      ].map(m => (
-                        <button
-                          key={m.id}
-                          onClick={() => setSelectedModel(m.id)}
-                          className={'px-2 py-2 rounded-lg border text-[10px] font-mono transition ' + (selectedModel === m.id ? 'bg-cyan-500/15 border-cyan-500/50 text-cyan-300 font-bold' : 'bg-zinc-950 border-zinc-800 text-zinc-400 hover:text-white hover:border-cyan-500/30')}
-                        >
-                          {m.paramSize} &bull; {m.label.replace('Qwen3.8 27B FAST', '27B Fast').replace('EAR-32B Architect', '32B Arch').replace('EAR-14B Speed', '14B Speed')}
-                        </button>
-                      ))
-                      : gpuModels.map(m => (
-                        <button
-                          key={m.id}
-                          onClick={() => setSelectedModel(m.id)}
-                          className={'px-2 py-2 rounded-lg border text-[10px] font-mono transition ' + (selectedModel === m.id ? 'bg-cyan-500/15 border-cyan-500/50 text-cyan-300 font-bold' : 'bg-zinc-950 border-zinc-800 text-zinc-400 hover:text-white hover:border-cyan-500/30')}
-                        >
-                          {m.paramSize} &bull; {m.label}
-                        </button>
-                      ))}
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between gap-2 pt-1 border-t border-zinc-800">
-                  <div className="flex items-center gap-2">
-                    <BrainCircuit className="w-3.5 h-3.5 text-[#ecb613]" />
-                    <span className="text-[10px] font-mono text-zinc-400">Forja el Prompt Maestro (nivel frontera)</span>
-                  </div>
-                  <button
-                    onClick={() => setForgeEnabled(v => !v)}
-                    className={'relative w-9 h-5 rounded-full transition ' + (forgeEnabled ? 'bg-[#ecb613]' : 'bg-zinc-700')}
-                    title={forgeEnabled ? 'Forja activada' : 'Forja desactivada'}
-                  >
-                    <span className={'absolute top-0.5 w-4 h-4 rounded-full bg-black transition ' + (forgeEnabled ? 'left-4' : 'left-0.5')} />
-                  </button>
-                </div>
-
-                <button
-                  onClick={() => void handlePreloadModel(selectedModel)}
-                  disabled={isPreloading !== null}
-                  className="w-full px-3 py-2 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 text-xs font-mono font-bold flex items-center justify-center gap-2 transition disabled:opacity-50"
-                >
-                  {isPreloading === selectedModel ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Zap className="w-3.5 h-3.5" />}
-                  {isPreloading === selectedModel ? 'Cargando en VRAM...' : 'Precargar modelo en VRAM (adiós cold-start)'}
-                </button>
-              </div>
-            )}
-
-            
-            {/* 🧭 SELECTORES DE LA GUÍA MAESTRA · SSOT: src/lib/compiler/master-guide.ts */}
-            <div className="p-4 rounded-2xl bg-zinc-950/80 border border-[#ecb613]/25 space-y-3.5">
-              <div className="flex items-center justify-between text-xs font-mono">
-                <span className="text-[#ecb613] font-bold flex items-center gap-1.5">
-                  <Crown className="w-3.5 h-3.5 text-[#ecb613]" /> Guía Maestra S-Class (Control 100% Autónomo CEO)
-                </span>
-                <span className="text-[10px] text-zinc-500 font-mono">Doctrina Exit Code 0</span>
-              </div>
-
-              {/* Galería de Plantillas Ejecutivas 1-Clic */}
-              <div className="space-y-1.5">
-                <label className="text-[10px] font-mono uppercase tracking-wider text-[#ecb613]">⚡ Plantillas Ejecutivas de 1 Clic (Carga Automática)</label>
-                <div className="grid grid-cols-2 gap-1.5 max-h-40 overflow-y-auto pr-1">
-                  {MASTER_EXECUTIVE_TEMPLATES.map(tpl => (
-                    <button
-                      key={tpl.id}
-                      type="button"
-                      onClick={() => handleApplyTemplate(tpl)}
-                      className="p-2 rounded-xl text-left border bg-black/50 border-zinc-800 hover:border-[#ecb613]/60 text-zinc-300 hover:text-white text-[11px] font-mono transition"
-                    >
-                      <div className="font-bold truncate text-white">{tpl.title}</div>
-                      <div className="text-[9px] text-[#ecb613] truncate">{tpl.badge}</div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Selector 0A: Dominio / Unidad de Negocio Aislada */}
-              <div className="space-y-1.5">
-                <label className="text-[10px] font-mono uppercase tracking-wider text-zinc-400">0A. Unidad de Negocio / Dominio Aislado</label>
-                <div className="grid grid-cols-2 gap-1.5">
-                  {MASTER_DOMAINS.map(item => (
-                    <button
-                      key={item.id}
-                      type="button"
-                      onClick={() => setSelectedDomain(item.id)}
-                      className={'p-2 rounded-xl text-left border text-xs font-mono transition ' + (selectedDomain === item.id ? 'bg-[#ecb613]/15 border-[#ecb613] text-[#ecb613] font-bold' : 'bg-black/40 border-zinc-800/80 text-zinc-400 hover:text-white')}
-                    >
-                      <div className="truncate">{item.label}</div>
-                      <div className="text-[9px] text-zinc-500 truncate">{item.hint}</div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Selector 0B: Perfil de Cliente / Interlocutor */}
-              <div className="space-y-1.5">
-                <label className="text-[10px] font-mono uppercase tracking-wider text-zinc-400">0B. Perfil de Interlocutor / Cliente</label>
-                <div className="grid grid-cols-2 gap-1.5">
-                  {MASTER_STAKEHOLDERS.map(item => (
-                    <button
-                      key={item.id}
-                      type="button"
-                      onClick={() => setSelectedStakeholder(item.id)}
-                      className={'p-2 rounded-xl text-left border text-xs font-mono transition ' + (selectedStakeholder === item.id ? 'bg-emerald-500/15 border-emerald-400 text-emerald-300 font-bold' : 'bg-black/40 border-zinc-800/80 text-zinc-400 hover:text-white')}
-                    >
-                      <div className="truncate">{item.label}</div>
-                      <div className="text-[9px] text-zinc-500 truncate">{item.hint}</div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Selector 1: Objetivo de Negocio */}
-              <div className="space-y-1.5">
-                <label className="text-[10px] font-mono uppercase tracking-wider text-zinc-400">1. Objetivo de Negocio</label>
-                <div className="grid grid-cols-2 gap-1.5">
-                  {MASTER_OBJECTIVES.map(item => (
-                    <button
-                      key={item.id}
-                      type="button"
-                      onClick={() => setSelectedObjective(item.id)}
-                      className={'p-2 rounded-xl text-left border text-xs font-mono transition ' + (selectedObjective === item.id ? 'bg-[#ecb613]/15 border-[#ecb613] text-[#ecb613] font-bold' : 'bg-black/40 border-zinc-800/80 text-zinc-400 hover:text-white')}
-                    >
-                      <div className="truncate">{item.label}</div>
-                      <div className="text-[9px] text-zinc-500 truncate">{item.hint}</div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Selector 2: Táctica de la Bóveda de Crecimiento */}
-              <div className="space-y-1.5">
-                <label className="text-[10px] font-mono uppercase tracking-wider text-zinc-400">2. Táctica de la Bóveda de Crecimiento</label>
-                <div className="grid grid-cols-2 gap-1.5">
-                  {MASTER_TACTICS.map(item => (
-                    <button
-                      key={item.id}
-                      type="button"
-                      onClick={() => setSelectedTactic(item.id)}
-                      className={'p-2 rounded-xl text-left border text-xs font-mono transition ' + (selectedTactic === item.id ? 'bg-cyan-500/15 border-cyan-400 text-cyan-300 font-bold' : 'bg-black/40 border-zinc-800/80 text-zinc-400 hover:text-white')}
-                    >
-                      <div className="truncate">{item.label}</div>
-                      <div className="text-[9px] text-zinc-500 truncate">{item.hint}</div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Selector 3: Destinatario del Prompt */}
-              <div className="space-y-1.5">
-                <label className="text-[10px] font-mono uppercase tracking-wider text-zinc-400">3. ¿A qué IA o Agente se lo entregarás?</label>
-                <div className="grid grid-cols-3 gap-1.5">
-                  {MASTER_TARGETS.map(item => (
-                    <button
-                      key={item.id}
-                      type="button"
-                      onClick={() => setSelectedTargetAgent(item.id)}
-                      className={'p-2 rounded-xl text-center border text-xs font-mono transition ' + (selectedTargetAgent === item.id ? 'bg-[#FF2B44]/15 border-[#FF2B44] text-[#FF2B44] font-bold' : 'bg-black/40 border-zinc-800/80 text-zinc-400 hover:text-white')}
-                    >
-                      <div className="truncate">{item.label}</div>
-                      <div className="text-[9px] text-zinc-500 truncate">{item.hint}</div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Auditor Pre-Vuelo en Vivo */}
-              <div className="p-3 rounded-xl bg-black/60 border border-zinc-800 space-y-2">
-                <div className="flex items-center justify-between text-[10px] font-mono">
-                  <span className="text-zinc-300 uppercase">Auditor Pre-Vuelo de Claridad</span>
-                  <span className={readiness.score >= 75 ? 'text-emerald-400 font-bold' : 'text-amber-400 font-bold'}>
-                    Precisión: {readiness.score}%
-                  </span>
-                </div>
-                <div className="grid grid-cols-2 gap-1.5">
-                  {readiness.checks.map(chk => (
-                    <div
-                      key={chk.id}
-                      title={chk.tip}
-                      className={'px-2 py-1 rounded text-[10px] font-mono flex items-center gap-1.5 ' + (chk.passed ? 'bg-emerald-950/30 text-emerald-300 border border-emerald-500/20' : 'bg-zinc-900/60 text-zinc-500 border border-zinc-800')}
-                    >
-                      <CheckCircle2 className={'w-3 h-3 shrink-0 ' + (chk.passed ? 'text-emerald-400' : 'text-zinc-600')} />
-                      <span className="truncate">{chk.label}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <textarea
-              value={prompt}
-              onChange={e => setPrompt(e.target.value)}
-              placeholder={PERSONA_PLACEHOLDER[oraclePersona]}
-              rows={7}
-              className="w-full p-4 rounded-xl bg-zinc-950 border border-zinc-800 text-sm text-zinc-200 placeholder:text-zinc-600 focus:outline-none focus:border-[#ecb613] transition resize-none"
-            />
-
-            <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={toggleVoice}
-                  disabled={isCompiling}
-                  className={'px-3 py-2 rounded-xl border text-xs font-mono flex items-center gap-1.5 transition disabled:opacity-50 ' + (isListening ? 'bg-[#FF2B44]/15 border-[#FF2B44]/50 text-[#FF2B44]' : 'bg-zinc-950 border-zinc-800 text-zinc-400 hover:text-white hover:border-[#ecb613]/50')}
-                >
-                  {isListening ? <Square className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
-                  {isListening ? 'Detener' : 'Voz'}
-                </button>
-
-                <button
-                  onClick={handleRefineWithOracle}
-                  disabled={!prompt.trim() || isCompiling}
-                  className="px-3.5 py-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-700/80 text-[#ecb613] text-xs font-mono flex items-center gap-1.5 transition disabled:opacity-40"
-                  title="Amplificar con los principios de la Bóveda de Crecimiento"
-                >
-                  <Sparkles className="w-3.5 h-3.5" />
-                  <span>Refinar con Oráculo</span>
-                </button>
-              </div>
-
-              <button
-                onClick={handleCompile}
-                disabled={isCompiling || !prompt.trim()}
-                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#ecb613] to-amber-500 text-black font-bold text-xs font-mono flex items-center gap-2 transition disabled:opacity-50 shadow-lg shadow-[#ecb613]/20"
-              >
-                <Zap className={'w-4 h-4 ' + (isCompiling ? 'animate-spin' : '')} />
-                {isCompiling ? 'Compilando...' : 'Compilar a DAG'}
-              </button>
-            </div>
+      {/* ════════════════════════════════════════════════════════════════════════ */}
+      {/* 2. PANEL CENTRAL · MOTOR DEL ORÁCULO (VELOCITY RAG & FILTRO HALCÓN)     */}
+      {/* ════════════════════════════════════════════════════════════════════════ */}
+      <section className="rounded-3xl bg-[#09090d]/90 border border-white/10 p-5 sm:p-6 shadow-[0_20px_50px_rgba(0,0,0,0.85)] space-y-4">
+        <div className="flex items-center justify-between pb-3 border-b border-white/10">
+          <div className="flex items-center gap-2">
+            <Zap className="w-4 h-4 text-cyan-400" />
+            <h2 className="font-mono text-xs font-bold text-white uppercase tracking-wider">
+              2. Motor del Oráculo (Velocity RAG &amp; Filtro Halcón)
+            </h2>
           </div>
-
-          {/* Oracle Insight Preview Card */}
-          {oracleResult && (
-            <div className="p-4 rounded-2xl bg-[#090910] border border-[#ecb613]/30 space-y-3">
-              <div className="flex items-center justify-between text-xs font-mono">
-                <span className="text-[#ecb613] font-bold flex items-center gap-1.5">
-                  <Flame className="w-3.5 h-3.5" /> Directivas del Oráculo ({oracleResult.persona})
-                </span>
-                <span className="text-[10px] text-zinc-500">Regla 10 Activa</span>
-              </div>
-
-              <div className="text-xs font-mono text-zinc-300 bg-zinc-950 p-3 rounded-xl border border-zinc-800 leading-relaxed max-h-40 overflow-y-auto whitespace-pre-wrap">
-                {oracleResult.refinedPrompt}
-              </div>
-
-              <div className="flex flex-wrap gap-1.5 pt-1">
-                {oracleResult.tacticalLevers.map((lever, i) => (
-                  <span key={i} className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#ecb613]/10 text-[#ecb613] border border-[#ecb613]/20">
-                    &bull; {lever}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-
-          <div className="p-4 rounded-xl bg-zinc-900/30 border border-zinc-800/50 text-xs font-mono text-zinc-400 flex flex-col gap-2">
-            <div className="flex items-center gap-1.5 text-zinc-300 font-bold">
-              <ShieldAlert className="w-3.5 h-3.5 text-[#ecb613]" /> Blindaje Zero-Alucinación
-            </div>
-            <p className="text-[11px] text-zinc-500">
-              Validación inmutable: SSOT Méntrida, 350 € Solista, Split 80/10/10, Depósito Stripe 100 € SHA-256 y Exit Code 0.
-            </p>
-          </div>
+          <span className="text-[10px] font-mono text-cyan-400 bg-cyan-500/10 px-2.5 py-0.5 rounded-full border border-cyan-500/20">
+            {vaultStats.totalFiles} Recursos de Bóveda Sincronizados
+          </span>
         </div>
 
-        {/* Right Column: Compiled Manifest DAG & Editable Studio */}
-        <div className="lg:col-span-7 flex flex-col gap-4">
-          {compileError && (
-            <div className="p-4 rounded-2xl bg-[#FF2B44]/10 border border-[#FF2B44]/40 text-xs font-mono text-[#FF2B44]">
-              {compileError}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Columna A: Invariantes Constitucionales del SSOT Inyectadas */}
+          <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-2.5">
+            <div className="flex items-center gap-1.5 font-mono text-xs font-bold text-emerald-400 uppercase">
+              <ShieldCheck className="w-4 h-4" />
+              <span>Invariantes Sagradas de ear-os-ssot.ts Aplicadas:</span>
             </div>
-          )}
-
-          {injectMessage && (
-            <div className={'p-4 rounded-2xl border text-xs font-mono ' + (injected ? 'bg-emerald-500/10 border-emerald-500/40 text-emerald-300' : 'bg-amber-500/10 border-amber-500/40 text-amber-300')}>
-              {injectMessage}
-            </div>
-          )}
-
-          {/* Forged Master Prompt Studio (Edición Palabra por Palabra) */}
-          <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-[#ecb613]/30 backdrop-blur-md space-y-3">
-            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-800 pb-2">
-              <div className="flex items-center gap-2">
-                <BrainCircuit className="w-4 h-4 text-[#ecb613]" />
-                <span className="text-xs font-mono uppercase text-[#ecb613] font-bold">
-                  Estudio de Prompt Maestro (Editable Bit a Bit / Palabra por Palabra)
-                </span>
-              </div>
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => setIsEditingMaster(v => !v)}
-                  className="px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-200 text-xs font-mono transition"
-                >
-                  {isEditingMaster ? 'Ver Modo Lectura' : 'Editar Texto Libre'}
-                </button>
-                <button
-                  type="button"
-                  onClick={handleCopyMasterPrompt}
-                  disabled={!masterPrompt}
-                  className="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-mono flex items-center gap-1.5 transition disabled:opacity-40"
-                >
-                  {copiedMaster ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-                  <span>{copiedMaster ? 'Copiado' : 'Copiar Prompt Maestro'}</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Inyección rápida de bloques modulares al Prompt Maestro */}
-            <div className="flex flex-wrap items-center gap-1.5">
-              <span className="text-[10px] font-mono text-zinc-500 uppercase mr-1">Insertar bloque:</span>
-              {[
-                { label: '+ Regla 350€ Solista', snippet: '\n- [REGLA SSOT]: Respetar suelo canónico de 350,00 € para Solista (Edwin Agudelo) + 1,50 €/km desde km 50.' },
-                { label: '+ Split 80/10/10 Céntimos', snippet: '\n- [REGLA SPLIT]: Calcular reparto 80% Artista / 10% EAR OS / 10% VIMUME en céntimos enteros (integer cents).' },
-                { label: '+ Acústica Ley 37/2003', snippet: '\n- [REGLA ACÚSTICA]: Garantizar < 75 dB SPL (salud pública) y 12 W/pax con limitador homologado.' },
-                { label: '+ Techo B2G 14.250€', snippet: '\n- [REGLA B2G]: Contrato menor Art. 118 LCSP con tope preventivo en 14.250,00 € y SROI 4.85x.' },
-                { label: '+ Cero Emojis / UNSLOP', snippet: '\n- [UNSLOP OLED]: Fondo #030305, un solo acento (#ecb613), iconos Lucide strokeWidth 1.5, cero emojis.' },
-              ].map((blk) => (
-                <button
-                  key={blk.label}
-                  type="button"
-                  onClick={() => setMasterPrompt(prev => (prev || prompt || '') + blk.snippet)}
-                  className="px-2 py-1 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-[#ecb613]/50 text-[10px] font-mono text-zinc-300 transition"
-                >
-                  {blk.label}
-                </button>
+            <ul className="space-y-1.5 text-xs font-sans text-zinc-300">
+              {refinedResult.appliedInvariants.map((inv) => (
+                <li key={inv} className="flex items-start gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                  <span>{inv}</span>
+                </li>
               ))}
-            </div>
-
-            {isEditingMaster ? (
-              <textarea
-                value={masterPrompt ?? ''}
-                onChange={e => setMasterPrompt(e.target.value)}
-                placeholder="Aquí aparecerá el Prompt Maestro al pulsar 'Compilar a DAG', o puedes escribir/pegar y modificar cualquier palabra, frase o bloque directamente aquí antes de copiarlo o inyectarlo a la cola..."
-                rows={14}
-                className="w-full p-4 rounded-xl bg-black border border-[#ecb613]/30 text-xs font-mono leading-relaxed text-zinc-200 focus:outline-none focus:border-[#ecb613] resize-y"
-              />
-            ) : (
-              <pre className="p-4 rounded-xl bg-black border border-[#ecb613]/20 text-[11px] font-mono leading-relaxed overflow-x-auto whitespace-pre-wrap text-zinc-300 max-h-96">
-                {masterPrompt || 'Pulsa "Compilar a DAG" o activa "Editar Texto Libre" para redactar tu propio Prompt Maestro.'}
-              </pre>
-            )}
+            </ul>
           </div>
 
-          {/* Control Quirúrgico de la Tarea antes de Inyectar a tasks_queue.json */}
-          <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 backdrop-blur-md space-y-3">
-            <div className="flex items-center justify-between border-b border-zinc-800 pb-2">
-              <span className="text-xs font-mono uppercase text-zinc-300 font-bold">
-                Parámetros Exactos de la Orden para tasks_queue.json (100% Editables)
-              </span>
-              <span className="text-[10px] font-mono text-zinc-500">Modifica cualquier campo libremente</span>
+          {/* Columna B: Recursos de la Bóveda Velocity Vinculados */}
+          <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-2.5">
+            <div className="flex items-center gap-1.5 font-mono text-xs font-bold text-[#ecb613] uppercase">
+              <BookOpen className="w-4 h-4" />
+              <span>Recursos Bóveda Velocity / Incubadora RAG:</span>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label className="text-[10px] font-mono uppercase text-zinc-400">Título de la Tarea</label>
-                <input
-                  type="text"
-                  value={editableTitle}
-                  onChange={e => setEditableTitle(e.target.value)}
-                  placeholder="Ej: B0.Omega: Unificar fichas y cotizador..."
-                  className="mt-1 w-full px-3 py-2 rounded-xl bg-zinc-950 border border-zinc-800 text-xs font-mono text-white focus:outline-none focus:border-[#ecb613]"
-                />
-              </div>
-              <div>
-                <label className="text-[10px] font-mono uppercase text-zinc-400">Comando de Verificación (Done When)</label>
-                <input
-                  type="text"
-                  value={editableValidation}
-                  onChange={e => setEditableValidation(e.target.value)}
-                  placeholder="npx tsc --noEmit -> Exit Code 0"
-                  className="mt-1 w-full px-3 py-2 rounded-xl bg-zinc-950 border border-zinc-800 text-xs font-mono text-emerald-400 focus:outline-none focus:border-[#ecb613]"
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label className="text-[10px] font-mono uppercase text-zinc-400">Archivos Autorizados (1 por línea)</label>
-                <textarea
-                  value={editableFiles}
-                  onChange={e => setEditableFiles(e.target.value)}
-                  rows={3}
-                  placeholder={'src/app/(admin)/admin/page.tsx\nsrc/components/hubs/SovereignIntentHubView.tsx'}
-                  className="mt-1 w-full p-2.5 rounded-xl bg-zinc-950 border border-zinc-800 text-xs font-mono text-cyan-300 focus:outline-none focus:border-[#ecb613]"
-                />
-              </div>
-              <div>
-                <label className="text-[10px] font-mono uppercase text-zinc-400">Resumen de Acción Ejecutiva</label>
-                <textarea
-                  value={editableAction}
-                  onChange={e => setEditableAction(e.target.value)}
-                  rows={3}
-                  placeholder="Describe exactamente qué cambio quieres que ejecute el obrero..."
-                  className="mt-1 w-full p-2.5 rounded-xl bg-zinc-950 border border-zinc-800 text-xs font-mono text-zinc-200 focus:outline-none focus:border-[#ecb613]"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 backdrop-blur-md flex flex-col flex-1 min-h-[380px]">
-            <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-zinc-800 mb-4">
-              <div className="flex items-center gap-2">
-                <Code2 className="w-4 h-4 text-[#ecb613]" />
-                <span className="text-xs font-mono uppercase text-zinc-300">Manifiesto DAG YAML · servidor propio</span>
-              </div>
-              <div className="flex items-center gap-2">
-                {compiledData && (
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-zinc-800 text-zinc-400 border border-zinc-700">
-                    ~{Math.round((editableYaml || compiledData.yaml).length / 4)} tokens
-                  </span>
-                )}
-                <button
-                  type="button"
-                  onClick={() => setIsEditingDag(v => !v)}
-                  className="px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-200 text-xs font-mono transition"
-                >
-                  {isEditingDag ? 'Vista Coloreada' : 'Editar YAML'}
-                </button>
-                <button onClick={handleCopyYAML} className="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-mono flex items-center gap-1.5 transition">
-                  {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-                  <span>{copied ? 'Copiado' : 'Copiar DAG'}</span>
-                </button>
-                <button onClick={handleInjectQueue} disabled={isInjecting} className="px-3 py-1.5 rounded-lg bg-[#ecb613]/20 hover:bg-[#ecb613]/30 border border-[#ecb613]/40 text-[#ecb613] text-xs font-mono flex items-center gap-1.5 transition disabled:opacity-50">
-                  {injected ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Send className="w-3.5 h-3.5" />}
-                  <span>{isInjecting ? 'Inyectando...' : injected ? 'En Cola (Re-inyectar)' : 'Inyectar a tasks_queue.json'}</span>
-                </button>
-              </div>
-            </div>
-            {isEditingDag ? (
-              <textarea
-                value={editableYaml}
-                onChange={e => setEditableYaml(e.target.value)}
-                rows={14}
-                placeholder="Puedes editar cada línea del YAML aquí..."
-                className="flex-1 w-full p-4 rounded-xl bg-black border border-[#ecb613]/30 text-[11px] font-mono leading-relaxed text-zinc-200 focus:outline-none focus:border-[#ecb613]"
-              />
-            ) : compiledData || editableYaml ? (
-              <pre className="flex-1 p-4 rounded-xl bg-black border border-zinc-800 text-[11px] font-mono leading-relaxed overflow-x-auto selection:bg-emerald-950 selection:text-white max-h-96">
-                {yamlLines.map((line, i) => (
-                  <div key={i} className={line.className}>{line.text || ' '}</div>
+            {refinedResult.matchedVaultDocs.length > 0 ? (
+              <ul className="space-y-1.5 text-xs font-mono text-zinc-300">
+                {refinedResult.matchedVaultDocs.map((doc) => (
+                  <li key={doc.sha256} className="flex items-center justify-between p-1.5 rounded-lg bg-white/[0.02] border border-white/5">
+                    <span className="truncate pr-2">{doc.filename}</span>
+                    <span className="text-[9px] text-[#ecb613] shrink-0 font-bold uppercase">
+                      {doc.category}
+                    </span>
+                  </li>
                 ))}
-              </pre>
+              </ul>
             ) : (
-              <div className="flex-1 flex flex-col items-center justify-center text-center p-8 border border-dashed border-zinc-800 rounded-xl">
-                <Terminal className="w-10 h-10 text-zinc-700 mb-3" />
-                <p className="text-sm text-zinc-400 font-medium mb-1">Esperando entrada del Oráculo o Edición Directa</p>
-                <p className="text-xs text-zinc-600 font-mono max-w-sm">
-                  Escribe tu visión comercial a la izquierda y pulsa &apos;Compilar a DAG&apos;, o edita directamente el Prompt Maestro arriba e inyéctalo a la cola.
-                </p>
-              </div>
+              <p className="text-xs text-zinc-500 font-sans">
+                Sin documentos adicionales de filtro inmediato.
+              </p>
             )}
           </div>
         </div>
-      </div>
 
-      {/* CENTRO DE MANDO SOBERANO (5 conectores · 3 puertas · sello y despliegue) */}
-      <MetaCompilerCommandCenter />
+        {/* Principios de Tono Aristocrático y Reglas Canónicas */}
+        <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 flex flex-wrap items-center justify-between gap-3 text-xs font-mono text-zinc-400">
+          <div className="flex flex-wrap items-center gap-4">
+            <span className="text-white font-bold">FILTRO HALCÓN:</span>
+            {refinedResult.toneGuidelines.map((g) => (
+              <span key={g} className="flex items-center gap-1">
+                <span className="text-[#ecb613]">•</span> {g}
+              </span>
+            ))}
+          </div>
+          <span className="text-[10px] text-[#ecb613] bg-[#ecb613]/10 px-2 py-0.5 rounded-full border border-[#ecb613]/30 font-bold">
+            {refinedResult.appliedCanonicalRules.length} Reglas Canónicas Activas (Base 1-50)
+          </span>
+        </div>
+      </section>
 
-      {/* TERMINAL DE ESTADOS DEL METACOMPILADOR (FSM determinista · zero-token) */}
-      <MetaCompilerFsmPanel />
+      {/* ════════════════════════════════════════════════════════════════════════ */}
+      {/* 3. PANEL INFERIOR · SALIDA SOBERANA (PEPITA DE ORO & DISPARADORES)       */}
+      {/* ════════════════════════════════════════════════════════════════════════ */}
+      <section className="rounded-3xl bg-[#09090d]/90 border border-white/10 p-5 sm:p-6 shadow-[0_20px_50px_rgba(0,0,0,0.85)] space-y-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-3 border-b border-white/10">
+          <div className="flex items-center gap-2">
+            <Crown className="w-4 h-4 text-[#ecb613]" />
+            <h2 className="font-mono text-xs font-bold text-white uppercase tracking-wider">
+              3. Salida Soberana (Pepita de Oro &amp; Disparadores)
+            </h2>
+          </div>
+
+          {/* Botones de Acción */}
+          <div className="flex flex-wrap items-center gap-2.5 w-full sm:w-auto">
+            {/* Botón 1: Copiar al Portapapeles */}
+            <button
+              type="button"
+              onClick={handleCopyPepita}
+              className={`px-4 py-2 rounded-xl font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 ${
+                copiedPepita
+                  ? 'bg-emerald-500 text-black shadow-[0_0_15px_rgba(16,185,129,0.4)]'
+                  : 'bg-[#ecb613] text-black hover:bg-[#ffd24d] shadow-[0_0_15px_rgba(236,182,19,0.3)]'
+              }`}
+            >
+              {copiedPepita ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+              <span>{copiedPepita ? '¡Copiado!' : 'Copiar Pepita de Oro'}</span>
+            </button>
+
+            {/* Botón 2: Disparar Flujo n8n */}
+            <button
+              type="button"
+              onClick={handleDispatchN8n}
+              disabled={isDispatchingN8n}
+              className="px-4 py-2 rounded-xl bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 hover:bg-cyan-500/30 font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5"
+            >
+              <Send className="w-3.5 h-3.5" />
+              <span>{isDispatchingN8n ? 'Enviando...' : 'Disparar Flujo n8n'}</span>
+            </button>
+
+            {/* Botón 3: Exportar Megaprompt para Obrero */}
+            <button
+              type="button"
+              onClick={handleCopyMegaprompt}
+              className={`px-4 py-2 rounded-xl border border-white/15 font-mono text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                copiedMegaprompt
+                  ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
+                  : 'bg-white/5 text-zinc-300 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              <FileCode className="w-3.5 h-3.5 text-[#ecb613]" />
+              <span>{copiedMegaprompt ? 'Megaprompt Copiado' : 'Exportar Megaprompt Obrero'}</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Mensaje de estado n8n si existe */}
+        {n8nStatusMessage && (
+          <div className="p-2.5 rounded-xl bg-cyan-950/40 border border-cyan-500/30 text-xs font-mono text-cyan-300 animate-fadeIn">
+            {n8nStatusMessage}
+          </div>
+        )}
+
+        {/* Visor de la Pepita de Oro */}
+        <div className="p-5 rounded-2xl bg-black/60 border border-white/15">
+          <div className="flex items-center justify-between text-[10px] font-mono uppercase tracking-wider text-zinc-500 mb-2">
+            <span>TEXTO FINAL DE ALTO IMPACTO (LISTO PARA ENVIAR)</span>
+            <span className="text-[#ecb613]">TONO ARISTOCRÁTICO · CERO ADJETIVOS VACÍOS</span>
+          </div>
+          <pre className="font-sans text-xs sm:text-sm text-zinc-200 whitespace-pre-wrap leading-relaxed select-all">
+            {refinedResult.pepitaDeOro}
+          </pre>
+        </div>
+      </section>
     </div>
   );
 }
