@@ -23,53 +23,45 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 import {
+  MASTER_OBJECTIVES,
+  MASTER_TACTICS,
+  MASTER_TARGETS,
+  type MasterObjectiveId,
+  type MasterTacticId,
+  type MasterTargetAgentId,
+} from '@/lib/compiler/master-guide';
+import {
   refineWithVelocityOracle,
   type OracleObjective,
   type OracleRefinedOutput,
 } from '@/lib/oraculo/oracle-refiner';
 import { getVelocityVaultStats } from '@/lib/oraculo/velocity-knowledge-index';
 
-interface ObjectiveOption {
-  readonly id: OracleObjective;
-  readonly label: string;
-  readonly icon: LucideIcon;
-  readonly description: string;
-}
-
-const OBJECTIVES: readonly ObjectiveOption[] = [
-  {
-    id: 'BODAS',
-    label: 'Cierre de Novios / Bodas',
-    icon: Heart,
-    description: 'Propuesta de alta conversión, Otzarreta, menús cerrados y fianza deducible de 100€.',
-  },
-  {
-    id: 'PROVEEDOR',
-    label: 'Acuerdo Proveedor / Finca',
-    icon: Building2,
-    description: 'Alianzas de gala, retribución 80% artista y cero comisiones parásitas de directorios.',
-  },
-  {
-    id: 'B2G',
-    label: 'Licitación B2G',
-    icon: Landmark,
-    description: 'Contrato menor Art. 118 LCSP (< 14.250 €), Line Array 18k W y DIR3 para FACe.',
-  },
-  {
-    id: 'ESTRATEGIA',
-    label: 'Estrategia General',
-    icon: Compass,
-    description: 'Postura aristocrática, erradicación de adjetivos vacíos y control de marco.',
-  },
-];
-
 export default function MasterCompilerPage(): React.JSX.Element {
   const [rawVision, setRawVision] = useState<string>('');
-  const [selectedObjective, setSelectedObjective] = useState<OracleObjective>('BODAS');
+  const [selectedObjective, setSelectedObjective] = useState<MasterObjectiveId>('VENTAS');
+  const [selectedTactic, setSelectedTactic] = useState<MasterTacticId>('SOBREDEMANDA');
+  const [selectedTargetAgent, setSelectedTargetAgent] = useState<MasterTargetAgentId>('CLINE');
   const [copiedPepita, setCopiedPepita] = useState<boolean>(false);
   const [copiedMegaprompt, setCopiedMegaprompt] = useState<boolean>(false);
   const [isDispatchingN8n, setIsDispatchingN8n] = useState<boolean>(false);
   const [n8nStatusMessage, setN8nStatusMessage] = useState<string | null>(null);
+
+  // Mapeo del objetivo del SSOT al Oráculo
+  const oracleObjective: OracleObjective = useMemo(() => {
+    switch (selectedObjective) {
+      case 'VENTAS':
+        return 'BODAS';
+      case 'FINCAS':
+        return 'PROVEEDOR';
+      case 'B2G':
+        return 'B2G';
+      case 'ARQUITECTURA':
+        return 'ESTRATEGIA';
+      default:
+        return 'BODAS';
+    }
+  }, [selectedObjective]);
 
   // Estadísticas de la Bóveda de Velocity
   const vaultStats = useMemo(() => getVelocityVaultStats(), []);
@@ -78,9 +70,9 @@ export default function MasterCompilerPage(): React.JSX.Element {
   const refinedResult: OracleRefinedOutput = useMemo(() => {
     return refineWithVelocityOracle({
       rawVision,
-      objective: selectedObjective,
+      objective: oracleObjective,
     });
-  }, [rawVision, selectedObjective]);
+  }, [rawVision, oracleObjective]);
 
   // Manejo de copia de la Pepita de Oro
   const handleCopyPepita = async () => {
@@ -114,6 +106,8 @@ export default function MasterCompilerPage(): React.JSX.Element {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           objective: selectedObjective,
+          tactic: selectedTactic,
+          targetAgent: selectedTargetAgent,
           input: rawVision,
           pepitaDeOro: refinedResult.pepitaDeOro,
           megaprompt: refinedResult.megaprompt,
@@ -189,11 +183,10 @@ export default function MasterCompilerPage(): React.JSX.Element {
           </span>
         </div>
 
-        {/* Selector de los 4 Objetivos Estratégicos */}
+        {/* Selector de los 4 Objetivos Estratégicos (SSOT Guía Maestra) */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
-          {OBJECTIVES.map((obj) => {
+          {MASTER_OBJECTIVES.map((obj) => {
             const isSelected = selectedObjective === obj.id;
-            const Icon = obj.icon;
 
             return (
               <button
@@ -207,15 +200,61 @@ export default function MasterCompilerPage(): React.JSX.Element {
                 }`}
               >
                 <div className="flex items-center gap-2 mb-1">
-                  <Icon className={`w-4 h-4 ${isSelected ? 'text-[#ecb613]' : 'text-zinc-500'}`} />
                   <span className="font-mono text-xs font-bold uppercase">{obj.label}</span>
                 </div>
                 <p className="text-[11px] font-sans text-zinc-400 line-clamp-2">
-                  {obj.description}
+                  {obj.hint}
                 </p>
               </button>
             );
           })}
+        </div>
+
+        {/* Ejes de Táctica Comercial & Destinatario de Ejecución (SSOT Guía Maestra) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2 border-t border-white/5">
+          <div>
+            <label className="text-[10px] font-mono uppercase text-zinc-400 block mb-1.5 font-bold">
+              Táctica Comercial:
+            </label>
+            <div className="grid grid-cols-2 gap-2">
+              {MASTER_TACTICS.map((tac) => (
+                <button
+                  key={tac.id}
+                  type="button"
+                  onClick={() => setSelectedTactic(tac.id)}
+                  className={`px-3 py-1.5 rounded-xl border text-left text-xs font-mono transition-all ${
+                    selectedTactic === tac.id
+                      ? 'bg-cyan-500/15 border-cyan-500/50 text-cyan-300 shadow-[0_0_15px_rgba(6,182,212,0.2)]'
+                      : 'bg-white/[0.02] border-white/5 text-zinc-400 hover:text-white'
+                  }`}
+                >
+                  <span className="truncate block font-bold">{tac.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <label className="text-[10px] font-mono uppercase text-zinc-400 block mb-1.5 font-bold">
+              Destinatario de Ejecución:
+            </label>
+            <div className="grid grid-cols-3 gap-2">
+              {MASTER_TARGETS.map((tgt) => (
+                <button
+                  key={tgt.id}
+                  type="button"
+                  onClick={() => setSelectedTargetAgent(tgt.id)}
+                  className={`px-3 py-1.5 rounded-xl border text-center text-xs font-mono transition-all ${
+                    selectedTargetAgent === tgt.id
+                      ? 'bg-[#ecb613]/15 border-[#ecb613]/50 text-[#ecb613] shadow-[0_0_15px_rgba(236,182,19,0.2)]'
+                      : 'bg-white/[0.02] border-white/5 text-zinc-400 hover:text-white'
+                  }`}
+                >
+                  <span className="font-bold">{tgt.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Área de Texto de la Visión */}
