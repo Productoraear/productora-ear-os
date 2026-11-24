@@ -413,6 +413,14 @@ export const ADMIN_MASTER_TABS: AdminMasterTab[] = [
         badge: 'ENTIDADES',
         description: 'Artistas, proveedores, terapeutas, flota, afiliados y tesorería',
       },
+      {
+        id: 'war-room',
+        name: '🏛️ War Room & Control Plane',
+        href: '/admin/war-room',
+        icon: Satellite,
+        badge: 'TOPOLOGÍA',
+        description: 'Grafo dinámico de runtime, topología operacional y auditoría de blast-radius',
+      },
     ],
   },
 ];

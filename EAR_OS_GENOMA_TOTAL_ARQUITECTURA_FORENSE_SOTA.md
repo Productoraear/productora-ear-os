@@ -7,6 +7,20 @@
 
 ---
 
+## 0. CLÁUSULA PERPETUA: PROTOCOLO DE INTERACCIÓN TIER-1 (ESTÁNDAR 1% GLOBAL)
+
+1. **PROHIBICIÓN DE SOLUCIONES DE CONSUMO / AMATEUR:**
+   - Queda formalmente prohibido proponer arquitecturas basadas en documentación pasiva, grafos estáticos de texto, diagramas cosméticos sin enlace a runtime o explicaciones manuales que exijan mantenimiento humano.
+   - Toda solución planteada a la Dirección Ejecutiva debe responder a la doctrina de sistemas distribuidos de clase mundial (Amazon AWS Control Plane, Palantir Foundry, Stripe Ledger Architecture).
+
+2. **PILARES OBLIGATORIOS EN CADA PROPUESTA TÉCNICA:**
+   - **DETERMINISMO Y AST:** Todo mapeo debe apoyarse en introspección mecánica del código fuente (TypeScript AST / Compilador) y esquemas de base de datos vivos.
+   - **ANÁLISIS DE RADIO DE IMPACTO (BLAST-RADIUS):** Ninguna modificación de contratos o tarifas puede plantearse sin proyectar transitivamente qué nodos, rutas y compuertas dependen de ella.
+   - **SOBERANÍA EN RUNTIME:** La consola de administración no es un visor; es un plano de mando con telemetría viva, alertas de salud por nodo y capacidad de conmutación.
+   - **CERO ADJETIVOS SIN EXIT CODE:** Ningún hito se da por válido sin verificación mecánica reproducible (`Exit Code 0`).
+
+---
+
 ## 1. ESPECIFICACIÓN CONSTITUCIONAL Y SSOT (ZONA CERO)
 
 El sistema opera bajo gobernanza estricta Nivel 5 (Constitutional Spec-Driven Development). Toda lógica financiera, legal, logística y de retribución emana de una única fuente de verdad inmutable situada en `src/lib/constants/ear-os-ssot.ts`. Cualquier alteración fuera de este punto está tipificada como infracción constitucional.

@@ -3,8 +3,8 @@
 > Emitido por `scripts/audit_admin_ecosystem.cjs` (solo lectura).
 > Fuente única de verdad: `src/lib/config/admin-navigation.ts`.
 
-- Módulos registrados en el SSOT: **30**
-- Páginas reales bajo (admin)/admin: **34**
+- Módulos registrados en el SSOT: **31**
+- Páginas reales bajo (admin)/admin: **35**
 - Violaciones: **0**
 
 ## Módulos registrados
@@ -36,6 +36,7 @@
 - `/admin/training`
 - `/admin/video-factory`
 - `/admin/voice-studio`
+- `/admin/war-room`
 - `/admin/whatsapp`
 - `/aura`
 - `/pro`
@@ -75,6 +76,7 @@
 - `/admin/training`
 - `/admin/video-factory`
 - `/admin/voice-studio`
+- `/admin/war-room`
 - `/admin/whatsapp`
 
 ## ✅ Sin violaciones
