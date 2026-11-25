@@ -36,6 +36,11 @@ import {
   type BusinessFrontDefinition,
   type Tier1HealthReport,
 } from '@/lib/governance/constitution-tier1';
+import VisionInput from '@/components/admin/VisionInput';
+import {
+  type CeoOperationalDimensionId,
+  getCeoDimension,
+} from '@/lib/compiler/ceo-operational-matrix';
 
 export default function OracleCompilerTier1Page(): React.JSX.Element {
   const topology = useMemo(() => getTopology(), []);
@@ -43,6 +48,8 @@ export default function OracleCompilerTier1Page(): React.JSX.Element {
   const isSentinelIntact = useMemo(() => verifySentinelIntegrity(SENTINEL_HASH_SSOT), []);
 
   // Estados de interfaz
+  const [selectedDimension, setSelectedDimension] = useState<CeoOperationalDimensionId>('CLIENTES_NOVIOS');
+  const [rawVision, setRawVision] = useState<string>('');
   const [selectedBlock, setSelectedBlock] = useState<number | 'ALL'>('ALL');
   const [searchRuleQuery, setSearchRuleQuery] = useState<string>('');
   const [activeBlastTarget, setActiveBlastTarget] = useState<string>('RULE-53');
@@ -214,7 +221,26 @@ export default function OracleCompilerTier1Page(): React.JSX.Element {
         </div>
       </div>
 
-      {/* 4. Panel Dual: Telemetría de las 100 Reglas + Simulador de Blast-Radius */}
+      {/* 4. Matriz Canónica Multi-Rol de 8 Ejes (Cockpit Vision Input & Refinador S-Class) */}
+      <div className="max-w-7xl mx-auto mb-8 bg-neutral-900/40 border border-neutral-800 rounded-xl p-5">
+        <VisionInput
+          selectedDimension={selectedDimension}
+          onSelectDimension={(dimId) => {
+            setSelectedDimension(dimId);
+            const firstRule = getCeoDimension(dimId).canonicalRuleIds[0];
+            if (firstRule) {
+              setActiveBlastTarget(`RULE-${firstRule}`);
+            }
+          }}
+          rawVision={rawVision}
+          onChangeRawVision={setRawVision}
+          showRefinerOutput={true}
+          title="MATRIZ CANÓNICA MULTI-ROL DE 8 EJES (ENTRADA DEL COMPILADOR CEO)"
+          subtitle="Selecciona cualquiera de las 8 dimensiones operativas para precargar invariantes sagradas de ear-os-ssot.ts, proyectar el radio de impacto transitivo y compilar la visión en un Megaprompt S-Class."
+        />
+      </div>
+
+      {/* 5. Panel Dual: Telemetría de las 100 Reglas + Simulador de Blast-Radius */}
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Columna Izquierda: Roster de las 100 Reglas (7 Cols) */}
         <div className="lg:col-span-7 bg-neutral-900/40 border border-neutral-800 rounded-xl p-5 space-y-4 flex flex-col">

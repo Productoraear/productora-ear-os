@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
-  "generated_at": "2026-11-24T17:35:18.327Z",
-  "execution_duration_ms": 428.93,
+  "generated_at": "2026-11-25T09:29:44.304Z",
+  "execution_duration_ms": 439.74,
   "stats": {
     "total_nodes": 743,
     "total_edges": 544,
@@ -3238,7 +3238,7 @@
       "name": "/admin/cockpit",
       "type": "route",
       "path": "src/app/(admin)/admin/cockpit/page.tsx",
-      "integrityHash": "ac6bdb24be574392",
+      "integrityHash": "fe6e128e20796e93",
       "criticality": "HIGH",
       "metadata": {
         "pathname": "/admin/cockpit",
@@ -3420,7 +3420,7 @@
       "name": "/admin/oracle-compiler",
       "type": "route",
       "path": "src/app/(admin)/admin/oracle-compiler/page.tsx",
-      "integrityHash": "650aa2762b5fa645",
+      "integrityHash": "2e53edac42ed670f",
       "criticality": "HIGH",
       "metadata": {
         "pathname": "/admin/oracle-compiler",
@@ -9111,7 +9111,7 @@
       "name": "/api/health",
       "type": "api",
       "path": "src/app/api/health/route.ts",
-      "integrityHash": "0a79a0f08b43f1c9",
+      "integrityHash": "2780818085fdb59a",
       "criticality": "MEDIUM",
       "metadata": {
         "endpoint": "/api/health",

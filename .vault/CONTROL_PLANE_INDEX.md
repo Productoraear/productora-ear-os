@@ -1,7 +1,7 @@
 ---
 title: EAR OS Semantic Control Plane
 type: topology-index
-generated_at: 2026-11-24T17:35:18.327Z
+generated_at: 2026-11-25T09:29:44.304Z
 total_nodes: 743
 total_edges: 544
 ---
@@ -9,7 +9,7 @@ total_edges: 544
 # 🏛️ EAR OS · SEMANTIC CONTROL PLANE & TOPOLOGÍA OPERACIONAL
 
 Mapa operativo e introspección de runtime del sistema soberano **productoraear.com**.
-Generado deterministamente en **428.93 ms**.
+Generado deterministamente en **439.74 ms**.
 
 ## Métricas Clave de Infraestructura
 - **Nodos Totales**: 743

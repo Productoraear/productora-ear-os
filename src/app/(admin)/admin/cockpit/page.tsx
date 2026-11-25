@@ -1,13 +1,13 @@
 import type { Metadata } from 'next';
-import CeoSkillsRack from '@/components/admin/CeoSkillsRack';
+import CeoCockpitHub from '@/components/admin/CeoCockpitHub';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: 'Cockpit CEO · Cartuchos ejecutivos · EAR OS',
+  title: 'Cockpit CEO · Cartuchos ejecutivos & Matriz 8 Ejes · EAR OS',
   description:
-    'Rack de habilidades locales que emiten liquidaciones, contratos y dossiers reales con cierre SHA-256. Cero tokens.',
+    'Matriz multi-rol de 8 dimensiones y rack de habilidades locales que emiten liquidaciones, contratos y dossiers reales con cierre SHA-256.',
   robots: { index: false, follow: false },
 };
 
@@ -15,15 +15,14 @@ export const metadata: Metadata = {
  * ════════════════════════════════════════════════════════════════════════════
  * /admin/cockpit — CONSOLA DE EJECUCIÓN DEL CEO
  * ════════════════════════════════════════════════════════════════════════════
- * Server Component delgado: la sesión ya la valida el layout de `(admin)` y el
- * middleware; el rack lee el catálogo real del servidor vía `GET /api/admin/skills`.
- * No se declaran cartuchos aquí: la única fuente es `src/lib/skills/registry.ts`.
+ * Aloja la Matriz Canónica Multi-Rol de 8 Ejes (VisionInput) y el Rack de
+ * cartuchos ejecutivos del servidor.
  * ════════════════════════════════════════════════════════════════════════════
  */
 export default function CeoCockpitPage() {
   return (
     <div className="mx-auto max-w-6xl pb-16">
-      <CeoSkillsRack />
+      <CeoCockpitHub />
     </div>
   );
 }
