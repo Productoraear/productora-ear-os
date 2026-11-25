@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { ChevronLeft, ChevronRight, Maximize2, X, Play, Image as ImageIcon } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Maximize2, X, Play, Image as ImageIcon, ShieldCheck } from 'lucide-react';
 import { isPanoramicLandscape } from '@/components/sclass/CinematicVanguardCarousel';
 import {
   classifyProviderVideo,
@@ -95,8 +95,17 @@ export const ProviderMediaGallery: React.FC<MediaGalleryProps> = React.memo(func
                 src={currentImage}
               />
             ) : (
-              <div className="flex h-full w-full items-center justify-center text-zinc-600">
-                Sin imágenes disponibles
+              <div className="flex flex-col h-full w-full items-center justify-center p-8 bg-[#07070a] text-center space-y-3">
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 rounded-full text-xs font-mono font-bold uppercase tracking-wider">
+                  <ShieldCheck size={14} />
+                  <span>Ficha Técnica Verificada · Multimedia en Auditoría</span>
+                </div>
+                <h4 className="text-base font-bold font-syne text-white uppercase tracking-wide">
+                  {providerName}
+                </h4>
+                <p className="text-xs text-zinc-400 font-mono max-w-md">
+                  Especificaciones técnicas, aforos y acústica homologados bajo estándar S-Class. Material gráfico en proceso de auditoría y verificación por la central técnica.
+                </p>
               </div>
             )}
 

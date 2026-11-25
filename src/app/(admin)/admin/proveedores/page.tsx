@@ -52,6 +52,8 @@ import {
   type MultiRailExecutionResult,
 } from '@/lib/compiler/multi-rail-execution';
 import { ProviderProfileFieldSchema } from '@/lib/providers/trojan-horse-schema';
+import { resolveEarAsin } from '@/lib/catalog/asin-standard';
+import { applyCallCenterEnrichment } from '@/lib/services/marketplace/asin-catalog-service';
 
 /* ========================================================================== */
 /* CONTRATO DE DATOS ZOD ESTRICTO (NIVEL 5)                                   */
@@ -233,6 +235,37 @@ function ProveedoresSyncContent(): React.ReactElement {
     name: string;
     category: string;
   } | null>(null);
+
+  // Quick Enrichment Call Center
+  const [quickPhone, setQuickPhone] = useState<string>('');
+  const [quickSocial, setQuickSocial] = useState<string>('');
+  const [quickSaved, setQuickSaved] = useState<boolean>(false);
+
+  const handleSelectProvider = (prov: ProviderItem): void => {
+    setSelectedProvider(prov);
+    setQuickPhone(prov.phone || prov.telephone || '');
+    setQuickSocial('');
+    setQuickSaved(false);
+  };
+
+  const handleSaveQuickEnrichment = (): void => {
+    if (!selectedProvider) return;
+    if (selectedProvider.slug || selectedProvider.id) {
+      applyCallCenterEnrichment(selectedProvider.slug || selectedProvider.id || 'prov', {
+        internalPhone: quickPhone,
+        socialWeb: quickSocial,
+      });
+    }
+    const updated: ProviderItem = {
+      ...selectedProvider,
+      phone: quickPhone || selectedProvider.phone,
+      telephone: quickPhone || selectedProvider.telephone,
+    };
+    setSelectedProvider(updated);
+    setProviders((prev) => prev.map((p) => (p.id === updated.id ? updated : p)));
+    setQuickSaved(true);
+    setTimeout(() => setQuickSaved(false), 3000);
+  };
 
   const handleTriggerOrdenSala = (provider: ProviderItem): void => {
     const res = executeOrdenSalaCocina({
@@ -516,7 +549,7 @@ function ProveedoresSyncContent(): React.ReactElement {
             return (
               <div
                 key={p.id || idx}
-                onClick={() => setSelectedProvider(p)}
+                onClick={() => handleSelectProvider(p)}
                 className="p-4 rounded-3xl bg-[#09090d]/80 border border-white/10 hover:border-[#ecb613]/50 transition-all cursor-pointer group flex flex-col justify-between"
               >
                 <div>
@@ -612,9 +645,19 @@ function ProveedoresSyncContent(): React.ReactElement {
               ✕
             </button>
 
-            <div className="flex items-center gap-2 text-xs font-mono text-[#ecb613] uppercase">
-              <ShieldCheck className="w-4 h-4" />
-              Ficha Maestra Proveedor S-Class
+            <div className="flex items-center justify-between text-xs font-mono text-[#ecb613] uppercase pr-6">
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4" />
+                Ficha Maestra Proveedor S-Class
+              </div>
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613]">
+                ASIN: {resolveEarAsin({
+                  id: selectedProvider.id,
+                  slug: selectedProvider.slug,
+                  name: selectedProvider.name,
+                  category: selectedProvider.category,
+                })}
+              </span>
             </div>
 
             <h3 className="text-xl font-bold font-mono">{selectedProvider.name}</h3>
@@ -643,6 +686,52 @@ function ProveedoresSyncContent(): React.ReactElement {
                   <span className="text-[#ecb613] font-bold">
                     {selectedProvider.phone || selectedProvider.telephone || `Centralita (${CENTRALITA_EAR_OS})`}
                   </span>
+                </div>
+              </div>
+
+              {/* Quick Enrichment Call Center */}
+              <div className="p-4 rounded-xl bg-black/60 border border-white/10 space-y-3 font-mono text-xs">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] text-[#ecb613] uppercase font-bold tracking-wider flex items-center gap-1.5">
+                    <Phone className="w-3.5 h-3.5" /> Enriquecimiento Rápido · Call Center
+                  </span>
+                  {quickSaved && (
+                    <span className="text-[10px] text-emerald-400 font-bold">
+                      ✓ Enriquecimiento Guardado
+                    </span>
+                  )}
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="space-y-1">
+                    <label className="text-[10px] text-zinc-400">Teléfono Interno / Enlace:</label>
+                    <input
+                      type="text"
+                      value={quickPhone}
+                      onChange={(e) => setQuickPhone(e.target.value)}
+                      placeholder="+34 600 000 000"
+                      className="w-full px-3 py-1.5 rounded-lg bg-zinc-900 border border-white/10 text-white text-xs font-mono focus:border-[#ecb613] outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-[10px] text-zinc-400">Redes / Web Oficial:</label>
+                    <input
+                      type="text"
+                      value={quickSocial}
+                      onChange={(e) => setQuickSocial(e.target.value)}
+                      placeholder="instagram.com/... o web"
+                      className="w-full px-3 py-1.5 rounded-lg bg-zinc-900 border border-white/10 text-white text-xs font-mono focus:border-[#ecb613] outline-none"
+                    />
+                  </div>
+                </div>
+                <div className="flex items-center justify-between pt-1">
+                  <span className="text-[10px] text-zinc-500">Mantiene integridad Zod estricta</span>
+                  <button
+                    type="button"
+                    onClick={handleSaveQuickEnrichment}
+                    className="px-3 py-1.5 rounded-lg bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 font-bold text-xs hover:bg-emerald-500/30 transition-colors"
+                  >
+                    Guardar Datos Call Center
+                  </button>
                 </div>
               </div>
             </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import { LumenNoiseGrain } from '@/components/lumen/LumenNoiseGrain';
-import SovereignScrollytellingStage from '@/components/spatial/SovereignScrollytellingStage';
+import { SovereignThreeDoorsDistributor } from '@/components/home/SovereignThreeDoorsDistributor';
 
 export const metadata: Metadata = {
   title: 'Productora EAR · Distribuidor Soberano de Contratación Directa (52 Provincias)',
@@ -22,15 +22,15 @@ export const metadata: Metadata = {
 };
 
 /**
- * Escenario de Scrollytelling Cinemático Awwwards-tier S-Class.
- * Contenedor maestro con sticky pinning de 4 actos gobernados por useScroll continuo.
- * CLS = 0,000 mediante anclaje de viewport estricto y geometría inmutable.
+ * Escaparate Cinematográfico S-Class sobre fondo Aura Onyx (#030305).
+ * Gobernado por el Distribuidor Soberano de 3 Puertas hacia los embudos asistidos.
+ * Cero apilamiento vertical mono-proveedor.
  */
 export default function Home(): React.JSX.Element {
   return (
-    <main className="bg-[#030305] relative w-full max-w-full min-h-screen overflow-x-hidden text-zinc-100 font-sans selection:bg-[#ecb613] selection:text-black pt-24 pb-28">
+    <main className="bg-[#030305] relative w-full max-w-full min-h-screen overflow-x-hidden text-zinc-100 font-sans selection:bg-[#ecb613] selection:text-black pt-24 pb-20">
       <LumenNoiseGrain />
-      <SovereignScrollytellingStage />
+      <SovereignThreeDoorsDistributor />
     </main>
   );
 }

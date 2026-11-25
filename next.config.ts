@@ -255,6 +255,7 @@ const nextConfig: NextConfig = {
       { source: "/celebraciones", destination: "/", permanent: true },
       { source: "/celebraciones/:path*", destination: "/", permanent: true },
       { source: "/reservar", destination: "/reservar/solista", permanent: true },
+      { source: "/produccion", destination: "/proveedores?categoria=tecnica", permanent: true },
       // Consolidación anti-doorway: rutas legacy /weddings -> hub real de bodas
       { source: "/weddings", destination: "/bodas", permanent: true },
       { source: "/weddings/:path*", destination: "/bodas", permanent: true },
