@@ -1,4 +1,22 @@
 import type { NextConfig } from "next";
+// SSOT canónico de las 52 provincias (archivo autocontenido, sin dependencias).
+import { PROVINCIAS_52_GRAPH } from "./src/lib/constants/seo-data-hydrated";
+
+/**
+ * 301 de CONTINUIDAD SEO · LISTADO PROVINCIAL DE FINCAS
+ * ────────────────────────────────────────────────────────────────────────────
+ * El listado provincial de fincas se movió de `/fincas/{provincia}` a
+ * `/fincas/p/{provincia}` para resolver la colisión de rutas con las fichas
+ * `/fincas/{slug}` (ver scripts/audit_route_conflicts.cjs). Las URLs antiguas
+ * ya indexadas NO deben devolver 404: se redirigen con 301 para transferir
+ * íntegra la autoridad SEO a la nueva jerarquía canónica.
+ * Lista derivada del SSOT `PROVINCIAS_52_GRAPH` — cero duplicación de datos.
+ */
+const FINCAS_PROVINCIA_REDIRECTS = Object.keys(PROVINCIAS_52_GRAPH).map((provincia) => ({
+  source: `/fincas/${provincia}`,
+  destination: `/fincas/p/${provincia}`,
+  permanent: true,
+}));
 
 const nextConfig: NextConfig = {
   output: "standalone",
@@ -166,6 +184,8 @@ const nextConfig: NextConfig = {
         destination: "https://www.productoraear.com/:path*",
         permanent: true,
       },
+      // 301 SEO · listado provincial de fincas: /fincas/{provincia} -> /fincas/p/{provincia}
+      ...FINCAS_PROVINCIA_REDIRECTS,
       // ORDEN DIRECTIVA 2026-11-11 · UNIFICACIÓN DE CALCULADORA:
       // `/presupuesto` es la ruta CANÓNICA del cotizador. `/calculadora` (y su
       // alias histórico `/cotizador`, al que apuntaba el conmutador de la propia

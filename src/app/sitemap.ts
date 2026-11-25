@@ -131,7 +131,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }
 
     // Rutas provinciales reales que venden, derivadas del SSOT canónico (52 provincias).
-    // /bodas/{provincia} y /fincas/{provincia} renderizan páginas dinámicas reales.
+    // /bodas/{provincia} y /fincas/p/{provincia} renderizan páginas dinámicas reales.
     const provinceSlugs: string[] = Object.keys(PROVINCIAS_52_GRAPH);
 
     for (const slug of provinceSlugs) {
@@ -142,7 +142,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
             priority: 0.8,
         });
         entries.push({
-            url: `${BASE_URL}/fincas/${slug}`,
+            url: `${BASE_URL}/fincas/p/${slug}`,
             lastModified,
             changeFrequency: 'weekly',
             priority: 0.8,

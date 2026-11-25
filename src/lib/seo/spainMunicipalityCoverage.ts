@@ -315,3 +315,115 @@ export function getProvincesByMunicipalityDensity(): readonly string[] {
     .map((entry) => entry.provinceSlug);
 }
 
+function foldSearchWords(value: string): string {
+  return value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+}
+
+const MUNICIPALITY_BY_SLUG: Map<string, SpainMunicipality[]> = new Map();
+const MUNICIPALITY_BY_FOLDED_NAME: Map<string, SpainMunicipality[]> = new Map();
+
+function pushIndexed(
+  map: Map<string, SpainMunicipality[]>,
+  key: string,
+  municipality: SpainMunicipality
+): void {
+  if (!key) return;
+  const bucket = map.get(key);
+  if (bucket) {
+    if (!bucket.includes(municipality)) bucket.push(municipality);
+  } else {
+    map.set(key, [municipality]);
+  }
+}
+
+for (const municipality of COVERAGE.municipalities) {
+  pushIndexed(MUNICIPALITY_BY_SLUG, municipality.slug, municipality);
+  pushIndexed(MUNICIPALITY_BY_FOLDED_NAME, foldSearchWords(municipality.name), municipality);
+  if (municipality.name.includes('/')) {
+    for (const part of municipality.name.split('/')) {
+      pushIndexed(MUNICIPALITY_BY_FOLDED_NAME, foldSearchWords(part), municipality);
+    }
+  }
+}
+
+const QUERY_STOPWORDS: ReadonlySet<string> = new Set([
+  'en', 'de', 'del', 'la', 'el', 'los', 'las', 'un', 'una', 'unos', 'unas',
+  'para', 'con', 'por', 'y', 'o', 'a', 'al', 'boda', 'bodas', 'finca',
+  'salon', 'evento', 'eventos', 'hotel', 'palacio', 'caserio', 'masia',
+  'sonido', 'iluminacion', 'musica', 'catering', 'transporte', 'espana',
+  'calle', 'avenida', 'plaza', 'urbanizacion', 'urb', 'km',
+]);
+
+function pickBestCandidate(
+  candidates: readonly SpainMunicipality[],
+  foldedQuery: string
+): SpainMunicipality {
+  if (candidates.length === 1) return candidates[0];
+  const provinceHit = candidates.find(
+    (m) =>
+      foldedQuery.includes(foldSearchWords(m.provinceName)) ||
+      foldedQuery.includes(m.provinceSlug.replace(/-/g, ' '))
+  );
+  return provinceHit ?? candidates[0];
+}
+
+/**
+ * Resuelve cualquier consulta textual (nombre, slug, nombre bilingüe con `/` o
+ * texto libre con municipio + provincia) contra los 8.131 municipios oficiales INE.
+ */
+export function findMunicipalityByQuery(rawQuery: string): SpainMunicipality | null {
+  if (typeof rawQuery !== 'string' || rawQuery.trim().length === 0) return null;
+
+  const folded = foldSearchWords(rawQuery);
+  if (!folded) return null;
+
+  const directName = MUNICIPALITY_BY_FOLDED_NAME.get(folded);
+  if (directName && directName.length > 0) {
+    return pickBestCandidate(directName, folded);
+  }
+
+  const directSlug = MUNICIPALITY_BY_SLUG.get(normalizeToken(rawQuery));
+  if (directSlug && directSlug.length > 0) {
+    return pickBestCandidate(directSlug, folded);
+  }
+
+  const words = folded.split(' ').filter((w) => w.length > 0);
+  const maxGram = Math.min(words.length, 6);
+  const matches: Array<{ municipality: SpainMunicipality; gramLen: number; isProvinceHomonym: boolean }> = [];
+
+  for (let len = maxGram; len >= 1; len -= 1) {
+    for (let start = 0; start <= words.length - len; start += 1) {
+      const gramWords = words.slice(start, start + len);
+      if (len === 1 && (gramWords[0].length < 2 || QUERY_STOPWORDS.has(gramWords[0]))) {
+        continue;
+      }
+      const gram = gramWords.join(' ');
+      const hits = MUNICIPALITY_BY_FOLDED_NAME.get(gram);
+      if (hits && hits.length > 0) {
+        const chosen = pickBestCandidate(hits, folded);
+        const isProvinceHomonym =
+          len === 1 &&
+          (foldSearchWords(chosen.provinceName) === gram ||
+            chosen.provinceSlug.replace(/-/g, ' ') === gram);
+        matches.push({ municipality: chosen, gramLen: len, isProvinceHomonym });
+      }
+    }
+  }
+
+  if (matches.length === 0) return null;
+
+  matches.sort((a, b) => {
+    if (a.isProvinceHomonym !== b.isProvinceHomonym) {
+      return a.isProvinceHomonym ? 1 : -1;
+    }
+    return b.gramLen - a.gramLen;
+  });
+
+  return matches[0].municipality;
+}
+

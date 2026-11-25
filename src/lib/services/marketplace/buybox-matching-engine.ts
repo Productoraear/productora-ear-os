@@ -24,7 +24,19 @@ import {
 } from '@/types/transductive-schemas';
 import { resolveEarAsin, ANCHOR_1P_ASINS } from '@/lib/catalog/asin-standard';
 import { TARIFA_ESTANDAR_SOLISTA_EUR, DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
+import {
+  isProvinceMatch,
+  normalizeBodasNetCategory,
+  resolveProvince,
+} from '@/lib/constants/spain-regions-and-categories';
 import { planLogisticsDispatch, type LogisticsRoutingPlan } from '@/lib/agents/geo';
+import { listFichasForBuyBox } from '@/lib/providers/fichaProvider';
+import {
+  findMunicipalityByQuery,
+  type SpainMunicipality,
+} from '@/lib/seo/spainMunicipalityCoverage';
+import { geocodeAddressSync } from '@/lib/services/geo/geocoder';
+import { calculateHaversineDistance } from '@/lib/services/pricing/geo-pricer';
 
 export interface CandidateMarketplaceEntity {
   id: string;
@@ -32,6 +44,11 @@ export interface CandidateMarketplaceEntity {
   name: string;
   category: string;
   province: string;
+  municipality?: string;
+  coordinates?: { latitude: number; longitude: number } | null;
+  asin?: string;
+  active?: boolean;
+  homologated?: boolean;
   basePriceEur?: number;
   hasOwnSound?: boolean;
   hasOwnKitchen?: boolean;
@@ -120,7 +137,11 @@ export function scoreMarketplaceEntity(
     // Otzarreta es benchmark en Bizkaia / País Vasco
     proximityScore = targetNorm.includes('bizkaia') || targetNorm.includes('alava') || targetNorm.includes('guipuzcoa') ? 1.0 : 0.75;
     proximityKm = targetNorm.includes('bizkaia') ? 15 : 90;
-  } else if (entityNorm.includes(targetNorm) || targetNorm.includes(entityNorm)) {
+  } else if (
+    isProvinceMatch(req.province, entity.province) ||
+    entityNorm.includes(targetNorm) ||
+    targetNorm.includes(entityNorm)
+  ) {
     proximityScore = 1.0;
     proximityKm = 20;
   } else if (entityNorm.includes('nacional')) {
@@ -282,6 +303,296 @@ export function evaluateBilateralMatch(
   };
 }
 
+export type Nearest3pResolutionTier =
+  | 'GPS_HAVERSINE'
+  | 'MUNICIPALITY_EXACT'
+  | 'PROVINCE_MATCH'
+  | 'NEAREST_PROVINCE'
+  | 'FALLBACK_LABEL';
+
+export interface Nearest3pProviderQuery {
+  readonly category: string;
+  readonly destinationText: string;
+  readonly destinationCoords?: { readonly latitude: number; readonly longitude: number } | null;
+  readonly excludeProviderIds?: readonly string[];
+  readonly extraCandidates?: readonly CandidateMarketplaceEntity[];
+}
+
+export interface Nearest3pCandidate {
+  readonly id: string;
+  readonly key: string;
+  readonly asin: string;
+  readonly slug: string;
+  readonly name: string;
+  readonly category: string;
+  readonly province: string;
+  readonly municipality: string;
+  readonly verified: boolean;
+  readonly distanceKm: number;
+  readonly resolutionTier: Nearest3pResolutionTier;
+  readonly coordinates: { readonly latitude: number; readonly longitude: number } | null;
+  readonly rating: number | null;
+  readonly completeness: number;
+}
+
+export interface Nearest3pProviderResult {
+  readonly selected: Nearest3pCandidate | null;
+  readonly alternatives: readonly Nearest3pCandidate[];
+  readonly resolvedMunicipality: SpainMunicipality | null;
+  readonly resolvedProvinceSlug: string | null;
+  readonly destinationCoords: { readonly latitude: number; readonly longitude: number } | null;
+  readonly resolutionTier: Nearest3pResolutionTier;
+}
+
+function foldGeoText(value: string): string {
+  return value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+}
+
+function mapCategoryToFichaCategories(category: string): readonly string[] {
+  const normalized = normalizeBodasNetCategory(category);
+  if (normalized === 'ALL') return [];
+  if (normalized === 'foto') return ['fotografia', 'foto'];
+  if (normalized === 'sonido') return ['sonido'];
+  if (normalized === 'catering') return ['catering'];
+  if (normalized === 'transporte') return ['transporte'];
+  if (normalized === 'musica') return ['musica'];
+  if (normalized === 'finca') return ['finca'];
+  if (normalized === 'decoracion') return ['decoracion'];
+  return [normalized, 'servicios'];
+}
+
+function tierPriority(tier: Nearest3pResolutionTier): number {
+  if (tier === 'MUNICIPALITY_EXACT') return 0;
+  if (tier === 'GPS_HAVERSINE') return 1;
+  if (tier === 'PROVINCE_MATCH') return 2;
+  if (tier === 'NEAREST_PROVINCE') return 3;
+  return 4;
+}
+
+function municipalityNamesMatch(candidateMunicipality: string, target: SpainMunicipality | null): boolean {
+  if (!candidateMunicipality || !target) return false;
+  const candFold = foldGeoText(candidateMunicipality);
+  if (!candFold) return false;
+  if (candFold === foldGeoText(target.name)) return true;
+  if (target.name.includes('/')) {
+    return target.name.split('/').some((part) => foldGeoText(part) === candFold);
+  }
+  return false;
+}
+
+/**
+ * Algoritmo de Proximidad 3P sobre los 8.131 municipios oficiales y catálogo
+ * de proveedores activos/homologados (`fichas_index.json` + `fichas_gold.json` +
+ * candidatos adicionales de DB).
+ */
+export function resolveNearest3pProvider(params: Nearest3pProviderQuery): Nearest3pProviderResult {
+  const targetCategories = mapCategoryToFichaCategories(params.category);
+  const resolvedMunicipality = findMunicipalityByQuery(params.destinationText);
+  const resolvedProvince = resolvedMunicipality
+    ? (resolveProvince(resolvedMunicipality.provinceName) ?? resolveProvince(resolvedMunicipality.provinceSlug))
+    : resolveProvince(params.destinationText);
+
+  const resolvedProvinceSlug =
+    resolvedMunicipality?.provinceSlug ??
+    (resolvedProvince
+      ? resolvedProvince.name
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, '-')
+      : null);
+
+  const destinationCoords =
+    params.destinationCoords ??
+    geocodeAddressSync(params.destinationText) ??
+    (resolvedMunicipality
+      ? (geocodeAddressSync(resolvedMunicipality.provinceSlug) ??
+        geocodeAddressSync(resolvedMunicipality.provinceName))
+      : null) ??
+    (resolvedProvince ? geocodeAddressSync(resolvedProvince.name) : null);
+
+  const excludedSet = new Set(
+    (params.excludeProviderIds ?? [])
+      .map((id) => id.trim().toLowerCase())
+      .filter((id) => id.length > 0),
+  );
+
+  const rawFichas = listFichasForBuyBox({
+    onlyVerified: true,
+    categories: targetCategories.length > 0 ? targetCategories : undefined,
+  });
+
+  const targetCategorySet = new Set(targetCategories);
+
+  interface RawCandidate {
+    readonly id: string;
+    readonly key: string;
+    readonly asin: string;
+    readonly slug: string;
+    readonly name: string;
+    readonly category: string;
+    readonly province: string;
+    readonly municipality: string;
+    readonly verified: boolean;
+    readonly coordinates: { readonly latitude: number; readonly longitude: number } | null;
+    readonly rating: number | null;
+    readonly completeness: number;
+  }
+
+  const pool: RawCandidate[] = [];
+  const seenKeys = new Set<string>();
+
+  if (params.extraCandidates) {
+    for (const extra of params.extraCandidates) {
+      if (extra.active === false || extra.homologated === false || extra.verifiedAudit === false) {
+        continue;
+      }
+      if (targetCategorySet.size > 0) {
+        const mapped = mapCategoryToFichaCategories(extra.category);
+        const intersects = mapped.some((m) => targetCategorySet.has(m));
+        if (!intersects) continue;
+      }
+      const asin =
+        extra.asin ??
+        resolveEarAsin({
+          id: extra.id,
+          slug: extra.slug,
+          name: extra.name,
+          category: extra.category,
+        });
+      const candidateIds = [extra.id, extra.slug, asin].map((v) => v.trim().toLowerCase());
+      if (candidateIds.some((v) => excludedSet.has(v))) continue;
+
+      seenKeys.add(extra.id);
+      pool.push({
+        id: extra.id,
+        key: extra.id,
+        asin,
+        slug: extra.slug,
+        name: extra.name,
+        category: extra.category,
+        province: extra.province,
+        municipality: extra.municipality ?? '',
+        verified: Boolean(extra.verifiedAudit),
+        coordinates: extra.coordinates ?? null,
+        rating: null,
+        completeness: 100,
+      });
+    }
+  }
+
+  for (const ficha of rawFichas) {
+    const asin =
+      ficha.asin ??
+      resolveEarAsin({
+        id: ficha.key,
+        slug: ficha.slug,
+        name: ficha.name,
+        category: ficha.category,
+      });
+    const candidateIds = [ficha.key, ficha.slug, asin, ficha.vendorId ?? '']
+      .map((v) => v.trim().toLowerCase())
+      .filter((v) => v.length > 0);
+    if (candidateIds.some((v) => excludedSet.has(v))) continue;
+    if (seenKeys.has(ficha.key)) continue;
+
+    seenKeys.add(ficha.key);
+    pool.push({
+      id: ficha.key,
+      key: ficha.key,
+      asin,
+      slug: ficha.slug,
+      name: ficha.name,
+      category: ficha.category,
+      province: ficha.province,
+      municipality: ficha.municipality,
+      verified: ficha.verified,
+      coordinates:
+        typeof ficha.lat === 'number' && typeof ficha.lng === 'number'
+          ? { latitude: ficha.lat, longitude: ficha.lng }
+          : null,
+      rating: ficha.rating,
+      completeness: ficha.completeness,
+    });
+  }
+
+  const targetProvinceLabel =
+    resolvedProvince?.name ?? resolvedMunicipality?.provinceName ?? params.destinationText;
+
+  const ranked: Nearest3pCandidate[] = [];
+
+  for (const cand of pool) {
+    let resolutionTier: Nearest3pResolutionTier | null = null;
+    let distanceKm = Number.POSITIVE_INFINITY;
+
+    const exactMuni = municipalityNamesMatch(cand.municipality, resolvedMunicipality);
+    const sameProvince = isProvinceMatch(targetProvinceLabel, cand.province);
+
+    if (destinationCoords && cand.coordinates) {
+      distanceKm = Math.round(calculateHaversineDistance(destinationCoords, cand.coordinates) * 100) / 100;
+      resolutionTier = exactMuni ? 'MUNICIPALITY_EXACT' : 'GPS_HAVERSINE';
+    } else if (exactMuni) {
+      distanceKm = 0;
+      resolutionTier = 'MUNICIPALITY_EXACT';
+    } else if (sameProvince) {
+      distanceKm = 15;
+      resolutionTier = 'PROVINCE_MATCH';
+    } else if (destinationCoords) {
+      const candProvinceCoords = geocodeAddressSync(cand.province);
+      if (candProvinceCoords) {
+        distanceKm =
+          Math.round(calculateHaversineDistance(destinationCoords, candProvinceCoords) * 100) / 100;
+        resolutionTier = 'NEAREST_PROVINCE';
+      }
+    }
+
+    if (resolutionTier === null || !Number.isFinite(distanceKm)) continue;
+
+    ranked.push({
+      id: cand.id,
+      key: cand.key,
+      asin: cand.asin,
+      slug: cand.slug,
+      name: cand.name,
+      category: cand.category,
+      province: cand.province,
+      municipality: cand.municipality,
+      verified: cand.verified,
+      distanceKm,
+      resolutionTier,
+      coordinates: cand.coordinates,
+      rating: cand.rating,
+      completeness: cand.completeness,
+    });
+  }
+
+  ranked.sort((a, b) => {
+    if (a.distanceKm !== b.distanceKm) return a.distanceKm - b.distanceKm;
+    const tierDiff = tierPriority(a.resolutionTier) - tierPriority(b.resolutionTier);
+    if (tierDiff !== 0) return tierDiff;
+    if (a.completeness !== b.completeness) return b.completeness - a.completeness;
+    const ratingDiff = (b.rating ?? 0) - (a.rating ?? 0);
+    if (ratingDiff !== 0) return ratingDiff;
+    return a.key < b.key ? -1 : a.key > b.key ? 1 : 0;
+  });
+
+  const selected = ranked[0] ?? null;
+
+  return {
+    selected,
+    alternatives: ranked.slice(1, 6),
+    resolvedMunicipality,
+    resolvedProvinceSlug,
+    destinationCoords,
+    resolutionTier: selected?.resolutionTier ?? 'FALLBACK_LABEL',
+  };
+}
+
 export interface HybridLogisticsQuoteResult {
   readonly destination: string;
   readonly routing: LogisticsRoutingPlan;
@@ -293,9 +604,12 @@ export interface HybridLogisticsQuoteResult {
   };
   readonly soundProvisioning: {
     readonly providerName: string;
+    readonly providerId?: string;
+    readonly asin?: string;
     readonly origin: string;
     readonly isLocalProvider: boolean;
     readonly vanLogisticsChargedFromToledo: boolean;
+    readonly resolutionTier?: Nearest3pResolutionTier;
   };
   readonly note: string;
 }
@@ -304,7 +618,7 @@ export interface HybridLogisticsQuoteResult {
  * Resuelve la cotización de despacho híbrido:
  * - Edwin Agudelo (1P Solista) viaja desde Hub Méntrida (Km 0).
  * - Si destino > 150 km (ej. Bilbao/Bizkaia a 440 km): la dotación de sonido
- *   se asigna al proveedor local más cercano sin portes de furgoneta desde Toledo.
+ *   se asigna al proveedor local homologado más próximo sin portes de furgoneta desde Toledo.
  */
 export function resolveHybridLogisticsQuote(
   destinationText: string,
@@ -313,6 +627,25 @@ export function resolveHybridLogisticsQuote(
 ): HybridLogisticsQuoteResult {
   const routing = planLogisticsDispatch(destinationText, explicitDistanceKm);
   const isDecoupled = routing.dispatchMode === 'DECOUPLED_LOCAL_BUYBOX';
+  const nearest3p =
+    isDecoupled && !localProviderCandidateName
+      ? resolveNearest3pProvider({ category: 'sonido', destinationText })
+      : null;
+  const matched = nearest3p?.selected ?? null;
+
+  const resolvedProviderName = isDecoupled
+    ? (localProviderCandidateName ||
+      matched?.name ||
+      `Proveedor Homologado de Sonido (${routing.destination})`)
+    : 'Flota Integrada Hub Méntrida';
+
+  const resolvedOrigin = isDecoupled
+    ? matched
+      ? matched.municipality
+        ? `${matched.municipality} (${matched.province})`
+        : matched.province || routing.destination
+      : routing.destination
+    : 'Hub Méntrida (Toledo)';
 
   return {
     destination: routing.destination,
@@ -324,15 +657,97 @@ export function resolveHybridLogisticsQuote(
       travelFromMentrida: true,
     },
     soundProvisioning: {
-      providerName: isDecoupled
-        ? (localProviderCandidateName || `Proveedor Homologado de Sonido (${routing.destination})`)
-        : 'Flota Integrada Hub Méntrida',
-      origin: isDecoupled ? routing.destination : 'Hub Méntrida (Toledo)',
+      providerName: resolvedProviderName,
+      ...(matched ? { providerId: matched.key, asin: matched.asin } : {}),
+      origin: resolvedOrigin,
       isLocalProvider: isDecoupled,
       vanLogisticsChargedFromToledo: !isDecoupled,
+      ...(isDecoupled
+        ? {
+            resolutionTier: localProviderCandidateName
+              ? ('FALLBACK_LABEL' as const)
+              : nearest3p?.resolutionTier,
+          }
+        : {}),
     },
     note: isDecoupled
-      ? `Evento en ${routing.destination} (${routing.distanceToMentridaKm} km): Edwin viaja desde Méntrida; sonido asignado localmente sin portes de furgoneta desde Toledo.`
+      ? `Evento en ${routing.destination} (${routing.distanceToMentridaKm} km): Edwin viaja desde Méntrida; sonido asignado localmente (${resolvedProviderName}) sin portes de furgoneta desde Toledo.`
       : `Evento en ${routing.destination} (${routing.distanceToMentridaKm} km): Paquetizado conjunto con flota Méntrida en un solo porte.`,
+  };
+}
+
+export interface BuyBoxFallbackLineInput {
+  readonly id: string;
+  readonly category: string;
+  readonly providerId: string;
+  readonly status?: string;
+  readonly destinationText?: string;
+  readonly excludeProviderIds?: readonly string[];
+  readonly slaExpiresAt?: string;
+}
+
+export interface ResolveBuyBoxFallbackInput {
+  readonly line: BuyBoxFallbackLineInput;
+  readonly reason: 'RECHAZO' | 'SLA_EXPIRED';
+  readonly now?: number;
+  readonly destinationText?: string;
+  readonly extraCandidates?: readonly CandidateMarketplaceEntity[];
+}
+
+export interface ResolveBuyBoxFallbackResult {
+  readonly ok: boolean;
+  readonly lineId: string;
+  readonly reason: 'RECHAZO' | 'SLA_EXPIRED';
+  readonly previousProviderId: string;
+  readonly newProviderId: string | null;
+  readonly providerId: string | null;
+  readonly provider: Nearest3pCandidate | null;
+  readonly alternatives: readonly Nearest3pCandidate[];
+  readonly excludeProviderIds: readonly string[];
+  readonly exhausted: boolean;
+}
+
+/**
+ * Resiliencia Buy Box (F7): ante RECHAZO o expiración de ventana SLA (24h),
+ * promueve automáticamente al siguiente proveedor homologado más cercano
+ * excluyendo al proveedor actual y a los rechazados previamente.
+ */
+export function resolveBuyBoxFallback(
+  input: ResolveBuyBoxFallbackInput
+): ResolveBuyBoxFallbackResult {
+  const excluded = Array.from(
+    new Set(
+      [input.line.providerId, ...(input.line.excludeProviderIds ?? [])]
+        .map((id) => id.trim())
+        .filter((id) => id.length > 0)
+    )
+  );
+
+  const destination =
+    input.line.destinationText?.trim() || input.destinationText?.trim() || 'Madrid';
+
+  const nearest = resolveNearest3pProvider({
+    category: input.line.category,
+    destinationText: destination,
+    excludeProviderIds: excluded,
+    extraCandidates: input.extraCandidates,
+  });
+
+  const nextId = nearest.selected?.id ?? null;
+  const nextExcludeIds = nextId
+    ? Array.from(new Set([...excluded, nextId]))
+    : excluded;
+
+  return {
+    ok: nearest.selected !== null,
+    lineId: input.line.id,
+    reason: input.reason,
+    previousProviderId: input.line.providerId,
+    newProviderId: nextId,
+    providerId: nextId,
+    provider: nearest.selected,
+    alternatives: nearest.alternatives,
+    excludeProviderIds: nextExcludeIds,
+    exhausted: nearest.selected === null,
   };
 }

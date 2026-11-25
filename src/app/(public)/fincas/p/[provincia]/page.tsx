@@ -53,7 +53,7 @@ const FALLBACK_IMAGE =
 /**
  * Intents SEO de fincas publicados originalmente por el catch-all
  * `[vertical]/[intent]`. Se preservan aquí para no romper backlinks mientras
- * la ruta concreta `/fincas/[provincia]` asume la resolución territorial.
+ * la ruta concreta `/fincas/p/[provincia]` asume la resolución territorial.
  */
 const FINCA_SEO_INTENTS: Record<string, { title: string; description: string }> = {
   'opiniones-quinta-malpica-sonorizacion': {
@@ -105,12 +105,12 @@ export async function generateMetadata({ params }: ProvinciaFincasProps): Promis
       title: `Fincas para Bodas y Sonorización en ${resolved.display} · Homologación Oficial | Productora EAR`,
       description: `${count === 1 ? 'Finca certificada' : `${count} fincas certificadas`} para bodas y eventos en ${resolved.display}. RC 300.000 €, acústica calibrada Ley 37/2003 y rider Bose F1 con split 80/10/10.`,
       alternates: {
-        canonical: `https://www.productoraear.com/fincas/${resolved.slug}`,
+        canonical: `https://www.productoraear.com/fincas/p/${resolved.slug}`,
       },
       openGraph: {
         title: `Fincas para Bodas y Sonorización en ${resolved.display} — Productora EAR`,
         description: `Red certificada de fincas S-Class en ${resolved.display} con limitadores homologados y música en vivo.`,
-        url: `https://www.productoraear.com/fincas/${resolved.slug}`,
+        url: `https://www.productoraear.com/fincas/p/${resolved.slug}`,
         type: 'website',
       },
     };
@@ -213,7 +213,7 @@ export default async function ProvinciaFincasPage({ params }: ProvinciaFincasPro
   // If the URL has a non-canonical slug (e.g. city instead of province or unnormalized string)
   if (resolved.slug !== provincia.toLowerCase()) {
     const { redirect } = await import('next/navigation');
-    redirect(`/fincas/${resolved.slug}`);
+    redirect(`/fincas/p/${resolved.slug}`);
   }
 
   const fincas = SCLASS_12_FINCAS_HOMOLOGADAS.filter(
@@ -241,7 +241,7 @@ export default async function ProvinciaFincasPage({ params }: ProvinciaFincasPro
               price: TARIFA_BASE_SOLISTA_EUR.toFixed(2),
               priceCurrency: 'EUR',
               availability: 'https://schema.org/InStock',
-              url: `https://ear-os.com/fincas/${resolved.slug}`
+              url: `https://ear-os.com/fincas/p/${resolved.slug}`
             }
           })
         }}

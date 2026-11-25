@@ -6,11 +6,18 @@ import { normalizeCurrencyAndNumbers } from '@/lib/voice/speechNormalizer';
 import { resolvePageContext } from '@/lib/agents/pageContext';
 import { resolveTaxonomyMatch, TAXONOMY_QUOTE_HREF, type TaxonomyMatch } from '@/lib/search/taxonomy-index';
 import {
-  TARIFA_BASE_SOLISTA_EUR,
-  DEPOSITO_STRIPE_EUR,
+  AJUSTE_PREVENTIVO_B2G_EUR,
   CENTRALITA_EAR_OS,
+  DEPOSITO_STRIPE_EUR,
+  LIMITE_B2G_LCSP_EUR,
+  LOGISTICA_EUR_PER_KM,
+  SOLISTA_KM_INCLUIDOS,
+  TARIFA_BASE_SOLISTA_EUR,
+  TARIFA_ESTANDAR_SOLISTA_EUR,
   WATTS_PER_PAX,
 } from '@/lib/constants/ear-os-ssot';
+import { OTZARRETA_WEDDING_MENUS, formatOtzarretaMenuPrice } from '@/lib/constants/otzarreta-entity';
+import { buildWhatsAppHandoffUrl } from '@/lib/whatsapp/whatsapp-concierge';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -141,23 +148,34 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    const { message, provinceSlug, categorySlug, pathname } = body;
-    // Ensure Otzarreta context is detected
-    const isOtzarreta = 
-      pathname?.includes('otzarreta') || 
-      message?.toLowerCase()?.includes('otzarreta') || 
-      message?.toLowerCase()?.includes('derio') || 
-      message?.toLowerCase()?.includes('ezkertza');
+    const { message, provinceSlug, categorySlug, pathname, asin, entityName } = body as {
+      message?: string;
+      provinceSlug?: string;
+      categorySlug?: string;
+      pathname?: string;
+      asin?: string;
+      entityName?: string;
+      history?: unknown;
+    };
+    const activeAsin = typeof asin === 'string' && asin.trim().length > 0 ? asin.trim() : undefined;
+    const activeEntityName = typeof entityName === 'string' && entityName.trim().length > 0 ? entityName.trim() : undefined;
+    const safePathname = typeof pathname === 'string' ? pathname : '';
 
     if (!message || typeof message !== 'string') {
       return NextResponse.json({ error: 'Mensaje inválido' }, { status: 400 });
     }
 
-    // ── HILO CONDUCTOR (P0 · anti-alucinación): el historial de sesión que
-    // envía el cliente se sanea y se inyecta en el prompt. Antes se ignoraba y
-    // cada turno se respondía a ciegas (el agente "olvidaba" lo hablado dos
-    // segundos antes). SEC-4: esquema estricto en frontera externa.
     const history = sanitizeConciergeHistory(body.history);
+    const contextProbe = [safePathname, message, ...history.map((h) => h.content)].join(' ').toLowerCase();
+
+    const isOtzarreta =
+      safePathname.includes('otzarreta') ||
+      safePathname.includes('restaurante-eduardo-martinez') ||
+      /\b(?:otzarreta|derio|ezkertza|bilbao|bizkaia|vizcaya)\b/i.test(contextProbe);
+
+    const isB2g =
+      /\/(?:b2g|ayuntamientos|instituciones|gobiernos|vimume\/b2g)/i.test(safePathname) ||
+      /\b(?:b2g|licitaci[oó]n|ayuntamiento|art\.?\s*118|lcsp|contrato menor|facturae|dir3)\b/i.test(contextProbe);
 
     // ── ANTI-SESGO DEL ROSTER (P0): si el usuario está en la ficha de un
     // proveedor de terceros, el concierge habla de ESE proveedor y de su gremio.
@@ -182,7 +200,7 @@ export async function POST(request: Request) {
     const lower = message.toLowerCase();
 
     // 1. Detección heurística de provincia y categoría en lenguaje natural
-    let detectedProv = provinceSlug;
+    let detectedProv: string = provinceSlug || '';
     if (!detectedProv) {
       for (const [kw, slug] of Object.entries(PROVINCE_KEYWORDS)) {
         if (lower.includes(kw)) {
@@ -191,7 +209,6 @@ export async function POST(request: Request) {
         }
       }
     }
-    detectedProv = detectedProv || null; // No fallback a Madrid, solo se usa la provincia detectada o null
 
     let detectedCat = categorySlug;
     if (!detectedCat) {
@@ -217,16 +234,16 @@ export async function POST(request: Request) {
       claimText: 'Bloquea este espacio junto con la producción musical oficial en un solo clic.',
     };
 
-    const provName = detectedProv.charAt(0).toUpperCase() + detectedProv.slice(1);
+    const provName = detectedProv ? detectedProv.charAt(0).toUpperCase() + detectedProv.slice(1) : 'España';
     const catName = detectedCat || 'Espacios y Proveedores';
     // Regla de precio condicionada al anclaje: en ficha de proveedor NO se vende
     // la tarifa del solista (sesgo del roster), se vende la tarifa de su ficha.
     const priceRule: string = isProviderFicha
       ? `   - Si preguntan precio: usa SOLO la tarifa publicada en la ficha del proveedor (bloque 4). PROHIBIDO aplicar, mencionar o insinuar la tarifa del solista de Edwin Agudelo.
    - Depósito de bloqueo: ${DEPOSITO_STRIPE_EUR} euros, íntegramente deducible del total del evento.`
-      : `   - Si preguntan precio: tarifa base de Edwin Agudelo como solista es de ${TARIFA_BASE_SOLISTA_EUR} euros (incluye sonido Bose F1 de alta fidelidad).
+      : `   - Si preguntan precio del solista Edwin Agudelo: tarifa estándar oficial de ${TARIFA_ESTANDAR_SOLISTA_EUR} euros (${SOLISTA_KM_INCLUIDOS} km incluidos desde Hub Méntrida) y suelo canónico afiliado de ${TARIFA_BASE_SOLISTA_EUR} euros (${SOLISTA_KM_INCLUIDOS} km exentos, ${LOGISTICA_EUR_PER_KM.toFixed(2).replace('.', ',')} euros/km excedente).
    - Para bloquear la fecha en exclusiva en agenda se realiza un depósito de ${DEPOSITO_STRIPE_EUR} euros íntegramente deducible del total del evento.
-   - Escribe siempre cantidades redondas y naturales ("${TARIFA_BASE_SOLISTA_EUR} euros", "${DEPOSITO_STRIPE_EUR} euros"). Cero decimales mecánicos como ".00".`;
+   - Escribe siempre cantidades redondas y naturales ("${TARIFA_ESTANDAR_SOLISTA_EUR} euros", "${TARIFA_BASE_SOLISTA_EUR} euros", "${DEPOSITO_STRIPE_EUR} euros"). Cero decimales mecánicos como ".00".`;
 
     // 4. Síntesis Conversacional S-Class (Tier 1: DeepSeek Cloud -> Tier 2: Gemini Flash -> Tier 3: Determinista)
     let reply = '';
@@ -249,24 +266,35 @@ export async function POST(request: Request) {
    - Si el cliente menciona un género o formato musical, oriéntale a /proveedores?categoria=musica o a /presupuesto.
    - Cierra SIEMPRE invitando al presupuesto y al WhatsApp oficial ${CENTRALITA_EAR_OS}.`;
 
-    const systemPrompt = `Eres el Concierge Inteligente de Productora EAR para Edwin Agudelo y la Red de Fincas y Proveedores de Gala.${
-  pathname.includes('/otzarreta')
-    ? '\n\n---\nROL ESPECIAL: Maître Digital del Asador Restaurante Otzarreta en Derio (Bizkaia)\nMenús Oficiales:\n1. Menú Tradición: 145,00 € + IVA\n2. Menú Asador: 155,00 € + IVA\n3. Menú Ezkertza: 165,00 € + IVA\n4. Menú Soberano: 185,00 € + IVA\nDatos Físicos:\n- Parrilla tradicional de carbón de encina y sarmiento.\n- Aforo: Comedor acristalado 50 a 200 comensales (ampliable a 350 con jardín y carpa).\n- Párking privado para más de 120 vehículos.\n- Ceremonia civil exterior en jardín.\n- Alérgenos: Protocolo de cocina limpia sin gluten para celíacos y menú vegetariano.\n- Cláusula Boda Exclusiva: \"Una sola boda por día. Toda la finca y salones en exclusiva\".\n- Acústica de fiesta: Protocolo preventivo según Ley 37/2003 (< 75 dB).\n---\n'
-    : ''
-}
-DIRECTIVA INMUTABLE (HUMANO, EMPÁTICO Y RESOLUTIVO — CERO LORO):
+    const otzarretaMenusPrompt = OTZARRETA_WEDDING_MENUS.map((m, idx) => {
+      const p = formatOtzarretaMenuPrice(m.priceEur);
+      return `${idx + 1}. ${m.name}: ${p ? `${p} + IVA` : 'consultar'}`;
+    }).join('\n');
+
+    const otzarretaRoleBlock = isOtzarreta
+      ? `\n\n---\nROL ESPECIAL: Maître Digital del Asador Restaurante Otzarreta en Derio (Bizkaia)\nMenús Oficiales:\n${otzarretaMenusPrompt}\nDatos Físicos:\n- Parrilla tradicional de carbón de encina y sarmiento.\n- Aforo: Comedor acristalado 50 a 200 comensales (ampliable a 350 con jardín y carpa).\n- Párking privado para más de 120 vehículos.\n- Ceremonia civil exterior en jardín.\n- Cláusula Boda Exclusiva: "Una sola boda por día. Toda la finca y salones en exclusiva".\n---\n`
+      : '';
+
+    const b2gRoleBlock = isB2g
+      ? `\n6. PROTOCOLO B2G INSTITUCIONAL ACTIVO:\n   - Contratos menores Art. 118 LCSP hasta ${AJUSTE_PREVENTIVO_B2G_EUR.toLocaleString('es-ES')} € preventivos (límite ${LIMITE_B2G_LCSP_EUR.toLocaleString('es-ES')} € + IVA), Facturae DIR3 vía FACe.`
+      : '';
+
+    const systemPrompt = `Eres el Maître de Sala de Productora EAR para la Red de Fincas, Artistas y Proveedores de Gala.${otzarretaRoleBlock}
+DIRECTIVA INMUTABLE (HUMANO, EMPÁTICO Y RESOLUTIVO — MÁXIMO 3 LÍNEAS):
 0. HILO CONDUCTOR (OBLIGATORIO):
    - Recibes el historial de la conversación. Úsalo: si el cliente ya dijo fecha, provincia o tipo de evento, NO se lo vuelvas a preguntar.
    - Continúa la conversación donde se quedó. PROHIBIDO reiniciar el saludo o repetir la bienvenida.
    - Si detectas un dato ya aportado, confírmalo en una sola frase y avanza al siguiente paso.
-1. REGLA DE ORO ANTI-LORO Y SUCINTO (MÁXIMO 40 PALABRAS):
-   - Responde ESTRICTAMENTE a la duda del usuario con empatía y cercanía.
-   - PROHIBIDO soltar párrafos largos o discursos. Máximo 1 o 2 oraciones breves y directas (máximo 40 palabras en total).
-   - Bebe la información exclusivamente de la ficha del proveedor o artista en pantalla si está disponible.
+1. REGLA DE ORO ANTI-LORO Y SUCINTO (MÁXIMO 3 LÍNEAS / 40 PALABRAS):
+   - Responde ESTRICTAMENTE a la duda del usuario con empatía y sobriedad.
+   - PROHIBIDO soltar monólogos. Máximo 3 líneas breves y directas.
+   - PROHIBIDO mencionar licitaciones B2G o Art. 118 LCSP a novios o bodas.
+   - PROHIBIDO proponer Otzarreta o caseríos de Derio a consultas fuera de Bizkaia.
+   - Bebe la información exclusivamente de la ficha del proveedor o artista en pantalla si está disponible (${activeEntityName || pageContext.name || 'catálogo general'}${activeAsin ? ` · ${activeAsin}` : ''}).
    - PROHIBIDO mencionar leyes acústicas (Ley 37/2003), decibelios, homologaciones o el reparto del split (80/10/10) a menos que el usuario pregunte expresamente por acústica o finanzas.
 1bis. ORIENTACIÓN AL CIERRE (SIEMPRE):
-   - Toda respuesta debe terminar acercando al cliente al cierre: o bien pedir el dato que falta (fecha, provincia, número de invitados), o bien invitar a confirmar por WhatsApp oficial o a generar el presupuesto.
-   - PROHIBIDO divagar sobre temas ajenos a eventos, ocio, política, opiniones personales o cualquier asunto que no sea organizar el evento del cliente. Si el cliente cambia de tema, reconduce en una frase a su evento.
+   - Toda respuesta debe terminar acercando al cliente al cierre: o bien pedir el dato que falta (fecha, provincia, número de invitados), o bien invitar a confirmar por WhatsApp o generar presupuesto.
+   - PROHIBIDO divagar sobre temas ajenos a eventos. Si el cliente cambia de tema, reconduce en una frase a su evento.
 2. PRECIOS Y NÚMEROS LIMPIOS:
 ${priceRule}
 3. CONTEXTO DISPONIBLE:
@@ -274,7 +302,7 @@ ${priceRule}
    - Categoría consultada: ${catName}
    - Proveedores encontrados en la base de datos: ${providersList || 'Búsqueda personalizada en curso'}
    - Turnos previos en este hilo: ${history.length}
-   - Teléfono / WhatsApp oficial: ${CENTRALITA_EAR_OS}${providerBlock}${taxonomyBlock}`;
+   - Teléfono / WhatsApp oficial: ${CENTRALITA_EAR_OS}${providerBlock}${taxonomyBlock}${b2gRoleBlock}`;
 
 
     if (isDeepSeekConfigured()) {
@@ -323,16 +351,60 @@ ${priceRule}
     if (!reply) {
       if (isProviderFicha) {
         // Determinista anclado a la ficha: cero lobby del roster, cero invención.
-        reply = `Estás en la ficha de **${pageContext.name}**${pageContext.municipality !== null ? ` (${pageContext.municipality})` : ''}, dentro de **${fichaCategory}**. ${pageContext.facts.slice(0, 2).join(' ')} Lo que su ficha no publica (${pageContext.missing.slice(0, 2).join(', ')}) lo cerramos con el proveedor desde la Conserjería EAR OS (${CENTRALITA_EAR_OS}).`;
+        reply = `Estás en la ficha de **${pageContext.name}**${pageContext.municipality !== null ? ` (${pageContext.municipality})` : ''} (${fichaCategory}). ${pageContext.facts.slice(0, 2).join(' ')}`;
+      } else if (isB2g) {
+        reply = `Gabinete B2G activo para contratos menores Art. 118 LCSP (techo preventivo ${AJUSTE_PREVENTIVO_B2G_EUR.toLocaleString('es-ES')} €, Facturae DIR3). ¿Qué municipio y fecha de festejo estás planificando?`;
       } else if (providers.length > 0) {
-        reply = `He seleccionado perfiles destacados de **${catName}** en **${provName}** para tu evento. Puedes revisar las opciones a continuación o escribirnos directamente a WhatsApp para armar un paquete personalizado con Edwin Agudelo.`;
+        reply = `He seleccionado opciones destacadas de **${catName}** en **${provName}** para tu evento. ¿Qué fecha y número aproximado de invitados tenéis previstos?`;
       } else {
-        reply = `He registrado tu solicitud para **${provName}**. Nuestro equipo en el Hub Central de Méntrida te contactará de inmediato con opciones a medida y fechas disponibles.`;
+        reply = `Será un placer ayudarte con **${catName}** en **${provName}**. ¿Qué fecha y aforo aproximado tenéis previstos para preparar tu propuesta?`;
       }
     }
 
     // Normalizar fonéticamente cualquier cifra para que no existan aberraciones
     reply = normalizeCurrencyAndNumbers(reply);
+
+    const cleanCentralitaDigits = CENTRALITA_EAR_OS.replace(/\D/g, '');
+    const initialWaText = activeEntityName
+      ? `Hola, consulto disponibilidad y presupuesto para ${activeEntityName}`
+      : taxonomy.label.length > 0
+        ? `Quiero presupuesto para ${taxonomy.label}`
+        : 'Quiero presupuesto para mi evento';
+    const whatsappHref = buildWhatsAppHandoffUrl(
+      cleanCentralitaDigits,
+      {
+        asin: activeAsin,
+        city: detectedProv ?? undefined,
+        serviceKind: isB2g ? 'b2g' : detectedCat ?? undefined,
+        rawQuery: message.slice(0, 100),
+      },
+      initialWaText,
+    );
+
+    const suggestedChips: string[] = isProviderFicha
+      ? [
+          `Más datos de ${pageContext.name}`,
+          'Verificar disponibilidad de fecha',
+        ]
+      : isB2g
+        ? [
+            'Contrato menor Art. 118 LCSP',
+            'Memoria técnica Ley 37/2003',
+          ]
+        : isOtzarreta
+          ? [
+              'Menús y aforos de Otzarreta',
+              'Verificar disponibilidad de fecha',
+            ]
+          : taxonomy.facet !== null
+            ? [
+                `Ver ${taxonomy.label} en el catálogo`,
+                'Calcular mi presupuesto',
+              ]
+            : [
+                `Espacios y fincas en ${provName}`,
+                'Calcular mi presupuesto',
+              ];
 
     return NextResponse.json({
       success: true,
@@ -343,8 +415,8 @@ ${priceRule}
         provinceSlug: detectedProv,
         category: isProviderFicha ? fichaCategory : detectedCat || 'General',
       },
-      // En ficha de proveedor NO se inyecta la tarjeta del roster (sesgo).
-      rosterRecommendation: isProviderFicha ? undefined : rosterRecommendation,
+      // En ficha de proveedor o B2G NO se inyecta la tarjeta del roster (sesgo).
+      rosterRecommendation: isProviderFicha || isB2g ? undefined : rosterRecommendation,
       // 🧭 ENRUTAMIENTO TAXONÓMICO (BLOQUE 4): el destino lo decide el MOTOR,
       // nunca el modelo. El cliente sólo pinta los enlaces ya validados.
       taxonomy: {
@@ -354,26 +426,9 @@ ${priceRule}
         familyLabel: taxonomy.family?.label ?? '',
         catalogHref: taxonomy.href,
         quoteHref: TAXONOMY_QUOTE_HREF,
-        whatsappHref: `https://wa.me/${CENTRALITA_EAR_OS.replace(/\D/g, '')}?text=${encodeURIComponent(
-          taxonomy.label.length > 0
-            ? `Quiero presupuesto para ${taxonomy.label}`
-            : 'Quiero presupuesto para mi evento',
-        )}`,
+        whatsappHref,
       },
-      suggestedChips: isProviderFicha
-        ? [
-            `Más datos de ${pageContext.name}`,
-            'Verificar disponibilidad de fecha',
-          ]
-        : taxonomy.facet !== null
-          ? [
-              `Ver ${taxonomy.label} en el catálogo`,
-              'Calcular mi presupuesto',
-            ]
-          : [
-              `Fincas rústicas en ${provName}`,
-              `Mariachi y Solista en ${provName}`,
-            ],
+      suggestedChips: suggestedChips.slice(0, 3),
     });
 
   } catch (error: unknown) {

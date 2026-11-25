@@ -46,8 +46,8 @@ export interface ConcentricRefusalInput {
   /** Propuesta principal de la entidad (menú, tarifa base, paquete). */
   readonly anchorOfferName: string | null;
   /**
-   * Fianza exacta que la entidad publica en céntimos. `null` ⇒ se usa el techo
-   * comercial del SSOT. Se acota SIEMPRE por arriba (INV-03).
+   * Fianza exacta que la entidad publica en céntimos. `null` ⇒ se aplica el
+   * suelo constitucional del SSOT (`DEPOSITO_STRIPE_EUR = 100,00 €`).
    */
   readonly depositCents?: number | null;
   /** Dato que falta para cerrar el ancla (aforo, fecha...). */
@@ -69,9 +69,9 @@ export function buildConcentricRefusalScript(input: ConcentricRefusalInput): str
     typeof input.depositCents === 'number' && Number.isFinite(input.depositCents) && input.depositCents > 0
       ? input.depositCents
       : null;
-  // Techo comercial: la entidad puede pedir menos fianza, nunca más (INV-03).
+  // Suelo constitucional F6: mínimo 100,00 €; si el proveedor configura fianza superior, se respeta.
   const depositEur: number =
-    publishedCents === null ? DEPOSITO_STRIPE_EUR : Math.min(publishedCents / 100, DEPOSITO_STRIPE_EUR);
+    publishedCents === null ? DEPOSITO_STRIPE_EUR : Math.max(publishedCents / 100, DEPOSITO_STRIPE_EUR);
 
   const nextQuestion: string =
     input.nextQuestion !== null && input.nextQuestion !== undefined && input.nextQuestion.trim().length > 0

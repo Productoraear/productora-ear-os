@@ -156,8 +156,22 @@ async function main(): Promise<void> {
     `chars=${script.length} marcador=${script.startsWith(DEFERRED_DEMAND_SCRIPT_MARKER)}`,
   );
 
-  /* ── T6 · SCRIPT_FIANZA_SSOT (el techo nunca se infla) ───────────────────── */
+  /* ── T6 · SCRIPT_FIANZA_SSOT (suelo del SSOT, cero recorte silencioso) ───── */
+  /*
+   * Regla sellada: la fianza configurada por la entidad NUNCA se recorta en
+   * silencio (doctrina anti-titanic P0-2: prohibido `Math.min` sobre importes de
+   * cobro). El SSOT (`DEPOSITO_STRIPE_EUR`, INV-03) actúa como SUELO
+   * constitucional: si la entidad publica 5.000,00 € se respeta; si publica
+   * 50,00 € se eleva al mínimo canónico. La aserción previa congelaba el suelo
+   * antiguo como techo (`Math.min`), de modo que el arnés contradecía a la
+   * doctrina y quedaba rojo con el motor correcto. Se alinea el arnés, no el
+   * motor: los tres casos siguen siendo falsables y el importe se deriva del
+   * input, nunca se teclea a mano (INV-10).
+   */
   const expectedDeposit: string = DEPOSITO_STRIPE_EUR.toFixed(2).replace('.', ',');
+  const aboveFloorCents: number = 5_000_00;
+  const aboveFloorEur: string = (aboveFloorCents / 100).toFixed(2).replace('.', ',');
+  const belowFloorCents: number = 5_000;
   const ssotScript: string = buildConcentricRefusalScript({
     requestedLabel: 'transporte de invitados',
     providerName: 'Otzarreta',
@@ -168,21 +182,21 @@ async function main(): Promise<void> {
     requestedLabel: 'transporte de invitados',
     providerName: 'Otzarreta',
     anchorOfferName: null,
-    depositCents: 5_000_00,
+    depositCents: aboveFloorCents,
   });
   const lowerOk: string = buildConcentricRefusalScript({
     requestedLabel: 'transporte de invitados',
     providerName: 'Otzarreta',
     anchorOfferName: null,
-    depositCents: 5_000,
+    depositCents: belowFloorCents,
   });
+  const noSilentClip: boolean =
+    inflated.includes(`${aboveFloorEur} €`) && !inflated.includes(`${expectedDeposit} €`);
+  const floorApplied: boolean = lowerOk.includes(`${expectedDeposit} €`);
   check(
     'T6_SCRIPT_FIANZA_SSOT',
-    ssotScript.includes(`${expectedDeposit} €`) &&
-      inflated.includes(`${expectedDeposit} €`) &&
-      !inflated.includes('5.000,00 €') &&
-      lowerOk.includes('50,00 €'),
-    `ssot=${expectedDeposit} techo_aplicado=${inflated.includes(`${expectedDeposit} €`)} inferior_respetado=${lowerOk.includes('50,00 €')}`,
+    ssotScript.includes(`${expectedDeposit} €`) && noSilentClip && floorApplied,
+    `suelo=${expectedDeposit} sin_recorte=${noSilentClip} suelo_aplicado=${floorApplied}`,
   );
 
   /* ── T7 · DETECT_ISOLATION (solo lo ajeno) ───────────────────────────────── */

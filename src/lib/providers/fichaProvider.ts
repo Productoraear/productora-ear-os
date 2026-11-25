@@ -200,6 +200,31 @@ export function getFichaStoreStats(): {
   return { entries: store.indexByKey.size, gold: store.goldByKey.size, verified, loaded: store.loaded };
 }
 
+/**
+ * Acceso de servidor al catálogo de fichas para el motor Buy Box 3P.
+ * Fusiona automáticamente `fichas_gold.json` (con lat/lng GPS) sobre `fichas_index.json`.
+ */
+export function listFichasForBuyBox(options?: {
+  readonly onlyVerified?: boolean;
+  readonly categories?: readonly string[];
+}): readonly ProviderFicha[] {
+  const store: FichaStore = loadStore();
+  const onlyVerified = options?.onlyVerified === true;
+  const categorySet =
+    options?.categories && options.categories.length > 0
+      ? new Set(options.categories.map((cat) => cat.trim().toLowerCase()))
+      : null;
+
+  const result: ProviderFicha[] = [];
+  for (const entry of store.indexByKey.values()) {
+    if (onlyVerified && !entry.verified) continue;
+    if (categorySet !== null && !categorySet.has(entry.category.toLowerCase())) continue;
+    const ficha: ProviderFicha | null = toFicha(entry);
+    if (ficha !== null) result.push(ficha);
+  }
+  return result;
+}
+
 const STOPWORDS: ReadonlySet<string> = new Set([
   'el', 'la', 'los', 'las', 'un', 'una', 'unos', 'unas', 'de', 'del', 'en', 'con', 'por', 'para',
   'algun', 'alguna', 'algunos', 'algunas', 'hay', 'tienes', 'teneis', 'busco', 'quiero', 'necesito',

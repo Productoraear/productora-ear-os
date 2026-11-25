@@ -143,7 +143,7 @@ export async function generateSitemapPartition(partitionId: string): Promise<Met
           .filter(Boolean)
       );
       for (const prov of fincaProvinces) {
-        addEntry(`${BASE_URL}/fincas/${prov}`, 0.85, 'weekly');
+        addEntry(`${BASE_URL}/fincas/p/${prov}`, 0.85, 'weekly');
       }
       for (const finca of (SCLASS_12_FINCAS_HOMOLOGADAS || [])) {
         if (finca && finca.slug) {

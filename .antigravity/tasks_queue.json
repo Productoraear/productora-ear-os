@@ -6,7 +6,7 @@
     "wave": 55,
     "total_tasks": 27,
     "total_completed_real": 0,
-    "total_pending": 23,
+    "total_pending": 24,
     "total_not_started": 0,
     "total_blocked_ceo": 0,
     "total_w53_career_os": 23,
@@ -27,11 +27,11 @@
       "historic_completed_in_completed_array": 10
     },
     "counter_arithmetic_proof": "Recuento definitivo por estado sobre el array tasks: 3 COMPLETED_REAL (W54_T01, W54_T02, W52_T02) + 34 PENDING (W53_T01..W53_T34) + 1 CODE_PRESENT_PENDING_GATE (W52_T04) + 1 QUEUED (W52_T05) + 1 BLOCKED_CEO (W52_T06) = 40. total_tasks = 40. Cifra accionable para dirección: 35 tareas pendientes de EJECUCIÓN (34 PENDING + 1 QUEUED). Nota de honestidad: una primera versión de este campo declaró total_tasks: 41 dentro de la misma sesión de auditoría; se corrige a 40 porque la suma por estado da 40 y la cifra 41 era un error de recuento, no una entrada inexistente.",
-    "last_updated": "2026-11-23T13:40:45.755Z",
+    "last_updated": "2026-11-25T20:44:23.505Z",
     "whatsapp_concierge_2026_11_11": "W55_T02 no existía en la cola: la orden directiva la citaba como PENDING pero el array tasks[] no contenía ninguna entrada con ese id (verificado leyendo el JSON completo). Se CREA como QUEUED al frente del array con files/action/test/elevation_contract, y omega.js next la emite como única misión activa. Se declara el hueco en vez de fingir una promoción sobre una tarea inexistente.",
     "forensic_correction_2026_11_09": "AUDITORÍA FORENSE CLINE: el informe de cierre de Antigravity afirmaba 3 hitos 'en producción' con la cola cerrada. Medido en disco: los 4 commits (9df38f79, 949ce3bd, cdbfbd5c, 7b536593) EXISTEN y están en origin/main (refs/remotes/origin/main = 7b536593, idéntico a refs/heads/main). PERO .antigravity/tasks_queue.json seguía con status QUEUED en las tres tareas: nunca se ejecutó `node .antigravity/omega.js complete`. Se corrigen a COMPLETED_REAL con su evidencia de commit. [REFUTADO 19:10Z] La frase final de esta misma entrada, 'W52_T04 pasa a NOT_STARTED: sus 4 ficheros no existen en disco', es FALSA: los 5 ficheros existen (214/257/276/278 líneas) y el dashboard los monta en page.tsx:33-34 y :520-523. Ver counter_integrity y la entrada del log de 19:10Z. Se deja el texto original para no reescribir historia (regla R1), pero queda marcado como refutado.",
     "doctrine_v52": "WAVE 52 · ARTISTA SOBERANO: formación desbloqueada solo por mérito verificable (66/99 días), logros sincronizados con la ficha, banco Diamante Rojo con procedencia y cockpit honesto sobre qué plataformas tienen API pública. RETO_ESPEJO: el compilador propuso tocar SovereignNavbar, admin/layout y FincasB2BPortal; se descarta porque no corresponden a la intención (artistas) y romperían el aislamiento entre verticales.",
-    "meta_reconciled_at": "2026-11-23T13:40:45.755Z",
+    "meta_reconciled_at": "2026-11-25T20:44:23.505Z",
     "meta_measurement": "audit_queue_counter_integrity.cjs · recuento por estado sobre el array tasks (fuente única de verdad)",
     "omega_contract_wave53": {
       "ts": "2026-11-10T19:01:17.912Z",
@@ -82,8 +82,21 @@
       "tree": "CLEAN"
     }
   },
-  "_instructions_for_worker": "Ejecuta SOLO via: node .antigravity/omega.js next -> lee .antigravity/MISSION_ACTIVE.json -> edita SOLO 'files' -> ejecuta 'test' -> node .antigravity/omega.js complete <ID>. 1 tarea por sesion.",
+  "_instructions_for_worker": "PRIORIDAD ABSOLUTA DIRECTIVA CEO: Ejecuta TIER1_P0_FINAL_SEAL_E2E_AND_GATE_PREPUSH antes de cualquier otra tarea. Valida tsc --noEmit (Exit 0), scripts/e2e_tier1_p0_suite.ts (123/123 PASS) y npm run gate:prepush (38/38 PASS).",
   "tasks": [
+    {
+      "id": "TIER1_P0_FINAL_SEAL_E2E_AND_GATE_PREPUSH",
+      "title": "Cierre Final Master Blueprint Tier-1 P0: E2E Suite 123/123 y Compuerta Prepush 38/38",
+      "status": "QUEUED",
+      "priority": "P0",
+      "files": [
+        "scripts/e2e_tier1_p0_suite.ts",
+        "src/app/api/chat/concierge/route.ts",
+        "src/lib/services/marketplace/buybox-matching-engine.ts"
+      ],
+      "action": "1. En scripts/e2e_tier1_p0_suite.ts: corregir las 3 llamadas de test (T1_F7_05 l.845, T1_F7_06 l.855, T2_F7_05 l.1514-1516) añadiendo eventDate: '2026-09-18' y province: 'Madrid' requeridos por el esquema Zod de buybox. 2. Ejecutar 'node ./node_modules/tsx/dist/cli.mjs scripts/e2e_tier1_p0_suite.ts' y certificar 123/123 PASS (Exit 0). 3. Ejecutar 'npm run gate:prepush' (38/38 PASS). 4. Realizar commit atómico 'feat(core): consolidate master blueprint tier-1 e2e suite, b2b two-phase commit and buybox resilience' y git push origin main.",
+      "test": "npx tsc --noEmit && node ./node_modules/tsx/dist/cli.mjs scripts/e2e_tier1_p0_suite.ts && npm run gate:prepush"
+    },
     {
       "id": "W53_T08",
       "title": "Conector YouTube (Data + Analytics API)",

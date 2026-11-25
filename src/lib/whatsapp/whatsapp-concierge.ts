@@ -40,6 +40,7 @@
 import { createHash, createHmac, timingSafeEqual } from 'node:crypto';
 
 import { CENTRALITA_EAR_OS, DEPOSITO_STRIPE_EUR, TARIFA_BASE_SOLISTA_EUR } from '@/lib/constants/ear-os-ssot';
+import { extractEarAsinFromText, isValidEarAsin } from '@/lib/entities/asin';
 import { computeSplit, type SplitBreakdown } from '@/lib/agents/pricing';
 import {
   aggregateServiceTree,
@@ -166,6 +167,7 @@ export interface WhatsAppSessionHandoff {
   readonly budgetCents?: number;
   readonly fichaSlug?: string;
   readonly rawQuery?: string;
+  readonly asin?: string;
 }
 
 /**
@@ -195,6 +197,10 @@ export function decodeHandoffState(token: string): WhatsAppSessionHandoff | null
       budgetCents: typeof parsed.budgetCents === 'number' && parsed.budgetCents > 0 ? parsed.budgetCents : undefined,
       fichaSlug: typeof parsed.fichaSlug === 'string' ? parsed.fichaSlug : undefined,
       rawQuery: typeof parsed.rawQuery === 'string' ? parsed.rawQuery : undefined,
+      asin:
+        typeof parsed.asin === 'string' && isValidEarAsin(parsed.asin)
+          ? parsed.asin.trim().toUpperCase()
+          : undefined,
     };
   } catch {
     return null;
@@ -211,6 +217,10 @@ export function buildWhatsAppHandoffUrl(
 ): string {
   const token = encodeHandoffState(handoff);
   const cleanPhone = phoneDigits.replace(/\D/g, '') || '34693693048';
+  const normalizedAsin =
+    typeof handoff.asin === 'string' && isValidEarAsin(handoff.asin)
+      ? handoff.asin.trim().toUpperCase()
+      : '';
   const lines: string[] = [];
   if (initialText && initialText.trim().length > 0) {
     lines.push(initialText.trim());
@@ -222,12 +232,16 @@ export function buildWhatsAppHandoffUrl(
   if (handoff.date) lines.push(`• Fecha: ${handoff.date}`);
   if (handoff.city) lines.push(`• Localidad: ${handoff.city}`);
   if (handoff.serviceKind) lines.push(`• Servicio: ${handoff.serviceKind}`);
+  if (normalizedAsin) lines.push(`[Ref: ${normalizedAsin}]`);
 
   if (token) {
     lines.push(`[Ref-Web: ${token}]`);
   }
 
   const message = lines.join('\n');
+  if (normalizedAsin) {
+    return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}&ref=${encodeURIComponent(normalizedAsin)}`;
+  }
   return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
 }
 
@@ -380,6 +394,8 @@ export interface ConciergeIntent {
   readonly categoryHint: string | null;
   /** `true` si el texto pide explícitamente congelar/cerrar la fecha. */
   readonly wantsLock: boolean;
+  /** ASIN canónico capturado del handoff o del texto del cliente. */
+  readonly asin: string | null;
 }
 
 /** Palabras clave → categoría REAL del catálogo (no se inventan categorías). */
@@ -470,8 +486,9 @@ export function extractIntent(text: string): ConciergeIntent {
   }
 
   const wantsLock: boolean = /(reserv|congel|bloque|price.?lock|deposito|senal)/.test(plain);
+  const asin: string | null = handoff?.asin ?? extractEarAsinFromText(text);
 
-  return { pax, budgetCents, categoryHint, wantsLock };
+  return { pax, budgetCents, categoryHint, wantsLock, asin };
 }
 
 /* ──────────────────────────────────────────────────────────────────────────── */
@@ -880,4 +897,32 @@ export function loadDefaultFichas(): readonly IndexEntry[] {
 /** Etiquetas de las macro-partidas canónicas (mensaje de ayuda del canal). */
 export function macroPartidaLabels(): readonly string[] {
   return BUDGET_CATEGORIES.map((rule: { readonly label: string }) => rule.label);
+}
+
+/* ──────────────────────────────────────────────────────────────────────────── */
+/* 5 · Protocolo 2PC WhatsApp ("OK", "OK <CODE>", "ACEPTO", "RECHAZO")         */
+/* ──────────────────────────────────────────────────────────────────────────── */
+
+export interface ProviderAckCommand {
+  readonly action: 'ACCEPT' | 'REJECT';
+  readonly ackCode: string | null;
+  readonly rawCommand: string;
+}
+
+const STRICT_PROVIDER_ACK_RE = /^(OK|ACEPTO|RECHAZO)(?:\s+([A-Z0-9][A-Z0-9_-]{1,31}))?$/i;
+
+/**
+ * Parsea exclusivamente acuses estructurados de proveedor ("OK", "OK <CODE>",
+ * "ACEPTO", "RECHAZO") sin interferir con mensajes conversacionales de clientes.
+ */
+export function parseProviderAckCommand(text: string): ProviderAckCommand | null {
+  const trimmed = text.trim();
+  const match = trimmed.match(STRICT_PROVIDER_ACK_RE);
+  if (!match) return null;
+  const verb = match[1].toUpperCase();
+  return {
+    action: verb === 'RECHAZO' ? 'REJECT' : 'ACCEPT',
+    ackCode: match[2] ? match[2].toUpperCase() : null,
+    rawCommand: trimmed,
+  };
 }

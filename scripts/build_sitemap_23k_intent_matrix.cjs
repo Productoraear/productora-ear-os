@@ -70,7 +70,7 @@ for (let i = 1; i < consultaLines.length; i++) {
 
   if (/finca|cortijo|cigarral|hacienda|palacio|alqueria|masia/.test(qLower)) {
     intentType = 'FINCA_HOMOLOGADA';
-    targetUrl = `${BASE_URL}/fincas/${prov}/${qSlug}`;
+    targetUrl = `${BASE_URL}/fincas/p/${prov}/${qSlug}`;
     acousticTier = 'Bodas & Fincas: 85-90 dBA exteriores / 80-85 dBA interiores (Ley 37/2003)';
     logisticsHub = 'Finca Local: Sin porte adicional / Proveedor externo según GPS';
   } else if (/mariachi|edwin agudelo|serenata|ranchera/.test(qLower)) {

@@ -126,6 +126,7 @@ export function formatFichaEuro(value: number): string {
 export function entryToFicha(entry: ProviderFichaIndexEntry): ProviderFicha {
   return {
     key: entry.key,
+    ...(entry.asin ? { asin: entry.asin } : {}),
     vendorId: entry.key.startsWith('v-') ? entry.key.slice(2) : null,
     slug: entry.slug,
     name: entry.name,

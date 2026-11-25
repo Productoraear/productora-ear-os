@@ -26,7 +26,25 @@ export const SOLISTA_TARIFA_ETIQUETA: string = 'Tarifa estándar mínima';
 export const LOGISTICA_EUR_PER_KM: number = 1.5;
 
 /** Kilómetros exentos desde la base operativa (Hub Méntrida para Edwin Agudelo). */
-export const LOGISTICA_KM_EXENTOS: number = 50;
+export const LOGISTICA_KM_EXENTOS: number = 100;
+
+/** Coordenadas GPS canónicas e inmutables del Hub Méntrida (Km 0 de Edwin Agudelo). */
+export const HUB_MENTRIDA_COORDINATES = Object.freeze({
+  latitude: 40.2378,
+  longitude: -4.1953,
+} as const);
+
+/** Dirección física canónica del Hub Méntrida (Km 0). */
+export const HUB_MENTRIDA_ADDRESS = Object.freeze({
+  street: 'Calle de la Tórtola 5',
+  urbanization: 'Urbanización Encinasola',
+  postalCode: '45214',
+  municipality: 'Méntrida',
+  province: 'Toledo',
+  country: 'España',
+  gps: '40.2378, -4.1953',
+  full: 'Calle de la Tórtola 5, Urbanización Encinasola, 45214 Méntrida, Toledo',
+} as const);
 
 /** Distancia límite que activa el suplemento hotelero obligatorio. */
 export const LOGISTICA_KM_HOTEL: number = 200;
@@ -99,6 +117,8 @@ export const EAR_OS_SSOT = Object.freeze({
   LOGISTICA_KM_HOTEL,
   SUPLEMENTO_HOTEL_EUR,
   HORA_FIN_HOTEL,
+  HUB_MENTRIDA_COORDINATES,
+  HUB_MENTRIDA_ADDRESS,
   DEPOSITO_RESERVA_EUR,
   DEPOSITO_STRIPE_EUR,
   DEPOSITO_URGENCIA_MENOS_7_DIAS_PCT,

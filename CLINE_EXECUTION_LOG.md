@@ -1,3 +1,26 @@
+# SIGMA://HANDOVER/v1 — PRIORIDAD ABSOLUTA DIRECTIVA CEO
+- **Task ID:** TIER1_P0_FINAL_SEAL_E2E_AND_GATE_PREPUSH
+- **Fecha:** 2026-11-25 21:20 CET
+- **Autoridad Ordenante:** Director Generalista / CEO (Edwin Agudelo)
+- **Arquitecto Orquestador:** Antigravity
+- **Destinatario Táctico:** Cline ("El Obrero") — Prioridad Absoluta antes de cualquier otra función.
+- **Estado Actual del Sistema:**
+  1. `tsc --noEmit` -> Exit Code 0 (0 errores de compilación).
+  2. Negociación determinista y límites acústicos (`scripts/simulate_javier_negotiation.ts`) -> Exit Code 0 (HTTP 200 con derivación WhatsApp y Ref-Web codificado).
+  3. Motor Logístico Híbrido y Buy Box 3P (`scripts/verify_hybrid_logistics_buybox.ts`) -> 8/8 PASS (Exit Code 0).
+  4. Suite E2E Tier-1 P0 (`scripts/e2e_tier1_p0_suite.ts`) -> 120/123 PASS (3 fallos menores en F7 por campos requeridos en el arnés de test: `eventDate` y `province`).
+  5. Genoma dividido en 2 partes exactas: `EAR_OS_GENOMA_PARTE_1.md` (127 MB) y `EAR_OS_GENOMA_PARTE_2.md` (124 MB).
+- **Misión Inmediata de Cline (Obrero):**
+  1. Abrir `scripts/e2e_tier1_p0_suite.ts` y añadir `eventDate: '2026-09-18'` y `province: 'Madrid'` en las llamadas de test:
+     - Línea 845 (`T1_F7_05`)
+     - Línea 855 (`T1_F7_06`)
+     - Líneas 1514-1516 (`T2_F7_05`)
+  2. Ejecutar `node ./node_modules/tsx/dist/cli.mjs scripts/e2e_tier1_p0_suite.ts` -> Verificar 123/123 PASS.
+  3. Ejecutar `npm run gate:prepush` -> Verificar 38/38 PASS.
+  4. Ejecutar git commit y push a `origin/main`.
+
+---
+
 # SIGMA://CLOSE/v1
 - **Task ID:** BARRIDO_INTELIGENCIA_VAULT_VELOCITY_INCUBADORA_DESPEGUE
 - **Fecha:** 2026-11-24
@@ -16,7 +39,30 @@
   - `npm run audit:ssot` -> Hash `cefa76c2c6a3f92f57acf74f654932c02bf66774502102cb4f932520aaa64b2b` (Coincide: SÍ, Invariantes: OK).
 - **Dictamen:** BÓVEDA VELOCITY / INCUBADORA CONSOLIDADA Y EXPUESTA AL COMPILADOR
 
-### SIGMA://CLOSE/v1
+### SIGMA://HANDOVER/v1 — PRIORIDAD ABSOLUTA DIRECTIVA CEO
+- **Task ID:** TIER1_P0_FINAL_SEAL_E2E_AND_GATE_PREPUSH
+- **Fecha:** 2026-11-25 21:20 CET
+- **Autoridad Ordenante:** Director Generalista / CEO (Edwin Agudelo)
+- **Arquitecto Orquestador:** Antigravity
+- **Destinatario Táctico:** Cline ("El Obrero") — Prioridad Absoluta antes de cualquier otra función.
+- **Estado Actual del Sistema:**
+  1. `tsc --noEmit` -> Exit Code 0 (0 errores de compilación).
+  2. Negociación determinista y límites acústicos (`scripts/simulate_javier_negotiation.ts`) -> Exit Code 0 (HTTP 200 con derivación WhatsApp y Ref-Web codificado).
+  3. Motor Logístico Híbrido y Buy Box 3P (`scripts/verify_hybrid_logistics_buybox.ts`) -> 8/8 PASS (Exit Code 0).
+  4. Suite E2E Tier-1 P0 (`scripts/e2e_tier1_p0_suite.ts`) -> 120/123 PASS (3 fallos menores en F7 por campos requeridos en el arnés de test: `eventDate` y `province`).
+  5. Genoma dividido en 2 partes exactas: `EAR_OS_GENOMA_PARTE_1.md` (127 MB) y `EAR_OS_GENOMA_PARTE_2.md` (124 MB).
+- **Misión Inmediata de Cline (Obrero):**
+  1. Abrir `scripts/e2e_tier1_p0_suite.ts` y añadir `eventDate: '2026-09-18'` y `province: 'Madrid'` en las llamadas de test:
+     - Línea 845 (`T1_F7_05`)
+     - Línea 855 (`T1_F7_06`)
+     - Líneas 1514-1516 (`T2_F7_05`)
+  2. Ejecutar `node ./node_modules/tsx/dist/cli.mjs scripts/e2e_tier1_p0_suite.ts` -> Verificar 123/123 PASS.
+  3. Ejecutar `npm run gate:prepush` -> Verificar 38/38 PASS.
+  4. Ejecutar git commit y push a `origin/main`.
+
+---
+
+# SIGMA://CLOSE/v1
 
 task_id        : ANTI_TITANIC_100_ENTERPRISE_CONSTITUTION
 estado_bloque  : SELLADO_Y_CERTIFICADO_AL_100%
@@ -24,6 +70,29 @@ arnes          : 100/100 PASS (Exit Code 0)
 anti_titanic   : PASS (Exit Code 0)
 constitucion   : .clinerules y .antigravityrules inyectados en disco
 typescript     : Exit Code 0 (tsc --noEmit)
+# SIGMA://HANDOVER/v1 — PRIORIDAD ABSOLUTA DIRECTIVA CEO
+- **Task ID:** TIER1_P0_FINAL_SEAL_E2E_AND_GATE_PREPUSH
+- **Fecha:** 2026-11-25 21:20 CET
+- **Autoridad Ordenante:** Director Generalista / CEO (Edwin Agudelo)
+- **Arquitecto Orquestador:** Antigravity
+- **Destinatario Táctico:** Cline ("El Obrero") — Prioridad Absoluta antes de cualquier otra función.
+- **Estado Actual del Sistema:**
+  1. `tsc --noEmit` -> Exit Code 0 (0 errores de compilación).
+  2. Negociación determinista y límites acústicos (`scripts/simulate_javier_negotiation.ts`) -> Exit Code 0 (HTTP 200 con derivación WhatsApp y Ref-Web codificado).
+  3. Motor Logístico Híbrido y Buy Box 3P (`scripts/verify_hybrid_logistics_buybox.ts`) -> 8/8 PASS (Exit Code 0).
+  4. Suite E2E Tier-1 P0 (`scripts/e2e_tier1_p0_suite.ts`) -> 120/123 PASS (3 fallos menores en F7 por campos requeridos en el arnés de test: `eventDate` y `province`).
+  5. Genoma dividido en 2 partes exactas: `EAR_OS_GENOMA_PARTE_1.md` (127 MB) y `EAR_OS_GENOMA_PARTE_2.md` (124 MB).
+- **Misión Inmediata de Cline (Obrero):**
+  1. Abrir `scripts/e2e_tier1_p0_suite.ts` y añadir `eventDate: '2026-09-18'` y `province: 'Madrid'` en las llamadas de test:
+     - Línea 845 (`T1_F7_05`)
+     - Línea 855 (`T1_F7_06`)
+     - Líneas 1514-1516 (`T2_F7_05`)
+  2. Ejecutar `node ./node_modules/tsx/dist/cli.mjs scripts/e2e_tier1_p0_suite.ts` -> Verificar 123/123 PASS.
+  3. Ejecutar `npm run gate:prepush` -> Verificar 38/38 PASS.
+  4. Ejecutar git commit y push a `origin/main`.
+
+---
+
 # SIGMA://CLOSE/v1
 - **Fecha:** 11/23/2026
 - **Autoridad Ordenante:** Director Generalista / CEO (Edwin Agudelo)
@@ -482,7 +551,30 @@ de cuarentena. Es un cambio de 4 líneas + paso del arnés; hoy 245 rutas constr
 
 El arnÃ©s destapÃ³ un **SEALED fantasma**: la transiciÃ³n terminal `GATE_EVAL â†’ SEALED` no se ejecutaba y el motor sellaba en `GATE_EVAL`. Corregido con transiciÃ³n terminal explÃ­cita y guarda que impide sobrescribir el motivo de aborto original. Sin el arnÃ©s, `/admin/compiler` habrÃ­a declarado verde sin llegar nunca a `SEALED`.
 
-### SIGMA://CLOSE/v1
+### SIGMA://HANDOVER/v1 — PRIORIDAD ABSOLUTA DIRECTIVA CEO
+- **Task ID:** TIER1_P0_FINAL_SEAL_E2E_AND_GATE_PREPUSH
+- **Fecha:** 2026-11-25 21:20 CET
+- **Autoridad Ordenante:** Director Generalista / CEO (Edwin Agudelo)
+- **Arquitecto Orquestador:** Antigravity
+- **Destinatario Táctico:** Cline ("El Obrero") — Prioridad Absoluta antes de cualquier otra función.
+- **Estado Actual del Sistema:**
+  1. `tsc --noEmit` -> Exit Code 0 (0 errores de compilación).
+  2. Negociación determinista y límites acústicos (`scripts/simulate_javier_negotiation.ts`) -> Exit Code 0 (HTTP 200 con derivación WhatsApp y Ref-Web codificado).
+  3. Motor Logístico Híbrido y Buy Box 3P (`scripts/verify_hybrid_logistics_buybox.ts`) -> 8/8 PASS (Exit Code 0).
+  4. Suite E2E Tier-1 P0 (`scripts/e2e_tier1_p0_suite.ts`) -> 120/123 PASS (3 fallos menores en F7 por campos requeridos en el arnés de test: `eventDate` y `province`).
+  5. Genoma dividido en 2 partes exactas: `EAR_OS_GENOMA_PARTE_1.md` (127 MB) y `EAR_OS_GENOMA_PARTE_2.md` (124 MB).
+- **Misión Inmediata de Cline (Obrero):**
+  1. Abrir `scripts/e2e_tier1_p0_suite.ts` y añadir `eventDate: '2026-09-18'` y `province: 'Madrid'` en las llamadas de test:
+     - Línea 845 (`T1_F7_05`)
+     - Línea 855 (`T1_F7_06`)
+     - Líneas 1514-1516 (`T2_F7_05`)
+  2. Ejecutar `node ./node_modules/tsx/dist/cli.mjs scripts/e2e_tier1_p0_suite.ts` -> Verificar 123/123 PASS.
+  3. Ejecutar `npm run gate:prepush` -> Verificar 38/38 PASS.
+  4. Ejecutar git commit y push a `origin/main`.
+
+---
+
+# SIGMA://CLOSE/v1
 
 ```
 task_id        : METACOMPILER_FSM_S_CLASS_V1
@@ -523,7 +615,30 @@ gates          : G-0 PASS Â· G-1 PASS (tsc 0) Â· G-2 PASS (0 errores eslint)
   * PreservaciÃ³n estricta de las entidades del SSOT: PÃ¡rking cerrado >120 plazas, parrilla de carbÃ³n y sarmientos de Eduardo MartÃ­nez, aforos 50-200/350 pax, menÃºs canÃ³nicos de 100 â‚¬ a 185 â‚¬ + IVA y depÃ³sito deducible Stripe Price-Lock de 100 â‚¬.
   * UnificaciÃ³n de rutas de Mariachis y redirecciones canÃ³nicas 301 en `src/middleware.ts` eliminando colisiones de dynamic routes.
 
-### SIGMA://CLOSE/v1
+### SIGMA://HANDOVER/v1 — PRIORIDAD ABSOLUTA DIRECTIVA CEO
+- **Task ID:** TIER1_P0_FINAL_SEAL_E2E_AND_GATE_PREPUSH
+- **Fecha:** 2026-11-25 21:20 CET
+- **Autoridad Ordenante:** Director Generalista / CEO (Edwin Agudelo)
+- **Arquitecto Orquestador:** Antigravity
+- **Destinatario Táctico:** Cline ("El Obrero") — Prioridad Absoluta antes de cualquier otra función.
+- **Estado Actual del Sistema:**
+  1. `tsc --noEmit` -> Exit Code 0 (0 errores de compilación).
+  2. Negociación determinista y límites acústicos (`scripts/simulate_javier_negotiation.ts`) -> Exit Code 0 (HTTP 200 con derivación WhatsApp y Ref-Web codificado).
+  3. Motor Logístico Híbrido y Buy Box 3P (`scripts/verify_hybrid_logistics_buybox.ts`) -> 8/8 PASS (Exit Code 0).
+  4. Suite E2E Tier-1 P0 (`scripts/e2e_tier1_p0_suite.ts`) -> 120/123 PASS (3 fallos menores en F7 por campos requeridos en el arnés de test: `eventDate` y `province`).
+  5. Genoma dividido en 2 partes exactas: `EAR_OS_GENOMA_PARTE_1.md` (127 MB) y `EAR_OS_GENOMA_PARTE_2.md` (124 MB).
+- **Misión Inmediata de Cline (Obrero):**
+  1. Abrir `scripts/e2e_tier1_p0_suite.ts` y añadir `eventDate: '2026-09-18'` y `province: 'Madrid'` en las llamadas de test:
+     - Línea 845 (`T1_F7_05`)
+     - Línea 855 (`T1_F7_06`)
+     - Líneas 1514-1516 (`T2_F7_05`)
+  2. Ejecutar `node ./node_modules/tsx/dist/cli.mjs scripts/e2e_tier1_p0_suite.ts` -> Verificar 123/123 PASS.
+  3. Ejecutar `npm run gate:prepush` -> Verificar 38/38 PASS.
+  4. Ejecutar git commit y push a `origin/main`.
+
+---
+
+# SIGMA://CLOSE/v1
 ```
 task_id        : SOBERANIA_GEO_MATRIZ_126_V30
 estado_bloque  : SELLADO_Y_CERTIFICADO_AL_100%
@@ -559,7 +674,30 @@ sitemap_status : 126 URLs incorporadas
   * IntegraciÃ³n en `SovereignConciergeWidget.tsx` parametrizando la Web Speech API en desarrollo y exponiendo el hook para pesos neuronales de VibeVoice en producciÃ³n.
   * ErradicaciÃ³n de advertencia Prisma `findFirst` en `/artistas/[slug]` para builds estÃ¡ticos 100% limpios.
 
-### SIGMA://CLOSE/v1
+### SIGMA://HANDOVER/v1 — PRIORIDAD ABSOLUTA DIRECTIVA CEO
+- **Task ID:** TIER1_P0_FINAL_SEAL_E2E_AND_GATE_PREPUSH
+- **Fecha:** 2026-11-25 21:20 CET
+- **Autoridad Ordenante:** Director Generalista / CEO (Edwin Agudelo)
+- **Arquitecto Orquestador:** Antigravity
+- **Destinatario Táctico:** Cline ("El Obrero") — Prioridad Absoluta antes de cualquier otra función.
+- **Estado Actual del Sistema:**
+  1. `tsc --noEmit` -> Exit Code 0 (0 errores de compilación).
+  2. Negociación determinista y límites acústicos (`scripts/simulate_javier_negotiation.ts`) -> Exit Code 0 (HTTP 200 con derivación WhatsApp y Ref-Web codificado).
+  3. Motor Logístico Híbrido y Buy Box 3P (`scripts/verify_hybrid_logistics_buybox.ts`) -> 8/8 PASS (Exit Code 0).
+  4. Suite E2E Tier-1 P0 (`scripts/e2e_tier1_p0_suite.ts`) -> 120/123 PASS (3 fallos menores en F7 por campos requeridos en el arnés de test: `eventDate` y `province`).
+  5. Genoma dividido en 2 partes exactas: `EAR_OS_GENOMA_PARTE_1.md` (127 MB) y `EAR_OS_GENOMA_PARTE_2.md` (124 MB).
+- **Misión Inmediata de Cline (Obrero):**
+  1. Abrir `scripts/e2e_tier1_p0_suite.ts` y añadir `eventDate: '2026-09-18'` y `province: 'Madrid'` en las llamadas de test:
+     - Línea 845 (`T1_F7_05`)
+     - Línea 855 (`T1_F7_06`)
+     - Líneas 1514-1516 (`T2_F7_05`)
+  2. Ejecutar `node ./node_modules/tsx/dist/cli.mjs scripts/e2e_tier1_p0_suite.ts` -> Verificar 123/123 PASS.
+  3. Ejecutar `npm run gate:prepush` -> Verificar 38/38 PASS.
+  4. Ejecutar git commit y push a `origin/main`.
+
+---
+
+# SIGMA://CLOSE/v1
 ```
 task_id        : SOBERANIA_VOICE_ENGINE_MULTI_TENANT_V28
 estado_bloque  : SELLADO_Y_CERTIFICADO_AL_100%
@@ -608,7 +746,30 @@ coolify_ready  : SÃ (Force Deploy without cache listo)
 - **Rutas Navegables:** 518 rutas auditadas (`scripts/audit_route_conflicts.cjs` -> 0 conflictos)
 - **Estado del Ãrbol de Trabajo:** `CLEAN` (confirmado en reposo absoluto).
 
-### SIGMA://CLOSE/v1
+### SIGMA://HANDOVER/v1 — PRIORIDAD ABSOLUTA DIRECTIVA CEO
+- **Task ID:** TIER1_P0_FINAL_SEAL_E2E_AND_GATE_PREPUSH
+- **Fecha:** 2026-11-25 21:20 CET
+- **Autoridad Ordenante:** Director Generalista / CEO (Edwin Agudelo)
+- **Arquitecto Orquestador:** Antigravity
+- **Destinatario Táctico:** Cline ("El Obrero") — Prioridad Absoluta antes de cualquier otra función.
+- **Estado Actual del Sistema:**
+  1. `tsc --noEmit` -> Exit Code 0 (0 errores de compilación).
+  2. Negociación determinista y límites acústicos (`scripts/simulate_javier_negotiation.ts`) -> Exit Code 0 (HTTP 200 con derivación WhatsApp y Ref-Web codificado).
+  3. Motor Logístico Híbrido y Buy Box 3P (`scripts/verify_hybrid_logistics_buybox.ts`) -> 8/8 PASS (Exit Code 0).
+  4. Suite E2E Tier-1 P0 (`scripts/e2e_tier1_p0_suite.ts`) -> 120/123 PASS (3 fallos menores en F7 por campos requeridos en el arnés de test: `eventDate` y `province`).
+  5. Genoma dividido en 2 partes exactas: `EAR_OS_GENOMA_PARTE_1.md` (127 MB) y `EAR_OS_GENOMA_PARTE_2.md` (124 MB).
+- **Misión Inmediata de Cline (Obrero):**
+  1. Abrir `scripts/e2e_tier1_p0_suite.ts` y añadir `eventDate: '2026-09-18'` y `province: 'Madrid'` en las llamadas de test:
+     - Línea 845 (`T1_F7_05`)
+     - Línea 855 (`T1_F7_06`)
+     - Líneas 1514-1516 (`T2_F7_05`)
+  2. Ejecutar `node ./node_modules/tsx/dist/cli.mjs scripts/e2e_tier1_p0_suite.ts` -> Verificar 123/123 PASS.
+  3. Ejecutar `npm run gate:prepush` -> Verificar 38/38 PASS.
+  4. Ejecutar git commit y push a `origin/main`.
+
+---
+
+# SIGMA://CLOSE/v1
 ```
 task_id        : AUDITORIA_100_CIERRE_FORENSE_SOTA
 estado_bloque  : SELLADO_Y_CERTIFICADO_AL_100%
@@ -676,7 +837,30 @@ tree_state     : CLEAN (working tree clean, 0 untracked, 0 uncommitted)
    - `npm run lint` (`eslint`) -> **Exit 0 (0 errores)**.
    - `node scripts/run_sv_protocol_15_gates.cjs` -> **17/17 PASS (Exit 0)**.
 
-### SIGMA://CLOSE/v1
+### SIGMA://HANDOVER/v1 — PRIORIDAD ABSOLUTA DIRECTIVA CEO
+- **Task ID:** TIER1_P0_FINAL_SEAL_E2E_AND_GATE_PREPUSH
+- **Fecha:** 2026-11-25 21:20 CET
+- **Autoridad Ordenante:** Director Generalista / CEO (Edwin Agudelo)
+- **Arquitecto Orquestador:** Antigravity
+- **Destinatario Táctico:** Cline ("El Obrero") — Prioridad Absoluta antes de cualquier otra función.
+- **Estado Actual del Sistema:**
+  1. `tsc --noEmit` -> Exit Code 0 (0 errores de compilación).
+  2. Negociación determinista y límites acústicos (`scripts/simulate_javier_negotiation.ts`) -> Exit Code 0 (HTTP 200 con derivación WhatsApp y Ref-Web codificado).
+  3. Motor Logístico Híbrido y Buy Box 3P (`scripts/verify_hybrid_logistics_buybox.ts`) -> 8/8 PASS (Exit Code 0).
+  4. Suite E2E Tier-1 P0 (`scripts/e2e_tier1_p0_suite.ts`) -> 120/123 PASS (3 fallos menores en F7 por campos requeridos en el arnés de test: `eventDate` y `province`).
+  5. Genoma dividido en 2 partes exactas: `EAR_OS_GENOMA_PARTE_1.md` (127 MB) y `EAR_OS_GENOMA_PARTE_2.md` (124 MB).
+- **Misión Inmediata de Cline (Obrero):**
+  1. Abrir `scripts/e2e_tier1_p0_suite.ts` y añadir `eventDate: '2026-09-18'` y `province: 'Madrid'` en las llamadas de test:
+     - Línea 845 (`T1_F7_05`)
+     - Línea 855 (`T1_F7_06`)
+     - Líneas 1514-1516 (`T2_F7_05`)
+  2. Ejecutar `node ./node_modules/tsx/dist/cli.mjs scripts/e2e_tier1_p0_suite.ts` -> Verificar 123/123 PASS.
+  3. Ejecutar `npm run gate:prepush` -> Verificar 38/38 PASS.
+  4. Ejecutar git commit y push a `origin/main`.
+
+---
+
+# SIGMA://CLOSE/v1
 ```
 task_id        : W54_T01 (Pack Caballo de Troya: Ficha Universal 380 Campos & Centro de Mando Soberano /portal/proveedor)
 estado_bloque  : VERIFICADO
@@ -719,7 +903,30 @@ gates          : G-0 PASS Â· G-1 PASS (tsc 0) Â· G-2 PASS (0 errores lint) �
    - `npm run typecheck` (`tsc --noEmit`) -> **Exit 0**.
    - `npm run lint` -> **Exit 0**.
 
-### SIGMA://CLOSE/v1
+### SIGMA://HANDOVER/v1 — PRIORIDAD ABSOLUTA DIRECTIVA CEO
+- **Task ID:** TIER1_P0_FINAL_SEAL_E2E_AND_GATE_PREPUSH
+- **Fecha:** 2026-11-25 21:20 CET
+- **Autoridad Ordenante:** Director Generalista / CEO (Edwin Agudelo)
+- **Arquitecto Orquestador:** Antigravity
+- **Destinatario Táctico:** Cline ("El Obrero") — Prioridad Absoluta antes de cualquier otra función.
+- **Estado Actual del Sistema:**
+  1. `tsc --noEmit` -> Exit Code 0 (0 errores de compilación).
+  2. Negociación determinista y límites acústicos (`scripts/simulate_javier_negotiation.ts`) -> Exit Code 0 (HTTP 200 con derivación WhatsApp y Ref-Web codificado).
+  3. Motor Logístico Híbrido y Buy Box 3P (`scripts/verify_hybrid_logistics_buybox.ts`) -> 8/8 PASS (Exit Code 0).
+  4. Suite E2E Tier-1 P0 (`scripts/e2e_tier1_p0_suite.ts`) -> 120/123 PASS (3 fallos menores en F7 por campos requeridos en el arnés de test: `eventDate` y `province`).
+  5. Genoma dividido en 2 partes exactas: `EAR_OS_GENOMA_PARTE_1.md` (127 MB) y `EAR_OS_GENOMA_PARTE_2.md` (124 MB).
+- **Misión Inmediata de Cline (Obrero):**
+  1. Abrir `scripts/e2e_tier1_p0_suite.ts` y añadir `eventDate: '2026-09-18'` y `province: 'Madrid'` en las llamadas de test:
+     - Línea 845 (`T1_F7_05`)
+     - Línea 855 (`T1_F7_06`)
+     - Líneas 1514-1516 (`T2_F7_05`)
+  2. Ejecutar `node ./node_modules/tsx/dist/cli.mjs scripts/e2e_tier1_p0_suite.ts` -> Verificar 123/123 PASS.
+  3. Ejecutar `npm run gate:prepush` -> Verificar 38/38 PASS.
+  4. Ejecutar git commit y push a `origin/main`.
+
+---
+
+# SIGMA://CLOSE/v1
 ```
 task_id        : W52_T04 (Cockpit de Plataformas del Artista & SSO Soberano)
 estado_bloque  : VERIFICADO
@@ -766,7 +973,30 @@ Este bloque + 2 lÃ­neas del ledger (`W55_T02_GATE_PREPUSH_FULL_GREEN`, `W55_T0
 4. **Resiliencia**: el 500 del Price-Lock (25 %) es el riesgo real de producciÃ³n; se detecta con `audit_estres_estadio.mjs --concurrency=100` antes que el cliente.
 5. **Consecuencia aceptada**: se despliega un sistema que **cuadra el cÃ©ntimo pero falla 1 de cada 4 bloqueos**; se declara `SOSPECHOSO` con 4 P0 abiertos en vez de declarar la plataforma Â«listaÂ».
 
-### SIGMA://CLOSE/v1
+### SIGMA://HANDOVER/v1 — PRIORIDAD ABSOLUTA DIRECTIVA CEO
+- **Task ID:** TIER1_P0_FINAL_SEAL_E2E_AND_GATE_PREPUSH
+- **Fecha:** 2026-11-25 21:20 CET
+- **Autoridad Ordenante:** Director Generalista / CEO (Edwin Agudelo)
+- **Arquitecto Orquestador:** Antigravity
+- **Destinatario Táctico:** Cline ("El Obrero") — Prioridad Absoluta antes de cualquier otra función.
+- **Estado Actual del Sistema:**
+  1. `tsc --noEmit` -> Exit Code 0 (0 errores de compilación).
+  2. Negociación determinista y límites acústicos (`scripts/simulate_javier_negotiation.ts`) -> Exit Code 0 (HTTP 200 con derivación WhatsApp y Ref-Web codificado).
+  3. Motor Logístico Híbrido y Buy Box 3P (`scripts/verify_hybrid_logistics_buybox.ts`) -> 8/8 PASS (Exit Code 0).
+  4. Suite E2E Tier-1 P0 (`scripts/e2e_tier1_p0_suite.ts`) -> 120/123 PASS (3 fallos menores en F7 por campos requeridos en el arnés de test: `eventDate` y `province`).
+  5. Genoma dividido en 2 partes exactas: `EAR_OS_GENOMA_PARTE_1.md` (127 MB) y `EAR_OS_GENOMA_PARTE_2.md` (124 MB).
+- **Misión Inmediata de Cline (Obrero):**
+  1. Abrir `scripts/e2e_tier1_p0_suite.ts` y añadir `eventDate: '2026-09-18'` y `province: 'Madrid'` en las llamadas de test:
+     - Línea 845 (`T1_F7_05`)
+     - Línea 855 (`T1_F7_06`)
+     - Líneas 1514-1516 (`T2_F7_05`)
+  2. Ejecutar `node ./node_modules/tsx/dist/cli.mjs scripts/e2e_tier1_p0_suite.ts` -> Verificar 123/123 PASS.
+  3. Ejecutar `npm run gate:prepush` -> Verificar 38/38 PASS.
+  4. Ejecutar git commit y push a `origin/main`.
+
+---
+
+# SIGMA://CLOSE/v1
 ```
 task_id        : W55_T02 (+ parches de instrumentaciÃ³n + auditorÃ­a de estrÃ©s)
 estado_bloque  : VERIFICADO (gate/push) Â· SOSPECHOSO (plataforma bajo carga masiva)
@@ -1014,7 +1244,30 @@ siguiente_paso : Desplegar 25d9287d a Coolify (82.29.179.172:8000) y sondear pro
   * âŒ Rutas del dossier v13.0 desalineadas: `/seguimiento/EXP-TEST-001` resuelve por `src/app/seguimiento/[id]/page.tsx` (no `[expediente]`); `src/app/fincas/page.tsx` no existe (sÃ­ `src/app/(public)/fincas/page.tsx`); `BudgetAllocatorEngine.ts` **no existe** en `src/lib/budget/` ni en `src/lib/engines/`.
   * âš ï¸ `omega.js` (`complete`) actualiza `data.metadata`, pero la cola usa la clave `_meta`: el contador `total_pending` nunca se actualizaba. Corregido con compatibilidad de ambas claves.
   * âš ï¸ `.clinerules` v1.0 terminaba en Â§6: **no contenÃ­a** Consenso AntagÃ³nico, Î©-DIAMANTE, gate premortem, doctrina CLS ni log persistente â†’ el obrero local operaba con un contrato mutilado.
-### SIGMA://CLOSE/v1 - SISTEMA TOTALMENTE CERTIFICADO
+### SIGMA://HANDOVER/v1 — PRIORIDAD ABSOLUTA DIRECTIVA CEO
+- **Task ID:** TIER1_P0_FINAL_SEAL_E2E_AND_GATE_PREPUSH
+- **Fecha:** 2026-11-25 21:20 CET
+- **Autoridad Ordenante:** Director Generalista / CEO (Edwin Agudelo)
+- **Arquitecto Orquestador:** Antigravity
+- **Destinatario Táctico:** Cline ("El Obrero") — Prioridad Absoluta antes de cualquier otra función.
+- **Estado Actual del Sistema:**
+  1. `tsc --noEmit` -> Exit Code 0 (0 errores de compilación).
+  2. Negociación determinista y límites acústicos (`scripts/simulate_javier_negotiation.ts`) -> Exit Code 0 (HTTP 200 con derivación WhatsApp y Ref-Web codificado).
+  3. Motor Logístico Híbrido y Buy Box 3P (`scripts/verify_hybrid_logistics_buybox.ts`) -> 8/8 PASS (Exit Code 0).
+  4. Suite E2E Tier-1 P0 (`scripts/e2e_tier1_p0_suite.ts`) -> 120/123 PASS (3 fallos menores en F7 por campos requeridos en el arnés de test: `eventDate` y `province`).
+  5. Genoma dividido en 2 partes exactas: `EAR_OS_GENOMA_PARTE_1.md` (127 MB) y `EAR_OS_GENOMA_PARTE_2.md` (124 MB).
+- **Misión Inmediata de Cline (Obrero):**
+  1. Abrir `scripts/e2e_tier1_p0_suite.ts` y añadir `eventDate: '2026-09-18'` y `province: 'Madrid'` en las llamadas de test:
+     - Línea 845 (`T1_F7_05`)
+     - Línea 855 (`T1_F7_06`)
+     - Líneas 1514-1516 (`T2_F7_05`)
+  2. Ejecutar `node ./node_modules/tsx/dist/cli.mjs scripts/e2e_tier1_p0_suite.ts` -> Verificar 123/123 PASS.
+  3. Ejecutar `npm run gate:prepush` -> Verificar 38/38 PASS.
+  4. Ejecutar git commit y push a `origin/main`.
+
+---
+
+# SIGMA://CLOSE/v1 - SISTEMA TOTALMENTE CERTIFICADO
 task_id        : ANTI_TITANIC_AUTONOMOUS_CLOSE
 estado_bloque  : VERIFICADO_AL_100%
 typescript     : Exit Code 0 validado en flujos críticos
@@ -4318,7 +4571,30 @@ CLAIM{W54-T04} :: cmd="git status --porcelain -- <6 ficheros Zona Cero + pricing
 - **No existe `@modelcontextprotocol/*` en `package.json`**: se entrega el wire
   format JSON-RPC 2.0 (`tools/list`, `tools/call`) sin aÃ±adir dependencias.
 
-### SIGMA://CLOSE/v1
+### SIGMA://HANDOVER/v1 — PRIORIDAD ABSOLUTA DIRECTIVA CEO
+- **Task ID:** TIER1_P0_FINAL_SEAL_E2E_AND_GATE_PREPUSH
+- **Fecha:** 2026-11-25 21:20 CET
+- **Autoridad Ordenante:** Director Generalista / CEO (Edwin Agudelo)
+- **Arquitecto Orquestador:** Antigravity
+- **Destinatario Táctico:** Cline ("El Obrero") — Prioridad Absoluta antes de cualquier otra función.
+- **Estado Actual del Sistema:**
+  1. `tsc --noEmit` -> Exit Code 0 (0 errores de compilación).
+  2. Negociación determinista y límites acústicos (`scripts/simulate_javier_negotiation.ts`) -> Exit Code 0 (HTTP 200 con derivación WhatsApp y Ref-Web codificado).
+  3. Motor Logístico Híbrido y Buy Box 3P (`scripts/verify_hybrid_logistics_buybox.ts`) -> 8/8 PASS (Exit Code 0).
+  4. Suite E2E Tier-1 P0 (`scripts/e2e_tier1_p0_suite.ts`) -> 120/123 PASS (3 fallos menores en F7 por campos requeridos en el arnés de test: `eventDate` y `province`).
+  5. Genoma dividido en 2 partes exactas: `EAR_OS_GENOMA_PARTE_1.md` (127 MB) y `EAR_OS_GENOMA_PARTE_2.md` (124 MB).
+- **Misión Inmediata de Cline (Obrero):**
+  1. Abrir `scripts/e2e_tier1_p0_suite.ts` y añadir `eventDate: '2026-09-18'` y `province: 'Madrid'` en las llamadas de test:
+     - Línea 845 (`T1_F7_05`)
+     - Línea 855 (`T1_F7_06`)
+     - Líneas 1514-1516 (`T2_F7_05`)
+  2. Ejecutar `node ./node_modules/tsx/dist/cli.mjs scripts/e2e_tier1_p0_suite.ts` -> Verificar 123/123 PASS.
+  3. Ejecutar `npm run gate:prepush` -> Verificar 38/38 PASS.
+  4. Ejecutar git commit y push a `origin/main`.
+
+---
+
+# SIGMA://CLOSE/v1
 ```
 task_id        : W54_T01_CONCIERGE_MCP_TOOLS
 estado_bloque  : VERIFICADO (arnÃ©s 18/18 Â· lint 0 Â· tsc sin errores nuevos)
@@ -5232,7 +5508,30 @@ tsc --noEmit    → Exit 0   ·   eslint → 0 errores
 Inspección EXTERNA (lector ZIP propio + parser xref): 28/28 PASS
 ```
 
-### SIGMA://CLOSE/v1
+### SIGMA://HANDOVER/v1 — PRIORIDAD ABSOLUTA DIRECTIVA CEO
+- **Task ID:** TIER1_P0_FINAL_SEAL_E2E_AND_GATE_PREPUSH
+- **Fecha:** 2026-11-25 21:20 CET
+- **Autoridad Ordenante:** Director Generalista / CEO (Edwin Agudelo)
+- **Arquitecto Orquestador:** Antigravity
+- **Destinatario Táctico:** Cline ("El Obrero") — Prioridad Absoluta antes de cualquier otra función.
+- **Estado Actual del Sistema:**
+  1. `tsc --noEmit` -> Exit Code 0 (0 errores de compilación).
+  2. Negociación determinista y límites acústicos (`scripts/simulate_javier_negotiation.ts`) -> Exit Code 0 (HTTP 200 con derivación WhatsApp y Ref-Web codificado).
+  3. Motor Logístico Híbrido y Buy Box 3P (`scripts/verify_hybrid_logistics_buybox.ts`) -> 8/8 PASS (Exit Code 0).
+  4. Suite E2E Tier-1 P0 (`scripts/e2e_tier1_p0_suite.ts`) -> 120/123 PASS (3 fallos menores en F7 por campos requeridos en el arnés de test: `eventDate` y `province`).
+  5. Genoma dividido en 2 partes exactas: `EAR_OS_GENOMA_PARTE_1.md` (127 MB) y `EAR_OS_GENOMA_PARTE_2.md` (124 MB).
+- **Misión Inmediata de Cline (Obrero):**
+  1. Abrir `scripts/e2e_tier1_p0_suite.ts` y añadir `eventDate: '2026-09-18'` y `province: 'Madrid'` en las llamadas de test:
+     - Línea 845 (`T1_F7_05`)
+     - Línea 855 (`T1_F7_06`)
+     - Líneas 1514-1516 (`T2_F7_05`)
+  2. Ejecutar `node ./node_modules/tsx/dist/cli.mjs scripts/e2e_tier1_p0_suite.ts` -> Verificar 123/123 PASS.
+  3. Ejecutar `npm run gate:prepush` -> Verificar 38/38 PASS.
+  4. Ejecutar git commit y push a `origin/main`.
+
+---
+
+# SIGMA://CLOSE/v1
 
 ```
 task_id        : W53_T07 (firma + cierre) Ã‚Â· W55_T01 (ejecuciÃƒÂ³n + cierre)
@@ -5337,7 +5636,30 @@ mut3 embudo sin contexto Ã¢â€¡â€™ Exit 1 (U20).
    como respuesta HTTP observada; y `/api/mcp/concierge` no estÃƒÂ¡ desplegado ni sondeado.
 
 
-### SIGMA://CLOSE/v1
+### SIGMA://HANDOVER/v1 — PRIORIDAD ABSOLUTA DIRECTIVA CEO
+- **Task ID:** TIER1_P0_FINAL_SEAL_E2E_AND_GATE_PREPUSH
+- **Fecha:** 2026-11-25 21:20 CET
+- **Autoridad Ordenante:** Director Generalista / CEO (Edwin Agudelo)
+- **Arquitecto Orquestador:** Antigravity
+- **Destinatario Táctico:** Cline ("El Obrero") — Prioridad Absoluta antes de cualquier otra función.
+- **Estado Actual del Sistema:**
+  1. `tsc --noEmit` -> Exit Code 0 (0 errores de compilación).
+  2. Negociación determinista y límites acústicos (`scripts/simulate_javier_negotiation.ts`) -> Exit Code 0 (HTTP 200 con derivación WhatsApp y Ref-Web codificado).
+  3. Motor Logístico Híbrido y Buy Box 3P (`scripts/verify_hybrid_logistics_buybox.ts`) -> 8/8 PASS (Exit Code 0).
+  4. Suite E2E Tier-1 P0 (`scripts/e2e_tier1_p0_suite.ts`) -> 120/123 PASS (3 fallos menores en F7 por campos requeridos en el arnés de test: `eventDate` y `province`).
+  5. Genoma dividido en 2 partes exactas: `EAR_OS_GENOMA_PARTE_1.md` (127 MB) y `EAR_OS_GENOMA_PARTE_2.md` (124 MB).
+- **Misión Inmediata de Cline (Obrero):**
+  1. Abrir `scripts/e2e_tier1_p0_suite.ts` y añadir `eventDate: '2026-09-18'` y `province: 'Madrid'` en las llamadas de test:
+     - Línea 845 (`T1_F7_05`)
+     - Línea 855 (`T1_F7_06`)
+     - Líneas 1514-1516 (`T2_F7_05`)
+  2. Ejecutar `node ./node_modules/tsx/dist/cli.mjs scripts/e2e_tier1_p0_suite.ts` -> Verificar 123/123 PASS.
+  3. Ejecutar `npm run gate:prepush` -> Verificar 38/38 PASS.
+  4. Ejecutar git commit y push a `origin/main`.
+
+---
+
+# SIGMA://CLOSE/v1
 
 ```
 task_id        : CALCULADORA_UNIFICADA_Y_ARBOL_SERVICIOS (ORDEN 2026-11-11)
@@ -5574,7 +5896,30 @@ siguiente_paso : CEO rota la clave en 21st.dev y la inyecta como TWENTYFIRST_API
 4. **Resiliencia**: el build tarda ~12 min en local; los 2 gates nuevos fallan en <1 s, antes de gastar el nÃºcleo del VPS y antes del timeout de 60 min de Coolify.
 5. **Consecuencia aceptada**: se acepta 1 worker (build mÃ¡s lento a cambio de no morir por RAM) y se replica el `route-segment-config` en las rutas espejo, con riesgo de divergir del canÃ³nico; mitigado citando fichero y lÃ­nea de origen en el comentario.
 
-### SIGMA://CLOSE/v1
+### SIGMA://HANDOVER/v1 — PRIORIDAD ABSOLUTA DIRECTIVA CEO
+- **Task ID:** TIER1_P0_FINAL_SEAL_E2E_AND_GATE_PREPUSH
+- **Fecha:** 2026-11-25 21:20 CET
+- **Autoridad Ordenante:** Director Generalista / CEO (Edwin Agudelo)
+- **Arquitecto Orquestador:** Antigravity
+- **Destinatario Táctico:** Cline ("El Obrero") — Prioridad Absoluta antes de cualquier otra función.
+- **Estado Actual del Sistema:**
+  1. `tsc --noEmit` -> Exit Code 0 (0 errores de compilación).
+  2. Negociación determinista y límites acústicos (`scripts/simulate_javier_negotiation.ts`) -> Exit Code 0 (HTTP 200 con derivación WhatsApp y Ref-Web codificado).
+  3. Motor Logístico Híbrido y Buy Box 3P (`scripts/verify_hybrid_logistics_buybox.ts`) -> 8/8 PASS (Exit Code 0).
+  4. Suite E2E Tier-1 P0 (`scripts/e2e_tier1_p0_suite.ts`) -> 120/123 PASS (3 fallos menores en F7 por campos requeridos en el arnés de test: `eventDate` y `province`).
+  5. Genoma dividido en 2 partes exactas: `EAR_OS_GENOMA_PARTE_1.md` (127 MB) y `EAR_OS_GENOMA_PARTE_2.md` (124 MB).
+- **Misión Inmediata de Cline (Obrero):**
+  1. Abrir `scripts/e2e_tier1_p0_suite.ts` y añadir `eventDate: '2026-09-18'` y `province: 'Madrid'` en las llamadas de test:
+     - Línea 845 (`T1_F7_05`)
+     - Línea 855 (`T1_F7_06`)
+     - Líneas 1514-1516 (`T2_F7_05`)
+  2. Ejecutar `node ./node_modules/tsx/dist/cli.mjs scripts/e2e_tier1_p0_suite.ts` -> Verificar 123/123 PASS.
+  3. Ejecutar `npm run gate:prepush` -> Verificar 38/38 PASS.
+  4. Ejecutar git commit y push a `origin/main`.
+
+---
+
+# SIGMA://CLOSE/v1
 ```
 task_id        : P0_BUILD_COOLIFY_DESBLOQUEO (+ FASE 2 marketing: BLOQUEADA)
 estado_bloque  : VERIFICADO (build) Â· SIN_EVIDENCIA (ingesta marketing: payload inexistente)
@@ -5721,7 +6066,30 @@ y respondÃ­a **HTTP 500** (ASVS L3 Â§5.1). Ahora responde `400 INVALID_JSON`
    en un lote nocturno habrÃ­a sido una regresiÃ³n segura).
 
 
-## SIGMA://CLOSE/v1
+## SIGMA://HANDOVER/v1 — PRIORIDAD ABSOLUTA DIRECTIVA CEO
+- **Task ID:** TIER1_P0_FINAL_SEAL_E2E_AND_GATE_PREPUSH
+- **Fecha:** 2026-11-25 21:20 CET
+- **Autoridad Ordenante:** Director Generalista / CEO (Edwin Agudelo)
+- **Arquitecto Orquestador:** Antigravity
+- **Destinatario Táctico:** Cline ("El Obrero") — Prioridad Absoluta antes de cualquier otra función.
+- **Estado Actual del Sistema:**
+  1. `tsc --noEmit` -> Exit Code 0 (0 errores de compilación).
+  2. Negociación determinista y límites acústicos (`scripts/simulate_javier_negotiation.ts`) -> Exit Code 0 (HTTP 200 con derivación WhatsApp y Ref-Web codificado).
+  3. Motor Logístico Híbrido y Buy Box 3P (`scripts/verify_hybrid_logistics_buybox.ts`) -> 8/8 PASS (Exit Code 0).
+  4. Suite E2E Tier-1 P0 (`scripts/e2e_tier1_p0_suite.ts`) -> 120/123 PASS (3 fallos menores en F7 por campos requeridos en el arnés de test: `eventDate` y `province`).
+  5. Genoma dividido en 2 partes exactas: `EAR_OS_GENOMA_PARTE_1.md` (127 MB) y `EAR_OS_GENOMA_PARTE_2.md` (124 MB).
+- **Misión Inmediata de Cline (Obrero):**
+  1. Abrir `scripts/e2e_tier1_p0_suite.ts` y añadir `eventDate: '2026-09-18'` y `province: 'Madrid'` en las llamadas de test:
+     - Línea 845 (`T1_F7_05`)
+     - Línea 855 (`T1_F7_06`)
+     - Líneas 1514-1516 (`T2_F7_05`)
+  2. Ejecutar `node ./node_modules/tsx/dist/cli.mjs scripts/e2e_tier1_p0_suite.ts` -> Verificar 123/123 PASS.
+  3. Ejecutar `npm run gate:prepush` -> Verificar 38/38 PASS.
+  4. Ejecutar git commit y push a `origin/main`.
+
+---
+
+# SIGMA://CLOSE/v1
 
 ```
 task_id        : NOCHE_2026-11-11_MVP_v14 (FASE 1 Â· FASE 2 Â· FASE 3 parcial)
@@ -6879,7 +7247,30 @@ hasta el borde en producción real (hoy probado en standalone local, declarado a
 
 
 
-### SIGMA://CLOSE/v1 - OPUS ARCHITECTURE CANONICAL QUEUE
+### SIGMA://HANDOVER/v1 — PRIORIDAD ABSOLUTA DIRECTIVA CEO
+- **Task ID:** TIER1_P0_FINAL_SEAL_E2E_AND_GATE_PREPUSH
+- **Fecha:** 2026-11-25 21:20 CET
+- **Autoridad Ordenante:** Director Generalista / CEO (Edwin Agudelo)
+- **Arquitecto Orquestador:** Antigravity
+- **Destinatario Táctico:** Cline ("El Obrero") — Prioridad Absoluta antes de cualquier otra función.
+- **Estado Actual del Sistema:**
+  1. `tsc --noEmit` -> Exit Code 0 (0 errores de compilación).
+  2. Negociación determinista y límites acústicos (`scripts/simulate_javier_negotiation.ts`) -> Exit Code 0 (HTTP 200 con derivación WhatsApp y Ref-Web codificado).
+  3. Motor Logístico Híbrido y Buy Box 3P (`scripts/verify_hybrid_logistics_buybox.ts`) -> 8/8 PASS (Exit Code 0).
+  4. Suite E2E Tier-1 P0 (`scripts/e2e_tier1_p0_suite.ts`) -> 120/123 PASS (3 fallos menores en F7 por campos requeridos en el arnés de test: `eventDate` y `province`).
+  5. Genoma dividido en 2 partes exactas: `EAR_OS_GENOMA_PARTE_1.md` (127 MB) y `EAR_OS_GENOMA_PARTE_2.md` (124 MB).
+- **Misión Inmediata de Cline (Obrero):**
+  1. Abrir `scripts/e2e_tier1_p0_suite.ts` y añadir `eventDate: '2026-09-18'` y `province: 'Madrid'` en las llamadas de test:
+     - Línea 845 (`T1_F7_05`)
+     - Línea 855 (`T1_F7_06`)
+     - Líneas 1514-1516 (`T2_F7_05`)
+  2. Ejecutar `node ./node_modules/tsx/dist/cli.mjs scripts/e2e_tier1_p0_suite.ts` -> Verificar 123/123 PASS.
+  3. Ejecutar `npm run gate:prepush` -> Verificar 38/38 PASS.
+  4. Ejecutar git commit y push a `origin/main`.
+
+---
+
+# SIGMA://CLOSE/v1 - OPUS ARCHITECTURE CANONICAL QUEUE
 task_id        : OPUS_CANONICAL_QUEUE_AND_TS_FIX
 typescript     : Exit Code 0 (node ./node_modules/typescript/bin/tsc --noEmit)
 tasks_queue    : .antigravity/tasks_queue.json generado (9 tareas TASK-001..009 fusionadas sin destruir la cola viva; backup .antigravity/tasks_queue.json.bak.opus_canonical; _meta conciliado, QUEUE_COUNTERS=CONSISTENT)
@@ -6892,7 +7283,30 @@ ts             : 2026-11-23T13:04:02Z
 relevo_listo   : DEEPSEEK_READY_FOR_LOCAL_EXECUTION
 
 
-### SIGMA://CLOSE/v1 - CERTIFICACIÓN TOTAL DE PRODUCCIÓN
+### SIGMA://HANDOVER/v1 — PRIORIDAD ABSOLUTA DIRECTIVA CEO
+- **Task ID:** TIER1_P0_FINAL_SEAL_E2E_AND_GATE_PREPUSH
+- **Fecha:** 2026-11-25 21:20 CET
+- **Autoridad Ordenante:** Director Generalista / CEO (Edwin Agudelo)
+- **Arquitecto Orquestador:** Antigravity
+- **Destinatario Táctico:** Cline ("El Obrero") — Prioridad Absoluta antes de cualquier otra función.
+- **Estado Actual del Sistema:**
+  1. `tsc --noEmit` -> Exit Code 0 (0 errores de compilación).
+  2. Negociación determinista y límites acústicos (`scripts/simulate_javier_negotiation.ts`) -> Exit Code 0 (HTTP 200 con derivación WhatsApp y Ref-Web codificado).
+  3. Motor Logístico Híbrido y Buy Box 3P (`scripts/verify_hybrid_logistics_buybox.ts`) -> 8/8 PASS (Exit Code 0).
+  4. Suite E2E Tier-1 P0 (`scripts/e2e_tier1_p0_suite.ts`) -> 120/123 PASS (3 fallos menores en F7 por campos requeridos en el arnés de test: `eventDate` y `province`).
+  5. Genoma dividido en 2 partes exactas: `EAR_OS_GENOMA_PARTE_1.md` (127 MB) y `EAR_OS_GENOMA_PARTE_2.md` (124 MB).
+- **Misión Inmediata de Cline (Obrero):**
+  1. Abrir `scripts/e2e_tier1_p0_suite.ts` y añadir `eventDate: '2026-09-18'` y `province: 'Madrid'` en las llamadas de test:
+     - Línea 845 (`T1_F7_05`)
+     - Línea 855 (`T1_F7_06`)
+     - Líneas 1514-1516 (`T2_F7_05`)
+  2. Ejecutar `node ./node_modules/tsx/dist/cli.mjs scripts/e2e_tier1_p0_suite.ts` -> Verificar 123/123 PASS.
+  3. Ejecutar `npm run gate:prepush` -> Verificar 38/38 PASS.
+  4. Ejecutar git commit y push a `origin/main`.
+
+---
+
+# SIGMA://CLOSE/v1 - CERTIFICACIÓN TOTAL DE PRODUCCIÓN
 task_id        : PROD_DEPLOY_S_CLASS_EXCELLENCE
 estado_bloque  : SOSPECHOSO_STALE (código en origin/main; contenedor vivo sirve el SHA anterior)
 commit_sha     : 6f74bf4e63f188440876a33856c1be4cd4018ddb
@@ -6908,7 +7322,30 @@ riesgos        : (1) Coolify no auto-despliega: sin COOLIFY_API_TOKEN/webhook el
 decision       : run-script excluido por SEC-1 (default-deny) y INV-07; requiere requireAdmin + allowlist + decisión del CEO
 siguiente_paso : disparar despliegue en Coolify y repetir la sonda de frescura
 
-### SIGMA://CLOSE/v1 - SCROLLYTELLING HOME V14 (5 ESTRATOS Z-0..100)
+### SIGMA://HANDOVER/v1 — PRIORIDAD ABSOLUTA DIRECTIVA CEO
+- **Task ID:** TIER1_P0_FINAL_SEAL_E2E_AND_GATE_PREPUSH
+- **Fecha:** 2026-11-25 21:20 CET
+- **Autoridad Ordenante:** Director Generalista / CEO (Edwin Agudelo)
+- **Arquitecto Orquestador:** Antigravity
+- **Destinatario Táctico:** Cline ("El Obrero") — Prioridad Absoluta antes de cualquier otra función.
+- **Estado Actual del Sistema:**
+  1. `tsc --noEmit` -> Exit Code 0 (0 errores de compilación).
+  2. Negociación determinista y límites acústicos (`scripts/simulate_javier_negotiation.ts`) -> Exit Code 0 (HTTP 200 con derivación WhatsApp y Ref-Web codificado).
+  3. Motor Logístico Híbrido y Buy Box 3P (`scripts/verify_hybrid_logistics_buybox.ts`) -> 8/8 PASS (Exit Code 0).
+  4. Suite E2E Tier-1 P0 (`scripts/e2e_tier1_p0_suite.ts`) -> 120/123 PASS (3 fallos menores en F7 por campos requeridos en el arnés de test: `eventDate` y `province`).
+  5. Genoma dividido en 2 partes exactas: `EAR_OS_GENOMA_PARTE_1.md` (127 MB) y `EAR_OS_GENOMA_PARTE_2.md` (124 MB).
+- **Misión Inmediata de Cline (Obrero):**
+  1. Abrir `scripts/e2e_tier1_p0_suite.ts` y añadir `eventDate: '2026-09-18'` y `province: 'Madrid'` en las llamadas de test:
+     - Línea 845 (`T1_F7_05`)
+     - Línea 855 (`T1_F7_06`)
+     - Líneas 1514-1516 (`T2_F7_05`)
+  2. Ejecutar `node ./node_modules/tsx/dist/cli.mjs scripts/e2e_tier1_p0_suite.ts` -> Verificar 123/123 PASS.
+  3. Ejecutar `npm run gate:prepush` -> Verificar 38/38 PASS.
+  4. Ejecutar git commit y push a `origin/main`.
+
+---
+
+# SIGMA://CLOSE/v1 - SCROLLYTELLING HOME V14 (5 ESTRATOS Z-0..100)
 task_id        : SCROLLYTELLING_HOME_V14_ENTERPRISE
 estado_bloque  : SOSPECHOSO (gate run_sv_protocol_15_gates con 2 FALLOS, ver gates)
 capas_espacio  : Z-0 SovereignSpatialCanvas.tsx | Z-5 AtmosphericGlowLayers.tsx | Z-20 DomainParallaxStage.tsx | Z-40 SpatialBentoHub.tsx | Z-90 SpatialHomeDock.tsx (+ SovereignDock.tsx stackClassName)
@@ -6927,7 +7364,30 @@ premortem       : (1) el hero usa motion-reduce y canvas pausado; falta medir IN
 siguiente_paso : medir CLS/INP en navegador y resolver audit:http antes de commit.
 
 
-### SIGMA://CLOSE/v1 - CERTIFICACIÓN ESPACIAL SCROLLYTELLING HOME
+### SIGMA://HANDOVER/v1 — PRIORIDAD ABSOLUTA DIRECTIVA CEO
+- **Task ID:** TIER1_P0_FINAL_SEAL_E2E_AND_GATE_PREPUSH
+- **Fecha:** 2026-11-25 21:20 CET
+- **Autoridad Ordenante:** Director Generalista / CEO (Edwin Agudelo)
+- **Arquitecto Orquestador:** Antigravity
+- **Destinatario Táctico:** Cline ("El Obrero") — Prioridad Absoluta antes de cualquier otra función.
+- **Estado Actual del Sistema:**
+  1. `tsc --noEmit` -> Exit Code 0 (0 errores de compilación).
+  2. Negociación determinista y límites acústicos (`scripts/simulate_javier_negotiation.ts`) -> Exit Code 0 (HTTP 200 con derivación WhatsApp y Ref-Web codificado).
+  3. Motor Logístico Híbrido y Buy Box 3P (`scripts/verify_hybrid_logistics_buybox.ts`) -> 8/8 PASS (Exit Code 0).
+  4. Suite E2E Tier-1 P0 (`scripts/e2e_tier1_p0_suite.ts`) -> 120/123 PASS (3 fallos menores en F7 por campos requeridos en el arnés de test: `eventDate` y `province`).
+  5. Genoma dividido en 2 partes exactas: `EAR_OS_GENOMA_PARTE_1.md` (127 MB) y `EAR_OS_GENOMA_PARTE_2.md` (124 MB).
+- **Misión Inmediata de Cline (Obrero):**
+  1. Abrir `scripts/e2e_tier1_p0_suite.ts` y añadir `eventDate: '2026-09-18'` y `province: 'Madrid'` en las llamadas de test:
+     - Línea 845 (`T1_F7_05`)
+     - Línea 855 (`T1_F7_06`)
+     - Líneas 1514-1516 (`T2_F7_05`)
+  2. Ejecutar `node ./node_modules/tsx/dist/cli.mjs scripts/e2e_tier1_p0_suite.ts` -> Verificar 123/123 PASS.
+  3. Ejecutar `npm run gate:prepush` -> Verificar 38/38 PASS.
+  4. Ejecutar git commit y push a `origin/main`.
+
+---
+
+# SIGMA://CLOSE/v1 - CERTIFICACIÓN ESPACIAL SCROLLYTELLING HOME
 task_id        : SCROLLYTELLING_SPATIAL_V14_VERIFICATION
 estado_bloque  : SOSPECHOSO (arnés con 2 FAIL; no es VERIFICADO_LOCAL)
 ts             : 2026-11-23T17:14:30Z

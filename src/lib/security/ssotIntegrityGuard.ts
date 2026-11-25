@@ -34,6 +34,8 @@ import {
     LOGISTICA_KM_HOTEL,
     SUPLEMENTO_HOTEL_EUR,
     HORA_FIN_HOTEL,
+    HUB_MENTRIDA_COORDINATES,
+    HUB_MENTRIDA_ADDRESS,
     LIMITE_SPL_DB,
     WATTS_PER_PAX,
     VAT_RATE,
@@ -72,6 +74,11 @@ function canonicalizeSsot(): Record<string, CanonicalNumber | CanonicalString | 
         LOGISTICA_KM_HOTEL: { value: LOGISTICA_KM_HOTEL },
         SUPLEMENTO_HOTEL_EUR: { value: SUPLEMENTO_HOTEL_EUR },
         HORA_FIN_HOTEL: { value: HORA_FIN_HOTEL },
+        HUB_MENTRIDA_POSTAL_CODE: { value: HUB_MENTRIDA_ADDRESS.postalCode },
+        HUB_MENTRIDA_COORDINATES: {
+            latitude: HUB_MENTRIDA_COORDINATES.latitude,
+            longitude: HUB_MENTRIDA_COORDINATES.longitude,
+        },
         DEPOSITO_STRIPE_EUR: { value: DEPOSITO_STRIPE_EUR },
         LIMITE_B2G_LCSP_EUR: { value: LIMITE_B2G_LCSP_EUR },
         SAFE_LCSP_CEILING_EUR: { value: SAFE_LCSP_CEILING_EUR },
@@ -157,8 +164,16 @@ export function validateSsotInvariants(): string[] {
         violations.push('Rider acústico alterado (75 dB SPL / 12 W-pax).');
     }
 
-    if (LOGISTICA_EUR_PER_KM !== 1.5 || LOGISTICA_KM_EXENTOS !== 50) {
-        violations.push('Logística S-Class alterada (1,50 €/km a partir del km 50).');
+    if (LOGISTICA_EUR_PER_KM !== 1.5 || LOGISTICA_KM_EXENTOS !== 100) {
+        violations.push('Logística S-Class alterada (1,50 €/km a partir del km 100).');
+    }
+
+    if (
+        HUB_MENTRIDA_COORDINATES.latitude !== 40.2378 ||
+        HUB_MENTRIDA_COORDINATES.longitude !== -4.1953 ||
+        HUB_MENTRIDA_ADDRESS.postalCode !== '45214'
+    ) {
+        violations.push('Hub Méntrida alterado (debe ser 40.2378, -4.1953 · CP 45214).');
     }
 
     if (SUPLEMENTO_HOTEL_EUR !== 120 || LOGISTICA_KM_HOTEL !== 200 || HORA_FIN_HOTEL !== 3) {
@@ -200,6 +215,6 @@ export function verifySsotIntegrity(): SsotIntegrityReport {
     };
 }
 
-export const KNOWN_GOOD_SSOT_HASH = 'cefa76c2c6a3f92f57acf74f654932c02bf66774502102cb4f932520aaa64b2b';
+export const KNOWN_GOOD_SSOT_HASH = 'e208462ea1a4e6796b31743ee0200794f18221fcc1154cb9e5e56526a0c41ea5';
 
 export { EAR_OS_SSOT };
