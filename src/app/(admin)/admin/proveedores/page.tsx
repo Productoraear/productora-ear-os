@@ -3,6 +3,7 @@
 
 import React, { useState, useEffect, useCallback, Suspense } from 'react';
 import Link from 'next/link';
+import { z } from 'zod';
 import { ProvidersAdminTable } from './ProvidersAdminTable';
 import type { ProviderProfileTarget } from './ProvidersAdminTable';
 import { ProviderProfileDrawer } from './ProviderProfileDrawer';
@@ -24,14 +25,62 @@ import {
   Sliders,
   Image as ImageIcon,
   Sparkles,
-  AlertTriangle
+  AlertTriangle,
+  UtensilsCrossed,
+  FileCheck,
+  X,
+  Download
 } from 'lucide-react';
 import {
   PROVIDERS_MANIFEST_TOTALS,
   PROVIDERS_GRAND_TOTAL,
   formatProviderCount,
 } from '@/lib/constants/providers-manifest';
-import { TARIFA_BASE_SOLISTA_EUR } from '@/lib/constants/ear-os-ssot';
+import {
+  TARIFA_BASE_SOLISTA_EUR,
+  TARIFA_ESTANDAR_SOLISTA_EUR,
+  SPLIT_SOBERANO,
+  CENTRALITA_EAR_OS,
+} from '@/lib/constants/ear-os-ssot';
+import {
+  GLOBAL_SYSTEM_INVARIANTS,
+  resolveEntityContext,
+} from '@/lib/oraculo/entity-resolver';
+import {
+  executeOrdenSalaCocina,
+  executeEidasContract,
+  type MultiRailExecutionResult,
+} from '@/lib/compiler/multi-rail-execution';
+import { ProviderProfileFieldSchema } from '@/lib/providers/trojan-horse-schema';
+
+/* ========================================================================== */
+/* CONTRATO DE DATOS ZOD ESTRICTO (NIVEL 5)                                   */
+/* ========================================================================== */
+
+export const ProviderNodeZodSchema = z
+  .object({
+    id: z.string().optional(),
+    slug: z.string().optional(),
+    name: z.string(),
+    category: z.string(),
+    province: z.string().optional(),
+    city: z.string().optional(),
+    municipality: z.string().optional(),
+    phone: z.string().optional(),
+    telephone: z.string().optional(),
+    price: z.union([z.number(), z.string()]).optional(),
+    rating: z.number().optional(),
+    reviewsCount: z.number().optional(),
+    imageUrls: z.array(z.string()).optional(),
+    gallery: z.array(z.string()).optional(),
+    description: z.string().optional(),
+    verified: z.boolean().optional(),
+    originHtml: z.string().nullable().optional(),
+    sourceUrl: z.string().nullable().optional(),
+  })
+  .strict();
+
+export type ProviderItem = z.infer<typeof ProviderNodeZodSchema>;
 
 const GRAND_TOTAL_FORMATTED = formatProviderCount(PROVIDERS_GRAND_TOTAL);
 
@@ -49,28 +98,6 @@ function toProviderSlug(primary: string | undefined, fallback: string): string {
     .replace(/[\u0300-\u036f]/g, '')
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
-}
-
-interface ProviderItem {
-  id?: string;
-  /** Clave canónica de la partición (`otzarreta-finca`, `v-57523`...). */
-  slug?: string;
-  name: string;
-  category: string;
-  province?: string;
-  city?: string;
-  municipality?: string;
-  phone?: string;
-  telephone?: string;
-  price?: number | string;
-  rating?: number;
-  reviewsCount?: number;
-  imageUrls?: string[];
-  gallery?: string[];
-  description?: string;
-  verified?: boolean;
-  originHtml?: string | null;
-  sourceUrl?: string | null;
 }
 
 interface ProvidersApiResponse {
@@ -200,11 +227,40 @@ function ProveedoresSyncContent(): React.ReactElement {
   const [fetchError, setFetchError] = useState<string | null>(null);
   const [selectedProvider, setSelectedProvider] = useState<ProviderItem | null>(null);
   const [viewMode, setViewMode] = useState<'grid' | 'table'>('table');
+  const [activeResult, setActiveResult] = useState<MultiRailExecutionResult | null>(null);
   const [profileTarget, setProfileTarget] = useState<{
     slug: string;
     name: string;
     category: string;
   } | null>(null);
+
+  const handleTriggerOrdenSala = (provider: ProviderItem): void => {
+    const res = executeOrdenSalaCocina({
+      eventId: `SALA-${provider.slug || 'PROV'}-${Date.now().toString(36).toUpperCase()}`,
+      clientName: provider.name,
+      venue: provider.municipality || provider.province || 'Recinto Homologado',
+      eventDate: new Date().toISOString().slice(0, 10),
+      dimensionId: 'PROVEEDORES_CATALOGO',
+      entityContext: resolveEntityContext(provider.slug || 'proveedor', 'PROVEEDORES_CATALOGO'),
+      pepitaDeOro: `Sincronización de Aforos y Alérgenos con Seating Planner para ${provider.name}`,
+      rawVision: `Distribución de sala, aforos, plazas y protocolo celíacos a 0€ sin suplemento`,
+    });
+    setActiveResult(res);
+  };
+
+  const handleTriggerEidas = (provider: ProviderItem): void => {
+    const res = executeEidasContract({
+      eventId: `AGREEMENT-${provider.slug || 'PROV'}`,
+      clientName: provider.name,
+      venue: provider.province || 'España',
+      eventDate: new Date().toISOString().slice(0, 10),
+      dimensionId: 'PROVEEDORES_CATALOGO',
+      entityContext: resolveEntityContext(provider.slug || 'proveedor', 'PROVEEDORES_CATALOGO'),
+      pepitaDeOro: `Acuerdo de homologación de proveedor ${provider.name} en Catálogo 380 Campos`,
+      rawVision: `Contrato marco de proveedor homologado con split soberano y custodia legal`,
+    });
+    setActiveResult(res);
+  };
 
   /**
    * Abre la ficha editable de 380 campos del nodo seleccionado. La categoría
@@ -585,7 +641,7 @@ function ProveedoresSyncContent(): React.ReactElement {
                 <div className="p-3 rounded-xl bg-black/50 border border-white/5">
                   <span className="text-zinc-500 text-[10px] block">CONTACTO DIRECTO</span>
                   <span className="text-[#ecb613] font-bold">
-                    {selectedProvider.phone || selectedProvider.telephone || 'Centralita (+34 693 693 048)'}
+                    {selectedProvider.phone || selectedProvider.telephone || `Centralita (${CENTRALITA_EAR_OS})`}
                   </span>
                 </div>
               </div>
@@ -593,7 +649,23 @@ function ProveedoresSyncContent(): React.ReactElement {
 
             <div className="pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-3 font-mono text-xs">
               <span className="text-zinc-400">Tarifa Referencia: <strong className="text-emerald-400">{selectedProvider.price || TARIFA_BASE_SOLISTA_EUR} €</strong></span>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => handleTriggerOrdenSala(selectedProvider)}
+                  className="px-3 py-2 rounded-xl bg-purple-500/15 border border-purple-500/40 text-purple-300 font-bold text-xs flex items-center gap-1.5 hover:bg-purple-500/25 transition-colors"
+                >
+                  <UtensilsCrossed className="w-3.5 h-3.5 text-purple-400" />
+                  <span>Orden Sala &amp; Cocina</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleTriggerEidas(selectedProvider)}
+                  className="px-3 py-2 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 font-bold text-xs flex items-center gap-1.5 hover:bg-emerald-500/25 transition-colors"
+                >
+                  <FileCheck className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>Contrato eIDAS</span>
+                </button>
                 <button
                   onClick={() => openProviderProfile(selectedProvider)}
                   className="px-4 py-2 rounded-xl bg-[#ecb613]/15 border border-[#ecb613]/40 text-[#ecb613] font-bold text-xs flex items-center gap-2 hover:bg-[#ecb613]/25 transition-colors duration-300"
@@ -608,6 +680,68 @@ function ProveedoresSyncContent(): React.ReactElement {
                   Cerrar Ficha
                 </button>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal Multi-Rail Artifact */}
+      {activeResult && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-2xl bg-[#09090d] border border-white/20 rounded-3xl p-6 shadow-2xl space-y-4 font-mono">
+            <div className="flex items-center justify-between border-b border-zinc-800 pb-3">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                <h3 className="text-sm font-bold font-syne text-white uppercase tracking-wider">
+                  {activeResult.title}
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setActiveResult(null)}
+                className="p-1 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="space-y-3 text-xs">
+              <div className="flex items-center justify-between p-3 rounded-xl bg-zinc-950 border border-zinc-900">
+                <span className="text-zinc-400">Artefacto:</span>
+                <span className="text-white font-bold">{activeResult.filename}</span>
+              </div>
+
+              <div className="p-3 rounded-xl bg-zinc-950 border border-zinc-900 space-y-1">
+                <span className="text-zinc-500 text-[10px] block">SELLO CRIPTOGRÁFICO SHA-256</span>
+                <span className="text-[#ecb613] text-[11px] break-all">{activeResult.sha256}</span>
+              </div>
+
+              <div className="space-y-1">
+                <span className="text-zinc-400 text-[11px]">Vista Previa:</span>
+                <pre className="p-3 rounded-xl bg-black border border-zinc-900 text-[11px] text-zinc-300 overflow-x-auto max-h-48 font-mono">
+                  {activeResult.previewContent}
+                </pre>
+              </div>
+            </div>
+
+            <div className="pt-2 flex items-center justify-end gap-3">
+              <button
+                type="button"
+                onClick={() => setActiveResult(null)}
+                className="px-4 py-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-300 text-xs transition-colors"
+              >
+                Cerrar
+              </button>
+              {activeResult.downloadUrl && (
+                <a
+                  href={activeResult.downloadUrl}
+                  download={activeResult.filename}
+                  className="px-4 py-2 rounded-xl bg-[#ecb613] hover:bg-[#d8a40f] text-black font-bold text-xs flex items-center gap-1.5 transition-colors"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>Descargar Artefacto</span>
+                </a>
+              )}
             </div>
           </div>
         </div>

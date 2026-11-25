@@ -18,7 +18,12 @@ import {
   ArrowRight,
   Download,
   AlertTriangle,
+  UtensilsCrossed,
+  FileCheck,
+  Car,
+  X,
 } from 'lucide-react';
+import { z } from 'zod';
 import { Cult3StageEnrichmentPipeline } from '@/app/components/cult-directory/Cult3StageEnrichmentPipeline';
 import { SCLASS_12_FINCAS_HOMOLOGADAS } from '@/lib/constants/fincas-catalog';
 import {
@@ -27,6 +32,45 @@ import {
 } from '@/lib/constants/providers-manifest';
 import { MetricProvenanceBadge } from '@/components/admin/MetricProvenanceBadge';
 import { staticMetric } from '@/lib/admin/metrics-provenance';
+import {
+  LIMITE_SPL_DB,
+  SPLIT_SOBERANO,
+  DEPOSITO_STRIPE_EUR,
+} from '@/lib/constants/ear-os-ssot';
+import {
+  GLOBAL_SYSTEM_INVARIANTS,
+  resolveEntityContext,
+} from '@/lib/oraculo/entity-resolver';
+import {
+  OTZARRETA_WEDDING_MENUS,
+  formatOtzarretaMenuPrice,
+} from '@/lib/constants/otzarreta-entity';
+import {
+  executeOrdenSalaCocina,
+  executeEidasContract,
+  type MultiRailExecutionResult,
+} from '@/lib/compiler/multi-rail-execution';
+
+/* ========================================================================== */
+/* CONTRATO DE DATOS ZOD ESTRICTO (NIVEL 5)                                   */
+/* ========================================================================== */
+
+export const FincaVenueZodSchema = z
+  .object({
+    id: z.string(),
+    name: z.string(),
+    provincia: z.string(),
+    location: z.string(),
+    capacidadMaxPax: z.number(),
+    tomaElectrica: z.string(),
+    limiteAcusticoDba: z.number().max(LIMITE_SPL_DB),
+    polizaRCEuros: z.number(),
+    estadoHomologacion: z.string(),
+    isOtzarretaIsolated: z.boolean(),
+  })
+  .strict();
+
+export type FincaVenue = z.infer<typeof FincaVenueZodSchema>;
 
 /* -------------------------------------------------------------------------- */
 /*  ERROR BOUNDARY — S-Class sealed                                            */
@@ -131,14 +175,50 @@ function FincasSkeleton(): ReactNode {
 }
 
 /* -------------------------------------------------------------------------- */
-/*  PAGE                                                                       */
+/*  PAGE PRINCIPAL DIRECTORY (NIVEL 5)                                         */
 /* -------------------------------------------------------------------------- */
 
 export default function AdminCultDirectoryPage(): ReactNode {
-  const [activeTab, setActiveTab] = useState<'pipeline' | 'fincas' | 'stats'>('pipeline');
+  const [activeTab, setActiveTab] = useState<'pipeline' | 'fincas' | 'otzarreta'>('pipeline');
+  const [activeResult, setActiveResult] = useState<MultiRailExecutionResult | null>(null);
+
+  const otzarretaContext = resolveEntityContext('otzarreta-finca', 'HOSTELERIA_FINCAS');
+
+  const handleTriggerOrdenSala = () => {
+    const res = executeOrdenSalaCocina({
+      eventId: `OTZARRETA-SALA-${Date.now().toString(36).toUpperCase()}`,
+      clientName: 'Pareja VIP / Banquete Otzarreta 2026',
+      venue: otzarretaContext.displayName,
+      eventDate: new Date().toISOString().slice(0, 10),
+      grossEur: 18500.0,
+      dimensionId: 'HOSTELERIA_FINCAS',
+      entityContext: otzarretaContext,
+      pepitaDeOro: 'Orden Oficial de Sala y Cocina Caserío Ezkertza Berria',
+      rawVision: `Distribución de mesas, 120 plazas párking, límite < ${LIMITE_SPL_DB} dB y menús ${formatOtzarretaMenuPrice(OTZARRETA_WEDDING_MENUS[0]?.priceEur ?? 145)} a ${formatOtzarretaMenuPrice(OTZARRETA_WEDDING_MENUS[3]?.priceEur ?? 185)} sin suplemento de intolerancias`,
+    });
+    setActiveResult(res);
+  };
+
+  const handleTriggerEidasContrato = () => {
+    const res = executeEidasContract({
+      eventId: `OTZARRETA-AGREEMENT-2026`,
+      clientName: 'Eduardo Martínez / Restaurante Otzarreta',
+      venue: 'Derio (Bizkaia · Txorierri)',
+      eventDate: new Date().toISOString().slice(0, 10),
+      dimensionId: 'HOSTELERIA_FINCAS',
+      entityContext: otzarretaContext,
+      pepitaDeOro: 'Acuerdo Soberano de Exclusividad Comarcal 100 km (Regla 91)',
+      rawVision: `Contrato eIDAS marco para preservación de menús y blindaje de tarifas 2026`,
+    });
+    setActiveResult(res);
+  };
+
+  const artistPct = Math.round(SPLIT_SOBERANO.artista * 100);
+  const earOsPct = Math.round(SPLIT_SOBERANO.earOs * 100);
+  const vimumePct = Math.round(SPLIT_SOBERANO.vimume * 100);
 
   return (
-    <div className="space-y-8 max-w-7xl mx-auto font-sans">
+    <div className="space-y-8 max-w-7xl mx-auto font-sans pb-16">
       {/* Breadcrumb & Top Status */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
@@ -156,7 +236,7 @@ export default function AdminCultDirectoryPage(): ReactNode {
             </span>
           </h1>
           <p className="text-xs font-mono text-zinc-400 mt-1">
-            Control de homologación de nodos • Pipeline de enriquecimiento semántico en 3 etapas con GPU local
+            Control de homologación de nodos • Ficha aislada Otzarreta • Límite acústico &lt; {LIMITE_SPL_DB} dB SPL
           </p>
         </div>
 
@@ -221,13 +301,13 @@ export default function AdminCultDirectoryPage(): ReactNode {
                 Rider Bose 12W/pax
               </span>
               <div className="text-2xl font-bold text-emerald-400 mt-1">
-                &lt; 75 dB SPL
+                &lt; {LIMITE_SPL_DB} dB SPL
               </div>
               <span className="text-[10px] text-zinc-400">Certificación acústica SSOT</span>
             </div>
             <div className="pt-2 border-t border-white/5">
               <MetricProvenanceBadge
-                metric={staticMetric('directorio_rider_db', 'Límite Acústico', 75, 'ear-os-ssot.ts', 'dB SPL')}
+                metric={staticMetric('directorio_rider_db', 'Límite Acústico', LIMITE_SPL_DB, 'ear-os-ssot.ts', 'dB SPL')}
                 size="sm"
               />
             </div>
@@ -239,13 +319,13 @@ export default function AdminCultDirectoryPage(): ReactNode {
                 Split Soberano
               </span>
               <div className="text-2xl font-bold text-cyan-400 mt-1">
-                80 / 10 / 10
+                {artistPct} / {earOsPct} / {vimumePct}
               </div>
               <span className="text-[10px] text-zinc-400">80% IRPF Deducible VIMUME</span>
             </div>
             <div className="pt-2 border-t border-white/5">
               <MetricProvenanceBadge
-                metric={staticMetric('directorio_split', 'Split Soberano', 80, 'ear-os-ssot.ts', '%')}
+                metric={staticMetric('directorio_split', 'Split Soberano', artistPct, 'ear-os-ssot.ts', '%')}
                 size="sm"
               />
             </div>
@@ -254,11 +334,11 @@ export default function AdminCultDirectoryPage(): ReactNode {
       </SectionErrorBoundary>
 
       {/* Tab Navigation */}
-      <div className="flex items-center gap-2 border-b border-zinc-800 pb-3">
+      <div className="flex flex-wrap items-center gap-2 border-b border-zinc-800 pb-3 font-mono">
         <button
           type="button"
           onClick={() => setActiveTab('pipeline')}
-          className={`px-4 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider transition-all flex items-center gap-2 ${
+          className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2 ${
             activeTab === 'pipeline'
               ? 'bg-[#ecb613] text-black shadow-[0_0_12px_rgba(236,182,19,0.3)]'
               : 'bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-800'
@@ -271,7 +351,7 @@ export default function AdminCultDirectoryPage(): ReactNode {
         <button
           type="button"
           onClick={() => setActiveTab('fincas')}
-          className={`px-4 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider transition-all flex items-center gap-2 ${
+          className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2 ${
             activeTab === 'fincas'
               ? 'bg-[#ecb613] text-black shadow-[0_0_12px_rgba(236,182,19,0.3)]'
               : 'bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-800'
@@ -279,6 +359,19 @@ export default function AdminCultDirectoryPage(): ReactNode {
         >
           <Building className="w-3.5 h-3.5" />
           <span>Red de 12 Fincas Homologadas</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setActiveTab('otzarreta')}
+          className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2 ${
+            activeTab === 'otzarreta'
+              ? 'bg-[#ecb613] text-black shadow-[0_0_12px_rgba(236,182,19,0.3)]'
+              : 'bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-800'
+          }`}
+        >
+          <UtensilsCrossed className="w-3.5 h-3.5 text-emerald-400" />
+          <span>Paciente Cero Otzarreta (Derio)</span>
         </button>
       </div>
 
@@ -341,6 +434,168 @@ export default function AdminCultDirectoryPage(): ReactNode {
             </div>
           </Suspense>
         </SectionErrorBoundary>
+      )}
+
+      {activeTab === 'otzarreta' && (
+        <div className="rounded-3xl bg-[#09090d]/90 border border-emerald-500/30 p-6 sm:p-8 space-y-6 shadow-2xl font-mono">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800 pb-4">
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/20">
+                  Paciente Cero B2B Fincas
+                </span>
+                <span className="text-zinc-500 text-xs">• Eduardo Martínez</span>
+              </div>
+              <h2 className="text-xl sm:text-2xl font-black font-syne text-white uppercase mt-1">
+                {otzarretaContext.displayName}
+              </h2>
+              <p className="text-xs text-zinc-400 mt-1">
+                {otzarretaContext.locationBase} • {otzarretaContext.legalProvenance}
+              </p>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2.5">
+              <button
+                type="button"
+                onClick={handleTriggerOrdenSala}
+                className="px-4 py-2 rounded-xl bg-purple-500/15 border border-purple-500/40 text-purple-300 hover:text-white text-xs font-bold flex items-center gap-2 transition-all"
+              >
+                <UtensilsCrossed className="w-4 h-4 text-purple-400" />
+                <span>Orden Sala &amp; Cocina</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={handleTriggerEidasContrato}
+                className="px-4 py-2 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 hover:text-white text-xs font-bold flex items-center gap-2 transition-all"
+              >
+                <FileCheck className="w-4 h-4 text-emerald-400" />
+                <span>Contrato eIDAS</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Tarjetas Invariantes Otzarreta */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+            <div className="p-4 rounded-2xl bg-zinc-950 border border-zinc-800 space-y-1">
+              <span className="text-zinc-500 text-[10px] uppercase block">Aparcamiento Privado</span>
+              <div className="text-xl font-bold text-white flex items-center gap-2">
+                <Car className="w-4 h-4 text-[#ecb613]" />
+                <span>{otzarretaContext.parkingSpaces} plazas</span>
+              </div>
+              <span className="text-[10px] text-zinc-400">Gratuitas y vigiladas en Caserío</span>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-zinc-950 border border-zinc-800 space-y-1">
+              <span className="text-zinc-500 text-[10px] uppercase block">Blindaje Acústico</span>
+              <div className="text-xl font-bold text-emerald-400 flex items-center gap-2">
+                <Volume2 className="w-4 h-4" />
+                <span>&lt; {otzarretaContext.acousticLimitDb} dB SPL</span>
+              </div>
+              <span className="text-[10px] text-zinc-400">Ley 37/2003 del Ruido garantizada</span>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-zinc-950 border border-zinc-800 space-y-1">
+              <span className="text-zinc-500 text-[10px] uppercase block">Exclusividad Comarcal</span>
+              <div className="text-xl font-bold text-cyan-400 flex items-center gap-2">
+                <Lock className="w-4 h-4" />
+                <span>100 km blindados</span>
+              </div>
+              <span className="text-[10px] text-zinc-400">Regla 91 de no-competencia</span>
+            </div>
+          </div>
+
+          {/* Menús Oficiales 2026 */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <h3 className="text-sm font-bold text-white uppercase tracking-wider">
+                Menús Oficiales Temporada 2026 (Dossier Sellado)
+              </h3>
+              <span className="text-[10px] text-emerald-400">Intolerancias y celíacos a 0,00 € sin recargo</span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {OTZARRETA_WEDDING_MENUS.map((menu) => (
+                <div
+                  key={menu.name}
+                  className="p-4 rounded-2xl bg-zinc-950/80 border border-zinc-850 hover:border-[#ecb613]/40 transition-colors space-y-2"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-white text-xs">{menu.name}</span>
+                    <span className="font-extrabold text-[#ecb613] text-sm">
+                      {formatOtzarretaMenuPrice(menu.priceEur)} + IVA
+                    </span>
+                  </div>
+                  <div className="text-[11px] text-zinc-400">
+                    {menu.note}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal Multi-Rail Artifact */}
+      {activeResult && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 font-mono">
+          <div className="w-full max-w-2xl bg-[#09090d] border border-white/20 rounded-3xl p-6 shadow-2xl space-y-4">
+            <div className="flex items-center justify-between border-b border-zinc-800 pb-3">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                <h3 className="text-sm font-bold font-syne text-white uppercase tracking-wider">
+                  {activeResult.title}
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setActiveResult(null)}
+                className="p-1 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="space-y-3 text-xs">
+              <div className="flex items-center justify-between p-3 rounded-xl bg-zinc-950 border border-zinc-900">
+                <span className="text-zinc-400">Artefacto:</span>
+                <span className="text-white font-bold">{activeResult.filename}</span>
+              </div>
+
+              <div className="p-3 rounded-xl bg-zinc-950 border border-zinc-900 space-y-1">
+                <span className="text-zinc-500 text-[10px] block">SELLO SHA-256</span>
+                <span className="text-[#ecb613] text-[11px] break-all">{activeResult.sha256}</span>
+              </div>
+
+              <div className="space-y-1">
+                <span className="text-zinc-400 text-[11px]">Vista Previa:</span>
+                <pre className="p-3 rounded-xl bg-black border border-zinc-900 text-[11px] text-zinc-300 overflow-x-auto max-h-48 font-mono">
+                  {activeResult.previewContent}
+                </pre>
+              </div>
+            </div>
+
+            <div className="pt-2 flex items-center justify-end gap-3">
+              <button
+                type="button"
+                onClick={() => setActiveResult(null)}
+                className="px-4 py-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-300 text-xs transition-colors"
+              >
+                Cerrar
+              </button>
+              {activeResult.downloadUrl && (
+                <a
+                  href={activeResult.downloadUrl}
+                  download={activeResult.filename}
+                  className="px-4 py-2 rounded-xl bg-[#ecb613] hover:bg-[#d8a40f] text-black font-bold text-xs flex items-center gap-1.5 transition-colors"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>Descargar</span>
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
