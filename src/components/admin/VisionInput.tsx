@@ -49,6 +49,7 @@ export interface VisionInputProps {
   readonly onChangeRawVision: (val: string) => void;
   readonly onRefineComplete?: (output: OracleRefinedOutput) => void;
   readonly showRefinerOutput?: boolean;
+  readonly entityId?: string;
   readonly title?: string;
   readonly subtitle?: string;
 }
@@ -60,6 +61,7 @@ export default function VisionInput({
   onChangeRawVision,
   onRefineComplete,
   showRefinerOutput = false,
+  entityId,
   title = 'COCKPIT CEO · MATRIZ MULTI-ROL DE 8 DIMENSIONES',
   subtitle = 'Selecciona la dimensión de negocio para preconfigurar invariantes canónicos y compilar la visión en un Megaprompt S-Class.',
 }: VisionInputProps): React.JSX.Element {
@@ -72,12 +74,13 @@ export default function VisionInput({
     const res = refineWithVelocityOracle({
       rawVision,
       objective: selectedDimension,
+      entityId,
     });
     if (onRefineComplete) {
       onRefineComplete(res);
     }
     return res;
-  }, [rawVision, selectedDimension, onRefineComplete]);
+  }, [rawVision, selectedDimension, entityId, onRefineComplete]);
 
   const handlePreloadTemplate = () => {
     onChangeRawVision(currentDimension.defaultSeedVision);

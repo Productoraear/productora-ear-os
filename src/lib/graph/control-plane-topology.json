@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
-  "generated_at": "2026-11-25T09:29:44.304Z",
-  "execution_duration_ms": 439.74,
+  "generated_at": "2026-11-25T10:02:29.121Z",
+  "execution_duration_ms": 464.4,
   "stats": {
     "total_nodes": 743,
     "total_edges": 544,
@@ -3420,7 +3420,7 @@
       "name": "/admin/oracle-compiler",
       "type": "route",
       "path": "src/app/(admin)/admin/oracle-compiler/page.tsx",
-      "integrityHash": "2e53edac42ed670f",
+      "integrityHash": "2635b595ba51738b",
       "criticality": "HIGH",
       "metadata": {
         "pathname": "/admin/oracle-compiler",

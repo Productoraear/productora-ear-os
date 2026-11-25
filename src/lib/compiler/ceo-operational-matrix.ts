@@ -60,7 +60,7 @@ export const CEO_OPERATIONAL_DIMENSIONS: readonly CeoOperationalDimension[] = Ob
     label: 'Clientes & Novios',
     roleTag: 'HIGH-TICKET B2C',
     badge: 'CONVERSIÓN',
-    summary: 'Seating Planner, menús cerrados, NDA VIP y depósito Price-Lock de 100 €.',
+    summary: 'Seating Planner, RSVP, alérgenos, fianza 100 €.',
     description: 'Relación directa novios-productora sin fricción, protocolo de sala exclusivo, personalización de menú sin recargo celíaco y bloqueo de fecha.',
     canonicalRuleIds: [1, 5, 23, 31, 32, 51, 81, 84, 87, 88, 90],
     canonicalInvariants: [
@@ -80,7 +80,7 @@ export const CEO_OPERATIONAL_DIMENSIONS: readonly CeoOperationalDimension[] = Ob
     label: 'Hostelería & Fincas',
     roleTag: 'B2B HOSPITALITY',
     badge: 'ALIANZAS',
-    summary: 'Estándar Otzarreta, menús 145€-185€, aforo, exclusividad 100 km y < 75 dB.',
+    summary: 'Salones, aforos, sonometría < 75 dB, exclusividad 100 km.',
     description: 'Acuerdos marco de exclusividad territorial, protección de licencia de actividad municipal con sonometría legal y fidelización de recintos de prestigio.',
     canonicalRuleIds: [33, 35, 71, 72, 73, 74, 75, 77, 84, 91],
     canonicalInvariants: [
@@ -99,7 +99,7 @@ export const CEO_OPERATIONAL_DIMENSIONS: readonly CeoOperationalDimension[] = Ob
     label: 'Artistas & Escenario',
     roleTag: 'TALENT & RIDERS',
     badge: 'ESPECTÁCULO',
-    summary: 'Edwin Agudelo (550 € / 100 km / suelo 350 €), riders, trifásica y 52 provincias.',
+    summary: 'Cachés propios, kilometraje, riders, 52 provincias.',
     description: 'Gestión de solistas de gala, cumplimiento incondicional de riders técnicos, logística de gira nacional y respeto absoluto al suelo canónico.',
     canonicalRuleIds: [11, 12, 13, 14, 53, 56, 71, 75, 78, 97],
     canonicalInvariants: [
@@ -118,7 +118,7 @@ export const CEO_OPERATIONAL_DIMENSIONS: readonly CeoOperationalDimension[] = Ob
     label: 'Proveedores & Catálogo',
     roleTag: 'INFRAESTRUCTURA B2B',
     badge: 'CATÁLOGO 2026',
-    summary: 'Ficha 380 campos, luces navideñas (652 refs), alérgenos y fianza 48h.',
+    summary: 'Ficha 380 campos, luces navideñas 652 refs, mobiliario.',
     description: 'Homologación técnica y formal de proveedores de infraestructura, elevación transductiva de catálogo y liquidación segura con garantías.',
     canonicalRuleIds: [61, 63, 64, 65, 66, 67, 70, 85],
     canonicalInvariants: [
@@ -137,7 +137,7 @@ export const CEO_OPERATIONAL_DIMENSIONS: readonly CeoOperationalDimension[] = Ob
     label: 'B2G & Ayuntamientos',
     roleTag: 'SECTOR PÚBLICO',
     badge: 'LICITACIÓN',
-    summary: 'Art. 118 LCSP (< 14.250 €), códigos DIR3, Facturae y RC 1M€.',
+    summary: 'Art. 118 LCSP < 14.250 €, códigos DIR3, Facturae.',
     description: 'Contratación menor de festejos populares, memorias técnicas blindadas contra fraccionamiento de contratos y tramitación ágil vía FACe.',
     canonicalRuleIds: [41, 44, 46, 47, 48, 62, 68, 69, 79],
     canonicalInvariants: [
@@ -156,7 +156,7 @@ export const CEO_OPERATIONAL_DIMENSIONS: readonly CeoOperationalDimension[] = Ob
     label: 'Tesorería & Split 80/10/10',
     roleTag: 'FINANZAS & STRIPE',
     badge: 'TESORERÍA',
-    summary: 'Split 80/10/10, Stripe Connect, conciliación céntimo entero y VIMUME.',
+    summary: 'Split 80/10/10, Stripe Connect, conciliación céntimo entero.',
     description: 'Gestión contable soberana de tesorería, liquidaciones automáticas en céntimos enteros sin desvíos y fondeo de proyectos sociales.',
     canonicalRuleIds: [21, 22, 52, 55, 82, 86, 95, 98],
     canonicalInvariants: [
@@ -175,7 +175,7 @@ export const CEO_OPERATIONAL_DIMENSIONS: readonly CeoOperationalDimension[] = Ob
     label: 'Logística & Flota',
     roleTag: 'OPERACIONES & FLOTA',
     badge: 'LOGÍSTICA',
-    summary: 'Hojas de ruta Waybill, inventario Line Array, microfonía y telemetría.',
+    summary: 'Waybill de ruta, furgonetas, montaje 2h antes, trifásica.',
     description: 'Coordinación táctica de furgones técnicos, control de inventario de sonido e iluminación, horarios de carga y montaje con margen de seguridad.',
     canonicalRuleIds: [42, 43, 65, 66, 71, 76, 89],
     canonicalInvariants: [
@@ -183,9 +183,9 @@ export const CEO_OPERATIONAL_DIMENSIONS: readonly CeoOperationalDimension[] = Ob
       'Hojas de ruta digitales Waybill con manifiesto de carga y precintos QR',
       'Control de microfonía inalámbrica UHF con barrido de frecuencias libres de interferencias',
       'Telemetría GPS en tiempo real de flota con cálculo de rutas de baja emisión',
-      'Protocolo de descarga, montaje y sonometría previa 3h antes de apertura de puertas',
+      'Protocolo de descarga, montaje y sonometría previa 2h antes de apertura de puertas',
     ],
-    defaultSeedVision: 'Emitir hoja de ruta Waybill para transporte de Line Array 18.000W RMS, microfonía UHF y calibración acústica 3 horas previas al evento.',
+    defaultSeedVision: 'Emitir hoja de ruta Waybill para transporte de Line Array 18.000W RMS, microfonía UHF y calibración acústica 2 horas previas al evento.',
     accentColor: '#f97316',
   },
   {
@@ -194,7 +194,7 @@ export const CEO_OPERATIONAL_DIMENSIONS: readonly CeoOperationalDimension[] = Ob
     label: 'Gobernanza & SRE',
     roleTag: 'SYSTEM ARCHITECTURE',
     badge: 'SENTINEL SSOT',
-    summary: 'Centinela SSOT (cefa76c2...), arnés de 22 compuertas, Blast Radius AST.',
+    summary: 'Centinela cefa76c2..., arnés 22 compuertas, Blast Radius AST.',
     description: 'Custodia constitucional del repositorio, verificación mecánica reproducible, radio de impacto transitivo y cero deuda técnica.',
     canonicalRuleIds: [2, 3, 4, 10, 50, 93, 94, 96, 99, 100],
     canonicalInvariants: [

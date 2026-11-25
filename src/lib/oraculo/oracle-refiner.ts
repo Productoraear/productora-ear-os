@@ -28,6 +28,12 @@ import {
   getCeoDimension,
 } from '@/lib/compiler/ceo-operational-matrix';
 import {
+  resolveEntityContext,
+  applyFalconFilter,
+  GLOBAL_SYSTEM_INVARIANTS,
+  type ResolvedEntityContext,
+} from '@/lib/oraculo/entity-resolver';
+import {
   queryVelocityVault,
   type VelocityVaultItem,
 } from '@/lib/oraculo/velocity-knowledge-index';
@@ -75,6 +81,7 @@ export type OracleObjective =
 export interface OracleRefineInput {
   readonly rawVision: string;
   readonly objective: OracleObjective;
+  readonly entityId?: string;
 }
 
 export interface OracleRefinedOutput {
@@ -85,6 +92,8 @@ export interface OracleRefinedOutput {
   readonly appliedCanonicalRules: readonly AnyOraculoRule[];
   readonly toneGuidelines: readonly string[];
   readonly sha256Checksum: string;
+  readonly resolvedEntity: ResolvedEntityContext;
+  readonly purgedAdjectives: readonly string[];
 }
 
 function formatEur(amount: number): string {
@@ -96,7 +105,9 @@ function formatEur(amount: number): string {
  * Aplica el Filtro Halcón y la doctrina de Velocity / Incubadora Despegue.
  */
 export function refineWithVelocityOracle(input: OracleRefineInput): OracleRefinedOutput {
-  const raw = input.rawVision.trim();
+  const falconResult = applyFalconFilter(input.rawVision);
+  const raw = falconResult.filteredText;
+  const entityContext = resolveEntityContext(input.entityId, input.objective as any);
 
   // 1. Consulta RAG en la Bóveda de Velocity
   const queryTerms = raw || (
@@ -383,5 +394,7 @@ ${matchedVaultDocs.map((doc) => `- [${doc.category}] ${doc.filename} (SHA-256: $
     appliedCanonicalRules,
     toneGuidelines,
     sha256Checksum: 's-class-oracle-verified',
+    resolvedEntity: entityContext,
+    purgedAdjectives: falconResult.purgedAdjectives,
   };
 }
