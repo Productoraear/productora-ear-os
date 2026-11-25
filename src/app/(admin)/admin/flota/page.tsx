@@ -18,12 +18,66 @@ import {
   Lock,
   ExternalLink,
   Sparkles,
-  CheckCircle2
+  CheckCircle2,
+  Download,
+  X,
+  FileText,
 } from 'lucide-react';
 import Link from 'next/link';
+import { z } from 'zod';
+import {
+  LOGISTICA_EUR_PER_KM,
+  LOGISTICA_KM_EXENTOS,
+  LOGISTICA_KM_HOTEL,
+  SUPLEMENTO_HOTEL_EUR,
+  HORA_FIN_HOTEL,
+  LIMITE_SPL_DB,
+} from '@/lib/constants/ear-os-ssot';
+import {
+  GLOBAL_SYSTEM_INVARIANTS,
+  resolveEntityContext,
+} from '@/lib/oraculo/entity-resolver';
+import {
+  executeWaybillLogistica,
+  executeEidasContract,
+  type MultiRailExecutionResult,
+} from '@/lib/compiler/multi-rail-execution';
 import { INITIAL_INVENTORY, InventoryEngine, InventoryItem } from '@/lib/constants/inventory-catalog';
 
-const VEHICLES = [
+/* ========================================================================== */
+/* CONTRATO DE DATOS ZOD ESTRICTO (NIVEL 5)                                   */
+/* ========================================================================== */
+
+export const VehicleSchema = z
+  .object({
+    id: z.string(),
+    name: z.string(),
+    driver: z.string(),
+    status: z.string(),
+    location: z.string(),
+    equipment: z.string(),
+    dest: z.string(),
+  })
+  .strict();
+
+export type Vehicle = z.infer<typeof VehicleSchema>;
+
+export const FleetLogisticsCalcSchema = z
+  .object({
+    km: z.number(),
+    endHour: z.number(),
+    baseKmFree: z.number(),
+    billableKm: z.number(),
+    kmCostEur: z.number(),
+    needsHotel: z.boolean(),
+    hotelCostEur: z.number(),
+    totalLogisticsEur: z.number(),
+  })
+  .strict();
+
+export type FleetLogisticsCalc = z.infer<typeof FleetLogisticsCalcSchema>;
+
+const RAW_VEHICLES = [
   {
     id: "FLEET-01",
     name: "Furgo Máster L2H2 // Sonido & Luz",
@@ -39,7 +93,7 @@ const VEHICLES = [
     driver: "Técnico Certificado VIMUME",
     status: "EN RUTA",
     location: "A-5 km 28 sentido Madrid",
-    equipment: "Sistema Neuroacústico Terapéutico < 75 dB SPL",
+    equipment: `Sistema Neuroacústico Terapéutico < ${LIMITE_SPL_DB} dB SPL`,
     dest: "Residencia Los Nogales (Madrid)"
   },
   {
@@ -53,17 +107,64 @@ const VEHICLES = [
   }
 ];
 
+const VEHICLES: readonly Vehicle[] = RAW_VEHICLES.map((v) => VehicleSchema.parse(v));
+
 export default function FlotaAdminCatminPage() {
   const [km, setKm] = useState<number>(85);
   const [endHour, setEndHour] = useState<number>(23);
+  const [activeResult, setActiveResult] = useState<MultiRailExecutionResult | null>(null);
 
-  // Reglas de negocio inmutables
-  const baseKmFree = 50;
+  // Reglas de negocio inmutables ancladas a SSOT
+  const baseKmFree = LOGISTICA_KM_EXENTOS;
   const billableKm = Math.max(0, km - baseKmFree);
-  const kmCost = billableKm * 1.50;
-  const needsHotel = km > 200 || endHour >= 3;
-  const hotelCost = needsHotel ? 120 : 0;
+  const kmCost = billableKm * LOGISTICA_EUR_PER_KM;
+  const needsHotel = km > LOGISTICA_KM_HOTEL || endHour >= 24 + HORA_FIN_HOTEL || (endHour >= 3 && endHour <= 7);
+  const hotelCost = needsHotel ? SUPLEMENTO_HOTEL_EUR : 0;
   const totalLogistics = kmCost + hotelCost;
+
+  // Validación de contrato de cálculo en runtime
+  const calcValidation = FleetLogisticsCalcSchema.parse({
+    km,
+    endHour,
+    baseKmFree,
+    billableKm,
+    kmCostEur: kmCost,
+    needsHotel,
+    hotelCostEur: hotelCost,
+    totalLogisticsEur: totalLogistics,
+  });
+
+  const handleTriggerWaybill = (vehicle?: Vehicle) => {
+    const v = vehicle ?? VEHICLES[0];
+    const res = executeWaybillLogistica({
+      eventId: `FLEET-${v?.id ?? '01'}-${Date.now().toString(36).toUpperCase()}`,
+      clientName: v?.driver ?? 'Edwin Agudelo',
+      venue: v?.dest ?? 'Destino de Ruta',
+      eventDate: new Date().toISOString().slice(0, 10),
+      grossEur: calcValidation.totalLogisticsEur,
+      dimensionId: 'LOGISTICA_FLEET',
+      entityContext: resolveEntityContext('e78903', 'LOGISTICA_FLEET'),
+      pepitaDeOro: `Waybill Oficial de Transporte · ${v?.name ?? 'Flota Méntrida'}`,
+      rawVision: `Hoja de ruta logística desde Méntrida hacia ${v?.dest ?? 'destino'} con equipo ${v?.equipment ?? 'Bose F1'}`,
+    });
+    setActiveResult(res);
+  };
+
+  const handleTriggerEidas = (vehicle?: Vehicle) => {
+    const v = vehicle ?? VEHICLES[0];
+    const res = executeEidasContract({
+      eventId: `WAYBILL-EIDAS-${v?.id ?? '01'}`,
+      clientName: v?.driver ?? 'Edwin Agudelo',
+      venue: v?.location ?? 'Méntrida (Toledo)',
+      eventDate: new Date().toISOString().slice(0, 10),
+      grossEur: calcValidation.totalLogisticsEur,
+      dimensionId: 'LOGISTICA_FLEET',
+      entityContext: resolveEntityContext('e78903', 'LOGISTICA_FLEET'),
+      pepitaDeOro: `Hoja de Ruta eIDAS Transportista Certificado`,
+      rawVision: `Contrato de transporte y custodia de rider acústico < ${LIMITE_SPL_DB} dB`,
+    });
+    setActiveResult(res);
+  };
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-16 font-sans">
@@ -78,7 +179,7 @@ export default function FlotaAdminCatminPage() {
             <span>/</span>
             <span>Operaciones</span>
             <span>/</span>
-            <span className="text-[#ecb613] font-bold">Flota & Logística Méntrida</span>
+            <span className="text-[#ecb613] font-bold">Flota &amp; Logística Méntrida</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white font-syne uppercase mt-1">
             Logística S-Class // Méntrida Km 0
@@ -86,9 +187,27 @@ export default function FlotaAdminCatminPage() {
         </div>
 
         <div className="flex items-center gap-2.5">
+          <button
+            type="button"
+            onClick={() => handleTriggerWaybill()}
+            className="px-3.5 py-2 rounded-xl bg-[#ecb613] hover:bg-[#d8a40f] text-black font-extrabold text-xs font-mono flex items-center gap-1.5 transition-all shadow-md shadow-[#ecb613]/20"
+          >
+            <Truck className="w-3.5 h-3.5" />
+            <span>+ Generar Waybill A4</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleTriggerEidas()}
+            className="px-3.5 py-2 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-xs font-mono flex items-center gap-1.5 transition-all"
+          >
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+            <span>eIDAS Transportista</span>
+          </button>
+
           <div className="flex items-center gap-2 bg-[#ecb613]/10 border border-[#ecb613]/30 px-3 py-1.5 rounded-xl text-xs font-mono text-[#ecb613]">
             <MapPin className="w-3.5 h-3.5" />
-            <span>Centro Logístico Méntrida (Toledo)</span>
+            <span>Hub Méntrida Km 0</span>
           </div>
         </div>
       </div>
@@ -105,11 +224,13 @@ export default function FlotaAdminCatminPage() {
               <DollarSign className="w-4 h-4 text-emerald-400" />
             </div>
           </div>
-          <div className="text-2xl font-bold font-mono text-white">1,50 €/km</div>
-          <p className="text-[11px] text-zinc-400 mt-1">A partir de los primeros 50 km</p>
+          <div className="text-2xl font-bold font-mono text-white">
+            {LOGISTICA_EUR_PER_KM.toFixed(2).replace('.', ',')} €/km
+          </div>
+          <p className="text-[11px] text-zinc-400 mt-1">A partir de los primeros {LOGISTICA_KM_EXENTOS} km</p>
           <div className="mt-2 flex items-center text-xs font-mono text-emerald-400 font-medium">
             <TrendingUp className="mr-1 h-3.5 w-3.5" />
-            Primeros 50 km Exentos
+            Primeros {LOGISTICA_KM_EXENTOS} km Exentos
           </div>
         </div>
 
@@ -120,8 +241,12 @@ export default function FlotaAdminCatminPage() {
               <Hotel className="w-4 h-4 text-cyan-400" />
             </div>
           </div>
-          <div className="text-2xl font-bold font-mono text-white">+120,00 €</div>
-          <p className="text-[11px] text-zinc-400 mt-1">Si fin &gt;= 3:00 AM o &gt; 200 km</p>
+          <div className="text-2xl font-bold font-mono text-white">
+            +{SUPLEMENTO_HOTEL_EUR.toFixed(2).replace('.', ',')} €
+          </div>
+          <p className="text-[11px] text-zinc-400 mt-1">
+            Si fin &gt;= 0{HORA_FIN_HOTEL}:00 AM o &gt; {LOGISTICA_KM_HOTEL} km
+          </p>
           <div className="mt-2 flex items-center text-xs font-mono text-cyan-400 font-medium">
             <TrendingUp className="mr-1 h-3.5 w-3.5" />
             Descanso del Artista Garantizado
@@ -135,7 +260,7 @@ export default function FlotaAdminCatminPage() {
               <Truck className="w-4 h-4 text-[#ecb613]" />
             </div>
           </div>
-          <div className="text-2xl font-bold font-mono text-white">3 Unidades</div>
+          <div className="text-2xl font-bold font-mono text-white">{VEHICLES.length} Unidades</div>
           <p className="text-[11px] text-zinc-400 mt-1">Equipadas con rider Bose F1 y S1 Pro</p>
           <div className="mt-2 flex items-center text-xs font-mono text-[#ecb613] font-medium">
             <TrendingUp className="mr-1 h-3.5 w-3.5" />
@@ -190,8 +315,8 @@ export default function FlotaAdminCatminPage() {
               />
               <div className="flex justify-between text-[10px] font-mono text-zinc-500">
                 <span>0 km (Méntrida)</span>
-                <span>50 km (Exento)</span>
-                <span>200 km (+Hotel)</span>
+                <span>{LOGISTICA_KM_EXENTOS} km (Exento)</span>
+                <span>{LOGISTICA_KM_HOTEL} km (+Hotel)</span>
                 <span>350 km</span>
               </div>
             </div>
@@ -212,7 +337,7 @@ export default function FlotaAdminCatminPage() {
               <div className="flex justify-between text-[10px] font-mono text-zinc-500">
                 <span>18:00</span>
                 <span>23:00</span>
-                <span>03:00 (Suplemento Hotel)</span>
+                <span>0{HORA_FIN_HOTEL}:00 (Suplemento Hotel)</span>
                 <span>05:00</span>
               </div>
             </div>
@@ -259,13 +384,24 @@ export default function FlotaAdminCatminPage() {
                     </span>
                     <span className="text-xs font-bold text-white">{v.name}</span>
                   </div>
-                  <span className={`text-[9px] font-mono px-2 py-0.5 rounded border ${
-                    v.status === 'EN BASE'
-                      ? 'bg-zinc-900 text-zinc-400 border-zinc-800'
-                      : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
-                  }`}>
-                    {v.status}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className={`text-[9px] font-mono px-2 py-0.5 rounded border ${
+                      v.status === 'EN BASE'
+                        ? 'bg-zinc-900 text-zinc-400 border-zinc-800'
+                        : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+                    }`}>
+                      {v.status}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => handleTriggerWaybill(v)}
+                      className="px-2 py-0.5 rounded bg-[#ecb613]/10 hover:bg-[#ecb613]/20 border border-[#ecb613]/30 text-[#ecb613] text-[10px] font-mono flex items-center gap-1 transition-colors"
+                      title="Generar Waybill específico para este vehículo"
+                    >
+                      <Truck className="w-3 h-3" />
+                      <span>Waybill</span>
+                    </button>
+                  </div>
                 </div>
 
                 <div className="text-[11px] font-mono text-zinc-400 flex items-center gap-1.5">
@@ -386,6 +522,70 @@ export default function FlotaAdminCatminPage() {
           </span>
         </div>
       </div>
+
+      {/* ===================================================================== */}
+      {/* 5. MODAL MULTI-RAIL ARTIFACT (WAYBILL / CONTRATO EIDAS)                */}
+      {/* ===================================================================== */}
+      {activeResult && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-2xl bg-[#09090d] border border-white/20 rounded-3xl p-6 shadow-2xl space-y-4">
+            <div className="flex items-center justify-between border-b border-zinc-800 pb-3">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                <h3 className="text-sm font-bold font-syne text-white uppercase tracking-wider">
+                  {activeResult.title}
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setActiveResult(null)}
+                className="p-1 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="space-y-3 text-xs font-mono">
+              <div className="flex items-center justify-between p-3 rounded-xl bg-zinc-950 border border-zinc-900">
+                <span className="text-zinc-400">Documento Generado:</span>
+                <span className="text-white font-bold">{activeResult.filename}</span>
+              </div>
+
+              <div className="p-3 rounded-xl bg-zinc-950 border border-zinc-900 space-y-1">
+                <span className="text-zinc-500 text-[10px] block">SELLO SHA-256 RUTA Y EQUIPOS</span>
+                <span className="text-[#ecb613] text-[11px] break-all">{activeResult.sha256}</span>
+              </div>
+
+              <div className="space-y-1">
+                <span className="text-zinc-400 text-[11px]">Resumen del Waybill / Manifiesto:</span>
+                <pre className="p-3 rounded-xl bg-black border border-zinc-900 text-[11px] text-zinc-300 overflow-x-auto max-h-48 font-mono">
+                  {activeResult.previewContent}
+                </pre>
+              </div>
+            </div>
+
+            <div className="pt-2 flex items-center justify-end gap-3">
+              <button
+                type="button"
+                onClick={() => setActiveResult(null)}
+                className="px-4 py-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-300 text-xs font-mono transition-colors"
+              >
+                Cerrar
+              </button>
+              {activeResult.downloadUrl && (
+                <a
+                  href={activeResult.downloadUrl}
+                  download={activeResult.filename}
+                  className="px-4 py-2 rounded-xl bg-[#ecb613] hover:bg-[#d8a40f] text-black font-bold text-xs font-mono flex items-center gap-1.5 transition-colors"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>Descargar Waybill A4</span>
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );
