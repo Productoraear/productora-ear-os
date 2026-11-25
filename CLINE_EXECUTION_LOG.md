@@ -6270,6 +6270,48 @@ siguiente_paso : sesiÃ³n cerrada por Pacto ZTM (WF-4). Plataforma en fase de e
 
 ### Evidencia ejecutada en esta sesiÃ³n
 
+---
+
+## TIER1_P0_FINAL_SEAL_E2E_AND_GATE_PREPUSH · 2026-11-25 · CIERRE DE BLOQUE (Cline · El Obrero)
+
+**1) QUÉ CAMBIÓ** — Commit `2b974f0c` (19 archivos): suite E2E Tier-1 P0 nueva (`scripts/e2e_tier1_p0_suite.ts`, 123 casos), Buy Box con resolución municipal (`findMunicipalityByQuery`) y `listFichasForBuyBox`, entidad ASIN (`src/lib/entities/asin.ts`), concierge `/api/chat/concierge` con ASIN/B2G/Otzarreta, 301 SEO `/fincas/{provincia}` → `/fincas/p/{provincia}` con canónicos y sitemaps alineados, SSOT sellado (`LOGISTICA_KM_EXENTOS` 50→100 + `HUB_MENTRIDA_*`) y arnés `verify:concentric-conversion` T6 alineado a P0-2.
+
+**2) QUÉ RIESGO DESAPARECE** — El set ordenado (6 rutas) **rompía el build**: `TS2305` (`listFichasForBuyBox`, `findMunicipalityByQuery`) y `TS2353` (`asin` fuera de `WhatsAppSessionHandoff`). Medido con el compilador real en worktree aislado `HEAD+set`: `tsc --noEmit` **Exit 0** (antes Exit 2). Reto espejo: se eleva el set a su clausura de compilación (19 rutas) en lugar de empujar un build roto.
+
+**3) QUÉ LO PRUEBA**
+- `node ./node_modules/tsx/dist/cli.mjs scripts/e2e_tier1_p0_suite.ts` → `TOTAL: 123/123 PASS | 0 FAIL | VERDICT=PASS`, **Exit 0** (T1 54 · T2 54 · T3 10 · T4 5).
+- `npm run gate:prepush` → **EXIT=0**, 38/38 compuertas (conteo derivado de `package.json`: 38 comandos separados por `&&`). Interior medido: `audit:contrast:core` contra `http://127.0.0.1:3007` → `VERDICT=PASS`, 10 rutas, `ROUTES_SIN_EVIDENCIA=0`, `TOTAL_FALLOS=0`; `T6_SCRIPT_FIANZA_SSOT PASS (suelo=100,00 sin_recorte=true suelo_aplicado=true)`; `T13_ZONA_CERO_INTACTA sin cambios`; `13/13 verificaciones`; `OMEGA_ROJO_SCORE=20/20 · VERDICT=VERDE`; `CLS_BUDGET_VERDICT=PASS`.
+- `git push origin main` → `16469224..2b974f0c` · `git ls-remote origin main` = `2b974f0ca9a438a702ad6a510ef29a0e53934494`.
+
+**4) QUÉ NO ESTÁ PROBADO (crudo, sin maquillar)**
+- **El despliegue NO se ejecutó.** `gh run view 45711531097`: `contract-gate` success · `typecheck-gate` success · `build-and-push` success (imagen en GHCR) · `production-smoke` **failure**. Sonda viva `https://www.productoraear.com/api/health` HTTP 200 con `buildSha=16469224…` (`buildSource=coolify-source-commit`) frente a esperado `2b974f0` → `VERDICT=STALE`. Causa declarada por el propio pipeline: falta `COOLIFY_API_TOKEN` / webhook de deploy. **Es infraestructura, no código.**
+- **P0 preexistente ajeno a esta tarea:** el `POST` del smoke devuelve **503 `SCHEMA_MISSING`** («Tabla de outreach inexistente… falta `prisma migrate deploy`»). `prisma/schema.prisma` sigue sin commitear y la migración sin aplicar en el VPS.
+- **`omega.js complete` NO ejecutado:** el slot activo es `W53_T12` y el cierre de tarea exige firma del Arquitecto. Se declara el hueco en vez de forzar el slot único (WF-5).
+- **G-3 (`run_sv_protocol_15_gates.cjs`) y G-5 (`sim:event`)**: `SIN_EVIDENCIA` en esta sesión (no ejecutados; el armés `gate:prepush` cubre 38 puertas pero no suple esas dos).
+- El árbol conserva ~50 archivos con cambios fuera del alcance de esta tarea.
+
+**5) DECISIÓN QUE NECESITO** — 1) Activar *API access* en Coolify y guardar `COOLIFY_API_TOKEN`/`COOLIFY_WEBHOOK_URL` (o auto-deploy por git webhook) para que el SHA construido llegue a producción. 2) Autorizar `npm run db:migrate:production` para cerrar el 503 de outreach.
+
+```
+SIGMA://CLOSE/v1
+task_id        : TIER1_P0_FINAL_SEAL_E2E_AND_GATE_PREPUSH
+estado_bloque  : SOSPECHOSO
+hecho          : scripts/e2e_tier1_p0_suite.ts (123 casos) + buybox-matching-engine.ts:34-38 (imports municipio/ASIN) + next.config.ts:17-22 (301 fincas) + ear-os-ssot.ts:29,32-48 (KM_EXENTOS 100, HUB) + sovereign-script.ts:72-74 (suelo P0-2) + verify_concentric_conversion.ts:159-199 (T6)
+evidence[]     : {E2E, cmd="node ./node_modules/tsx/dist/cli.mjs scripts/e2e_tier1_p0_suite.ts", exit=0, url=n/a, sha256=n/a, ts=2026-11-25T21:4x}
+                 {GATE, cmd="npm run gate:prepush", exit=0, url="http://127.0.0.1:3007", sha256=n/a, ts=2026-11-25T22:13}
+                 {PUSH, cmd="git ls-remote origin main", exit=0, url="https://github.com/Productoraear/productora-ear-os", sha256=2b974f0ca9a4..., ts=2026-11-25T22:14}
+                 {HEALTH, cmd="Invoke-WebRequest /api/health", exit=0, url="https://www.productoraear.com/api/health", sha256=n/a(buildSha=16469224...), ts=2026-11-25T22:24}
+                 {CI, cmd="gh run view 45711531097", exit=1, url="https://github.com/Productoraear/productora-ear-os/actions/runs/45711531097", sha256=n/a, ts=2026-11-25T22:23}
+cambios[]      : 19 rutas (ver commit 2b974f0c)
+gates          : {G0 PASS, G1 PASS, G2 PASS, G3 SIN_EVIDENCIA, G4 PASS, G5 SIN_EVIDENCIA, G6 PASS, G7 PASS, G8 PASS}
+omega_diamante : { score: "20/20", verdict: "VERDE", pendientes: ["deploy Coolify (token)", "migración prisma en VPS"] }
+hipotesis[]    : Coolify no tiene auto-deploy por webhook; el token de API no está en secretos.
+decision       : Se descarta commit literal de 6 rutas (no compila) y se descarta commitear el árbol completo (INV-05 Zona Cero + 50 archivos fuera de alcance).
+riesgos        : Producción sigue sirviendo 16469224 hasta que exista disparo de deploy; el 503 de outreach persiste.
+reto_espejo    : Clausura de compilación demostrada con tsc en worktree aislado HEAD+set (Exit 0), no con "parece que compila".
+aprendizaje_ceo: Un commit verde en local puede romper la fábrica: el sello real es `tsc` sobre HEAD+set, no sobre el árbol sucio.
+siguiente_paso : Configurar COOLIFY_API_TOKEN y relanzar deploy; después `npm run db:migrate:production`.
+```
 ```
 npm run typecheck        â†’ Exit 0 (0 errores)
 npm run lint             â†’ 0 errores (3457 warnings preexistentes, ninguno en el diff)
