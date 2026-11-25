@@ -7,6 +7,7 @@ import {
 import {
   CENTRALITA_EAR_OS,
   DEPOSITO_STRIPE_EUR,
+  LIMITE_SPL_DB,
   LOGISTICA_EUR_PER_KM,
   LOGISTICA_KM_EXENTOS,
   SPLIT_SOBERANO,
@@ -524,6 +525,10 @@ function determineActionForQuery(
   };
 }
 
+/** Triggers de contrapropuesta / regateo (rama NEGOTIATION_COUNTER_OFFER). */
+const NEGOTIATION_TRIGGERS: RegExp =
+  /te propongo|te sugiero|contrapropuesta|contra propuesta|algo mejor|mejor precio|rebaj|descuent|m[aá]s barato|bajar(me)? (el )?precio|puedes bajar|negociar|trato (mejor|especial)/i;
+
 /**
  * Motor Conversacional Determinista S-Class (Fallback infalible).
  */
@@ -546,6 +551,38 @@ function resolveDeterministicFallback(
   ]
     .filter(Boolean)
     .join(' ');
+
+  // 0-NEG. NEGOTIATION_COUNTER_OFFER: el cliente contrapropone o regatea en caliente.
+  // Guardrails inmutables (TypeScript, no criterio del LLM): se escucha con cintura,
+  // pero NUNCA se rebaja la dotación técnica, la seguridad eléctrica ni el límite acústico,
+  // y NUNCA se inventa un precio o descuento nuevo: la cifra la cierra dirección técnica.
+  if (NEGOTIATION_TRIGGERS.test(query)) {
+    const ctx = ctxSummary ? ` (${ctxSummary})` : '';
+    const negotiationHandoff: WhatsAppSessionHandoff = {
+      pax: mem.pax ?? undefined,
+      date: mem.dateText ?? undefined,
+      city: mem.city ?? undefined,
+      serviceKind: mem.serviceKind ?? undefined,
+      rawQuery: 'contrapropuesta',
+    };
+    return {
+      reply:
+        `Dime, te escucho de verdad: entre colegas se llega más lejos hablando claro. Cuéntame tu propuesta y la estudiamos con cabeza${ctx}.\n\n` +
+        `Para no perder tiempo, te adelanto dónde hay margen y dónde no. Margen: horarios de montaje, formato del paquete, qué aportas tú (tu controlador o tu cabina) y la forma de cierre. ` +
+        `Líneas que no se mueven: la potencia de PA y subgraves dimensionada al aforo, la tarima homologada, el monitoreo de cabina, la acometida eléctrica y el límite de ${LIMITE_SPL_DB} dB de la Ley 37/2003 del Ruido.\n\n` +
+        `¿Me la cuentas por aquí o prefieres que dirección técnica te llame hoy y lo cerramos en diez minutos?`,
+      action: {
+        type: 'whatsapp',
+        label: '📲 Continuar presupuesto en WhatsApp móvil',
+        url: buildWhatsAppHandoffUrl(
+          CLEAN_PHONE,
+          negotiationHandoff,
+          'Hola, tengo una contrapropuesta para mi presupuesto y quiero hablarlo con dirección técnica.'
+        ),
+      },
+      shouldEscalate: true,
+    };
+  }
 
   // 0. Saludo y bienvenida hospitalaria (Saneamiento Maître de Sala P0)
   const isGenericGreeting = /^(hola|buenas|buenos\s*d[ií]as|buenas\s*tardes|buenas\s*noches|saludos|hello|hi|hey)[\s!.,?]*$/i.test(query);
