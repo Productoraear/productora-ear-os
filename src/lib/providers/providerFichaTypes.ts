@@ -17,7 +17,7 @@
  */
 
 /** Origen del dato: índice HTML absorbido y/o registro canónico depurado. */
-export type ProviderFichaSource = 'catalogo_html' | 'providers_canonical';
+export type ProviderFichaSource = 'catalogo_html' | 'providers_canonical' | 'manifest_chunk';
 
 /** Cómo se resolvió la pareja catálogo ↔ canónico en el join determinista. */
 export type ProviderFichaMatchMode = 'vendorId' | 'slug' | 'name' | 'unmatched';
@@ -25,6 +25,7 @@ export type ProviderFichaMatchMode = 'vendorId' | 'slug' | 'name' | 'unmatched';
 /** Ficha completa (artefacto `fichas_gold.json`). */
 export interface ProviderFicha {
   readonly key: string;
+  readonly asin?: string;
   readonly vendorId: string | null;
   readonly slug: string;
   readonly name: string;
@@ -54,6 +55,7 @@ export interface ProviderFicha {
 /** Entrada compacta (artefacto `fichas_index.json`, < 1 MB). */
 export interface ProviderFichaIndexEntry {
   readonly key: string;
+  readonly asin?: string;
   readonly slug: string;
   readonly name: string;
   readonly category: string;
@@ -91,6 +93,7 @@ export interface ProviderFichaGoldFile {
   readonly sources: {
     readonly catalogoHtml: ProviderFichaSourceRef;
     readonly canonical: ProviderFichaSourceRef;
+    readonly manifest?: ProviderFichaSourceRef;
   };
   readonly counts: ProviderFichaCounts;
   readonly fichas: readonly ProviderFicha[];

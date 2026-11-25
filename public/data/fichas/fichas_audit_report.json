@@ -10,28 +10,34 @@
       "path": "public/data/providers/providers_canonical.json",
       "sha256": "8294e62a1fc9482c592eddf14139467a621263e9057afb3830e0afc961f56f1e",
       "entries": 310
+    },
+    "manifest": {
+      "path": "public/data/providers/manifest.json",
+      "sha256": "90ace7e551c273d4d18e0b307348d1f1e14ce11e70c2558f61c36f1b37e99eef",
+      "entries": 13094
     }
   },
   "join": {
-    "vendorId": 71,
+    "vendorId": 310,
     "slug": 0,
-    "name": 5,
-    "unmatched": 2075
+    "name": 9,
+    "unmatched": 12781
   },
-  "duplicatesMerged": 1,
+  "duplicatesMerged": 2158,
   "counts": {
     "catalogEntries": 2151,
     "canonicalEntries": 310,
-    "fichas": 2150,
-    "gold": 62,
-    "groundable": 2150,
-    "verified": 76,
-    "duplicatesMerged": 1,
+    "manifestEntries": 13094,
+    "fichas": 13087,
+    "gold": 74,
+    "groundable": 13087,
+    "verified": 6277,
+    "duplicatesMerged": 2158,
     "joinModes": {
-      "vendorId": 71,
+      "vendorId": 310,
       "slug": 0,
-      "name": 5,
-      "unmatched": 2075
+      "name": 9,
+      "unmatched": 12781
     }
   },
   "goldKeys": [
@@ -40,15 +46,21 @@
     "v-13825",
     "v-1480",
     "v-16070",
+    "v-168699",
     "v-17575",
     "v-18337",
     "v-23738",
     "v-25821",
+    "v-259051",
     "v-26514",
     "v-27137",
     "v-29458",
     "v-31195",
+    "v-33474",
     "v-35311",
+    "v-36057",
+    "v-37775",
+    "v-38273",
     "v-38478",
     "v-38685",
     "v-39525",
@@ -62,10 +74,12 @@
     "v-45446",
     "v-49414",
     "v-49567",
+    "v-50725",
     "v-52656",
     "v-53452",
     "v-54195",
     "v-56308",
+    "v-57301",
     "v-57523",
     "v-59357",
     "v-60032",
@@ -80,12 +94,16 @@
     "v-72059",
     "v-74531",
     "v-75535",
+    "v-75661",
     "v-77463",
     "v-77570",
+    "v-78354",
+    "v-79671",
     "v-80443",
     "v-81404",
     "v-82015",
     "v-8216",
+    "v-83959",
     "v-87374",
     "v-88354",
     "v-89422",
@@ -101,17 +119,18 @@
   "goldCriteria": "verified === true (teléfono real publicable, §4bis) && completeness >= 90 && name.length > 1",
   "distribution": {
     "verifiedCompleteness": {
-      "60": 2,
-      "70": 2,
-      "80": 10,
-      "90": 50,
-      "100": 12
+      "50": 94,
+      "60": 627,
+      "70": 5464,
+      "80": 18,
+      "90": 3,
+      "100": 71
     },
-    "verifiedWithPrice": 71,
-    "verifiedWithRating": 76,
-    "verifiedWithDescription": 76,
-    "verifiedWithImage": 76,
-    "groundableWithoutPhone": 2074
+    "verifiedWithPrice": 91,
+    "verifiedWithRating": 85,
+    "verifiedWithDescription": 6183,
+    "verifiedWithImage": 6183,
+    "groundableWithoutPhone": 6810
   },
   "invariants": {
     "centralitaPublished": 0,

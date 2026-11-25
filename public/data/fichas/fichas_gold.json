@@ -13,30 +13,37 @@
       "path": "public/data/providers/providers_canonical.json",
       "sha256": "8294e62a1fc9482c592eddf14139467a621263e9057afb3830e0afc961f56f1e",
       "entries": 310
+    },
+    "manifest": {
+      "path": "public/data/providers/manifest.json",
+      "sha256": "90ace7e551c273d4d18e0b307348d1f1e14ce11e70c2558f61c36f1b37e99eef",
+      "entries": 13094
     }
   },
   "counts": {
     "catalogEntries": 2151,
     "canonicalEntries": 310,
-    "fichas": 2150,
-    "gold": 62,
-    "groundable": 2150,
-    "verified": 76,
-    "duplicatesMerged": 1,
+    "manifestEntries": 13094,
+    "fichas": 13087,
+    "gold": 74,
+    "groundable": 13087,
+    "verified": 6277,
+    "duplicatesMerged": 2158,
     "joinModes": {
-      "vendorId": 71,
+      "vendorId": 310,
       "slug": 0,
-      "name": 5,
-      "unmatched": 2075
+      "name": 9,
+      "unmatched": 12781
     }
   },
   "fichas": [
     {
       "key": "v-10615",
+      "asin": "EAR-ASIN-FOT-10615",
       "vendorId": "10615",
       "slug": "el-porton-de-javier-e10615-10615",
       "name": "El Portón de Javier",
-      "category": "",
+      "category": "fotografia",
       "province": "Segovia",
       "municipality": "Marugán",
       "phone": "34921196141",
@@ -51,20 +58,22 @@
       "lat": 40.8889,
       "lng": -4.38486,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "aac137580a7350e3f97655487db2fe5e3771a65acae90b74576f7cde3c5d1bd4"
+      "completeness": 100,
+      "provenanceHash": "8cb2100e4f72e644c9b1cd3b060630a593dc1246067da840bf80058398cd8521"
     },
     {
       "key": "v-1086",
+      "asin": "EAR-ASIN-FOT-1086",
       "vendorId": "1086",
       "slug": "limutaxi-navarra",
       "name": "Limutaxi",
-      "category": "",
+      "category": "fotografia",
       "province": "Navarra",
       "municipality": "Beriáin",
       "phone": "34948310808",
@@ -79,16 +88,18 @@
       "lat": 42.7354,
       "lng": -1.63462,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "8202dcff4afc013198bf08f10e0b3a94df3ac35072fa461613a9a39e03f2e193"
+      "completeness": 100,
+      "provenanceHash": "89a9ef05e0a16c56a8507ff7eb1e24a2f2d83bdc1ae3837e9978275be2a72683"
     },
     {
       "key": "v-13825",
+      "asin": "EAR-ASIN-TEC-13825",
       "vendorId": "13825",
       "slug": "casa-rafael-madrid",
       "name": "Casa Rafael",
@@ -107,20 +118,22 @@
       "lat": 36.898,
       "lng": -2.44441,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
       "completeness": 100,
-      "provenanceHash": "be9c4cc883750cde8122c2504a03da5557e2be21c276348be279727005625baf"
+      "provenanceHash": "8f56cc1285a5855cc6b3f516786398878d4290cf23dee05ee023fc5caedc3772"
     },
     {
       "key": "v-1480",
+      "asin": "EAR-ASIN-FOT-1480",
       "vendorId": "1480",
       "slug": "autos-casa-madrid",
       "name": "Autos Casa",
-      "category": "",
+      "category": "fotografia",
       "province": "Madrid",
       "municipality": "Madrid",
       "phone": "34917478221",
@@ -135,20 +148,22 @@
       "lat": 40.4598,
       "lng": -3.58048,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "6c12e5378be41856fe4a07efd5416ab5212164fbe93fbc9b7db98114ca50c033"
+      "completeness": 100,
+      "provenanceHash": "d79bd109a8891139bd7db57854e6c2b443bf01089c70261be0cbcb0649b04924"
     },
     {
       "key": "v-16070",
+      "asin": "EAR-ASIN-FOT-16070",
       "vendorId": "16070",
       "slug": "arcos-3-catering-e16070-16070",
       "name": "Arcos 3 Catering",
-      "category": "",
+      "category": "fotografia",
       "province": "Huelva",
       "municipality": "Huelva",
       "phone": "34959307888",
@@ -163,20 +178,52 @@
       "lat": 37.3772,
       "lng": -6.83347,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "3da5f582097b019aa0c74ce7435ae36c77482e6b2ffac05ab1cdb2f5f42e8cad"
+      "completeness": 100,
+      "provenanceHash": "4fbdf83359931e5f7f038e8d1b6769cff7d24877be2fdacb0df8369b84a82847"
+    },
+    {
+      "key": "v-168699",
+      "asin": "EAR-ASIN-GEN-168699",
+      "vendorId": "168699",
+      "slug": "autocares-azahar-68699",
+      "name": "Autocares Azahar",
+      "category": "transporte",
+      "province": "Castellón",
+      "municipality": "Vila-real",
+      "phone": "34626190593",
+      "priceEur": 100,
+      "priceRange": "",
+      "rating": 4.6,
+      "reviewsCount": 34,
+      "description": "Guía de alquiler de autobuses para bodas: encuentra el autobús de alquiler adecuado a tu evento y otro tipo de propuestas como bus, minibús, microbús o alquiler de autocares en Castellón.",
+      "image": "https://cdn0.bodas.net/vendor/68699/3_2/960/jpg/116587309-608157256508764-5470249734666011361-o_1_168699-160569820960253.webp",
+      "profileUrl": "https://www.bodas.net/autobuses/autocares-azahar--e168699",
+      "web": "http://www.autocaresazahar.com/",
+      "lat": 39.945139,
+      "lng": -0.090219,
+      "sources": [
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
+      ],
+      "matchMode": "name",
+      "verified": true,
+      "completeness": 96,
+      "provenanceHash": "b97dde9323f3e77b83619240bd9dea70a03d6f4a76ac96becd7a36f9ac89542f"
     },
     {
       "key": "v-17575",
+      "asin": "EAR-ASIN-FOT-17575",
       "vendorId": "17575",
       "slug": "tot-diver-tarragona",
       "name": "Tot Diver",
-      "category": "",
+      "category": "fotografia",
       "province": "Tarragona",
       "municipality": "El Vendrell",
       "phone": "34665288314",
@@ -191,20 +238,22 @@
       "lat": 41.1856,
       "lng": 1.52823,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "79b5fc74ddda3d0c19231f8a37858683860b626a00d05585616e4865801fb322"
+      "completeness": 100,
+      "provenanceHash": "b441050b079dd589ba6f0f2487f4aa7a571c8a4d23a4390d7def2cf5d8d64535"
     },
     {
       "key": "v-18337",
+      "asin": "EAR-ASIN-GEN-18337",
       "vendorId": "18337",
       "slug": "joelle-joyas-as",
       "name": "Jöelle joyas",
-      "category": "moda",
+      "category": "servicios",
       "province": "Asturias",
       "municipality": "Oviedo",
       "phone": "34696355612",
@@ -219,20 +268,22 @@
       "lat": 43.3652,
       "lng": -5.86599,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
       "completeness": 100,
-      "provenanceHash": "ae18fccfbbbc0e94bd57911e95692bbded426640909612bda18a0cb3a90906ca"
+      "provenanceHash": "349b69666c865d879b0d8af4bdefe5b255224c3e7d511ab2b829031347c4fbd1"
     },
     {
       "key": "v-23738",
+      "asin": "EAR-ASIN-FOT-23738",
       "vendorId": "23738",
       "slug": "catering-malena-e23738-23738",
       "name": "Catering Malena",
-      "category": "",
+      "category": "fotografia",
       "province": "Asturias",
       "municipality": "Llanera",
       "phone": "34645511561",
@@ -247,20 +298,22 @@
       "lat": 43.3555,
       "lng": -5.84972,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "a86f5d618148dc1621f810545a1fa518bce990857811f41b55dc487c693a77b2"
+      "completeness": 100,
+      "provenanceHash": "4e9e9ffbc937ab2f5fc290516df15858d2c4a597491a8066637661749bd7a024"
     },
     {
       "key": "v-25821",
+      "asin": "EAR-ASIN-FOT-25821",
       "vendorId": "25821",
       "slug": "autocares-rico-25821",
       "name": "Autocares Rico",
-      "category": "",
+      "category": "fotografia",
       "province": "Cádiz",
       "municipality": "San Fernando",
       "phone": "34956883692",
@@ -275,20 +328,52 @@
       "lat": 36.4754,
       "lng": -6.1939,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "71031005a78b64b68b4c9a2700e361cd01732ebbe17ca5a32084b055365ad337"
+      "completeness": 100,
+      "provenanceHash": "a072a8883e210e2f27bb233700ccea929b4f769f5b45d4715711c8a3f5a0bfaa"
+    },
+    {
+      "key": "v-259051",
+      "asin": "EAR-ASIN-FOT-259051",
+      "vendorId": "259051",
+      "slug": "agencia-de-eventos-navarro-e259051-59051",
+      "name": "Agencia de eventos Navarro",
+      "category": "fotografia",
+      "province": "Granada",
+      "municipality": "Jun",
+      "phone": "34675388421",
+      "priceEur": 300,
+      "priceRange": "",
+      "rating": 5,
+      "reviewsCount": 2,
+      "description": "Filtros 0 80 resultados Listado Imágenes Mapa Ver 59 fotos más TOP Fotomatones Granada 4.8 (47) · Granada Si queréis pasarlo en grande junto a vuestros invitados durante la fiesta, no dudéis en contar con el espejo mágico de ... Leer más Fotomatones Granada. Con este servicio ha…",
+      "image": "https://cdn0.bodas.net/vendor/59051/3_2/960/jpeg/whatsapp-image-2024-11-07-at-14-17-20_1_259051-173098580144456.webp",
+      "profileUrl": "https://www.bodas.net/animacion/agencia-de-eventos-navarro--e259051",
+      "web": "https://agenciadeeventos.es/",
+      "lat": 37.218698,
+      "lng": -3.592249,
+      "sources": [
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
+      ],
+      "matchMode": "name",
+      "verified": true,
+      "completeness": 96,
+      "provenanceHash": "c0ac09074ebf63bad81581ba297a63c829fb1ce7d5acc98e54be5c7d82d9c2d7"
     },
     {
       "key": "v-26514",
+      "asin": "EAR-ASIN-FOT-26514",
       "vendorId": "26514",
       "slug": "classic-avenir-tarragona",
       "name": "Classic Avenir",
-      "category": "",
+      "category": "fotografia",
       "province": "Tarragona",
       "municipality": "Valls",
       "phone": "34696496665",
@@ -303,20 +388,22 @@
       "lat": 43.45,
       "lng": -5.96985,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "0f9a01bd491973250921f1398692be78c6b3a8ddf8353c112afd5db6689796dc"
+      "completeness": 100,
+      "provenanceHash": "fe23510616bca068b9a6a86826ad15b865abf022e14a2edac6b34917150c22bb"
     },
     {
       "key": "v-27137",
+      "asin": "EAR-ASIN-FOT-27137",
       "vendorId": "27137",
       "slug": "catering-santa-cruz-ciudad-real",
       "name": "Catering Santa Cruz",
-      "category": "",
+      "category": "fotografia",
       "province": "Ciudad Real",
       "municipality": "Santa Cruz de Mudela",
       "phone": "34926331350",
@@ -331,20 +418,22 @@
       "lat": 38.0071,
       "lng": -4.39963,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "6681f3192445b2279207998d188df6b074b10d958b4a1181f8a59f3bbb250849"
+      "completeness": 100,
+      "provenanceHash": "a29486d6505258600872b1a665ecadb253355fe47e28dac9f873a81c2cd51762"
     },
     {
       "key": "v-29458",
+      "asin": "EAR-ASIN-FOT-29458",
       "vendorId": "29458",
       "slug": "catering-nature-e29458-29458",
       "name": "Catering Nature",
-      "category": "",
+      "category": "fotografia",
       "province": "Asturias",
       "municipality": "Cangas de Onís",
       "phone": "34985849277",
@@ -359,20 +448,22 @@
       "lat": 43.3514,
       "lng": -5.12836,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "2c27e98125567ae100f71b8bc998416a5d81d344e8da02e9d3b79e8f2f5110e7"
+      "completeness": 100,
+      "provenanceHash": "7c0a943f8cc487141a6b4ea6a7384661a16a2590bb27a1887221d64826a17477"
     },
     {
       "key": "v-31195",
+      "asin": "EAR-ASIN-FOT-31195",
       "vendorId": "31195",
       "slug": "restaurante-loureiro-e31195-31195",
       "name": "Restaurante Loureiro",
-      "category": "",
+      "category": "fotografia",
       "province": "Pontevedra",
       "municipality": "Bueu",
       "phone": "34986320719",
@@ -387,20 +478,52 @@
       "lat": 42.3323,
       "lng": -8.76995,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "2d6655a961f5abfadb7c06093c932035a158fe41c48b1a552519853a7474aad7"
+      "completeness": 100,
+      "provenanceHash": "2698c3bc2c432fe1cac78cfd164df37cfea9665b5ccd39f7c29253f6eb536c4c"
+    },
+    {
+      "key": "v-33474",
+      "asin": "EAR-ASIN-FOT-33474",
+      "vendorId": "33474",
+      "slug": "juan-fernando-fotograf-a-33474",
+      "name": "Juan Fernando Fotografía",
+      "category": "fotografia",
+      "province": "Badajoz",
+      "municipality": "Villafranca De Los Barros",
+      "phone": "34664028111",
+      "priceEur": 150,
+      "priceRange": "150 €",
+      "rating": 4.8,
+      "reviewsCount": 40,
+      "description": "Juan Fernando Fotografía es un proveedor homologado bajo los estándares de calidad de Productora EAR.",
+      "image": "https://cdn0.bodas.net/vendor/33474/3_2/960/jpg/1i1a7416_1_233474-174022828868187.webp",
+      "profileUrl": "https://www.bodas.net/decoracion-para-bodas/a-s-decoracion-de-eventos--e33474",
+      "web": "http://www.JuanFernandoFotografia.com/",
+      "lat": 36.6658,
+      "lng": -6.1331,
+      "sources": [
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
+      ],
+      "matchMode": "vendorId",
+      "verified": true,
+      "completeness": 100,
+      "provenanceHash": "0b7d993a75c5cd21f14676cdb6fae774405e56446311ea6b38b5c592113805ac"
     },
     {
       "key": "v-35311",
+      "asin": "EAR-ASIN-FOT-35311",
       "vendorId": "35311",
       "slug": "larache-e35311-35311",
       "name": "Larache",
-      "category": "",
+      "category": "fotografia",
       "province": "Murcia",
       "municipality": "Murcia",
       "phone": "34968870459",
@@ -415,20 +538,112 @@
       "lat": 37.9972,
       "lng": -1.0212,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "f51f0282f36397f6c0b8d91b57b335fc31ef40a723df5721b2a9651243d4d937"
+      "completeness": 100,
+      "provenanceHash": "81c24bc3bf16b45504cd6019cfdd7e88b1fc98458728147d8f8fa6980f31bad0"
+    },
+    {
+      "key": "v-36057",
+      "asin": "EAR-ASIN-FOT-36057",
+      "vendorId": "36057",
+      "slug": "animaciones-y-eventos-la-fabrica-e36057-36057",
+      "name": "Animaciones y Eventos La Fábrica",
+      "category": "fotografia",
+      "province": "Cádiz",
+      "municipality": "Jerez De La Frontera",
+      "phone": "34956042751",
+      "priceEur": 80,
+      "priceRange": "80 €",
+      "rating": 4.9,
+      "reviewsCount": 165,
+      "description": "Filtros 0 80 resultados Listado Imágenes Mapa Ver 32 fotos más TOP Vella Eventos 5.0 (22) · Cádiz ¡Convierte tu celebración en una fiesta inolvidable con Vella Eventos! ¿Quieres que tu boda sea recordada por divertida ... Leer más y original? Pues esta empresa es lo que buscas.…",
+      "image": "https://cdn0.bodas.net/vendor/36057/3_2/960/jpg/ap3_1_36057-176296853137883.webp",
+      "profileUrl": "https://www.bodas.net/animacion/animaciones-y-eventos-la-fabrica--e36057",
+      "web": "http://www.fabricandoeventos.com/",
+      "lat": 36.6593,
+      "lng": -6.13149,
+      "sources": [
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
+      ],
+      "matchMode": "vendorId",
+      "verified": true,
+      "completeness": 100,
+      "provenanceHash": "d4b87db1414b10321c3ffddcfacc2ea2e2955533335f5adff0509712482cd30b"
+    },
+    {
+      "key": "v-37775",
+      "asin": "EAR-ASIN-FOT-37775",
+      "vendorId": "37775",
+      "slug": "alphafoto-ex",
+      "name": "Alphafoto",
+      "category": "fotografia",
+      "province": "Cáceres",
+      "municipality": "Cáceres",
+      "phone": "34613037766",
+      "priceEur": 700,
+      "priceRange": "700 €",
+      "rating": 4.3,
+      "reviewsCount": 2,
+      "description": "9 (66) · Cáceres ¿Te agobia pensar en la cobertura fotográfica de tu boda? ¿No sabes por dónde empezar? ¿Te falta tiempo para ver y. Leer más decidir? El equipo de Juan Pedro Álvarez se encargará de hacer real.",
+      "image": "https://cdn0.bodas.net/vendor/37775/3_2/960/jpg/a07_1_37775.webp",
+      "profileUrl": "https://www.bodas.net/fotografos/alphafoto--e37775",
+      "web": "http://www.alphafoto.es/",
+      "lat": 39.478,
+      "lng": -6.37412,
+      "sources": [
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
+      ],
+      "matchMode": "vendorId",
+      "verified": true,
+      "completeness": 100,
+      "provenanceHash": "9c3defa8d81d2842d1096fd8c4d15360d456ae014e5cfeed7a6b90f4d2d75793"
+    },
+    {
+      "key": "v-38273",
+      "asin": "EAR-ASIN-FOT-38273",
+      "vendorId": "38273",
+      "slug": "kuara-joyeros-e38273-38273",
+      "name": "Kuara Joyeros",
+      "category": "fotografia",
+      "province": "Almería",
+      "municipality": "Almería",
+      "phone": "34950274167",
+      "priceEur": 50,
+      "priceRange": "50 €",
+      "rating": 4.9,
+      "reviewsCount": 68,
+      "description": "Filtros 0 4 resultados Listado Imágenes Mapa Ver 53 fotos más PREMIUM Verajoya 5.0 (24) · Vera, Almería ¿Te casas? Verajoya es una joyería muy especial que se presenta como tu mejor elección para conseguir esas joyas ... Leer más maravillosas con las que siempre has soñado y luc…",
+      "image": "https://cdn0.bodas.net/vendor/38273/3_2/960/jpg/boda-20x12-1_1_38273-169960904784280.webp",
+      "profileUrl": "https://www.bodas.net/joyeria/kuara-joyeros--e38273",
+      "web": "https://www.kuara.es/",
+      "lat": 36.8418,
+      "lng": -2.46352,
+      "sources": [
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
+      ],
+      "matchMode": "vendorId",
+      "verified": true,
+      "completeness": 100,
+      "provenanceHash": "8755ee68585c3ad81c246ebb6e8bcaaa9f83abc1f92f0a68c49bb3e34923aa4d"
     },
     {
       "key": "v-38478",
+      "asin": "EAR-ASIN-FOT-38478",
       "vendorId": "38478",
       "slug": "sonido-54-e38478-38478",
       "name": "Sonido 54",
-      "category": "",
+      "category": "fotografia",
       "province": "Huesca",
       "municipality": "Huesca",
       "phone": "34615064906",
@@ -443,20 +658,22 @@
       "lat": 42.1473,
       "lng": -0.394433,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "4cdf5fd206accff6918484a167e7a3fa4e9b4e37a43613f8bf26aec42927197a"
+      "completeness": 100,
+      "provenanceHash": "2ae71efeb39ef0880c7d263abdf1e91e804e9b9d5814f12a7d7eaf5cf85d9dec"
     },
     {
       "key": "v-38685",
+      "asin": "EAR-ASIN-FOT-38685",
       "vendorId": "38685",
       "slug": "audiv-produccions-e38685-38685",
       "name": "Audiv Produccions",
-      "category": "",
+      "category": "fotografia",
       "province": "Barcelona",
       "municipality": "Terrassa",
       "phone": "34622708573",
@@ -471,20 +688,22 @@
       "lat": 41.5945,
       "lng": 2.00783,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "b278cb806823a04b56044b7b490b596b2082b572f8659e2709ec938050ab81d6"
+      "completeness": 100,
+      "provenanceHash": "d1d1916176f66a54a82a522a1cff9b905ac8c7b1fd49d25b9debbfbaa3a7cad0"
     },
     {
       "key": "v-39525",
+      "asin": "EAR-ASIN-FOT-39525",
       "vendorId": "39525",
       "slug": "el-porton-de-la-condesa-e39525-39525",
       "name": "El Portón de la Condesa",
-      "category": "",
+      "category": "fotografia",
       "province": "Murcia",
       "municipality": "Molina de Segura",
       "phone": "34968139800",
@@ -499,20 +718,22 @@
       "lat": 38.0839,
       "lng": -1.15314,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "715f2f534f21921ca8d6092e274e8b9255d33649f3999f3085a8c6d787229055"
+      "completeness": 100,
+      "provenanceHash": "65186dfbdaa5f5cbfe76a33bcf22bc5c83870416bd90c0d88386dcc9db81dda7"
     },
     {
       "key": "v-3976",
+      "asin": "EAR-ASIN-FOT-3976",
       "vendorId": "3976",
       "slug": "catering-hacienda-nuestra-senora-de-guia-e3976-3976",
       "name": "Catering Hacienda Nuestra Señora de Guia",
-      "category": "",
+      "category": "fotografia",
       "province": "Huelva",
       "municipality": "La Palma del Condado",
       "phone": "34657986858",
@@ -527,20 +748,22 @@
       "lat": 37.3907,
       "lng": -6.55867,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "dcf1562ee7ee21e0e58b001a7c0d670f56912d3d15fb3264d2e3139c4e490d6e"
+      "completeness": 100,
+      "provenanceHash": "c65934c027fdc08c437aeee738744cf7688e53eb557ac9704096a27211c08067"
     },
     {
       "key": "v-39906",
+      "asin": "EAR-ASIN-FOT-39906",
       "vendorId": "39906",
       "slug": "limusinas-zaragoza-e39906-39906",
       "name": "Limusinas Zaragoza",
-      "category": "",
+      "category": "fotografia",
       "province": "Zaragoza",
       "municipality": "Zaragoza",
       "phone": "34976331558",
@@ -555,20 +778,22 @@
       "lat": 41.6458,
       "lng": -0.889535,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "91f608e99fb99b0d0c92ab1ea770743856dcd4f13a355853ebd67ba7073e433e"
+      "completeness": 100,
+      "provenanceHash": "81ec5d8937de2919e3b7de63b2e1c0fad8d5877907657b7a01318a75d8a21241"
     },
     {
       "key": "v-42166",
+      "asin": "EAR-ASIN-FOT-42166",
       "vendorId": "42166",
       "slug": "mago-david-gonzalez-e42166-42166",
       "name": "Mago David González",
-      "category": "",
+      "category": "fotografia",
       "province": "Alicante",
       "municipality": "Dolores",
       "phone": "34627410900",
@@ -583,20 +808,22 @@
       "lat": 38.346,
       "lng": -0.490685,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "b8f79b7a2dc7a6d8be796b15f5c9c1b9fb77ed24403d926da7744e8496cc5f31"
+      "completeness": 100,
+      "provenanceHash": "c6fd15b3606c058d030f241425ec625d922ff467b11d8e0bd8c7ccd0514491cf"
     },
     {
       "key": "v-43241",
+      "asin": "EAR-ASIN-FOT-43241",
       "vendorId": "43241",
       "slug": "sandra-roura-gerona",
       "name": "Sandra Roura",
-      "category": "",
+      "category": "fotografia",
       "province": "Gerona",
       "municipality": "Peralada",
       "phone": "34972538632",
@@ -611,20 +838,22 @@
       "lat": 42.3078,
       "lng": 3.01341,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "183c73b796c8627a69828d4d6d9bd6f055206927d6138134c9bd9aee0d2c1a89"
+      "completeness": 100,
+      "provenanceHash": "9bf64f1dd56baa9fc6200ecc0e00a8e7571a953cc33e2493311da51670ec2219"
     },
     {
       "key": "v-43602",
+      "asin": "EAR-ASIN-FOT-43602",
       "vendorId": "43602",
       "slug": "autobuses-sanchez-navarra",
       "name": "Autobuses Sánchez",
-      "category": "",
+      "category": "fotografia",
       "province": "Navarra",
       "municipality": "Falces",
       "phone": "34948714720",
@@ -639,20 +868,22 @@
       "lat": 42.3884,
       "lng": -1.79649,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "42c400e19fb719304edabce035fdd00df04caac153baf9ac67e63e132b439535"
+      "completeness": 100,
+      "provenanceHash": "dd5ac74ba2348f483609d80636b1cb987fcc19aecf9534fbf4fd3c6768ee2087"
     },
     {
       "key": "v-44801",
+      "asin": "EAR-ASIN-FOT-44801",
       "vendorId": "44801",
       "slug": "bullido-joyeros-e44801-44801",
       "name": "Bullido Joyeros",
-      "category": "",
+      "category": "fotografia",
       "province": "Madrid",
       "municipality": "Arroyomolinos",
       "phone": "34916897353",
@@ -667,20 +898,22 @@
       "lat": 40.2724,
       "lng": -3.91763,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "fc32c301c0191463e2456184dc566580b96f5fea30eef728ce7c8bea2e92d94d"
+      "completeness": 100,
+      "provenanceHash": "5da084c6243ab3f3466004d246a266df04aeb684da27def5038b2a32da479e66"
     },
     {
       "key": "v-44905",
+      "asin": "EAR-ASIN-GEN-44905",
       "vendorId": "44905",
       "slug": "gala-peluquer-a-44905",
       "name": "Gala Peluquería",
-      "category": "moda",
+      "category": "servicios",
       "province": "Jaén",
       "municipality": "Mancha Real",
       "phone": "34675807806",
@@ -695,16 +928,18 @@
       "lat": 43.4591,
       "lng": -6.48483,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
       "completeness": 100,
-      "provenanceHash": "71205e2d3cf48d61f0e9e838fe07533bd3dd34febd54f3779b8bd71764a97f81"
+      "provenanceHash": "f4c5fafd0fa11479b8b3e0481c32ca801d4ff8a08ad25a842562f14acdf362d3"
     },
     {
       "key": "v-45446",
+      "asin": "EAR-ASIN-FNC-45446",
       "vendorId": "45446",
       "slug": "finca-los-sauces-denire-eventos-45446",
       "name": "Finca Los Sauces - Denire Eventos",
@@ -723,20 +958,22 @@
       "lat": 37.66,
       "lng": -0.979369,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
       "completeness": 100,
-      "provenanceHash": "a3cf2b0f3d30debe719809c751e9f6ac93e733100ae23d1dc9a1f0c5858bc780"
+      "provenanceHash": "736109e731876247af32f9b4865ebe715cac130ed921f5c2c590d5e481033746"
     },
     {
       "key": "v-49414",
+      "asin": "EAR-ASIN-FOT-49414",
       "vendorId": "49414",
       "slug": "casa-fermin-e49414-49414",
       "name": "Casa Fermín",
-      "category": "",
+      "category": "fotografia",
       "province": "Asturias",
       "municipality": "Oviedo",
       "phone": "34985216452",
@@ -751,21 +988,23 @@
       "lat": 43.362,
       "lng": -5.84696,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "2dfc6cd8fc5818c3f06d4027b6ae73387dfd41f35d6134f48d42ffcc4ec98034"
+      "completeness": 100,
+      "provenanceHash": "5bf913005e49d8ab6f724729ee3491dc40ddbf8f97e949ed025fbaf9dd59cac7"
     },
     {
       "key": "v-49567",
+      "asin": "EAR-ASIN-GEN-49567",
       "vendorId": "49567",
       "slug": "joyer-a-nicas-49567",
       "name": "Joyería Únicas",
       "category": "servicios",
-      "province": "",
+      "province": "Valladolid",
       "municipality": "Valladolid",
       "phone": "34983093594",
       "priceEur": 150,
@@ -779,20 +1018,52 @@
       "lat": 41.649,
       "lng": -4.72824,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 92,
-      "provenanceHash": "ed2c8e49080cd8ea1efd53c7382e473d19e964770476c5fe1095192e232f56f8"
+      "completeness": 100,
+      "provenanceHash": "9e4f905735ff602af7e5c64a0399cf2894102e7dce5318342a5f0ca6db4818c2"
+    },
+    {
+      "key": "v-50725",
+      "asin": "EAR-ASIN-FOT-50725",
+      "vendorId": "50725",
+      "slug": "trevol-tv-ct",
+      "name": "Trèvol tv",
+      "category": "fotografia",
+      "province": "Lérida",
+      "municipality": "Lleida",
+      "phone": "34973254069",
+      "priceEur": 950,
+      "priceRange": "950 €",
+      "rating": 5,
+      "reviewsCount": 4,
+      "description": "0 (66) · Juneda, Lleida Una historia como la vuestra merece un reportaje extraordinario, por eso \"Es la inversión más rentable de vuestra boda,. Leer más y es lo único de vuestra boda que.",
+      "image": "https://cdn0.bodas.net/vendor/50725/3_2/960/jpg/video-02_1_50725.webp",
+      "profileUrl": "https://www.bodas.net/video/trevol-tv--e50725",
+      "web": "http://www.trevol.tv/",
+      "lat": 41.6325,
+      "lng": 0.630225,
+      "sources": [
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
+      ],
+      "matchMode": "vendorId",
+      "verified": true,
+      "completeness": 100,
+      "provenanceHash": "fb583e4b8e1e07576c0acbfb7093ef54228c673ae177314ed3f85a0211c225cc"
     },
     {
       "key": "v-52656",
+      "asin": "EAR-ASIN-FOT-52656",
       "vendorId": "52656",
       "slug": "ortola-show-valencia",
       "name": "Ortolá Show",
-      "category": "",
+      "category": "fotografia",
       "province": "Valencia",
       "municipality": "Miramar",
       "phone": "34687005600",
@@ -807,20 +1078,22 @@
       "lat": 38.968,
       "lng": -0.184467,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "376488ce29d52924f15a72cc03955f6760fbe515304fcb9f40a95796f8bd197b"
+      "completeness": 100,
+      "provenanceHash": "ef85f229008af5b5bde12fb27c40a22521572390420c7395b6efb0cc499e98d5"
     },
     {
       "key": "v-53452",
+      "asin": "EAR-ASIN-FOT-53452",
       "vendorId": "53452",
       "slug": "alejandro-setien-video-e53452-53452",
       "name": "Alejandro Setién Vídeo",
-      "category": "",
+      "category": "fotografia",
       "province": "Cantabria",
       "municipality": "Santander",
       "phone": "34660523777",
@@ -835,20 +1108,22 @@
       "lat": 43.4623,
       "lng": -3.80998,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "8395694df563e06ac4b9b8fe1e7a98c4fe52f988f8e676ac0985bcc829c98635"
+      "completeness": 100,
+      "provenanceHash": "cb82a1b446e7c1f74b689280fd45fe5f2ac8c6dc10a0cd82eed64cdc5f7820a6"
     },
     {
       "key": "v-54195",
+      "asin": "EAR-ASIN-FOT-54195",
       "vendorId": "54195",
       "slug": "london-studio-e54195-54195",
       "name": "London Studio",
-      "category": "",
+      "category": "fotografia",
       "province": "Cantabria",
       "municipality": "Piélagos",
       "phone": "34942046931",
@@ -863,20 +1138,22 @@
       "lat": 43.4228,
       "lng": -3.95196,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "32e2d58199297270892bbb385819fa4142c6d7baa95bf594f89ca970dfae2705"
+      "completeness": 100,
+      "provenanceHash": "2cc72b7e9b271467eca9bce0db84996711a445c59a6f385910cf32b26bc3f23c"
     },
     {
       "key": "v-56308",
+      "asin": "EAR-ASIN-FOT-56308",
       "vendorId": "56308",
       "slug": "catering-manzano-e56308-56308",
       "name": "Catering Manzano",
-      "category": "",
+      "category": "fotografia",
       "province": "Asturias",
       "municipality": "Avilés",
       "phone": "34608503543",
@@ -891,20 +1168,52 @@
       "lat": 43.3546,
       "lng": -5.14744,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "5760e89f3ca82e7af80ec00b8736d4dd752c2f1fa2365c555b7dac9439261ce6"
+      "completeness": 100,
+      "provenanceHash": "1445c809fc64b01457f6ed18e0dbc1d0e5bf56e30fa6d447aee66fc08c656ee6"
+    },
+    {
+      "key": "v-57301",
+      "asin": "EAR-ASIN-FOT-57301",
+      "vendorId": "57301",
+      "slug": "alfonso-caceres-fotografia-ex",
+      "name": "Alfonso Cáceres Fotografía",
+      "category": "fotografia",
+      "province": "Cáceres",
+      "municipality": "Plasencia",
+      "phone": "34686464206",
+      "priceEur": 750,
+      "priceRange": "750 €",
+      "rating": 5,
+      "reviewsCount": 32,
+      "description": "9 (66) · Cáceres ¿Te agobia pensar en la cobertura fotográfica de tu boda? ¿No sabes por dónde empezar? ¿Te falta tiempo para ver y. Leer más decidir? El equipo de Juan Pedro Álvarez se encargará de hacer real.",
+      "image": "https://cdn0.bodas.net/vendor/57301/3_2/960/jpg/-acr0244-2_1_57301-158046920557010.webp",
+      "profileUrl": "https://www.bodas.net/fotografos/alfonso-caceres-fotografia--e57301",
+      "web": "http://www.alfonsocaceresfotografia.com/",
+      "lat": 40.0383,
+      "lng": -6.09339,
+      "sources": [
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
+      ],
+      "matchMode": "vendorId",
+      "verified": true,
+      "completeness": 100,
+      "provenanceHash": "ced90f1aba8d2c5f294973efe5a8f5336c18c03a1e71ad5c5ea92298267e0a09"
     },
     {
       "key": "v-57523",
+      "asin": "EAR-ASIN-FOT-57523",
       "vendorId": "57523",
       "slug": "alba-pifarre-lleida",
       "name": "Alba Pifarré",
-      "category": "",
+      "category": "fotografia",
       "province": "Lérida",
       "municipality": "Torrefarrera",
       "phone": "34669217097",
@@ -919,20 +1228,22 @@
       "lat": 41.6759,
       "lng": 0.605967,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "b39737c1b649f30dbf8f0c634a91b4bdb0268d064d77fd3db955ed4658657ff1"
+      "completeness": 100,
+      "provenanceHash": "5a8a4ded503c9620b3fbbd1d667d3bbc9e94e39f28a63a4f8bf9459389c33a47"
     },
     {
       "key": "v-59357",
+      "asin": "EAR-ASIN-FOT-59357",
       "vendorId": "59357",
       "slug": "la-darsena-cantabria",
       "name": "La Darsena",
-      "category": "",
+      "category": "fotografia",
       "province": "Cantabria",
       "municipality": "Castro-Urdiales",
       "phone": "34942780775",
@@ -947,20 +1258,22 @@
       "lat": 43.4257,
       "lng": -4.04272,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "94b95f581c641fb848a88a9268e910bf6cd48d2654b449562556e0a0d1a5d6d4"
+      "completeness": 100,
+      "provenanceHash": "c5bcb0a9feca7d83330b6ed49c1d8bc5895743479c0194fc53f31916cae2a3ac"
     },
     {
       "key": "v-60032",
+      "asin": "EAR-ASIN-FOT-60032",
       "vendorId": "60032",
       "slug": "costa-brava-djs-girona",
       "name": "Costa Brava Djs",
-      "category": "",
+      "category": "fotografia",
       "province": "Gerona",
       "municipality": "Torroella De Montgrí",
       "phone": "34669010253",
@@ -975,20 +1288,22 @@
       "lat": 42.0419,
       "lng": 3.12653,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "c30fd276c75512b8a3e178f1061b1763da97aee7eb1c650e695e9961b5491ae0"
+      "completeness": 100,
+      "provenanceHash": "11e038178f1ccd0138d7a433f45b14e255c0ba6307f408097739670ac81cac42"
     },
     {
       "key": "v-60035",
+      "asin": "EAR-ASIN-FOT-60035",
       "vendorId": "60035",
       "slug": "laura-lavado-fotografia-caceres",
       "name": "Laura Lavado Fotografía",
-      "category": "",
+      "category": "fotografia",
       "province": "Cáceres",
       "municipality": "Cáceres",
       "phone": "34628480686",
@@ -1003,20 +1318,22 @@
       "lat": 39.4656,
       "lng": -6.37885,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "0705d61f697817c42c7f20de052e87a0bddfee1476f35355923412fa212d3d81"
+      "completeness": 100,
+      "provenanceHash": "c04c128651687c2cfcfe3d8ac1fd0e1eb4c60b0d5557011704dc224350d8c87d"
     },
     {
       "key": "v-60163",
+      "asin": "EAR-ASIN-FOT-60163",
       "vendorId": "60163",
       "slug": "efphotographers-caceres",
       "name": "Efphotographers",
-      "category": "",
+      "category": "fotografia",
       "province": "Cáceres",
       "municipality": "Cáceres",
       "phone": "34680799787",
@@ -1031,20 +1348,22 @@
       "lat": 39.4926,
       "lng": -6.36903,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "04c56b3e42fe44691e73c3634ea3392a3e551cde7b8d3a15f5a0fe0a156d7f25"
+      "completeness": 100,
+      "provenanceHash": "22b56e39aa11d672f679ca6090c1cc9be960569451554e91281b200e0fee4da3"
     },
     {
       "key": "v-61860",
+      "asin": "EAR-ASIN-FOT-61860",
       "vendorId": "61860",
       "slug": "solooroyhora-e61860-61860",
       "name": "SoloOroyHora",
-      "category": "",
+      "category": "fotografia",
       "province": "Badajoz",
       "municipality": "Campanario",
       "phone": "34924831051",
@@ -1059,20 +1378,22 @@
       "lat": 38.8631,
       "lng": -5.61837,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "9816a1c61ca83d5570270d542c3dbb6fb69addbdbfca1ab395224e7ddc444849"
+      "completeness": 100,
+      "provenanceHash": "e5ddbbbd2774f817e2b5ecd2313d6b09659c77fedef21e12ab3d152fbedd0da2"
     },
     {
       "key": "v-62661",
+      "asin": "EAR-ASIN-GEN-62661",
       "vendorId": "62661",
       "slug": "maria-goti-joyas-asturias",
       "name": "María Goti Joyas",
-      "category": "moda",
+      "category": "servicios",
       "province": "Asturias",
       "municipality": "Gijón",
       "phone": "34984296116",
@@ -1087,21 +1408,23 @@
       "lat": 43.5387,
       "lng": -5.65857,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
       "completeness": 100,
-      "provenanceHash": "bc53bf1d52d32877f0fa0a40a57f3f7ad7274a74f80cd9b0103d25af64447f9c"
+      "provenanceHash": "82f78d9744af4126a552f0c027065e9da83c6479e0616ee84f3a0c210133beaa"
     },
     {
       "key": "v-70273",
+      "asin": "EAR-ASIN-GEN-70273",
       "vendorId": "70273",
       "slug": "eventos-de-seda-70273",
       "name": "Eventos de Seda",
       "category": "servicios",
-      "province": "",
+      "province": "Cádiz",
       "municipality": "Algeciras",
       "phone": "34657682244",
       "priceEur": 120,
@@ -1115,20 +1438,22 @@
       "lat": 40.9067,
       "lng": -4.11612,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 92,
-      "provenanceHash": "ee50b959c2e31a337cd4bc0d6ce608e0aaa8371b58289397dc5d9a04f334e0e3"
+      "completeness": 100,
+      "provenanceHash": "b537a418cd1ab57c6eccbf4e754796f0c0ce308b6a464d83a375be6a8118f8d0"
     },
     {
       "key": "v-71079",
+      "asin": "EAR-ASIN-FOT-71079",
       "vendorId": "71079",
       "slug": "maradj-almeria",
       "name": "Maradj",
-      "category": "",
+      "category": "fotografia",
       "province": "Almería",
       "municipality": "El Ejido",
       "phone": "34647724882",
@@ -1143,21 +1468,23 @@
       "lat": 36.772,
       "lng": -2.80942,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "8730e786371ad667a224dcd5a5d1080c6a47fb693f24e321a71ac89114d18c99"
+      "completeness": 100,
+      "provenanceHash": "b51e70f06c2545f536b3431e1b71929f616192a0f59b86d64f934c5c7fe64fc9"
     },
     {
       "key": "v-71305",
+      "asin": "EAR-ASIN-GEN-71305",
       "vendorId": "71305",
       "slug": "ignacio-franco-joyeros-71305",
       "name": "Ignacio Franco joyeros",
       "category": "servicios",
-      "province": "",
+      "province": "Sevilla",
       "municipality": "Sevilla",
       "phone": "34617840824",
       "priceEur": 100,
@@ -1171,20 +1498,22 @@
       "lat": 37.3795,
       "lng": -5.99937,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 92,
-      "provenanceHash": "e15682893d1746c2ba9cb6ad07126ee8c77ceaf5d2c4f5426b0d31333f4ec7cb"
+      "completeness": 100,
+      "provenanceHash": "ae9018a8cfb381a42e5a45239b7e540223c38cdc656027616fde803978524aea"
     },
     {
       "key": "v-71742",
+      "asin": "EAR-ASIN-FOT-71742",
       "vendorId": "71742",
       "slug": "claudia-llop-lleida",
       "name": "Claudia Llop",
-      "category": "",
+      "category": "fotografia",
       "province": "Lérida",
       "municipality": "Tàrrega",
       "phone": "34722441442",
@@ -1199,16 +1528,18 @@
       "lat": 41.647,
       "lng": 1.13948,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "01772aa01a820482ad45eb228f3f0bdb16bc78e67bda47490de04b743c72854f"
+      "completeness": 100,
+      "provenanceHash": "e562cc38c4bcbb58c56938fce2bf21e5a724ce8f61a01be29267a548b24e90c5"
     },
     {
       "key": "v-72059",
+      "asin": "EAR-ASIN-GEN-72059",
       "vendorId": "72059",
       "slug": "autocares-p-rez-cubero-72059",
       "name": "Autocares Pérez Cubero",
@@ -1227,20 +1558,22 @@
       "lat": 37.8467,
       "lng": -4.79591,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
       "completeness": 100,
-      "provenanceHash": "959000f271681f3160c6671b985feba67ac8204b3989a00daee2afb1e3d79780"
+      "provenanceHash": "aeee1dbd3040cca27a1bb1421903b6a2ea28fd278b9e2c31cf4707785fb36a19"
     },
     {
       "key": "v-74531",
+      "asin": "EAR-ASIN-GEN-74531",
       "vendorId": "74531",
       "slug": "monica-aparicio-joyeria-asturias",
       "name": "Mónica Aparicio Joyería",
-      "category": "moda",
+      "category": "servicios",
       "province": "Asturias",
       "municipality": "Oviedo",
       "phone": "34984480038",
@@ -1255,20 +1588,22 @@
       "lat": 43.3638,
       "lng": -5.85348,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
       "completeness": 100,
-      "provenanceHash": "58d0c037e980b91fd603c538ea1b82a49965cbeb783a59a12d35aef283e254e9"
+      "provenanceHash": "8a27658db9e96bdb92204c12bc7b2ca854e27ef97982f3e8ebd101c0b9a08117"
     },
     {
       "key": "v-75535",
+      "asin": "EAR-ASIN-FOT-75535",
       "vendorId": "75535",
       "slug": "torres-joyeros-e75535-75535",
       "name": "Torres Joyeros",
-      "category": "",
+      "category": "fotografia",
       "province": "Ciudad Real",
       "municipality": "La Solana",
       "phone": "34926632191",
@@ -1283,20 +1618,52 @@
       "lat": 38.9416,
       "lng": -3.2392,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "c1b576c10376ebe056c6563fa5533497609cc173ad54c15a3e18a6a585844d6b"
+      "completeness": 100,
+      "provenanceHash": "31f902b926678f3c6070b20cbe7a31c35f0bd885171d3f80ef089f61449d571e"
+    },
+    {
+      "key": "v-75661",
+      "asin": "EAR-ASIN-FOT-75661",
+      "vendorId": "75661",
+      "slug": "catering-ramirez-canela-e75661-75661",
+      "name": "Catering Ramírez Canela",
+      "category": "fotografia",
+      "province": "Huelva",
+      "municipality": "Isla Cristina",
+      "phone": "34616205361",
+      "priceEur": 18,
+      "priceRange": "18 €",
+      "rating": 5,
+      "reviewsCount": 2,
+      "description": "Filtros 0 15 resultados Listado Imágenes Mapa Ver 27 fotos más TOP Las Palomas Catering 4.9 (142) · Gibraleon, Huelva En Las Palomas Catering & Eventos creamos experiencias gastronómicas inolvidables. Sabemos bien que vuestra boda no se ... Leer más reduce a un buen banquete, po…",
+      "image": "https://cdn0.bodas.net/vendor/75661/3_2/960/jpg/7-.webp",
+      "profileUrl": "https://www.bodas.net/catering/catering-ramirez-canela--e75661",
+      "web": "",
+      "lat": 37.1985,
+      "lng": -7.31873,
+      "sources": [
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
+      ],
+      "matchMode": "vendorId",
+      "verified": true,
+      "completeness": 100,
+      "provenanceHash": "c87e939ccd20b13c6384d7a154bc8917301d34aa5543f18e36c8d1ba085a34ca"
     },
     {
       "key": "v-77463",
+      "asin": "EAR-ASIN-FOT-77463",
       "vendorId": "77463",
       "slug": "el-piano-de-tu-boda-e77463-77463",
       "name": "El Piano de tu Boda",
-      "category": "",
+      "category": "fotografia",
       "province": "Barcelona",
       "municipality": "Terrassa",
       "phone": "34722226401",
@@ -1311,20 +1678,22 @@
       "lat": 41.3789,
       "lng": 2.13989,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "107f51e88f44a1118c5eaeecfba4a3e6f0a444602faed40fd289d2a9ab8359ed"
+      "completeness": 100,
+      "provenanceHash": "2b5fa4e5f991c37f6e18ae5d3103fd7644d76439648f32a8009747172a873f2a"
     },
     {
       "key": "v-77570",
+      "asin": "EAR-ASIN-FOT-77570",
       "vendorId": "77570",
       "slug": "la-caseta-e77570-77570",
       "name": "La Caseta",
-      "category": "",
+      "category": "fotografia",
       "province": "Madrid",
       "municipality": "Madrid",
       "phone": "34917660933",
@@ -1339,20 +1708,81 @@
       "lat": 41.7017,
       "lng": 2.84673,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "90d666476ccd38a26aa32f21bc14cc0fc2c3d0028d1dad6f2f87b8d139bc22fd"
+      "completeness": 100,
+      "provenanceHash": "8d30bc53f0c486d7430eb5302fb0a4b8f787f2006383960e189a93c9a2dcd8f7"
+    },
+    {
+      "key": "v-78354",
+      "asin": "EAR-ASIN-FOT-78354",
+      "vendorId": "78354",
+      "slug": "foto-martin-video-e78354-78354",
+      "name": "Foto Martín Vídeo",
+      "category": "fotografia",
+      "province": "Cáceres",
+      "municipality": "La Pesga",
+      "phone": "34699144888",
+      "priceEur": 500,
+      "priceRange": "500 €",
+      "rating": 5,
+      "reviewsCount": 1,
+      "description": "Filtros 0 27 resultados Listado Imágenes Mapa Ver 1 foto más PREMIUM +Momentos Cáceres En +Momentos saben que el día de tu boda no hay segundas tomas. Por eso, aplican su experiencia en edición profesional y ... Leer más en televisión para crear un recuerdo espectacular, dinámic…",
+      "image": "https://cdn0.bodas.net/vendor/78354/3_2/960/jpg/foto-martin-video-25.webp",
+      "profileUrl": "https://www.bodas.net/video/foto-martin-video--e78354",
+      "web": "http://www.fotomartinvideo.com/",
+      "lat": 40.0421,
+      "lng": -6.08381,
+      "sources": [
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
+      ],
+      "matchMode": "vendorId",
+      "verified": true,
+      "completeness": 100,
+      "provenanceHash": "00c689ce97137f7edf90ce5cb23d0e640dc99e2541584251f758907edcc80fff"
+    },
+    {
+      "key": "v-79671",
+      "asin": "EAR-ASIN-FOT-79671",
+      "vendorId": "79671",
+      "slug": "m-boda-intima-e79671-79671",
+      "name": "M Boda Intima",
+      "category": "fotografia",
+      "province": "Gerona",
+      "municipality": "Vilers",
+      "phone": "34697663153",
+      "priceEur": 500,
+      "priceRange": "",
+      "rating": 5,
+      "reviewsCount": 78,
+      "description": "Filtros 0 80 resultados Listado Imágenes Mapa Ver 29 fotos más TOP Gerard Barnaus Photography 5.0 (2) · Girona En el día de tu boda, el tiempo vuela y los momentos irrepetibles suceden en fracciones d",
+      "image": "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80",
+      "profileUrl": "https://www.bodas.net/fotografos/m-boda-intima--e79671",
+      "web": "https://www.mbodaintima.com/",
+      "lat": 41.9901,
+      "lng": 2.95725,
+      "sources": [
+        "manifest_chunk",
+        "catalogo_html"
+      ],
+      "matchMode": "unmatched",
+      "verified": true,
+      "completeness": 96,
+      "provenanceHash": "8d4a83c3b5c4827c6e70d99ef9b0fd0ebff6095a41887f31376e063fa98452c8"
     },
     {
       "key": "v-80443",
+      "asin": "EAR-ASIN-FOT-80443",
       "vendorId": "80443",
       "slug": "kike-alvarez-e80443-80443",
       "name": "Kike Álvarez",
-      "category": "",
+      "category": "fotografia",
       "province": "Granada",
       "municipality": "Motril",
       "phone": "34649522854",
@@ -1367,20 +1797,22 @@
       "lat": 36.7484,
       "lng": -3.50713,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "c5de37e4ace02a5236dd1e677622a5b182c95319810d10f6fc828df5271d3042"
+      "completeness": 100,
+      "provenanceHash": "1a32b1037900fa7cef642180147977099ee49e45de41fb4dd2e99534e3c6a265"
     },
     {
       "key": "v-81404",
+      "asin": "EAR-ASIN-FOT-81404",
       "vendorId": "81404",
       "slug": "algarabia-m",
       "name": "Algarabía",
-      "category": "",
+      "category": "fotografia",
       "province": "Madrid",
       "municipality": "Madrid",
       "phone": "34915424131",
@@ -1395,20 +1827,22 @@
       "lat": 43.2433,
       "lng": -5.77106,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "38264ef55809afac3a82d2624d62398f1543145c1afa4afa4983d33b996ea6ad"
+      "completeness": 100,
+      "provenanceHash": "c9fc202407f26d9d6dc2d52c91359050ee85dc19c1f6b3baf6ccaa62997251dc"
     },
     {
       "key": "v-82015",
+      "asin": "EAR-ASIN-FOT-82015",
       "vendorId": "82015",
       "slug": "medina-travel-bus-e82015-82015",
       "name": "Medina Travel Bus",
-      "category": "",
+      "category": "fotografia",
       "province": "Cádiz",
       "municipality": "Jerez De La Frontera",
       "phone": "34956340509",
@@ -1423,20 +1857,22 @@
       "lat": 36.7235,
       "lng": -6.09239,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "f57670185cec8d6e29b2fb4812b7cba97f4cf408cbf1cf6926c14242a94a54be"
+      "completeness": 100,
+      "provenanceHash": "68a5a0a7e9806e9ce301853a262bc19c18ffb17a89161ea332f8e99b9f985d2a"
     },
     {
       "key": "v-8216",
+      "asin": "EAR-ASIN-FOT-8216",
       "vendorId": "8216",
       "slug": "almeria-de-fiesta-almeria",
       "name": "Almería de Fiesta",
-      "category": "",
+      "category": "fotografia",
       "province": "Almería",
       "municipality": "Viator",
       "phone": "34950306551",
@@ -1451,20 +1887,52 @@
       "lat": 36.8373,
       "lng": -2.46298,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "00d57c385fa357abd424c1cb326f1cea7985f7de32a9de49a15ead650a687734"
+      "completeness": 100,
+      "provenanceHash": "1f9ab6e229af67e8ee96c3afe24595bef7b518bc728e8dd7b5564713524cb8c8"
+    },
+    {
+      "key": "v-83959",
+      "asin": "EAR-ASIN-FOT-83959",
+      "vendorId": "83959",
+      "slug": "cuadriga-e83959-83959",
+      "name": "Cuadriga",
+      "category": "fotografia",
+      "province": "Cáceres",
+      "municipality": "Casar De Cáceres",
+      "phone": "34649095341",
+      "priceEur": 2100,
+      "priceRange": "2100 €",
+      "rating": 4.9,
+      "reviewsCount": 12,
+      "description": "Filtros 0 27 resultados Listado Imágenes Mapa Ver 1 foto más PREMIUM +Momentos Cáceres En +Momentos saben que el día de tu boda no hay segundas tomas. Por eso, aplican su experiencia en edición profesional y ... Leer más en televisión para crear un recuerdo espectacular, dinámic…",
+      "image": "https://cdn0.bodas.net/vendor/83959/3_2/960/jpg/by-cuadriga-marina-y-guille-144_1_83959-158885149875248.webp",
+      "profileUrl": "https://www.bodas.net/video/cuadriga--e83959",
+      "web": "http://www.cuadriga.es/",
+      "lat": 39.5581,
+      "lng": -6.41617,
+      "sources": [
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
+      ],
+      "matchMode": "vendorId",
+      "verified": true,
+      "completeness": 100,
+      "provenanceHash": "3695ff933889c4f6ef0519c6a360097809bd145b760b07dc4f832978f8aa4d9d"
     },
     {
       "key": "v-87374",
+      "asin": "EAR-ASIN-GEN-87374",
       "vendorId": "87374",
       "slug": "joyerias-adeley-santa-cruz-de-tenerife",
       "name": "Joyerias Adeley",
-      "category": "moda",
+      "category": "servicios",
       "province": "Santa Cruz de Tenerife",
       "municipality": "San Miguel de Abona",
       "phone": "34922735735",
@@ -1479,20 +1947,22 @@
       "lat": 28.4891,
       "lng": -16.3176,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
       "completeness": 100,
-      "provenanceHash": "c434e7d52e6f5176d8e5a8be30814b99df8a51d6e459a3b4255728fc85574cfb"
+      "provenanceHash": "32ab387dab0ecf9f9206825d21b0cfebedd41afa0287be509169721200d6c32d"
     },
     {
       "key": "v-88354",
+      "asin": "EAR-ASIN-FOT-88354",
       "vendorId": "88354",
       "slug": "pedro-martino-catering-e88354-88354",
       "name": "Pedro Martino Catering",
-      "category": "",
+      "category": "fotografia",
       "province": "Asturias",
       "municipality": "Oviedo",
       "phone": "34684603384",
@@ -1507,20 +1977,22 @@
       "lat": 43.331,
       "lng": -5.93428,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "bc95a628b1d1a9590553a985e32e830cb313594376ab3c786a25c92720805d17"
+      "completeness": 100,
+      "provenanceHash": "665fc7cd07200eed56d13ac8d12af14674c0667786c422a7639b624a44bfe59b"
     },
     {
       "key": "v-89422",
+      "asin": "EAR-ASIN-GEN-89422",
       "vendorId": "89422",
       "slug": "joyeria-coronel-mc",
       "name": "Joyería Coronel",
-      "category": "moda",
+      "category": "servicios",
       "province": "Murcia",
       "municipality": "Lorca",
       "phone": "34968465262",
@@ -1535,20 +2007,22 @@
       "lat": 37.6722,
       "lng": -1.7014,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
       "completeness": 100,
-      "provenanceHash": "a02151d3452780a386e53a7249b1de579f35f3592484f0e4d0301f628c5e5509"
+      "provenanceHash": "912a04e62c797e6643a23b4c1b973743f3d780c0b54947bf957e1657217d00a7"
     },
     {
       "key": "v-92390",
+      "asin": "EAR-ASIN-FOT-92390",
       "vendorId": "92390",
       "slug": "tudela-caravaning-navarra",
       "name": "Tudela Caravaning",
-      "category": "",
+      "category": "fotografia",
       "province": "Navarra",
       "municipality": "Tudela",
       "phone": "34640789456",
@@ -1563,20 +2037,22 @@
       "lat": 42.0572,
       "lng": -1.59281,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "7166490a8e695b9b3c69db63002af904bcd59d5d2cd1bcfb3bbe9acbc301df9d"
+      "completeness": 100,
+      "provenanceHash": "2c26f736702301926634a7fcd51bff70143aaab20c6475a0c4770cf078e999de"
     },
     {
       "key": "v-92534",
+      "asin": "EAR-ASIN-GEN-92534",
       "vendorId": "92534",
       "slug": "joyeria-roibas-asturias",
       "name": "Joyería Roibás",
-      "category": "moda",
+      "category": "servicios",
       "province": "Asturias",
       "municipality": "Gijón",
       "phone": "34985341862",
@@ -1591,16 +2067,18 @@
       "lat": 43.5423,
       "lng": -5.6643,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
       "completeness": 100,
-      "provenanceHash": "cd6ff684f49c2c22b696cb4e65421c1ecac2dd4b6a499e7fc0fae11bfe47cd08"
+      "provenanceHash": "318a5b419c0753f7a8fdba6e9be1b762c929afbb1ed9d685c5e0fd90545a5f46"
     },
     {
       "key": "v-92834",
+      "asin": "EAR-ASIN-GEN-92834",
       "vendorId": "92834",
       "slug": "joieria-del-mercat-92834",
       "name": "Joieria del Mercat",
@@ -1619,20 +2097,22 @@
       "lat": 41.4281,
       "lng": 2.164,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
       "completeness": 100,
-      "provenanceHash": "ca2e9097d483cdb0ed89bf7b24df3c0d03d54cc4948daf7d3a646f18e222bd78"
+      "provenanceHash": "bf15778b5d40bbb39bc5d05e1727116fd5f1be8b909963ab5a035359637b8533"
     },
     {
       "key": "v-94288",
+      "asin": "EAR-ASIN-FOT-94288",
       "vendorId": "94288",
       "slug": "paso-a-dos-escuela-de-danza-asturias",
       "name": "Paso a Dos - Escuela de Danza",
-      "category": "",
+      "category": "fotografia",
       "province": "Asturias",
       "municipality": "Gijón",
       "phone": "34984997559",
@@ -1647,16 +2127,18 @@
       "lat": 43.5327,
       "lng": -5.64696,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "61f1d8893dfe5e19f5d4702561c8efefe7f240a0314d82cc3d3f92199d6ad2bd"
+      "completeness": 100,
+      "provenanceHash": "76a27d93bbc0c6ef733ae875887b3fb5bccc801d7b67978206c1802922b83eff"
     },
     {
       "key": "v-96136",
+      "asin": "EAR-ASIN-GEN-96136",
       "vendorId": "96136",
       "slug": "joyer-a-irantzu-96136",
       "name": "Joyería Irantzu",
@@ -1675,20 +2157,22 @@
       "lat": 43.3187,
       "lng": -1.98008,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
       "completeness": 100,
-      "provenanceHash": "49116adc4b680da363e798e526de8bac3f296996fa59bf843ec60c77a1b07cb6"
+      "provenanceHash": "0732b3b99c99d79377e288ef9ae27de82044f279b281c0e22d20ffaa7c692121"
     },
     {
       "key": "v-96600",
+      "asin": "EAR-ASIN-FOT-96600",
       "vendorId": "96600",
       "slug": "autos-palacios-e96600-96600",
       "name": "Autos Palacios",
-      "category": "",
+      "category": "fotografia",
       "province": "Zaragoza",
       "municipality": "Zaragoza",
       "phone": "34671282822",
@@ -1703,20 +2187,22 @@
       "lat": 41.6488,
       "lng": -0.889085,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "cc5819a88392567b9f397a9147cba6713749af43a8d13a16651004a0fe267c5a"
+      "completeness": 100,
+      "provenanceHash": "e4cc64ae705b27a91f1827fac37fbd61c01ad57f0c536f0da0510bdfcf3f03d6"
     },
     {
       "key": "v-97346",
+      "asin": "EAR-ASIN-FOT-97346",
       "vendorId": "97346",
       "slug": "autocares-mougan-a-coruna",
       "name": "Autocares Mougán",
-      "category": "",
+      "category": "fotografia",
       "province": "A Coruña",
       "municipality": "Vedra",
       "phone": "34981512179",
@@ -1731,20 +2217,22 @@
       "lat": 42.8769,
       "lng": -8.54417,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "64d5e1d6b593cae4f66aa66088b8cf6adc4f255464974e736fe874573e2652ea"
+      "completeness": 100,
+      "provenanceHash": "c70fe82f830152917aa6b616e386b1547f105e07e2b3a0adb0e1b1d3e5b4efe4"
     },
     {
       "key": "v-99302",
+      "asin": "EAR-ASIN-FOT-99302",
       "vendorId": "99302",
       "slug": "la-tienda-de-pily-santa-cruz-de-tenerife",
       "name": "La Tienda de Pily",
-      "category": "",
+      "category": "fotografia",
       "province": "Santa Cruz de Tenerife",
       "municipality": "Santa Cruz de la Palma",
       "phone": "34922411069",
@@ -1759,13 +2247,14 @@
       "lat": 28.6843,
       "lng": -17.7635,
       "sources": [
-        "catalogo_html",
-        "providers_canonical"
+        "providers_canonical",
+        "manifest_chunk",
+        "catalogo_html"
       ],
       "matchMode": "vendorId",
       "verified": true,
-      "completeness": 90,
-      "provenanceHash": "24faa56e923485eff5219effcfc3438c384cf53064474b49908cc6bcc079a9dd"
+      "completeness": 100,
+      "provenanceHash": "f8c77413a1b4c173e54c093d1217ada4e6a05206a1b75cc433e1e6a9a38135ee"
     }
   ]
 }

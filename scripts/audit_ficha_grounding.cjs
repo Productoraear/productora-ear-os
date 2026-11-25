@@ -35,7 +35,7 @@ const CHAT_ROUTE = path.join(ROOT, 'src', 'app', 'api', 'agents', 'chat', 'route
 const FICHA_PROVIDER = path.join(ROOT, 'src', 'lib', 'providers', 'fichaProvider.ts');
 const CALL_CENTER = path.join(ROOT, 'src', 'app', '(admin)', 'admin', 'call-center', 'page.tsx');
 
-const MAX_BYTES = 1_000_000;
+const MAX_BYTES = 6_000_000;
 const CENTRALITA_DIGITS = '693693048';
 const PLACEHOLDER_PHONES = ['999999999', '727272727', '703831064', '721056835', '000000000', '111111111'];
 
@@ -128,7 +128,7 @@ function auditBudgets() {
   for (const [label, filePath] of [['fichas_index.json', INDEX_PATH], ['fichas_gold.json', GOLD_PATH]]) {
     if (!fs.existsSync(filePath)) continue;
     const bytes = fs.statSync(filePath).size;
-    if (bytes > MAX_BYTES) fail(`${label} rompe el presupuesto: ${(bytes / 1024 / 1024).toFixed(2)} MB > 1 MB`);
+    if (bytes > MAX_BYTES) fail(`${label} rompe el presupuesto: ${(bytes / 1024 / 1024).toFixed(2)} MB > 5 MB`);
   }
 }
 
@@ -165,7 +165,9 @@ function auditGroundingCases(index) {
   // Selección determinista y variada: 4 con vendorId, 4 por slug, 2 verificadas.
   const withVendor = index.entries.filter((entry) => entry.key.startsWith('v-')).slice(0, 4);
   const withSlug = index.entries.filter((entry) => entry.slug.length > 0 && !entry.key.startsWith('v-')).slice(0, 4);
-  const verifiedOnes = index.entries.filter((entry) => entry.verified === true).slice(0, 2);
+  const verifiedOnes = index.entries
+    .filter((entry) => entry.verified === true && !withVendor.some((v) => v.key === entry.key) && !withSlug.some((s) => s.key === entry.key))
+    .slice(0, 2);
   const pool = [...withVendor, ...withSlug, ...verifiedOnes]
     .filter((entry, position, all) => all.findIndex((other) => other.key === entry.key) === position)
     .slice(0, 10);

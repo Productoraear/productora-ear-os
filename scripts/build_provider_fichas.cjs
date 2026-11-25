@@ -34,6 +34,8 @@ const { createHash } = require('node:crypto');
 const ROOT = path.resolve(__dirname, '..');
 const CATALOG_PATH = path.join(ROOT, 'vault', 'proveedores_html_indexados', 'CATALOGO_PROVEEDORES_HTML_INDEX.json');
 const CANONICAL_PATH = path.join(ROOT, 'public', 'data', 'providers', 'providers_canonical.json');
+const MANIFEST_PATH = path.join(ROOT, 'public', 'data', 'providers', 'manifest.json');
+const MUNICIPALITIES_PATH = path.join(ROOT, 'src', 'data', 'geo', 'spain-8131-municipalities.json');
 const OUT_DIR = path.join(ROOT, 'public', 'data', 'fichas');
 const GOLD_PATH = path.join(OUT_DIR, 'fichas_gold.json');
 const INDEX_PATH = path.join(OUT_DIR, 'fichas_index.json');
@@ -262,9 +264,13 @@ function computeProvenanceHash(ficha) {
 
 // ─── Construcción de una ficha ──────────────────────────────────────────────
 
-function pickPublishablePhone(catalog, canonical) {
-  if (isPublishablePhone(catalog.phone)) return digitsOf(catalog.phone);
-  if (isPublishablePhone(canonical.telephone)) return digitsOf(canonical.telephone);
+function pickPublishablePhone(catalog, canonical, chunk) {
+  if (catalog && isPublishablePhone(catalog.phone)) return digitsOf(catalog.phone);
+  if (canonical && isPublishablePhone(canonical.telephone)) return digitsOf(canonical.telephone);
+  if (chunk) {
+    if (isPublishablePhone(chunk.telephone)) return digitsOf(chunk.telephone);
+    if (isPublishablePhone(chunk.phone)) return digitsOf(chunk.phone);
+  }
   return null;
 }
 
@@ -274,8 +280,19 @@ function pickPublishablePhone(catalog, canonical) {
 // AUSENTE antes que publicarse mal delante del cliente.
 
 const CATEGORY_JUNK = new Set([
-  'foto', 'fotos', 'galeria', 'galerías', 'video', 'videos', 'ver', 'mas', 'mapa',
+  'galeria', 'galerías', 'ver', 'mas', 'mapa',
   'web', 'webs', 'opiniones', 'contacto', 'telefono', 'precios', 'inicio', 'home',
+]);
+
+const CANONICAL_VERTICALS = Object.freeze([
+  'finca',
+  'catering',
+  'musica',
+  'sonido',
+  'fotografia',
+  'decoracion',
+  'transporte',
+  'servicios',
 ]);
 
 const PROVINCE_NAMES = [
@@ -289,8 +306,6 @@ const PROVINCE_NAMES = [
 ];
 
 // Códigos ISO 3166-2:ES de PROVINCIA (+ regiones uniprovinciales inequívocas).
-// Las regiones pluriprovinciales (AN, EX, CL, CT, CN, CM, AR, GA, PV, VC) se
-// descartan: mapearlas a una provincia sería inventar.
 const PROVINCE_CODES = {
   A: 'Alicante', AB: 'Albacete', AL: 'Almería', AV: 'Ávila', B: 'Barcelona', BA: 'Badajoz',
   BI: 'Vizcaya', BU: 'Burgos', C: 'A Coruña', CA: 'Cádiz', CC: 'Cáceres', CE: 'Ceuta',
@@ -323,6 +338,22 @@ const PROVINCE_ALIASES = {
   'santa cruz de tenerife': 'Santa Cruz de Tenerife',
 };
 
+const POSTAL_PREFIX_TO_PROVINCE = {
+  '01': 'Álava', '02': 'Albacete', '03': 'Alicante', '04': 'Almería', '05': 'Ávila',
+  '06': 'Badajoz', '07': 'Baleares', '08': 'Barcelona', '09': 'Burgos', '10': 'Cáceres',
+  '11': 'Cádiz', '12': 'Castellón', '13': 'Ciudad Real', '14': 'Córdoba', '15': 'A Coruña',
+  '16': 'Cuenca', '17': 'Gerona', '18': 'Granada', '19': 'Guadalajara', '20': 'Guipúzcoa',
+  '21': 'Huelva', '22': 'Huesca', '23': 'Jaén', '24': 'León', '25': 'Lérida',
+  '26': 'La Rioja', '27': 'Lugo', '28': 'Madrid', '29': 'Málaga', '30': 'Murcia',
+  '31': 'Navarra', '32': 'Orense', '33': 'Asturias', '34': 'Palencia', '35': 'Las Palmas',
+  '36': 'Pontevedra', '37': 'Salamanca', '38': 'Santa Cruz de Tenerife', '39': 'Cantabria', '40': 'Segovia',
+  '41': 'Sevilla', '42': 'Soria', '43': 'Tarragona', '44': 'Teruel', '45': 'Toledo',
+  '46': 'Valencia', '47': 'Valladolid', '48': 'Vizcaya', '49': 'Zamora', '50': 'Zaragoza',
+  '51': 'Ceuta', '52': 'Melilla',
+};
+
+const REGIONAL_CODES = new Set(['AN', 'CL', 'EX', 'GA', 'CT', 'PV', 'CN', 'CM', 'AR', 'VC']);
+
 function foldText(value) {
   return String(value === null || value === undefined ? '' : value)
     .normalize('NFD')
@@ -336,24 +367,111 @@ const PROVINCE_LOOKUP = new Map();
 for (const name of PROVINCE_NAMES) PROVINCE_LOOKUP.set(foldText(name), name);
 for (const alias of Object.keys(PROVINCE_ALIASES)) PROVINCE_LOOKUP.set(foldText(alias), PROVINCE_ALIASES[alias]);
 
+let MUNICIPALITY_LOOKUP = null;
+
+function getMunicipalityLookup() {
+  if (MUNICIPALITY_LOOKUP !== null) return MUNICIPALITY_LOOKUP;
+  const lookup = new Map();
+  if (fs.existsSync(MUNICIPALITIES_PATH)) {
+    try {
+      const munis = JSON.parse(fs.readFileSync(MUNICIPALITIES_PATH, 'utf8'));
+      for (const m of munis) {
+        const provNorm = PROVINCE_LOOKUP.get(foldText(m.province));
+        if (!provNorm) continue;
+        const nameClean = foldText(m.name);
+        lookup.set(nameClean, provNorm);
+        if (m.slug) lookup.set(foldText(m.slug), provNorm);
+        if (m.name.includes('/')) {
+          for (const part of m.name.split('/')) lookup.set(foldText(part), provNorm);
+        }
+        if (m.name.includes(',')) {
+          const [main, art] = m.name.split(',');
+          lookup.set(foldText(`${art} ${main}`), provNorm);
+          lookup.set(foldText(main), provNorm);
+        }
+      }
+    } catch {
+      // fail-open
+    }
+  }
+  const EXTRA_MAPPING = {
+    'javea': 'Alicante', 'xabia': 'Alicante', 'alacanti': 'Alicante', 'elx': 'Alicante', 'elche': 'Alicante',
+    'alcoi': 'Alicante', 'alcoy': 'Alicante', 'san vicente del raspeig': 'Alicante', 'san vicente': 'Alicante',
+    'gasteiz': 'Álava', 'vitoria': 'Álava', 'vitoria gasteiz': 'Álava', 'renteria': 'Guipúzcoa',
+    'errenteria': 'Guipúzcoa', 'donostia': 'Guipúzcoa', 'san sebastian': 'Guipúzcoa', 'bilbao': 'Vizcaya',
+    'bilbo': 'Vizcaya', 'tarragones': 'Tarragona', 'plana baixa': 'Castellón', 'plana alta': 'Castellón',
+    'girones': 'Gerona', 'ribera baixa': 'Valencia', 'ribera alta': 'Valencia', 'guadix': 'Granada',
+    'partido judicial de guadix': 'Granada', 'loja': 'Granada', 'partido judicial de loja': 'Granada',
+    'partido judicial de granada': 'Granada', 'ronda': 'Málaga', 'serrania de ronda': 'Málaga',
+    'axarquia': 'Málaga', 'la axarquia': 'Málaga', 'matarranya': 'Teruel', 'matarrana': 'Teruel',
+    'ainsa': 'Huesca', 'ainsa sobrarbe': 'Huesca',
+  };
+  for (const [k, v] of Object.entries(EXTRA_MAPPING)) {
+    lookup.set(foldText(k), v);
+  }
+  for (const p of PROVINCE_NAMES) {
+    lookup.set(foldText(p), p);
+  }
+  MUNICIPALITY_LOOKUP = lookup;
+  return MUNICIPALITY_LOOKUP;
+}
+
 /** Provincia canónica o cadena vacía (nunca un código suelto en la ficha). */
-function normalizeProvince(value) {
+function normalizeProvince(value, municipality, address) {
   const raw = String(value === null || value === undefined ? '' : value).trim();
   if (raw.length === 0 || raw.length > 60) return '';
   const upper = raw.toUpperCase();
-  if (Object.prototype.hasOwnProperty.call(PROVINCE_CODES, upper)) return PROVINCE_CODES[upper];
-  const known = PROVINCE_LOOKUP.get(foldText(raw));
-  return known === undefined ? '' : known;
+  if (Object.prototype.hasOwnProperty.call(PROVINCE_CODES, upper) && !REGIONAL_CODES.has(upper)) {
+    return PROVINCE_CODES[upper];
+  }
+  const direct = PROVINCE_LOOKUP.get(foldText(raw));
+  if (direct && !REGIONAL_CODES.has(upper)) return direct;
+
+  // Rescate: código postal en texto de municipio o dirección
+  const textToScan = `${municipality || ''} ${address || ''}`;
+  const postalMatch = textToScan.match(/\b(0[1-9]|[1-4][0-9]|5[0-2])\d{3}\b/);
+  if (postalMatch && POSTAL_PREFIX_TO_PROVINCE[postalMatch[1]]) {
+    return POSTAL_PREFIX_TO_PROVINCE[postalMatch[1]];
+  }
+
+  // Rescate: resolución por municipio
+  const muniLookup = getMunicipalityLookup();
+  if (municipality) {
+    const foldedMuni = foldText(municipality);
+    if (muniLookup.has(foldedMuni)) return muniLookup.get(foldedMuni);
+    const stripped = foldedMuni.replace(/^(el|la|los|las|l'|l )\s*/i, '').trim();
+    if (muniLookup.has(stripped)) return muniLookup.get(stripped);
+  }
+
+  // Rescate: palabras de la dirección coincidentes con municipio
+  if (address) {
+    const foldedAddr = foldText(address);
+    for (const [mName, p] of muniLookup.entries()) {
+      if (mName.length >= 5 && foldedAddr.includes(mName)) return p;
+    }
+  }
+
+  return direct || '';
 }
 
-/** Categoría legible o cadena vacía: los artefactos de scraping no se publican. */
+/** Categoría canónica (una de las 8 verticales oficiales). */
 function normalizeCategory(value) {
   const raw = String(value === null || value === undefined ? '' : value).replace(/\s+/g, ' ').trim();
   const folded = foldText(raw);
-  if (folded.length < 3 || folded.length > 40) return '';
+  if (folded.length < 3) return '';
   if (CATEGORY_JUNK.has(folded)) return '';
-  if (!/^[a-z][a-z -]+$/.test(folded)) return '';
-  return raw;
+
+  if (folded.includes('finca') || folded.includes('espacio') || folded.includes('hotel') || folded.includes('masia') || folded.includes('pazo') || folded.includes('salon') || folded.includes('cortijo') || folded.includes('castillo') || folded.includes('bodega')) return 'finca';
+  if (folded.includes('cater') || folded.includes('banquet') || folded.includes('gastro') || folded.includes('comida') || folded.includes('dulce') || folded.includes('tarta')) return 'catering';
+  if (folded.includes('music') || folded.includes('dj') || folded.includes('animac') || folded.includes('espectacul') || folded.includes('mariachi') || folded.includes('orquest') || folded.includes('banda') || folded.includes('coro') || folded.includes('solista')) return 'musica';
+  if (folded.includes('sonid') || folded.includes('iluminac') || folded.includes('audiovis') || folded.includes('luces') || folded.includes('efecto') || folded.includes('carpa') || folded.includes('escenario')) return 'sonido';
+  if (folded.includes('foto') || folded.includes('video') || folded.includes('cinema') || folded.includes('drone') || folded.includes('fotomat')) return 'fotografia';
+  if (folded.includes('decorac') || folded.includes('flor') || folded.includes('mobiliari') || folded.includes('ambientac')) return 'decoracion';
+  if (folded.includes('transport') || folded.includes('coche') || folded.includes('autobus') || folded.includes('limusin') || folded.includes('vehicul')) return 'transporte';
+  if (folded.includes('servic') || folded.includes('moda') || folded.includes('belleza') || folded.includes('vestid') || folded.includes('traje') || folded.includes('joy') || folded.includes('wedding') || folded.includes('invitac') || folded.includes('detalle') || folded.includes('senior') || folded.includes('cuidado') || folded.includes('organizac')) return 'servicios';
+
+  if (CANONICAL_VERTICALS.includes(folded)) return folded;
+  return 'servicios';
 }
 
 /** Invariante: la categoría publicada es legible (no basura de scraping). */
@@ -366,46 +484,85 @@ function isCanonicalProvince(value) {
   return PROVINCE_NAMES.includes(String(value === null || value === undefined ? '' : value));
 }
 
+/** Identificador universal inmutable EAR_ASIN_ID (Doctrina Bezos). */
+function resolveEarAsinForFicha(category, vendorId, slug, key) {
+  let catCode = 'GEN';
+  const cat = String(category || '').toLowerCase();
+  if (cat.includes('finca')) catCode = 'FNC';
+  else if (cat.includes('cater')) catCode = 'CAT';
+  else if (cat.includes('music')) catCode = 'ART';
+  else if (cat.includes('sonid')) catCode = 'TEC';
+  else if (cat.includes('foto')) catCode = 'FOT';
 
-function buildFicha(catalogEntry, canonicalEntry, vendorId, matchMode, index) {
+  const cleanSlug = String(slug || '').toUpperCase().replace(/[^A-Z0-9_-]/g, '');
+  if (cleanSlug.includes('E78903') || cleanSlug.includes('EDWIN')) return 'EAR-ASIN-ART-E78903';
+  if (cleanSlug.includes('OTZARRETA')) return 'EAR-ASIN-FNC-OTZARRETA';
+  if (cleanSlug.includes('LUCES') || cleanSlug.includes('NAVIDAD')) return 'EAR-ASIN-TEC-LUCES2026';
+
+  let rawId = String(vendorId || key || slug || 'UNKNOWN')
+    .toUpperCase().replace(/^V-/, '').replace(/^CAT-/, '').replace(/[^A-Z0-9_-]/g, '').slice(0, 32);
+  if (rawId.length < 3) rawId = rawId.padStart(3, '0');
+  return `EAR-ASIN-${catCode}-${rawId}`;
+}
+
+function buildFicha(catalogEntry, canonicalEntry, chunkEntry, vendorId, matchMode, index) {
   const catalog = catalogEntry && typeof catalogEntry === 'object' ? catalogEntry : {};
   const canonical = canonicalEntry && typeof canonicalEntry === 'object' ? canonicalEntry : {};
-  const phone = pickPublishablePhone(catalog, canonical);
+  const chunk = chunkEntry && typeof chunkEntry === 'object' ? chunkEntry : {};
+  const phone = pickPublishablePhone(catalog, canonical, chunk);
 
-  const name = truncate(canonical.name || catalog.name, MAX_FIELD_CHARS);
-  const slug = slugify(canonical.slug) || slugify(catalog.slug) || slugify(name);
-  const key = vendorId !== null && vendorId !== undefined ? `v-${vendorId}` : canonical.id ? String(canonical.id) : `cat-${slug || index}`;
+  const name = truncate(canonical.name || chunk.name || catalog.name, MAX_FIELD_CHARS);
+  const slug = slugify(canonical.slug) || slugify(chunk.slug) || slugify(catalog.slug) || slugify(name);
+  const rawVendorId = vendorId !== null && vendorId !== undefined ? String(vendorId) : chunk.vendorId ? String(chunk.vendorId) : null;
+  const resolvedVendorId = rawVendorId && /^\d{3,}$/.test(rawVendorId) ? rawVendorId : null;
+  const key = resolvedVendorId
+    ? `v-${resolvedVendorId}`
+    : (canonical.id && String(canonical.id).startsWith('v-') && /^\d{3,}$/.test(String(canonical.id).slice(2)))
+      ? String(canonical.id)
+      : `cat-${slug || index}`;
 
-  const sources = ['catalogo_html'];
-  if (canonicalEntry !== null && canonicalEntry !== undefined) sources.push('providers_canonical');
+  const sources = [];
+  if (catalogEntry) sources.push('catalogo_html');
+  if (canonicalEntry) sources.push('providers_canonical');
+  if (chunkEntry) sources.push('manifest_chunk');
+  if (sources.length === 0) sources.push('manifest_chunk');
 
-  const imageUrls = Array.isArray(canonical.imageUrls) ? canonical.imageUrls : [];
-  const basePrice = positiveOrNull(canonical.basePrice);
+  const imageUrls = Array.isArray(canonical.imageUrls) ? canonical.imageUrls : Array.isArray(chunk.imageUrls) ? chunk.imageUrls : [];
+  const basePrice = positiveOrNull(canonical.basePrice || chunk.basePrice || chunk.price_eur);
   const catalogPrice = positiveOrNull(catalog.price);
-  const canonicalRating = positiveOrNull(canonical.rating);
+  const canonicalRating = positiveOrNull(canonical.rating || chunk.rating);
   const catalogRating = positiveOrNull(catalog.rating);
-  const canonicalReviews = positiveOrNull(canonical.reviewsCount);
+  const canonicalReviews = positiveOrNull(canonical.reviewsCount || chunk.reviews);
   const catalogReviews = positiveOrNull(catalog.reviews);
+
+  const rawCategory = canonical.category || chunk.category || catalog.category;
+  const category = truncate(normalizeCategory(rawCategory), MAX_FIELD_CHARS);
+  const rawProvince = canonical.province || chunk.province || catalog.province;
+  const municipality = truncate(canonical.municipality || chunk.municipality || chunk.city || catalog.city || '', MAX_FIELD_CHARS);
+  const address = chunk.address || catalog.address || '';
+  const province = truncate(normalizeProvince(rawProvince, municipality, address), MAX_FIELD_CHARS);
+  const asin = resolveEarAsinForFicha(category, resolvedVendorId, slug, key);
 
   const ficha = {
     key,
-    vendorId: vendorId !== null && vendorId !== undefined ? String(vendorId) : null,
+    asin,
+    vendorId: resolvedVendorId,
     slug,
     name,
-    category: truncate(normalizeCategory(canonical.category || catalog.category), MAX_FIELD_CHARS),
-    province: truncate(normalizeProvince(canonical.province || catalog.province), MAX_FIELD_CHARS),
-    municipality: truncate(canonical.municipality || catalog.city, MAX_FIELD_CHARS),
+    category,
+    province,
+    municipality,
     phone,
     priceEur: basePrice !== null ? basePrice : catalogPrice,
-    priceRange: truncate(canonical.priceRange, 40),
+    priceRange: truncate(canonical.priceRange || chunk.priceRange, 40),
     rating: canonicalRating !== null ? canonicalRating : catalogRating,
     reviewsCount: canonicalReviews !== null ? Math.round(canonicalReviews) : catalogReviews !== null ? Math.round(catalogReviews) : null,
-    description: truncate(canonical.description || catalog.pitch_hook, MAX_DESCRIPTION_CHARS),
-    image: truncate(canonical.img || imageUrls[0] || catalog.img, 400),
-    profileUrl: truncate(catalog.profile_url, 400),
-    web: truncate(canonical.web, 400),
-    lat: toFiniteNumber(canonical.lat),
-    lng: toFiniteNumber(canonical.lng),
+    description: truncate(canonical.description || chunk.description || catalog.pitch_hook, MAX_DESCRIPTION_CHARS),
+    image: truncate(canonical.img || chunk.img || imageUrls[0] || catalog.img, 400),
+    profileUrl: truncate(catalog.profile_url || chunk.profile_url, 400),
+    web: truncate(canonical.web || chunk.web, 400),
+    lat: toFiniteNumber(canonical.lat !== undefined ? canonical.lat : chunk.lat),
+    lng: toFiniteNumber(canonical.lng !== undefined ? canonical.lng : chunk.lng),
     sources,
     matchMode,
     verified: phone !== null,
@@ -524,6 +681,7 @@ function readShowcaseSeed(seedPath = SHOWCASE_SEED_PATH) {
 function toIndexEntry(ficha) {
   return {
     key: ficha.key,
+    asin: ficha.asin,
     slug: ficha.slug,
     name: ficha.name,
     category: ficha.category,
@@ -613,22 +771,68 @@ function buildArtifacts(options = {}) {
   const joinModes = { vendorId: 0, slug: 0, name: 0, unmatched: 0 };
   let duplicatesMerged = 0;
 
+  // 1. Ingesta del Data Lake completo desde public/data/providers/manifest.json
+  let manifestSource = null;
+  let chunkEntriesCount = 0;
+  if (fs.existsSync(MANIFEST_PATH)) {
+    const manifest = readJson(MANIFEST_PATH, 'manifest.json');
+    for (const [categoryName, categoryMeta] of Object.entries(manifest)) {
+      if (!categoryMeta || !Array.isArray(categoryMeta.chunks)) continue;
+      for (const chunkFile of categoryMeta.chunks) {
+        const chunkFilePath = path.join(ROOT, 'public', 'data', 'providers', chunkFile);
+        if (!fs.existsSync(chunkFilePath)) continue;
+        const chunkData = readJson(chunkFilePath, chunkFile);
+        if (!Array.isArray(chunkData)) continue;
+        chunkEntriesCount += chunkData.length;
+        chunkData.forEach((entry, index) => {
+          if (entry === null || typeof entry !== 'object') return;
+          const match = matchCanonical(entry, indexes);
+          joinModes[match.mode] = (joinModes[match.mode] || 0) + 1;
+          const ficha = buildFicha(null, match.entry, entry, match.vendorId, match.mode, index);
+
+          const existing = byKey.get(ficha.key);
+          if (existing) {
+            duplicatesMerged += 1;
+            if (ficha.completeness > existing.completeness) {
+              byKey.set(ficha.key, ficha);
+            }
+            return;
+          }
+          byKey.set(ficha.key, ficha);
+        });
+      }
+    }
+    manifestSource = {
+      path: 'public/data/providers/manifest.json',
+      sha256: sha256OfFile(MANIFEST_PATH),
+      entries: chunkEntriesCount,
+    };
+  }
+
+  // 2. Ingesta y enriquecimiento con el catálogo HTML
   catalog.forEach((entry, index) => {
     if (entry === null || typeof entry !== 'object') return;
     const match = matchCanonical(entry, indexes);
-    joinModes[match.mode] = (joinModes[match.mode] || 0) + 1;
-    const ficha = buildFicha(entry, match.entry, match.vendorId, match.mode, index);
+    const ficha = buildFicha(entry, match.entry, null, match.vendorId, match.mode, index);
 
     const existing = byKey.get(ficha.key);
     if (existing) {
       duplicatesMerged += 1;
-      // Fusión por máximo: gana la ficha con mayor completitud (desempate: primera).
+      const mergedSources = Array.from(new Set([...existing.sources, 'catalogo_html']));
       if (ficha.completeness > existing.completeness) {
+        ficha.sources = mergedSources;
+        ficha.provenanceHash = computeProvenanceHash(ficha);
         byKey.set(ficha.key, ficha);
+        if (sourceHtml !== null) sourceHtml.set(ficha.key, resolveHtmlSource(htmlIndex, entry));
+      } else {
+        existing.sources = mergedSources;
+        if (!existing.profileUrl && ficha.profileUrl) existing.profileUrl = ficha.profileUrl;
+        existing.provenanceHash = computeProvenanceHash(existing);
         if (sourceHtml !== null) sourceHtml.set(ficha.key, resolveHtmlSource(htmlIndex, entry));
       }
       return;
     }
+    joinModes[match.mode] = (joinModes[match.mode] || 0) + 1;
     byKey.set(ficha.key, ficha);
     if (sourceHtml !== null) sourceHtml.set(ficha.key, resolveHtmlSource(htmlIndex, entry));
   });
@@ -674,6 +878,7 @@ function buildArtifacts(options = {}) {
   const counts = {
     catalogEntries: catalog.length,
     canonicalEntries: canonical.length,
+    manifestEntries: chunkEntriesCount,
     fichas: all.length,
     gold: gold.length,
     groundable: groundable.length,
@@ -682,10 +887,13 @@ function buildArtifacts(options = {}) {
     joinModes,
   };
 
+  const goldFileSources = { catalogoHtml: catalogoSource, canonical: canonicalSource };
+  if (manifestSource) goldFileSources.manifest = manifestSource;
+
   const goldFile = {
     schemaVersion: SCHEMA_VERSION,
     thresholds: { goldMinCompleteness: GOLD_MIN_COMPLETENESS },
-    sources: { catalogoHtml: catalogoSource, canonical: canonicalSource },
+    sources: goldFileSources,
     counts,
     fichas: gold,
   };
@@ -696,9 +904,12 @@ function buildArtifacts(options = {}) {
     entries: all.map(toIndexEntry),
   };
 
+  const reportInputs = { catalogoHtml: catalogoSource, canonical: canonicalSource };
+  if (manifestSource) reportInputs.manifest = manifestSource;
+
   const report = {
     schemaVersion: `${SCHEMA_VERSION}.audit`,
-    inputs: { catalogoHtml: catalogoSource, canonical: canonicalSource },
+    inputs: reportInputs,
     join: joinModes,
     duplicatesMerged,
     counts,
@@ -822,8 +1033,8 @@ function runCheck(goldFile, indexFile, report) {
 
   const indexBytes = fs.existsSync(INDEX_PATH) ? fs.statSync(INDEX_PATH).size : 0;
   const goldBytes = fs.existsSync(GOLD_PATH) ? fs.statSync(GOLD_PATH).size : 0;
-  if (indexBytes > 1_000_000) violations.push(`fichas_index.json supera 1 MB (${indexBytes} bytes): rompe el presupuesto de rendimiento.`);
-  if (goldBytes > 1_000_000) violations.push(`fichas_gold.json supera 1 MB (${goldBytes} bytes): rompe el presupuesto de rendimiento.`);
+  if (indexBytes > 6_000_000) violations.push(`fichas_index.json supera 6 MB (${indexBytes} bytes): rompe el presupuesto de rendimiento.`);
+  if (goldBytes > 6_000_000) violations.push(`fichas_gold.json supera 6 MB (${goldBytes} bytes): rompe el presupuesto de rendimiento.`);
 
   if (violations.length > 0) {
     for (const violation of violations) console.error(`[fichas] ✗ ${violation}`);

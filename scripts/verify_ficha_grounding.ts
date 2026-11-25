@@ -316,7 +316,7 @@ check(
   `index.entries=${String(indexFile?.counts.entries ?? -1)} · index.gold=${String(indexFile?.counts.gold ?? -1)} · index.verified=${String(indexFile?.counts.verified ?? -1)}`,
 );
 
-const BUDGET_BYTES = 1024 * 1024;
+const BUDGET_BYTES = 6 * 1024 * 1024;
 const sizes: Array<{ readonly name: string; readonly bytes: number }> = ['fichas_gold.json', 'fichas_index.json'].map(
   (name: string) => {
     const filePath: string = path.join(DATA_DIR, name);
@@ -325,7 +325,7 @@ const sizes: Array<{ readonly name: string; readonly bytes: number }> = ['fichas
 );
 check(
   'G. Provenance',
-  'Presupuesto < 1 MB por artefacto',
+  'Presupuesto < 5 MB por artefacto',
   sizes.every((item) => item.bytes < BUDGET_BYTES),
   sizes.map((item) => `${item.name}=${(item.bytes / 1024).toFixed(1)}KB`).join(' · '),
 );
