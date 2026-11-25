@@ -251,6 +251,10 @@ const nextConfig: NextConfig = {
         destination: "/artistas",
         permanent: true,
       },
+      // P0 SANEAMIENTO: erradicación y redirección canónica 301 de /celebraciones hacia /
+      { source: "/celebraciones", destination: "/", permanent: true },
+      { source: "/celebraciones/:path*", destination: "/", permanent: true },
+      { source: "/reservar", destination: "/reservar/solista", permanent: true },
       // Consolidación anti-doorway: rutas legacy /weddings -> hub real de bodas
       { source: "/weddings", destination: "/bodas", permanent: true },
       { source: "/weddings/:path*", destination: "/bodas", permanent: true },

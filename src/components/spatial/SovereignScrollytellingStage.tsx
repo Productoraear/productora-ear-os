@@ -288,7 +288,7 @@ export default function SovereignScrollytellingStage(): React.JSX.Element {
         id: 'fianza',
         label: `Bloquear Fecha (Stripe ${DEPOSITO_STRIPE_EUR.toFixed(0)}€ Deducible)`,
         icon: CreditCard,
-        href: '/reservar',
+        href: '/reservar/solista',
       },
       {
         id: 'centralita',

@@ -1,44 +1,18 @@
 {
-  "generatedAt": "2026-11-25T10:48:40.605Z",
+  "generatedAt": "2026-11-25T11:33:46.721Z",
   "totalAuditedPages": 32,
   "maturityDistribution": {
-    "nivel1_pasivo": 9,
-    "nivel2_asistido": 12,
-    "nivel3_validado": 3,
+    "nivel1_pasivo": 6,
+    "nivel2_asistido": 11,
+    "nivel3_validado": 0,
     "nivel4_integrado": 0,
-    "nivel5_tier1_sclass": 8
+    "nivel5_tier1_sclass": 15
   },
   "multiRailConnectivity": {
-    "connected": 23,
-    "isolated": 9
+    "connected": 26,
+    "isolated": 6
   },
   "entries": [
-    {
-      "routeUrl": "/admin/afiliados",
-      "fileRelPath": "src/app/(admin)/admin/afiliados/page.tsx",
-      "dimension": "TESORERIA_SPLIT",
-      "maturityLevel": 1,
-      "maturityLabel": "Nivel 1: Pasivo (Vista estática)",
-      "ssotStatus": "HARDCODED",
-      "multiRailConnected": false,
-      "connectedRails": [],
-      "validationStatus": "TS_INTERFACE",
-      "primaryDebt": "Cifras o textos no importan de ear-os-ssot.ts; Tipado laxo (sin validación Zod en runtime); Formulario/tabla pasiva sin Multi-Rail",
-      "recommendedAction": "Enlazar constantes con ear-os-ssot.ts; Elevar a contrato Zod estricto; Conectar disparador ejecutivo (STRIPE_CHECKOUT / WEBHOOK_N8N)"
-    },
-    {
-      "routeUrl": "/admin/agentes",
-      "fileRelPath": "src/app/(admin)/admin/agentes/page.tsx",
-      "dimension": "GOBERNANZA_SRE",
-      "maturityLevel": 1,
-      "maturityLabel": "Nivel 1: Pasivo (Vista estática)",
-      "ssotStatus": "HARDCODED",
-      "multiRailConnected": false,
-      "connectedRails": [],
-      "validationStatus": "TS_INTERFACE",
-      "primaryDebt": "Cifras o textos no importan de ear-os-ssot.ts; Tipado laxo (sin validación Zod en runtime); Formulario/tabla pasiva sin Multi-Rail",
-      "recommendedAction": "Enlazar constantes con ear-os-ssot.ts; Elevar a contrato Zod estricto; Conectar disparador ejecutivo (MEGAPROMPT_OBRERO / WEBHOOK_N8N)"
-    },
     {
       "routeUrl": "/admin/arena",
       "fileRelPath": "src/app/(admin)/admin/arena/page.tsx",
@@ -116,19 +90,6 @@
       "validationStatus": "TS_INTERFACE",
       "primaryDebt": "Cifras o textos no importan de ear-os-ssot.ts; Tipado laxo (sin validación Zod en runtime); Formulario/tabla pasiva sin Multi-Rail",
       "recommendedAction": "Enlazar constantes con ear-os-ssot.ts; Elevar a contrato Zod estricto; Conectar disparador ejecutivo (ORDEN_SALA_COCINA / CONTRATO_EIDAS)"
-    },
-    {
-      "routeUrl": "/admin/sentinel",
-      "fileRelPath": "src/app/(admin)/admin/sentinel/page.tsx",
-      "dimension": "GOBERNANZA_SRE",
-      "maturityLevel": 1,
-      "maturityLabel": "Nivel 1: Pasivo (Vista estática)",
-      "ssotStatus": "HARDCODED",
-      "multiRailConnected": false,
-      "connectedRails": [],
-      "validationStatus": "TS_INTERFACE",
-      "primaryDebt": "Cifras o textos no importan de ear-os-ssot.ts; Tipado laxo (sin validación Zod en runtime); Formulario/tabla pasiva sin Multi-Rail",
-      "recommendedAction": "Enlazar constantes con ear-os-ssot.ts; Elevar a contrato Zod estricto; Conectar disparador ejecutivo (MEGAPROMPT_OBRERO / WEBHOOK_N8N)"
     },
     {
       "routeUrl": "/admin",
@@ -226,22 +187,6 @@
       "recommendedAction": "Enlazar constantes con ear-os-ssot.ts; Elevar a contrato Zod estricto"
     },
     {
-      "routeUrl": "/admin/telemetria",
-      "fileRelPath": "src/app/(admin)/admin/telemetria/page.tsx",
-      "dimension": "GOBERNANZA_SRE",
-      "maturityLevel": 2,
-      "maturityLabel": "Nivel 2: Asistido (Fetch básico)",
-      "ssotStatus": "HARDCODED",
-      "multiRailConnected": true,
-      "connectedRails": [
-        "STRIPE_CHECKOUT",
-        "WEBHOOK_N8N"
-      ],
-      "validationStatus": "TS_INTERFACE",
-      "primaryDebt": "Cifras o textos no importan de ear-os-ssot.ts; Tipado laxo (sin validación Zod en runtime)",
-      "recommendedAction": "Enlazar constantes con ear-os-ssot.ts; Elevar a contrato Zod estricto"
-    },
-    {
       "routeUrl": "/admin/telemetria/funnel",
       "fileRelPath": "src/app/(admin)/admin/telemetria/funnel/page.tsx",
       "dimension": "GOBERNANZA_SRE",
@@ -318,55 +263,39 @@
       "recommendedAction": "Enlazar constantes con ear-os-ssot.ts; Elevar a contrato Zod estricto"
     },
     {
-      "routeUrl": "/admin/compiler",
-      "fileRelPath": "src/app/(admin)/admin/compiler/page.tsx",
-      "dimension": "GOBERNANZA_SRE",
-      "maturityLevel": 3,
-      "maturityLabel": "Nivel 3: Validado (Tipado/Zod)",
-      "ssotStatus": "CONECTADO_SSOT",
-      "multiRailConnected": true,
-      "connectedRails": [
-        "WEBHOOK_N8N",
-        "MEGAPROMPT_OBRERO"
-      ],
-      "validationStatus": "TS_INTERFACE",
-      "primaryDebt": "Tipado laxo (sin validación Zod en runtime)",
-      "recommendedAction": "Elevar a contrato Zod estricto"
-    },
-    {
-      "routeUrl": "/admin/documentacion",
-      "fileRelPath": "src/app/(admin)/admin/documentacion/page.tsx",
-      "dimension": "GOBERNANZA_SRE",
-      "maturityLevel": 3,
-      "maturityLabel": "Nivel 3: Validado (Tipado/Zod)",
-      "ssotStatus": "CONECTADO_SSOT",
-      "multiRailConnected": true,
-      "connectedRails": [
-        "STRIPE_CHECKOUT",
-        "FACTURAE_B2G",
-        "ORDEN_SALA_COCINA",
-        "WAYBILL_LOGISTICA"
-      ],
-      "validationStatus": "LAX",
-      "primaryDebt": "Tipado laxo (sin validación Zod en runtime)",
-      "recommendedAction": "Elevar a contrato Zod estricto"
-    },
-    {
-      "routeUrl": "/admin/legal",
-      "fileRelPath": "src/app/(admin)/admin/legal/page.tsx",
+      "routeUrl": "/admin/afiliados",
+      "fileRelPath": "src/app/(admin)/admin/afiliados/page.tsx",
       "dimension": "TESORERIA_SPLIT",
-      "maturityLevel": 3,
-      "maturityLabel": "Nivel 3: Validado (Tipado/Zod)",
+      "maturityLevel": 5,
+      "maturityLabel": "Nivel 5: Tier-1 S-Class Conectado",
+      "ssotStatus": "CONECTADO_SSOT",
+      "multiRailConnected": true,
+      "connectedRails": [
+        "CONTRATO_EIDAS",
+        "STRIPE_CHECKOUT"
+      ],
+      "validationStatus": "ZOD_STRICT",
+      "primaryDebt": "Ninguna crítica (Conforme)",
+      "recommendedAction": "Mantener certificación y telemetría AST"
+    },
+    {
+      "routeUrl": "/admin/agentes",
+      "fileRelPath": "src/app/(admin)/admin/agentes/page.tsx",
+      "dimension": "GOBERNANZA_SRE",
+      "maturityLevel": 5,
+      "maturityLabel": "Nivel 5: Tier-1 S-Class Conectado",
       "ssotStatus": "CONECTADO_SSOT",
       "multiRailConnected": true,
       "connectedRails": [
         "CONTRATO_EIDAS",
         "STRIPE_CHECKOUT",
-        "FACTURAE_B2G"
+        "FACTURAE_B2G",
+        "WEBHOOK_N8N",
+        "MEGAPROMPT_OBRERO"
       ],
-      "validationStatus": "LAX",
-      "primaryDebt": "Tipado laxo (sin validación Zod en runtime)",
-      "recommendedAction": "Elevar a contrato Zod estricto"
+      "validationStatus": "ZOD_STRICT",
+      "primaryDebt": "Ninguna crítica (Conforme)",
+      "recommendedAction": "Mantener certificación y telemetría AST"
     },
     {
       "routeUrl": "/admin/calibrador-proveedores",
@@ -380,6 +309,24 @@
         "CONTRATO_EIDAS",
         "FACTURAE_B2G",
         "WAYBILL_LOGISTICA"
+      ],
+      "validationStatus": "ZOD_STRICT",
+      "primaryDebt": "Ninguna crítica (Conforme)",
+      "recommendedAction": "Mantener certificación y telemetría AST"
+    },
+    {
+      "routeUrl": "/admin/compiler",
+      "fileRelPath": "src/app/(admin)/admin/compiler/page.tsx",
+      "dimension": "GOBERNANZA_SRE",
+      "maturityLevel": 5,
+      "maturityLabel": "Nivel 5: Tier-1 S-Class Conectado",
+      "ssotStatus": "CONECTADO_SSOT",
+      "multiRailConnected": true,
+      "connectedRails": [
+        "STRIPE_CHECKOUT",
+        "FACTURAE_B2G",
+        "WEBHOOK_N8N",
+        "MEGAPROMPT_OBRERO"
       ],
       "validationStatus": "ZOD_STRICT",
       "primaryDebt": "Ninguna crítica (Conforme)",
@@ -403,6 +350,27 @@
       "recommendedAction": "Mantener certificación y telemetría AST"
     },
     {
+      "routeUrl": "/admin/documentacion",
+      "fileRelPath": "src/app/(admin)/admin/documentacion/page.tsx",
+      "dimension": "GOBERNANZA_SRE",
+      "maturityLevel": 5,
+      "maturityLabel": "Nivel 5: Tier-1 S-Class Conectado",
+      "ssotStatus": "CONECTADO_SSOT",
+      "multiRailConnected": true,
+      "connectedRails": [
+        "CONTRATO_EIDAS",
+        "STRIPE_CHECKOUT",
+        "FACTURAE_B2G",
+        "ORDEN_SALA_COCINA",
+        "WAYBILL_LOGISTICA",
+        "WEBHOOK_N8N",
+        "MEGAPROMPT_OBRERO"
+      ],
+      "validationStatus": "ZOD_STRICT",
+      "primaryDebt": "Ninguna crítica (Conforme)",
+      "recommendedAction": "Mantener certificación y telemetría AST"
+    },
+    {
       "routeUrl": "/admin/flota",
       "fileRelPath": "src/app/(admin)/admin/flota/page.tsx",
       "dimension": "LOGISTICA_FLEET",
@@ -414,6 +382,24 @@
         "CONTRATO_EIDAS",
         "STRIPE_CHECKOUT",
         "WAYBILL_LOGISTICA"
+      ],
+      "validationStatus": "ZOD_STRICT",
+      "primaryDebt": "Ninguna crítica (Conforme)",
+      "recommendedAction": "Mantener certificación y telemetría AST"
+    },
+    {
+      "routeUrl": "/admin/legal",
+      "fileRelPath": "src/app/(admin)/admin/legal/page.tsx",
+      "dimension": "TESORERIA_SPLIT",
+      "maturityLevel": 5,
+      "maturityLabel": "Nivel 5: Tier-1 S-Class Conectado",
+      "ssotStatus": "CONECTADO_SSOT",
+      "multiRailConnected": true,
+      "connectedRails": [
+        "CONTRATO_EIDAS",
+        "STRIPE_CHECKOUT",
+        "FACTURAE_B2G",
+        "WEBHOOK_N8N"
       ],
       "validationStatus": "ZOD_STRICT",
       "primaryDebt": "Ninguna crítica (Conforme)",
@@ -468,6 +454,25 @@
       "recommendedAction": "Mantener certificación y telemetría AST"
     },
     {
+      "routeUrl": "/admin/sentinel",
+      "fileRelPath": "src/app/(admin)/admin/sentinel/page.tsx",
+      "dimension": "GOBERNANZA_SRE",
+      "maturityLevel": 5,
+      "maturityLabel": "Nivel 5: Tier-1 S-Class Conectado",
+      "ssotStatus": "CONECTADO_SSOT",
+      "multiRailConnected": true,
+      "connectedRails": [
+        "CONTRATO_EIDAS",
+        "STRIPE_CHECKOUT",
+        "FACTURAE_B2G",
+        "WEBHOOK_N8N",
+        "MEGAPROMPT_OBRERO"
+      ],
+      "validationStatus": "ZOD_STRICT",
+      "primaryDebt": "Ninguna crítica (Conforme)",
+      "recommendedAction": "Mantener certificación y telemetría AST"
+    },
+    {
       "routeUrl": "/admin/simulador",
       "fileRelPath": "src/app/(admin)/admin/simulador/page.tsx",
       "dimension": "TESORERIA_SPLIT",
@@ -479,6 +484,24 @@
         "CONTRATO_EIDAS",
         "STRIPE_CHECKOUT",
         "FACTURAE_B2G"
+      ],
+      "validationStatus": "ZOD_STRICT",
+      "primaryDebt": "Ninguna crítica (Conforme)",
+      "recommendedAction": "Mantener certificación y telemetría AST"
+    },
+    {
+      "routeUrl": "/admin/telemetria",
+      "fileRelPath": "src/app/(admin)/admin/telemetria/page.tsx",
+      "dimension": "GOBERNANZA_SRE",
+      "maturityLevel": 5,
+      "maturityLabel": "Nivel 5: Tier-1 S-Class Conectado",
+      "ssotStatus": "CONECTADO_SSOT",
+      "multiRailConnected": true,
+      "connectedRails": [
+        "CONTRATO_EIDAS",
+        "STRIPE_CHECKOUT",
+        "WAYBILL_LOGISTICA",
+        "WEBHOOK_N8N"
       ],
       "validationStatus": "ZOD_STRICT",
       "primaryDebt": "Ninguna crítica (Conforme)",

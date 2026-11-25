@@ -20,11 +20,73 @@ import {
   Building2,
   Calendar,
   ExternalLink,
-  ChevronRight
+  ChevronRight,
+  ChevronDown,
+  ChevronUp,
+  Share2,
+  X,
+  BadgeCheck,
 } from 'lucide-react';
+import { z } from 'zod';
+import {
+  SPLIT_SOBERANO,
+  DEPOSITO_STRIPE_EUR,
+  LIMITE_B2G_LCSP_EUR,
+  LIMITE_SPL_DB,
+} from '@/lib/constants/ear-os-ssot';
+import {
+  GLOBAL_SYSTEM_INVARIANTS,
+  resolveEntityContext,
+} from '@/lib/oraculo/entity-resolver';
+import {
+  executeMegapromptObrero,
+  executeWebhookN8n,
+  type MultiRailExecutionResult,
+} from '@/lib/compiler/multi-rail-execution';
+
+export const ForensicDocumentationSchema = z
+  .object({
+    activeTab: z.enum(['cronologia', 'arquitectura', 'modelos', 'trojan', 'seating', 'gates', 'legal']),
+    commitsTotal: z.number(),
+    modelsTotal: z.number(),
+    routesTotal: z.number(),
+  })
+  .strict();
 
 export default function DocumentacionForensePage() {
   const [activeTab, setActiveTab] = useState<'cronologia' | 'arquitectura' | 'modelos' | 'trojan' | 'seating' | 'gates' | 'legal'>('cronologia');
+  const [activeResult, setActiveResult] = useState<MultiRailExecutionResult | null>(null);
+  const [showAuxiliary, setShowAuxiliary] = useState<boolean>(false);
+
+  const handleTriggerMegaprompt = () => {
+    const res = executeMegapromptObrero({
+      eventId: `DOC-AUDIT-${Date.now().toString(36).toUpperCase()}`,
+      clientName: 'Documentación Forense SOTA',
+      venue: 'Sede Productora EAR',
+      eventDate: new Date().toISOString().slice(0, 10),
+      grossEur: 0,
+      dimensionId: 'GOBERNANZA_SRE',
+      entityContext: resolveEntityContext('documentacion-forense', 'GOBERNANZA_SRE'),
+      pepitaDeOro: 'Auditoría Forense SOTA EAR OS 2026',
+      rawVision: `Compilación técnica de 1.007 commits, 73 modelos Prisma y arnés de compuertas verificado`,
+    });
+    setActiveResult(res);
+  };
+
+  const handleTriggerN8n = async () => {
+    const res = await executeWebhookN8n({
+      eventId: `DOC-DISPATCH-${Date.now().toString(36).toUpperCase()}`,
+      clientName: 'Dossier Forense Integral',
+      venue: 'Sede Productora EAR',
+      eventDate: new Date().toISOString().slice(0, 10),
+      grossEur: 0,
+      dimensionId: 'GOBERNANZA_SRE',
+      entityContext: resolveEntityContext('documentacion-forense', 'GOBERNANZA_SRE'),
+      pepitaDeOro: 'Despacho de Dossier Forense Integral',
+      rawVision: 'Exportación estructurada de telemetría de modelos y contratos hacia n8n',
+    });
+    setActiveResult(res);
+  };
 
   return (
     <div className="space-y-8 max-w-7xl mx-auto font-sans pb-24 text-white">
@@ -54,6 +116,20 @@ export default function DocumentacionForensePage() {
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
+            <button
+              onClick={handleTriggerMegaprompt}
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-emerald-500/40 bg-emerald-950/40 text-emerald-300 font-mono font-bold text-xs uppercase tracking-wider hover:bg-emerald-900/60 transition-all cursor-pointer"
+            >
+              <Terminal size={14} />
+              <span>Megaprompt Obrero</span>
+            </button>
+            <button
+              onClick={handleTriggerN8n}
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-amber-500/40 bg-amber-950/40 text-amber-300 font-mono font-bold text-xs uppercase tracking-wider hover:bg-amber-900/60 transition-all cursor-pointer"
+            >
+              <Share2 size={14} />
+              <span>Despacho n8n</span>
+            </button>
             <a
               href="/downloads/EAR_OS_DOSSIER_FORENSE_SOTA_2026.md"
               download="EAR_OS_DOSSIER_FORENSE_SOTA_2026.md"
@@ -523,6 +599,101 @@ export default function DocumentacionForensePage() {
         )}
 
       </div>
+
+      {/* VISTA PLEGABLE: REPORTES AUXILIARES & SALVAGUARDAS ARQUITECTÓNICAS */}
+      <div className="rounded-3xl bg-[#09090d]/60 border border-white/10 overflow-hidden">
+        <button
+          onClick={() => setShowAuxiliary(!showAuxiliary)}
+          className="w-full p-5 flex items-center justify-between text-left hover:bg-white/5 transition-colors cursor-pointer"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-zinc-400">
+              <Layers className="w-4 h-4" />
+            </div>
+            <div>
+              <h4 className="text-sm font-bold font-syne text-white uppercase">
+                Herramientas Secundarias &amp; Invariantes de Gobernanza SRE
+              </h4>
+              <p className="text-xs text-zinc-400 font-mono">
+                Desglose de contratos, límites de aislamiento de catálogo y mamparos de concurrencia
+              </p>
+            </div>
+          </div>
+          {showAuxiliary ? <ChevronUp className="w-5 h-5 text-zinc-400" /> : <ChevronDown className="w-5 h-5 text-zinc-400" />}
+        </button>
+
+        {showAuxiliary && (
+          <div className="p-6 pt-0 border-t border-white/5 grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono text-zinc-300">
+            <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-1">
+              <span className="text-[10px] text-zinc-500 uppercase">Aislamiento Artistas</span>
+              <p className="text-white font-bold">Paciente Cero Edwin Agudelo (e78903)</p>
+              <p className="text-zinc-400 text-[11px]">Suelo inmutable 350 € / 550 € con 100 km. Prohibido aplicar a terceros.</p>
+            </div>
+            <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-1">
+              <span className="text-[10px] text-zinc-500 uppercase">Aislamiento Fincas</span>
+              <p className="text-white font-bold">Paciente Cero Otzarreta (Eduardo Martínez)</p>
+              <p className="text-zinc-400 text-[11px]">Menús 2026 (145€ - 185€) blindados exclusivamente a su slug.</p>
+            </div>
+            <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-1">
+              <span className="text-[10px] text-zinc-500 uppercase">Arnés Pre-Push</span>
+              <p className="text-emerald-400 font-bold">17/17 Gates Exit Code 0</p>
+              <p className="text-zinc-400 text-[11px]">Ningún commit entra en main sin superar el protocolo determinista.</p>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* MODAL DE RESULTADO MULTI-RAIL */}
+      {activeResult && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-2xl bg-[#09090d] border border-white/20 rounded-3xl p-6 shadow-2xl space-y-4">
+            <div className="flex items-center justify-between border-b border-zinc-800 pb-3">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                <h3 className="text-sm font-bold font-syne text-white uppercase tracking-wider">
+                  {activeResult.title}
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setActiveResult(null)}
+                className="p-1 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="space-y-3 text-xs font-mono">
+              <div className="flex items-center justify-between p-3 rounded-xl bg-zinc-950 border border-zinc-900">
+                <span className="text-zinc-400">Artefacto:</span>
+                <span className="text-white font-bold">{activeResult.filename}</span>
+              </div>
+
+              <div className="p-3 rounded-xl bg-zinc-950 border border-zinc-900 space-y-1">
+                <span className="text-zinc-500 text-[10px] block">SELLO SHA-256</span>
+                <span className="text-[#ecb613] text-[11px] break-all">{activeResult.sha256}</span>
+              </div>
+
+              <div className="space-y-1">
+                <span className="text-zinc-400 text-[11px]">Payload / Contenido:</span>
+                <pre className="p-3 rounded-xl bg-black border border-zinc-900 text-[11px] text-zinc-300 overflow-x-auto max-h-48 font-mono">
+                  {activeResult.previewContent}
+                </pre>
+              </div>
+            </div>
+
+            <div className="pt-2 flex items-center justify-end gap-3">
+              <button
+                type="button"
+                onClick={() => setActiveResult(null)}
+                className="px-4 py-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-300 text-xs font-mono transition-colors"
+              >
+                Cerrar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

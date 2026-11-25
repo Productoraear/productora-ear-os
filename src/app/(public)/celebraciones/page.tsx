@@ -1,13 +1,13 @@
-import React from 'react';
-import type { Metadata } from 'next';
-import { JourneyPage } from '@/components/home/JourneyPage';
+import { permanentRedirect } from 'next/navigation';
 
-export const metadata: Metadata = {
-  title: 'Celebraciones privadas y restauración · EAR OS',
-  description: 'Restaurante Otzarreta en Derio, menús oficiales, música de gala y reserva con fianza deducible.',
-  alternates: { canonical: 'https://productoraear.com/celebraciones' },
-};
-
-export default function CelebracionesPage(): React.JSX.Element {
-  return <JourneyPage door="celebraciones" />;
+/**
+ * ════════════════════════════════════════════════════════════════════════════
+ * SANEAMIENTO CANÓNICO P0 — /celebraciones → /
+ * ════════════════════════════════════════════════════════════════════════════
+ * Erradicación definitiva de la ruta contaminada /celebraciones y sus CTAs
+ * obsoletos. Redirección permanente 301 al escaparate canónico principal.
+ * ════════════════════════════════════════════════════════════════════════════
+ */
+export default function CelebracionesPage(): never {
+  permanentRedirect('/');
 }

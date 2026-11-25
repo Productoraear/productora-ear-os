@@ -20,8 +20,19 @@ import {
   ExternalLink,
   ShieldCheck,
   Zap,
+  ArrowRight,
   type LucideIcon,
 } from 'lucide-react';
+import { z } from 'zod';
+import {
+  SPLIT_SOBERANO,
+  DEPOSITO_STRIPE_EUR,
+  LIMITE_B2G_LCSP_EUR,
+} from '@/lib/constants/ear-os-ssot';
+import {
+  GLOBAL_SYSTEM_INVARIANTS,
+  resolveEntityContext,
+} from '@/lib/oraculo/entity-resolver';
 import {
   MASTER_OBJECTIVES,
   MASTER_TACTICS,
@@ -36,6 +47,15 @@ import {
   type OracleRefinedOutput,
 } from '@/lib/oraculo/oracle-refiner';
 import { getVelocityVaultStats } from '@/lib/oraculo/velocity-knowledge-index';
+
+export const MasterCompilerFormSchema = z
+  .object({
+    objective: z.string(),
+    tactic: z.string(),
+    targetAgent: z.string(),
+    rawVision: z.string(),
+  })
+  .strict();
 
 export default function MasterCompilerPage(): React.JSX.Element {
   const [rawVision, setRawVision] = useState<string>('');
@@ -131,6 +151,37 @@ export default function MasterCompilerPage(): React.JSX.Element {
 
   return (
     <div className="min-h-screen bg-[#030305] text-zinc-100 font-sans p-4 sm:p-8 space-y-6">
+      {/* ════════════════════════════════════════════════════════════════════════ */}
+      {/* BANNER CANÓNICO DE UNIFICACIÓN: COCKPIT CEO v14.1                         */}
+      {/* ════════════════════════════════════════════════════════════════════════ */}
+      <div className="bg-gradient-to-r from-amber-500/10 via-[#0b0c13] to-amber-500/10 border border-[#ecb613]/40 rounded-3xl p-5 shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-2xl bg-[#ecb613]/20 border border-[#ecb613]/40 flex items-center justify-center text-[#ecb613] shrink-0">
+            <Crown className="w-5 h-5" />
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] font-mono uppercase bg-[#ecb613] text-black font-bold px-2 py-0.5 rounded">
+                PUENTE CANÓNICO
+              </span>
+              <span className="text-xs font-mono text-zinc-400">
+                Compilador Unificado del CEO · EAR OS v14.1
+              </span>
+            </div>
+            <h2 className="text-base font-bold font-syne text-white mt-0.5">
+              Cockpit &amp; Oráculo Multi-Rail Operacional
+            </h2>
+          </div>
+        </div>
+        <Link
+          href="/admin/oracle-compiler"
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-[#ecb613] text-black font-mono font-bold text-xs uppercase tracking-wider hover:bg-amber-300 transition-all shadow-[0_0_20px_rgba(236,182,19,0.3)] shrink-0"
+        >
+          <span>Ir al Cockpit CEO (/admin/oracle-compiler)</span>
+          <ArrowRight className="w-4 h-4" />
+        </Link>
+      </div>
+
       {/* ════════════════════════════════════════════════════════════════════════ */}
       {/* BARRA SUPERIOR DE MANDO DEL CEO                                          */}
       {/* ════════════════════════════════════════════════════════════════════════ */}

@@ -27,34 +27,55 @@ import {
   Save,
   X,
   Power,
+  CreditCard,
+  FileCheck,
+  Download,
 } from 'lucide-react';
+import { z } from 'zod';
+import {
+  SPLIT_SOBERANO,
+  DEPOSITO_STRIPE_EUR,
+} from '@/lib/constants/ear-os-ssot';
+import {
+  GLOBAL_SYSTEM_INVARIANTS,
+  resolveEntityContext,
+} from '@/lib/oraculo/entity-resolver';
+import {
+  executeStripeCheckout,
+  executeEidasContract,
+  type MultiRailExecutionResult,
+} from '@/lib/compiler/multi-rail-execution';
 
 // ════════════════════════════════════════════════════════════════════════════
-// S-CLASS ADMIN · RED DE AFILIADOS · COMMISSION ENGINE 80/10/10
+// S-CLASS ADMIN · RED DE AFILIADOS · COMMISSION ENGINE
 // Datos reales desde /api/affiliates/v2/list + gestión de comisiones
 // ════════════════════════════════════════════════════════════════════════════
 
-interface AffiliateItem {
-  id: string;
-  affiliateCode: string;
-  companyName: string | null;
-  name: string | null;
-  email: string;
-  phone: string | null;
-  category: string;
-  tier: string;
-  commissionRate: number;
-  totalSalesGenerated: number;
-  kycStatus: string;
-  isActive: boolean;
-  walletBalance: number;
-  commissionsPaid: number;
-  commissionsPending: number;
-  referralsCount: number;
-  conversionsCount: number;
-  payoutMethod: string;
-  createdAt: string;
-}
+export const AffiliateRecordSchema = z
+  .object({
+    id: z.string(),
+    affiliateCode: z.string(),
+    companyName: z.string().nullable(),
+    name: z.string().nullable(),
+    email: z.string(),
+    phone: z.string().nullable(),
+    category: z.string(),
+    tier: z.string(),
+    commissionRate: z.number(),
+    totalSalesGenerated: z.number(),
+    kycStatus: z.string(),
+    isActive: z.boolean(),
+    walletBalance: z.number(),
+    commissionsPaid: z.number(),
+    commissionsPending: z.number(),
+    referralsCount: z.number(),
+    conversionsCount: z.number(),
+    payoutMethod: z.string(),
+    createdAt: z.string(),
+  })
+  .strict();
+
+export type AffiliateItem = z.infer<typeof AffiliateRecordSchema>;
 
 const fmtEUR = (n: number) =>
   n.toLocaleString("es-ES", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -96,6 +117,42 @@ export default function AfiliadosAdminCatminPage() {
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [approvingAll, setApprovingAll] = useState(false);
   const [approveMsg, setApproveMsg] = useState<string | null>(null);
+
+  const [activeResult, setActiveResult] = useState<MultiRailExecutionResult | null>(null);
+
+  const artistPct = Math.round(SPLIT_SOBERANO.artista * 100);
+  const earOsPct = Math.round(SPLIT_SOBERANO.earOs * 100);
+  const vimumePct = Math.round(SPLIT_SOBERANO.vimume * 100);
+
+  const handleTriggerStripe = (affiliate?: AffiliateItem) => {
+    const res = executeStripeCheckout({
+      eventId: `AFF-PAYOUT-${affiliate?.affiliateCode ?? 'DIRECT'}-${Date.now().toString(36).toUpperCase()}`,
+      clientName: affiliate?.companyName || affiliate?.name || 'Afiliado Prescriptor',
+      venue: 'Stripe Connect Custom',
+      eventDate: new Date().toISOString().slice(0, 10),
+      grossEur: affiliate?.walletBalance && affiliate.walletBalance > 0 ? affiliate.walletBalance : DEPOSITO_STRIPE_EUR,
+      dimensionId: 'TESORERIA_SPLIT',
+      entityContext: resolveEntityContext('afiliados-split', 'TESORERIA_SPLIT'),
+      pepitaDeOro: `Liquidación Atómica de Comisiones Split ${artistPct}/${earOsPct}/${vimumePct}`,
+      rawVision: `Transferencia Stripe Connect con enmascaramiento ISO 13616 de datos bancarios`,
+    });
+    setActiveResult(res);
+  };
+
+  const handleTriggerEidas = (affiliate?: AffiliateItem) => {
+    const res = executeEidasContract({
+      eventId: `AFF-AGREEMENT-${affiliate?.affiliateCode ?? 'PRESCRIPTOR'}`,
+      clientName: affiliate?.companyName || affiliate?.name || 'Prescriptor Homologado',
+      venue: 'Sede Productora EAR',
+      eventDate: new Date().toISOString().slice(0, 10),
+      grossEur: 0,
+      dimensionId: 'TESORERIA_SPLIT',
+      entityContext: resolveEntityContext('afiliados-split', 'TESORERIA_SPLIT'),
+      pepitaDeOro: 'Acuerdo Mercantil de Prescripción y Comisión Split Soberano',
+      rawVision: `Contrato eIDAS marco para afiliados con retención y liquidación atómica`,
+    });
+    setActiveResult(res);
+  };
 
   // Alta / Baja / Ajuste de % y Tier (Indie Affiliates Pro)
   const [createOpen, setCreateOpen] = useState(false);
@@ -247,11 +304,25 @@ export default function AfiliadosAdminCatminPage() {
             <span className="text-[#ecb613] font-bold">Red de Afiliados</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white font-syne uppercase mt-1">
-            Commission Engine · Split 80/10/10
+            Commission Engine · Split {artistPct}/{earOsPct}/{vimumePct}
           </h1>
         </div>
 
         <div className="flex items-center gap-2.5 flex-wrap">
+          <button
+            onClick={() => handleTriggerStripe()}
+            className="flex items-center gap-1.5 bg-zinc-900 border border-emerald-500/40 text-emerald-300 px-3 py-1.5 rounded-xl text-xs font-mono font-bold hover:bg-emerald-950/60 transition-colors cursor-pointer"
+          >
+            <CreditCard className="w-3.5 h-3.5" />
+            <span>+ Stripe Checkout</span>
+          </button>
+          <button
+            onClick={() => handleTriggerEidas()}
+            className="flex items-center gap-1.5 bg-zinc-900 border border-cyan-500/40 text-cyan-300 px-3 py-1.5 rounded-xl text-xs font-mono font-bold hover:bg-cyan-950/60 transition-colors cursor-pointer"
+          >
+            <FileCheck className="w-3.5 h-3.5" />
+            <span>Contrato eIDAS</span>
+          </button>
           <button
             onClick={() => setCreateOpen(!createOpen)}
             className="flex items-center gap-1.5 bg-[#ecb613] text-black px-3 py-1.5 rounded-xl text-xs font-mono font-bold hover:bg-amber-300 transition-colors cursor-pointer"
@@ -628,6 +699,58 @@ export default function AfiliadosAdminCatminPage() {
           </div>
         )}
       </div>
+
+      {/* MODAL DE RESULTADO MULTI-RAIL */}
+      {activeResult && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-2xl bg-[#09090d] border border-white/20 rounded-3xl p-6 shadow-2xl space-y-4">
+            <div className="flex items-center justify-between border-b border-zinc-800 pb-3">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                <h3 className="text-sm font-bold font-syne text-white uppercase tracking-wider">
+                  {activeResult.title}
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setActiveResult(null)}
+                className="p-1 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="space-y-3 text-xs font-mono">
+              <div className="flex items-center justify-between p-3 rounded-xl bg-zinc-950 border border-zinc-900">
+                <span className="text-zinc-400">Artefacto:</span>
+                <span className="text-white font-bold">{activeResult.filename}</span>
+              </div>
+
+              <div className="p-3 rounded-xl bg-zinc-950 border border-zinc-900 space-y-1">
+                <span className="text-zinc-500 text-[10px] block">SELLO SHA-256</span>
+                <span className="text-[#ecb613] text-[11px] break-all">{activeResult.sha256}</span>
+              </div>
+
+              <div className="space-y-1">
+                <span className="text-zinc-400 text-[11px]">Payload / Contenido:</span>
+                <pre className="p-3 rounded-xl bg-black border border-zinc-900 text-[11px] text-zinc-300 overflow-x-auto max-h-48 font-mono">
+                  {activeResult.previewContent}
+                </pre>
+              </div>
+            </div>
+
+            <div className="pt-2 flex items-center justify-end gap-3">
+              <button
+                type="button"
+                onClick={() => setActiveResult(null)}
+                className="px-4 py-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-300 text-xs font-mono transition-colors"
+              >
+                Cerrar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );

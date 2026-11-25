@@ -67,7 +67,6 @@ export const SOVEREIGN_DOMAINS: Readonly<Record<SovereignDomainId, SovereignDoma
       '/fincas',
       '/otzarreta',
       '/restaurante-otzarreta',
-      '/celebraciones',
       '/calendario',
       '/proveedores',
       '/directorio',

@@ -358,7 +358,7 @@ export function middleware(request: NextRequest) {
   //    jamás deben caer en el escaparate: eso era la canibalización medida.
   const isCertified = isCertifiedRoute(url.pathname) || isKnownPublicSegment(url.pathname);
   if (!isRouteGatingBypassed(url.pathname) && !isFileRequest(url.pathname) && !isCertified) {
-    const fallback = isCertifiedRoute('/celebraciones') ? '/celebraciones' : '/';
+    const fallback = '/';
     const gatedResponse = NextResponse.redirect(new URL(fallback, request.url), 307);
     gatedResponse.headers.set('x-ear-vertical', vertical.id);
     gatedResponse.headers.set('x-ear-route-gating', 'redirected-to-certified-route');

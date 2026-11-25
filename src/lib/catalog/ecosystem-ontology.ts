@@ -137,7 +137,7 @@ export const DOORS: Readonly<Record<DoorId, DoorDef>> = Object.freeze({
   },
   celebraciones: {
     id: 'celebraciones',
-    href: '/celebraciones',
+    href: '/presupuesto',
     title: 'Celebraciones privadas y restauración',
     subtitle: 'Gastronomía, música y calma para su día en las 52 provincias.',
     cta: 'Preparar mi celebración',
@@ -147,10 +147,10 @@ export const DOORS: Readonly<Record<DoorId, DoorDef>> = Object.freeze({
       'Reserva con fianza deducible',
     ],
     menu: [
-      { label: 'Fincas y asador', href: '/celebraciones#fincas' },
-      { label: 'Menús y mesas', href: '/celebraciones#menus' },
-      { label: 'Música de gala', href: '/celebraciones#musica' },
-      { label: 'Reserva con fianza', href: '/celebraciones#reserva' },
+      { label: 'Fincas y asador', href: '/fincas' },
+      { label: 'Menús y mesas', href: '/otzarreta' },
+      { label: 'Música de gala', href: '/artistas' },
+      { label: 'Reserva con fianza', href: '/reservar/solista' },
     ],
   },
   profesionales: {
