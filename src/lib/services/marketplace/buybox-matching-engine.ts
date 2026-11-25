@@ -24,6 +24,7 @@ import {
 } from '@/types/transductive-schemas';
 import { resolveEarAsin, ANCHOR_1P_ASINS } from '@/lib/catalog/asin-standard';
 import { TARIFA_ESTANDAR_SOLISTA_EUR, DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
+import { planLogisticsDispatch, type LogisticsRoutingPlan } from '@/lib/agents/geo';
 
 export interface CandidateMarketplaceEntity {
   id: string;
@@ -223,4 +224,115 @@ export function matchMarketplaceTop3(
     ...item,
     rank: idx + 1,
   }));
+}
+
+export interface BilateralMatchConsent {
+  readonly clientSwipe: 'MATCH' | 'PASS';
+  readonly providerSwipe: 'MATCH' | 'PASS';
+  readonly isTwoWayMatch: boolean;
+  readonly acousticMatch: boolean;
+  readonly capacityMatch: boolean;
+  readonly budgetMatch: boolean;
+  readonly airCoverGuaranteeActive: boolean;
+  readonly contractProofSha256?: string;
+  readonly reason: string;
+}
+
+/**
+ * Filtro Bilateral Tinder S-Class (Two-Way Double Opt-In):
+ * 1. Capacidad / Aforo exacto (evita bodas de 12 pax en salones de 200).
+ * 2. Compatibilidad Acústica (Ley 37/2003 < 75 dB).
+ * 3. Presupuesto & Suelo canónico.
+ * 4. AirCover de Gala: Sustitución garantizada en 52 provincias sin coste extra.
+ */
+export function evaluateBilateralMatch(
+  entity: CandidateMarketplaceEntity,
+  request: BuyBoxCompatibilityRequest,
+  providerAccepted: boolean = true
+): BilateralMatchConsent {
+  const req = BuyBoxCompatibilityRequestSchema.parse(request);
+
+  // A. Aforo y capacidad
+  const capacityMatch = req.guestCount >= 30 && req.guestCount <= 350;
+
+  // B. Compatibilidad acústica (< 75 dB)
+  const acousticMatch = (entity.maxAcousticDb ?? 74) <= 75;
+
+  // C. Presupuesto
+  const budgetMatch = req.budgetEur >= (entity.basePriceEur ?? TARIFA_ESTANDAR_SOLISTA_EUR);
+
+  const clientMatch = capacityMatch && acousticMatch && budgetMatch;
+  const isTwoWay = clientMatch && providerAccepted;
+
+  return {
+    clientSwipe: clientMatch ? 'MATCH' : 'PASS',
+    providerSwipe: providerAccepted ? 'MATCH' : 'PASS',
+    isTwoWayMatch: isTwoWay,
+    acousticMatch,
+    capacityMatch,
+    budgetMatch,
+    airCoverGuaranteeActive: isTwoWay,
+    reason: isTwoWay
+      ? '🔥 It\'s a Match Perfecto: Aforo, acústica < 75 dB, tarifa SSOT y consentimiento bilateral sincronizados con AirCover de Gala activo.'
+      : 'Compatibilidad bilateral incompleta: ' +
+        (!capacityMatch ? 'aforo fuera de rango; ' : '') +
+        (!acousticMatch ? 'límite acústico superado; ' : '') +
+        (!budgetMatch ? 'presupuesto insuficiente; ' : '') +
+        (!providerAccepted ? 'pendiente aceptación de sala por proveedor.' : ''),
+  };
+}
+
+export interface HybridLogisticsQuoteResult {
+  readonly destination: string;
+  readonly routing: LogisticsRoutingPlan;
+  readonly soloArtist: {
+    readonly artistName: string;
+    readonly origin: string;
+    readonly distanceKm: number;
+    readonly travelFromMentrida: boolean;
+  };
+  readonly soundProvisioning: {
+    readonly providerName: string;
+    readonly origin: string;
+    readonly isLocalProvider: boolean;
+    readonly vanLogisticsChargedFromToledo: boolean;
+  };
+  readonly note: string;
+}
+
+/**
+ * Resuelve la cotización de despacho híbrido:
+ * - Edwin Agudelo (1P Solista) viaja desde Hub Méntrida (Km 0).
+ * - Si destino > 150 km (ej. Bilbao/Bizkaia a 440 km): la dotación de sonido
+ *   se asigna al proveedor local más cercano sin portes de furgoneta desde Toledo.
+ */
+export function resolveHybridLogisticsQuote(
+  destinationText: string,
+  explicitDistanceKm?: number,
+  localProviderCandidateName?: string
+): HybridLogisticsQuoteResult {
+  const routing = planLogisticsDispatch(destinationText, explicitDistanceKm);
+  const isDecoupled = routing.dispatchMode === 'DECOUPLED_LOCAL_BUYBOX';
+
+  return {
+    destination: routing.destination,
+    routing,
+    soloArtist: {
+      artistName: 'Edwin Agudelo (Solista S-Class)',
+      origin: 'Hub Méntrida, Toledo (Km 0)',
+      distanceKm: routing.distanceToMentridaKm,
+      travelFromMentrida: true,
+    },
+    soundProvisioning: {
+      providerName: isDecoupled
+        ? (localProviderCandidateName || `Proveedor Homologado de Sonido (${routing.destination})`)
+        : 'Flota Integrada Hub Méntrida',
+      origin: isDecoupled ? routing.destination : 'Hub Méntrida (Toledo)',
+      isLocalProvider: isDecoupled,
+      vanLogisticsChargedFromToledo: !isDecoupled,
+    },
+    note: isDecoupled
+      ? `Evento en ${routing.destination} (${routing.distanceToMentridaKm} km): Edwin viaja desde Méntrida; sonido asignado localmente sin portes de furgoneta desde Toledo.`
+      : `Evento en ${routing.destination} (${routing.distanceToMentridaKm} km): Paquetizado conjunto con flota Méntrida en un solo porte.`,
+  };
 }

@@ -196,7 +196,7 @@ export function AIConciergeDock() {
   const buildWelcomeMessage = (): ChatMessage => ({
     id: `welcome-${Date.now()}`,
     sender: 'concierge',
-    text: '¡Hola! Soy el **Concierge Ejecutivo de Productora EAR**. Dime qué evento estás organizando (tipo, fecha y provincia) y te doy el formato exacto con precio cerrado y disponibilidad real.',
+    text: 'Buenas tardes y bienvenidos a Productora EAR. Será un placer coordinar cada detalle de vuestra celebración. ¿Qué experiencia o servicio deseáis proyectar?',
     quickActions: resolveWelcomeActions(activePath),
     timestamp: formatTimestamp(),
   });

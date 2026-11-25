@@ -22,13 +22,20 @@ export const metadata: Metadata = {
 };
 
 /**
- * Escaparate Cinematográfico S-Class sobre fondo Aura Onyx (#030305).
+ * Escaparate Cinematográfico "Champagne & Noche de Gala" sobre base #040407
+ * (compatibilidad con estándar Aura Onyx #030305).
  * Gobernado por el Distribuidor Soberano de 3 Puertas hacia los embudos asistidos.
  * Cero apilamiento vertical mono-proveedor.
  */
 export default function Home(): React.JSX.Element {
   return (
-    <main className="bg-[#030305] relative w-full max-w-full min-h-screen overflow-x-hidden text-zinc-100 font-sans selection:bg-[#ecb613] selection:text-black pt-24 pb-20">
+    <main
+      className="bg-[#040407] relative w-full max-w-full min-h-screen overflow-x-hidden text-[#f4f4f5] font-sans selection:bg-[#ecb613] selection:text-[#040407] pt-24 pb-20"
+      style={{
+        backgroundImage:
+          'radial-gradient(ellipse at 50% 0%, rgba(236,182,19,0.12) 0%, rgba(4,4,7,0.98) 75%)',
+      }}
+    >
       <LumenNoiseGrain />
       <SovereignThreeDoorsDistributor />
     </main>

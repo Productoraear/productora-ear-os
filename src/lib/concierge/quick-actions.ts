@@ -59,6 +59,33 @@ const SOLISTA_TARIFF_LABEL = `${TARIFA_BASE_SOLISTA_EUR.toLocaleString('es-ES', 
  * el punto real de cotización, así que el chip aterriza en el motor activo y no
  * en una ruta que ignorase query params (clic muerto = INV-09).
  */
+/**
+ * Las 3 acciones de conversión y triaje por defecto ordenadas por la Dirección Ejecutiva:
+ * 1. [💍 Bodas & Fincas Singulares] (/fincas)
+ * 2. [🎵 Música en Directo & Artistas] (/artistas)
+ * 3. [⚡ Producción Técnica & Iluminación] (/produccion)
+ */
+const ACTION_BODAS_FINCAS: ConciergeQuickAction = {
+    id: 'qa-bodas-fincas',
+    label: '💍 Bodas & Fincas Singulares',
+    icon: 'layout',
+    href: '/fincas',
+};
+
+const ACTION_MUSICA_ARTISTAS: ConciergeQuickAction = {
+    id: 'qa-musica-artistas',
+    label: '🎵 Música en Directo & Artistas',
+    icon: 'music',
+    href: '/artistas',
+};
+
+const ACTION_PRODUCCION_TECNICA: ConciergeQuickAction = {
+    id: 'qa-produccion-tecnica',
+    label: '⚡ Producción Técnica & Iluminación',
+    icon: 'mic',
+    href: '/produccion',
+};
+
 const ACTION_SOLISTA: ConciergeQuickAction = {
     id: 'qa-solista',
     label: `Presupuesto de Solista (${SOLISTA_TARIFF_LABEL})`,
@@ -95,7 +122,10 @@ const ACTION_BLOQUEO: ConciergeQuickAction = {
  *  1. `/mariachis*`            -> mariachis (hub), presupuesto, bloqueo.
  *  2. `/seating-planner*`      -> mesas, presupuesto, mariachis.
  *  3. `/artistas*` o `/reservar*` -> presupuesto solista, bloqueo, mariachis.
- *  4. Cualquier otra ruta      -> solista, mariachis, mesas (conversión base).
+ *  4. Cualquier otra ruta / Home -> 3 chips de triaje canónicos:
+ *     - [💍 Bodas & Fincas Singulares]
+ *     - [🎵 Música en Directo & Artistas]
+ *     - [⚡ Producción Técnica & Iluminación]
  *
  * @param pathname Ruta activa del navegador (`window.location.pathname`).
  */
@@ -112,7 +142,7 @@ export function resolveQuickActions(pathname: string | null | undefined): Concie
         return [ACTION_SOLISTA, ACTION_BLOQUEO, ACTION_MARIACHIS];
     }
 
-    return [ACTION_SOLISTA, ACTION_MARIACHIS, ACTION_MESAS];
+    return [ACTION_BODAS_FINCAS, ACTION_MUSICA_ARTISTAS, ACTION_PRODUCCION_TECNICA];
 }
 
 /**

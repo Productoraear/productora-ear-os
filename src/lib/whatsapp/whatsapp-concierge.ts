@@ -155,8 +155,81 @@ export function verifyWebhookSignature(
 }
 
 /* ──────────────────────────────────────────────────────────────────────────── */
-/* 2 · Normalización del evento entrante                                       */
+/* 2 · Normalización del evento entrante y Handoff de Sesión                   */
 /* ──────────────────────────────────────────────────────────────────────────── */
+
+export interface WhatsAppSessionHandoff {
+  readonly pax?: number;
+  readonly date?: string;
+  readonly city?: string;
+  readonly serviceKind?: string;
+  readonly budgetCents?: number;
+  readonly fichaSlug?: string;
+  readonly rawQuery?: string;
+}
+
+/**
+ * Codifica el estado de la sesión web en un token compacto seguro para URL.
+ */
+export function encodeHandoffState(handoff: WhatsAppSessionHandoff): string {
+  try {
+    const json = JSON.stringify(handoff);
+    return Buffer.from(json, 'utf8').toString('base64url');
+  } catch {
+    return '';
+  }
+}
+
+/**
+ * Decodifica el token de sesión emitido desde la web o el chat del Concierge.
+ */
+export function decodeHandoffState(token: string): WhatsAppSessionHandoff | null {
+  try {
+    const raw = Buffer.from(token, 'base64url').toString('utf8');
+    const parsed = JSON.parse(raw) as Record<string, unknown>;
+    return {
+      pax: typeof parsed.pax === 'number' && parsed.pax > 0 ? parsed.pax : undefined,
+      date: typeof parsed.date === 'string' ? parsed.date : undefined,
+      city: typeof parsed.city === 'string' ? parsed.city : undefined,
+      serviceKind: typeof parsed.serviceKind === 'string' ? parsed.serviceKind : undefined,
+      budgetCents: typeof parsed.budgetCents === 'number' && parsed.budgetCents > 0 ? parsed.budgetCents : undefined,
+      fichaSlug: typeof parsed.fichaSlug === 'string' ? parsed.fichaSlug : undefined,
+      rawQuery: typeof parsed.rawQuery === 'string' ? parsed.rawQuery : undefined,
+    };
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Construye el enlace wa.me canónico con sutura contextual y parámetro de estado.
+ */
+export function buildWhatsAppHandoffUrl(
+  phoneDigits: string,
+  handoff: WhatsAppSessionHandoff,
+  initialText?: string
+): string {
+  const token = encodeHandoffState(handoff);
+  const cleanPhone = phoneDigits.replace(/\D/g, '') || '34693693048';
+  const lines: string[] = [];
+  if (initialText && initialText.trim().length > 0) {
+    lines.push(initialText.trim());
+  } else {
+    lines.push('Hola, deseo continuar con la coordinacion de mi evento en Productora EAR.');
+  }
+
+  if (handoff.pax) lines.push(`• Invitados: ${handoff.pax} pax`);
+  if (handoff.date) lines.push(`• Fecha: ${handoff.date}`);
+  if (handoff.city) lines.push(`• Localidad: ${handoff.city}`);
+  if (handoff.serviceKind) lines.push(`• Servicio: ${handoff.serviceKind}`);
+
+  if (token) {
+    lines.push(`[Ref-Web: ${token}]`);
+  }
+
+  const message = lines.join('\n');
+  return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
+}
 
 export type InboundKind = 'TEXT' | 'BUTTON_REPLY' | 'INTERACTIVE_REPLY';
 
@@ -337,20 +410,28 @@ export function normalizeText(value: string): string {
 }
 
 /**
- * Extrae aforo, presupuesto y categoría del texto libre.
- * Cero suposiciones: lo que no aparece en el mensaje queda en `null`.
+ * Extrae aforo, presupuesto y categoría del texto libre, o recupera el estado
+ * previo si el mensaje contiene un token de handoff `[Ref-Web: <token>]` o `state=<token>`.
+ * Cero suposiciones: lo que no aparece en el mensaje ni en el token queda en `null`.
  */
 export function extractIntent(text: string): ConciergeIntent {
+  // 1. Intento de recuperación vía token de sesión (Handoff Web -> WhatsApp)
+  const refMatch: RegExpMatchArray | null = text.match(/\[(?:Ref-Web|state):\s*([a-zA-Z0-9_-]{10,})\]/i) || text.match(/[?&]state=([a-zA-Z0-9_-]{10,})/i);
+  let handoff: WhatsAppSessionHandoff | null = null;
+  if (refMatch !== null && refMatch[1]) {
+    handoff = decodeHandoffState(refMatch[1]);
+  }
+
   const plain: string = normalizeText(text);
 
-  let pax: number | null = null;
+  let pax: number | null = handoff?.pax ?? null;
   const paxMatch: RegExpMatchArray | null = plain.match(/(\d{1,5})\s*(pax|personas|invitados|comensales)/);
   if (paxMatch !== null) {
     const value: number = Number.parseInt(paxMatch[1], 10);
     if (Number.isInteger(value) && value > 0 && value <= MAX_PAX) pax = value;
   }
 
-  let budgetCents: number | null = null;
+  let budgetCents: number | null = handoff?.budgetCents ?? null;
   const budgetMatch: RegExpMatchArray | null = plain.match(
     /(\d{1,3}(?:[.\s]\d{3})+|\d{2,7})(?:[.,](\d{1,2}))?\s*(?:euros?|eur)/,
   );
@@ -370,10 +451,21 @@ export function extractIntent(text: string): ConciergeIntent {
   }
 
   let categoryHint: string | null = null;
-  for (const entry of CATEGORY_KEYWORDS) {
-    if (plain.includes(entry.word)) {
-      categoryHint = entry.category;
-      break;
+  if (handoff?.serviceKind) {
+    const norm = normalizeText(handoff.serviceKind);
+    for (const entry of CATEGORY_KEYWORDS) {
+      if (norm.includes(entry.word)) {
+        categoryHint = entry.category;
+        break;
+      }
+    }
+  }
+  if (!categoryHint) {
+    for (const entry of CATEGORY_KEYWORDS) {
+      if (plain.includes(entry.word)) {
+        categoryHint = entry.category;
+        break;
+      }
     }
   }
 

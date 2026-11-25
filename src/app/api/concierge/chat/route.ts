@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import {
+  buildWhatsAppHandoffUrl,
+  type WhatsAppSessionHandoff,
+} from '@/lib/whatsapp/whatsapp-concierge';
+import {
   CENTRALITA_EAR_OS,
   DEPOSITO_STRIPE_EUR,
   LOGISTICA_EUR_PER_KM,
@@ -314,9 +318,17 @@ async function generateNeuralConciergeResponse(
     .filter(Boolean)
     .join(' · ');
 
-  const systemPrompt = `Eres el Agente Concierge S-Class de Productora EAR (productoraear.com).
-Tu misión es atender a novios, clientes y proveedores con máxima inteligencia, cortesía, precisión y naturalidad.
+  const systemPrompt = `Eres el Maître de Sala y Concierge S-Class de Productora EAR (productoraear.com).
+Tu misión es atender a novios, clientes y proveedores con máxima elegancia, sobriedad, hospitalidad, precisión y calidez humana.
 NO eres un bot rígido ni repites respuestas desconectadas de lo que el usuario pregunta.
+
+PROTOCOLO DE HOSPITALIDAD Y MAÎTRE DE SALA (P0 SUPREMO):
+- Si el usuario sólo saluda («hola», «buenas», «buenas tardes», etc.) o hace una consulta inicial abierta, NUNCA escupas un monólogo con listas de servicios, marcas de sonido (Bose), precios (145 €) ni caseríos (Otzarreta/Derio). Responde con máxima hospitalidad y sobriedad en máximo 2 líneas:
+  "Buenas tardes y bienvenidos a Productora EAR. Será un placer coordinar cada detalle de vuestra celebración. ¿Qué experiencia o servicio deseáis proyectar?"
+- ENRUTAMIENTO CONDICIONAL ESTRICTO POR ARQUETIPO:
+  * Solo hablar de Derio / Otzarreta si el usuario menciona Bizkaia, caserío o banquete vasco.
+  * Solo hablar de licitaciones B2G o Art. 118 LCSP si el usuario se identifica como ayuntamiento, comisión de fiestas o entidad pública.
+  * Si es un particular o novios: enfocar en aforo, fecha, estilo y tranquilidad de sala.
 
 MEMORIA CONFIRMADA EN ESTE HILO (PROHIBIDO VOLVER A PREGUNTAR ESTOS DATOS):
 ${memoryLine || 'Sin datos confirmados aún en el hilo.'}
@@ -497,12 +509,18 @@ function determineActionForQuery(
     };
   }
 
+  const handoff: WhatsAppSessionHandoff = {
+    pax: mem.pax ?? undefined,
+    date: mem.dateText ?? undefined,
+    city: mem.city ?? undefined,
+    serviceKind: mem.serviceKind ?? undefined,
+    rawQuery: rawQuery.slice(0, 100),
+  };
+
   return {
     type: 'whatsapp',
-    label: `Hablar con la Centralita (${CENTRALITA_EAR_OS})`,
-    url: `https://wa.me/${CLEAN_PHONE}?text=${encodeURIComponent(
-      `Hola, tengo una consulta sobre: "${rawQuery.slice(0, 100)}"`
-    )}`,
+    label: '📲 Continuar presupuesto en WhatsApp móvil',
+    url: buildWhatsAppHandoffUrl(CLEAN_PHONE, handoff, `Hola, deseo coordinar mi evento: "${rawQuery.slice(0, 80)}"`),
   };
 }
 
@@ -516,6 +534,8 @@ function resolveDeterministicFallback(
   mem: ThreadMemorySummary,
   isAdmin: boolean = false
 ): ConciergeResolution {
+  const isVenueRoute =
+    isOtzarretaTenant(pathname, providerSlug) || pathname.includes('/fincas') || pathname.includes('/catering');
   const query = rawMessage.toLowerCase().trim();
   const km = mem.distanceKm ?? 45;
   const soloQuote = computeSoloQuote(km, 22);
@@ -527,7 +547,19 @@ function resolveDeterministicFallback(
     .filter(Boolean)
     .join(' ');
 
-  // 0A. Cómo se paga / Señal / Depósito / Stripe Price-Lock
+  // 0. Saludo y bienvenida hospitalaria (Saneamiento Maître de Sala P0)
+  const isGenericGreeting = /^(hola|buenas|buenos\s*d[ií]as|buenas\s*tardes|buenas\s*noches|saludos|hello|hi|hey)[\s!.,?]*$/i.test(query);
+  if (isGenericGreeting && !isVenueRoute && !query.includes('otzarreta') && !query.includes('b2g')) {
+    return {
+      reply: 'Buenas tardes y bienvenidos a Productora EAR. Será un placer coordinar cada detalle de vuestra celebración. ¿Qué experiencia o servicio deseáis proyectar?',
+      action: {
+        type: 'dossier',
+        label: '💍 Explorar Espacios & Fincas (/fincas)',
+        url: '/fincas',
+      },
+      shouldEscalate: false,
+    };
+  }
   if (
     query.includes('como se paga') ||
     query.includes('cómo se paga') ||
@@ -775,8 +807,6 @@ function resolveDeterministicFallback(
   }
 
   // 7. Respuesta General Inteligente
-  const isVenueRoute =
-    isOtzarretaTenant(pathname, providerSlug) || pathname.includes('/fincas') || pathname.includes('/catering');
   if (isVenueRoute) {
     return {
       reply:
@@ -790,15 +820,25 @@ function resolveDeterministicFallback(
     };
   }
 
+  const handoffFallback: WhatsAppSessionHandoff = {
+    pax: mem.pax ?? undefined,
+    date: mem.dateText ?? undefined,
+    city: mem.city ?? undefined,
+    serviceKind: mem.serviceKind ?? undefined,
+    rawQuery: rawMessage.slice(0, 100),
+  };
+
   return {
     reply:
-      `Estás conectado con la Centralita Inteligente de Productora EAR. Puedo orientarte sobre espacios exclusivos como el Caserío Ezkertza Berria & Otzarreta en Derio (${OTZARRETA_WEDDING_MENUS_CLAIM} y párking privado de ${OTZARRETA_SEATING_PRESET.parkingSpaces} plazas), servicios de producción y sonido Bose para eventos, o licitaciones B2G para ayuntamientos.`,
+      'Buenas tardes y bienvenidos a Productora EAR. Será un placer coordinar cada detalle de vuestra celebración. ¿Qué experiencia o servicio deseáis proyectar?',
     action: {
       type: 'whatsapp',
-      label: `Hablar con la Centralita (${CENTRALITA_EAR_OS})`,
-      url: `https://wa.me/${CLEAN_PHONE}?text=${encodeURIComponent(
-        `Hola, tengo una consulta sobre: "${rawMessage.slice(0, 100)}"`
-      )}`,
+      label: '📲 Continuar presupuesto en WhatsApp móvil',
+      url: buildWhatsAppHandoffUrl(
+        CLEAN_PHONE,
+        handoffFallback,
+        `Hola, deseo coordinar mi celebración: "${rawMessage.slice(0, 80)}"`
+      ),
     },
     shouldEscalate: false,
   };
