@@ -65,6 +65,7 @@ const CERTIFIED_PRODUCTION_ROUTES: readonly string[] = Object.freeze([
   // insignia del asador NUNCA llegaba a un cliente real (medido en producción
   // el 2026-11-21). Se certifica el destino para que el alias aterrice en la ficha.
   '/proveedores',
+  '/fincas',
   '/seating-planner',
   '/presupuesto',
   '/portal/proveedor',
@@ -122,6 +123,9 @@ function isKnownPublicSegment(pathname: string): boolean {
   if (head === 'proveedores') {
     // /proveedores/[slug] (ficha) y /proveedores/dashboard. Nunca rutas de admin.
     return segments.length === 2 && second !== 'dashboard';
+  }
+  if (head === 'fincas') {
+    return segments.length === 2;
   }
   if (head === 'calendario') {
     return matchesCertifiedDynamicRoute(pathname);
