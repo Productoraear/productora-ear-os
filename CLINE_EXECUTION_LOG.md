@@ -1,4 +1,45 @@
 # SIGMA://CLOSE/v1
+- **Task ID:** P0_FIX_CASHTUNNEL_IDEMPOTENCY_SCOPE_AND_ARCHIVE_DEAD_CINEMATIC_HERO
+- **Fecha:** 2026-11-26 (CET)
+- **Autoridad Ordenante:** Director Generalista / CEO (Edwin Agudelo) — Opción B aprobada
+- **Ejecutor:** Cline ("El Obrero")
+- **estado_bloque:** VERIFICADO
+- **hecho:**
+  1. `src/components/checkout/SovereignStickyCheckoutBar.tsx`: se sustituye la clave de idempotencia determinista por fecha (`cashtunnel-${formato}-${fecha}`, idéntica para todo visitante) por una **aislada por visita** (`cashtunnel-${nonce}-${formato}-${fecha}`), con generador `createIntentNonce()` basado en `crypto.randomUUID` (32 chars, resuelto en `useEffect` para preservar la paridad SSR↔hidratación y re-derivado en el handler si el efecto aún no lo fijó). Cierra el P0 de INV-08: dos compradores del mismo sábado compartían `orderId` y `priceLockHash`, y Stripe (retención ~24 h) habría entregado al segundo la sesión de checkout del primero — ventana real, pues el candado de fecha caduca a los 30 min (`atomicDateLockEngine` `ttlMinutes = 30`).
+  2. `scripts/verify_cashtunnel_idempotency_scope.cjs` (nuevo): guardián estático de 8 comprobaciones (plantilla presente · nonce interpolado · plantilla prohibida ausente · generador `randomUUID` · nonce cableado en montaje y en el POST · contrato del servidor `sanitizeToken(…, 8, 128)` · aislamiento entre visitantes con dedupe del mismo intento · cerrojo de contrato con `route.ts`). Declara `probed:false · source:"static" · mode:"SIMULADO"` (AF-1/AF-2).
+  3. Hero cinematográfico muerto (commit `30e0a1a9`) **desmontado y archivado** con historia preservada (`git mv`) en `.antigravity/archive/cinematic-hero-30e0a1a9/`: 17 ficheros (0 inserciones/borrados en el diff ⇒ renames puros) + `README.md` con el procedimiento de restauración. Se eliminan 2.760 líneas huérfanas del árbol compilado (CHG-3). Los 3 WebP vivos del Cash-Tunnel (`acto-01-sala`, `acto-02-directo`, `acto-04-plaza`) **permanecen** en `public/images/cinematic/`.
+  4. `scripts/audit_cls_budget.cjs`: consolidado el mapa de la ruta `/` — el hero W52 se sustituye por `ScrollytellingCashTunnel.tsx` + `SovereignStickyCheckoutBar.tsx`, conservando las 8 reglas de CLS sobre la nueva cabecera.
+  5. `package.json`: se retira `verify:cinematic` (puerta obsoleta, quedaba en `SOSPECHOSO`/Exit 1 por el desmontaje) y se añade `verify:cashtunnel-idempotency`, **cableada dentro de `gate:prepush`** (doctrina: «un gate que nadie ejecuta es una fachada de papel»).
+- **evidence[]:**
+  - CLAIM-1 :: cmd="npm run typecheck" :: exit=0 :: ts=2026-11-26
+  - CLAIM-2 :: cmd="npm run lint" :: exit=0 (0 errores · 3.670 warnings preexistentes) :: ts=2026-11-26
+  - CLAIM-3 :: cmd="npm run audit:cta-matrix" :: exit=0 :: verdict=PASS (1.933 CTAs · 8/8 superficies con gate · 0 violaciones) :: ts=2026-11-26
+  - CLAIM-4 :: cmd="npm run verify:cashtunnel-idempotency" :: exit=0 :: verdict=PASS (8/8 comprobaciones) :: ts=2026-11-26
+  - CLAIM-5 :: cmd="npm run audit:omega-rojo" :: exit=0 :: OMEGA_ROJO_SCORE=20/20 VERDE :: ts=2026-11-26
+  - CLAIM-6 :: cmd="npm run audit:ssot" :: exit=0 :: hash=e208462ea1a4e6796b31743ee0200794f18221fcc1154cb9e5e56526a0c41ea5 (== KNOWN_GOOD) :: ts=2026-11-26
+  - CLAIM-7 :: cmd="node scripts/audit_cls_budget.cjs" :: exit=0 :: 5/5 rutas PASS :: ts=2026-11-26
+  - CLAIM-8 :: cmd="node scripts/audit_orphan_imports.cjs" :: exit=0 :: BROKEN_REACHABLE=0 (el archivo no deja imports colgando) :: ts=2026-11-26
+  - url: NO APLICA (cambio no desplegado; pendiente de push a `origin/main` → Coolify).
+- **gates:** G0 PASS · G1 PASS · G2 PASS · G3 PASS (Ω-CTA 8/8) · G4 PASS (SSOT) · G5 SIN_EVIDENCIA (requiere dev server :3007) · G6 PASS (Ω-Diamante 20/20) · G7 PASS (CLS, `MODE=SIMULADO_LAB · PROBED=false`) · G8 PASS (este log)
+- **cambios[]:** `src/components/checkout/SovereignStickyCheckoutBar.tsx` · `scripts/verify_cashtunnel_idempotency_scope.cjs` (nuevo) · `scripts/audit_cls_budget.cjs` · `package.json` · `.antigravity/archive/cinematic-hero-30e0a1a9/**` (17 renames + README) · `CLINE_EXECUTION_LOG.md`
+- **omega_diamante:** { score: "20/20", verdict: "VERDE", pendientes: ["sonda HTTP real de producción tras el deploy (buildSha + /api/health)"] }
+- **hipotesis[]:** (1) `--ear-dock-h` está definido globalmente en `globals.css:970` — **verificado en esta sesión**. (2) Retención de idempotencia de Stripe ≈ 24 h: asunción declarada, no sondeada contra la API. (3) `crypto.randomUUID` disponible en el navegador objetivo (contexto seguro); existe fallback determinista si no lo estuviera.
+- **decision:** Se descartó rebasar/reescribir `30e0a1a9` para hacerlo desaparecer del historial (habría cambiado el SHA de `79fb6a14`, ya citado en el acta previa y en la cola). Se prefirió **archivar con historia preservada** (`git mv`): el rollback queda ensayado y a un comando (CHG-2), sin reescribir historia ya firmada.
+- **riesgos:** Dos superficies `fixed` inferiores coexisten en móvil (dock z-80 + BuyBox z-50); se mitiga anclando el BuyBox por encima del dock con `--ear-dock-h`.
+- **reto_espejo:** El acta previa declaraba «Idempotencia ACID Stripe (INV-08)» en VERIFICADO porque el scorecard audita la **ruta**, no la estrategia de clave del **llamador**. Se aplicó la cláusula más exigente (AMD-1): un invariante sólo está verde si **todos** sus llamadores lo respetan, y se añadió la puerta que lo vigila.
+- **aprendizaje_ceo:** Un arnés verde puede convivir con un invariante roto si el gate mira la pieza equivocada: aquí el auditor validaba la ruta de cobro mientras el botón nuevo enviaba una clave compartida. El dinero no se defiende auditando el motor, sino auditando **quién lo llama y con qué**.
+- **siguiente_paso:** `git push origin main` (2 commits: `30e0a1a9` + `79fb6a14` + el commit de este acta) → esperar el ciclo Docker de Coolify → sondear `https://productoraear.com/api/health` y confirmar `buildSha` + HTTP 200.
+
+### Premortem (5 preguntas · INC-2 / G-8)
+1. **¿Objetivo exacto?** Sí: el P0 era que la clave de Stripe fuese independiente del cliente. Ahora nace de un nonce por visita; los reintentos del mismo intento siguen produciendo exactamente una sesión (`C7_VISITOR_ISOLATION` lo demuestra con dos visitantes simulados).
+2. **¿Asunciones frágiles?** La retención de ~24 h de Stripe (declarada como hipótesis) y la disponibilidad de `crypto.randomUUID` (con fallback). El nonce se resuelve en cliente dentro de `useEffect`, así que no altera el markup del servidor.
+3. **¿Alternativa arquitectónica descartada?** Mover el aislamiento al servidor derivando el alcance como `sha256(idempotencyKey + IP + artistProfileId)`: descartado porque debilita la deduplicación legítima de un mismo cliente que cambia de red (móvil → wifi) y porque el contrato de la ruta ya está firmado y en producción.
+4. **¿Qué se rompería bajo carga y cómo lo detectamos?** Nada nuevo por el nonce (es local). Lo que rompería sin el fix: dos compradores del mismo sábado en una ventana de 30 min post-caducidad del candado → el segundo recibe la sesión del primero. Ahora lo detecta `verify:cashtunnel-idempotency` en `gate:prepush`, antes de que salga del repositorio.
+5. **¿Consecuencia al firmar?** Ninguna irreversible: cambio de clave en el cliente + reubicación de 17 ficheros con historia preservada. Rollback = `git revert` del commit o el procedimiento del README del archivo. Se elimina código muerto del bundle sin tocar ningún activo vivo del Cash-Tunnel.
+
+---
+
+# SIGMA://CLOSE/v1
 - **Task ID:** P0_COMERCIAL_SCROLLYTELLING_CASH_TUNNEL_STRIPE_BUYBOX
 - **Fecha:** 2026-11-26 (CET)
 - **Autoridad Ordenante:** Director Generalista / CEO (Edwin Agudelo)

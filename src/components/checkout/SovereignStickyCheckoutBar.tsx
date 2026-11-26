@@ -25,6 +25,14 @@ import {
  * un literal de precio en la vista. El depósito se materializa contra la ruta de
  * cobro ya existente: cero botones huérfanos, cero redirecciones de fachada.
  *
+ * INV-08 · AISLAMIENTO DE IDEMPOTENCIA: la clave que viaja a
+ * `/api/reservar/solista/deposit` se compone con un nonce de INTENCIÓN por visita
+ * (`cashtunnel-<nonce>-<formato>-<fecha>`). El servidor la propaga a Stripe como
+ * `priceLockHash` (route.ts:401); una clave determinista por fecha haría que dos
+ * compradores distintos del mismo sábado compartiesen `orderId` y sesión de
+ * checkout. Con el nonce, los reintentos del MISMO intento siguen deduplicando y
+ * dos clientes jamás colisionan. Guardián: `scripts/verify_cashtunnel_idempotency_scope.cjs`.
+ *
  * GEOMETRÍA (INV-18 · G-7 · CLS 0.000): la capa es `fixed` (fuera del flujo) y
  * la altura interna está bloqueada; el aviso de estado vive en una línea de
  * alto fijo, por lo que ni la carga de Stripe ni un error mueven el layout.
@@ -103,6 +111,29 @@ function nextSaturdayIso(from: Date): string {
   return new Date(from.getTime() + delta * 86_400_000).toISOString().slice(0, 10);
 }
 
+/**
+ * Nonce de INTENCIÓN por visita (32 caracteres alfanuméricos).
+ *
+ * Por qué existe (INV-08): la clave de idempotencia se propaga al `idempotencyKey`
+ * de Stripe a través de `priceLockHash`. Si naciese sólo de `<formato>` y
+ * `<fecha>`, dos compradores distintos del mismo sábado compartirían `orderId` y
+ * Stripe devolvería al segundo la sesión de checkout ya emitida al primero
+ * (ventana real: el candado de fecha caduca a los 30 min y la sesión vive 24 h).
+ * Con un nonce por visita, los reintentos del MISMO intento siguen deduplicando
+ * exactamente una sesión, pero clientes distintos nunca colisionan.
+ *
+ * Se resuelve en cliente (dentro de `useEffect`) para no romper la paridad
+ * SSR ↔ hidratación. Fallback determinista si `crypto.randomUUID` no está
+ * disponible (contexto no seguro).
+ */
+function createIntentNonce(): string {
+  const raw =
+    typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
+      ? crypto.randomUUID()
+      : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
+  return raw.replace(/[^A-Za-z0-9]/g, '').slice(0, 32);
+}
+
 export interface SovereignStickyCheckoutBarProps {
   readonly activeAct: CashTunnelActIndex;
 }
@@ -113,6 +144,7 @@ export function SovereignStickyCheckoutBar({
   const terminal = ACT_TERMINALS[activeAct] ?? ACT_TERMINALS[0];
   const [fecha, setFecha] = useState<string>('');
   const [minDate, setMinDate] = useState<string>('');
+  const [intentId, setIntentId] = useState<string>('');
   const [pending, setPending] = useState<boolean>(false);
   const [notice, setNotice] = useState<string>('');
 
@@ -122,6 +154,8 @@ export function SovereignStickyCheckoutBar({
     const now = new Date();
     setMinDate(now.toISOString().slice(0, 10));
     setFecha(nextSaturdayIso(now));
+    // Nonce por visita: aísla la clave de idempotencia de Stripe (INV-08).
+    setIntentId(createIntentNonce());
   }, []);
 
   const startDeposit = useCallback(
@@ -130,6 +164,9 @@ export function SovereignStickyCheckoutBar({
         setNotice('Selecciona la fecha del evento para bloquearla con la fianza.');
         return;
       }
+      // Nunca se envía una clave sin aislar por cliente (INV-08): si el efecto
+      // aún no ha fijado el nonce, se genera aquí mismo.
+      const nonce = intentId.length > 0 ? intentId : createIntentNonce();
       setPending(true);
       setNotice('');
       try {
@@ -143,7 +180,9 @@ export function SovereignStickyCheckoutBar({
             // refina en el configurador completo antes de la liquidación.
             distanciaKm: 0,
             totalEstimado: TARIFA_BASE_SOLISTA_EUR,
-            idempotencyKey: `cashtunnel-${formato}-${fecha}`.replace(/[^A-Za-z0-9_-]/g, '-'),
+            // Clave de idempotencia AISLADA POR VISITA (INV-08): mismo intento ⇒
+            // misma sesión Stripe; visitantes distintos ⇒ jamás colisionan.
+            idempotencyKey: `cashtunnel-${nonce}-${formato}-${fecha}`.replace(/[^A-Za-z0-9_-]/g, '-'),
           }),
         });
         const payload: unknown = await response.json().catch(() => null);
@@ -162,7 +201,7 @@ export function SovereignStickyCheckoutBar({
         setPending(false);
       }
     },
-    [fecha]
+    [fecha, intentId]
   );
 
   const handleDeposit = useCallback((): void => {

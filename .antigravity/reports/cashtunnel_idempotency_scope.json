@@ -1,0 +1,67 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-11-26T20:43:49.361Z",
+  "generator": "scripts/verify_cashtunnel_idempotency_scope.cjs",
+  "doctrine": "INV-08 · Idempotencia ACID · Aislamiento de la clave de Stripe por visitante",
+  "evidence": {
+    "probed": false,
+    "source": "static",
+    "mode": "SIMULADO",
+    "checkedAt": "2026-11-26T20:43:49.363Z"
+  },
+  "sources": {
+    "component": "src/components/checkout/SovereignStickyCheckoutBar.tsx",
+    "route": "src/app/api/reservar/solista/deposit/route.ts"
+  },
+  "contract": {
+    "minLength": 8,
+    "maxLength": 128,
+    "pattern": "^[A-Za-z0-9_-]+$",
+    "stripeKey": "priceLockHash"
+  },
+  "checks": [
+    {
+      "id": "C1_KEY_TEMPLATE_PRESENT",
+      "ok": true,
+      "detail": "plantilla: cashtunnel-${nonce}-${formato}-${fecha}"
+    },
+    {
+      "id": "C2_NONCE_INTERPOLATED",
+      "ok": true,
+      "detail": "variable(s) de nonce: nonce"
+    },
+    {
+      "id": "C3_FORBIDDEN_TEMPLATE_ABSENT",
+      "ok": true,
+      "detail": "la clave determinista por fecha no está presente"
+    },
+    {
+      "id": "C4_NONCE_GENERATOR",
+      "ok": true,
+      "detail": "createIntentNonce() presente y basado en crypto.randomUUID"
+    },
+    {
+      "id": "C5_NONCE_BOUND",
+      "ok": true,
+      "detail": "nonce fijado en useEffect y re-derivado en el handler antes del fetch"
+    },
+    {
+      "id": "C6_SERVER_KEY_CONTRACT",
+      "ok": true,
+      "detail": "claves dentro de [8,128] y /^[A-Za-z0-9_-]+$/ (p.ej. cashtunnel-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-solista-2026-11-28)"
+    },
+    {
+      "id": "C7_VISITOR_ISOLATION",
+      "ok": true,
+      "detail": "visitantes distintos ⇒ claves distintas · mismo intento ⇒ misma clave :: A=cashtunnel-a1b2c3d4e5f60718293a4b5c6d7e8f90-solista-2026-11-28 · B=cashtunnel-0f9e8d7c6b5a4938271605f4e3d2c1b0-solista-2026-11-28 · A_reintento=cashtunnel-a1b2c3d4e5f60718293a4b5c6d7e8f90-solista-2026-11-28"
+    },
+    {
+      "id": "C8_STRIPE_CONTRACT_LOCK",
+      "ok": true,
+      "detail": "route.ts: orderId ← idempotencyKey · priceLockHash ← sha256(orderId…) · Stripe ← priceLockHash"
+    }
+  ],
+  "violations": [],
+  "verdict": "PASS",
+  "durationMs": 5
+}
