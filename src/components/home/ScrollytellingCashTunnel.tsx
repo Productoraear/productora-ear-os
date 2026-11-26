@@ -35,6 +35,11 @@ import {
  * stage `sticky` de 100 dvh. El progreso (0..1) se reparte en 4 tramos iguales
  * (0–25 / 25–50 / 50–75 / 75–100 %).
  *
+ * ALTERNANCIA ESTRICTA (defecto corregido 2026-11-26): el copy de cada acto se
+ * desvanece DENTRO de su propio tramo y el siguiente sólo empieza a subir cuando
+ * el anterior ha llegado a 0 ⇒ jamás hay dos titulares legibles superpuestos. La
+ * placa visual sí hace cross-fade: dos fotografías no compiten por legibilidad.
+ *
  * GEOMETRÍA (INV-11 · INV-18 · G-7 · CLS 0.000): el track y el stage declaran
  * su altura desde el primer byte; las capas visual y tipográfica son `absolute`
  * y sólo mutan `opacity` / `translate` (transform), nunca dimensiones. El dock
@@ -114,17 +119,26 @@ const ACTS: readonly CashTunnelAct[] = Object.freeze([
 
 const ACT_COUNT = ACTS.length;
 
-/** Duración del cross-fade entre actos, en fracción del progreso global. */
+/** Duración del desvanecido, en fracción del progreso global. */
 const FADE = 0.07;
 
 /**
- * Curva de opacidad del acto `index`: encendido al entrar en su tramo, apagado
- * al salir. El primer y el último acto quedan sólidos en los extremos del track
- * (sin parpadeo en el borde superior/inferior de la página).
+ * Ventana de scroll del acto `index`: `[start, end]` sobre el progreso global
+ * (0–25 / 25–50 / 50–75 / 75–100 %). Las ventanas son CONTIGUAS y NUNCA se
+ * solapan: es la base geométrica de la alternancia estricta del copy.
  */
-function useActOpacity(progress: MotionValue<number>, index: number): MotionValue<number> {
-  const start = index / ACT_COUNT;
-  const end = (index + 1) / ACT_COUNT;
+function actWindow(index: number): { readonly start: number; readonly end: number } {
+  return { start: index / ACT_COUNT, end: (index + 1) / ACT_COUNT };
+}
+
+/**
+ * Opacidad de la PLACA VISUAL (backdrop). Aquí SÍ se permite cross-fade: dos
+ * fotografías pueden convivir durante el relevo sin competir por legibilidad y
+ * el cambio queda cinematográfico. El primer y el último acto quedan sólidos en
+ * los extremos del track (sin parpadeo en el borde superior/inferior).
+ */
+function useBackdropOpacity(progress: MotionValue<number>, index: number): MotionValue<number> {
+  const { start, end } = actWindow(index);
   const isFirst = index === 0;
   const isLast = index === ACT_COUNT - 1;
 
@@ -133,6 +147,35 @@ function useActOpacity(progress: MotionValue<number>, index: number): MotionValu
     : isLast
       ? [start - FADE, Math.min(start + FADE, 0.98), 1]
       : [start - FADE, start + FADE, end - FADE, end + FADE];
+  const output: number[] = isFirst ? [1, 1, 0] : isLast ? [0, 1, 1] : [0, 1, 1, 0];
+
+  return useTransform(progress, input, output);
+}
+
+/**
+ * Opacidad del COPY: alternancia ESTRICTA, sin cross-fade tipográfico.
+ *
+ * El acto N se desvanece DENTRO de su propio tramo (`end - FADE → end`) y el
+ * acto N+1 sólo empieza a subir cuando el anterior ya ha llegado a 0
+ * (`start → start + FADE`, siendo `start` = `end` del anterior). Por tanto en
+ * ningún instante del scroll hay dos titulares legibles superpuestos: ésa era
+ * la causa exacta del texto pisado que se veía en producción.
+ *
+ * El rango de entrada es estrictamente creciente y queda confinado en
+ * `[start, end]`, así que `useTransform` nunca extrapola dentro de otro acto.
+ */
+function useCopyOpacity(progress: MotionValue<number>, index: number): MotionValue<number> {
+  const { start, end } = actWindow(index);
+  const isFirst = index === 0;
+  const isLast = index === ACT_COUNT - 1;
+  // El desvanecido jamás invade más de la mitad del tramo (acto corto = fade corto).
+  const fade = Math.min(FADE, (end - start) / 2);
+
+  const input: number[] = isFirst
+    ? [0, end - fade, end]
+    : isLast
+      ? [start, start + fade, 1]
+      : [start, start + fade, end - fade, end];
   const output: number[] = isFirst ? [1, 1, 0] : isLast ? [0, 1, 1] : [0, 1, 1, 0];
 
   return useTransform(progress, input, output);
@@ -148,8 +191,9 @@ function ActBackdrop({
   readonly index: CashTunnelActIndex;
   readonly progress: MotionValue<number>;
 }): React.JSX.Element {
-  const opacity = useActOpacity(progress, index);
-  const scale = useTransform(progress, [index / ACT_COUNT, (index + 1) / ACT_COUNT], [1.14, 1.02]);
+  const opacity = useBackdropOpacity(progress, index);
+  const { start, end } = actWindow(index);
+  const scale = useTransform(progress, [start, end], [1.14, 1.02]);
 
   return (
     <motion.div style={{ opacity }} className="absolute inset-0 z-0" aria-hidden="true">
@@ -167,22 +211,35 @@ function ActBackdrop({
   );
 }
 
-/** Capa tipográfica del acto: copy + métrica trazable al SSOT (solo opacity/translate). */
+/**
+ * Capa tipográfica del acto: copy + métrica trazable al SSOT (solo opacity/translate).
+ *
+ * `isActive` llega del orquestador (`Math.floor(progress * 4)`), que conmuta
+ * EXACTAMENTE en el mismo punto en que el copy saliente ha llegado a opacidad 0
+ * y el entrante aún vale 0. Se usa para dos cosas que la opacidad sola no
+ * resuelve: `visibility` real (un texto a opacity 0 sigue existiendo en el DOM y
+ * puede seleccionarse o repintarse) y `aria-hidden` (un lector de pantalla no
+ * debe leer cuatro titulares a la vez).
+ */
 function ActCopy({
   act,
   index,
   progress,
+  isActive,
 }: {
   readonly act: CashTunnelAct;
   readonly index: CashTunnelActIndex;
   readonly progress: MotionValue<number>;
+  readonly isActive: boolean;
 }): React.JSX.Element {
-  const opacity = useActOpacity(progress, index);
-  const y = useTransform(progress, [index / ACT_COUNT, (index + 1) / ACT_COUNT], [28, -28]);
+  const opacity = useCopyOpacity(progress, index);
+  const { start, end } = actWindow(index);
+  const y = useTransform(progress, [start, end], [28, -28]);
 
   return (
     <motion.article
-      style={{ opacity, y }}
+      style={{ opacity, y, visibility: isActive ? 'visible' : 'hidden' }}
+      aria-hidden={isActive ? undefined : true}
       className="pointer-events-none absolute inset-x-0 bottom-52 z-20 mx-auto flex max-w-3xl flex-col gap-3 px-6 sm:bottom-56 lg:bottom-36 lg:px-0"
     >
       <span className="font-mono text-[10px] uppercase tracking-[0.32em] text-[#ecb613]">
@@ -254,12 +311,15 @@ export function ScrollytellingCashTunnel(): React.JSX.Element {
             aria-hidden="true"
           />
 
+          {/* Un único copy visible por acto: `activeAct` conmuta justo en el
+              punto donde el saliente ya vale 0 y el entrante aún vale 0. */}
           {ACTS.map((act, i) => (
             <ActCopy
               key={act.slug}
               act={act}
               index={i as CashTunnelActIndex}
               progress={scrollYProgress}
+              isActive={activeAct === i}
             />
           ))}
 

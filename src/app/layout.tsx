@@ -165,7 +165,13 @@ export default function RootLayout({
                       <EventCartProvider>
                         <CartProvider>
                           <SmoothScrollProvider>
-                            <div className="min-h-screen relative flex flex-col">
+                            {/* `id="app-shell"` + `overflow-x: clip` (globals.css):
+                                este wrapper es `relative` ⇒ es el bloque contenedor de
+                                todos los descendientes `position:absolute`. Un `clip` en
+                                <html>/<body> NO alcanza a un absoluto cuyo bloque contenedor
+                                es el viewport (sonda Chromium: scrollX=600), pero sí lo
+                                alcanza cuando el ancestro posicionado recorta. */}
+                            <div id="app-shell" className="min-h-screen relative flex flex-col">
                               <GeoStructuredData />
                               <SovereignNavbar />
                               <main className="flex-grow">

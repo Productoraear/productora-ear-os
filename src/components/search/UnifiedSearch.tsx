@@ -188,7 +188,6 @@ export const UnifiedSearch: React.FC = () => {
   // ── Efectos de ciclo de vida ────────────────────────────────────────────
   useEffect(() => {
     if (!isSearchOpen) {
-      document.body.style.overflow = 'unset';
       setQuery('');
       setPillar('all');
       setSelectedIndex(0);
@@ -196,9 +195,19 @@ export const UnifiedSearch: React.FC = () => {
       return;
     }
 
+    // SAVE/RESTORE (no `unset`): el layout monta este componente en TODAS las
+    // rutas, así que escribir `document.body.style.overflow = 'unset'` al
+    // arrancar dejaba un estilo INLINE en <body> que anulaba el blindaje global
+    // `overflow-x: clip` de globals.css (un inline gana a cualquier hoja) y
+    // destripaba el scroll-lock de otros overlays. Se restaura el valor previo
+    // —'' si no había nada— y el clip del CSS vuelve a mandar al cerrar.
+    const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     const focusTimer = window.setTimeout(() => inputRef.current?.focus(), 80);
-    return () => window.clearTimeout(focusTimer);
+    return () => {
+      window.clearTimeout(focusTimer);
+      document.body.style.overflow = previousOverflow;
+    };
   }, [isSearchOpen]);
 
   useEffect(() => {

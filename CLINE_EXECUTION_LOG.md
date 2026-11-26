@@ -7576,3 +7576,55 @@ siguiente_paso : `npm run build` + `npm run gate:prepush` en CI antes del deploy
 ```
 
 
+
+---
+
+## 2026-11-26 · P0 · SCROLLYTELLING ACT-ALTERNATION + BLINDAJE OVERFLOW-X GLOBAL
+
+**1) QUÉ CAMBIÓ**
+- `src/components/home/ScrollytellingCashTunnel.tsx:125-182` — curvas separadas: `useBackdropOpacity` (cross-fade de placa, se conserva) y `useCopyOpacity` (ventana estricta por acto). El copy N se apaga en `[end-0.07, end]` y el N+1 enciende en `[start, start+0.07]`: sin solape temporal.
+- `src/components/home/ScrollytellingCashTunnel.tsx:214-260` — `ActCopy` recibe `isActive` y aplica `visibility` + `aria-hidden`; antes los 4 titulares vivían siempre montados con opacidad cruzada.
+- `src/components/home/ScrollytellingCashTunnel.tsx:315-324` — `isActive={activeAct === i}`.
+- `src/app/globals.css:1193-1221` — `html, body` y `#root/#__next/#app-shell/main` con `max-width:100%` + `overflow-x: clip` (con `overflow-x:hidden` como fallback).
+- `src/app/layout.tsx:168-173` — el wrapper raíz recibe `id="app-shell"` (bloque contenedor de los `position:absolute`).
+- `src/components/search/UnifiedSearch.tsx:189-211` — eliminado el `document.body.style.overflow = 'unset'` inline; ahora save/restore del valor previo.
+- `scripts/verify_cashtunnel_act_alternation.cjs` (nuevo) + `package.json` (`verify:cashtunnel-alternation`, incluido en `gate:prepush`).
+
+**2) EVIDENCIA (medida en esta sesión)**
+- `npm run typecheck` → Exit 0.
+- `npm run lint` sobre los 4 archivos tocados → Exit 0.
+- `node scripts/verify_cashtunnel_act_alternation.cjs` → 4001 muestras · copys simultáneos = 1 · track sin copy = 0,825 % · suma backdrop 1.000..1.000 · Exit 0.
+- `node scripts/audit_cls_budget.cjs` → VIOLATIONS=0 · Exit 0.
+- Sonda Chromium real contra el dev server (`http://localhost:3007/`, 390×844): `scrollX=0`, `docScrollWidth=390`, `stageTop≈0` en 13 muestras, máximo de copys simultáneos = 1, relevo 0→1 en p≈0,22-0,26, `bodyClip=clip`, `lock=hidden`, `unlockClip=clip`.
+- Sonda Chromium de semántica `clip`: fuga in-flow bloqueada (scrollX=0); fuga absoluta sin ancestro posicionado NO bloqueada (scrollX=600) → justifica `#app-shell`.
+
+**3) QUÉ NO ESTÁ PROBADO (crudo)**
+- `npm run build` de producción NO ejecutado: la evidencia viene del dev server + `tsc --noEmit`.
+- `npm run gate:prepush` completo NO ejecutado (38 puertas con dependencias ajenas al encargo).
+- Safari/Firefox sin sondear: `overflow-x: clip` existe desde Safari 16; el fallback `hidden` mantiene el recorte pero reintroduce scroll container.
+- INP de campo (CrUX) tras el cambio de `visibility`: SIN_EVIDENCIA.
+
+**Premortem (INC-2, G-8)**
+1. *¿Objetivo exacto o primo hermano?* Exacto: el defecto era el solape de los cuatro titulares. Se corrige en la fuente (ventanas de opacidad disjuntas) y se añade apagado real de `visibility` + `aria-hidden`; no se maquilla con `mix-blend` ni con recortes.
+2. *¿Asunciones frágiles?* (i) `activeAct` conmuta en `Math.floor(progress*4)`, justo donde el copy saliente llega a 0 — si se cambia `FADE` por encima de 0,25 el relevo vuelve a solaparse (el arnés lo detecta); (ii) soporte de `overflow-x: clip` (fallback `hidden`); (iii) el `#app-shell` debe seguir siendo `relative` para contener los absolutos; (iv) cualquier overlay futuro que escriba `body.style.overflow` inline vuelve a anular el clip del `body`.
+3. *¿Alternativa descartada?* Cross-fade tipográfico con `mix-blend-mode`/máscaras: descartado porque dos titulares siguen siendo legibles a la vez y el coste de composición sube. También se descartó `overflow-x: hidden` en `<main>`: crea scroll container y anula el `sticky` del túnel.
+4. *¿Qué se rompe bajo carga y cómo lo detectamos?* Un `position:absolute` desbocado fuera del `#app-shell` (portal montado en `document.body`) no quedaría recortado; se detecta con `audit:visual` y con la sonda de `scrollX`. Un `visibility:hidden` mal sincronizado dejaría el copy invisible un frame; el arnés mide el tramo sin copy (0,825 %).
+5. *¿Qué acepto al firmar?* ~0,825 % del recorrido sin copy visible (punto de corte, no banda), un `id` nuevo en el wrapper raíz y que el blindaje depende de que los overlays respeten el save/restore del scroll-lock.
+
+**SIGMA://CLOSE/v1**
+```
+task_id        : P0_SCROLLYTELLING_ALTERNATION_OVERFLOW_SHIELD
+estado_bloque  : VERIFICADO (G-1 · G-2 · G-7 · arnés propio · sonda Chromium real)
+hecho          : src/components/home/ScrollytellingCashTunnel.tsx (curvas separadas + visibility/aria-hidden) · src/app/globals.css (clip global) · src/app/layout.tsx (#app-shell) · src/components/search/UnifiedSearch.tsx (save/restore) · scripts/verify_cashtunnel_act_alternation.cjs · package.json
+evidence[]     : tsc --noEmit exit=0 · eslint exit=0 · verify_cashtunnel_act_alternation exit=0 (1 copy simultáneo, 0,825 % sin copy) · audit_cls_budget exit=0 (VIOLATIONS=0) · Chromium 390×844 ruta / → scrollX=0, docScrollWidth=390, stageTop≈0, maxCopy=1
+cambios[]      : 5 archivos modificados + 1 arnés nuevo (133 inserciones / 20 borrados)
+gates          : G0=PASS · G1=PASS · G2=PASS · G3=SIN_EVIDENCIA · G4=SIN_EVIDENCIA · G5=SIN_EVIDENCIA · G6=SIN_EVIDENCIA · G7=PASS · G8=PASS
+omega_diamante : { score: "no re-auditado en esta sesión", verdict: "PENDIENTE" }
+hipotesis[]    : FADE ≤ 0,25; soporte de overflow-x:clip; #app-shell relative; overlays futuros sin inline overflow
+decision       : ventanas de opacidad disjuntas (corte tipográfico) en lugar de cross-fade con máscaras
+riesgos        : absolutos fuera del shell no recortados; fallback hidden en Safari<16 reintroduce scroll container
+reto_espejo    : el criterio más exigente fue demostrar el relevo en el navegador real, no sólo en la curva (13 muestras, 1 copy visible)
+aprendizaje_ceo: un `overflow-x: hidden` global no basta si un overlay escribe `overflow: unset` inline; el blindaje se firma en la cascada real
+siguiente_paso : `npm run build` + `npm run gate:prepush` en CI antes del deploy a Coolify
+```
+
