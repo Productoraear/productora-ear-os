@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import { LumenNoiseGrain } from '@/components/lumen/LumenNoiseGrain';
-import { CinematicHeroSpot } from '@/components/home/CinematicHeroSpot';
+import { ScrollytellingCashTunnel } from '@/components/home/ScrollytellingCashTunnel';
 import { SovereignThreeDoorsDistributor } from '@/components/home/SovereignThreeDoorsDistributor';
 
 export const metadata: Metadata = {
@@ -25,24 +25,27 @@ export const metadata: Metadata = {
 /**
  * Escaparate Cinematográfico "Champagne & Noche de Gala" sobre base #040407
  * (compatibilidad con estándar Aura Onyx #030305).
- * Cabecera: hero cinematográfico de 4 actos (Taste Engine Velocity) con motor
- * Canvas 2D aislado en cliente. Debajo, el Distribuidor Soberano de 3 Puertas
- * hacia los embudos asistidos. Cero apilamiento vertical mono-proveedor.
+ * Cabecera: Scrollytelling Cash-Tunnel de 4 actos con BuyBox flotante conectado
+ * a la pasarela real (Stripe Checkout / presupuesto de finca / pliego B2G).
+ * Debajo, el Distribuidor Soberano de 3 Puertas hacia los embudos asistidos.
+ * Cero apilamiento vertical mono-proveedor.
  *
  * NOTA DE ARQUITECTURA (sticky): `overflow-x-clip` sustituye a `overflow-x-hidden`
  * porque `overflow-x: hidden` convierte `<main>` en scroll container y anularía
- * el `position: sticky` del stage del hero (el clipping visual se mantiene).
+ * el `position: sticky` del stage del túnel (el clipping visual se mantiene).
+ * `pt-24` despeja la cabecera fija opaca (SovereignNavbar) para que el primer
+ * acto no nazca bajo ella (Ω-CTA · puerta G05).
  */
 export default function Home(): React.JSX.Element {
   return (
     <main
-      className="bg-[#040407] relative w-full max-w-full min-h-screen overflow-x-clip text-[#f4f4f5] font-sans selection:bg-[#ecb613] selection:text-[#040407] pb-20"
+      className="bg-[#040407] relative w-full max-w-full min-h-screen overflow-x-clip pt-24 text-[#f4f4f5] font-sans selection:bg-[#ecb613] selection:text-[#040407] pb-20"
       style={{
         backgroundImage:
           'radial-gradient(ellipse at 50% 0%, rgba(236,182,19,0.12) 0%, rgba(4,4,7,0.98) 75%)',
       }}
     >
-      <CinematicHeroSpot />
+      <ScrollytellingCashTunnel />
       <LumenNoiseGrain />
       <SovereignThreeDoorsDistributor />
     </main>

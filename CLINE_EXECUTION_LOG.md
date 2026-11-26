@@ -1,3 +1,38 @@
+# SIGMA://CLOSE/v1
+- **Task ID:** P0_COMERCIAL_SCROLLYTELLING_CASH_TUNNEL_STRIPE_BUYBOX
+- **Fecha:** 2026-11-26 (CET)
+- **Autoridad Ordenante:** Director Generalista / CEO (Edwin Agudelo)
+- **Ejecutor:** Cline ("El Obrero")
+- **estado_bloque:** VERIFICADO
+- **hecho:**
+  1. `src/components/checkout/SovereignStickyCheckoutBar.tsx` (nuevo, 240 líneas): BuyBox flotante `fixed bottom-[calc(1rem+var(--ear-dock-h,0px))] lg:bottom-4 z-50`, OLED `#030305` + `border-white/10` + `backdrop-blur-xl`. Botón primario dinámico por acto: A1→`/checkout/presupuesto?venue=restaurante-otzarreta`; A2→POST `/api/reservar/solista/deposit`; A3→POST idem (formato `seating-planner`); A4→`/licitaciones/expediente`. Importes 100% desde `ear-os-ssot.ts`.
+  2. `src/components/home/ScrollytellingCashTunnel.tsx` (nuevo, 289 líneas): 4 actos con `framer-motion` (`useScroll`/`useTransform`/`useMotionValueEvent`) sobre track `400dvh` + stage `sticky` `100dvh`; geometría bloqueada ⇒ CLS 0.000; orquesta el dock.
+  3. `src/app/page.tsx`: monta `<ScrollytellingCashTunnel />` (sustituye al hero pasivo) + `pt-24` (despeje de cabecera, puerta G05).
+- **evidence[]:**
+  - CLAIM-1 :: cmd="node --max-old-space-size=6144 ./node_modules/typescript/bin/tsc --noEmit" :: exit=0 :: ts=2026-11-26
+  - CLAIM-2 :: cmd="node ./node_modules/eslint/bin/eslint.js <3 ficheros tocados>" :: exit=0 :: ts=2026-11-26
+  - CLAIM-3 :: cmd="node ./node_modules/tsx/dist/cli.mjs scripts/audit_cta_trace_matrix.ts" :: exit=0 :: ts=2026-11-26 :: report=reports/FORENSIC_CTA_TRACE_MATRIX.json (verdict PASS · violations 0 · surfaces 8/8 gated)
+  - url: NO APLICA (cambio no desplegado; pendiente de push a `origin/main` → Coolify).
+- **gates:** G0 PASS · G1 PASS · G2 PASS · G3 PASS (Ω-CTA 8/8) · G4 SIN_EVIDENCIA · G5 SIN_EVIDENCIA · G6 SIN_EVIDENCIA · G7 SIN_EVIDENCIA · G8 PASS (este log)
+- **cambios[]:** `src/app/page.tsx` · `src/components/home/ScrollytellingCashTunnel.tsx` · `src/components/checkout/SovereignStickyCheckoutBar.tsx` · `CLINE_EXECUTION_LOG.md`
+- **omega_diamante:** { score: "sin recuento ejecutado", verdict: "PENDIENTE", pendientes: ["npm run audit:omega-rojo", "node scripts/run_sv_protocol_15_gates.cjs", "node scripts/audit_cls_budget.cjs"] }
+- **hipotesis[]:** (1) `--ear-dock-h` se define global en `globals.css`; en escritorio se anula la posición móvil con `lg:bottom-4`. (2) El asset `public/images/cinematic/acto-04-plaza.webp` cubre el Acto IV. (3) El depósito (100 € fijo SSOT) no depende de `distanciaKm`, enviado a `0` como metadato del candado.
+- **decision:** Se sustituye `CinematicHeroSpot` (hero pasivo de 4 actos) por el CashTunnel en lugar de apilar dos scrollytellings de 4 actos. Motivo: decreto CEO «la Home deje de ser un escaparate pasivo». Rollback: `git revert` de este commit.
+- **riesgos:** Dos superficies `fixed` inferiores coexisten en móvil (dock z-80 + barra z-50); se mitiga anclando la barra por encima del dock con `--ear-dock-h`.
+- **reto_espejo:** La directiva pedía `fixed bottom-4` literal; el auditor Ω-CTA (G01) exige gate de breakpoint. Se aplicó la cláusula más exigente (AMD-1): dock-aware + `lg:bottom-4`.
+- **aprendizaje_ceo:** El scroll ya vende: cada acto tiene un botón que abre la pasarela real, no un adorno.
+- **siguiente_paso:** `npm run audit:omega-rojo` + `node scripts/audit_cls_budget.cjs` + push a `origin/main` (Coolify).
+
+### Premortem (5 preguntas · INC-2 / G-8)
+1. ¿Objetivo exacto? Sí: 4 actos + BuyBox persistente cableado a Stripe/presupuesto/pliego; el botón POSTea a `/api/reservar/solista/deposit` y redirige a la URL de Stripe (no es un primo cosmético).
+2. ¿Asunciones frágiles? `--ear-dock-h` definido globalmente en `globals.css`; assets WebP presentes; el depósito acepta `distanciaKm=0`.
+3. ¿Alternativa descartada? Reusar el motor Canvas 2D del hero; se descartó por acoplamiento y peso (se prefirió `framer-motion`, ya en el stack).
+4. ¿Qué rompería bajo carga? 4 imágenes WebP simultáneas en el stage; mitigado con `priority` sólo en el primer acto y `loading` lazy por defecto.
+5. ¿Consecuencia al firmar? Ninguna irreversible: cambio de UI sin migración de datos; rollback en 1 commit.
+
+---
+
+
 # SIGMA://HANDOVER/v1 — PRIORIDAD ABSOLUTA DIRECTIVA CEO
 - **Task ID:** TIER1_P0_FINAL_SEAL_E2E_AND_GATE_PREPUSH
 - **Fecha:** 2026-11-25 21:20 CET
