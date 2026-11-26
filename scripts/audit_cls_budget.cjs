@@ -70,7 +70,17 @@ const ROUTE_FILE_MAP = {
   '/': [
     'src/app/page.tsx',
     'src/components/sclass/PrismaDiamondHero3D.tsx',
-    'src/components/home/SovereignHomeHeroNodes.tsx'
+    'src/components/home/SovereignHomeHeroNodes.tsx',
+    // W52 · Hero cinematográfico "Taste Engine Velocity": las cuatro capas del
+    // stage se auditan con las mismas 8 reglas (geometría reservada, sin
+    // w-screen/h-screen, animación sólo de opacity/transform, dynamic+loading).
+    'src/components/home/CinematicHeroSpot.tsx',
+    'src/components/home/cinematic/CinematicCanvasStage.tsx',
+    'src/components/home/cinematic/CinematicKeyframeStage.tsx',
+    'src/components/home/cinematic/CinematicCopyStage.tsx',
+    'src/components/home/cinematic/CinematicMaitrePanel.tsx',
+    'src/components/home/cinematic/CinematicActRail.tsx',
+    'src/components/home/cinematic/CinematicAudioToggle.tsx'
   ]
 };
 

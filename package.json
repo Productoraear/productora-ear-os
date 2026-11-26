@@ -152,6 +152,7 @@
     "audit:omega-rojo": "node scripts/audit_omega_rojo_scorecard.cjs",
     "audit:omega-rojo:strict": "node scripts/audit_omega_rojo_scorecard.cjs --strict",
     "audit:cls-budget": "node scripts/audit_cls_budget.cjs",
+    "verify:cinematic": "node scripts/verify_cinematic_hero.cjs",
     "audit:queue-counters": "node scripts/audit_queue_counter_integrity.cjs",
     "audit:queue-forensic": "node scripts/audit_queue_forensic.cjs",
     "verify:concierge-saga": "node ./node_modules/tsx/dist/cli.mjs scripts/verify_concierge_saga_contract.ts",

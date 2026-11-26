@@ -5919,8 +5919,7 @@ siguiente_paso : CEO rota la clave en 21st.dev y la inyecta como TWENTYFIRST_API
 
 ---
 
-# SIGMA://CLOSE/v1
-```
+# 
 task_id        : P0_BUILD_COOLIFY_DESBLOQUEO (+ FASE 2 marketing: BLOQUEADA)
 estado_bloque  : VERIFICADO (build) Â· SIN_EVIDENCIA (ingesta marketing: payload inexistente)
 hecho          : next.config.ts:48-55 restaura cpus:1/workerThreads:false (regresiÃ³n de 56ee94a2);
@@ -6270,29 +6269,7 @@ siguiente_paso : sesiÃ³n cerrada por Pacto ZTM (WF-4). Plataforma en fase de e
 
 ### Evidencia ejecutada en esta sesiÃ³n
 
----
 
-## TIER1_P0_FINAL_SEAL_E2E_AND_GATE_PREPUSH · 2026-11-25 · CIERRE DE BLOQUE (Cline · El Obrero)
-
-**1) QUÉ CAMBIÓ** — Commit `2b974f0c` (19 archivos): suite E2E Tier-1 P0 nueva (`scripts/e2e_tier1_p0_suite.ts`, 123 casos), Buy Box con resolución municipal (`findMunicipalityByQuery`) y `listFichasForBuyBox`, entidad ASIN (`src/lib/entities/asin.ts`), concierge `/api/chat/concierge` con ASIN/B2G/Otzarreta, 301 SEO `/fincas/{provincia}` → `/fincas/p/{provincia}` con canónicos y sitemaps alineados, SSOT sellado (`LOGISTICA_KM_EXENTOS` 50→100 + `HUB_MENTRIDA_*`) y arnés `verify:concentric-conversion` T6 alineado a P0-2.
-
-**2) QUÉ RIESGO DESAPARECE** — El set ordenado (6 rutas) **rompía el build**: `TS2305` (`listFichasForBuyBox`, `findMunicipalityByQuery`) y `TS2353` (`asin` fuera de `WhatsAppSessionHandoff`). Medido con el compilador real en worktree aislado `HEAD+set`: `tsc --noEmit` **Exit 0** (antes Exit 2). Reto espejo: se eleva el set a su clausura de compilación (19 rutas) en lugar de empujar un build roto.
-
-**3) QUÉ LO PRUEBA**
-- `node ./node_modules/tsx/dist/cli.mjs scripts/e2e_tier1_p0_suite.ts` → `TOTAL: 123/123 PASS | 0 FAIL | VERDICT=PASS`, **Exit 0** (T1 54 · T2 54 · T3 10 · T4 5).
-- `npm run gate:prepush` → **EXIT=0**, 38/38 compuertas (conteo derivado de `package.json`: 38 comandos separados por `&&`). Interior medido: `audit:contrast:core` contra `http://127.0.0.1:3007` → `VERDICT=PASS`, 10 rutas, `ROUTES_SIN_EVIDENCIA=0`, `TOTAL_FALLOS=0`; `T6_SCRIPT_FIANZA_SSOT PASS (suelo=100,00 sin_recorte=true suelo_aplicado=true)`; `T13_ZONA_CERO_INTACTA sin cambios`; `13/13 verificaciones`; `OMEGA_ROJO_SCORE=20/20 · VERDICT=VERDE`; `CLS_BUDGET_VERDICT=PASS`.
-- `git push origin main` → `16469224..2b974f0c` · `git ls-remote origin main` = `2b974f0ca9a438a702ad6a510ef29a0e53934494`.
-
-**4) QUÉ NO ESTÁ PROBADO (crudo, sin maquillar)**
-- **El despliegue NO se ejecutó.** `gh run view 45711531097`: `contract-gate` success · `typecheck-gate` success · `build-and-push` success (imagen en GHCR) · `production-smoke` **failure**. Sonda viva `https://www.productoraear.com/api/health` HTTP 200 con `buildSha=16469224…` (`buildSource=coolify-source-commit`) frente a esperado `2b974f0` → `VERDICT=STALE`. Causa declarada por el propio pipeline: falta `COOLIFY_API_TOKEN` / webhook de deploy. **Es infraestructura, no código.**
-- **P0 preexistente ajeno a esta tarea:** el `POST` del smoke devuelve **503 `SCHEMA_MISSING`** («Tabla de outreach inexistente… falta `prisma migrate deploy`»). `prisma/schema.prisma` sigue sin commitear y la migración sin aplicar en el VPS.
-- **`omega.js complete` NO ejecutado:** el slot activo es `W53_T12` y el cierre de tarea exige firma del Arquitecto. Se declara el hueco en vez de forzar el slot único (WF-5).
-- **G-3 (`run_sv_protocol_15_gates.cjs`) y G-5 (`sim:event`)**: `SIN_EVIDENCIA` en esta sesión (no ejecutados; el armés `gate:prepush` cubre 38 puertas pero no suple esas dos).
-- El árbol conserva ~50 archivos con cambios fuera del alcance de esta tarea.
-
-**5) DECISIÓN QUE NECESITO** — 1) Activar *API access* en Coolify y guardar `COOLIFY_API_TOKEN`/`COOLIFY_WEBHOOK_URL` (o auto-deploy por git webhook) para que el SHA construido llegue a producción. 2) Autorizar `npm run db:migrate:production` para cerrar el 503 de outreach.
-
-```
 SIGMA://CLOSE/v1
 task_id        : TIER1_P0_FINAL_SEAL_E2E_AND_GATE_PREPUSH
 estado_bloque  : SOSPECHOSO
@@ -7446,3 +7423,80 @@ hipotesis[]    : el router admin/system sin commit rompe audit:http en HEAD; el 
 decision       : no se tocó audit:http ni el probe; arreglarlos excede el scope de esta tarea.
 premortem      : (1) cosmético vs real: la parte WebGL no se midió en navegador. (2) frágil: depende de tsx y de HEAD. (3) bloquea deploy mientras run-script no esté en commit o el probe no esté en verde.
 siguiente_paso : commitear src/app/api/admin/system/ (o retirarlo del consumidor) y re-ejecutar run_sv_protocol_15_gates.cjs hasta exit=0.
+
+---
+
+## TIER1_P0_FINAL_SEAL_E2E_AND_GATE_PREPUSH · 2026-11-25 · CIERRE DE BLOQUE (Cline · El Obrero)
+
+**1) QUÉ CAMBIÓ** — Commit `2b974f0c` (19 archivos): suite E2E Tier-1 P0 nueva (`scripts/e2e_tier1_p0_suite.ts`, 123 casos), Buy Box con resolución municipal (`findMunicipalityByQuery`) y `listFichasForBuyBox`, entidad ASIN (`src/lib/entities/asin.ts`), concierge `/api/chat/concierge` con ASIN/B2G/Otzarreta, 301 SEO `/fincas/{provincia}` → `/fincas/p/{provincia}` con canónicos y sitemaps alineados, SSOT sellado (`LOGISTICA_KM_EXENTOS` 50→100 + `HUB_MENTRIDA_*`) y arnés `verify:concentric-conversion` T6 alineado a P0-2.
+
+**2) QUÉ RIESGO DESAPARECE** — El set ordenado (6 rutas) **rompía el build**: `TS2305` (`listFichasForBuyBox`, `findMunicipalityByQuery`) y `TS2353` (`asin` fuera de `WhatsAppSessionHandoff`). Medido con el compilador real en worktree aislado `HEAD+set`: `tsc --noEmit` **Exit 0** (antes Exit 2). Reto espejo: se eleva el set a su clausura de compilación (19 rutas) en lugar de empujar un build roto.
+
+**3) QUÉ LO PRUEBA**
+- `node ./node_modules/tsx/dist/cli.mjs scripts/e2e_tier1_p0_suite.ts` → `TOTAL: 123/123 PASS | 0 FAIL | VERDICT=PASS`, **Exit 0** (T1 54 · T2 54 · T3 10 · T4 5).
+- `npm run gate:prepush` → **EXIT=0**, 38/38 compuertas (conteo derivado de `package.json`: 38 comandos separados por `&&`). Interior medido: `audit:contrast:core` contra `http://127.0.0.1:3007` → `VERDICT=PASS`, 10 rutas, `ROUTES_SIN_EVIDENCIA=0`, `TOTAL_FALLOS=0`; `T6_SCRIPT_FIANZA_SSOT PASS (suelo=100,00 sin_recorte=true suelo_aplicado=true)`; `T13_ZONA_CERO_INTACTA sin cambios`; `OMEGA_ROJO_SCORE=20/20 · VERDICT=VERDE`; `CLS_BUDGET_VERDICT=PASS`.
+- `git push origin main` → `16469224..2b974f0c` · `git ls-remote origin main` = `2b974f0ca9a438a702ad6a510ef29a0e53934494`.
+
+**4) QUÉ NO ESTÁ PROBADO (crudo, sin maquillar)**
+- **El despliegue NO se ejecutó.** `gh run view 45711531097`: `contract-gate` success · `typecheck-gate` success · `build-and-push` success (imagen en GHCR) · `production-smoke` **failure**. Sonda viva `https://www.productoraear.com/api/health` HTTP 200 con `buildSha=16469224…` (`buildSource=coolify-source-commit`) frente a esperado `2b974f0` → `VERDICT=STALE`. Causa declarada por el propio pipeline: falta `COOLIFY_API_TOKEN` / webhook de deploy. **Es infraestructura, no código.**
+- **P0 preexistente ajeno a esta tarea:** el `POST` del smoke devuelve **503 `SCHEMA_MISSING`** («Tabla de outreach inexistente… falta `prisma migrate deploy`»). `prisma/schema.prisma` sigue sin commitear y la migración sin aplicar en el VPS.
+- **`omega.js complete` NO ejecutado:** el slot activo es `W53_T12` y el cierre de tarea exige firma del Arquitecto. Se declara el hueco en vez de forzar el slot único (WF-5).
+- **G-3 (`run_sv_protocol_15_gates.cjs`) y G-5 (`sim:event`)**: `SIN_EVIDENCIA` en esta sesión (no ejecutados; el arnés `gate:prepush` cubre 38 puertas pero no suple esas dos).
+- El árbol conserva ~50 archivos con cambios fuera del alcance de esta tarea.
+
+**5) DECISIÓN QUE NECESITO** — 1) Activar *API access* en Coolify y guardar `COOLIFY_API_TOKEN`/`COOLIFY_WEBHOOK_URL` (o auto-deploy por git webhook) para que el SHA construido llegue a producción. 2) Autorizar `npm run db:migrate:production` para cerrar el 503 de outreach.
+
+---
+
+## HOME_CINEMATIC_HERO_TASTE_ENGINE · 2026-11-26 · CIERRE DE BLOQUE (Cline · El Obrero)
+
+**1) QUÉ CAMBIÓ** — Hero cinematográfico de 4 actos "Taste Engine Velocity" en la Home real (`src/app/page.tsx`; la ruta `src/app/(public)/page.tsx` del guion **no existe** en disco y así se declara). Nuevos ficheros: `src/types/cinematic-hero.ts`, `src/components/home/CinematicHeroSpot.tsx` y 10 piezas en `src/components/home/cinematic/` (`cinematicScenes.ts`, `cinematicSignal.ts`, `cinematicMath.ts`, `cinematicSprites.ts`, `useCinematicTimeline.ts`, `CinematicCanvasStage.tsx`, `CinematicKeyframeStage.tsx`, `CinematicCopyStage.tsx`, `CinematicMaitrePanel.tsx`, `CinematicActRail.tsx`, `CinematicAudioToggle.tsx`). Pipeline reproducible `scripts/build_cinematic_frames.cjs` → 5 WebP reales en `public/images/cinematic/` (530.076 B totales; 8,1 %–17,9 % del JPG origen). Arnés vivo nuevo `scripts/verify_cinematic_hero.cjs` (+ `npm run verify:cinematic`). Cero dependencias nuevas: Canvas 2D + Worker inline con OffscreenCanvas; sin `three`, sin framer-motion.
+
+**2) QUÉ RIESGO DESAPARECE** — (a) El hero deja de ser fachada de gradientes: compone 8 placas fotográficas reales con cámara continua y etalonaje; (b) riesgo de CLS por vídeo/canvas eliminado: el stage reserva `h-[100dvh]` desde el HTML del servidor y sólo se mutan `opacity`/`transform`; (c) SSR safety: el canvas entra por `next/dynamic` con `loading` reservado (regla R4 del auditor), así Node/Docker nunca toca `window`; (d) el copy de los 4 actos ya no se superpone (fundido alineado al límite de acto), defecto real detectado y corregido con medición.
+
+**3) QUÉ LO PRUEBA (comandos reales, esta sesión)**
+- `node --max-old-space-size=6144 ./node_modules/typescript/bin/tsc --noEmit` → **Exit 0** (G-1).
+- `node ./node_modules/eslint/bin/eslint.js <7 ficheros>` → **Exit 0** (G-2; sólo warning preexistente de `.eslintignore`).
+- `node scripts/audit_cls_budget.cjs` → `ROUTE=/ RULES=8 VIOLATIONS=0` (auditando ahora también los 7 ficheros del hero) · **Exit 0** (G-7).
+- `node scripts/audit_route_conflicts.cjs` → 552 rutas, **0 conflictos** · **Exit 0**.
+- `node scripts/verify_cinematic_hero.cjs --url=http://localhost:3007/` → `verdict: VERIFICADO` · **Exit 0**: `canvasMounted=true`, `keyframes=1`, `heroHeight=2700`, `act4Cta={href:"/fincas", inside:true}`, `maitreButton=true`, `audioPressedInitial="false"` → `audioPressedAfterClick="true"`, `cls=0.0000559`, `pageErrors=[]`, `prefers-reduced-motion ⇒ canvases=0, layersWithWebp=2`.
+- SSR crudo (`Invoke-WebRequest http://localhost:3007/`) → `HTTP=200 LEN=150111`, `CANVAS_IN_SSR=False` (el canvas no existe en el HTML del servidor), capa de keyframes y los 4 claims presentes.
+- Móvil 390×844 (Puppeteer): `heroHeight=844`, `hasCanvas=false`, `layersWithWebp=2`, `cls=0`, `horizontalOverflow=0`, claim a 31,2 px dentro del viewport.
+- `node scripts/audit_ci_gate_wiring.cjs` → 4 jobs, 0 fugas · **Exit 0** (añadir `verify:cinematic` a `package.json` no rompe el cableado).
+- `node scripts/build_cinematic_frames.cjs` → `VERDICT=PASS frames=5` · **Exit 0**.
+
+**4) QUÉ NO ESTÁ PROBADO (crudo)**
+- **`npm run build` de producción NO ejecutado** en esta sesión: la evidencia viene del dev server (Turbopack) + `tsc --noEmit`. `SIN_EVIDENCIA` hasta un build real.
+- **CLS de campo (p75/CrUX) `SIN_EVIDENCIA`**: 0,0000559 es laboratorio (Chrome headless, una corrida). El auditor estático sigue declarando `mode=SIMULADO_LAB`.
+- **Safari/Firefox sin sondear**: el blur del Acto III usa `ctx.filter` y los sprites usan `OffscreenCanvas` + `transferToImageBitmap`; ambos tienen fallback, pero no se midió en esos motores.
+- **`npm run gate:prepush` completo NO ejecutado** (38 puertas con sondas de contraste en vivo y dependencias ajenas al encargo).
+- **Audio**: se verifica el estado del grafo (`aria-pressed`), no el SPL del drone; el ambiente es sintetizado y no hay asset de audio.
+- **Binarios nuevos**: 530 KB de WebP entran al repo (ninguno > 1 MB, CHG-3 OK); requieren aprobación del CEO.
+
+**5) DECISIÓN QUE NECESITO** — Ninguna bloqueante. Recomendado: (1) aprobar el commit de los 5 WebP (530 KB) o exigir que se generen en el build del contenedor; (2) lanzar `npm run build` + `npm run gate:prepush` en CI antes del deploy a Coolify; (3) para CLS de campo, activar sonda RUM.
+
+**Premortem (INC-2, G-8)**
+1. *¿Objetivo exacto o primo hermano?* Cumple el storyboard: 4 actos con placas reales (brasa → sala de gala, cono + mástil, macro de cristal con el panel real del planner, plaza institucional), copy íntegro del guion y CTA dual del Acto IV a `/fincas` y al dock real (`open-ai-concierge`). No hay vídeo HLS: se eligió canvas + WebP porque no existen másters de vídeo en el repo y no se inventan assets.
+2. *¿Asunciones frágiles?* (i) soporte de `ctx.filter` (sin él el Acto III pierde el blur, no rompe); (ii) soporte de `overflow-x: clip` (sin él el sticky del hero se degrada a scroll normal); (iii) la medición de CLS depende de `layout-shift` de Chromium; (iv) rendimiento de GPU integrada bajo el blur cacheado.
+3. *¿Alternativa descartada?* Vídeo HLS con `<video>` + gradiente radial: descartado por peso y por exigir másters inexistentes. WebGL/`three` (ya en `package.json`): descartado por +600 KB al bundle y riesgo de shader en SSR/CI.
+4. *¿Qué se rompe bajo carga y cómo lo detectamos?* El canvas a 45 fps con DPR 1.5 podría bajar de 30 fps con blur: mitigado cacheando el blur por viewport y limitando partículas (64 brasas / 34 motas); el rail y el copy no dependen del canvas. Detección: `verify:cinematic` mide CLS y errores; INP/FPS aún `SIN_EVIDENCIA`.
+5. *¿Qué acepto al firmar?* Un tramo de 300 dvh antes del Distribuidor de 3 Puertas (coste de scroll), 530 KB de binarios nuevos y que el copy desaparece ~0,04 de progreso en cada corte de acto (corte por negro tipográfico intencional).
+
+**SIGMA://CLOSE/v1**
+```
+task_id        : HOME_CINEMATIC_HERO_TASTE_ENGINE
+estado_bloque  : VERIFICADO (G-1 · G-2 · G-7 · rutas · arnés vivo) / build de producción SIN_EVIDENCIA
+hecho          : src/components/home/CinematicHeroSpot.tsx + src/components/home/cinematic/* + src/types/cinematic-hero.ts + scripts/build_cinematic_frames.cjs + scripts/verify_cinematic_hero.cjs + 5 WebP
+evidence[]     : tsc --noEmit exit=0 · eslint exit=0 · audit_cls_budget ROUTE=/ VIOLATIONS=0 exit=0 · audit_route_conflicts exit=0 · verify_cinematic_hero verdict=VERIFICADO exit=0 (cls=5.59e-5)
+cambios[]      : src/app/page.tsx (hero montado, overflow-x-clip), scripts/audit_cls_budget.cjs (mapa `/` ampliado), package.json (verify:cinematic)
+gates          : G0=PASS · G1=PASS · G2=PASS · G7=PASS · G3=SIN_EVIDENCIA · G4=SIN_EVIDENCIA · G5=SIN_EVIDENCIA · G6=SIN_EVIDENCIA · G8=PASS
+omega_diamante : { score: "pendiente", verdict: "no re-auditado en esta sesión" }
+hipotesis[]    : ctx.filter / overflow-x:clip / layout-shift; CLS de campo no medido; Safari-Firefox no sondeados
+decision       : canvas 2D + WebP en lugar de HLS o three (peso y assets inexistentes)
+riesgos        : 300 dvh de scroll antes del distribuidor; 530 KB de binarios; FPS en GPU integrada sin medir
+reto_espejo    : el copy se funde por límite de acto (no por posición continua) para impedir dos claims legibles a la vez; medido en 9 puntos del recorrido
+aprendizaje_ceo: sin másters de vídeo, el lujo está en placas reales + etalonaje + copy; el motor procedural sólo acompaña
+siguiente_paso : `npm run build` + `npm run gate:prepush` en CI antes del deploy a Coolify
+```
+
+
