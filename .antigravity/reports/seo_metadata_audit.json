@@ -1,5 +1,5 @@
 {
-  "auditedAt": "2026-11-27T12:46:20.551Z",
+  "auditedAt": "2026-11-27T13:09:53.175Z",
   "skill": ".agents/skills/seo-optimizer/SKILL.md",
   "scope": "src/app/**/page.tsx (layout.tsx contados aparte)",
   "surfaceFilter": "all",
@@ -20,8 +20,8 @@
     "errored": 0,
     "layoutsIgnored": 10,
     "jsonLdPages": 82,
-    "violations": 124,
-    "violationsPublic": 110,
+    "violations": 117,
+    "violationsPublic": 103,
     "violationsInternal": 14,
     "warnings": 281
   },
@@ -766,20 +766,6 @@
       "route": "/fincas-landing",
       "surface": "public",
       "file": "src/app/fincas-landing/page.tsx",
-      "code": "TITLE_TOO_LONG",
-      "detail": "73 > 60"
-    },
-    {
-      "route": "/fincas-landing",
-      "surface": "public",
-      "file": "src/app/fincas-landing/page.tsx",
-      "code": "TITLE_BRAND_MISSING",
-      "detail": "sin token de marca \"EAR\""
-    },
-    {
-      "route": "/fincas-landing",
-      "surface": "public",
-      "file": "src/app/fincas-landing/page.tsx",
       "code": "DESC_TOO_LONG",
       "detail": "161 > 160"
     },
@@ -794,22 +780,8 @@
       "route": "/licitaciones",
       "surface": "public",
       "file": "src/app/licitaciones/page.tsx",
-      "code": "TITLE_TOO_LONG",
-      "detail": "83 > 60"
-    },
-    {
-      "route": "/licitaciones",
-      "surface": "public",
-      "file": "src/app/licitaciones/page.tsx",
       "code": "DESC_TOO_LONG",
       "detail": "240 > 160"
-    },
-    {
-      "route": "/",
-      "surface": "public",
-      "file": "src/app/page.tsx",
-      "code": "TITLE_TOO_LONG",
-      "detail": "78 > 60"
     },
     {
       "route": "/",
@@ -822,22 +794,8 @@
       "route": "/pro",
       "surface": "public",
       "file": "src/app/pro/page.tsx",
-      "code": "TITLE_TOO_LONG",
-      "detail": "74 > 60"
-    },
-    {
-      "route": "/pro",
-      "surface": "public",
-      "file": "src/app/pro/page.tsx",
       "code": "DESC_TOO_LONG",
       "detail": "189 > 160"
-    },
-    {
-      "route": "/reservar",
-      "surface": "public",
-      "file": "src/app/reservar/page.tsx",
-      "code": "TITLE_TOO_LONG",
-      "detail": "63 > 60"
     },
     {
       "route": "/reservar",
@@ -880,13 +838,6 @@
       "file": "src/app/vimume/propuesta/page.tsx",
       "code": "DESC_TOO_SHORT",
       "detail": "123 < 140"
-    },
-    {
-      "route": "/voicestudio/studio-pro",
-      "surface": "public",
-      "file": "src/app/voicestudio/studio-pro/page.tsx",
-      "code": "TITLE_TOO_LONG",
-      "detail": "67 > 60"
     },
     {
       "route": "/voicestudio/studio-pro",
@@ -7664,9 +7615,9 @@
       "surface": "public",
       "file": "src/app/fincas-landing/page.tsx",
       "kind": "static",
-      "title": "Fincas para Bodas en Madrid y Toledo | Espacios Exclusivos Sin Comisiones",
+      "title": "Fincas para Bodas · Espacios Sin Comisiones | EAR OS",
       "description": "Alquiler de fincas exclusivas para bodas en Madrid, Toledo y Guadalajara. Presupuesto transparente, libertad de catering y acústica auditada para música en vivo.",
-      "titleLength": 73,
+      "titleLength": 52,
       "descriptionLength": 161,
       "interpolated": false,
       "unresolved": [],
@@ -7712,9 +7663,9 @@
       "surface": "public",
       "file": "src/app/licitaciones/page.tsx",
       "kind": "static",
-      "title": "Licitaciones Menores B2G & Contratación LCSP Art. 118 (< 14.250 €) | Productora EAR",
+      "title": "Licitaciones B2G · Contratación Menor LCSP | EAR OS",
       "description": "Portal de licitaciones y contratos menores de servicios técnicos y culturales para Ayuntamientos, Diputaciones y Entidades Públicas. Ajuste preventivo a 14.250 € bajo Art. 118 LCSP, facturación FACe con códigos DIR3 y trazabilidad ODS 2030.",
-      "titleLength": 83,
+      "titleLength": 51,
       "descriptionLength": 240,
       "interpolated": false,
       "unresolved": [],
@@ -7808,9 +7759,9 @@
       "surface": "public",
       "file": "src/app/page.tsx",
       "kind": "static",
-      "title": "Productora EAR · Distribuidor Soberano de Contratación Directa (52 Provincias)",
+      "title": "Productora EAR · Distribuidor Soberano de Eventos | EAR OS",
       "description": "Distribuidor nacional de contratación directa en las 52 provincias de España: Fincas, Caseríos y Asadores Homologados, Roster Artístico S-Class (Edwin Agudelo y agrupaciones de gala) e Ingeniería Acústica & Alquiler de Sonido Line Array.",
-      "titleLength": 78,
+      "titleLength": 58,
       "descriptionLength": 237,
       "interpolated": false,
       "unresolved": [],
@@ -7824,9 +7775,9 @@
       "surface": "public",
       "file": "src/app/pro/page.tsx",
       "kind": "static",
-      "title": "S-Class Pro • Portal B2B de Proveedores & Fincas de Élite | Productora EAR",
+      "title": "S-Class Pro · Portal de Proveedores de Élite | EAR OS",
       "description": "Panel de control soberano para proveedores de eventos de alta gama: CRM de novios, escaparate con teléfono 24/7 sin censura, rider acústico Bose < 75 dB SPL, opiniones 5.0 y split 80/10/10.",
-      "titleLength": 74,
+      "titleLength": 53,
       "descriptionLength": 189,
       "interpolated": false,
       "unresolved": [],
@@ -7840,9 +7791,9 @@
       "surface": "public",
       "file": "src/app/reservar/page.tsx",
       "kind": "static",
-      "title": "Reserva Oficial de Artistas & Shows en Directo · Productora EAR",
+      "title": "Reserva Oficial de Artistas & Shows en Directo | EAR OS",
       "description": "Reserva oficial con garantía contractual y depósito de 100 € en Stripe. Elige entre el Solista Insignia Edwin Agudelo (350 €) o explora el Catálogo Nacional de 6.710 artistas auditados.",
-      "titleLength": 63,
+      "titleLength": 55,
       "descriptionLength": 185,
       "interpolated": false,
       "unresolved": [],
@@ -8130,9 +8081,9 @@
       "surface": "public",
       "file": "src/app/voicestudio/studio-pro/page.tsx",
       "kind": "static",
-      "title": "EAR OS Studio Pro — DAW Soberano, Agregadora DDEX y Radar Omnicanal",
+      "title": "Studio Pro · DAW Soberano y Radar Omnicanal | EAR OS",
       "description": "Mesa de producción musical soberana con 4 stems (Lead Vocal, Percusión, Bajo, Armonía), masterización AES TD1004 a -14 LUFS, generación de ISRC/UPC y tracking omnicanal de streams.",
-      "titleLength": 67,
+      "titleLength": 52,
       "descriptionLength": 180,
       "interpolated": false,
       "unresolved": [],

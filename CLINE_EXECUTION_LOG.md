@@ -7912,3 +7912,49 @@ siguiente_paso : recuperar la shell y ejecutar `git add -A && git commit -m "fix
 ```
 
 
+
+---
+
+## 2026-11-27 · CIERRE TIER1 · EMPAQUETADO AISLADO SEO + ALINEACIÓN DE COMPUERTAS HISTÓRICAS + DESPLIEGUE
+
+**Directiva**: capitalizar las 39 oportunidades GSC/Clarity, verificar los CTAs de conversión, aislar el WIP (booking/concierge/prisma/stripe) por stash, dejar el árbol limpio, certificar el arnés prepush (42 compuertas) y desplegar a `origin/main` (Coolify).
+
+**Commits atómicos (sobre `e0185f51`)**
+1. `9979ecf3` feat(seo): wire skills and seo to prepush, trim meta titles under 60 chars and sync GSC/Clarity insights — 53 ficheros: `package.json` (+`audit:agent-skills`/`audit:seo` como primeras compuertas), 3 scripts SEO, 4 skills en `.agents/skills/`, 34+5 `page.tsx` de `src/app/(public)/**`, `src/lib/whatsapp/client-handoff.ts`, `src/components/shared/SovereignWhatsAppButton.tsx`, `src/lib/providers/sovereign-lead-gate.ts`, `.antigravity/reports/gsc_high_opportunity.json`.
+2. `1015f52b` fix(core): align logistics/pricing tests to 100km SSOT and clean ledger evidence — alinea `scripts/verify_pricing_ssot_unification.ts` y `scripts/verify_logistics_multi_origin.ts` al SSOT de **100 km** del Hub Méntrida (sin tocar libs ni Zona Cero) + `.antigravity/evidence/ledger.jsonl` saneado (quíntupla EP-1 íntegra).
+3. `7e010040` fix(seo): trim remaining meta titles under 60 chars on non-(public) surfaces — 6 `page.tsx` fuera de `(public)`: `/`, `/pro`, `/reservar`, `/licitaciones`, `/fincas-landing`, `/voicestudio/studio-pro`.
+4. `docs(sigma)`: registro de este cierre + refresco de la evidencia del arnés (`.antigravity/`).
+
+**WIP aislado**: `stash@{0}` = "wip: booking concierge prisma and stripe" (booking, concierge, `prisma/schema.prisma`, `api/stripe/webhook`, contratos, `reservar/contrato`). NO commiteado; preservado para sesión limpia.
+
+**Evidencia ejecutable (medida en esta sesión)**
+- `npm run gate:prepush` sobre el árbol limpio `7e010040` → **Exit 0 (42/42 compuertas)**.
+  · `audit:agent-skills` → `AGENT_SKILLS_TOTAL=12 OK=12 REQUIRED_OK=4/4 VIOLATIONS=0 VERDICT=PASS`
+  · `audit:seo` → `SEO_VIOLATIONS=117` con **0 TITLE_TOO_LONG** (veredicto no-strict, no bloquea) · Exit 0
+  · `verify:pricing` → 33/33 · `verify:logistics` → PASS · `verify:confianza` → PASS
+  · `audit:contrast:core` → `TOTAL_FALLOS=0 VERDICT=PASS` (10 rutas, Chrome headless real)
+  · `audit:omega-rojo` → `OMEGA_ROJO_SCORE=20/20 VERDICT=VERDE`
+  · `tsc --noEmit` → Exit 0 · `eslint` → 0 errores · `audit_cls_budget` → PASS
+- `git push origin main` → `e0185f51..7e010040`; `git ls-remote origin refs/heads/main` = `7e01004049264611c5bc439885f52c98f82dee2c`
+- `curl https://www.productoraear.com/api/health` → **HTTP 200** `status=healthy` (buildSha servido aún `e0185f51`: rebuild de Coolify pendiente).
+
+**Hallazgo honesto (no maquillado)**: `verify:pricing`, `verify:logistics` y `verify:confianza` estaban ROJAS en HEAD (`e0185f51`) de forma **pre-existente** y ajena a la ola SEO: sus tests exigían 50 km de franquicia mientras el SSOT canónico fija 100 km. Se sanearon alineando los **tests** al SSOT (no las libs).
+
+**SIGMA://CLOSE/v1**
+```
+task_id        : TIER1_SEO_AND_HISTORICAL_GATES_ALIGNMENT_DEPLOY
+estado_bloque  : VERIFICADO (42/42 compuertas · push confirmado en remoto)
+hecho          : Ola SEO (41 títulos 50-60 + skills/seo en prepush + cruce GSC/Clarity 39 oportunidades) · WIP aislado en stash · 3 compuertas históricas alineadas al SSOT 100 km · push origin/main
+evidence[]     : { id: PREPUSH, cmd: "npm run gate:prepush", exit: 0, gates: "42/42 PASS" }
+                 { id: GIT_PUSH, cmd: "git push origin main", exit: 0, remote_main: "7e010040" }
+                 { id: PROD_HEALTH, cmd: "curl https://www.productoraear.com/api/health", status: 200, buildSha_servido: "e0185f51 (rebuild Coolify pendiente)" }
+cambios[]      : package.json · scripts/ · src/app/(public)/** · src/app/** (6 títulos) · .agents/skills/** · src/lib/whatsapp/client-handoff.ts · src/lib/providers/sovereign-lead-gate.ts · src/components/shared/SovereignWhatsAppButton.tsx · .antigravity/
+gates          : G-0 PASS · G-1 PASS (tsc 0) · G-2 PASS (lint 0) · G-3 PASS (prepush 42/42) · G-8 PASS
+hipotesis[]    : (i) CSVs GSC/Clarity = snapshots locales válidos; (ii) el build de Coolify converge al nuevo commit; (iii) el WIP stasheado recompila al recuperarlo
+decision       : alinear los TESTS al SSOT (100 km) en vez de mutar libs/Zona Cero; aislar el WIP por stash en vez de commitearlo (rompería Coolify)
+riesgos        : producción sirve aún buildSha e0185f51 hasta que Coolify termine; el WIP stasheado debe revisarse antes de reproponerse
+reto_espejo    : la Directiva pedía "0 títulos > 60"; `/reservar/contrato` quedó fuera (depende de `@/lib/booking/b2b-orchestration`, WIP de booking prohibido) → su título NO se recorta en esta release
+aprendizaje_ceo: el gate prepush valida invariantes globales; un fix parcial hereda rojos históricos ajenos. Alineando los tests al SSOT el arnés cierra 42/42 sin relajar ninguna regla
+siguiente_paso : sondear /api/health hasta buildSha == nuevo HEAD; después `git stash pop` para retomar booking/stripe en sesión limpia
+```
+
