@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { SClassProEmpMenu } from "@/components/fincas/sclass-pro/SClassProEmpMenu";
 
 export const metadata: Metadata = {
-  title: "S-Class Pro • Portal B2B de Proveedores & Fincas de Élite | Productora EAR",
+  title: "S-Class Pro · Portal de Proveedores de Élite | EAR OS",
   description: "Panel de control soberano para proveedores de eventos de alta gama: CRM de novios, escaparate con teléfono 24/7 sin censura, rider acústico Bose < 75 dB SPL, opiniones 5.0 y split 80/10/10.",
   keywords: [
     "portal proveedores bodas",

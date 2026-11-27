@@ -5,7 +5,7 @@ import DawWorkspace from "@/components/voicestudio/DawWorkspace";
 import DistributionRadar from "@/components/voicestudio/DistributionRadar";
 
 export const metadata: Metadata = {
-  title: "EAR OS Studio Pro — DAW Soberano, Agregadora DDEX y Radar Omnicanal",
+  title: "Studio Pro · DAW Soberano y Radar Omnicanal | EAR OS",
   description:
     "Mesa de producción musical soberana con 4 stems (Lead Vocal, Percusión, Bajo, Armonía), masterización AES TD1004 a -14 LUFS, generación de ISRC/UPC y tracking omnicanal de streams.",
 };

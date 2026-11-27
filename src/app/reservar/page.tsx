@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Sparkles, Music, Users, ShieldCheck, ArrowRight, Star, Lock } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Reserva Oficial de Artistas & Shows en Directo · Productora EAR",
+  title: "Reserva Oficial de Artistas & Shows en Directo | EAR OS",
   description:
     "Reserva oficial con garantía contractual y depósito de 100 € en Stripe. Elige entre el Solista Insignia Edwin Agudelo (350 €) o explora el Catálogo Nacional de 6.710 artistas auditados.",
   alternates: { canonical: "https://productoraear.com/reservar" },

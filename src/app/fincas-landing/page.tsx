@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import FincasLandingClient from './FincasLandingClient';
 
 export const metadata: Metadata = {
-  title: 'Fincas para Bodas en Madrid y Toledo | Espacios Exclusivos Sin Comisiones',
+  title: 'Fincas para Bodas · Espacios Sin Comisiones | EAR OS',
   description: 'Alquiler de fincas exclusivas para bodas en Madrid, Toledo y Guadalajara. Presupuesto transparente, libertad de catering y acústica auditada para música en vivo.',
   keywords: [
     'fincas para bodas en madrid',

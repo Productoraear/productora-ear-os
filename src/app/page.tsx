@@ -5,7 +5,7 @@ import { ScrollytellingCashTunnel } from '@/components/home/ScrollytellingCashTu
 import { SovereignThreeDoorsDistributor } from '@/components/home/SovereignThreeDoorsDistributor';
 
 export const metadata: Metadata = {
-  title: 'Productora EAR · Distribuidor Soberano de Contratación Directa (52 Provincias)',
+  title: 'Productora EAR · Distribuidor Soberano de Eventos | EAR OS',
   description:
     'Distribuidor nacional de contratación directa en las 52 provincias de España: Fincas, Caseríos y Asadores Homologados, Roster Artístico S-Class (Edwin Agudelo y agrupaciones de gala) e Ingeniería Acústica & Alquiler de Sonido Line Array.',
   alternates: {
