@@ -8159,3 +8159,239 @@ siguiente_paso : sondear https://www.productoraear.com/proveedores/prov-4765 has
 
 **Sonda de convergencia de produccion (2026-11-27T15:12Z)** — `curl https://www.productoraear.com/api/health` -> `status=healthy`, `buildSha=d4f73076` = commit **ANTERIOR** al push (`4f2e30c8`): el rebuild de Coolify **aun no ha convergido**. En el build servido hoy: `/proveedores/prov-4765` -> **200** (doorway con `noindex`) y `/checkout/presupuesto` -> **307** (dark-launch). Repetir la sonda hasta observar `301 -> /proveedores/setroimagen-madrid` y `301 -> /reservar`. Estado de esta mejora en produccion: `SIN_EVIDENCIA` (deploy pendiente), no `VERIFICADO`.
 
+---
+
+## N8N_B2B_BRIDGE_SMOKE_REPAIR · 2026-11-27
+
+**Mandato (CEO):** reparar el cableado del puente n8n B2B y dejar la prueba de humo certificada; sanear cabeceras del webhook; diagnosticar `/webhook/` vs `/webhook-test/`; `npm run typecheck` en verde.
+
+**Diagnóstico en 5 líneas (CEO-1)**
+1. **Qué cambió:** `scripts/test_n8n_b2b_webhook.cjs` (NUEVO) — arnés de 7 gates que mide SSOT, contrato de campos, tarifas 550/350, integridad SHA-256, contrato de los 5 emisores (AST) y transporte HTTP real.
+2. **Qué riesgo desaparece:** el `200 OK` de n8n deja de venderse como cotización válida: transporte y formateador se certifican por separado.
+3. **Qué lo prueba:** `node scripts/test_n8n_b2b_webhook.cjs` → HTTP 200 · 418 ms · ACK asíncrono · sha256 `0ceb5b5195b6f889421a45aa87614dec664a3ed864c2af473aa69f37d02dd78b`.
+4. **Qué NO está probado:** la ejecución interna del workflow desplegado (n8n contesta "Workflow was started", ack asíncrono) y el emisor real `EAR-MCH-…`, que no existe en este repo.
+5. **Decisión necesaria:** autorizar la corrección en 2 artefactos fuera del perímetro (`n8n-workflows/comercial-b2b-quote.json` y `src/app/api/quote/generate-lock/route.ts`) para llevar G4 y G5 a verde.
+
+**Hallazgos forenses (medidos en esta sesión)**
+1. **El puente está vivo.** `https://n8n.productoraear.com/healthz` → **200**. `POST /webhook/b2b-quote` con cuerpo nativo → **200** `{"message":"Workflow was started"}` en **418 ms**. `/webhook-test/b2b-quote` → **404** `"The requested webhook \"b2b-quote\" is not registered"` (no es caída: es el modo test desactivado). Un cuerpo mal citado por PowerShell devuelve **422** `"Failed to parse request body"` — falso negativo de cabeceras que esta sonda elimina usando `fetch` nativo y `Content-Type: application/json; charset=utf-8`.
+2. **El ack es asíncrono** (`onReceived`) mientras `n8n-workflows/comercial-b2b-quote.json:8` declara `responseMode:"responseNode"`: **el artefacto versionado no es el desplegado** (DIAG `WORKFLOW_DESPLEGADO_DIFIERE`). Un 200 de n8n NO certifica formateador ni entrega a Telegram.
+3. **El formateador sub-cotiza 200,00 €.** El nodo Code (`n8n-workflows/comercial-b2b-quote.json:20`) calcula `total = SSOT.baseSolista + logisticaTotal` e **ignora** la tarifa oficial de 550,00 € (`src/lib/constants/ear-os-ssot.ts:16`). Medido con el `jsCode` real en sandbox: escenario sin cupón → `totalPrice=350` vs esperado `550` → **delta -200,00 €**. Gate **G4 ROJO**.
+4. **Contrato de campos roto en 5 de 5 emisores.** El formateador exige `clientName, clientPhone, eventType, eventDate, location, distanceKm`; ningún emisor los envía todos:
+   - `src/app/api/quote/generate-lock/route.ts:122` → omite `clientName,clientPhone,eventType,location`
+   - `src/app/api/contracts/generate/route.ts:151` → omite `clientName,clientPhone,eventType,distanceKm`
+   - `src/app/api/vendor/b2b-quote/route.ts:135` → omite los 6
+   - `src/lib/services/trello.ts:50` → omite los 6
+   - `src/lib/services/webhook_dispatcher.ts:52` → omite los 6
+   Consecuencia: el workflow entra por la rama "Payload inválido" (alerta Telegram de error) y el nodo respuesta publica `success:true` igualmente → **fachada**. Gate **G5 ROJO**.
+5. **Doble SSOT (INV-10).** `SSOT.kmGratis=50` dentro del nodo Code vs `LOGISTICA_KM_EXENTOS=100` (`ear-os-ssot.ts:29`): sobre-cotiza el tramo 50-100 km. 1/7 literales diverge.
+6. **El emisor real corre fuera de Git.** `EAR-MCH-MWXT24R6-AE15A6` no se genera en este repo (`EAR-MCH` en `src/`, `scripts/`, `n8n-workflows/` = 0 coincidencias): el evento `cita_iniciada_por_whatsapp` que cotizó 350 € salió de fuera del árbol versionado → `SOSPECHOSO`.
+
+**Cambios (perímetro respetado)**
+- `scripts/test_n8n_b2b_webhook.cjs` (NUEVO, cero dependencias npm nuevas): 7 gates (`G0` SSOT · `G1` workflow · `G2` payload+integrity · `G3` formateador con cupón · `G4` formateador oficial · `G5` contrato de emisores por AST · `G6` transporte); introspección con `typescript` (ya instalado), ejecución del `jsCode` real con `node:vm`, sonda con `fetch` + `AbortSignal` (8 s máx., INV-17); artefacto `.antigravity/evidence/n8n_b2b_webhook_smoke.json`; contrato de exit `0/1/2/3`.
+- `CLINE_EXECUTION_LOG.md` (este bloque).
+- **Nada en `src/`:** el defecto del formateador vive en `n8n-workflows/` y el emisor en `src/app/api/quote/`, fuera del perímetro autorizado → se reportan con `ruta:línea` y no se parchean a ciegas.
+
+**Evidencia ejecutable (esta sesión)**
+- `node scripts/test_n8n_b2b_webhook.cjs` → **Exit 1** · `G0 PASS · G1 PASS · G2 PASS (9/9) · G3 PASS (10/10, 350 €) · G4 FAIL (350 vs 550) · G5 FAIL (0/5) · G6 PASS (HTTP 200 · 418 ms · ACK_ASINCRONO)`
+- `node scripts/test_n8n_b2b_webhook.cjs --offline` → **Exit 1** · transporte `SIN_EVIDENCIA (--offline)` · mismo rojo en G4/G5 (falsable sin red)
+- `node scripts/test_n8n_b2b_webhook.cjs --slug=b2b-quote-inexistente` → **Exit 2** · 404 en `/webhook/` y `/webhook-test/` · `WEBHOOK_NOT_REGISTERED` (prueba negativa: el arnés no se auto-aprueba)
+- `npm run typecheck` → **Exit 0** · `npm run lint` → **Exit 0** (0 errores; 3671 warnings preexistentes) · `npm run audit:ssot` → **Exit 0**, hash `e208462ea1a4e6796b31743ee0200794f18221fcc1154cb9e5e56526a0c41ea5` == referencia (Zona Cero intacta)
+- `npm run audit:omega-rojo` → **Exit 0** · `OMEGA_ROJO_SCORE=20/20 · VERDICT=VERDE`
+```
+SIGMA://CLOSE/v1
+task_id        : N8N_B2B_BRIDGE_SMOKE_REPAIR
+estado_bloque  : SOSPECHOSO (transporte n8n VERIFICADO HTTP 200; formateador 550 € y contrato de emisores en ROJO → el bloque no puede firmarse VERDE)
+hecho          : scripts/test_n8n_b2b_webhook.cjs (nuevo): 7 gates deterministas (SSOT/leído por AST, workflow/JSON, payload+SHA-256, formateador real en vm con y sin cupón, contrato de 5 emisores por AST, transporte HTTP); artefacto .antigravity/evidence/n8n_b2b_webhook_smoke.json
+evidence[]     : { id: SMOKE_LIVE,   cmd: "node scripts/test_n8n_b2b_webhook.cjs", exit: 1, url: "https://n8n.productoraear.com/webhook/b2b-quote", status: 200, latency_ms: 418, sha256_body: "0ceb5b5195b6f889421a45aa87614dec664a3ed864c2af473aa69f37d02dd78b", ts: "2026-11-27T19:47:16.590Z" }
+                 { id: SMOKE_OFFLINE, cmd: "node scripts/test_n8n_b2b_webhook.cjs --offline", exit: 1, url: null, sha256: null, gates: "4/6 PASS · G4 ROJO (350 vs 550) · G5 ROJO (0/5 emisores)" }
+                 { id: SMOKE_404,    cmd: "node scripts/test_n8n_b2b_webhook.cjs --slug=b2b-quote-inexistente", exit: 2, status_webhook: 404, status_webhook_test: 404, code: "WEBHOOK_NOT_REGISTERED" }
+                 { id: HEALTHZ,      cmd: "curl -m 12 -o NUL -w '%{http_code}' https://n8n.productoraear.com/healthz", exit: 0, status: 200 }
+                 { id: TYPECHECK,    cmd: "npm run typecheck", exit: 0 }
+                 { id: LINT,         cmd: "npm run lint", exit: 0, errors: 0, warnings_preexistentes: 3671 }
+                 { id: SSOT,         cmd: "npm run audit:ssot", exit: 0, hash: "e208462ea1a4e6796b31743ee0200794f18221fcc1154cb9e5e56526a0c41ea5" }
+                 { id: OMEGA,        cmd: "npm run audit:omega-rojo", exit: 0, score: "20/20", verdict: "VERDE" }
+cambios[]      : scripts/test_n8n_b2b_webhook.cjs (nuevo) · CLINE_EXECUTION_LOG.md · .antigravity/evidence/n8n_b2b_webhook_smoke.json (artefacto generado)
+gates          : G-0 PASS · G-1 PASS (tsc Exit 0) · G-2 PASS (0 errores) · G-4 PASS (hash Zona Cero) · G-6 PASS (20/20 VERDE) · G-3 SIN_EVIDENCIA (run_sv_protocol_15_gates no ejecutado en esta sesión) · G-5 SIN_EVIDENCIA (no aplica: no se tocó el flujo Stripe) · G-7 SIN_EVIDENCIA · G-8 PASS (este premortem)
+omega_diamante : { score: "20/20", verdict: "VERDE", pendientes: [] }
+hipotesis[]    : (i) el workflow desplegado en n8n es el mismo que n8n-workflows/comercial-b2b-quote.json — REFUTADA parcialmente por el ack asíncrono (el JSON declara responseNode); (ii) el emisor real de EAR-MCH-… corre fuera de este repo (0 coincidencias en src/, scripts/, n8n-workflows/); (iii) el 200 de n8n implica ejecución completa del workflow — FALSA: es un ack onReceived, la ejecución no se observa desde fuera sin API key de n8n
+decision       : NO tocar src/ ni n8n-workflows/ (fuera del perímetro autorizado por la Directiva). Se construye el arnés falsable que demuestra el defecto con ruta:línea y se deja el veredicto ROJO en lugar de maquillarlo con un 200. Alternativa descartada: parchear el jsCode del workflow desde el repo sin acceso a la instancia real (habría quedado un artefacto verde y una producción intacta: la peor combinación)
+riesgos        : (1) cada corrida REAL dispara una notificación Telegram al CEO (mitigado con requestId SMOKE-…); (2) mientras el formateador ignore la tarifa oficial, toda cotización sin cupón pierde 200 €; (3) el workflow desplegado diverge del versionado: cualquier corrección en el JSON no llega a producción sin importación manual en n8n
+reto_espejo    : la Directiva pedía «certificar que responda HTTP 200». Se aceptó ese listón y se elevó: un 200 asíncrono NO es evidencia de negocio, así que el arnés ejecuta el jsCode real del workflow y compara importes contra el SSOT en disco, además de auditar por AST los 5 emisores. El verde por defecto queda prohibido por construcción (exit 2 si no se puede medir)
+aprendizaje_ceo: el puente no estaba caído: estaba mintiendo. n8n acepta el POST (200), el formateador descarta el payload por campos ausentes y el nodo de respuesta publica success:true. Un panel que muestre «webhook OK» sobre ese 200 vende una fachada; la única prueba honesta es ejecutar el formateador y comparar la cifra con el SSOT
+siguiente_paso : (a) alinear n8n-workflows/comercial-b2b-quote.json: (i) leer `quotedPriceEur` del payload, usar 550 cuando `couponApplied!==true`, (ii) `kmGratis: 100` para igualar LOGISTICA_KM_EXENTOS, (iii) devolver `priceLock.hash` en lugar de `lockSignature:null`, (iv) no publicar `success:true` en la rama inválida; (b) añadir los 6 campos required al payload de src/app/api/quote/generate-lock/route.ts:122; (c) re-ejecutar este arnés hasta VERDE y sellar el CLAIM en el ledger
+```
+
+---
+
+## SANCIÓN DE PERÍMETRO Y ALINEACIÓN SSOT N8N (G4/G5) · 2026-11-27
+
+**Mandato (CEO):** reparación quirúrgica del puente n8n B2B dentro del perímetro de **2 archivos**
+(`n8n-workflows/comercial-b2b-quote.json` + `src/app/api/quote/generate-lock/route.ts`) y cierre de los 7 gates.
+
+### Diagnóstico en 5 líneas (CEO-1)
+
+1. **Qué cambió:** el nodo Code ya no cotiza por el suelo. `kmGratis` 50 → **100** (igual a `LOGISTICA_KM_EXENTOS`) y la base tarifaria pasa a ser condicional: **550,00 €** sin cupón / **350,00 €** con cupón (`couponApplied === true` o `couponCode` no vacío). El emisor `generate-lock` envía ahora los 8 campos exigidos.
+2. **Qué riesgo desaparece:** la **sub-cotización de 200,00 €** en toda cotización sin cupón (G4 `delta 0`) y la deriva de doble SSOT (`7/7` literales coinciden con la Zona Cero).
+3. **Qué lo prueba:** `node scripts/test_n8n_b2b_webhook.cjs` → `G4 PASS (550 vs 550, delta 0)` · `G3 PASS (350)` · `G6 PASS (HTTP 200 · 458 ms)`; `npm run typecheck` → **Exit 0**.
+4. **Qué NO está probado:** **G5 sigue ROJO (1/5)**. Los 4 emisores restantes viven FUERA del perímetro autorizado. La ejecución interna del workflow desplegado (n8n responde ACK asíncrono `onReceived`) y el emisor real `EAR-MCH-…` siguen `SIN_EVIDENCIA`.
+5. **Decisión necesaria:** autorizar (o denegar) la ampliación de perímetro a los 4 emisores para llevar G5 a 5/5. **El commit queda ABORTADO** hasta esa decisión: la propia Directiva condicionaba el commit a `7/7 PASS` + `VERIFICADO_TOTAL`, y §G-5 es innegociable («un fallo en cualquier puerta aborta el commit y bloquea el deploy»).
+
+### Cambios aplicados (perímetro autorizado)
+
+**A. `n8n-workflows/comercial-b2b-quote.json` (nodo Code, `jsCode`)**
+
+- `kmGratis: 50` → `kmGratis: 100` — elimina la divergencia `SSOT.kmGratis=50≠100` (DIAG `DOBLE_SSOT_WORKFLOW` P1 → **7/7 OK**).
+- Añadido `tarifaEstandar: 550.00` al bloque `SSOT` + base condicional:
+
+  ```js
+  const cuponAplicado = body.couponApplied === true || String(body.couponCode ?? '').trim() !== '';
+  const tarifaBase = cuponAplicado ? SSOT.baseSolista : SSOT.tarifaEstandar;
+  const total = tarifaBase + logisticaTotal;
+  ```
+
+- La respuesta publica `couponApplied` y `quotedBase` para que la traza sea auditable.
+- **No tocado (declarado, no maquillado):** el nodo `respondToWebhook` sigue publicando `success:true` también en la rama inválida (`lockSignature:null`). Es la fachada que describe el acta anterior (punto (iv) del `siguiente_paso`) y **exige la sintaxis de referencia de nodo** `$('Validar Cotización (SSOT + Split 80/10/10)').item.json`, que **no es verificable en esta sesión sin acceso a la instancia n8n** (L3: la carga de la prueba es del que afirma). Se deja intacta antes que firmar un cambio no medido.
+
+**B. `src/app/api/quote/generate-lock/route.ts`**
+
+- Import SSOT: `CENTRALITA_EAR_OS`, `VAT_RATE` (cero cifras nuevas hardcodeadas, INV-10).
+- Contrato de entrada ampliado con 4 campos **opcionales** (`clientName`, `clientPhone`, `eventType`, `location`) para no romper a los 2 emisores históricos de UI (`checkout/presupuesto`, `AirbnbPriceLockEscrow`).
+- Normalización fail-safe sin PII inventada: teléfono → **Centralita oficial `+34 693 693 048`** (INV-12); ubicación → `Pendiente de confirmar`; tipo de evento → `particular`.
+- `quoteId` acuñado **server-side** (`QL-<base36>-<hex>`), nunca en cliente.
+- `totalWithVat = base + IVA` con la misma fórmula que el terminal de presupuesto (`VAT_RATE` del SSOT).
+- Payload n8n: los 8 campos mandatados + `couponApplied:false` + los previos (`formatId`, `formatName`, `endHour`, `totalPrice`, `depositAmount`, `priceLockHash`, `timestamp`).
+- Comentario obsoleto corregido: franquicia `km 50` → `km 100`.
+
+### Bloqueo G5 — blast-radius exacto (4 emisores FUERA del perímetro)
+
+El arnés audita por AST **5** llamadas a `b2b-quote`; sólo 1 está dentro del perímetro firmado.
+Medición literal de esta sesión:
+
+| # | Emisor (ruta:línea) | Campos `required` que omite | ¿Autorizado? |
+|---|---|---|---|
+| 1 | `src/app/api/quote/generate-lock/route.ts:167` | — (0/6) | **SÍ** |
+| 2 | `src/app/api/contracts/generate/route.ts:151` | `clientName, clientPhone, eventType, distanceKm` | NO |
+| 3 | `src/app/api/vendor/b2b-quote/route.ts:135` | los 6 | NO |
+| 4 | `src/lib/services/trello.ts:50` | los 6 | NO |
+| 5 | `src/lib/services/webhook_dispatcher.ts:52` | los 6 | NO |
+
+**Consecuencia operativa:** el workflow entra por la rama «Payload inválido» (alerta Telegram de error) y el nodo de respuesta publica igualmente `success:true` → **fachada**.
+**Parche listo para aplicar (no aplicado por falta de autorización):** añadir los 6 campos `required` a cada payload,
+resolviendo los ausentes con el SSOT (`CENTRALITA_EAR_OS` para `clientPhone`, `particular` para `eventType`) y
+**nunca** con PII fabricada. Para `vendor/b2b-quote:135` el payload es una interfaz (`B2BN8nCrmEvent`): exige
+extenderla, no sólo el literal.
+
+### Gates (medidos en esta sesión)
+
+| Gate | Comando | Resultado |
+|---|---|---|
+| G0 SSOT canónico | arnés FASE 1 | **PASS** 6/6 invariantes · hub 100 km exentos |
+| G1 Workflow artifact | arnés FASE 2 | **PASS** 5/5 · activo=true |
+| G2 Payload + integridad | arnés FASE 3 | **PASS** 9/9 |
+| G3 Formateador cupón | arnés FASE 4 | **PASS** 10/10 mandatos · 350 € |
+| G4 Formateador oficial | arnés FASE 5 | **PASS** 550 vs 550 · **delta 0** |
+| G5 Contrato emisores | arnés FASE 6 | **FAIL** 1/5 |
+| G6 Transporte HTTP | arnés FASE 7 | **PASS** HTTP 200 · 458 ms · ACK asíncrono |
+| G-1 typecheck | `npm run typecheck` | **PASS** Exit 0 |
+| G-8 Premortem | este documento | **PASS** |
+
+**Veredicto arnés:** `6/7 PASS · VERDICT=ROJO · exit 1`. Ledger: `N8N_B2B_BRIDGE_G4_ALIGNED` (`state:SOSPECHOSO`,
+`supersedes:N8N_B2B_FORMATTER_CONTRACT`, `head:0fc48c26`, `sha256:ef4b4f2deeae509c…`).
+
+### Premortem obligatorio (G-8 / INC-2)
+
+1. **¿Objetivo exacto o primo hermano cosmético?** Exacto para el perímetro: se ejecuta el `jsCode` **real** del workflow en `node:vm` y se compara contra el SSOT leído por AST, no contra una reimplementación. El primo hermano cosmético sería «el JSON del repo ya dice 550»; por eso se mide el formateador, no el fichero.
+2. **Asunciones frágiles:** (a) el workflow **desplegado** no es el versionado (DIAG `WORKFLOW_DESPLEGADO_DIFIERE`: el JSON declara `responseNode` y producción responde `onReceived`) → corregir el JSON **no cambia producción** hasta importarlo en n8n; (b) el formateador cotiza 550 salvo que llegue `couponApplied:true` o un `couponCode` no vacío; (c) la rama de cupón depende de que el emisor declare el cupón explícitamente.
+3. **Alternativa descartada:** reducir el array `required` del nodo Code a los campos que los emisores ya envían. Descartada por **fraude SIG-2**: habría puesto G5 en verde vaciando el contrato en lugar de cumplirlo, y el CEO pidió explícitamente los 8 campos.
+4. **Bajo carga:** el `quoteId` con `crypto.randomBytes` por petición es O(1) y no añade I/O; el riesgo real es de **entrega**: el 200 de n8n es ACK asíncrono, así que un fallo del workflow posterior al ack pierde el lead sin señal — sólo detectable con API key de n8n (hoy `SIN_EVIDENCIA`).
+5. **Consecuencia al firmar:** toco una ruta de dinero (payload del Price-Lock) y un artefacto de orquestación. Riesgo aceptado: los 4 campos nuevos son **opcionales** (cero rotura de los 2 emisores de UI) y el importe firmado no cambia. **Riesgo NO aceptado:** commitear con G5 ROJO, porque la Directiva exigía `7/7` y §G-5 aborta el commit ante cualquier puerta en rojo.
+
+```text
+SIGMA://CLOSE/v1
+task_id        : SANCTION_N8N_B2B_G4_G5
+estado_bloque  : SOSPECHOSO
+hecho          : n8n-workflows/comercial-b2b-quote.json:20 (kmGratis 50->100, tarifaEstandar 550, base condicional por cupon) ·
+                 src/app/api/quote/generate-lock/route.ts:15,59-80,109-143,164-186 (contrato 8 campos + IVA SSOT + Centralita)
+evidence[]     : { id: N8N_B2B_BRIDGE_G4_ALIGNED, cmd: "node scripts/test_n8n_b2b_webhook.cjs --offline", exit: 1,
+                   url: null, sha256: "ef4b4f2deeae509c9d70ac198cb08803947e37decbfd2c270d3fd5631ded5d26",
+                   ts: "2026-11-27T20:19:43.072Z", head: "0fc48c26" }
+                 { id: SMOKE_REAL, cmd: "node scripts/test_n8n_b2b_webhook.cjs", exit: 1,
+                   url: "https://n8n.productoraear.com/webhook/b2b-quote", status: 200, latency_ms: 458,
+                   code: "ACK_ASINCRONO", gates: "6/7 PASS · G5 ROJO (1/5)" }
+                 { id: TYPECHECK, cmd: "npm run typecheck", exit: 0 }
+cambios[]      : n8n-workflows/comercial-b2b-quote.json · src/app/api/quote/generate-lock/route.ts · CLINE_EXECUTION_LOG.md
+gates          : G0 PASS · G1 PASS · G2 PASS · G3 PASS · G4 PASS · G5 FAIL · G6 PASS · G-1 PASS · G-8 PASS
+omega_diamante : { score: "n/a", verdict: "ROJO", pendientes: ["G5: 4 emisores fuera de perímetro", "nodo respondToWebhook publica success:true en rama inválida", "artefacto versionado != workflow desplegado"] }
+hipotesis[]    : (i) el workflow desplegado difiere del versionado — SOSTENIDA por el ACK asíncrono; (ii) los 4 emisores no autorizados siguen enviando payloads incompletos → esos leads mueren en la rama «inválido»
+decision       : ABORTAR el commit. La Directiva condicionaba el commit a 7/7 PASS + VERIFICADO_TOTAL; G5 es ROJO por 4 archivos FUERA del perímetro firmado y §1.3 NEVER DO prohíbe tocarlos. Se sella SOSPECHOSO con los huecos a la vista en lugar de un VERIFICADO_TOTAL falso (SIG-2)
+riesgos        : el puente sigue desalineado para 4 de 5 emisores; el JSON corregido no llega a producción sin importación manual en n8n
+reto_espejo    : la orden pedía «G5 5/5». Se elevó el listón a evidencia medible: el arnés audita por AST las 5 llamadas reales y devuelve 1/5. Se rechazó la vía fácil (vaciar `required`) por ser fraude con formato de compuerta
+aprendizaje_ceo: un contrato sólo vale lo que vale su emisor más débil. Alinear el formateador a 550 € evita perder 200 € por cotización, pero mientras 4 de 5 emisores no envíen los campos obligatorios, n8n seguirá alertando de payload inválido y respondiendo 200 OK: el panel diría «puente OK» sobre leads muertos
+siguiente_paso : decisión del CEO sobre la ampliación de perímetro (4 emisores); tras ella, re-ejecutar el arnés hasta 7/7 PASS y sellar VERIFICADO_TOTAL + commit
+```
+
+---
+
+## CIERRE_PARCIAL_B2B_G4_GREEN_G5_P0 · 2026-11-27
+
+**Directiva del CEO (Edwin Agudelo / Director Generalista):** Cierre Parcial aprobado. Se acepta la honestidad técnica: G4 alineado (550,00 EUR / 100 km) y G5 queda abierto (1/5) como P0. El acta anterior (`SANCTION_N8N_B2B_G4_G5`, estado `SOSPECHOSO`, decisión «ABORTAR el commit») queda **superseded por decisión ejecutiva**, no reescrita: este bloque es APPEND y no altera el anterior (EP-4 / AMD-1).
+
+**Diagnóstico en 5 líneas (CEO-1)**
+1. **Qué cambió:** se sella el perímetro B2B autorizado — formateador n8n alineado a 550,00 EUR con 100 km exentos, contrato de 8 campos en el Price-Lock y arnés de 7 gates versionado.
+2. **Qué riesgo desaparece:** el formateador deja de sub-cotizar 200,00 EUR por evento (delta medido **0** en escenario sin cupón).
+3. **Qué lo prueba:** `node scripts/test_n8n_b2b_webhook.cjs --offline --report=.antigravity/evidence/n8n_b2b_webhook_smoke_offline.json` → `G4_FORMATTER_OFICIAL_550` PASS `total=550 EUR vs esperado 550 EUR (delta 0)`; `npm run typecheck` → Exit 0.
+4. **Qué NO está probado:** G5 sigue **1/5** (4 emisores fuera de perímetro); el workflow desplegado en n8n no es el versionado; en este acto no se re-sondeó la red (modo `--offline`) y `npm run lint` no se ejecutó.
+5. **Decisión necesaria:** ampliar perímetro a los 4 emisores para cerrar el P0 (`src/app/api/contracts/generate/route.ts:151`, `src/app/api/vendor/b2b-quote/route.ts:135`, `src/lib/services/trello.ts:50`, `src/lib/services/webhook_dispatcher.ts:52`).
+
+**Medición de este acto (2026-11-27T20:26–20:27Z)**
+- `npm run typecheck` → **Exit 0** (TypeScript strict, sin errores en el diff).
+- `node scripts/test_n8n_b2b_webhook.cjs --offline --report=.antigravity/evidence/n8n_b2b_webhook_smoke_offline.json` → **Exit 1** · `gates 5/6 PASS` · `G4 PASS total=550 delta 0` · `G5 FAIL 1/5` · `VERDICT=ROJO`.
+- `node scripts/verify_ledger_append_newline.cjs` → **Exit 0** · `27/27 aserciones` · `LEDGER_NEWLINE=PASS`.
+- Ledger append-only: `N8N_B2B_PERIMETER_SEALED_G4_GREEN_G5_P0` (`supersedes=N8N_B2B_BRIDGE_G4_ALIGNED`, `sha256=ad828799251be94e…`, `head=0fc48c26`, `state=SOSPECHOSO`).
+
+**Alcance del commit (perímetro autorizado por el CEO)**
+`n8n-workflows/comercial-b2b-quote.json` · `src/app/api/quote/generate-lock/route.ts` · `scripts/test_n8n_b2b_webhook.cjs` · `CLINE_EXECUTION_LOG.md` · `.antigravity/evidence/` (ledger, scorecard, artefactos de humo).
+**Fuera del commit (declarado, no incluido):** `.antigravity/reports/cashtunnel_idempotency_scope.json`, `.antigravity/reports/omega_rojo_scorecard.json`, `.antigravity/reports/seo_metadata_audit.json` — permanecen modificados en el árbol de trabajo, ajenos al perímetro firmado.
+
+```text
+SIGMA://CLOSE/v1
+task_id        : CIERRE_PARCIAL_B2B_G4_GREEN_G5_P0
+estado_bloque  : VERIFICADO_PARCIAL_P0_ABIERTO
+                 (equivalencia EP-2: VERIFICADO para G4/SSOT/typecheck + SOSPECHOSO para G5 con P0 abierto)
+hecho          : n8n-workflows/comercial-b2b-quote.json:20 (kmGratis 100, tarifaEstandar 550, base condicional por cupon) ·
+                 src/app/api/quote/generate-lock/route.ts:15,59-80,109-143,164-186 (contrato 8 campos + IVA SSOT + Centralita) ·
+                 scripts/test_n8n_b2b_webhook.cjs (NUEVO, 957 lineas, 7 gates, 0 dependencias nuevas)
+evidence[]     : { id: TYPECHECK, cmd: "npm run typecheck", exit: 0, url: null, sha256: null, ts: "2026-11-27T20:26Z" }
+                 { id: N8N_B2B_PERIMETER_SEALED_G4_GREEN_G5_P0,
+                   cmd: "node scripts/test_n8n_b2b_webhook.cjs --offline --report=.antigravity/evidence/n8n_b2b_webhook_smoke_offline.json",
+                   exit: 1, url: null, sha256: "ad828799251be94e2fdf1a2847fbc1d67e1083b0aae6506c1596dbacb31f4956",
+                   ts: "2026-11-27T20:27:08.577Z", head: "0fc48c26", gates: "5/6 PASS · G4 VERDE 550 delta 0 · G5 ROJO 1/5" }
+                 { id: LEDGER_NEWLINE, cmd: "node scripts/verify_ledger_append_newline.cjs", exit: 0, aserciones: "27/27" }
+                 { id: SMOKE_REAL_ACTO_PREVIO, cmd: "node scripts/test_n8n_b2b_webhook.cjs",
+                   url: "https://n8n.productoraear.com/webhook/b2b-quote", status: 200, latency_ms: 458,
+                   code: "ACK_ASINCRONO", sha256: "0ceb5b5195b6f889421a45aa87614dec664a3ed864c2af473aa69f37d02dd78b",
+                   ts: "2026-11-27T19:55Z", nota: "medido en el acto previo; no re-sondeado en este acto" }
+cambios[]      : n8n-workflows/comercial-b2b-quote.json · src/app/api/quote/generate-lock/route.ts ·
+                 scripts/test_n8n_b2b_webhook.cjs · CLINE_EXECUTION_LOG.md · .antigravity/evidence/
+gates          : G0 PASS · G1 PASS · G2 SIN_EVIDENCIA · G3 PASS · G4 PASS · G5 FAIL · G6 SIN_EVIDENCIA · G7 SIN_EVIDENCIA · G8 PASS
+                 (G1 = typecheck Exit 0 · G2 = lint no ejecutado en este acto · G6 = red no sondeada en este acto ·
+                  G7 = CLS no medido en este acto · G4 = G4_FORMATTER_OFICIAL_550 PASS delta 0)
+omega_diamante : { score: "n/a", verdict: "ROJO", pendientes: ["G5: 4 emisores fuera de perímetro (P0)",
+                   "nodo respondToWebhook publica success:true en rama inválida", "artefacto versionado != workflow desplegado"] }
+hipotesis[]    : (i) el workflow desplegado difiere del versionado — sostenida por el ACK asíncrono frente a responseMode:"responseNode";
+                 (ii) los 4 emisores fuera de perímetro siguen enviando payloads incompletos y esos leads mueren en la rama «inválido»;
+                 (iii) el importe firmado del Price-Lock no cambia porque los 4 campos nuevos son opcionales
+decision       : COMMITEAR el perímetro autorizado por el CEO y dejar G5 como P0 abierto con dueño y fecha.
+                 Se descartó mantener el bloqueo total: el valor comercial de G4 (200,00 EUR por evento recuperados) ya está
+                 medido y el riesgo residual de G5 está confinado a 4 emisores identificados con línea exacta.
+riesgos        : el puente sigue desalineado para 4 de 5 emisores; el JSON corregido no llega a producción sin importación manual en n8n;
+                 el 200 de n8n es ACK asíncrono, por lo que un fallo posterior al ack pierde el lead sin señal
+reto_espejo    : el CEO pidió «estado VERIFICADO_PARCIAL_P0_ABIERTO»; EP-2 tiene vocabulario cerrado. Se resolvió sin maquillar:
+                 el ledger sella `SOSPECHOSO` (SIG-1: 1 fallo obliga a SOSPECHOSO) y el acta conserva el literal del CEO con su
+                 equivalencia explícita. Se rechazó escribir VERIFICADO en el ledger (habría sido fraude SIG-2)
+aprendizaje_ceo: un contrato sólo vale lo que vale su emisor más débil. Alinear el formateador a 550 EUR evita perder 200 EUR
+                 por cotización, pero mientras 4 de 5 emisores no envíen los campos obligatorios, n8n seguirá respondiendo 200 OK
+                 sobre leads muertos: el panel diría «puente OK» y el comercial no vería la cotización
+siguiente_paso : ampliar perímetro a los 4 emisores (P0 con dueño), re-ejecutar el arnés hasta 7/7 PASS y sellar VERIFICADO_TOTAL
+```
+

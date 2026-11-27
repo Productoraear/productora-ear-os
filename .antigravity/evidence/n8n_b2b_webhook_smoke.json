@@ -1,0 +1,749 @@
+{
+  "test": "test_n8n_b2b_webhook",
+  "harness": "EAR OS · puente n8n B2B",
+  "slug": "b2b-quote",
+  "mode": "SIMULADO",
+  "probed": false,
+  "source": "static",
+  "checkedAt": "2026-11-27T20:19:44.964Z",
+  "startedAt": "2026-11-27T20:19:43.278Z",
+  "ssot": {
+    "file": "src\\lib\\constants\\ear-os-ssot.ts",
+    "values": {
+      "file": "src\\lib\\constants\\ear-os-ssot.ts",
+      "baseSolista": 350,
+      "estandarSolista": 550,
+      "kmIncluidos": 100,
+      "eurPerKm": 1.5,
+      "kmExentos": 100,
+      "kmHotel": 200,
+      "hotelEur": 120,
+      "depositoEur": 100,
+      "techoB2gEur": 14250,
+      "limiteSplDb": 75,
+      "wattsPerPax": 12,
+      "vatRate": 0.21,
+      "split": {
+        "artista": 0.8,
+        "earOs": 0.1,
+        "vimume": 0.1
+      },
+      "centralita": "+34 693 693 048"
+    }
+  },
+  "workflow": {
+    "file": "n8n-workflows\\comercial-b2b-quote.json",
+    "name": "COMERCIAL · B2B/B2G Quote & Smart Lead Dispatcher (S-Class)",
+    "active": true,
+    "webhook": {
+      "path": "b2b-quote",
+      "httpMethod": "POST",
+      "responseMode": "responseNode"
+    },
+    "required": [
+      "clientName",
+      "clientPhone",
+      "eventType",
+      "eventDate",
+      "location",
+      "distanceKm"
+    ],
+    "ssotLiterals": {
+      "baseSolista": 350,
+      "artista": 0.8,
+      "earOs": 0.1,
+      "vimume": 0.1,
+      "deposito": 100,
+      "kmGratis": 100,
+      "tarifaKm": 1.5,
+      "hotel": 120,
+      "hotelKmUmbral": 200,
+      "techoB2G": 14250,
+      "tarifaEstandar": 550
+    }
+  },
+  "payloads": {
+    "cupon": {
+      "requestId": "SMOKE-B2B-QUOTE-MWZFDGZO",
+      "smokeTest": true,
+      "source": "ear-os-smoke-harness",
+      "event": "cita_iniciada_por_whatsapp",
+      "channel": "whatsapp",
+      "clientName": "Reserva Directa Edwin Agudelo (Madrid)",
+      "clientPhone": "+34693693048",
+      "eventType": "boda",
+      "eventDate": "2026-11-28",
+      "location": "Madrid",
+      "distanceKm": 15,
+      "format": "solista_edwin",
+      "formatCatalogId": "solista-edwin-agudelo",
+      "hub": "Hub Méntrida",
+      "hubFranchiseKm": 100,
+      "billableKm": 0,
+      "standardPriceEur": 550,
+      "floorPriceEur": 350,
+      "couponApplied": true,
+      "couponCode": "SMOKE-CUPON-SUELO-350",
+      "quotedPriceEur": 350,
+      "expectedTotalPrice": 350,
+      "clientPhoneDisplay": "+34 693 693 048",
+      "depositAmountEur": 100,
+      "depositDeductiblePct": 100,
+      "priceLock": {
+        "algorithm": "SHA-256",
+        "basis": "solista|distanceKm|franchiseKm|totalPrice|deposit",
+        "hash": "fe4041b966becd02571c723644886c20020a51ff52d85c06542d54de8f8e718c"
+      },
+      "integrity": {
+        "algorithm": "SHA-256",
+        "scope": "canonical-payload",
+        "hash": "ae068ff2939142627954562063022d4a7ff10e6ab63e2d8171c9b2c66a66d5d4"
+      }
+    },
+    "sinCupon": {
+      "requestId": "SMOKE-B2B-QUOTE-MWZFDGZO",
+      "smokeTest": true,
+      "source": "ear-os-smoke-harness",
+      "event": "cotizacion_directa_sin_cupon",
+      "channel": "whatsapp",
+      "clientName": "Reserva Directa Edwin Agudelo (Madrid)",
+      "clientPhone": "+34693693048",
+      "eventType": "boda",
+      "eventDate": "2026-11-28",
+      "location": "Madrid",
+      "distanceKm": 15,
+      "format": "solista_edwin",
+      "formatCatalogId": "solista-edwin-agudelo",
+      "hub": "Hub Méntrida",
+      "hubFranchiseKm": 100,
+      "billableKm": 0,
+      "standardPriceEur": 550,
+      "floorPriceEur": 350,
+      "couponApplied": false,
+      "couponCode": null,
+      "quotedPriceEur": 550,
+      "expectedTotalPrice": 550,
+      "clientPhoneDisplay": "+34 693 693 048",
+      "depositAmountEur": 100,
+      "depositDeductiblePct": 100,
+      "priceLock": {
+        "algorithm": "SHA-256",
+        "basis": "solista|distanceKm|franchiseKm|totalPrice|deposit",
+        "hash": "5d6ca40318dbaba9fdc089ed7aa2fcb4edfce9eed18cb2181c149dc9b65f2aca"
+      },
+      "integrity": {
+        "algorithm": "SHA-256",
+        "scope": "canonical-payload",
+        "hash": "e0f3f8e69c2ab7ecbb9484fbbfd7bb3ced63fe2b09aeb0843f02457b80b334e4"
+      }
+    }
+  },
+  "gates": [
+    {
+      "id": "G0_SSOT_CANONICO",
+      "ok": true,
+      "detail": "6/6 invariantes · hub 100 km exentos",
+      "checks": [
+        {
+          "id": "INV-01 suelo 350",
+          "ok": true,
+          "detail": "base=350"
+        },
+        {
+          "id": "tarifa oficial 550",
+          "ok": true,
+          "detail": "estandar=550"
+        },
+        {
+          "id": "INV-03 deposito 100",
+          "ok": true,
+          "detail": "deposito=100"
+        },
+        {
+          "id": "INV-12 centralita",
+          "ok": true,
+          "detail": "centralita=+34 693 693 048"
+        },
+        {
+          "id": "INV-02 split 80/10/10",
+          "ok": true,
+          "detail": "split={\"artista\":0.8,\"earOs\":0.1,\"vimume\":0.1}"
+        },
+        {
+          "id": "INV-13 rider 75 dB / 12 W-pax",
+          "ok": true,
+          "detail": "75dB · 12W/pax"
+        }
+      ]
+    },
+    {
+      "id": "G1_WORKFLOW_ARTIFACT",
+      "ok": true,
+      "detail": "5/5 · activo=true · responseMode=responseNode",
+      "checks": [
+        {
+          "id": "webhook.path",
+          "ok": true,
+          "detail": "path=b2b-quote"
+        },
+        {
+          "id": "webhook.method",
+          "ok": true,
+          "detail": "method=POST"
+        },
+        {
+          "id": "code.jsCode",
+          "ok": true,
+          "detail": "2000 chars"
+        },
+        {
+          "id": "required[]",
+          "ok": true,
+          "detail": "6 campos: clientName,clientPhone,eventType,eventDate,location,distanceKm"
+        },
+        {
+          "id": "ACG suelo 350",
+          "ok": true,
+          "detail": "basePriceEur=350"
+        }
+      ]
+    },
+    {
+      "id": "G2_PAYLOAD_CANONICO",
+      "ok": true,
+      "detail": "9/9 · requestId=SMOKE-B2B-QUOTE-MWZFDGZO",
+      "checks": [
+        {
+          "id": "titular",
+          "ok": true,
+          "detail": "Reserva Directa Edwin Agudelo (Madrid)"
+        },
+        {
+          "id": "formato",
+          "ok": true,
+          "detail": "solista_edwin / solista-edwin-agudelo"
+        },
+        {
+          "id": "distancia",
+          "ok": true,
+          "detail": "15 km · facturables 0"
+        },
+        {
+          "id": "deposito",
+          "ok": true,
+          "detail": "100 EUR"
+        },
+        {
+          "id": "telefono",
+          "ok": true,
+          "detail": "+34 693 693 048"
+        },
+        {
+          "id": "tarifas",
+          "ok": true,
+          "detail": "oficial 550 / suelo 350"
+        },
+        {
+          "id": "integrity.sha256",
+          "ok": true,
+          "detail": "ae068ff293914262…"
+        },
+        {
+          "id": "priceLock.sha256",
+          "ok": true,
+          "detail": "fe4041b966becd02…"
+        },
+        {
+          "id": "contrato_n8n",
+          "ok": true,
+          "detail": "clientName,clientPhone,eventType,eventDate,location,distanceKm"
+        }
+      ]
+    },
+    {
+      "id": "G3_FORMATTER_CUPON_350",
+      "ok": true,
+      "detail": "valid=true · 10/10 mandatos · total=350 EUR",
+      "output": {
+        "valid": true,
+        "requestId": "SMOKE-B2B-QUOTE-MWZFDGZO",
+        "smokeTest": true,
+        "source": "ear-os-smoke-harness",
+        "event": "cita_iniciada_por_whatsapp",
+        "channel": "whatsapp",
+        "clientName": "Reserva Directa Edwin Agudelo (Madrid)",
+        "clientPhone": "+34693693048",
+        "eventType": "boda",
+        "eventDate": "2026-11-28",
+        "location": "Madrid",
+        "distanceKm": 15,
+        "format": "solista_edwin",
+        "formatCatalogId": "solista-edwin-agudelo",
+        "hub": "Hub Méntrida",
+        "hubFranchiseKm": 100,
+        "billableKm": 0,
+        "standardPriceEur": 550,
+        "floorPriceEur": 350,
+        "couponApplied": true,
+        "couponCode": "SMOKE-CUPON-SUELO-350",
+        "quotedPriceEur": 350,
+        "expectedTotalPrice": 350,
+        "clientPhoneDisplay": "+34 693 693 048",
+        "depositAmountEur": 100,
+        "depositDeductiblePct": 100,
+        "priceLock": {
+          "algorithm": "SHA-256",
+          "basis": "solista|distanceKm|franchiseKm|totalPrice|deposit",
+          "hash": "fe4041b966becd02571c723644886c20020a51ff52d85c06542d54de8f8e718c"
+        },
+        "integrity": {
+          "algorithm": "SHA-256",
+          "scope": "canonical-payload",
+          "hash": "ae068ff2939142627954562063022d4a7ff10e6ab63e2d8171c9b2c66a66d5d4"
+        },
+        "logistica": 0,
+        "hotel": 0,
+        "logisticaTotal": 0,
+        "totalPrice": 350,
+        "quotedBase": 350,
+        "depositAmount": 100,
+        "depositDeductible": 100,
+        "b2gEligible": true,
+        "riderDBA": [
+          85,
+          90
+        ],
+        "split": {
+          "artista": 280,
+          "earOs": 35,
+          "vimume": 35
+        }
+      },
+      "checks": [
+        {
+          "id": "titular",
+          "ok": true,
+          "detail": "clientName=\"Reserva Directa Edwin Agudelo (Madrid)\""
+        },
+        {
+          "id": "formato",
+          "ok": true,
+          "detail": "format=\"solista_edwin\" catalogFormatId=\"solista-edwin-agudelo\""
+        },
+        {
+          "id": "tarifa_oficial_550",
+          "ok": true,
+          "detail": "standardPriceEur=550 (oráculo 550)"
+        },
+        {
+          "id": "suelo_cupon_350",
+          "ok": true,
+          "detail": "floorPriceEur=350 (oráculo 350)"
+        },
+        {
+          "id": "distancia_hub_15km",
+          "ok": true,
+          "detail": "distanceKm=15 logistica=0 hub=\"Hub Méntrida\""
+        },
+        {
+          "id": "deposito_price_lock_100",
+          "ok": true,
+          "detail": "depositAmount=100 deducible=100"
+        },
+        {
+          "id": "telefono_centralita",
+          "ok": true,
+          "detail": "clientPhone=+34693693048 display=\"+34 693 693 048\""
+        },
+        {
+          "id": "total_cotizado",
+          "ok": true,
+          "detail": "totalPrice=350 esperado=350"
+        },
+        {
+          "id": "split_80_10_10",
+          "ok": true,
+          "detail": "splitSum=350 total=350"
+        },
+        {
+          "id": "b2g_elegible",
+          "ok": true,
+          "detail": "b2gEligible=true"
+        }
+      ]
+    },
+    {
+      "id": "G4_FORMATTER_OFICIAL_550",
+      "ok": true,
+      "detail": "valid=true · total=550 EUR vs esperado 550 EUR (delta 0) · fallidos=ninguno",
+      "output": {
+        "valid": true,
+        "requestId": "SMOKE-B2B-QUOTE-MWZFDGZO",
+        "smokeTest": true,
+        "source": "ear-os-smoke-harness",
+        "event": "cotizacion_directa_sin_cupon",
+        "channel": "whatsapp",
+        "clientName": "Reserva Directa Edwin Agudelo (Madrid)",
+        "clientPhone": "+34693693048",
+        "eventType": "boda",
+        "eventDate": "2026-11-28",
+        "location": "Madrid",
+        "distanceKm": 15,
+        "format": "solista_edwin",
+        "formatCatalogId": "solista-edwin-agudelo",
+        "hub": "Hub Méntrida",
+        "hubFranchiseKm": 100,
+        "billableKm": 0,
+        "standardPriceEur": 550,
+        "floorPriceEur": 350,
+        "couponApplied": false,
+        "couponCode": null,
+        "quotedPriceEur": 550,
+        "expectedTotalPrice": 550,
+        "clientPhoneDisplay": "+34 693 693 048",
+        "depositAmountEur": 100,
+        "depositDeductiblePct": 100,
+        "priceLock": {
+          "algorithm": "SHA-256",
+          "basis": "solista|distanceKm|franchiseKm|totalPrice|deposit",
+          "hash": "5d6ca40318dbaba9fdc089ed7aa2fcb4edfce9eed18cb2181c149dc9b65f2aca"
+        },
+        "integrity": {
+          "algorithm": "SHA-256",
+          "scope": "canonical-payload",
+          "hash": "e0f3f8e69c2ab7ecbb9484fbbfd7bb3ced63fe2b09aeb0843f02457b80b334e4"
+        },
+        "logistica": 0,
+        "hotel": 0,
+        "logisticaTotal": 0,
+        "totalPrice": 550,
+        "quotedBase": 550,
+        "depositAmount": 100,
+        "depositDeductible": 100,
+        "b2gEligible": true,
+        "riderDBA": [
+          85,
+          90
+        ],
+        "split": {
+          "artista": 440,
+          "earOs": 55,
+          "vimume": 55
+        }
+      },
+      "checks": [
+        {
+          "id": "titular",
+          "ok": true,
+          "detail": "clientName=\"Reserva Directa Edwin Agudelo (Madrid)\""
+        },
+        {
+          "id": "formato",
+          "ok": true,
+          "detail": "format=\"solista_edwin\" catalogFormatId=\"solista-edwin-agudelo\""
+        },
+        {
+          "id": "tarifa_oficial_550",
+          "ok": true,
+          "detail": "standardPriceEur=550 (oráculo 550)"
+        },
+        {
+          "id": "suelo_cupon_350",
+          "ok": true,
+          "detail": "floorPriceEur=350 (oráculo 350)"
+        },
+        {
+          "id": "distancia_hub_15km",
+          "ok": true,
+          "detail": "distanceKm=15 logistica=0 hub=\"Hub Méntrida\""
+        },
+        {
+          "id": "deposito_price_lock_100",
+          "ok": true,
+          "detail": "depositAmount=100 deducible=100"
+        },
+        {
+          "id": "telefono_centralita",
+          "ok": true,
+          "detail": "clientPhone=+34693693048 display=\"+34 693 693 048\""
+        },
+        {
+          "id": "total_cotizado",
+          "ok": true,
+          "detail": "totalPrice=550 esperado=550"
+        },
+        {
+          "id": "split_80_10_10",
+          "ok": true,
+          "detail": "splitSum=550 total=550"
+        },
+        {
+          "id": "b2g_elegible",
+          "ok": true,
+          "detail": "b2gEligible=true"
+        }
+      ],
+      "delta": 0
+    },
+    {
+      "id": "G5_EMISORES_CONTRATO",
+      "ok": false,
+      "detail": "1/5 emisores cumplen los 6 campos required",
+      "findings": [
+        {
+          "file": "src\\app\\api\\contracts\\generate\\route.ts",
+          "line": 151,
+          "callee": "fireAndForgetN8n",
+          "payloadShape": "OBJECT",
+          "keys": [
+            "event",
+            "contractId",
+            "requestId",
+            "eventDate",
+            "location",
+            "baseAmount"
+          ],
+          "missing": [
+            "clientName",
+            "clientPhone",
+            "eventType",
+            "distanceKm"
+          ],
+          "contractOk": false
+        },
+        {
+          "file": "src\\app\\api\\quote\\generate-lock\\route.ts",
+          "line": 167,
+          "callee": "fireAndForgetN8n",
+          "payloadShape": "OBJECT",
+          "keys": [
+            "clientName",
+            "clientPhone",
+            "eventType",
+            "eventDate",
+            "location",
+            "distanceKm",
+            "quoteId",
+            "totalWithVat",
+            "couponApplied",
+            "formatId",
+            "formatName",
+            "endHour",
+            "totalPrice",
+            "depositAmount",
+            "priceLockHash",
+            "timestamp"
+          ],
+          "missing": [],
+          "contractOk": true
+        },
+        {
+          "file": "src\\app\\api\\vendor\\b2b-quote\\route.ts",
+          "line": 135,
+          "callee": "fireAndForgetN8n",
+          "payloadShape": "UNRESOLVED",
+          "keys": [],
+          "missing": [
+            "clientName",
+            "clientPhone",
+            "eventType",
+            "eventDate",
+            "location",
+            "distanceKm"
+          ],
+          "contractOk": false
+        },
+        {
+          "file": "src\\lib\\services\\trello.ts",
+          "line": 50,
+          "callee": "dispatchToN8n",
+          "payloadShape": "OBJECT",
+          "keys": [
+            "source",
+            "dossierId",
+            "contactName",
+            "contactEmail",
+            "contactPhone",
+            "occasion",
+            "province",
+            "totalAmount",
+            "depositAmount",
+            "selectedAssets",
+            "priority",
+            "channel",
+            "os_origin",
+            "dispatchedAt"
+          ],
+          "missing": [
+            "clientName",
+            "clientPhone",
+            "eventType",
+            "eventDate",
+            "location",
+            "distanceKm"
+          ],
+          "contractOk": false
+        },
+        {
+          "file": "src\\lib\\services\\webhook_dispatcher.ts",
+          "line": 52,
+          "callee": "dispatchToN8n",
+          "payloadShape": "OBJECT",
+          "keys": [
+            "monto",
+            "fuente",
+            "url",
+            "activosAsignados",
+            "timestamp",
+            "prioridad",
+            "metadata",
+            "os_origin",
+            "dispatch_time"
+          ],
+          "missing": [
+            "clientName",
+            "clientPhone",
+            "eventType",
+            "eventDate",
+            "location",
+            "distanceKm"
+          ],
+          "contractOk": false
+        }
+      ]
+    }
+  ],
+  "diagnostics": [
+    {
+      "id": "EMISOR_FUERA_DE_CONTRATO",
+      "severity": "P0",
+      "detail": "src\\app\\api\\contracts\\generate\\route.ts:151 (fireAndForgetN8n) omite: clientName,clientPhone,eventType,distanceKm",
+      "file": "src\\app\\api\\contracts\\generate\\route.ts",
+      "line": 151,
+      "callee": "fireAndForgetN8n",
+      "payloadShape": "OBJECT",
+      "keys": [
+        "event",
+        "contractId",
+        "requestId",
+        "eventDate",
+        "location",
+        "baseAmount"
+      ],
+      "missing": [
+        "clientName",
+        "clientPhone",
+        "eventType",
+        "distanceKm"
+      ],
+      "contractOk": false
+    },
+    {
+      "id": "EMISOR_FUERA_DE_CONTRATO",
+      "severity": "P0",
+      "detail": "src\\app\\api\\vendor\\b2b-quote\\route.ts:135 (fireAndForgetN8n) omite: clientName,clientPhone,eventType,eventDate,location,distanceKm",
+      "file": "src\\app\\api\\vendor\\b2b-quote\\route.ts",
+      "line": 135,
+      "callee": "fireAndForgetN8n",
+      "payloadShape": "UNRESOLVED",
+      "keys": [],
+      "missing": [
+        "clientName",
+        "clientPhone",
+        "eventType",
+        "eventDate",
+        "location",
+        "distanceKm"
+      ],
+      "contractOk": false
+    },
+    {
+      "id": "EMISOR_FUERA_DE_CONTRATO",
+      "severity": "P0",
+      "detail": "src\\lib\\services\\trello.ts:50 (dispatchToN8n) omite: clientName,clientPhone,eventType,eventDate,location,distanceKm",
+      "file": "src\\lib\\services\\trello.ts",
+      "line": 50,
+      "callee": "dispatchToN8n",
+      "payloadShape": "OBJECT",
+      "keys": [
+        "source",
+        "dossierId",
+        "contactName",
+        "contactEmail",
+        "contactPhone",
+        "occasion",
+        "province",
+        "totalAmount",
+        "depositAmount",
+        "selectedAssets",
+        "priority",
+        "channel",
+        "os_origin",
+        "dispatchedAt"
+      ],
+      "missing": [
+        "clientName",
+        "clientPhone",
+        "eventType",
+        "eventDate",
+        "location",
+        "distanceKm"
+      ],
+      "contractOk": false
+    },
+    {
+      "id": "EMISOR_FUERA_DE_CONTRATO",
+      "severity": "P0",
+      "detail": "src\\lib\\services\\webhook_dispatcher.ts:52 (dispatchToN8n) omite: clientName,clientPhone,eventType,eventDate,location,distanceKm",
+      "file": "src\\lib\\services\\webhook_dispatcher.ts",
+      "line": 52,
+      "callee": "dispatchToN8n",
+      "payloadShape": "OBJECT",
+      "keys": [
+        "monto",
+        "fuente",
+        "url",
+        "activosAsignados",
+        "timestamp",
+        "prioridad",
+        "metadata",
+        "os_origin",
+        "dispatch_time"
+      ],
+      "missing": [
+        "clientName",
+        "clientPhone",
+        "eventType",
+        "eventDate",
+        "location",
+        "distanceKm"
+      ],
+      "contractOk": false
+    },
+    {
+      "id": "EMISOR_PRODUCCION_FUERA_DE_GIT",
+      "severity": "P1",
+      "detail": "el formato de referencia vivo EAR-MCH-… no se genera en este repo: el emisor real corre fuera del árbol versionado (SOSPECHOSO)"
+    }
+  ],
+  "transport": {
+    "state": "SIN_EVIDENCIA",
+    "code": "OFFLINE",
+    "probed": false,
+    "source": "static",
+    "mode": "SIMULADO",
+    "checkedAt": "2026-11-27T20:19:44.964Z",
+    "note": "ejecutado con --offline: no se sondeó la red"
+  },
+  "verdict": "ROJO",
+  "exitCode": 1,
+  "evidence": {
+    "id": "N8N_B2B_WEBHOOK_SMOKE",
+    "cmd": "node scripts/test_n8n_b2b_webhook.cjs --offline",
+    "exit": 1,
+    "url": null,
+    "sha256": null,
+    "ts": "2026-11-27T20:19:44.964Z"
+  },
+  "reportPath": ".antigravity\\evidence\\n8n_b2b_webhook_smoke.json"
+}
