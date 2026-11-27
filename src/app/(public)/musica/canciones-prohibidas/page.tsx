@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import ProhibitedSongsVault from '@/components/music/ProhibitedSongsVault';
 
 export const metadata: Metadata = {
-  title: 'Bóveda de Canciones Prohibidas | Filtro Musical para DJs y Fincas | EAR OS',
+  title: 'Bóveda de Canciones Prohibidas · Filtro Musical | EAR OS',
   description:
     'Configura la lista negra de canciones que jamás deben sonar en tu boda o evento de alta gala, genera el código QR de peticiones para las mesas y filtra las solicitudes de los invitados en tiempo real con alternativas de gala.',
   alternates: { canonical: '/musica/canciones-prohibidas' },

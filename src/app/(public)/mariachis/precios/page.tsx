@@ -4,7 +4,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Precios de Mariachis Oficiales | Tarifas Cerradas y Reserva Blindada",
+  title: "Precios de Mariachis Oficiales · Tarifas 2026 | EAR OS",
   description: "Calcula el precio oficial de mariachis para bodas, serenatas y fiestas. Sin intermediarios, seguimiento en tiempo real y pago 100% protegido.",
 };
 

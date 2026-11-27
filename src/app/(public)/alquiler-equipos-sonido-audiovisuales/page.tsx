@@ -18,7 +18,7 @@ const CANONICAL_URL =
 
 export const metadata: Metadata = {
   title:
-    'Alquiler de Equipos de Sonido, Pantallas LED Gigantes & Iluminación DMX | Productora EAR',
+    'Alquiler de Sonido y Pantallas LED Profesional | EAR OS',
   description:
     'Alquiler profesional de pantallas LED P2.9 HDR, sonorización Bose F1 / L-Acoustics e iluminación robótica DMX para bodas de gala, convenciones corporativas y festivales. Montaje certificado, técnicos titulados y cobertura nacional.',
   keywords: [

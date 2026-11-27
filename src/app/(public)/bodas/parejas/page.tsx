@@ -14,7 +14,7 @@ import { DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
 import { CouplesInteractiveFunnelSection } from '@/features/wedding/ui/CouplesInteractiveFunnelSection';
 
 export const metadata: Metadata = {
-  title: 'Área de Parejas · Tu Boda Gestionada con Garantía S-Class | Productora EAR',
+  title: 'Área de Parejas · Tu Boda con Garantía S-Class | EAR OS',
   description: `Espacio privado para novios: guarda proveedores favoritos, bloquea la fecha con depósito ${DEPOSITO_STRIPE_EUR}€ 100% deducible y recibe asesoría nupcial directa por WhatsApp sin coste.`,
   alternates: { canonical: 'https://productoraear.com/bodas/parejas' },
 };

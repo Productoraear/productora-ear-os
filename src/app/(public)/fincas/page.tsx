@@ -19,12 +19,20 @@ import {
     DEPOSITO_STRIPE_EUR,
     CENTRALITA_EAR_OS,
 } from '@/lib/constants/ear-os-ssot';
+import { resolveEntityAsin } from '@/lib/entities/asin';
+
+const FINCAS_HUB_ASIN = resolveEntityAsin('finca', 'fincas-homologadas');
 
 export const metadata: Metadata = {
-    title: 'Fincas y Venues B2B · Pacto 100 Fundadores & Simulador 2026 | EAR OS',
+    title: 'Fincas y Venues B2B · Pacto 100 Fundadores | EAR OS',
     description:
         'Pacto de los 100 Fundadores para propietarios de fincas: igualamos tu cuota anterior con tarifa vitalicia y 0% de fuga a competidores. ' +
         `Simulador de menús 2026, garantía acústica Ley 37/2003 y bloqueo de visita técnica con depósito deducible de ${DEPOSITO_STRIPE_EUR} €.`,
+    other: {
+        'ear:asin': FINCAS_HUB_ASIN,
+        'ear:entity-name': 'Red de Fincas Homologadas EAR OS',
+        'ear:category': 'Fincas',
+    },
 };
 
 const OFFER_SCHEMA = {
@@ -46,7 +54,12 @@ const OFFER_SCHEMA = {
 
 export default function FincasB2BPage() {
     return (
-        <div className="w-full min-h-screen bg-[#030305] text-white overflow-x-hidden selection:bg-[#ecb613]/20 selection:text-[#ecb613]">
+        <div
+            data-ear-asin={FINCAS_HUB_ASIN}
+            data-ear-entity-name="Red de Fincas Homologadas EAR OS"
+            data-ear-category="Fincas"
+            className="w-full min-h-screen bg-[#030305] text-white overflow-x-hidden selection:bg-[#ecb613]/20 selection:text-[#ecb613]"
+        >
             {/* Metadatos Estructurados JSON-LD */}
             <script
                 type="application/ld+json"
@@ -149,6 +162,7 @@ export default function FincasB2BPage() {
                         <SovereignWhatsAppButton
                               message="Hola Edwin, soy propietario de finca y deseo consultar el Pacto de los 100 Fundadores con Price-Match."
                               category="Fincas Fundadores"
+                              asin={FINCAS_HUB_ASIN}
                               className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#00E5FF]/10 border border-[#00E5FF]/30 text-[#00E5FF] hover:bg-[#00E5FF]/20 px-6 py-3.5 text-xs font-bold font-mono uppercase tracking-wider transition-all duration-300 ml-auto"
                             >
                             <Phone size={14} />

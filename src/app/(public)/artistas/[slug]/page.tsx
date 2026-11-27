@@ -21,6 +21,8 @@ import {
   Phone
 } from 'lucide-react';
 import { CENTRALITA } from '@/lib/phone-constants';
+import { resolveEntityAsin } from '@/lib/entities/asin';
+import { buildClientWhatsAppHandoffUrl } from '@/lib/whatsapp/client-handoff';
 import ArtistBookingSpecSheet from '@/components/artists/ArtistBookingSpecSheet';
 import ArtistPanel360 from '@/components/artists/ArtistPanel360';
 import { PRODUCTORA_EAR_E78903_PROFILE } from '@/data/artists/productora-ear-e78903-full';
@@ -31,16 +33,78 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
+function findArtistInDataLake(slug: string): Record<string, any> | null {
+  try {
+    const musicaPath = path.join(process.cwd(), 'public', 'data', 'providers', 'musica.json');
+    const canonicalPath = path.join(process.cwd(), 'public', 'data', 'artists', 'artists_canonical.json');
+    const items: Record<string, any>[] = [];
+    if (fs.existsSync(canonicalPath)) {
+      try {
+        const canonicalItems = JSON.parse(fs.readFileSync(canonicalPath, 'utf-8'));
+        if (Array.isArray(canonicalItems)) items.push(...canonicalItems);
+      } catch {}
+    }
+    if (fs.existsSync(musicaPath)) {
+      try {
+        const musicaItems = JSON.parse(fs.readFileSync(musicaPath, 'utf-8'));
+        if (Array.isArray(musicaItems)) items.push(...musicaItems);
+      } catch {}
+    }
+    if (items.length === 0) return null;
+    const cleanSlug = slug.toLowerCase().trim();
+    return (
+      items.find((item) => {
+        const itemSlug = String(item.slug || '').toLowerCase().trim();
+        const itemId = String(item.id || '').toLowerCase().trim();
+        const itemNameSlug = String(item.name || '')
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-+|-+$/g, '');
+        return itemSlug === cleanSlug || itemId === cleanSlug || itemNameSlug === cleanSlug;
+      }) ?? null
+    );
+  } catch {
+    return null;
+  }
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
+  const slugLower = slug.toLowerCase().trim();
+
+  if (slugLower === 'edwin-agudelo' || slugLower === 'productora-ear' || slugLower === 'e78903') {
+    const p = PRODUCTORA_EAR_E78903_PROFILE;
+    const asin = resolveEntityAsin('artist', slugLower);
+    return {
+      title: `${p.name} · Solista & Tenor de Gala | Productora EAR`,
+      description: p.weddingPackSummary,
+      alternates: {
+        canonical: `https://productoraear.com/artistas/${slug}`,
+      },
+      other: {
+        'ear:asin': asin,
+        'ear:entity-name': p.name,
+        'ear:category': 'Solista',
+      },
+    };
+  }
+
   const variant = HIGH_VALUE_VARIANTS.find(v => v.slug === slug);
 
   if (variant) {
+    const asin = resolveEntityAsin('artist', slug);
     return {
       title: variant.title,
       description: variant.metaDescription,
       alternates: {
         canonical: `https://productoraear.com/artistas/${slug}`,
+      },
+      other: {
+        'ear:asin': asin,
+        'ear:entity-name': variant.title,
+        'ear:category': variant.showTypeName || 'Artistas',
       },
       openGraph: {
         title: variant.title,
@@ -59,11 +123,63 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
+  try {
+    const dbArtist = await (prisma as any).artistProfile.findFirst({
+      where: { slug },
+      include: {
+        user: {
+          select: { name: true, displayName: true },
+        },
+      },
+    });
+    if (dbArtist) {
+      const artistName = dbArtist.stageName || dbArtist.displayName || dbArtist.user?.displayName || dbArtist.user?.name || slug;
+      const asin = resolveEntityAsin('artist', slug);
+      return {
+        title: `${artistName} | Artista Homologado Productora EAR`,
+        description: dbArtist.bio || 'Perfil artístico homologado por Productora EAR.',
+        alternates: {
+          canonical: `https://productoraear.com/artistas/${slug}`,
+        },
+        other: {
+          'ear:asin': asin,
+          'ear:entity-name': artistName,
+          'ear:category': 'Artistas',
+        },
+      };
+    }
+  } catch {}
+
+  const dataLakeArtist = findArtistInDataLake(slug);
+  if (dataLakeArtist) {
+    const entityName = String(dataLakeArtist.name || slug);
+    const category = String(dataLakeArtist.category || 'Música');
+    const asin = resolveEntityAsin('artist', slug, typeof dataLakeArtist.asin === 'string' ? dataLakeArtist.asin : null);
+    return {
+      title: `${entityName} | Productora EAR`,
+      description: String(dataLakeArtist.description || 'Artista musical auditado con sonorización Bose F1 y garantía de actuación S-Class.'),
+      alternates: {
+        canonical: `https://productoraear.com/artistas/${slug}`,
+      },
+      other: {
+        'ear:asin': asin,
+        'ear:entity-name': entityName,
+        'ear:category': category,
+      },
+    };
+  }
+
+  const fallbackAsin = resolveEntityAsin('artist', slug);
   return {
     title: `Artista ${slug} | Productora EAR`,
     description: 'Perfil y rider técnico oficial en Productora EAR',
     alternates: {
       canonical: `https://productoraear.com/artistas/${slug}`,
+    },
+    other: {
+      'ear:asin': fallbackAsin,
+      'ear:entity-name': `Artista ${slug}`,
+      'ear:category': 'Artistas',
     },
     openGraph: {
       title: `Artista ${slug} | Productora EAR`,
@@ -83,8 +199,14 @@ export default async function ArtistDetailPage({ params }: PageProps) {
   // 0. ESCAPARATE SOBERANO 13 SECCIONES — EDWIN AGUDELO / PRODUCTORA EAR (ID BODAS.NET: e78903)
   if (slugLower === 'edwin-agudelo' || slugLower === 'productora-ear' || slugLower === 'e78903') {
     const p = PRODUCTORA_EAR_E78903_PROFILE;
+    const asin = resolveEntityAsin('artist', slugLower);
     return (
-      <main className="min-h-screen bg-[#030305] text-white pt-28 pb-24 font-sans selection:bg-[#ecb613]/30">
+      <main
+        data-ear-asin={asin}
+        data-ear-entity-name={p.name}
+        data-ear-category="Solista"
+        className="min-h-screen bg-[#030305] text-white pt-28 pb-24 font-sans selection:bg-[#ecb613]/30"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-12">
           {/* CABECERA OFICIAL E78903 (100% DESBLOQUEADA · CERO COMPETIDORES INYECTADOS) */}
           <header className="p-6 sm:p-8 rounded-3xl bg-[#050507] border border-[#ecb613]/40 space-y-4">
@@ -306,9 +428,20 @@ export default async function ArtistDetailPage({ params }: PageProps) {
 
   if (variant) {
     const basePrice = variant.showType === 'solista' ? 350 : variant.showType === 'mariachi-6' ? 850 : variant.showType === 'show-caballo' ? 1200 : 2400;
+    const asin = resolveEntityAsin('artist', slug);
+    const variantWaHref = buildClientWhatsAppHandoffUrl({
+      phoneDigits: CENTRALITA.raw,
+      text: `Hola Productora EAR, deseo contratar ${variant.title} en ${variant.city}. Precio de referencia: desde ${basePrice}€.`,
+      asin,
+    });
 
     return (
-      <main className="min-h-screen bg-[#050505] text-white pt-32 pb-24 font-sans selection:bg-[#ecb613]/30">
+      <main
+        data-ear-asin={asin}
+        data-ear-entity-name={variant.title}
+        data-ear-category={variant.showTypeName || 'Artistas'}
+        className="min-h-screen bg-[#050505] text-white pt-32 pb-24 font-sans selection:bg-[#ecb613]/30"
+      >
         <div className="max-w-6xl mx-auto px-6 space-y-16">
 
           {/* HEADER / HERO DE ARTISTA (EXACTAMENTE UN H1) */}
@@ -422,7 +555,7 @@ export default async function ArtistDetailPage({ params }: PageProps) {
                   </Link>
 
                   <a
-                    href={`https://wa.me/${CENTRALITA.raw}?text=${encodeURIComponent(`Hola Productora EAR, deseo contratar ${variant.title} en ${variant.city}. Precio de referencia: desde ${basePrice}€.`)}`}
+                    href={variantWaHref}
                     target="_blank"
                     rel="noreferrer"
                     className="w-full py-3.5 bg-white/5 border border-white/10 text-white hover:bg-white/10 font-bold uppercase tracking-wider text-xs rounded-2xl transition-all text-center flex items-center justify-center gap-2"
@@ -491,9 +624,15 @@ export default async function ArtistDetailPage({ params }: PageProps) {
 
   if (artist) {
     const artistName = artist.stageName || artist.displayName || artist.user?.displayName || artist.user?.name || slug;
+    const asin = resolveEntityAsin('artist', slug);
 
     return (
-      <main className="min-h-screen bg-[#050505] text-white pt-32 pb-24 font-sans selection:bg-[#ecb613]/30">
+      <main
+        data-ear-asin={asin}
+        data-ear-entity-name={artistName}
+        data-ear-category="Artistas"
+        className="min-h-screen bg-[#050505] text-white pt-32 pb-24 font-sans selection:bg-[#ecb613]/30"
+      >
         <div className="max-w-4xl mx-auto px-6 space-y-8">
           <header className="space-y-4">
             <span className="px-3.5 py-1 rounded-full text-[10px] font-mono text-[#ecb613] bg-[#ecb613]/10 border border-[#ecb613]/30 uppercase">
@@ -535,55 +674,34 @@ export default async function ArtistDetailPage({ params }: PageProps) {
   }
 
   // 3. COMPROBACIÓN EN DATA LAKE DE PROVEEDORES Y CELEBRENTS (musica.json y artists_canonical.json)
-  try {
-    const musicaPath = path.join(process.cwd(), 'public', 'data', 'providers', 'musica.json');
-    const canonicalPath = path.join(process.cwd(), 'public', 'data', 'artists', 'artists_canonical.json');
-    let items: any[] = [];
-    if (fs.existsSync(canonicalPath)) {
-      try {
-        const canonicalItems = JSON.parse(fs.readFileSync(canonicalPath, 'utf-8'));
-        if (Array.isArray(canonicalItems)) items.push(...canonicalItems);
-      } catch {}
-    }
-    if (fs.existsSync(musicaPath)) {
-      try {
-        const musicaItems = JSON.parse(fs.readFileSync(musicaPath, 'utf-8'));
-        if (Array.isArray(musicaItems)) items.push(...musicaItems);
-      } catch {}
-    }
+  const matched = findArtistInDataLake(slug);
+  if (matched) {
+    const title = matched.name || slug;
+    const category = String(matched.category || 'Música');
+    const asin = resolveEntityAsin('artist', slug, typeof matched.asin === 'string' ? matched.asin : null);
+    const province = matched.province || 'España';
+    const description = matched.description || matched.description_full || 'Artista musical auditado con sonorización Bose F1 y garantía de actuación S-Class.';
+    const basePrice = matched.basePrice || 350;
+    const rating = matched.rating ? Number(matched.rating).toFixed(1) : '5.0';
+    const reviews = matched.reviews || 28;
+    const photos: string[] = (matched.imageUrls && matched.imageUrls.length > 0)
+      ? matched.imageUrls
+      : (matched.gallery && matched.gallery.length > 0)
+        ? matched.gallery
+        : [matched.img || 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4'];
+    const dataLakeWaHref = buildClientWhatsAppHandoffUrl({
+      phoneDigits: CENTRALITA.raw,
+      text: `Hola Edwin, deseo consultar presupuesto para el artista ${title} en ${province}.`,
+      asin,
+    });
 
-    if (items.length > 0) {
-      const cleanSlug = slug.toLowerCase().trim();
-      const matched = items.find((item: any) => {
-        const itemSlug = (item.slug || '').toLowerCase().trim();
-        const itemId = (item.id || '').toLowerCase().trim();
-        const itemNameSlug = (item.name || '').toLowerCase()
-          .normalize('NFD')
-          .replace(/[\u0300-\u036f]/g, '')
-          .replace(/[^a-z0-9]+/g, '-')
-          .replace(/^-+|-+$/g, '');
-
-        if (itemSlug && itemSlug === cleanSlug) return true;
-        if (itemId && itemId === cleanSlug) return true;
-        if (itemNameSlug && itemNameSlug === cleanSlug) return true;
-        return false;
-      });
-
-      if (matched) {
-        const title = matched.name || slug;
-        const province = matched.province || 'España';
-        const description = matched.description || matched.description_full || 'Artista musical auditado con sonorización Bose F1 y garantía de actuación S-Class.';
-        const basePrice = matched.basePrice || 350;
-        const rating = matched.rating ? Number(matched.rating).toFixed(1) : '5.0';
-        const reviews = matched.reviews || 28;
-        const photos: string[] = (matched.imageUrls && matched.imageUrls.length > 0)
-          ? matched.imageUrls
-          : (matched.gallery && matched.gallery.length > 0)
-            ? matched.gallery
-            : [matched.img || 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4'];
-
-        return (
-          <main className="min-h-screen bg-[#050505] text-white pt-20 pb-12 font-sans selection:bg-[#ecb613]/30">
+    return (
+      <main
+        data-ear-asin={asin}
+        data-ear-entity-name={title}
+        data-ear-category={category}
+        className="min-h-screen bg-[#050505] text-white pt-20 pb-12 font-sans selection:bg-[#ecb613]/30"
+      >
             <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-6">
 
               {/* VISTA COMPACTA "DE UN VISTAZO" (ABOVE THE FOLD) */}
@@ -658,7 +776,7 @@ export default async function ArtistDetailPage({ params }: PageProps) {
 
                     <div className="flex items-center gap-2 w-full sm:w-auto">
                       <a
-                        href={`https://wa.me/34693693048?text=${encodeURIComponent(`Hola Edwin, deseo consultar presupuesto para el artista ${title} en ${province}.`)}`}
+                        href={dataLakeWaHref}
                         target="_blank"
                         rel="noreferrer"
                         className="flex-1 sm:flex-initial px-4 py-3 bg-white/5 hover:bg-white/10 border border-white/15 text-white font-bold uppercase text-xs rounded-xl transition-all flex items-center justify-center gap-1.5"
@@ -702,15 +820,17 @@ export default async function ArtistDetailPage({ params }: PageProps) {
             </div>
           </main>
         );
-      }
-    }
-  } catch (err) {
-    console.warn(`[ARTIST_PAGE] Data lake fallback error for slug ${slug}:`, err);
   }
 
   // 4. FALLBACK LIMPIO CON UN SOLO H1
+  const fallbackAsin = resolveEntityAsin('artist', slug);
   return (
-    <main className="min-h-screen bg-[#050505] text-white pt-32 pb-24 font-sans flex flex-col items-center justify-center px-6">
+    <main
+      data-ear-asin={fallbackAsin}
+      data-ear-entity-name={`Artista ${slug}`}
+      data-ear-category="Artistas"
+      className="min-h-screen bg-[#050505] text-white pt-32 pb-24 font-sans flex flex-col items-center justify-center px-6"
+    >
       <div className="max-w-lg text-center space-y-6">
         <span className="px-3.5 py-1 rounded-full text-[10px] font-mono text-[#ecb613] bg-[#ecb613]/10 border border-[#ecb613]/30 uppercase">
           Bóveda de Artistas EAR

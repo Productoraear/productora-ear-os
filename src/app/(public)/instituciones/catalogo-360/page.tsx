@@ -8,7 +8,7 @@ import {
 } from '@/lib/constants/ear-os-ssot';
 
 export const metadata: Metadata = {
-  title: 'Catálogo Integral 360 | EAR OS — Entidades Públicas y Privadas',
+  title: 'Catálogo Integral 360 · Entidades Públicas | EAR OS',
   description:
     'Catálogo integral 360 de servicios técnicos para entidades públicas y privadas: escenarios, sonido, iluminación, pirotecnia y personal técnico. Tarifa Solista 350 € y packs de inventario con pliegos B2G.',
   alternates: {

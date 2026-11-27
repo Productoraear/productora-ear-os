@@ -4,7 +4,7 @@ import { MeshGradientBackground } from '@/components/sclass/MeshGradientBackgrou
 import { TinderNeuralMatcher } from '@/features/matchmaker/ui/TinderNeuralMatcher';
 
 export const metadata: Metadata = {
-  title: 'Tinder Neural Matcher S-Class & Despacho Uber | Productora EAR',
+  title: 'Matcher Neural S-Class · Despacho Tipo Uber | EAR OS',
   description: 'Matching inteligente estilo Tinder con presupuesto final con IVA 21% incluido, validación de franjas horarias y cascada de relevo tipo Uber.',
 };
 

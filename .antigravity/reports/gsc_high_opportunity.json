@@ -1,0 +1,1523 @@
+{
+  "generatedAt": "2026-11-27T10:29:38.874Z",
+  "doctrine": "GOLDEN_OPPORTUNITY: Impresiones > 50 AND CTR < 5% AND Posición < 20",
+  "sources": {
+    "gscPages": "knowledge/Páginas.csv",
+    "gscQueries": "knowledge/Consultas.csv",
+    "clarity": "knowledge/Clarity_Productora_EAR_Panel_11-27-2026_10_12.csv",
+    "clarityMode": "PAGE_LEVEL_CSV"
+  },
+  "totals": {
+    "gscPages": 1000,
+    "gscQueries": 1000,
+    "opportunities": 39,
+    "unmappedQueries": 25,
+    "clarityPages": 12,
+    "claritySessions": 9221
+  },
+  "evidence": {
+    "gscPages": "VERIFICADO",
+    "gscQueries": "VERIFICADO",
+    "clarityCsv": "VERIFICADO",
+    "clarityFallback": "SIN_EVIDENCIA"
+  },
+  "opportunities": [
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-3446",
+      "clicks": 0,
+      "impressions": 854,
+      "ctr": 0,
+      "position": 6.93,
+      "correlatedQueries": [],
+      "clarity": {
+        "url": "https://www.productoraear.com/proveedores",
+        "sessions": 260,
+        "matchType": "prefix"
+      }
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-4875",
+      "clicks": 0,
+      "impressions": 269,
+      "ctr": 0,
+      "position": 9.38,
+      "correlatedQueries": [],
+      "clarity": {
+        "url": "https://www.productoraear.com/proveedores",
+        "sessions": 260,
+        "matchType": "prefix"
+      }
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/regalos-ana-mari",
+      "clicks": 1,
+      "impressions": 200,
+      "ctr": 0.5,
+      "position": 8.27,
+      "correlatedQueries": [
+        {
+          "query": "regalos ana mari",
+          "clicks": 0,
+          "impressions": 97,
+          "ctr": 0,
+          "position": 8.32
+        },
+        {
+          "query": "regalos ana mari palencia",
+          "clicks": 0,
+          "impressions": 36,
+          "ctr": 0,
+          "position": 8.78
+        },
+        {
+          "query": "ana mari regalos",
+          "clicks": 1,
+          "impressions": 30,
+          "ctr": 3.33,
+          "position": 8.27
+        },
+        {
+          "query": "ana mari regalos fotos",
+          "clicks": 0,
+          "impressions": 11,
+          "ctr": 0,
+          "position": 5.36
+        }
+      ],
+      "clarity": {
+        "url": "https://www.productoraear.com/proveedores",
+        "sessions": 260,
+        "matchType": "prefix"
+      }
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/sa-torre-de-vernissa",
+      "clicks": 0,
+      "impressions": 164,
+      "ctr": 0,
+      "position": 9.27,
+      "correlatedQueries": [
+        {
+          "query": "torre villa tea",
+          "clicks": 0,
+          "impressions": 195,
+          "ctr": 0,
+          "position": 10.09
+        },
+        {
+          "query": "sa torre de vernissa",
+          "clicks": 0,
+          "impressions": 86,
+          "ctr": 0,
+          "position": 9.94
+        },
+        {
+          "query": "opiniones de torre villa tea",
+          "clicks": 0,
+          "impressions": 62,
+          "ctr": 0,
+          "position": 7.08
+        },
+        {
+          "query": "hacienda torre doña maría",
+          "clicks": 0,
+          "impressions": 16,
+          "ctr": 0,
+          "position": 34.81
+        },
+        {
+          "query": "finca torre valdeflores",
+          "clicks": 2,
+          "impressions": 8,
+          "ctr": 25,
+          "position": 20.62
+        }
+      ],
+      "clarity": {
+        "url": "https://www.productoraear.com/proveedores",
+        "sessions": 260,
+        "matchType": "prefix"
+      }
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/sa-llapasseta-consulta-disponibilidad-y-precios",
+      "clicks": 0,
+      "impressions": 158,
+      "ctr": 0,
+      "position": 9.75,
+      "correlatedQueries": [
+        {
+          "query": "precio alquiler pantalla led gigante",
+          "clicks": 0,
+          "impressions": 83,
+          "ctr": 0,
+          "position": 57.57
+        },
+        {
+          "query": "alquiler de pantallas led precios",
+          "clicks": 0,
+          "impressions": 74,
+          "ctr": 0,
+          "position": 70.65
+        },
+        {
+          "query": "alquiler de pantallas para eventos precio",
+          "clicks": 0,
+          "impressions": 68,
+          "ctr": 0,
+          "position": 76.93
+        },
+        {
+          "query": "alquiler pantalla gigante precio",
+          "clicks": 0,
+          "impressions": 67,
+          "ctr": 0,
+          "position": 60.18
+        },
+        {
+          "query": "alquiler pantallas led para eventos precios",
+          "clicks": 0,
+          "impressions": 67,
+          "ctr": 0,
+          "position": 72.18
+        }
+      ],
+      "clarity": {
+        "url": "https://www.productoraear.com/proveedores",
+        "sessions": 260,
+        "matchType": "prefix"
+      }
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-2509",
+      "clicks": 0,
+      "impressions": 151,
+      "ctr": 0,
+      "position": 11.7,
+      "correlatedQueries": [],
+      "clarity": {
+        "url": "https://www.productoraear.com/proveedores",
+        "sessions": 260,
+        "matchType": "prefix"
+      }
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-2738",
+      "clicks": 1,
+      "impressions": 149,
+      "ctr": 0.67,
+      "position": 8.44,
+      "correlatedQueries": [],
+      "clarity": {
+        "url": "https://www.productoraear.com/proveedores",
+        "sessions": 260,
+        "matchType": "prefix"
+      }
+    },
+    {
+      "page": "https://www.productoraear.com/bodas/madrid/alquiler-pantallas-led",
+      "clicks": 0,
+      "impressions": 146,
+      "ctr": 0,
+      "position": 11.73,
+      "correlatedQueries": [
+        {
+          "query": "dj para bodas",
+          "clicks": 0,
+          "impressions": 289,
+          "ctr": 0,
+          "position": 80.56
+        },
+        {
+          "query": "dj bodas",
+          "clicks": 0,
+          "impressions": 231,
+          "ctr": 0,
+          "position": 73.67
+        },
+        {
+          "query": "alquiler pantalla led",
+          "clicks": 0,
+          "impressions": 224,
+          "ctr": 0,
+          "position": 76.04
+        },
+        {
+          "query": "coches de boda valladolid",
+          "clicks": 0,
+          "impressions": 185,
+          "ctr": 0,
+          "position": 30.06
+        },
+        {
+          "query": "alquiler pantalla led sevilla",
+          "clicks": 0,
+          "impressions": 184,
+          "ctr": 0,
+          "position": 44.62
+        }
+      ],
+      "clarity": {
+        "url": "https://productoraear.com/bodas",
+        "sessions": 118,
+        "matchType": "prefix"
+      }
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-636",
+      "clicks": 1,
+      "impressions": 135,
+      "ctr": 0.74,
+      "position": 10.73,
+      "correlatedQueries": [],
+      "clarity": {
+        "url": "https://www.productoraear.com/proveedores",
+        "sessions": 260,
+        "matchType": "prefix"
+      }
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-3765",
+      "clicks": 0,
+      "impressions": 126,
+      "ctr": 0,
+      "position": 15.46,
+      "correlatedQueries": [],
+      "clarity": {
+        "url": "https://www.productoraear.com/proveedores",
+        "sessions": 260,
+        "matchType": "prefix"
+      }
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-2825",
+      "clicks": 1,
+      "impressions": 122,
+      "ctr": 0.82,
+      "position": 9.91,
+      "correlatedQueries": [],
+      "clarity": {
+        "url": "https://www.productoraear.com/proveedores",
+        "sessions": 260,
+        "matchType": "prefix"
+      }
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/finca-el-toro-consulta-disponibilidad-y-precios",
+      "clicks": 0,
+      "impressions": 119,
+      "ctr": 0,
+      "position": 10.6,
+      "correlatedQueries": [
+        {
+          "query": "finca el toro",
+          "clicks": 0,
+          "impressions": 171,
+          "ctr": 0,
+          "position": 10.88
+        },
+        {
+          "query": "precio alquiler pantalla led gigante",
+          "clicks": 0,
+          "impressions": 83,
+          "ctr": 0,
+          "position": 57.57
+        },
+        {
+          "query": "alquiler de pantallas led precios",
+          "clicks": 0,
+          "impressions": 74,
+          "ctr": 0,
+          "position": 70.65
+        },
+        {
+          "query": "alquiler de pantallas para eventos precio",
+          "clicks": 0,
+          "impressions": 68,
+          "ctr": 0,
+          "position": 76.93
+        },
+        {
+          "query": "alquiler pantalla gigante precio",
+          "clicks": 0,
+          "impressions": 67,
+          "ctr": 0,
+          "position": 60.18
+        }
+      ],
+      "clarity": {
+        "url": "https://www.productoraear.com/proveedores",
+        "sessions": 260,
+        "matchType": "prefix"
+      }
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-4915",
+      "clicks": 1,
+      "impressions": 113,
+      "ctr": 0.88,
+      "position": 19.87,
+      "correlatedQueries": [],
+      "clarity": {
+        "url": "https://www.productoraear.com/proveedores",
+        "sessions": 260,
+        "matchType": "prefix"
+      }
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-1013",
+      "clicks": 0,
+      "impressions": 113,
+      "ctr": 0,
+      "position": 7.45,
+      "correlatedQueries": [],
+      "clarity": {
+        "url": "https://www.productoraear.com/proveedores",
+        "sessions": 260,
+        "matchType": "prefix"
+      }
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-3816",
+      "clicks": 0,
+      "impressions": 110,
+      "ctr": 0,
+      "position": 11.66,
+      "correlatedQueries": [],
+      "clarity": {
+        "url": "https://www.productoraear.com/proveedores",
+        "sessions": 260,
+        "matchType": "prefix"
+      }
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-2059",
+      "clicks": 0,
+      "impressions": 106,
+      "ctr": 0,
+      "position": 10.11,
+      "correlatedQueries": [],
+      "clarity": {
+        "url": "https://www.productoraear.com/proveedores",
+        "sessions": 260,
+        "matchType": "prefix"
+      }
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-2704",
+      "clicks": 0,
+      "impressions": 105,
+      "ctr": 0,
+      "position": 10.04,
+      "correlatedQueries": [],
+      "clarity": {
+        "url": "https://www.productoraear.com/proveedores",
+        "sessions": 260,
+        "matchType": "prefix"
+      }
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-971",
+      "clicks": 0,
+      "impressions": 100,
+      "ctr": 0,
+      "position": 10.02,
+      "correlatedQueries": [],
+      "clarity": {
+        "url": "https://www.productoraear.com/proveedores",
+        "sessions": 260,
+        "matchType": "prefix"
+      }
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-896",
+      "clicks": 0,
+      "impressions": 96,
+      "ctr": 0,
+      "position": 10.45,
+      "correlatedQueries": [],
+      "clarity": {
+        "url": "https://www.productoraear.com/proveedores",
+        "sessions": 260,
+        "matchType": "prefix"
+      }
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-253",
+      "clicks": 0,
+      "impressions": 94,
+      "ctr": 0,
+      "position": 3.31,
+      "correlatedQueries": [],
+      "clarity": {
+        "url": "https://www.productoraear.com/proveedores",
+        "sessions": 260,
+        "matchType": "prefix"
+      }
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-2730",
+      "clicks": 0,
+      "impressions": 94,
+      "ctr": 0,
+      "position": 11.27,
+      "correlatedQueries": [],
+      "clarity": {
+        "url": "https://www.productoraear.com/proveedores",
+        "sessions": 260,
+        "matchType": "prefix"
+      }
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-4765",
+      "clicks": 1,
+      "impressions": 86,
+      "ctr": 1.16,
+      "position": 5.93,
+      "correlatedQueries": [],
+      "clarity": {
+        "url": "https://www.productoraear.com/proveedores",
+        "sessions": 260,
+        "matchType": "prefix"
+      }
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-849",
+      "clicks": 0,
+      "impressions": 78,
+      "ctr": 0,
+      "position": 5.95,
+      "correlatedQueries": [],
+      "clarity": {
+        "url": "https://www.productoraear.com/proveedores",
+        "sessions": 260,
+        "matchType": "prefix"
+      }
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-4009",
+      "clicks": 0,
+      "impressions": 70,
+      "ctr": 0,
+      "position": 9.43,
+      "correlatedQueries": [],
+      "clarity": {
+        "url": "https://www.productoraear.com/proveedores",
+        "sessions": 260,
+        "matchType": "prefix"
+      }
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-3977",
+      "clicks": 1,
+      "impressions": 68,
+      "ctr": 1.47,
+      "position": 15.15,
+      "correlatedQueries": [],
+      "clarity": {
+        "url": "https://www.productoraear.com/proveedores",
+        "sessions": 260,
+        "matchType": "prefix"
+      }
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-3980",
+      "clicks": 0,
+      "impressions": 68,
+      "ctr": 0,
+      "position": 10.72,
+      "correlatedQueries": [],
+      "clarity": {
+        "url": "https://www.productoraear.com/proveedores",
+        "sessions": 260,
+        "matchType": "prefix"
+      }
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-4604",
+      "clicks": 0,
+      "impressions": 68,
+      "ctr": 0,
+      "position": 11.35,
+      "correlatedQueries": [],
+      "clarity": {
+        "url": "https://www.productoraear.com/proveedores",
+        "sessions": 260,
+        "matchType": "prefix"
+      }
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/las-10-mejores-empresas-para-la-lista-de-boda-en-murcia",
+      "clicks": 0,
+      "impressions": 67,
+      "ctr": 0,
+      "position": 8.36,
+      "correlatedQueries": [
+        {
+          "query": "dj para bodas",
+          "clicks": 0,
+          "impressions": 289,
+          "ctr": 0,
+          "position": 80.56
+        },
+        {
+          "query": "dj bodas",
+          "clicks": 0,
+          "impressions": 231,
+          "ctr": 0,
+          "position": 73.67
+        },
+        {
+          "query": "coches de boda valladolid",
+          "clicks": 0,
+          "impressions": 185,
+          "ctr": 0,
+          "position": 30.06
+        },
+        {
+          "query": "coches de boda murcia",
+          "clicks": 0,
+          "impressions": 160,
+          "ctr": 0,
+          "position": 37.11
+        },
+        {
+          "query": "coches de boda granada",
+          "clicks": 0,
+          "impressions": 159,
+          "ctr": 0,
+          "position": 36.32
+        }
+      ],
+      "clarity": {
+        "url": "https://www.productoraear.com/proveedores",
+        "sessions": 260,
+        "matchType": "prefix"
+      }
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/jardins-ribes-consulta-disponibilidad-y-precios",
+      "clicks": 0,
+      "impressions": 64,
+      "ctr": 0,
+      "position": 8.95,
+      "correlatedQueries": [
+        {
+          "query": "precio alquiler pantalla led gigante",
+          "clicks": 0,
+          "impressions": 83,
+          "ctr": 0,
+          "position": 57.57
+        },
+        {
+          "query": "alquiler de pantallas led precios",
+          "clicks": 0,
+          "impressions": 74,
+          "ctr": 0,
+          "position": 70.65
+        },
+        {
+          "query": "alquiler de pantallas para eventos precio",
+          "clicks": 0,
+          "impressions": 68,
+          "ctr": 0,
+          "position": 76.93
+        },
+        {
+          "query": "alquiler pantalla gigante precio",
+          "clicks": 0,
+          "impressions": 67,
+          "ctr": 0,
+          "position": 60.18
+        },
+        {
+          "query": "alquiler pantallas led para eventos precios",
+          "clicks": 0,
+          "impressions": 67,
+          "ctr": 0,
+          "position": 72.18
+        }
+      ],
+      "clarity": {
+        "url": "https://www.productoraear.com/proveedores",
+        "sessions": 260,
+        "matchType": "prefix"
+      }
+    },
+    {
+      "page": "https://www.productoraear.com/arsenal/iluminacion-dmx/malaga",
+      "clicks": 0,
+      "impressions": 61,
+      "ctr": 0,
+      "position": 4.87,
+      "correlatedQueries": [
+        {
+          "query": "iluminacion eventos malaga",
+          "clicks": 0,
+          "impressions": 77,
+          "ctr": 0,
+          "position": 23.35
+        },
+        {
+          "query": "bodas velez malaga",
+          "clicks": 0,
+          "impressions": 64,
+          "ctr": 0,
+          "position": 34.56
+        },
+        {
+          "query": "dj para bodas malaga",
+          "clicks": 0,
+          "impressions": 35,
+          "ctr": 0,
+          "position": 52.43
+        },
+        {
+          "query": "dj de bodas malaga",
+          "clicks": 0,
+          "impressions": 34,
+          "ctr": 0,
+          "position": 51.12
+        },
+        {
+          "query": "dj boda malaga",
+          "clicks": 0,
+          "impressions": 33,
+          "ctr": 0,
+          "position": 47.82
+        }
+      ],
+      "clarity": null
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-2504",
+      "clicks": 0,
+      "impressions": 61,
+      "ctr": 0,
+      "position": 9.51,
+      "correlatedQueries": [],
+      "clarity": {
+        "url": "https://www.productoraear.com/proveedores",
+        "sessions": 260,
+        "matchType": "prefix"
+      }
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/los-10-mejores-castillos-para-boda-en-murcia",
+      "clicks": 0,
+      "impressions": 60,
+      "ctr": 0,
+      "position": 15.77,
+      "correlatedQueries": [
+        {
+          "query": "dj para bodas",
+          "clicks": 0,
+          "impressions": 289,
+          "ctr": 0,
+          "position": 80.56
+        },
+        {
+          "query": "dj bodas",
+          "clicks": 0,
+          "impressions": 231,
+          "ctr": 0,
+          "position": 73.67
+        },
+        {
+          "query": "coches de boda valladolid",
+          "clicks": 0,
+          "impressions": 185,
+          "ctr": 0,
+          "position": 30.06
+        },
+        {
+          "query": "coches de boda murcia",
+          "clicks": 0,
+          "impressions": 160,
+          "ctr": 0,
+          "position": 37.11
+        },
+        {
+          "query": "coches de boda granada",
+          "clicks": 0,
+          "impressions": 159,
+          "ctr": 0,
+          "position": 36.32
+        }
+      ],
+      "clarity": {
+        "url": "https://www.productoraear.com/proveedores",
+        "sessions": 260,
+        "matchType": "prefix"
+      }
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-3713",
+      "clicks": 2,
+      "impressions": 57,
+      "ctr": 3.51,
+      "position": 10.44,
+      "correlatedQueries": [],
+      "clarity": {
+        "url": "https://www.productoraear.com/proveedores",
+        "sessions": 260,
+        "matchType": "prefix"
+      }
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-2673",
+      "clicks": 0,
+      "impressions": 57,
+      "ctr": 0,
+      "position": 9.63,
+      "correlatedQueries": [],
+      "clarity": {
+        "url": "https://www.productoraear.com/proveedores",
+        "sessions": 260,
+        "matchType": "prefix"
+      }
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-3530",
+      "clicks": 0,
+      "impressions": 56,
+      "ctr": 0,
+      "position": 8.77,
+      "correlatedQueries": [],
+      "clarity": {
+        "url": "https://www.productoraear.com/proveedores",
+        "sessions": 260,
+        "matchType": "prefix"
+      }
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-3808",
+      "clicks": 1,
+      "impressions": 54,
+      "ctr": 1.85,
+      "position": 8.61,
+      "correlatedQueries": [],
+      "clarity": {
+        "url": "https://www.productoraear.com/proveedores",
+        "sessions": 260,
+        "matchType": "prefix"
+      }
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-2824",
+      "clicks": 1,
+      "impressions": 53,
+      "ctr": 1.89,
+      "position": 9.91,
+      "correlatedQueries": [],
+      "clarity": {
+        "url": "https://www.productoraear.com/proveedores",
+        "sessions": 260,
+        "matchType": "prefix"
+      }
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-2812",
+      "clicks": 1,
+      "impressions": 52,
+      "ctr": 1.92,
+      "position": 11.19,
+      "correlatedQueries": [],
+      "clarity": {
+        "url": "https://www.productoraear.com/proveedores",
+        "sessions": 260,
+        "matchType": "prefix"
+      }
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-4128",
+      "clicks": 1,
+      "impressions": 51,
+      "ctr": 1.96,
+      "position": 10.69,
+      "correlatedQueries": [],
+      "clarity": {
+        "url": "https://www.productoraear.com/proveedores",
+        "sessions": 260,
+        "matchType": "prefix"
+      }
+    }
+  ],
+  "unmappedQueries": [
+    {
+      "query": "bamboo rent",
+      "clicks": 0,
+      "impressions": 102,
+      "ctr": 0,
+      "position": 7.54
+    },
+    {
+      "query": "el vivar de la granja",
+      "clicks": 0,
+      "impressions": 91,
+      "ctr": 0,
+      "position": 8.44
+    },
+    {
+      "query": "alqueria balada",
+      "clicks": 1,
+      "impressions": 90,
+      "ctr": 1.11,
+      "position": 10.83
+    },
+    {
+      "query": "djbodas",
+      "clicks": 0,
+      "impressions": 74,
+      "ctr": 0,
+      "position": 67.31
+    },
+    {
+      "query": "viaje de novios a medida gipuzkoa",
+      "clicks": 0,
+      "impressions": 72,
+      "ctr": 0,
+      "position": 50.26
+    },
+    {
+      "query": "jota fierro",
+      "clicks": 0,
+      "impressions": 69,
+      "ctr": 0,
+      "position": 9.46
+    },
+    {
+      "query": "trajes novio a coruña",
+      "clicks": 0,
+      "impressions": 67,
+      "ctr": 0,
+      "position": 28.81
+    },
+    {
+      "query": "floristería brunete",
+      "clicks": 0,
+      "impressions": 67,
+      "ctr": 0,
+      "position": 65.42
+    },
+    {
+      "query": "trajes novio córdoba",
+      "clicks": 0,
+      "impressions": 63,
+      "ctr": 0,
+      "position": 34.22
+    },
+    {
+      "query": "setroimagen",
+      "clicks": 1,
+      "impressions": 62,
+      "ctr": 1.61,
+      "position": 5.71
+    },
+    {
+      "query": "trajes de novio baratos córdoba",
+      "clicks": 0,
+      "impressions": 61,
+      "ctr": 0,
+      "position": 38.98
+    },
+    {
+      "query": "viaje de novios gipuzkoa",
+      "clicks": 0,
+      "impressions": 51,
+      "ctr": 0,
+      "position": 47.14
+    },
+    {
+      "query": "luna de miel a medida gipuzkoa",
+      "clicks": 0,
+      "impressions": 50,
+      "ctr": 0,
+      "position": 63.76
+    },
+    {
+      "query": "organizador de conciertos en gijón",
+      "clicks": 0,
+      "impressions": 44,
+      "ctr": 0,
+      "position": 44.39
+    },
+    {
+      "query": "villa cartuja",
+      "clicks": 0,
+      "impressions": 43,
+      "ctr": 0,
+      "position": 10.23
+    },
+    {
+      "query": "sonorización de espectáculos",
+      "clicks": 0,
+      "impressions": 42,
+      "ctr": 0,
+      "position": 40.93
+    },
+    {
+      "query": "complejo hh",
+      "clicks": 0,
+      "impressions": 41,
+      "ctr": 0,
+      "position": 66.71
+    },
+    {
+      "query": "pirotecnia bemil",
+      "clicks": 0,
+      "impressions": 37,
+      "ctr": 0,
+      "position": 10.05
+    },
+    {
+      "query": "la rueca antiguedades",
+      "clicks": 0,
+      "impressions": 35,
+      "ctr": 0,
+      "position": 7.97
+    },
+    {
+      "query": "rexnatura",
+      "clicks": 0,
+      "impressions": 33,
+      "ctr": 0,
+      "position": 29.06
+    },
+    {
+      "query": "rex natura",
+      "clicks": 0,
+      "impressions": 33,
+      "ctr": 0,
+      "position": 41.03
+    },
+    {
+      "query": "grupo rex natura",
+      "clicks": 0,
+      "impressions": 32,
+      "ctr": 0,
+      "position": 40.16
+    },
+    {
+      "query": "cortijo de chillas",
+      "clicks": 0,
+      "impressions": 29,
+      "ctr": 0,
+      "position": 12
+    },
+    {
+      "query": "ess foodtruck",
+      "clicks": 0,
+      "impressions": 28,
+      "ctr": 0,
+      "position": 59.04
+    },
+    {
+      "query": "elena cabanillas",
+      "clicks": 0,
+      "impressions": 27,
+      "ctr": 0,
+      "position": 14.96
+    }
+  ],
+  "topQueries": [
+    {
+      "query": "finca torre valdeflores",
+      "clicks": 2,
+      "impressions": 8,
+      "ctr": 25,
+      "position": 20.62
+    },
+    {
+      "query": "alqueria balada",
+      "clicks": 1,
+      "impressions": 90,
+      "ctr": 1.11,
+      "position": 10.83
+    },
+    {
+      "query": "setroimagen",
+      "clicks": 1,
+      "impressions": 62,
+      "ctr": 1.61,
+      "position": 5.71
+    },
+    {
+      "query": "finca salvago",
+      "clicks": 1,
+      "impressions": 48,
+      "ctr": 2.08,
+      "position": 10.06
+    },
+    {
+      "query": "finca alubian",
+      "clicks": 1,
+      "impressions": 44,
+      "ctr": 2.27,
+      "position": 8.48
+    },
+    {
+      "query": "ana mari regalos",
+      "clicks": 1,
+      "impressions": 30,
+      "ctr": 3.33,
+      "position": 8.27
+    },
+    {
+      "query": "finca san dámaso",
+      "clicks": 1,
+      "impressions": 27,
+      "ctr": 3.7,
+      "position": 10.89
+    },
+    {
+      "query": "finca errota aoiz",
+      "clicks": 1,
+      "impressions": 25,
+      "ctr": 4,
+      "position": 7.48
+    },
+    {
+      "query": "finca navafría",
+      "clicks": 1,
+      "impressions": 25,
+      "ctr": 4,
+      "position": 11.32
+    },
+    {
+      "query": "astigi eventos",
+      "clicks": 1,
+      "impressions": 12,
+      "ctr": 8.33,
+      "position": 7.5
+    },
+    {
+      "query": "aloemek",
+      "clicks": 1,
+      "impressions": 12,
+      "ctr": 8.33,
+      "position": 7.75
+    },
+    {
+      "query": "ostras nin",
+      "clicks": 1,
+      "impressions": 9,
+      "ctr": 11.11,
+      "position": 12.33
+    },
+    {
+      "query": "catering cuenca",
+      "clicks": 1,
+      "impressions": 7,
+      "ctr": 14.29,
+      "position": 48.57
+    },
+    {
+      "query": "finca goyena",
+      "clicks": 1,
+      "impressions": 6,
+      "ctr": 16.67,
+      "position": 10.67
+    },
+    {
+      "query": "juan espinosa studio",
+      "clicks": 1,
+      "impressions": 5,
+      "ctr": 20,
+      "position": 9
+    },
+    {
+      "query": "hacienda el ternero bodas",
+      "clicks": 1,
+      "impressions": 5,
+      "ctr": 20,
+      "position": 11
+    },
+    {
+      "query": "la finca medina",
+      "clicks": 1,
+      "impressions": 4,
+      "ctr": 25,
+      "position": 9
+    },
+    {
+      "query": "alquiler luces navidad",
+      "clicks": 1,
+      "impressions": 2,
+      "ctr": 50,
+      "position": 6
+    },
+    {
+      "query": "bendito sarao hora loca",
+      "clicks": 1,
+      "impressions": 2,
+      "ctr": 50,
+      "position": 12
+    },
+    {
+      "query": "cortijo las mozas",
+      "clicks": 1,
+      "impressions": 2,
+      "ctr": 50,
+      "position": 31.5
+    }
+  ],
+  "clarity": {
+    "source": "knowledge/Clarity_Productora_EAR_Panel_11-27-2026_10_12.csv",
+    "mode": "PAGE_LEVEL_CSV",
+    "panel": {
+      "meta": {
+        "range": "11/28/2025 00:00 - 11/27/2026 23:59"
+      },
+      "sessions": {
+        "total": 9221,
+        "bot": 1925
+      },
+      "engagement": {
+        "pagesPerSession": 1.0016267216137078,
+        "scrollDepth": 61.64,
+        "activeTime": 56,
+        "totalTime": 165
+      },
+      "users": {
+        "unique": 9218,
+        "newSessions": 9219,
+        "returningSessions": 2
+      },
+      "insights": [
+        {
+          "name": "Clics continuos",
+          "sessions": 7,
+          "pct": "0,08%"
+        },
+        {
+          "name": "Clic inactivo",
+          "sessions": 773,
+          "pct": "8,38%"
+        },
+        {
+          "name": "Desplazamiento excesivo",
+          "sessions": 0,
+          "pct": "0%"
+        },
+        {
+          "name": "Clic atrás rápido",
+          "sessions": 4,
+          "pct": "0,04%"
+        }
+      ],
+      "browsers": [
+        {
+          "name": "Chrome",
+          "sessions": 2551,
+          "pct": "27,67%"
+        },
+        {
+          "name": "Edge",
+          "sessions": 2141,
+          "pct": "23,22%"
+        },
+        {
+          "name": "ChromeMobile",
+          "sessions": 1818,
+          "pct": "19,72%"
+        },
+        {
+          "name": "Opera",
+          "sessions": 1533,
+          "pct": "16,63%"
+        },
+        {
+          "name": "GoogleApp",
+          "sessions": 797,
+          "pct": "8,64%"
+        },
+        {
+          "name": "MobileSafari",
+          "sessions": 327,
+          "pct": "3,55%"
+        },
+        {
+          "name": "Safari",
+          "sessions": 27,
+          "pct": "0,29%"
+        },
+        {
+          "name": "SamsungInternet",
+          "sessions": 11,
+          "pct": "0,12%"
+        },
+        {
+          "name": "FacebookApp",
+          "sessions": 9,
+          "pct": "0,10%"
+        },
+        {
+          "name": "MiuiBrowser",
+          "sessions": 3,
+          "pct": "0,03%"
+        },
+        {
+          "name": "Firefox",
+          "sessions": 3,
+          "pct": "0,03%"
+        },
+        {
+          "name": "FirefoxMobile",
+          "sessions": 1,
+          "pct": "0,01%"
+        }
+      ],
+      "pages": [
+        {
+          "url": "https://www.productoraear.com/",
+          "sessions": 709
+        },
+        {
+          "url": "https://productoraear.com/",
+          "sessions": 460
+        },
+        {
+          "url": "http://localhost:3007/",
+          "sessions": 269
+        },
+        {
+          "url": "https://www.productoraear.com/proveedores",
+          "sessions": 260
+        },
+        {
+          "url": "https://www.productoraear.com/otzarreta",
+          "sessions": 253
+        },
+        {
+          "url": "http://localhost:3007/otzarreta",
+          "sessions": 216
+        },
+        {
+          "url": "http://localhost:3007/admin/compiler",
+          "sessions": 201
+        },
+        {
+          "url": "https://www.productoraear.com/celebraciones",
+          "sessions": 143
+        },
+        {
+          "url": "https://productoraear.com/dossier",
+          "sessions": 142
+        },
+        {
+          "url": "http://localhost:3007/proveedores",
+          "sessions": 139
+        },
+        {
+          "url": "https://productoraear.com/bodas",
+          "sessions": 118
+        },
+        {
+          "url": "https://productoraear.com/soluciones",
+          "sessions": 107
+        }
+      ],
+      "smartEvents": [
+        {
+          "name": "Clic de salida",
+          "sessions": 216,
+          "pct": "2,34%"
+        },
+        {
+          "name": "Enviar formulario",
+          "sessions": 174,
+          "pct": "1,89%"
+        },
+        {
+          "name": "Finalizar la compra",
+          "sessions": 123,
+          "pct": "1,33%"
+        },
+        {
+          "name": "Reservar",
+          "sessions": 82,
+          "pct": "0,89%"
+        },
+        {
+          "name": "Póngase en contacto con nosotros",
+          "sessions": 45,
+          "pct": "0,49%"
+        },
+        {
+          "name": "Buscar",
+          "sessions": 44,
+          "pct": "0,48%"
+        },
+        {
+          "name": "Iniciar sesión",
+          "sessions": 40,
+          "pct": "0,43%"
+        },
+        {
+          "name": "Solicitar presupuesto",
+          "sessions": 21,
+          "pct": "0,23%"
+        },
+        {
+          "name": "Buscar una ubicación",
+          "sessions": 13,
+          "pct": "0,14%"
+        },
+        {
+          "name": "Descargar",
+          "sessions": 7,
+          "pct": "0,08%"
+        },
+        {
+          "name": "Pausar",
+          "sessions": 5,
+          "pct": "0,05%"
+        },
+        {
+          "name": "Pedido correcto",
+          "sessions": 5,
+          "pct": "0,05%"
+        },
+        {
+          "name": "Comprar",
+          "sessions": 4,
+          "pct": "0,04%"
+        },
+        {
+          "name": "Mostrar más",
+          "sessions": 3,
+          "pct": "0,03%"
+        },
+        {
+          "name": "Comenzar finalización de la compra",
+          "sessions": 2,
+          "pct": "0,02%"
+        },
+        {
+          "name": "Ver reseñas",
+          "sessions": 2,
+          "pct": "0,02%"
+        },
+        {
+          "name": "Añadir a la cesta",
+          "sessions": 2,
+          "pct": "0,02%"
+        },
+        {
+          "name": "Comprobar disponibilidad",
+          "sessions": 2,
+          "pct": "0,02%"
+        },
+        {
+          "name": "Reintentar",
+          "sessions": 1,
+          "pct": "0,01%"
+        },
+        {
+          "name": "Depósito",
+          "sessions": 1,
+          "pct": "0,01%"
+        },
+        {
+          "name": "Cargar",
+          "sessions": 1,
+          "pct": "0,01%"
+        }
+      ],
+      "referrers": [
+        {
+          "source": "www.productoraear.com",
+          "sessions": 1578
+        },
+        {
+          "source": "www.google.com",
+          "sessions": 935
+        },
+        {
+          "source": "productoraear.com",
+          "sessions": 597
+        },
+        {
+          "source": "www.bing.com",
+          "sessions": 31
+        },
+        {
+          "source": "console.firebase.google.com",
+          "sessions": 17
+        },
+        {
+          "source": "checkout.stripe.com",
+          "sessions": 13
+        },
+        {
+          "source": "hpanel.hostinger.com",
+          "sessions": 13
+        },
+        {
+          "source": "ear-psi.vercel.app",
+          "sessions": 8
+        },
+        {
+          "source": "search.google.com",
+          "sessions": 7
+        },
+        {
+          "source": "ear-12lfjm0u4-productoraear-gmailcoms-projects.vercel.app",
+          "sessions": 6
+        },
+        {
+          "source": "es.search.yahoo.com",
+          "sessions": 5
+        },
+        {
+          "source": "m.facebook.com",
+          "sessions": 5
+        }
+      ],
+      "jsErrors": [
+        {
+          "error": "usesuit must be used within suitprovider",
+          "sessions": 16,
+          "pct": "10,53%"
+        },
+        {
+          "error": "'text/html' is not a valid javascript mime type.",
+          "sessions": 15,
+          "pct": "9,87%"
+        },
+        {
+          "error": "cannot read properties of null (reading 'uniforms')",
+          "sessions": 9,
+          "pct": "5,92%"
+        },
+        {
+          "error": "failed to fetch dynamically imported module: http://localhost:5173/src/pages/ops/warroom.tsx?t=17711",
+          "sessions": 9,
+          "pct": "5,92%"
+        },
+        {
+          "error": "cannot read properties of null (reading 'useref')",
+          "sessions": 6,
+          "pct": "3,95%"
+        }
+      ],
+      "jsErrorsTotal": 152,
+      "performance": {
+        "score": 68.9012987012987,
+        "lcp": "5.508s",
+        "inp": "320ms",
+        "cls": "0.13325s"
+      },
+      "bots": {
+        "webScraperBotSessions": 86,
+        "suspiciousDeviceBotSessions": 1097,
+        "suspiciousNetworkBotSessions": 150,
+        "suspiciousInteractionBotSessions": 1914,
+        "ppcAdFraudBotSessions": 0,
+        "otherBotsSessions": 10,
+        "__typename": 0
+      }
+    }
+  }
+}

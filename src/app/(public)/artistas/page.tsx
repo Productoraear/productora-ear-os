@@ -10,7 +10,7 @@ import {
 } from "@/lib/constants/ear-os-ssot";
 
 export const metadata: Metadata = {
-  title: "Directorio Nacional de Artistas & Shows en Directo (5.359 Auditados) · Productora EAR",
+  title: "Directorio Nacional de Artistas & Shows Auditados | EAR OS",
   description:
     `Catálogo nacional de música en directo: Edwin Agudelo (Solista Premium ${TARIFA_BASE_SOLISTA_EUR}€), Mariachis (6, 9 y 13 músicos), DJs en vivo, Saxofonistas y Grupos de Versiones. Sonido profesional Bose y reserva directa con ${DEPOSITO_STRIPE_EUR} € de depósito.`,
   keywords: [

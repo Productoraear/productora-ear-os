@@ -11,7 +11,7 @@ import {
 import { Shield, Volume2, PhoneCall, FileText, ArrowRight, Sparkles, Building2 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Fiestas Patronales y Festivales Municipales B2G | Productora EAR',
+  title: 'Fiestas Patronales y Festivales Municipales | EAR OS',
   description: 'Gestión integral, licitaciones menores y contratación artística para ayuntamientos bajo Art. 118 LCSP con techo preventivo.',
   keywords: ['contratos menores ayuntamientos', 'fiestas patronales lcsp', 'licitaciones sonido ferias', 'productora ear b2g']
 };

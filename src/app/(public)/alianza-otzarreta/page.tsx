@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { OtzarretaExecutiveDeck } from '@/components/otzarreta/OtzarretaExecutiveDeck';
 
 export const metadata: Metadata = {
-  title: 'Alianza Soberana · Restaurante Otzarreta (Derio) & Productora EAR',
+  title: 'Alianza Soberana · Restaurante Otzarreta Derio | EAR OS',
   description:
     'Presentación ejecutiva de cierre para Eduardo Martínez: Infraestructura agéntica 24/7, clúster de dominancia en Bizkaia y comparativa de modelos de alianza para Restaurante Otzarreta (Derio).',
   robots: {

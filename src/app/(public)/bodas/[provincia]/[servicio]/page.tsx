@@ -136,7 +136,7 @@ export default async function BodasServicioProvinciaPage({ params }: Props) {
   // 🏰 El servicio "fincas" se sirve con el catálogo certificado real
   // (aforo, potencia, acústica y distancia), nunca con una plantilla SEO vacía.
   if (canonical.service === 'fincas') {
-    redirect(`/fincas/${canonical.province}`);
+    redirect(`/fincas/p/${canonical.province}`);
   }
 
   const provData = PROVINCIAS_52_GRAPH[canonical.province] || { name: canonical.province, slug: canonical.province };

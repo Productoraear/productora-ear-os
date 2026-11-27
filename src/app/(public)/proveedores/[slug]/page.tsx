@@ -29,6 +29,9 @@ import { Metadata } from 'next';
 import fs from 'fs';
 import path from 'path';
 import { CENTRALITA } from '@/lib/phone-constants';
+import { resolveEntityAsin } from '@/lib/entities/asin';
+import { findFichaBySlug, findFichaByVendorId } from '@/lib/providers/fichaProvider';
+import { buildClientWhatsAppHandoffUrl } from '@/lib/whatsapp/client-handoff';
 import { SupplierBlurLock } from '@/components/ui/SupplierBlurLock';
 import { ClaimProfileTrigger } from '@/components/providers/ClaimProfileTrigger';
 import { ProviderMediaGallery } from '@/components/providers/ProviderMediaGallery';
@@ -539,6 +542,7 @@ function findInStaticPartitions(slugNorm: string) {
 
           return {
             id: found.id || slugNorm,
+            asin: typeof found.asin === 'string' ? found.asin : undefined,
             name: (found.name || '').replace(/\s*-\s*Consulta disponibilidad y precios.*/i, '').trim(),
             category: (found.category === 'finca' || fileName.startsWith('finca')) ? 'Finca para Bodas' : found.category === 'musica' ? 'Música & Espectáculos' : found.category === 'catering' ? 'Catering & Gastronomía' : found.category || 'Servicio para Eventos',
             province: found.province || found.location?.province || 'Madrid',
@@ -585,6 +589,21 @@ function findInStaticPartitions(slugNorm: string) {
   return null;
 }
 
+function resolveProviderAsin(
+  rawProvider: Record<string, any>,
+  canonicalSlug: string,
+  fallbackSlug: string,
+): string {
+  const explicit =
+    (typeof rawProvider.asin === 'string' && rawProvider.asin) ||
+    findFichaBySlug(canonicalSlug)?.asin ||
+    findFichaBySlug(fallbackSlug)?.asin ||
+    (rawProvider.vendorId || rawProvider.id
+      ? findFichaByVendorId(rawProvider.vendorId || rawProvider.id)?.asin
+      : undefined);
+  return resolveEntityAsin('provider', canonicalSlug || fallbackSlug, explicit ?? null);
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const provider = await getProviderData(slug);
@@ -604,11 +623,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   // fichas prov-* sin reclamar y BLACKLISTED) se emite con noindex para erradicar
   // el castigo algorítmico por "Thin Content / Doorways" y disparar el CTR real.
   const canonicalSlug = buildCanonicalProviderSlug(provider);
+  const asin = resolveProviderAsin(provider, canonicalSlug, slug);
   const isVerifiedTier = tier === 'SOVEREIGN' || tier === 'CLAIMED';
   const isGenericDoorway = isOpaqueProviderSlug(canonicalSlug) || cleanName.toLowerCase().startsWith('prov-');
   const shouldNoIndex = isBlacklisted || isGenericDoorway || (!isVerifiedTier && !cleanName);
 
   const isGenericName = !cleanName || cleanName.toLowerCase().startsWith('prov-') || isBlacklisted || !isVerifiedTier;
+  const publicEntityName = isGenericName
+    ? `Proveedor Homologado S-Class #${providerIdShort} · ${category}`
+    : cleanName;
   const isFinca = category.toLowerCase().includes('finca') || category.toLowerCase().includes('espacio') || slug.includes('finca');
   const isMusica = category.toLowerCase().includes('música') || category.toLowerCase().includes('musica') || category.toLowerCase().includes('mariachi') || category.toLowerCase().includes('artista') || category.toLowerCase().includes('dj');
 
@@ -640,6 +663,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     robots: shouldNoIndex ? { index: false, follow: false } : { index: true, follow: true },
     alternates: {
       canonical: `https://www.productoraear.com/proveedores/${canonicalSlug}`,
+    },
+    other: {
+      'ear:asin': asin,
+      'ear:entity-name': publicEntityName,
+      'ear:category': category,
     },
     openGraph: {
       title: displayTitle,
@@ -882,9 +910,25 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
   // 📦 Pack Gala VIP (80-150 m²) — precio SSOT desde el inventario canónico
   const galaPack = INITIAL_INVENTORY.find((item) => item.id === 'pack-gala-100m2');
   const galaPriceEur: number = galaPack?.dailyPrice ?? 420;
+  const asin = resolveProviderAsin(rawProvider, canonicalProviderSlug, slug);
+  const centralitaWaDossierHref = buildClientWhatsAppHandoffUrl({
+    phoneDigits: CENTRALITA.whatsapp.replace(/\D/g, ''),
+    text: `Hola, solicito el dossier fotográfico completo (${totalPrivatePhotosCount} imágenes) y disponibilidad de ${displayName} (${category}) en ${location.split(',')[0]}.`,
+    asin,
+  });
+  const centralitaWaDirectHref = buildClientWhatsAppHandoffUrl({
+    phoneDigits: CENTRALITA.whatsapp.replace(/\D/g, ''),
+    text: `Hola, quiero disponibilidad y precios de ${displayName} (${category}) en ${location.split(',')[0]}.`,
+    asin,
+  });
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white selection:bg-[#ecb613] selection:text-black font-sans pt-28 pb-36 px-4 sm:px-6 lg:px-8">
+    <div
+      data-ear-asin={asin}
+      data-ear-entity-name={displayName}
+      data-ear-category={category}
+      className="min-h-screen bg-[#050505] text-white selection:bg-[#ecb613] selection:text-black font-sans pt-28 pb-36 px-4 sm:px-6 lg:px-8"
+    >
       <div className="max-w-7xl mx-auto space-y-8">
 
         {/* BREADCRUMBS S-CLASS */}
@@ -1038,9 +1082,7 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
                 </p>
               </div>
               <a
-                href={`${CENTRALITA.whatsapp}?text=${encodeURIComponent(
-                  `Hola, solicito el dossier fotográfico completo (${totalPrivatePhotosCount} imágenes) y disponibilidad de ${displayName} (${category}) en ${location.split(',')[0]}.`
-                )}`}
+                href={centralitaWaDossierHref}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="shrink-0 px-4 py-2.5 rounded-xl bg-[#ecb613] hover:bg-[#d9a40e] text-black font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-colors"
@@ -1400,7 +1442,7 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
                 </a>
 
                 <a
-                  href={`${CENTRALITA.whatsapp}?text=${encodeURIComponent(`Hola, quiero disponibilidad y precios de ${displayName} (${category}) en ${location.split(',')[0]}.`)}`}
+                  href={centralitaWaDirectHref}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full py-3.5 px-5 rounded-2xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all"

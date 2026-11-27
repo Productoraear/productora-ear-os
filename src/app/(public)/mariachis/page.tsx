@@ -31,7 +31,7 @@ import ThemeToggle from '@/components/layout/ThemeToggle';
 const CANONICAL_URL = 'https://productoraear.com/mariachis';
 
 export const metadata: Metadata = {
-  title: '▷ Contratar Mariachis en España | Precio Cerrado, Edwin Agudelo & Reserva Garantizada | Productora EAR',
+  title: 'Contratar Mariachis en España · Precio Cerrado | EAR OS',
   description: 'Mariachis profesionales en toda España con precio cerrado desde 350€. Edwin Agudelo (Mariachi de Gala) como voz de referencia, formatos desde solista hasta 8 integrantes. Reserva segura con 100€ deducibles en Stripe, logística transparente y formación adaptada al límite de ruido de cada finca.',
   keywords: [...MARIACHI_KEYWORDS_METADATA],
   alternates: {

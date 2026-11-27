@@ -26,6 +26,7 @@
  */
 
 import { CENTRALITA_EAR_OS } from '@/lib/constants/ear-os-ssot';
+import { isValidEarAsin } from '@/lib/entities/asin';
 import { maskPhoneForDisplay } from '@/lib/providers/contact-gate';
 
 /** Motivo comercial del contacto: define el copy pre-rellenado y la atribución. */
@@ -104,6 +105,8 @@ export interface DemandWhatsappInput {
   readonly intent: DemandIntent;
   /** Detalle opcional: municipio, formato de evento, fecha tentativa. */
   readonly detail?: string;
+  /** ASIN canónico de la entidad visualizada (handoff contextual). */
+  readonly asin?: string | null;
 }
 
 /**
@@ -115,10 +118,14 @@ export function buildDemandWhatsappUrl(input: DemandWhatsappInput): string {
   const detailLabel: string =
     typeof input.detail === 'string' ? sanitizeEntityLabel(input.detail, 80) : '';
   const detail: string = detailLabel.length > 0 ? ` (${detailLabel})` : '';
+  const rawAsin: string = typeof input.asin === 'string' ? input.asin.trim().toUpperCase() : '';
+  const validAsin: string = isValidEarAsin(rawAsin) ? rawAsin : '';
   const message: string =
     `Hola ${SOVEREIGN_DEMAND_CHANNEL.label}, solicito ${INTENT_COPY[input.intent]} ` +
-    `para ${entity}${detail}. Vengo de la web oficial de Productora EAR.`;
-  return `${SOVEREIGN_DEMAND_CHANNEL.whatsappBase}?text=${encodeURIComponent(message)}`;
+    `para ${entity}${detail}. Vengo de la web oficial de Productora EAR.` +
+    (validAsin ? `\n[Ref: ${validAsin}]` : '');
+  const base = `${SOVEREIGN_DEMAND_CHANNEL.whatsappBase}?text=${encodeURIComponent(message)}`;
+  return validAsin ? `${base}&ref=${encodeURIComponent(validAsin)}` : base;
 }
 
 /**

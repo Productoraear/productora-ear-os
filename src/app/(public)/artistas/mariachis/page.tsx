@@ -22,7 +22,7 @@ import {
 } from '@/lib/constants/ear-os-ssot';
 
 export const metadata: Metadata = {
-  title: 'Contratar Mariachis en Directo en España (Desde 350€) · Productora EAR',
+  title: 'Mariachis en Directo · Contratación Directa | EAR OS',
   description:
     'Contrata las mejores agrupaciones de mariachis en España con Productora EAR. 4 formatos oficiales (Solista 350€, Cuarteto 600€, Gran Ensamble 900€, Gala Imperial 1.300€), sonorización Bose calibrada y reserva garantizada con 100€ en Stripe.',
   keywords: [

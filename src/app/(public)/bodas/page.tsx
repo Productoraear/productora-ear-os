@@ -397,7 +397,7 @@ export default function BodasPage() {
             {topProvincesBanquetes.map((prov) => (
               <Link
                 key={prov.slug}
-                href={`/fincas/${prov.slug}`}
+                href={`/fincas/p/${prov.slug}`}
                 className="p-5 rounded-2xl bg-[#0c0a0e] border border-white/10 hover:border-[#ecb613] transition-all flex flex-col justify-between group shadow-lg hover:shadow-[0_10px_30px_rgba(236,182,19,0.15)] hover:-translate-y-1"
               >
                 <div className="flex items-center justify-between mb-3">

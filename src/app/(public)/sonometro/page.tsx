@@ -3,7 +3,7 @@ import AcousticConscienceMeter from '@/components/tools/AcousticConscienceMeter'
 import { LIMITE_SPL_DB, WATTS_PER_PAX } from '@/lib/constants/ear-os-ssot';
 
 export const metadata: Metadata = {
-  title: 'Sonómetro de Conciencia PWA | Medidor Acústico Ley 37/2003 | EAR OS',
+  title: 'Sonómetro PWA · Medidor Acústico Ley 37/2003 | EAR OS',
   description:
     'Medidor acústico pedagógico en tiempo real con Web Audio API. Autorregulación acústica conforme a la Ley 37/2003 del Ruido para cócteles, bodas, festejos populares y centros senior VIMUME.',
   openGraph: {

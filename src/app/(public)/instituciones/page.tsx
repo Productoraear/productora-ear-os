@@ -7,7 +7,7 @@ import {
 } from '@/lib/constants/ear-os-ssot';
 
 export const metadata: Metadata = {
-  title: 'Canal Instituciones & Administraciones Públicas (Art. 118 LCSP) | Productora EAR',
+  title: 'Canal Instituciones · Contratación LCSP Art. 118 | EAR OS',
   description:
     'Gabinete técnico para Administraciones Locales, Ayuntamientos y Diputaciones. Contratación menor simplificada, facturación FACe y programas ODS 2030. Tarifa Solista desde 350 €.',
   alternates: {

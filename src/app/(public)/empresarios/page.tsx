@@ -15,7 +15,7 @@ import {
 } from '@/lib/constants/ear-os-ssot';
 
 export const metadata: Metadata = {
-  title: 'Acompañamiento Estratégico & Canal Empresarios | Productora EAR',
+  title: 'Acompañamiento Estratégico para Empresarios | EAR OS',
   description: 'Acompañamiento estratégico y táctico para empresarios y marcas de alto valor. Planes desde 1000€/mes con garantía de ROI por escrito.',
   alternates: {
     canonical: 'https://productoraear.com/empresarios',

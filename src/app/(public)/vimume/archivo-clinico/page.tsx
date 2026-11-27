@@ -2,7 +2,7 @@ import React from 'react';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Archivo Clínico de Musicoterapia y Estimulación Neurocognitiva | VIMUME',
+  title: 'Archivo Clínico VIMUME · Musicoterapia 40 Hz | EAR OS',
   description: 'Protocolo de intervención neuroacústica en residencias de mayores y centros de día. Seguridad clínica estricta < 75 dB SPL.',
 };
 

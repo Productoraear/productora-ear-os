@@ -14,6 +14,7 @@ import {
   Building2,
 } from 'lucide-react';
 import { CENTRALITA_EAR_OS, DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
+import { resolveEntityAsin } from '@/lib/entities/asin';
 import {
   OTZARRETA_ENTITY,
   OTZARRETA_SEATING_PRESET,
@@ -54,13 +55,19 @@ const OTZARRETA_CTA_SOURCE = {
 } as const;
 
 const OTZARRETA_MENU_RANGE_LABEL = `${OTZARRETA_WEDDING_MENUS[0]?.priceEur ?? 0} € a ${OTZARRETA_WEDDING_MENUS[OTZARRETA_WEDDING_MENUS.length - 1]?.priceEur ?? 0} €`;
+const OTZARRETA_ASIN = resolveEntityAsin('finca', 'otzarreta');
 
 export const metadata: Metadata = {
-  title: 'Restaurante Otzarreta | Bodas, Asador & Banquetes en Derio (Bizkaia)',
+  title: 'Restaurante Otzarreta · Bodas y Banquetes | EAR OS',
   description:
     `Banquetes nupciales exclusivos para hasta ${OTZARRETA_SEATING_PRESET.totalPax} comensales en caserío tradicional con jardines, carpa para ceremonias civiles y parrilla al carbón de encina y sarmiento de Eduardo Martínez. Parking privado cerrado de más de ${OTZARRETA_SEATING_PRESET.parkingSpaces} plazas. ${OTZARRETA_WEDDING_MENUS_CLAIM}.`,
   alternates: {
     canonical: 'https://productoraear.com/otzarreta'
+  },
+  other: {
+    'ear:asin': OTZARRETA_ASIN,
+    'ear:entity-name': 'Restaurante Otzarreta',
+    'ear:category': 'Fincas',
   },
   openGraph: {
     title: 'Restaurante Otzarreta | Bodas, Asador & Banquetes de Gala en Derio',
@@ -152,13 +159,14 @@ export default async function OtzarretaFlagshipPage({
   const whatsappConciergeUrl = buildDemandWhatsappUrl({
     entityName: 'Restaurante Otzarreta',
     intent: 'disponibilidad',
-    detail: 'boda o banquete'
+    detail: 'boda o banquete',
+    asin: OTZARRETA_ASIN,
   });
 
-  // â”€â”€ CTAs POR ENTIDAD (W48) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-  // El Â«Bloquear FechaÂ» de esta alianza deja de aterrizar en la agenda de
+  // ── CTAs POR ENTIDAD (W48) ────────────────────────────────────────────────
+  // El «Bloquear Fecha» de esta alianza deja de aterrizar en la agenda de
   // Edwin Agudelo: se resuelve contra el calendario real del proveedor
-  // (`restaurante-otzarreta`, gremio catering del Data Lake) y el depÃ³sito
+  // (`restaurante-otzarreta`, gremio catering del Data Lake) y el depósito
   // deducible se formaliza en el expediente contractual con importes del SSOT.
   const calendarBlockHref = resolveProviderCalendarHref(OTZARRETA_CTA_SOURCE, { intent: 'bloquear' });
   const calendarVisitHref = resolveProviderCalendarHref(OTZARRETA_CTA_SOURCE, { intent: 'ver' });
@@ -168,7 +176,12 @@ export default async function OtzarretaFlagshipPage({
   // se ancla al borde inferior. `pb-32` (8rem) garantiza que jamás tape precios,
   // botones de fianza ni la línea de términos del pie.
   return (
-    <main className="min-h-screen w-full max-w-full overflow-x-hidden bg-[#030305] px-0 pt-24 pb-32 text-white selection:bg-[#ecb613] selection:text-black sm:pt-28 sm:pb-16">
+    <main
+      data-ear-asin={OTZARRETA_ASIN}
+      data-ear-entity-name="Restaurante Otzarreta"
+      data-ear-category="Fincas"
+      className="min-h-screen w-full max-w-full overflow-x-hidden bg-[#030305] px-0 pt-24 pb-32 text-white selection:bg-[#ecb613] selection:text-black sm:pt-28 sm:pb-16"
+    >
       {/* Script Estructurado JSON-LD (saneado: cero líneas de proveedor) */}
       <script
         type="application/ld+json"

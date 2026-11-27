@@ -38,7 +38,7 @@ import {
 const HUB_URL = `${MARIACHI_CANONICAL_BASE}/centralita-mariachis`;
 
 export const metadata: Metadata = {
-    title: 'Centralita de Mariachis · Contratación directa en España y Europa',
+    title: 'Centralita de Mariachis · Contratación Directa | EAR OS',
     description:
         'Centralita de Mariachis: contratación directa de mariachi con Edwin Agudelo. 220 landings, 40 mercados en España y Europa, depósito de 100 € deducible, rider acústico Ley 37/2003 y presupuesto por escrito.',
     keywords: [

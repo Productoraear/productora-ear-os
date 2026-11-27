@@ -2,7 +2,7 @@ import { CommercialEventCalculator } from '@/components/calculator/CommercialEve
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Cotizador de Eventos en 1 Clic // Precios Oficiales S-Class | Productora EAR',
+  title: 'Cotizador de Eventos en 1 Clic S-Class 2026 | EAR OS',
   description:
     'Calculador oficial de presupuestos para bodas, mariachis, fincas y eventos corporativos con logística desde Méntrida, Split 80/10/10 y fianza protegida Stripe de 100 €.',
   openGraph: {

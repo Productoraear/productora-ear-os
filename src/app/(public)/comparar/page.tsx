@@ -19,7 +19,7 @@ import {
 } from '@/lib/constants/ear-os-ssot';
 
 export const metadata: Metadata = {
-  title: 'Matriz Comparativa S-Class vs Portales Tradicionales | Productora EAR',
+  title: 'Matriz Comparativa vs Portales Tradicionales | EAR OS',
   description:
     'Transparencia absoluta: Compara el Split 80/10/10, garantía acústica 12 W/pax y Price-Lock 100€ de Productora EAR frente a las comisiones ocultas de portales tradicionales.',
 };

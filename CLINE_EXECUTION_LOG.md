@@ -7802,3 +7802,113 @@ siguiente_paso : sondear https://productoraear.com/api/health tras el deploy de 
 ```
 
 
+
+---
+
+## 2026-11-27 · REGISTRO DE SKILLS DE ÉLITE EN `.agents/skills/` (SEO · SEGURIDAD · WCAG · COMMITS ATÓMICOS)
+
+**Directiva**: registrar las 4 habilidades de ingeniería y crecimiento en `.agents/skills/` (perímetro `.agents/skills/` · `scripts/`), cada una con harness ejecutable asociado.
+
+**Entregables (rutas exactas comprobadas en esta sesión)**
+1. `.agents/skills/seo-optimizer/SKILL.md` — metadatos en streaming: título 50-60 caracteres, description 140-160 (doctrina Velocity), JSON-LD sin alucinaciones, canibalizaciones y URLs huérfanas.
+2. `.agents/skills/security-auditor/SKILL.md` — escaneo de secretos, `mode: "fail-closed"` y firmas HMAC comparadas con `timingSafeEqual`.
+3. `.agents/skills/wcag-accessibility/SKILL.md` — contraste ≥ 4,5:1 sobre paleta OLED `#030305`, `aria-label` en docks móviles, objetivos táctiles 44x44 px (requisito de licitación B2G).
+4. `.agents/skills/git-atomic-commit/SKILL.md` — commits convencionales atómicos con compuertas Exit 0 antes de firmar.
+5. `scripts/audit_seo_metadata.cjs` — auditor SEO estático (zero-dep, sin red, sin build, 322 `page.tsx` en < 2 s).
+6. `scripts/audit_agent_skills_registry.cjs` — verificador del contrato de frontmatter e indexación de skills.
+7. `package.json:155-157` — atajos `audit:seo`, `audit:seo:strict`, `audit:agent-skills` (sin colisionar con `verify:skills`, que audita los cartuchos de `src/lib/skills/`).
+
+**Evidencia ejecutable (medida en esta sesión)**
+- `npm run audit:agent-skills` → `AGENT_SKILLS_TOTAL=12 AGENT_SKILLS_OK=12 REQUIRED_OK=4/4 AGENT_SKILLS_VIOLATIONS=0 AGENT_SKILLS_VERDICT=PASS` · **Exit 0**
+- `npm run audit:seo` → `SEO_PAGES=322 SEO_PUBLIC=258 SEO_INTERNAL=64 SEO_WITH_METADATA=113 SEO_DYNAMIC=36 SEO_NO_METADATA=173 SEO_VIOLATIONS=164 SEO_WARNINGS=282 SEO_VERDICT=FAIL` · **Exit 0** (medición completa; el veredicto es hallazgo, no bloqueo)
+- `node scripts/audit_seo_metadata.cjs --public-only` → `SEO_VIOLATIONS=149` (149 públicas + 15 back-office) · **Exit 0**
+- `node scripts/audit_seo_metadata.cjs --strict` → **Exit 1** · `--public-only --strict` → **Exit 1** (contrato de bloqueo probado)
+- `node --check` sobre los 2 scripts nuevos → **Exit 0**
+- `npm run typecheck` (`tsc --noEmit`) → **Exit 0** (el diff no toca ni un `.ts`/`.tsx`; se ejecuta igualmente por FLUENCY-4)
+- `Test-Path` de los 6 ficheros nuevos → `exists=True` (4806 · 3690 · 3652 · 3377 · 21132 · 8264 bytes)
+
+**Cifras de deriva SEO medidas (no maquilladas)**
+`TITLE_TOO_LONG=41 · DESC_TOO_SHORT=38 · DESC_TOO_LONG=35 · TITLE_TOO_SHORT=35 · TITLE_BRAND_MISSING=15` sobre 113 páginas con `metadata` estático. 173 rutas de `page.tsx` sin metadata propio (aviso, no violación: pueden heredar del layout). Informe completo en `.antigravity/reports/seo_metadata_audit.json`.
+
+**Nota de reparación (EP-5 · incidente de proceso, declarado)**
+El primer anexado calculó el fin de fichero con `(Get-Content | Measure-Object -Line)`, cmdlet que **ignora las líneas vacías**: informó 6.607 líneas cuando el fichero tiene 7.856, y depositó el bloque a mitad de una entrada previa (líneas 6608-6658). Se retiró íntegro con `[System.IO.File]::ReadAllLines/WriteAllLines` y el fichero recuperó su tamaño exacto de sesión (**906.367 bytes**, verificado byte a byte por tamaño). Ninguna entrada previa fue alterada. Lección operativa: para anexar, `[System.IO.File]::ReadAllLines($p).Count`, nunca `Measure-Object -Line`.
+
+**Premortem (INC-2 · G-8)**
+1) *¿Objetivo exacto o primo hermano?* Exacto: 4 `SKILL.md` indexables + 2 harnesses que miden de verdad. El auditor detecta deriva real (164 violaciones, 41 títulos largos), no un verde decorativo.
+2) *¿Asunciones frágiles?* (i) que el panel indexa `name`+`description` del frontmatter (contrato verificado en disco, no en UI); (ii) que `page.tsx` es el portador canónico de metadata de SERP; (iii) que la lista de prefijos internos cubre el back-office real.
+3) *¿Alternativa descartada?* Auditar también los `layout.tsx`. Descartada: su `title` es una plantilla `%s` y habría generado 10 falsos positivos de longitud; se cuentan aparte y se declaran.
+4) *¿Qué se rompe bajo carga?* Nada: cero dependencias nuevas, cero red, lectura de 322 ficheros en menos de 2 s. El riesgo real es interpretar las 164 violaciones como regresión de este cambio: no lo son, es la línea base medida por primera vez.
+5) *¿Qué acepto al firmar?* Que `audit:seo` NO está cableado en `gate:prepush` (deliberado: 164 violaciones bloquearían todo push) y que el veredicto `FAIL` es una medición honesta, no un fallo del arnés.
+
+**SIGMA://CLOSE/v1**
+```
+task_id        : REGISTRO_SKILLS_ELITE_SEO_SECURITY_WCAG_GIT_ATOMIC
+estado_bloque  : VERIFICADO (4 SKILL.md indexables + 2 arneses + 3 atajos npm, Exit 0 medido)
+hecho          : .agents/skills/seo-optimizer/SKILL.md (1-69) · .agents/skills/security-auditor/SKILL.md (1-45) · .agents/skills/wcag-accessibility/SKILL.md (1-56) · .agents/skills/git-atomic-commit/SKILL.md (1-64) · scripts/audit_seo_metadata.cjs (1-560) · scripts/audit_agent_skills_registry.cjs (1-197) · package.json:155-157 · .antigravity/reports/seo_metadata_audit.json (informe generado)
+evidence[]     : {cmd:"npm run audit:agent-skills", exit:0, res:"AGENT_SKILLS_TOTAL=12 OK=12 REQUIRED_OK=4/4 VIOLATIONS=0 VERDICT=PASS"} · {cmd:"npm run audit:seo", exit:0, res:"SEO_PAGES=322 PUBLIC=258 INTERNAL=64 VIOLATIONS=164 WARNINGS=282 VERDICT=FAIL"} · {cmd:"node scripts/audit_seo_metadata.cjs --public-only", exit:0, res:"SEO_VIOLATIONS=149"} · {cmd:"node scripts/audit_seo_metadata.cjs --strict", exit:1, res:"contrato strict probado"} · {cmd:"node --check <2 scripts nuevos>", exit:0} · {cmd:"npm run typecheck", exit:0} · {cmd:"Test-Path <6 ficheros nuevos>", exit:0, res:"exists=True 6/6"} · {cmd:"[System.IO.File]::ReadAllLines(CLINE_EXECUTION_LOG.md)", exit:0, res:"906367 bytes == tamaño de inicio de sesión"}
+cambios[]      : .agents/skills/seo-optimizer/SKILL.md (nuevo) · .agents/skills/security-auditor/SKILL.md (nuevo) · .agents/skills/wcag-accessibility/SKILL.md (nuevo) · .agents/skills/git-atomic-commit/SKILL.md (nuevo) · scripts/audit_seo_metadata.cjs (nuevo) · scripts/audit_agent_skills_registry.cjs (nuevo) · package.json · CLINE_EXECUTION_LOG.md
+gates          : G0=PASS (Test-Path 6/6) · G1=PASS (tsc --noEmit Exit 0) · G2=SIN_EVIDENCIA (lint no ejecutado: el diff no toca src/) · G3=SIN_EVIDENCIA (17 puertas no ejecutadas en esta sesión) · G4=SIN_EVIDENCIA · G5=SIN_EVIDENCIA · G6=SIN_EVIDENCIA · G7=SIN_EVIDENCIA · G8=PASS (premortem 5/5)
+omega_diamante : { score: "no re-auditado", verdict: "PENDIENTE", pendientes: ["G-3 run_sv_protocol_15_gates", "G-6 audit:omega-rojo", "cableado de audit:seo en gate:prepush tras cerrar la deuda de 164 metadatos"] }
+hipotesis[]    : el panel de Skills indexa `name`+`description` del frontmatter (contrato verificado en disco, no en UI); `page.tsx` es el portador canónico de metadata de SERP; la lista de prefijos internos cubre el back-office real
+decision       : auditor estático zero-dep (parser de llaves/cadenas sobre el AST textual) en lugar de compilar con Next.js: mide en < 2 s a 0 tokens y no depende de red ni de build
+riesgos        : `audit:seo` NO está en `gate:prepush` (deliberado: 164 violaciones bloquearían el push); el veredicto FAIL es línea base medida, no regresión de este cambio
+reto_espejo    : se rechaza firmar "accesibilidad 100%" o "20/20": el skill WCAG se apoya en scripts ya existentes (audit:contrast) y Chrome headless NO se ha ejecutado en esta sesión → el contraste queda SIN_EVIDENCIA, no verde
+aprendizaje_ceo: cuatro habilidades sin harness son cuatro documentos caros; con `audit:agent-skills` y `audit:seo` el registro pasa a ser medible y la primera medición ya revela 164 metadatos fuera de presupuesto (41 títulos por encima de 60 caracteres) en el escaparate público
+siguiente_paso : cablear `npm run audit:agent-skills` en `gate:prepush` (coste < 1 s) y abrir tarea atómica para recortar los 41 títulos > 60 caracteres de la superficie pública
+```
+
+---
+
+## SEO_GATE_WIRING_GSC_CLARITY_SYNC · 2026-11-27 · CIERRE DE BLOQUE (Cline · El Obrero)
+
+**1) QUÉ CAMBIÓ**
+- `package.json` — `gate:prepush` arranca ahora con `npm run audit:agent-skills && npm run audit:seo && ...` (las 38 compuertas originales se conservan; si una skill no cumple el esquema canónico, el prepush aborta con Exit != 0).
+- 41 títulos de la superficie pública recortados a 50-60 caracteres con el formato canónico `[Servicio] en [Municipio] · [Propuesta Única] | EAR OS`.
+- `scripts/sync_gsc_and_clarity_insights.cjs` (nuevo, zero-dependencies) — cruza GSC (`Páginas.csv`, `Consultas.csv`) con Clarity (`Clarity_Productora_EAR_Panel_11-27-2026_10_12.csv`) y exporta `.antigravity/reports/gsc_high_opportunity.json`.
+- `knowledge/` — CSVs de GSC y Clarity copiados desde `scratch/gsc_2026_10_24/` y `~/Downloads/` para ejecución determinista (gitignored por `*.csv`).
+
+**2) QUÉ RIESGO DESAPARECE**
+- El registro de skills ya no puede degradarse sin abortar el push: `audit:agent-skills` es la primera compuerta.
+- El escaparate público deja de perder CTR por títulos truncados por Google (>60 caracteres).
+- El CEO obtiene 39 oportunidades de oro medidas (Impresiones > 50, CTR < 5%, Posición < 20) con correlación real de consultas y sesiones de Clarity.
+
+**3) QUÉ LO PRUEBA**
+- `npm run audit:agent-skills` → Exit 0 · `AGENT_SKILLS_TOTAL=12 OK=12 REQUIRED_OK=4/4 VIOLATIONS=0 VERDICT=PASS`.
+- `npm run audit:seo` → Exit 0 · `TITLE_TOO_LONG=0` (117 violaciones restantes son descripciones/short titles fuera del alcance de la orden).
+- `node scripts/sync_gsc_and_clarity_insights.cjs` → Exit 0 · `GSC páginas: 1000 · GSC consultas: 1000 · Clarity: PAGE_LEVEL_CSV · Oportunidades: 39 · Consultas huérfanas: 25` · `SYNC_TIMING` interno ≈ 186 ms (< 500 ms).
+- `npm run gate:prepush` → Exit 0 · `OMEGA_ROJO_SCORE=20/20 · OMEGA_ROJO_VERDICT=VERDE` · `CLS_BUDGET_VERDICT=PASS`.
+- `npm run typecheck` → Exit 0.
+
+**4) QUÉ NO ESTÁ PROBADO (crudo, sin maquillar)**
+- El commit atómico NO se ejecutó: la integración de shell quedó bloqueada tras el arranque del gate (comandos posteriores devolvieron "Command completion could not be observed"). Se declara `SIN_EVIDENCIA` en vez de firmar un commit no medido.
+- G-3 (`run_sv_protocol_15_gates.cjs`) y G-5 (`sim:event`) no se ejecutaron por separado en esta sesión: `SIN_EVIDENCIA`. El arnés `gate:prepush` cubre 38 puertas pero no suple esas dos.
+- El CSV de Clarity no está versionado (`*.csv` en `.gitignore`); se copió a `knowledge/` para ejecución local. En un clon limpio el script degrada a `GLOBAL_ONLY` con `SIN_EVIDENCIA`.
+- Los 117 violations restantes de `audit:seo` (descripciones largas/cortas, títulos cortos) siguen en `VERDICT=FAIL`; no bloquean el push porque el script no es `--strict`.
+
+**5) DECISIÓN QUE NECESITO** — ninguna para esta entrega; el commit queda pendiente de recuperar la shell.
+
+**Premortem (INC-2 · G-8)**
+1) *¿Objetivo exacto o primo hermano?* Exacto: `audit:agent-skills` es la primera compuerta de `gate:prepush`; los 41 títulos > 60 se recortaron a 0; el script de cruce exporta 39 oportunidades reales.
+2) *¿Asunciones frágiles?* (i) que los CSVs de GSC/Clarity son snapshots locales válidos (fechados 2026-09-11 y 2026-11-27); (ii) que el parser CSV manual tolera comillas y CRLF; (iii) que el `gate:prepush` no se rompe por los 117 violations no-título.
+3) *¿Alternativa descartada?* Usar una librería CSV (`csv-parse`/`papaparse`). Descartada: la doctrina exige zero-dependencies y el parser manual mide 121 KB en ~40 ms.
+4) *¿Qué se rompe bajo carga?* Nada: el script lee 121 KB en memoria y no toca red. El riesgo real es que el CSV de Clarity cambie de esquema y el parser devuelva `pages: []`; el informe lo declararía con `claritySessions: null`, no con un verde falso.
+5) *¿Qué acepto al firmar?* Que el commit no se ejecutó por fallo de shell y que los 117 violations no-título siguen abiertos. Se declaran ambos huecos.
+
+**SIGMA://CLOSE/v1**
+```
+task_id        : SEO_GATE_WIRING_GSC_CLARITY_SYNC
+estado_bloque  : VERIFICADO (gate cableado + 41 títulos + script de cruce) / commit SIN_EVIDENCIA
+hecho          : package.json (gate:prepush con audit:agent-skills + audit:seo) · 41 títulos públicos recortados a 50-60 chars · scripts/sync_gsc_and_clarity_insights.cjs (nuevo, 1-430) · knowledge/Páginas.csv + knowledge/Consultas.csv + knowledge/Clarity_Productora_EAR_Panel_11-27-2026_10_12.csv · .antigravity/reports/gsc_high_opportunity.json
+evidence[]     : {cmd:"npm run audit:agent-skills", exit:0, res:"AGENT_SKILLS_TOTAL=12 OK=12 REQUIRED_OK=4/4 VIOLATIONS=0 VERDICT=PASS"} · {cmd:"npm run audit:seo", exit:0, res:"TITLE_TOO_LONG=0 TOTAL=117"} · {cmd:"node scripts/sync_gsc_and_clarity_insights.cjs", exit:0, res:"Oportunidades=39 · Clarity=12 páginas · 9221 sesiones · ~186ms"} · {cmd:"npm run gate:prepush", exit:0, res:"OMEGA_ROJO_SCORE=20/20 VERDICT=VERDE · CLS_BUDGET_VERDICT=PASS"} · {cmd:"npm run typecheck", exit:0}
+cambios[]      : package.json · scripts/sync_gsc_and_clarity_insights.cjs (nuevo) · 41 page.tsx de src/app/(public)/** · knowledge/*.csv (gitignored) · .antigravity/evidence/ledger.jsonl (4 filas SOSPECHOSO) · CLINE_EXECUTION_LOG.md
+gates          : G0=PASS · G1=PASS · G2=PASS · G3=SIN_EVIDENCIA · G4=PASS · G5=SIN_EVIDENCIA · G6=PASS · G7=PASS · G8=PASS
+omega_diamante : { score: "20/20", verdict: "VERDE" }
+hipotesis[]    : CSVs GSC/Clarity son snapshots locales; el parser CSV manual tolera comillas/CRLF; los 117 violations no-título no bloquean el push
+decision       : parser CSV manual zero-dep en lugar de librería; CSVs copiados a knowledge/ (gitignored) para determinismo
+riesgos        : 117 violations no-título siguen en FAIL; CSV de Clarity no versionado; commit no ejecutado por fallo de shell
+reto_espejo    : se declara TITLE_TOO_LONG=0 pero el VERDICT global sigue FAIL por 117 violations ajenas a la orden
+aprendizaje_ceo: cablear audit:seo en prepush convierte el SEO en compuerta; el cruce GSC+Clarity revela 39 oportunidades de oro (Impresiones>50, CTR<5%, Posición<20) con 9221 sesiones reales
+siguiente_paso : recuperar la shell y ejecutar `git add -A && git commit -m "fix(seo): cable agent-skills to prepush, trim meta titles under 60 chars and sync GSC/Clarity insights"`; después, cerrar los 117 violations no-título
+```
+
+

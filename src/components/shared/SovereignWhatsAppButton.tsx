@@ -3,6 +3,7 @@
 import React, { useCallback, useMemo } from 'react';
 import { usePathname } from 'next/navigation';
 import { CENTRALITA_EAR_OS } from '@/lib/constants/ear-os-ssot';
+import { buildClientWhatsAppHandoffUrl } from '@/lib/whatsapp/client-handoff';
 
 export interface SovereignWhatsAppButtonProps {
   /** Texto precargado en el chat. Si falta, se genera uno contextual por ruta. */
@@ -11,6 +12,7 @@ export interface SovereignWhatsAppButtonProps {
   url?: string;
   providerName?: string;
   category?: string;
+  asin?: string;
   estimatedTotal?: number;
   className?: string;
   children?: React.ReactNode;
@@ -28,6 +30,7 @@ export function SovereignWhatsAppButton({
   url,
   providerName,
   category,
+  asin,
   estimatedTotal,
   className,
   children,
@@ -42,7 +45,10 @@ export function SovereignWhatsAppButton({
     return `Hola Productora EAR, escribo desde productoraear.com${pathname} y necesito asistencia.`;
   }, [message, providerName, category, pathname]);
 
-  const href = url && url.startsWith('https://wa.me/') ? url : `https://wa.me/${CLEAN_PHONE}?text=${encodeURIComponent(text)}`;
+  const href =
+    url && url.startsWith('https://wa.me/')
+      ? url
+      : buildClientWhatsAppHandoffUrl({ phoneDigits: CLEAN_PHONE, text, asin });
 
   const notifyConcierge = useCallback((): void => {
     try {

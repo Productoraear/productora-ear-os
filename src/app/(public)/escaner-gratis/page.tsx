@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { CENTRALITA_EAR_OS } from '@/lib/constants/ear-os-ssot';
 
 export const metadata: Metadata = {
-  title: 'Escáner Gratuito de Viabilidad Acústica & Presupuesto | Productora EAR',
+  title: 'Escáner de Viabilidad Acústica Gratis Online | EAR OS',
   description:
     'Comprueba en 60 segundos la presión sonora legal (Ley 37/2003), potencia W/pax y presupuesto real para tu evento, boda o gala sin comisiones de agencia.',
 };

@@ -17,7 +17,7 @@ const SITE_URL = 'https://productoraear.com';
 const CANONICAL_URL = `${SITE_URL}/academia`;
 
 export const metadata: Metadata = {
-  title: 'Academia S-Class | Formación Técnica para la Élite Artística — Productora EAR',
+  title: 'Academia S-Class · Formación Técnica para Artistas | EAR OS',
   description:
     'Campus LMS S-Class de Productora EAR: formación en riders homologados, protocolos B2G, microfonía Shure, mesas Behringer XR18 y tutoría IA Astra OS. Obtén tu insignia verificada.',
   keywords: [

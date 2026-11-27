@@ -20,7 +20,7 @@ import { PROVINCIAS_52_GRAPH } from '@/lib/constants/seo-data-hydrated';
 export const revalidate = 900; // 15 min ISR
 
 export const metadata: Metadata = {
-  title: 'DJ para Bodas ® | Contratación Directa de DJs Homologados (Depósito 100€ Price-Lock) | Productora EAR',
+  title: 'DJ para Bodas · Depósito 100€ Price-Lock Directo | EAR OS',
   description: 'Los mejores DJs para bodas en España con cabina Pioneer, sonido Bose calibrado a 12 W/pax, iluminación robótica y garantía 0% cancelaciones. Congela tu fecha con 100 € en Stripe (Split Soberano 80/10/10). Contacto directo: +34 693 693 048.',
   keywords: [
     'dj para bodas',

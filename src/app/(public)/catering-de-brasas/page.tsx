@@ -4,7 +4,7 @@ import { Flame, Shield, Phone, Calendar, Star } from 'lucide-react';
 import { CENTRALITA_EAR_OS, DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
 
 export const metadata: Metadata = {
-    title: 'Catering de Brasas S-Class | Ritual Ibérico en Vivo · Productora EAR',
+    title: 'Catering de Brasas · Ritual Ibérico en Vivo | EAR OS',
     description:
         'Showcooking de brasas en vivo para bodas y fincas de gala en Madrid y Toledo. Carnes maduradas, carbón de encina y fianza protegida con Split 80/10/10.',
     alternates: {

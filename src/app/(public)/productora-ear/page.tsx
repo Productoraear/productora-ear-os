@@ -38,7 +38,7 @@ const HUB_URL = `${EAR_EVENTOS_CANONICAL_BASE}/productora-ear`;
 const ACCENTS = ['oro', 'rubi', 'cyan', 'oro'] as const;
 
 export const metadata: Metadata = {
-    title: 'Productora EAR · Bodas y Eventos en las 52 Provincias de España',
+    title: 'Productora EAR · Bodas y Eventos en 52 Provincias | EAR OS',
     description:
         'Producción de bodas y eventos en toda España: 268 landings provinciales, música en directo, sonido homologado Ley 37/2003, depósito de 100 € deducible y presupuesto por escrito.',
     keywords: [

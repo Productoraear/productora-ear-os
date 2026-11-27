@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { OtzarretaExecutiveDeck } from '@/components/otzarreta/OtzarretaExecutiveDeck';
 
 export const metadata: Metadata = {
-  title: 'Propuesta Ejecutiva · Restaurante Otzarreta (Derio) & Productora EAR',
+  title: 'Propuesta Ejecutiva · Restaurante Otzarreta | EAR OS',
   description:
     'Alianza estratégica 2026: Infraestructura agéntica 24/7, clúster de 126 landings transaccionales y garantía de retorno para Restaurante Otzarreta (Derio, Bizkaia).',
   robots: {

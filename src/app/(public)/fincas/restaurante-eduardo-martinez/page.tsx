@@ -21,6 +21,7 @@ import {
   Volume2,
 } from 'lucide-react';
 import { CENTRALITA_EAR_OS, DEPOSITO_STRIPE_EUR, TARIFA_BASE_SOLISTA_EUR } from '@/lib/constants/ear-os-ssot';
+import { resolveEntityAsin } from '@/lib/entities/asin';
 import { OTZARRETA_ENTITY } from '@/lib/constants/otzarreta-entity';
 import { EZKERTZA_DERIO_VENUE } from '@/lib/constants/ezkertza-derio-venue';
 import {
@@ -52,10 +53,17 @@ const OTZARRETA_CTA_SOURCE = {
   category: 'catering',
 } as const;
 
+const OTZARRETA_ASIN = resolveEntityAsin('finca', 'restaurante-eduardo-martinez');
+
 export const metadata: Metadata = {
-  title: 'Restaurante Ezkertza Berria & Otzarreta · Eduardo Martínez | Finca Canónica EAR OS',
+  title: 'Restaurante Eduardo Martínez · Finca Canónica | EAR OS',
   description:
     'Dossier maestro para Eduardo Martínez: Caserío Ezkertza Berria & Restaurante Otzarreta en Derio (Bizkaia · Txorierri). Recorrido cinematográfico Altura, storytelling interactivo, análisis ROI vs portales pasivos y malla de 126 landings propietarias.',
+  other: {
+    'ear:asin': OTZARRETA_ASIN,
+    'ear:entity-name': 'Ezkertza Berria & Otzarreta',
+    'ear:category': 'Fincas',
+  },
 };
 
 export default async function EduardoMartinezMasterPage({
@@ -70,6 +78,7 @@ export default async function EduardoMartinezMasterPage({
     entityName: 'Ezkertza Berria & Otzarreta · Eduardo Martínez',
     intent: 'disponibilidad',
     detail: 'alianza estratégica y banquete',
+    asin: OTZARRETA_ASIN,
   });
 
   const calendarBlockHref = resolveProviderCalendarHref(OTZARRETA_CTA_SOURCE, { intent: 'bloquear' });
@@ -77,7 +86,12 @@ export default async function EduardoMartinezMasterPage({
   const contractHref = resolveProviderContractHref(OTZARRETA_CTA_SOURCE);
 
   return (
-    <main className="min-h-screen bg-[#030305] text-white selection:bg-[#ecb613] selection:text-black pt-28 pb-24 overflow-x-hidden font-sans">
+    <main
+      data-ear-asin={OTZARRETA_ASIN}
+      data-ear-entity-name="Ezkertza Berria & Otzarreta"
+      data-ear-category="Fincas"
+      className="min-h-screen bg-[#030305] text-white selection:bg-[#ecb613] selection:text-black pt-28 pb-24 overflow-x-hidden font-sans"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
         
         {/* ━━━ 1. CABECERA MAESTRA EDITORIAL CON LOGO OFICIAL ━━━ */}

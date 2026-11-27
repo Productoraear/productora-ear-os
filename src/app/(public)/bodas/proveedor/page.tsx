@@ -18,7 +18,7 @@ const EAR_PCT = Math.round(SPLIT_SOBERANO.earOs * 100);
 const VIMUME_PCT = Math.round(SPLIT_SOBERANO.vimume * 100);
 
 export const metadata: Metadata = {
-  title: 'Área de Proveedor · Homologación S-Class & Split 80/10/10 | Productora EAR',
+  title: 'Área de Proveedor · Homologación Split 80/10/10 | EAR OS',
   description: `Espacio privado para proveedores: reclama tu ficha con 2FA, obtén homologación acústica y cobra con liquidación transparente del Split Soberano ${ARTISTA_PCT}/${EAR_PCT}/${VIMUME_PCT}.`,
   alternates: { canonical: 'https://productoraear.com/bodas/proveedor' },
 };

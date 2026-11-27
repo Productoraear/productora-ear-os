@@ -8,7 +8,7 @@ import {
 } from '@/lib/constants/ear-os-ssot';
 
 export const metadata: Metadata = {
-  title: 'Portal B2G & Contratación Menor LCSP (<15.000€) | Productora EAR',
+  title: 'Portal B2G · Contratación Menor LCSP Art. 118 | EAR OS',
   description: 'Contratación pública simplificada (Art. 118 LCSP) para Ayuntamientos y Diputaciones. Ajuste preventivo a 14.250€, facturación electrónica FACe con códigos DIR3, sonorización 18W/pax y memorias ODS 2030.',
   keywords: [
     'contrato menor ayuntamientos',

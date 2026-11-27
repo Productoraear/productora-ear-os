@@ -12,7 +12,7 @@ import {
 } from '@/lib/constants/ear-os-ssot';
 
 export const metadata: Metadata = {
-  title: 'Música en Directo y Sonorización para Jardines La Cartuja (Valencia) | Productora EAR',
+  title: 'Música en Directo en Jardines La Cartuja Valencia | EAR OS',
   description: `Coordinación musical, limitadores acústicos Ley 37/2003 y cotizador oficial para bodas en Jardines La Cartuja (El Puig, Valencia). Reserva de depósito de ${DEPOSITO_STRIPE_EUR} € Price-Lock.`,
   alternates: {
     canonical: 'https://www.productoraear.com/fincas/jardines-la-cartuja',

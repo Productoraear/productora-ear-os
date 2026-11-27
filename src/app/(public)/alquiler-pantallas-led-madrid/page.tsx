@@ -27,7 +27,7 @@ const CANONICAL_URL = `${SITE_URL}${PAGE_PATH}`;
 const BRAND_NAME = 'Productora EAR — Producciones y Sonorización';
 
 export const metadata: Metadata = {
-  title: 'Alquiler de Pantallas LED en Madrid y Toledo | Productora EAR',
+  title: 'Alquiler de Pantallas LED en Madrid y Toledo | EAR OS',
   description:
     'Alquiler de pantallas LED modulares P2.9 y P3.9 para bodas, conciertos y eventos corporativos en Madrid. Montaje técnico, seguro de RC y operador de vídeo en vivo. Desde 2x1m hasta 6x3m.',
   alternates: {

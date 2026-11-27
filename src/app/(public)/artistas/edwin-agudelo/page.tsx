@@ -14,7 +14,7 @@ import {
 } from '@/lib/constants/ear-os-ssot';
 
 export const metadata: Metadata = {
-  title: 'Edwin Agudelo | Cantante, Compositor y Mariachi | Disponibilidad Mundial 24/7',
+  title: 'Edwin Agudelo · Cantante y Mariachi de Gala | EAR OS',
   description: `Cantante y compositor arropado por la figura del mariachi. Disponibilidad mundial 24/7 con exclusividad absoluta en la fecha. Tarifa solista ${TARIFA_BASE_SOLISTA_EUR} €. Sonorización Bose F1 12 W/pax, Price-Lock SHA-256.`,
 };
 
