@@ -7628,3 +7628,40 @@ aprendizaje_ceo: un `overflow-x: hidden` global no basta si un overlay escribe `
 siguiente_paso : `npm run build` + `npm run gate:prepush` en CI antes del deploy a Coolify
 ```
 
+---
+
+## P0_SCROLLYTELLING_STICKY_OVERFLOW_IMAGES_RESTORE · 2026-11-26 (Cline / El Obrero)
+
+**Qué se midió ANTES de tocar código (la premisa del encargo no se dio por buena)**
+- `localhost:3007` (HEAD de dev) **ya funciona**: sticky con `stageTop=0` durante los 400dvh (0 violaciones), 4/4 imágenes `naturalWidth>0`, máx. **1** copy visible por posición. El «clip rompió el sticky» **no se reproduce** en Chromium 152 (`html` computaba `overflow-x: clip` + `overflow-y: visible`).
+- **Producción SÍ está rota, pero por otra causa**: `https://www.productoraear.com/` sirve un build ANTIGUO (`#app-shell` ausente en el HTML, `overflow-x: hidden` computado en `html`, 0 `visibility:hidden`) ⇒ **hasta 3 copies solapados**. Y su optimizador `/_next/image` devuelve **HTTP 400 "The requested resource isn't a valid image."** para TODA imagen local (PNG y WebP) ⇒ las 4 placas con `naturalWidth: 0` (fondos negros).
+
+**Qué se cambió (2 archivos autorizados)**
+- `src/app/globals.css` — `html`/`body` **sin** `overflow` (nunca scroll container raíz). El recorte horizontal se conserva en `#app-shell`/`main` (`overflow-x: clip`, ancestro posicionado que sí alcanza a los `absolute`).
+- `src/components/home/ScrollytellingCashTunnel.tsx` — `unoptimized` en el `Image` de `ActBackdrop`: la placa se sirve por ruta cruda `/images/cinematic/*.webp` (HTTP 200 verificado) y deja de depender del optimizador averiado.
+
+**Premortem (INC-2 · G-8)**
+1. *¿Objetivo exacto o primo hermano?* Exacto y acotado: raíz sin scroll container + backdrops inmunes al optimizador. **No** se recodificó el sticky ni el solape: ya estaban correctos en HEAD (el defecto real de producción era un build obsoleto).
+2. *¿Asunciones frágiles?* (i) `#app-shell` debe seguir `relative`; (ii) `main` conserva `overflow-x: clip` — si se retira, un absoluto desbocado de un portal en `body` podría reaparecer; (iii) el `unoptimized` pierde el `srcset` responsivo (WebP ≤ 210 KB, coste aceptado a cambio de un hero visible).
+3. *¿Alternativa descartada?* `images: { unoptimized: true }` global: arreglaría los 35 archivos que usan `next/image`, pero sacrifica optimización en todo el sitio → decisión de CEO, no del Obrero.
+4. *¿Qué se rompe bajo carga y cómo lo detectamos?* Regresión de scroll horizontal al quitar `overflow` de la raíz: medido `scrollX=0`, `scrollWidth==clientWidth` (390×390 y 1440×1440). Absolutos fuera del shell: se detecta con la sonda de `scrollX`.
+5. *¿Qué acepto al firmar?* Que el arreglo de solape **sólo se ve en producción tras desplegar HEAD**; que el 400 del optimizador es de infra (Coolify/VPS) y no lo cierra este commit.
+
+**SIGMA://CLOSE/v1**
+```
+task_id        : P0_SCROLLYTELLING_STICKY_OVERFLOW_IMAGES_RESTORE
+estado_bloque  : VERIFICADO (dev) · SOSPECHOSO (producción: build obsoleto + optimizador 400)
+hecho          : src/app/globals.css (raíz sin overflow; clip en #app-shell/main) · src/components/home/ScrollytellingCashTunnel.tsx (unoptimized)
+evidence[]     : tsc --noEmit exit=0 · eslint src/components/home/ScrollytellingCashTunnel.tsx exit=0 · Chromium 390×844 y 1440×900 ruta / → stickyViolations=0, maxCopy=1, imágenes 4/4, scrollX=0, hOverflow=false, html overflow-x=visible · SSR emite /images/cinematic/*.webp sin /_next/image
+cambios[]      : 2 archivos (globals.css, ScrollytellingCashTunnel.tsx)
+gates          : G0=PASS · G1=PASS · G2=PASS · G3=SIN_EVIDENCIA · G4=SIN_EVIDENCIA · G5=SIN_EVIDENCIA · G6=SIN_EVIDENCIA · G7=SIN_EVIDENCIA · G8=PASS
+omega_diamante : { score: "no re-auditado", verdict: "PENDIENTE" }
+hipotesis[]    : #app-shell sigue relative; main conserva clip; optimizador 400 es de infra
+decision       : unoptimized por-placa (acotado) en lugar de unoptimized global (decisión CEO)
+riesgos        : solape en producción persiste hasta desplegar HEAD; 35 archivos con next/image siguen sirviendo vía optimizador averiado
+reto_espejo    : exigir prueba en el navegador real de que la raíz NO es scroll container, en lugar de aceptar el fallback `hidden`
+aprendizaje_ceo: el síntoma (fondos negros + textos pisados) tenía DOS causas independientes: un deploy viejo y un optimizador de imágenes caído. Código correcto no salva un deploy que no lo carga
+siguiente_paso : desplegar HEAD a Coolify + verificar `/_next/image` en producción (o decidir unoptimized global / fix de infra)
+```
+
+

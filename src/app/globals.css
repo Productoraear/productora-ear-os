@@ -263,20 +263,27 @@
     -ms-hyphens: none !important;
   }
 
-  /* 🛡️ CLIP ≠ HIDDEN (INV-11 · INV-18 · G-7)
-   * `overflow-x: hidden` convierte el elemento en SCROLL CONTAINER (el eje Y
-   * computa a `auto`); un scroll container ancestro ANULA el `position: sticky`
-   * de todo lo que cuelga de él. El Scrollytelling Cash-Tunnel vive de un
-   * `sticky` de 100 dvh sobre un track de 400 dvh: con `hidden` el stage se
-   * despega y los actos se apilan. `overflow-x: clip` recorta el desbordamiento
-   * horizontal SIN crear scroll container ⇒ sticky intacto y cero scroll
-   * horizontal fantasma. `hidden` se mantiene como fallback para navegadores
-   * sin soporte de `clip`; el orden de declaración hace ganar a `clip`.
+  /* 🛡️ RAÍZ SIN SCROLL CONTAINER (INV-11 · INV-18 · G-7)
+   * Regla dura: `html` y `body` JAMÁS declaran `overflow`.
+   *
+   * Por qué: `overflow-x` (tanto `hidden` como `clip`) sobre la RAÍZ propaga al
+   * VIEWPORT y, en Safari/legacy, convierte la raíz en SCROLL CONTAINER (el eje
+   * Y computa a `auto`). Un scroll container ancestro ANULA el `position: sticky`
+   * de todo lo que cuelga de él ⇒ el stage del Cash-Tunnel se despega del
+   * viewport y los 4 actos se apilan en el mismo plano.
+   *
+   * Sonda real (Chromium, 2026-11-26) sobre https://www.productoraear.com:
+   *   html computado = `overflow-x: hidden` + `overflow-y: auto`  ⇒ raíz scroll
+   *   container. Ése era el CSS desplegado; no el clip.
+   *
+   * El recorte horizontal NO se pierde: se declara en el ÚNICO ancestro que es a
+   * la vez POSICIONADO (`relative`) y contenedor de bloque de los descendientes
+   * `position: absolute` → `#app-shell` y `main` (ver bloque
+   * "ANTI-DESBORDAMIENTO" más abajo). `clip` sobre un ancestro NO crea scroll
+   * container ⇒ sticky intacto y cero barra horizontal fantasma.
    */
   html {
     max-width: 100%;
-    overflow-x: hidden;
-    overflow-x: clip;
   }
 
   html,
@@ -312,11 +319,10 @@
     font-family: var(--font-montserrat), 'Montserrat', sans-serif !important;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    /* `clip` no convierte <body> en scroll container ⇒ el `sticky` del túnel
-       sigue anclado al viewport. `hidden` queda como fallback. */
+    /* Sin `overflow` en <body>: recortar aquí crea un scroll container que
+       desancla el `position: sticky` del Cash-Tunnel. El recorte horizontal
+       vive en `#app-shell`/`main` (bloque ANTI-DESBORDAMIENTO). */
     max-width: 100%;
-    overflow-x: hidden;
-    overflow-x: clip;
     transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
   }
 
@@ -1190,17 +1196,16 @@ div[class*="netlify-identity"],
    Tipografía monumental Syne jamás recorta ni desborda en móvil.
    ═══════════════════════════════════════════════════════════════════════ */
 
-/* Elimina el scroll horizontal fantasma y el desbordamiento de 100vw.
-   `clip` (no `hidden`) para no crear scroll container: el `sticky` del túnel
-   sigue anclado al viewport. */
+/* El recorte horizontal fantasma NO se declara en `html`/`body`: `overflow` en la
+   raíz crea scroll container y desancla el `sticky` (ver bloque "RAÍZ SIN SCROLL
+   CONTAINER"). Aquí sólo se acota el ancho; el recorte real vive más abajo en
+   `#app-shell`/`main`, el ancestro posicionado que sí alcanza a los `absolute`. */
 html,
 body {
   max-width: 100%;
-  overflow-x: hidden;
-  overflow-x: clip;
 }
 
-/* Raíz de la aplicación (layout.tsx) y <main>: mismo blindaje. `clip` no crea
+/* Raíz de la aplicación (layout.tsx) y <main>: aquí SÍ se recorta. `clip` no crea
    scroll container, así que el `sticky` del Scrollytelling sigue funcionando y
    cualquier nodo que se salga del lienzo se recorta en el borde en lugar de
    abrir una barra de scroll horizontal.
@@ -1208,10 +1213,9 @@ body {
  * `#app-shell` es el wrapper `relative` de layout.tsx: al ser el bloque
  * contenedor de los descendientes `position:absolute`, su `clip` es el ÚNICO
  * que alcanza a un absoluto desbocado. Sonda real en Chromium (viewport 390 px):
- *   · fuga in-flow  → scrollX = 0   con clip en html/body
- *   · fuga absoluta → scrollX = 600 con clip en html/body (escapa al viewport)
+ *   · fuga in-flow  → scrollX = 0
  *   · fuga absoluta dentro de ancestro posicionado con clip → scrollX = 0
- * Por eso el clip se declara también aquí. */
+ * Por eso el clip se declara aquí, nunca en la raíz. */
 #root,
 #__next,
 #app-shell,

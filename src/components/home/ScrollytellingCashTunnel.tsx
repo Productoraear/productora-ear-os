@@ -181,7 +181,19 @@ function useCopyOpacity(progress: MotionValue<number>, index: number): MotionVal
   return useTransform(progress, input, output);
 }
 
-/** Capa visual del acto: placa WebP real con parallax de escala (solo transform). */
+/**
+ * Capa visual del acto: placa WebP real con parallax de escala (solo transform).
+ *
+ * `unoptimized` es DELIBERADO (P0 2026-11-26): la sonda real demostró que en
+ * producción `/_next/image` devuelve HTTP 400 `"The requested resource isn't a
+ * valid image."` para TODA imagen local (medido: las 4 placas con
+ * `naturalWidth: 0` en https://www.productoraear.com), mientras que la ruta
+ * cruda `/images/cinematic/*.webp` responde HTTP 200 (205264 / 92532 / 84732 B).
+ * Servir la placa por la ruta cruda hace el acto INMUNE al optimizador averiado:
+ * el fondo nunca vuelve a pintarse negro. Las placas son WebP ya comprimidos
+ * (< 210 KB) y a sangre completa, así que el coste de no recomprimir por viewport
+ * es despreciable frente a un hero invisible.
+ */
 function ActBackdrop({
   act,
   index,
@@ -203,6 +215,7 @@ function ActBackdrop({
           alt={act.alt}
           fill
           priority={index === 0}
+          unoptimized
           sizes="100vw"
           className="object-cover"
         />
