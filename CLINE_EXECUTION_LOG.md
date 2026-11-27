@@ -8076,3 +8076,6 @@ siguiente_paso : sondear https://www.productoraear.com/proveedores/prov-4765 has
 ```
 
 
+
+**Sonda de convergencia de produccion (2026-11-27T15:12Z)** — `curl https://www.productoraear.com/api/health` -> `status=healthy`, `buildSha=d4f73076` = commit **ANTERIOR** al push (`4f2e30c8`): el rebuild de Coolify **aun no ha convergido**. En el build servido hoy: `/proveedores/prov-4765` -> **200** (doorway con `noindex`) y `/checkout/presupuesto` -> **307** (dark-launch). Repetir la sonda hasta observar `301 -> /proveedores/setroimagen-madrid` y `301 -> /reservar`. Estado de esta mejora en produccion: `SIN_EVIDENCIA` (deploy pendiente), no `VERIFICADO`.
+
