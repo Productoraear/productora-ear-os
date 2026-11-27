@@ -3,6 +3,7 @@ import { z } from 'zod';
 import crypto from 'crypto';
 import { ServiceCategory } from '@/types/multi-service';
 import { fireAndForgetN8n } from '@/lib/services/n8n-dispatcher';
+import { CENTRALITA_EAR_OS } from '@/lib/constants/ear-os-ssot';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -30,6 +31,9 @@ const B2BQuoteRequestSchema = z.object({
     location: z.string().min(2).max(120),
     clientName: z.string().min(2).max(80).optional(),
     clientEmail: z.string().email().optional(),
+    clientPhone: z.string().min(6).max(32).optional(),
+    eventType: z.string().min(2).max(40).optional(),
+    distanceKm: z.number().min(0).max(5000).optional(),
     services: z.array(B2BServiceLineSchema).min(1, 'Se requiere al menos un servicio').max(30),
     notes: z.string().max(500).optional(),
 });
@@ -120,6 +124,9 @@ interface B2BN8nCrmEvent {
     location: string;
     clientName: string | null;
     clientEmail: string | null;
+    clientPhone: string;
+    eventType: string;
+    distanceKm: number;
     subtotal: number;
     totalWithVat: number;
     servicesCount: number;
@@ -243,6 +250,10 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
             location: data.location,
             clientName: data.clientName ?? null,
             clientEmail: data.clientEmail ?? null,
+            // Contrato canónico (8 campos): fallbacks del SSOT, nunca PII inventada.
+            clientPhone: data.clientPhone?.trim() || CENTRALITA_EAR_OS,
+            eventType: data.eventType?.trim() || 'particular',
+            distanceKm: typeof data.distanceKm === 'number' ? data.distanceKm : 0,
             subtotal,
             totalWithVat,
             servicesCount: services.length,

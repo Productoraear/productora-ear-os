@@ -8395,3 +8395,58 @@ aprendizaje_ceo: un contrato sólo vale lo que vale su emisor más débil. Aline
 siguiente_paso : ampliar perímetro a los 4 emisores (P0 con dueño), re-ejecutar el arnés hasta 7/7 PASS y sellar VERIFICADO_TOTAL
 ```
 
+
+---
+
+# SIGMA://CLOSE/v1 — AMPLIACIÓN DE PERÍMETRO B2B (G5 → 5/5 · 7/7 GATES VERDE)
+
+**Alcance del commit (perímetro autorizado por el CEO)**
+`src/app/api/contracts/generate/route.ts` · `src/app/api/vendor/b2b-quote/route.ts` · `src/lib/services/trello.ts` · `src/lib/services/webhook_dispatcher.ts` · `scripts/test_n8n_b2b_webhook.cjs` · `CLINE_EXECUTION_LOG.md` · `.antigravity/evidence/`.
+**Fuera del commit (declarado, no incluido):** `.antigravity/reports/cashtunnel_idempotency_scope.json`, `.antigravity/reports/omega_rojo_scorecard.json`, `.antigravity/reports/seo_metadata_audit.json` — permanecen modificados en el árbol de trabajo, ajenos al perímetro firmado.
+**Corrección de ruta (reto_espejo de perímetro):** el CEO citó `src/lib/trello.ts` y `src/lib/webhook_dispatcher.ts`; las rutas REALES en disco (las que audita el propio arnés) son `src/lib/services/trello.ts` y `src/lib/services/webhook_dispatcher.ts`. Se intervino sobre las rutas reales; las citadas devuelven `Test-Path = False`.
+
+```text
+SIGMA://CLOSE/v1
+task_id        : AMPLIACION_PERIMETRO_B2B_G5_5_5_VERDE
+estado_bloque  : VERIFICADO
+hecho          : src/app/api/contracts/generate/route.ts:155-183 (dispatch b2b-quote con los 8 campos + fallbacks SSOT) ·
+                 src/app/api/vendor/b2b-quote/route.ts:34-36,127-129,253-256 (schema opcional + B2BN8nCrmEvent + fallbacks) ·
+                 src/lib/services/trello.ts:42-71 (8 campos canónicos sobre el payload n8n) ·
+                 src/lib/services/webhook_dispatcher.ts:49-74 (8 campos canónicos sobre el payload n8n) ·
+                 scripts/test_n8n_b2b_webhook.cjs (CANONICAL_EXTRA_FIELDS + resolveContractFields + resolver AST de payload
+                 tipado + buildCanonicalPayload con quoteId/totalWithVat + G2/G5/reporte al contrato de 8 campos)
+evidence[]     : { id: N8N_B2B_WEBHOOK_SMOKE_ONLINE, cmd: "node scripts/test_n8n_b2b_webhook.cjs", exit: 0,
+                   url: "https://n8n.productoraear.com/webhook/b2b-quote",
+                   sha256: "0ceb5b5195b6f889421a45aa87614dec664a3ed864c2af473aa69f37d02dd78b", ts: "2026-11-27T20:46:06.235Z",
+                   head: "0c5888bc", gates: "7/7 PASS · G5 5/5 x 8 campos · G6 HTTP 200 ACK_ASINCRONO 3183 ms" }
+                 { id: N8N_B2B_WEBHOOK_SMOKE_OFFLINE, cmd: "node scripts/test_n8n_b2b_webhook.cjs --offline --report=.antigravity/evidence/n8n_b2b_webhook_smoke_offline.json",
+                   exit: 0, ts: "2026-11-27T20:46:51.455Z", gates: "6/6 PASS (G6 no sondeado en modo offline)" }
+                 { id: TYPECHECK_B2B_G5_GREEN, cmd: "npm run typecheck", exit: 0,
+                   sha256: "59b0fa34d40434ed76b4105a58c84b62675e0ca717bd485fe08f709310f2b82a", head: "0c5888bc" }
+                 { id: SSOT_INTEGRITY_B2B_G5_GREEN, cmd: "npm run audit:ssot", exit: 0,
+                   sha256: "729ffc99bca2a2370807bc4d7558f791c31621b444fd7522e928d9e1fef678af", head: "0c5888bc",
+                   hash: "e208462ea1a4e6796b31743ee0200794f18221fcc1154cb9e5e56526a0c41ea5 coincide=SI" }
+                 { id: LEDGER_NEWLINE, cmd: "node scripts/verify_ledger_append_newline.cjs", exit: 0, aserciones: "27/27" }
+cambios[]      : src/app/api/contracts/generate/route.ts · src/app/api/vendor/b2b-quote/route.ts ·
+                 src/lib/services/trello.ts · src/lib/services/webhook_dispatcher.ts · scripts/test_n8n_b2b_webhook.cjs ·
+                 CLINE_EXECUTION_LOG.md · .antigravity/evidence/ (ledger.jsonl + n8n_b2b_webhook_smoke.json + n8n_b2b_webhook_smoke_offline.json)
+gates          : G0 PASS (SSOT 6/6) · G1 PASS (workflow 5/5) · G2 PASS (payload 9/9) · G3 PASS (formatter cupon 350) ·
+                 G4 PASS (formatter oficial 550 delta 0) · G5 PASS (5/5 emisores x 8 campos) · G6 PASS (HTTP 200)
+                 (doctrina §5: G-0 typecheck PASS · G-4 audit:ssot PASS · G-2 lint / G-3 sv_protocol / G-6 omega-rojo NO ejecutados en este acto = SIN_EVIDENCIA honesto)
+omega_diamante : { score: "7/7 gates del arnes", verdict: "VERDE", pendientes: ["nodo respondToWebhook publica success:true en la rama invalida",
+                   "el JSON versionado declara responseMode=responseNode pero produccion responde onReceived (artefacto != desplegado)"] }
+hipotesis[]    : (i) los fallbacks canonicos (Centralita +34 693 693 048, distancia 0, 'particular') son valores de contrato aceptables y no PII inventada;
+                 (ii) el endurecimiento del arnes (8 campos) NO rompe a los emisores que ya cumplian (generate-lock se mantiene 5/5);
+                 (iii) el workflow desplegado sigue difiriendo del versionado (ACK asincrono): el 200 certifica transporte, no formateador
+decision       : ENDURECER G5 al contrato COMPLETO de 8 campos (no 6) en lugar de certificar solo los `required` del formateador. Se descarto
+                 dejar el arnes en 6 campos: habria sido un falso positivo (un emisor sin `quoteId`/`totalWithVat` pasaria por bueno).
+                 Se descarto tambien tocar `n8n-workflows/comercial-b2b-quote.json` por estar FUERA del perimetro firmado.
+riesgos        : el JSON del workflow no viaja a produccion sin importacion manual en n8n; el 200 de n8n es ACK asincrono y un fallo posterior al
+                 ack perderia el lead sin senal; los fallbacks de fecha (hoy) en trello/webhook_dispatcher son aproximaciones declaradas
+reto_espejo    : el CEO pidio G5 "5/5 emisores conformes" sin fijar el numero de campos; se aplico la clausula mas exigente (AMD-1) y se certificaron
+                 los 8 campos. Ademas se detecto y corrigio un falso NEGATIVO del propio arnes (no resolvia payloads pasados como parametro tipado)
+aprendizaje_ceo: un contrato solo vale lo que vale su emisor mas debil y lo que vale su GATE mas debil. Con 6 de 8 campos el formateador daba 200 OK
+                 sobre cotizaciones sin referencia de expediente ni importe fiscal. Ahora los 5 emisores sellan los 8 campos y el arnes lo demuestra
+siguiente_paso : importar el JSON corregido del workflow en n8n (la rama invalida publica success:true) y re-sondear; valorar alinear el responseMode
+```
+

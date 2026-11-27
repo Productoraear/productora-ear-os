@@ -4,7 +4,7 @@ import {
     GenerateContractParams,
     SmartContractDocument,
 } from '@/lib/contracts/smartContractEngine';
-import { TARIFA_BASE_SOLISTA_EUR, DEPOSITO_STRIPE_EUR } from '@/lib/constants/ear-os-ssot';
+import { TARIFA_BASE_SOLISTA_EUR, DEPOSITO_STRIPE_EUR, CENTRALITA_EAR_OS } from '@/lib/constants/ear-os-ssot';
 import { prisma } from '@/lib/prisma';
 import { fireAndForgetN8n } from '@/lib/services/n8n-dispatcher';
 
@@ -41,6 +41,10 @@ interface GenerateContractRequestBody {
     };
     baseAmount?: number;
     depositPaid?: number;
+    /** Categoría del evento (boda, festejo, particular…) — fallback canónico 'particular'. */
+    eventType?: string;
+    /** Distancia al Hub Méntrida en km para la logística SSOT — fallback 0 (sin sobrecargo). */
+    distanceKm?: number;
 }
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
@@ -148,12 +152,34 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
             createdAt: contract.createdAt,
         });
 
+        // 3. Contrato canónico B2B (8 campos obligatorios). Fallbacks canónicos del
+        //    SSOT: nunca PII inventada; la atención telefónica recae en la Centralita
+        //    oficial (INV-12) y una distancia desconocida es 0 (sin sobrecargo
+        //    logístico). Un solo contrato, cinco emisores.
+        const eventType =
+            typeof body.eventType === 'string' && body.eventType.trim() !== ''
+                ? body.eventType.trim()
+                : 'particular';
+        const distanceKm =
+            typeof body.distanceKm === 'number' && Number.isFinite(body.distanceKm) && body.distanceKm >= 0
+                ? body.distanceKm
+                : 0;
+
         fireAndForgetN8n('b2b-quote', {
             event: 'CONTRACT_QUOTE_DISPATCHED',
             contractId: persistedId,
             requestId: contract.requestId,
+            // ── Contrato obligatorio del nodo Code de n8n ──
+            clientName: contract.parties.client.name,
+            clientPhone: contract.parties.client.phone || CENTRALITA_EAR_OS,
+            eventType,
             eventDate: contract.eventDetails.date,
             location: contract.eventDetails.location,
+            distanceKm,
+            // ── Trazabilidad y desglose fiscal SSOT ──
+            quoteId: contract.requestId,
+            totalWithVat: contract.financials.totalAmount,
+            // ── Contexto adicional ──
             baseAmount: contract.financials.baseAmount,
         });
 

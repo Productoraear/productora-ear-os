@@ -5,8 +5,8 @@
   "mode": "SIMULADO",
   "probed": false,
   "source": "static",
-  "checkedAt": "2026-11-27T20:27:10.905Z",
-  "startedAt": "2026-11-27T20:27:08.925Z",
+  "checkedAt": "2026-11-27T20:46:51.455Z",
+  "startedAt": "2026-11-27T20:46:49.873Z",
   "ssot": {
     "file": "src\\lib\\constants\\ear-os-ssot.ts",
     "values": {
@@ -48,6 +48,16 @@
       "location",
       "distanceKm"
     ],
+    "contractFields": [
+      "clientName",
+      "clientPhone",
+      "eventType",
+      "eventDate",
+      "location",
+      "distanceKm",
+      "quoteId",
+      "totalWithVat"
+    ],
     "ssotLiterals": {
       "baseSolista": 350,
       "artista": 0.8,
@@ -64,7 +74,7 @@
   },
   "payloads": {
     "cupon": {
-      "requestId": "SMOKE-B2B-QUOTE-MWZFN0V1",
+      "requestId": "SMOKE-B2B-QUOTE-MWZGCC4F",
       "smokeTest": true,
       "source": "ear-os-smoke-harness",
       "event": "cita_iniciada_por_whatsapp",
@@ -75,6 +85,8 @@
       "eventDate": "2026-11-28",
       "location": "Madrid",
       "distanceKm": 15,
+      "quoteId": "SMOKE-B2B-QUOTE-MWZGCC4F",
+      "totalWithVat": 423.5,
       "format": "solista_edwin",
       "formatCatalogId": "solista-edwin-agudelo",
       "hub": "Hub Méntrida",
@@ -97,11 +109,11 @@
       "integrity": {
         "algorithm": "SHA-256",
         "scope": "canonical-payload",
-        "hash": "e942af7cda27da4cdcc81fe1f3365c2f198c818b104df547eb5e5f01b6282591"
+        "hash": "a9ab6b4813d28c737cfd3c9045fa57dfa70e070141f94f2024638a480ac3e192"
       }
     },
     "sinCupon": {
-      "requestId": "SMOKE-B2B-QUOTE-MWZFN0V1",
+      "requestId": "SMOKE-B2B-QUOTE-MWZGCC4F",
       "smokeTest": true,
       "source": "ear-os-smoke-harness",
       "event": "cotizacion_directa_sin_cupon",
@@ -112,6 +124,8 @@
       "eventDate": "2026-11-28",
       "location": "Madrid",
       "distanceKm": 15,
+      "quoteId": "SMOKE-B2B-QUOTE-MWZGCC4F",
+      "totalWithVat": 665.5,
       "format": "solista_edwin",
       "formatCatalogId": "solista-edwin-agudelo",
       "hub": "Hub Méntrida",
@@ -134,7 +148,7 @@
       "integrity": {
         "algorithm": "SHA-256",
         "scope": "canonical-payload",
-        "hash": "48d14dd22a7162b33712cc35aab4a4999b38c5a4fccafde475b452b56a3d202b"
+        "hash": "3a94e27957ff0b151533687fe812910bafb39471ba5006f59c835c172bb10b3a"
       }
     }
   },
@@ -211,7 +225,7 @@
     {
       "id": "G2_PAYLOAD_CANONICO",
       "ok": true,
-      "detail": "9/9 · requestId=SMOKE-B2B-QUOTE-MWZFN0V1",
+      "detail": "9/9 · requestId=SMOKE-B2B-QUOTE-MWZGCC4F",
       "checks": [
         {
           "id": "titular",
@@ -246,7 +260,7 @@
         {
           "id": "integrity.sha256",
           "ok": true,
-          "detail": "e942af7cda27da4c…"
+          "detail": "a9ab6b4813d28c73…"
         },
         {
           "id": "priceLock.sha256",
@@ -256,7 +270,7 @@
         {
           "id": "contrato_n8n",
           "ok": true,
-          "detail": "clientName,clientPhone,eventType,eventDate,location,distanceKm"
+          "detail": "clientName,clientPhone,eventType,eventDate,location,distanceKm,quoteId,totalWithVat"
         }
       ]
     },
@@ -266,7 +280,7 @@
       "detail": "valid=true · 10/10 mandatos · total=350 EUR",
       "output": {
         "valid": true,
-        "requestId": "SMOKE-B2B-QUOTE-MWZFN0V1",
+        "requestId": "SMOKE-B2B-QUOTE-MWZGCC4F",
         "smokeTest": true,
         "source": "ear-os-smoke-harness",
         "event": "cita_iniciada_por_whatsapp",
@@ -277,6 +291,8 @@
         "eventDate": "2026-11-28",
         "location": "Madrid",
         "distanceKm": 15,
+        "quoteId": "SMOKE-B2B-QUOTE-MWZGCC4F",
+        "totalWithVat": 423.5,
         "format": "solista_edwin",
         "formatCatalogId": "solista-edwin-agudelo",
         "hub": "Hub Méntrida",
@@ -299,7 +315,7 @@
         "integrity": {
           "algorithm": "SHA-256",
           "scope": "canonical-payload",
-          "hash": "e942af7cda27da4cdcc81fe1f3365c2f198c818b104df547eb5e5f01b6282591"
+          "hash": "a9ab6b4813d28c737cfd3c9045fa57dfa70e070141f94f2024638a480ac3e192"
         },
         "logistica": 0,
         "hotel": 0,
@@ -378,7 +394,7 @@
       "detail": "valid=true · total=550 EUR vs esperado 550 EUR (delta 0) · fallidos=ninguno",
       "output": {
         "valid": true,
-        "requestId": "SMOKE-B2B-QUOTE-MWZFN0V1",
+        "requestId": "SMOKE-B2B-QUOTE-MWZGCC4F",
         "smokeTest": true,
         "source": "ear-os-smoke-harness",
         "event": "cotizacion_directa_sin_cupon",
@@ -389,6 +405,8 @@
         "eventDate": "2026-11-28",
         "location": "Madrid",
         "distanceKm": 15,
+        "quoteId": "SMOKE-B2B-QUOTE-MWZGCC4F",
+        "totalWithVat": 665.5,
         "format": "solista_edwin",
         "formatCatalogId": "solista-edwin-agudelo",
         "hub": "Hub Méntrida",
@@ -411,7 +429,7 @@
         "integrity": {
           "algorithm": "SHA-256",
           "scope": "canonical-payload",
-          "hash": "48d14dd22a7162b33712cc35aab4a4999b38c5a4fccafde475b452b56a3d202b"
+          "hash": "3a94e27957ff0b151533687fe812910bafb39471ba5006f59c835c172bb10b3a"
         },
         "logistica": 0,
         "hotel": 0,
@@ -487,29 +505,30 @@
     },
     {
       "id": "G5_EMISORES_CONTRATO",
-      "ok": false,
-      "detail": "1/5 emisores cumplen los 6 campos required",
+      "ok": true,
+      "detail": "5/5 emisores cumplen los 8 campos del contrato canónico (clientName, clientPhone, eventType, eventDate, location, distanceKm, quoteId, totalWithVat)",
       "findings": [
         {
           "file": "src\\app\\api\\contracts\\generate\\route.ts",
-          "line": 151,
+          "line": 168,
           "callee": "fireAndForgetN8n",
           "payloadShape": "OBJECT",
           "keys": [
             "event",
             "contractId",
             "requestId",
-            "eventDate",
-            "location",
-            "baseAmount"
-          ],
-          "missing": [
             "clientName",
             "clientPhone",
             "eventType",
-            "distanceKm"
+            "eventDate",
+            "location",
+            "distanceKm",
+            "quoteId",
+            "totalWithVat",
+            "baseAmount"
           ],
-          "contractOk": false
+          "missing": [],
+          "contractOk": true
         },
         {
           "file": "src\\app\\api\\quote\\generate-lock\\route.ts",
@@ -539,23 +558,34 @@
         },
         {
           "file": "src\\app\\api\\vendor\\b2b-quote\\route.ts",
-          "line": 135,
+          "line": 142,
           "callee": "fireAndForgetN8n",
-          "payloadShape": "UNRESOLVED",
-          "keys": [],
-          "missing": [
-            "clientName",
-            "clientPhone",
-            "eventType",
+          "payloadShape": "OBJECT",
+          "keys": [
+            "event",
+            "quoteId",
+            "timestamp",
+            "fincaId",
+            "fincaRazonSocial",
+            "fincaCif",
             "eventDate",
             "location",
-            "distanceKm"
+            "clientName",
+            "clientEmail",
+            "clientPhone",
+            "eventType",
+            "distanceKm",
+            "subtotal",
+            "totalWithVat",
+            "servicesCount",
+            "integrityHash"
           ],
-          "contractOk": false
+          "missing": [],
+          "contractOk": true
         },
         {
           "file": "src\\lib\\services\\trello.ts",
-          "line": 50,
+          "line": 74,
           "callee": "dispatchToN8n",
           "payloadShape": "OBJECT",
           "keys": [
@@ -571,22 +601,23 @@
             "selectedAssets",
             "priority",
             "channel",
-            "os_origin",
-            "dispatchedAt"
-          ],
-          "missing": [
             "clientName",
             "clientPhone",
             "eventType",
             "eventDate",
             "location",
-            "distanceKm"
+            "distanceKm",
+            "quoteId",
+            "totalWithVat",
+            "os_origin",
+            "dispatchedAt"
           ],
-          "contractOk": false
+          "missing": [],
+          "contractOk": true
         },
         {
           "file": "src\\lib\\services\\webhook_dispatcher.ts",
-          "line": 52,
+          "line": 76,
           "callee": "dispatchToN8n",
           "payloadShape": "OBJECT",
           "keys": [
@@ -597,129 +628,34 @@
             "timestamp",
             "prioridad",
             "metadata",
-            "os_origin",
-            "dispatch_time"
-          ],
-          "missing": [
             "clientName",
             "clientPhone",
             "eventType",
             "eventDate",
             "location",
-            "distanceKm"
+            "distanceKm",
+            "quoteId",
+            "totalWithVat",
+            "os_origin",
+            "dispatch_time"
           ],
-          "contractOk": false
+          "missing": [],
+          "contractOk": true
         }
+      ],
+      "contractFields": [
+        "clientName",
+        "clientPhone",
+        "eventType",
+        "eventDate",
+        "location",
+        "distanceKm",
+        "quoteId",
+        "totalWithVat"
       ]
     }
   ],
   "diagnostics": [
-    {
-      "id": "EMISOR_FUERA_DE_CONTRATO",
-      "severity": "P0",
-      "detail": "src\\app\\api\\contracts\\generate\\route.ts:151 (fireAndForgetN8n) omite: clientName,clientPhone,eventType,distanceKm",
-      "file": "src\\app\\api\\contracts\\generate\\route.ts",
-      "line": 151,
-      "callee": "fireAndForgetN8n",
-      "payloadShape": "OBJECT",
-      "keys": [
-        "event",
-        "contractId",
-        "requestId",
-        "eventDate",
-        "location",
-        "baseAmount"
-      ],
-      "missing": [
-        "clientName",
-        "clientPhone",
-        "eventType",
-        "distanceKm"
-      ],
-      "contractOk": false
-    },
-    {
-      "id": "EMISOR_FUERA_DE_CONTRATO",
-      "severity": "P0",
-      "detail": "src\\app\\api\\vendor\\b2b-quote\\route.ts:135 (fireAndForgetN8n) omite: clientName,clientPhone,eventType,eventDate,location,distanceKm",
-      "file": "src\\app\\api\\vendor\\b2b-quote\\route.ts",
-      "line": 135,
-      "callee": "fireAndForgetN8n",
-      "payloadShape": "UNRESOLVED",
-      "keys": [],
-      "missing": [
-        "clientName",
-        "clientPhone",
-        "eventType",
-        "eventDate",
-        "location",
-        "distanceKm"
-      ],
-      "contractOk": false
-    },
-    {
-      "id": "EMISOR_FUERA_DE_CONTRATO",
-      "severity": "P0",
-      "detail": "src\\lib\\services\\trello.ts:50 (dispatchToN8n) omite: clientName,clientPhone,eventType,eventDate,location,distanceKm",
-      "file": "src\\lib\\services\\trello.ts",
-      "line": 50,
-      "callee": "dispatchToN8n",
-      "payloadShape": "OBJECT",
-      "keys": [
-        "source",
-        "dossierId",
-        "contactName",
-        "contactEmail",
-        "contactPhone",
-        "occasion",
-        "province",
-        "totalAmount",
-        "depositAmount",
-        "selectedAssets",
-        "priority",
-        "channel",
-        "os_origin",
-        "dispatchedAt"
-      ],
-      "missing": [
-        "clientName",
-        "clientPhone",
-        "eventType",
-        "eventDate",
-        "location",
-        "distanceKm"
-      ],
-      "contractOk": false
-    },
-    {
-      "id": "EMISOR_FUERA_DE_CONTRATO",
-      "severity": "P0",
-      "detail": "src\\lib\\services\\webhook_dispatcher.ts:52 (dispatchToN8n) omite: clientName,clientPhone,eventType,eventDate,location,distanceKm",
-      "file": "src\\lib\\services\\webhook_dispatcher.ts",
-      "line": 52,
-      "callee": "dispatchToN8n",
-      "payloadShape": "OBJECT",
-      "keys": [
-        "monto",
-        "fuente",
-        "url",
-        "activosAsignados",
-        "timestamp",
-        "prioridad",
-        "metadata",
-        "os_origin",
-        "dispatch_time"
-      ],
-      "missing": [
-        "clientName",
-        "clientPhone",
-        "eventType",
-        "eventDate",
-        "location",
-        "distanceKm"
-      ],
-      "contractOk": false
-    },
     {
       "id": "EMISOR_PRODUCCION_FUERA_DE_GIT",
       "severity": "P1",
@@ -732,18 +668,18 @@
     "probed": false,
     "source": "static",
     "mode": "SIMULADO",
-    "checkedAt": "2026-11-27T20:27:10.905Z",
+    "checkedAt": "2026-11-27T20:46:51.455Z",
     "note": "ejecutado con --offline: no se sondeó la red"
   },
-  "verdict": "ROJO",
-  "exitCode": 1,
+  "verdict": "PARCIAL",
+  "exitCode": 0,
   "evidence": {
     "id": "N8N_B2B_WEBHOOK_SMOKE",
     "cmd": "node scripts/test_n8n_b2b_webhook.cjs --offline --report=.antigravity/evidence/n8n_b2b_webhook_smoke_offline.json",
-    "exit": 1,
+    "exit": 0,
     "url": null,
     "sha256": null,
-    "ts": "2026-11-27T20:27:10.905Z"
+    "ts": "2026-11-27T20:46:51.455Z"
   },
   "reportPath": ".antigravity\\evidence\\n8n_b2b_webhook_smoke_offline.json"
 }

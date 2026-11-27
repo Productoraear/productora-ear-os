@@ -4,8 +4,11 @@
  * EAR OS · PRUEBA DE HUMO DEL PUENTE n8n B2B (webhook `b2b-quote`)
  * ════════════════════════════════════════════════════════════════════════════
  * Certifica, en una sola pasada, las TRES capas que pueden romperse en silencio:
- *   1. CONTRATO   · el payload canónico EAR OS ↔ los campos que el formateador
- *                   de n8n exige (`const required = [...]` del nodo Code).
+ *   1. CONTRATO   · el payload canónico EAR OS ↔ los 8 campos obligatorios: los
+ *                   6 `required` del formateador n8n (`const required = [...]`
+ *                   del nodo Code) + `quoteId` y `totalWithVat` (trazabilidad del
+ *                   expediente y desglose fiscal SSOT). Un solo contrato, cinco
+ *                   emisores.
  *   2. FORMATEADOR· ejecuta el `jsCode` REAL del workflow (sandbox vm) y comprueba
  *                   la tarifa oficial (550) y el suelo con cupón (350).
  *   3. TRANSPORTE · POST nativo contra `/webhook/b2b-quote` (fallback declarado a
@@ -89,6 +92,22 @@ const CONTRACT = Object.freeze({
   centralitaDisplay: '+34 693 693 048',
   centralitaE164: '+34693693048',
 });
+
+/**
+ * Campos que el contrato canónico EAR OS exige a TODO emisor, además de los
+ * `required` declarados en el formateador n8n: `quoteId` (trazabilidad del
+ * expediente — ningún lead huérfano) y `totalWithVat` (desglose fiscal SSOT).
+ * Un solo contrato, cinco emisores. Sin estos dos campos el puente deja el
+ * expediente sin referencia o sin importe fiscal, aunque el formateador lo
+ * acepte: era el falso positivo que G5 debe erradicar.
+ */
+const CANONICAL_EXTRA_FIELDS = Object.freeze(['quoteId', 'totalWithVat']);
+
+/** Contrato completo = `required` del formateador n8n + campos canónicos EAR OS. */
+function resolveContractFields(workflow) {
+  const base = workflow && Array.isArray(workflow.required) ? workflow.required : [];
+  return [...base, ...CANONICAL_EXTRA_FIELDS];
+}
 
 const gates = [];
 const diagnostics = [];
@@ -341,8 +360,10 @@ function buildCanonicalPayload(ssot, coupon, now) {
   const priceLockBasis = `solista|${distanceKm}|${franchiseKm}|${totalPriceEur}|${depositEur}`;
   const priceLockHash = sha256(priceLockBasis);
 
+  const requestId = `SMOKE-${SLUG.toUpperCase()}-${now.getTime().toString(36).toUpperCase()}`;
+  const totalWithVat = eur2(totalPriceEur * (1 + ssot.vatRate));
   const core = {
-    requestId: `SMOKE-${SLUG.toUpperCase()}-${now.getTime().toString(36).toUpperCase()}`,
+    requestId,
     smokeTest: true,
     source: 'ear-os-smoke-harness',
     event: coupon ? 'cita_iniciada_por_whatsapp' : 'cotizacion_directa_sin_cupon',
@@ -354,6 +375,9 @@ function buildCanonicalPayload(ssot, coupon, now) {
     eventDate: nextSaturdayIso(now),
     location: CONTRACT.location,
     distanceKm,
+    // ── Contrato canónico EAR OS: trazabilidad + desglose fiscal SSOT ──
+    quoteId: requestId,
+    totalWithVat,
     // ── Identidad tarifaria canónica EAR OS ──
     format: CONTRACT.wireFormat,
     formatCatalogId: CONTRACT.catalogFormatId,
@@ -523,19 +547,69 @@ function resolvePayloadKeys(ts, node, sourceFile) {
       ts.forEachChild(n, visit);
     };
     visit(sourceFile);
+    // El identificador puede ser un parámetro/propiedad tipado con una interfaz
+    // local (p. ej. `function dispatch(event: B2BN8nCrmEvent)`): su nombre no
+    // declara nada, pero el TIPO anotado sí define las claves reales del payload.
+    if (keys === null) keys = resolveKeysFromTypedIdentifier(ts, sourceFile, name);
     return keys;
   }
   return null;
 }
 
 /**
+ * Claves de un identificador cuyo tipo está anotado con una interfaz o alias
+ * local. Se activa SOLO cuando la resolución por nombre falla (aditivo, nunca
+ * altera una resolución previa). Sin esto, G5 marcaría un falso negativo sobre
+ * un emisor que SÍ cumple el contrato y pasa su payload tipado.
+ */
+function resolveKeysFromTypedIdentifier(ts, sourceFile, name) {
+  let typeName = null;
+  const findAnnotated = (n) => {
+    if (typeName !== null) return;
+    if (
+      (ts.isParameter(n) || ts.isPropertyDeclaration(n) || ts.isVariableDeclaration(n)) &&
+      n.name &&
+      ts.isIdentifier(n.name) &&
+      n.name.text === name &&
+      n.type &&
+      ts.isTypeReferenceNode(n.type) &&
+      ts.isIdentifier(n.type.typeName)
+    ) {
+      typeName = n.type.typeName.text;
+      return;
+    }
+    ts.forEachChild(n, findAnnotated);
+  };
+  findAnnotated(sourceFile);
+  if (typeName === null) return null;
+
+  let members = null;
+  const findType = (n) => {
+    if (members !== null) return;
+    if (ts.isInterfaceDeclaration(n) && n.name.text === typeName) {
+      members = n.members.filter((m) => m.name && ts.isIdentifier(m.name)).map((m) => m.name.text);
+      return;
+    }
+    if (ts.isTypeAliasDeclaration(n) && n.name.text === typeName) {
+      const t = n.type && n.type.members ? n.type.members : [];
+      members = t.filter((m) => m.name && ts.isIdentifier(m.name)).map((m) => m.name.text);
+      return;
+    }
+    ts.forEachChild(n, findType);
+  };
+  findType(sourceFile);
+  return members;
+}
+
+/**
  * Auditoría AST de los emisores `N8n('<slug>', payload)`: compara las claves
- * reales de cada llamada con el array `required` del formateador de n8n.
- * Es la causa raíz del "puente roto": cuatro emisores, cuatro formas, un solo
+ * reales de cada llamada con el CONTRATO COMPLETO (los `required` del
+ * formateador de n8n + `quoteId` y `totalWithVat`).
+ * Es la causa raíz del "puente roto": cinco emisores, cinco formas, un solo
  * contrato. Determinista y sin ejecutar el código (cero efectos secundarios).
  */
 function auditEmitters(ts, workflow) {
-  const required = Array.isArray(workflow.required) ? workflow.required : [];
+  const required = resolveContractFields(workflow);
   const findings = [];
   for (const abs of collectTsFiles(SRC_DIR, [])) {
     let text;
@@ -763,7 +837,7 @@ async function main() {
     { id: 'tarifas', ok: couponPayload.standardPriceEur === 550 && couponPayload.floorPriceEur === 350, detail: `oficial ${couponPayload.standardPriceEur} / suelo ${couponPayload.floorPriceEur}` },
     { id: 'integrity.sha256', ok: couponPayload.integrity.hash === recomputeIntegrity(couponPayload), detail: `${couponPayload.integrity.hash.slice(0, 16)}…` },
     { id: 'priceLock.sha256', ok: couponPayload.priceLock.hash === sha256(priceLockBasis), detail: `${couponPayload.priceLock.hash.slice(0, 16)}…` },
-    { id: 'contrato_n8n', ok: Boolean(workflow && workflow.required.every((k) => Object.prototype.hasOwnProperty.call(couponPayload, k))), detail: workflow ? workflow.required.join(',') : 'sin workflow' },
+    { id: 'contrato_n8n', ok: Boolean(workflow && resolveContractFields(workflow).every((k) => Object.prototype.hasOwnProperty.call(couponPayload, k))), detail: workflow ? resolveContractFields(workflow).join(',') : 'sin workflow' },
   ];
   recordGate('G2_PAYLOAD_CANONICO', payloadChecks.every((c) => c.ok),
     `${payloadChecks.filter((c) => c.ok).length}/${payloadChecks.length} · requestId=${couponPayload.requestId}`,
@@ -805,9 +879,10 @@ async function main() {
     }
   }
   const brokenEmitters = emitterFindings.filter((f) => !f.contractOk);
+  const contractFields = resolveContractFields(workflow);
   recordGate('G5_EMISORES_CONTRATO', emitterFindings.length > 0 && brokenEmitters.length === 0,
-    `${emitterFindings.length - brokenEmitters.length}/${emitterFindings.length} emisores cumplen los ${workflow ? workflow.required.length : 0} campos required`,
-    { findings: emitterFindings });
+    `${emitterFindings.length - brokenEmitters.length}/${emitterFindings.length} emisores cumplen los ${contractFields.length} campos del contrato canónico (${contractFields.join(', ')})`,
+    { findings: emitterFindings, contractFields });
   for (const finding of brokenEmitters) {
     recordDiagnostic('EMISOR_FUERA_DE_CONTRATO', 'P0',
       `${finding.file}:${finding.line} (${finding.callee}) omite: ${finding.missing.join(',') || 'resolución de claves imposible'}`,
@@ -917,6 +992,7 @@ async function main() {
           active: workflow.active,
           webhook: workflow.webhook,
           required: workflow.required,
+          contractFields: resolveContractFields(workflow),
           ssotLiterals: workflow.ssotLiterals,
         }
       : null,
