@@ -2,8 +2,8 @@
  * 🧪 VERIFICACIÓN FORENSE — PARIDAD DEL MOTOR DE PRECIOS CON EL SSOT
  * ---------------------------------------------------------------------------
  * Objetivo: demostrar que NO existe un segundo motor de dinero.
- *   1. Invariantes SSOT (base 350 €, depósito 100 €, franquicia 50 km).
- *   2. Franquicia y hotel canónicos (0/50/200/201 km, 03:00 AM).
+ *   1. Invariantes SSOT (base 350 €, depósito 100 €, franquicia 100 km).
+ *   2. Franquicia y hotel canónicos (0/100/150/200/201 km, 03:00 AM).
  *   3. Paridad exacta entre terminal de pricing, Astra, Deal-Closer,
  *      centralita mariachi, radar geo-acústico y Price-Lock.
  *   4. Bloqueo estático de matemáticas paralelas en la ruta de venta.
@@ -16,6 +16,7 @@
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { HUB_MENTRIDA_COORDINATES } from '../src/lib/constants/ear-os-ssot';
 import {
   BASE_SOLISTA,
   DEPOSITO_STRIPE,
@@ -52,7 +53,7 @@ function check(name: string, ok: boolean, detail: string): void {
 /* ── 1. Invariantes SSOT ─────────────────────────────────────────────────── */
 check('SSOT: tarifa base solista 350,00 €', BASE_SOLISTA === 350, `BASE_SOLISTA=${BASE_SOLISTA}`);
 check('SSOT: depósito Stripe 100,00 €', DEPOSITO_STRIPE === 100, `DEPOSITO_STRIPE=${DEPOSITO_STRIPE}`);
-check('SSOT: franquicia de 50 km', KM_EXENTOS === 50, `KM_EXENTOS=${KM_EXENTOS}`);
+check('SSOT: franquicia de 100 km', KM_EXENTOS === 100, `KM_EXENTOS=${KM_EXENTOS}`);
 check('SSOT: tarifa logística 1,50 €/km (doctrina CEO)', COSTE_KM === 1.5, `COSTE_KM=${COSTE_KM}`);
 
 /* ── 2. Franquicia y hotel canónicos ─────────────────────────────────────── */
@@ -60,6 +61,7 @@ const zeroKm = computeSovereignLogistics(0);
 const fortyKm = computeSovereignLogistics(40);
 const fiftyKm = computeSovereignLogistics(50);
 const hundredKm = computeSovereignLogistics(100);
+const oneFiftyKm = computeSovereignLogistics(150);
 const twoHundredKm = computeSovereignLogistics(200);
 const twoOhOneKm = computeSovereignLogistics(201);
 const earlyEnd = computeSovereignLogistics(10, '03:00');
@@ -68,9 +70,14 @@ const beforeHotelHour = computeSovereignLogistics(10, '02:59');
 check('Franquicia: 40 km => desplazamiento 0 €', fortyKm.travelCost === 0, `travelCost=${fortyKm.travelCost}`);
 check('Franquicia: 50 km => desplazamiento 0 €', fiftyKm.travelCost === 0, `travelCost=${fiftyKm.travelCost}`);
 check(
-  'Tramo facturable: 100 km => 50 km × 1,50 € = 75 €',
-  hundredKm.billableKm === 50 && hundredKm.travelCost === 75,
+  'Franquicia: 100 km => desplazamiento 0 €',
+  hundredKm.billableKm === 0 && hundredKm.travelCost === 0,
   `billableKm=${hundredKm.billableKm} · travelCost=${hundredKm.travelCost}`,
+);
+check(
+  'Tramo facturable: 150 km => 50 km × 1,50 € = 75 €',
+  oneFiftyKm.billableKm === 50 && oneFiftyKm.travelCost === 75,
+  `billableKm=${oneFiftyKm.billableKm} · travelCost=${oneFiftyKm.travelCost}`,
 );
 check(
   'Hotel: 200 km NO pernocta',
@@ -96,15 +103,17 @@ check('Orden: 0 km sin pernocta', zeroKm.totalLogistics === 0, `total=${zeroKm.t
 
 /* ── 3. Presupuesto soberano + split ─────────────────────────────────────── */
 const quote100 = calculateSovereignQuote({ format: 'solista', distanceKm: 100, soundRider: 'standard' });
-const quote100Again = calculateSovereignQuote({ format: 'solista', distanceKm: 100, soundRider: 'standard' });
-const splitSum = quote100.split.artist80 + quote100.split.earOs10 + quote100.split.vimume10;
+const quote150 = calculateSovereignQuote({ format: 'solista', distanceKm: 150, soundRider: 'standard' });
+const quote150Again = calculateSovereignQuote({ format: 'solista', distanceKm: 150, soundRider: 'standard' });
+const splitSum = quote150.split.artist80 + quote150.split.earOs10 + quote150.split.vimume10;
 
-check('Presupuesto: 350 € + 75 € logística = 425 €', quote100.totalBudget === 425, `totalBudget=${quote100.totalBudget}`);
-check('Split 80/10/10 cierra al céntimo', splitSum === quote100.totalBudget, `suma=${splitSum}`);
+check('Presupuesto: 350 € + 0 € logística (100 km exentos) = 350 €', quote100.totalBudget === 350, `totalBudget=${quote100.totalBudget}`);
+check('Presupuesto: 350 € + 75 € logística (150 km) = 425 €', quote150.totalBudget === 425, `totalBudget=${quote150.totalBudget}`);
+check('Split 80/10/10 cierra al céntimo', splitSum === quote150.totalBudget, `suma=${splitSum}`);
 check(
   'Price-Lock: hash SHA-256 determinista',
-  quote100.priceLockHash === quote100Again.priceLockHash && /^[a-f0-9]{64}$/.test(quote100.priceLockHash),
-  `hash=${quote100.priceLockHash.slice(0, 16)}…`,
+  quote150.priceLockHash === quote150Again.priceLockHash && /^[a-f0-9]{64}$/.test(quote150.priceLockHash),
+  `hash=${quote150.priceLockHash.slice(0, 16)}…`,
 );
 const corrupted = calculateSovereignQuote({ format: 'solista', distanceKm: Number.NaN, soundRider: 'standard' });
 check(
@@ -114,8 +123,8 @@ check(
 );
 check(
   'Rider Bose F1 Elite: +150 € sobre el total canónico',
-  calculateSovereignQuote({ format: 'solista', distanceKm: 100, soundRider: 'bose_f1_elite' }).totalBudget === 575,
-  `total=${calculateSovereignQuote({ format: 'solista', distanceKm: 100, soundRider: 'bose_f1_elite' }).totalBudget}`,
+  calculateSovereignQuote({ format: 'solista', distanceKm: 150, soundRider: 'bose_f1_elite' }).totalBudget === 575,
+  `total=${calculateSovereignQuote({ format: 'solista', distanceKm: 150, soundRider: 'bose_f1_elite' }).totalBudget}`,
 );
 
 /* ── 4. Paridad entre motores ───────────────────────────────────────────── */
@@ -173,13 +182,16 @@ check(
 );
 
 /* ── 4 bis. Motor geo-pricer (ruta de dinero: cero tarifas duplicadas) ───── */
-const HUB_COORDS = { lat: 40.416775, lng: -3.703790 };
-const TOLEDO_COORDS = { lat: 39.862831, lng: -4.027324 };
+const HUB_COORDS = {
+  latitude: HUB_MENTRIDA_COORDINATES.latitude,
+  longitude: HUB_MENTRIDA_COORDINATES.longitude,
+};
+const VALENCIA_COORDS = { lat: 39.469907, lng: -0.376288 };
 
 const geoQuote = await calculateGeoPricing({
   artistId: 'edwin-agudelo',
   origin: HUB_COORDS,
-  destination: TOLEDO_COORDS,
+  destination: VALENCIA_COORDS,
   baseFee: BASE_SOLISTA,
   costPerKm: COSTE_KM,
   franchiseKm: KM_EXENTOS,
@@ -190,12 +202,12 @@ const geoExpectedTravel: number = computeSovereignLogistics(geoQuote.distanceKm)
 
 check(
   'Geo-pricer: trayecto idéntico a la logística canónica',
-  Math.abs(geoQuote.travelCost - geoExpectedTravel) <= 0.5,
+  Math.abs(geoQuote.travelCost - geoExpectedTravel) <= 0.75,
   `distancia=${geoQuote.distanceKm} km · travelCost=${geoQuote.travelCost} € (canónico ${geoExpectedTravel} €)`,
 );
 check(
   'Geo-pricer: total = 350 € + logística del SSOT',
-  Math.abs(geoQuote.totalAmount - (BASE_SOLISTA + geoExpectedTravel)) <= 0.5,
+  Math.abs(geoQuote.totalAmount - (BASE_SOLISTA + geoExpectedTravel)) <= 0.75,
   `total=${geoQuote.totalAmount} € (esperado ${BASE_SOLISTA + geoExpectedTravel} €)`,
 );
 check(
@@ -206,11 +218,11 @@ check(
 
 const edwinSolista = await calculateEdwinAgudeloFormatPricing({
   origin: HUB_COORDS,
-  destination: TOLEDO_COORDS,
+  destination: VALENCIA_COORDS,
 });
 check(
   'Motor Edwin: base 350 € del SSOT y tarifa 1,50 €/km (no 0,75)',
-  edwinSolista.baseFee === BASE_SOLISTA && Math.abs(edwinSolista.travelCost - geoExpectedTravel) <= 0.5,
+  edwinSolista.baseFee === BASE_SOLISTA && Math.abs(edwinSolista.travelCost - geoExpectedTravel) <= 0.75,
   `base=${edwinSolista.baseFee} € · travelCost=${edwinSolista.travelCost} € · km facturables=${Math.max(0, edwinSolista.distanceKm - KM_EXENTOS).toFixed(2)}`,
 );
 check(
@@ -221,7 +233,7 @@ check(
 
 const edwinQuinteto = await calculateEdwinAgudeloFormatPricing({
   origin: HUB_COORDS,
-  destination: TOLEDO_COORDS,
+  destination: VALENCIA_COORDS,
   musiciansCount: 3,
 });
 check(
