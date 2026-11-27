@@ -5,6 +5,7 @@ import {
   isPathAllowedForVertical,
   checkVerticalCircuitBreaker,
 } from '@/lib/domains/sovereign-domain-registry';
+import { resolveLegacyRouteAlias } from '@/lib/routing/legacy-route-aliases';
 
 /**
  * EAR OS Edge Middleware (S-Class)
@@ -369,6 +370,32 @@ export function middleware(request: NextRequest) {
         },
       }
     );
+  }
+
+  // 2.5. RESOLUCION DE ALIAS LEGACY (REMEDIACION DE COBERTURA GSC · P0 2026-11-27)
+  //      Google conserva indexadas 39 URLs historicas (`.antigravity/reports/
+  //      gsc_high_opportunity.json`) que hoy morian en 404 o quedaban replegadas
+  //      al escaparate por el gate de abajo. Se desvian con 301 PERMANENTE a una
+  //      superficie certificada, preservando los parametros del visitante
+  //      (utm_*, gclid, ref) sin pisar el destino.
+  //      · El patron opaco `prov-XXXX`/`v-XXXX` NO se resuelve aqui: el Edge no
+  //        lee disco y las 13.094 fichas viven en `public/data/`. Lo resuelve la
+  //        propia ficha server-side (`/proveedores/[slug]/page.tsx`) para poder
+  //        aterrizar en la ficha canonica real, no en un directorio generico.
+  const legacyAlias: string | null = resolveLegacyRouteAlias(url.pathname);
+  if (legacyAlias !== null) {
+    const aliasParts: string[] = legacyAlias.split('?');
+    const aliasTarget = new URL(aliasParts[0], request.url);
+    for (const [key, value] of new URLSearchParams(aliasParts[1] ?? '')) {
+      aliasTarget.searchParams.set(key, value);
+    }
+    url.searchParams.forEach((value, key) => {
+      if (!aliasTarget.searchParams.has(key)) aliasTarget.searchParams.set(key, value);
+    });
+    const aliasResponse = NextResponse.redirect(aliasTarget, 301);
+    aliasResponse.headers.set('x-ear-vertical', vertical.id);
+    aliasResponse.headers.set('x-ear-legacy-alias', '301-legacy-route');
+    return aliasResponse;
   }
 
   // 3. ROUTE-GATING · DARK LAUNCHING: cualquier ruta no certificada refluye con

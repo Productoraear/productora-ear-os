@@ -8022,3 +8022,57 @@ aprendizaje_ceo: el gate prepush valida invariantes globales; un fix parcial her
 siguiente_paso : sondear /api/health hasta buildSha == nuevo HEAD; después `git stash pop` para retomar booking/stripe en sesión limpia
 ```
 
+
+---
+
+## TIER1_GSC_LEGACY_ROUTES_301_REMEDIATION · 2026-11-27
+
+**Mandato (CEO):** cero 404 en las 39 oportunidades de Search Console; resolver el patron `prov-XXXX` con 301 a ficha canonica o directorio; `/checkout/presupuesto` -> `/reservar` preservando parametros.
+
+**Hallazgos forenses (verdad cruda, medida en esta sesion)**
+1. Los `redirect()`/`permanentRedirect()` emitidos desde `src/app/(public)/proveedores/[slug]/page.tsx` **NO producen 3xx** en Next.js 16.3.5: `/proveedores/otzarreta` (redirect preexistente a `/otzarreta`) responde **HTTP 200**. El resolvedor desplegado en la ficha era inoperante; se reubico en `src/middleware.ts` (Edge), donde los 301 SI se emiten (38 medidos).
+2. `src/data/all_providers_database.json` contiene los 30 ids `prov-<n>` del informe GSC con su slug semantico real (`prov-4765` -> `setroimagen-madrid`, ya citado en un comentario del propio codigo). Mapa cruzado con las consultas GSC: `prov-636`->"alqueria balada" (90 imp), `prov-1013`->"bamboo rent" (102 imp), `prov-2509`->"el vivar de la granja" (91 imp), `prov-4009`->"jota fierro" (69 imp).
+3. `/arsenal/...` y `/checkout/...` NO devolvian 404: el dark-launch gate los replegaba con 307 a `/`. Ahora 301 al destino canonico (`/presupuesto`, `/reservar`).
+4. `/bodas/madrid/alquiler-pantallas-led` ya resolvia por taxonomia canonica (200). Sin cambios.
+5. "Mixel Violin" YA tiene landing canonica 200: `/bodas/madrid/servicios/mixel-violin` (evidencia en `.antigravity/reports/AUDITORIA_FORENSE_SITEMAP_SCLASS.json`: coherence 100, Price-Lock CTA, 12 W/pax).
+
+**Cambios**
+- `src/lib/routing/legacy-route-aliases.ts` (NUEVO): resolvedor puro TS/Edge-safe (cero dependencias npm, cero `fs`) con mapa de rutas legacy, mapa de 30 ids opacos -> ficha canonica, mapa de prefijos y patron opaco con fallback `/proveedores`.
+- `src/middleware.ts`: nuevo paso 2.5 ANTES del dark-launch gate -> 301 permanente fusionando `utm_*`/`ref`/`gclid` sin pisar el destino.
+- `src/app/(public)/proveedores/[slug]/page.tsx`: mismo resolvedor (fuente unica de verdad) como defensa en profundidad + colapso del sufijo bodas.net `-consulta-disponibilidad-y-precios`.
+- `scripts/audit_gsc_routes_resolution.cjs` (NUEVO): arnes de cobertura GSC (analisis offline + sonda HTTP de primer salto y destino final encadenado).
+
+**Evidencia ejecutable (medida en esta sesion)**
+- `node scripts/audit_gsc_routes_resolution.cjs --base=http://localhost:3007` -> **Exit 0**, `GSC_404_COUNT=0` (incluye destino final de la cadena), `GSC_ORIGIN_404_COUNT=0`, `GSC_REDIRECTED_301=38`, `VERDICT=PASS`.
+- `node scripts/audit_gsc_routes_resolution.cjs --offline` -> **Exit 0**, `OFFLINE_DESTINOS_ROTOS=0`.
+- `npm run typecheck` -> **Exit 0** · `npm run lint` -> **Exit 0** (0 errores).
+- `npm run gate:prepush` -> **Exit 0 (42/42 compuertas)**; incluye `audit:omega-rojo` = `OMEGA_ROJO_SCORE=20/20 · VERDICT=VERDE`, `audit_cls_budget` -> `CLS_BUDGET_VERDICT=PASS` y `verify:middleware-reachability` -> PASS (afecta directo al cambio).
+- `node scripts/run_sv_protocol_15_gates.cjs` -> **16/17 PASS**; unico rojo `MC-F1` = sonda a PRODUCCION `https://www.productoraear.com/celebraciones` (hoy **308 -> /**) con deploy pendiente y **cero solape** con el diff (el mapa de alias no contiene `/celebraciones`).
+- `npm run audit:ssot` -> **Exit 0**, hash `e208462ea1a4e6796b31743ee0200794f18221fcc1154cb9e5e56526a0c41ea5` == referencia (Zona Cero intacta).
+- `npm run audit:routes` -> **Exit 0**, 549 rutas, 0 conflictos · `node scripts/audit_orphan_imports.cjs` -> **Exit 0**, `AUDIT_BROKEN_REACHABLE=0` · `npm run audit:cta-matrix` -> **Exit 0**, `VEREDICTO: PASS`.
+- Verificacion puntual: `/checkout/presupuesto?venue=finca-x&base=350` -> 301 `/reservar?venue=finca-x&base=350` · `/arsenal/iluminacion-dmx/malaga?utm_source=gsc` -> 301 `/presupuesto?utm_source=gsc` · `/proveedores/v-32714` -> 301 `/otzarreta` · `/proveedores/prov-999999` -> 301 `/proveedores` · `/proveedores/misha-violin-158103` -> 200 (sin regresion).
+
+```
+SIGMA://CLOSE/v1
+task_id        : TIER1_GSC_LEGACY_ROUTES_301_REMEDIATION
+estado_bloque  : VERIFICADO (38x301 + 1x200 medidos; 0 404 end-to-end) · prepush 42/42 Exit 0 · unico rojo externo MC-F1 en produccion
+hecho          : resolvedor Edge de alias legacy (prov-XXXX -> ficha canonica real) + /checkout/presupuesto -> /reservar con query preservada + sufijo bodas.net colapsado; arnes scripts/audit_gsc_routes_resolution.cjs
+evidence[]     : { id: ROUTES_PROBE, cmd: "node scripts/audit_gsc_routes_resolution.cjs --base=http://localhost:3007", exit: 0, GSC_404_COUNT: 0, GSC_REDIRECTED_301: 38, VERDICT: PASS }
+                 { id: ROUTES_OFFLINE, cmd: "node scripts/audit_gsc_routes_resolution.cjs --offline", exit: 0, OFFLINE_DESTINOS_ROTOS: 0 }
+                 { id: TYPECHECK, cmd: "npm run typecheck", exit: 0 }
+                 { id: LINT, cmd: "npm run lint", exit: 0, errors: 0 }
+                 { id: SSOT, cmd: "npm run audit:ssot", exit: 0, hash: "e208462ea1a4e6796b31743ee0200794f18221fcc1154cb9e5e56526a0c41ea5" }
+                 { id: PREPUSH, cmd: "npm run gate:prepush", exit: 0, gates: "42/42 PASS", omega_rojo: "20/20 VERDE", cls_budget: "PASS" }
+                 { id: G3_HARNESS, cmd: "node scripts/run_sv_protocol_15_gates.cjs", exit: 1, gates: "16/17 PASS", red: "MC-F1 (sonda a PRODUCCION /celebraciones, deploy pendiente, ajeno al diff)" }
+                 { id: PROD_SONDA, cmd: "curl https://www.productoraear.com/celebraciones", exit: 0, status: 308, location: "/" }
+cambios[]      : src/lib/routing/legacy-route-aliases.ts (nuevo) · src/middleware.ts · src/app/(public)/proveedores/[slug]/page.tsx · scripts/audit_gsc_routes_resolution.cjs (nuevo) · CLINE_EXECUTION_LOG.md
+gates          : G-0 PASS · G-1 PASS · G-2 PASS · G-3 PASS (prepush 42/42) · G-4 PASS · G-6 PASS (20/20 VERDE) · G-7 PASS · G-8 PASS
+hipotesis[]    : (i) el 200 de la pagina en Next 16.3.5 es comportamiento del runtime y no un fallo del diff; (ii) los slugs canonicos del mapa de ids existen en el dataset curado y responden 200; (iii) el deploy de Coolify converge al nuevo commit
+decision       : reubicar la resolucion en el middleware (Edge) en vez de la ficha, porque los redirect() de la ficha NO emiten 3xx en Next 16.3.5 (medido con /proveedores/otzarreta -> 200)
+riesgos        : MC-F1 seguira rojo hasta que produccion sirva el build con /celebraciones 200; el mapa de 30 ids es estatico y debe regenerarse si cambia el dataset curado
+reto_espejo    : la Directiva sugeria resolver en la ficha o el middleware; la evidencia obligo a descartar la ficha por inoperante y mover TODO el 301 al Edge, mas un mapa de 30 ids reales generados desde datos (no inventados)
+aprendizaje_ceo: una pagina puede devolver 200 con titulo generico y canonical ajeno (doorway + noindex): eso explica impresiones con 0 clics. El 301 al slug canonico real es lo que transfiere el trafico. En este stack, redirigir desde un Server Component no basta: hay que hacerlo en el middleware
+siguiente_paso : sondear https://www.productoraear.com/proveedores/prov-4765 hasta recibir 301 a /proveedores/setroimagen-madrid tras el rebuild de Coolify
+```
+
+

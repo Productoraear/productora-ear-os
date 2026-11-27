@@ -2,6 +2,11 @@ import React from 'react';
 import { notFound, redirect, permanentRedirect } from 'next/navigation';
 import { buildCanonicalProviderSlug, isOpaqueProviderSlug } from '@/lib/providers/semantic-slug';
 import {
+  hasLegacyProviderSuffix,
+  resolveLegacyRouteAlias,
+  stripLegacyProviderSuffixes,
+} from '@/lib/routing/legacy-route-aliases';
+import {
   ShieldCheck,
   Sparkles,
   ArrowRight,
@@ -213,6 +218,15 @@ async function getProviderData(slug: string) {
     slugNorm = decodeURIComponent(slugNorm);
   } catch {
     slugNorm = slugNorm.replace(/%[0-9a-f]{2}/gi, '');
+  }
+
+  // P0 · 2026-11-27 · SLUGS LEGACY DE SEARCH CONSOLE
+  // bodas.net indexo fichas con el sufijo `consulta-disponibilidad-y-precios`.
+  // Se colapsa el sufijo para poder resolver la ficha REAL; la propia pagina
+  // emite despues 301 a su slug semantico canonico (cero contenido duplicado).
+  const slugWithoutLegacySuffix = stripLegacyProviderSuffixes(slugNorm);
+  if (slugWithoutLegacySuffix.length >= 3 && slugWithoutLegacySuffix !== slugNorm) {
+    slugNorm = slugWithoutLegacySuffix;
   }
 
   // ━━━ FILTRO ANTI-SPAM Y SLUGS HEREDADOS INVALIDOS (RETORNAR 404 CLEAN) ━━━
@@ -543,6 +557,7 @@ function findInStaticPartitions(slugNorm: string) {
           return {
             id: found.id || slugNorm,
             asin: typeof found.asin === 'string' ? found.asin : undefined,
+            slug: typeof found.slug === 'string' ? found.slug : undefined,
             name: (found.name || '').replace(/\s*-\s*Consulta disponibilidad y precios.*/i, '').trim(),
             category: (found.category === 'finca' || fileName.startsWith('finca')) ? 'Finca para Bodas' : found.category === 'musica' ? 'Música & Espectáculos' : found.category === 'catering' ? 'Catering & Gastronomía' : found.category || 'Servicio para Eventos',
             province: found.province || found.location?.province || 'Madrid',
@@ -709,6 +724,16 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
     redirect('/otzarreta');
   }
 
+  // ━━━ RESOLUCION DE ALIAS LEGACY (P0 · 2026-11-27 · COBERTURA GSC) ━━━
+  // Google conserva indexados slugs historicos (`prov-3446`, `v-4765`) y fichas
+  // con sufijo bodas.net. Se resuelven con el MISMO resolutor que usa el Edge
+  // (una sola fuente de verdad) para desviar 301 a la ficha canonica real o al
+  // directorio asistido. Cero 404 en trafico organico.
+  const legacyProviderRedirect = resolveLegacyRouteAlias(`/proveedores/${slugLower}`);
+  if (legacyProviderRedirect !== null) {
+    permanentRedirect(legacyProviderRedirect);
+  }
+
   const sParams = searchParams ? await searchParams : {};
   const rawProvider = await getProviderData(slug);
 
@@ -719,8 +744,9 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
   // Redirección 308/301 Permanente desde slugs opacos de Search Console (ej. /proveedores/prov-4765)
   // hacia su slug semántico limpio (/proveedores/setroimagen-madrid)
   const canonicalProviderSlug = buildCanonicalProviderSlug(rawProvider);
+  const isLegacySuffixSlug = hasLegacyProviderSuffix(slugLower);
   if (
-    isOpaqueProviderSlug(slugLower) &&
+    (isOpaqueProviderSlug(slugLower) || isLegacySuffixSlug) &&
     canonicalProviderSlug &&
     !isOpaqueProviderSlug(canonicalProviderSlug) &&
     canonicalProviderSlug !== slugLower
