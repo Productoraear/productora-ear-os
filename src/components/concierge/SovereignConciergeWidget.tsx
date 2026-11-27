@@ -82,6 +82,16 @@ function isOtzarretaSurfaceRoute(pathname: string): boolean {
   return OTZARRETA_SURFACE_PATTERN.test(pathname);
 }
 
+/**
+ * Ficha insignia `/otzarreta` (y sus subrutas). En esa ruta toda la conversión
+ * se delega en el CTA flotante de WhatsApp directo a la Centralita
+ * (`FloatingWhatsAppCta`): aquí se desactiva el modal web del Concierge para
+ * evitar la superposición de disparadores flotantes y no desviar tráfico de la
+ * centralita. A diferencia de `OTZARRETA_SURFACE_PATTERN`, NO incluye la agenda
+ * `/calendario/.../restaurante-otzarreta`, donde el Concierge sí opera.
+ */
+const OTZARRETA_FLAGSHIP_PATTERN = /^\/otzarreta(?:\/|$)/i;
+
 function getContextForRoute(pathname: string): RouteContextConfig {
   if (pathname.includes('/reservar/solista') || pathname.includes('/artistas/e78903') || pathname.includes('/edwin-agudelo')) {
     return {
@@ -516,6 +526,14 @@ export function SovereignConciergeWidget({
 
   // Exclude from admin back-office routes
   if (!mounted || pathname.startsWith('/admin') || pathname.startsWith('/panel')) {
+    return null;
+  }
+
+  // `/otzarreta`: la conversión se canaliza por el CTA flotante de WhatsApp
+  // directo a la Centralita. Se desactiva el modal web del Concierge en esta
+  // ficha insignia para eliminar la superposición de disparadores flotantes y
+  // no desviar el lead fuera del canal soberano (+34 693 693 048).
+  if (OTZARRETA_FLAGSHIP_PATTERN.test(pathname)) {
     return null;
   }
 
