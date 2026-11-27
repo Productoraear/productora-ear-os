@@ -1,13 +1,13 @@
 {
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-11-27T13:18:01.331Z",
+  "generatedAt": "2026-11-27T15:09:27.099Z",
   "generator": "scripts/verify_cashtunnel_idempotency_scope.cjs",
   "doctrine": "INV-08 · Idempotencia ACID · Aislamiento de la clave de Stripe por visitante",
   "evidence": {
     "probed": false,
     "source": "static",
     "mode": "SIMULADO",
-    "checkedAt": "2026-11-27T13:18:01.333Z"
+    "checkedAt": "2026-11-27T15:09:27.102Z"
   },
   "sources": {
     "component": "src/components/checkout/SovereignStickyCheckoutBar.tsx",
@@ -63,5 +63,5 @@
   ],
   "violations": [],
   "verdict": "PASS",
-  "durationMs": 4
+  "durationMs": 5
 }
