@@ -1,0 +1,612 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifact": "ezkertza_homologada",
+  "generatedBy": "scripts/ingest_external_showcase.cjs",
+  "generatedAt": "2026-11-27T18:00:00.000Z",
+  "mode": "REAL",
+  "source": {
+    "kind": "url",
+    "url": "https://www.bodas.net/restaurantes/restaurante-ezkertza-berria--e141307",
+    "ownedUrl": "https://www.ezkertzaberria.com/",
+    "modules": [
+      "src/lib/constants/otzarreta-entity.ts",
+      "src/lib/constants/ezkertza-derio-venue.ts",
+      "src/lib/constants/ear-os-ssot.ts"
+    ],
+    "provenanceSha256": null,
+    "retrievedAt": "2026-11-27T18:00:00.000Z"
+  },
+  "target": {
+    "slug": "restaurante-ezkertza-berria",
+    "catalogCategory": "catering",
+    "trojanCategory": "RESTAURANTE_BODA",
+    "schemaFields": 380,
+    "projectedFields": 44,
+    "publicFields": 43
+  },
+  "identity": {
+    "businessName": "Restaurante Otzarreta (Ezkertza Berria)",
+    "municipality": "Derio",
+    "province": "Bizkaia",
+    "provinceAlias": "Vizcaya",
+    "postalCode": "48160",
+    "fullAddress": "Santo Domingo Hiribidea, 13, 48160 Derio (Bizkaia)",
+    "geo": {
+      "lat": 43.2928,
+      "lng": -2.8833
+    },
+    "foundedYear": 1902,
+    "generations": 4,
+    "rating": 4.8,
+    "reviewCount": 23,
+    "recommendationPercent": 96
+  },
+  "menus": {
+    "fromEur": 145,
+    "toEur": 185,
+    "count": 4,
+    "catalogue": [
+      {
+        "name": "Menú Tradición",
+        "priceEur": 145
+      },
+      {
+        "name": "Menú Asador",
+        "priceEur": 155
+      },
+      {
+        "name": "Menú Ezkertza",
+        "priceEur": 165
+      },
+      {
+        "name": "Menú Soberano",
+        "priceEur": 185
+      }
+    ]
+  },
+  "capacity": {
+    "salonPax": 200,
+    "jardinPax": 350,
+    "totalPax": 350,
+    "parkingPlazas": 120
+  },
+  "contact": {
+    "channel": "Conserjería EAR OS",
+    "telDisplay": "+34 693 693 048",
+    "telDigits": "34693693048",
+    "maskedPhone": true,
+    "whatsappUrl": "https://wa.me/34693693048?text=Hola%2C+quiero+tramitar+la+ficha+de+Restaurante+Otzarreta+%28Ezkertza+Berria%29+%28Derio%29.+Trazabilidad+HML-RESTAURANTE--82E472FC+%C2%B7+Price-Lock+SHA256-%CE%A9-82E472FC9ECB1522&ref=HML-RESTAURANTE--82E472FC&lock=SHA256-%CE%A9-82E472FC9ECB1522",
+    "traceId": "HML-RESTAURANTE--82E472FC",
+    "priceLock": {
+      "algorithm": "SHA-256",
+      "fingerprint": "SHA256-Ω-82E472FC9ECB1522",
+      "depositEur": 100,
+      "deducible": true,
+      "seed": "priceLock|slug=restaurante-ezkertza-berria|deposit=100|from=145|to=185"
+    }
+  },
+  "onboarding": {
+    "providerSlug": "restaurante-ezkertza-berria",
+    "businessName": "Restaurante Otzarreta (Ezkertza Berria)",
+    "contactPhone": "34693693048",
+    "membershipTier": "DIRECTORY_UNCLAIMED",
+    "acceptsAntiFraudPolicy": true,
+    "fields": [
+      {
+        "key": "ident.nombre_comercial",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Ident · Nombre Comercial",
+        "value": "Restaurante Otzarreta (Ezkertza Berria)",
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "ident.anio_fundacion",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Ident · Anio Fundacion",
+        "value": 1902,
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "ident.historia",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Ident · Historia",
+        "value": "Casa hostelera de raíz vasca (tradición desde 1902, reapertura en 1962) bajo la dirección gastronómica de Eduardo Martínez en Derio (Bizkaia): alta brasa al carbón de encina y sarmiento, cocina de cazuela vasca y banquetes en caserío en el valle del Txorierri.",
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "ident.lema",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Ident · Lema",
+        "value": "Brasa de encina y sarmiento en caserío vasco desde 1902",
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "ident.descripcion_corta",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Ident · Descripcion Corta",
+        "value": "Banquetes de boda en caserío vasco (Derio · Bizkaia).",
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "ident.descripcion_larga",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Ident · Descripcion Larga",
+        "value": "Espacios para cada momento de la celebración, en exterior o interior: extensos jardines con carpa para ceremonias civiles, salón acristalado climatizado e insonorizado y una cocina anclada en la brasa de encina y sarmiento.",
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "ident.propuesta_valor",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Ident · Propuesta Valor",
+        "value": "Un solo evento al día, brasa viva al momento y servicio de gala íntegro.",
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "cont.telefono_principal",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Cont · Telefono Principal",
+        "value": "+34 693 693 048",
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "cont.telefono_whatsapp",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Cont · Telefono Whatsapp",
+        "value": "+34 693 693 048",
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "cont.web",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Cont · Web",
+        "value": "https://www.ezkertzaberria.com/",
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "cont.tiempo_respuesta_min",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Cont · Tiempo Respuesta Min",
+        "value": 1440,
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "cont.acepta_whatsapp",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Cont · Acepta Whatsapp",
+        "value": true,
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "ubic.direccion",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Ubic · Direccion",
+        "value": "Santo Domingo Hiribidea, 13, 48160 Derio (Bizkaia)",
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "ubic.municipio",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Ubic · Municipio",
+        "value": "Derio",
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "ubic.provincia",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Ubic · Provincia",
+        "value": "Bizkaia",
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "ubic.parking_clientes",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Ubic · Parking Clientes",
+        "value": true,
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "tar.precio_desde_eur",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Tar · Precio Desde Eur",
+        "value": 145,
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "tar.precio_hasta_eur",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Tar · Precio Hasta Eur",
+        "value": 185,
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "tar.precio_por_pax_eur",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Tar · Precio Por Pax Eur",
+        "value": 145,
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "tar.pax_maximo",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Tar · Pax Maximo",
+        "value": 350,
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "tar.iva_incluido",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Tar · Iva Incluido",
+        "value": false,
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "res.deposito_deducible",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Res · Deposito Deducible",
+        "value": true,
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "res.firma_digital",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Res · Firma Digital",
+        "value": true,
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "esp.aforo_sentados",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Esp · Aforo Sentados",
+        "value": 200,
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "esp.aforo_maximo",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Esp · Aforo Maximo",
+        "value": 350,
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "esp.parking_plazas",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Esp · Parking Plazas",
+        "value": 120,
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "esp.parking_gratis",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Esp · Parking Gratis",
+        "value": true,
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "esp.zonas_verdes",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Esp · Zonas Verdes",
+        "value": true,
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "esp.cocina_propia",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Esp · Cocina Propia",
+        "value": true,
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "esp.ceremonia_exterior",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Esp · Ceremonia Exterior",
+        "value": true,
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "esp.exclusividad",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Esp · Exclusividad",
+        "value": true,
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "esp.dos_eventos_dia",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Esp · Dos Eventos Dia",
+        "value": false,
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "esp.limitador_sonido",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Esp · Limitador Sonido",
+        "value": true,
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "gastro.precio_menu_desde_eur",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Gastro · Precio Menu Desde Eur",
+        "value": 145,
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "gastro.precio_menu_hasta_eur",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Gastro · Precio Menu Hasta Eur",
+        "value": 185,
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "gastro.menus_disponibles",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Gastro · Menus Disponibles",
+        "value": 4,
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "gastro.cocina_tipo",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Gastro · Cocina Tipo",
+        "value": [
+          "Cocina vasca de autor",
+          "Alta brasa al carbón de encina y sarmiento",
+          "Pescados salvajes del Cantábrico"
+        ],
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "gastro.jefe_cocina",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Gastro · Jefe Cocina",
+        "value": "Eduardo Martínez",
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "gastro.showcooking",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Gastro · Showcooking",
+        "value": true,
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "gastro.notas_gastronomia",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Gastro · Notas Gastronomia",
+        "value": "Brasa viva elaborada al momento: parrilla de carbón de encina, cazuela vasca tradicional y mariscos del Cantábrico.",
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "media.video_presentacion_url",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Media · Video Presentacion Url",
+        "value": "https://vimeo.com/606467438",
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "media.fotos_count",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Media · Fotos Count",
+        "value": 12,
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "media.video_count",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": true,
+        "sensitive": false,
+        "label": "Media · Video Count",
+        "value": 1,
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      },
+      {
+        "key": "rep.testimonios",
+        "category": "RESTAURANTE_BODA",
+        "publicVisible": false,
+        "sensitive": false,
+        "label": "Rep · Testimonios",
+        "value": "Reseñas íntegras reservadas a la visita técnica (llave soberana cerrada).",
+        "verifiedByAdmin": false,
+        "updatedAt": "2026-11-27T18:00:00.000Z"
+      }
+    ]
+  },
+  "onboardingGaps": [
+    "cifNif: no publicado por el proveedor en su escaparate (JUR/AF-4: no se fabrica).",
+    "billingIban: pendiente del alta en Stripe Connect del proveedor (no se inventa)."
+  ],
+  "roleMatrix": {
+    "pacienteCeroArtista": {
+      "label": "Edwin Agudelo (Solista · Paciente Cero)",
+      "baseEur": 350,
+      "estandarEur": 550,
+      "kmIncluidos": 100,
+      "eurPerKmExtra": 1.5,
+      "origen": "Méntrida (Toledo)",
+      "ancla": "TARIFA_BASE_SOLISTA_EUR · TARIFA_ESTANDAR_SOLISTA_EUR · LOGISTICA_EUR_PER_KM"
+    },
+    "pacienteCeroEspacio": {
+      "label": "Restaurante Otzarreta / Ezkertza Berria (Eduardo Martínez)",
+      "menuDesdeEur": 145,
+      "menuHastaEur": 185,
+      "comisionPct": 0,
+      "ancla": "OTZARRETA_WEDDING_MENUS · OTZARRETA_ENTITY.weddingPriceFromEur"
+    },
+    "directorioAbierto": {
+      "label": "Directorio abierto (proveedores sin contrato soberano)",
+      "splitSoberano": {
+        "artista": 0.8,
+        "earOs": 0.1,
+        "vimume": 0.1
+      },
+      "depositoDeducibleEur": 100,
+      "ancla": "SPLIT_SOBERANO · DEPOSITO_RESERVA_EUR"
+    },
+    "b2g": {
+      "label": "Contratación pública (Ley 9/2017 LCSP)",
+      "topePreventivoEur": 14250,
+      "limiteLegalEur": 15000,
+      "articulo": "Art. 118 LCSP",
+      "ancla": "AJUSTE_PREVENTIVO_B2G_EUR · LIMITE_B2G_LCSP_EUR"
+    }
+  },
+  "doctrine": {
+    "exposePhone": false,
+    "maskedPhone": true,
+    "sovereignDataUnlocked": false,
+    "splitSoberano": {
+      "artista": 0.8,
+      "earOs": 0.1,
+      "vimume": 0.1
+    },
+    "depositoDeducibleEur": 100,
+    "b2g": {
+      "ceilingEur": 14250,
+      "legalLimitEur": 15000,
+      "article": "Art. 118 LCSP"
+    }
+  },
+  "completeness": {
+    "projected": 44,
+    "max": 380,
+    "score": 44,
+    "gaps": [
+      "cifNif: no publicado por el proveedor en su escaparate (JUR/AF-4: no se fabrica).",
+      "billingIban: pendiente del alta en Stripe Connect del proveedor (no se inventa).",
+      "campos restantes del catálogo (380) sin dato publicado por el proveedor: se declaran ausentes, no se estiman."
+    ]
+  },
+  "integrity": {
+    "fieldsProjected": 44,
+    "publicFields": 43,
+    "faqTotal": 0,
+    "selfHash": "c1e36c6454178cc37a8237dedbadc648178cb66d6424263ea6f9825c63aa3101"
+  }
+}

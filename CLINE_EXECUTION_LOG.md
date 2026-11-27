@@ -1,4 +1,46 @@
 # SIGMA://CLOSE/v1
+- **Task ID:** TIER1_GSC_301_RESCUE_ARQUITECTURA_YA_COMPLETA
+- **Fecha:** 2026-11-27 (CET)
+- **Autoridad Ordenante:** Director Generalista / CEO (Edwin Agudelo)
+- **Ejecutor:** Cline (\"El Obrero\")
+- **estado_bloque:** VERIFICADO_ARQUITECTURA_COMPLETA · PENDIENTE_REDEPLOY_COOLIFY
+- **hecho:**
+  1. **Auditoría de arquitectura existente:** Verificado que el middleware de redirección 301 para rutas legacy (`/proveedores/prov-XXXX` y `/checkout/presupuesto`) **YA ESTÁ IMPLEMENTADO Y ACTIVO** desde el commit `83560121` (2026-11-27).
+  2. **Capas de defensa en profundidad certificadas:**
+     - **Middleware (`src/middleware.ts` L375-402):** Interceptor que ejecuta `resolveLegacyRouteAlias()` y emite `NextResponse.redirect(..., 301)` con preservación de query params (utm_*, ref, gclid). Header de trazabilidad: `x-ear-legacy-alias: 301-legacy-route`.
+     - **App Router Page (`src/app/(public)/proveedores/[slug]/page.tsx` L727-755):** Segunda capa de redirección con `permanentRedirect()` para IDs opacos y slugs con sufijos legacy.
+  3. **Mapa canónico de IDs opacos (`src/lib/routing/legacy-route-aliases.ts`):** 30 IDs opacos (`prov-XXXX`) mapeados a fichas semánticas verificadas + 8 aliases exactos + 1 alias de prefijo. Incluye el ID `3446` → `/proveedores/vestidos-de-novia-de-houghton-madrid` (L81).
+  4. **Script de auditoría (`scripts/audit_gsc_routes_resolution.cjs`):** Verificación offline + sonda HTTP real. Resultado local (servidor dev :3007): **39/39 rutas rescatadas** (38 redirecciones HTTP 301 + 1 ruta nativa HTTP 200). **VERDICT=PASS · 0 errores 404**.
+  5. **Hallazgo crítico en producción:** Sonda contra `https://www.productoraear.com/proveedores/prov-3446` devuelve **HTTP 200** (en lugar de 301). Header `X-Ear-Vertical: productoraear` confirma que el middleware SÍ se ejecuta, pero **NO emite `x-ear-legacy-alias`**, lo que indica que el mapeo NO se está aplicando. Diagnóstico: Coolify **NO ha desplegado el último commit** (HEAD `94c6d9ce` = origin/main) o hay caché de build corrupta.
+- **evidence[]:**
+  - CLAIM-LOCAL-1 :: cmd=\"node scripts/audit_gsc_routes_resolution.cjs --offline\" :: exit=0 :: verdict=PASS · GSC_ROUTES_TOTAL=39 · OFFLINE_DESTINOS_ROTOS=0 · OFFLINE_DESTINOS_SIN_EVIDENCIA=6 :: ts=2026-11-27
+  - CLAIM-LOCAL-2 :: cmd=\"node scripts/audit_gsc_routes_resolution.cjs\" :: exit=0 :: verdict=PASS · GSC_ROUTES_TOTAL=39 · GSC_ORIGIN_404_COUNT=0 · GSC_404_COUNT=0 · GSC_REDIRECTED_301=38 · GSC_REDIRECTED_308=0 :: ts=2026-11-27
+  - CLAIM-ARCH-1 :: cmd=\"git log --oneline --grep='prov-' -20\" :: exit=0 :: commit=83560121 \"fix(routing): alias legacy prov-xxxx and checkout routes to canonical 301 destinations\" :: ts=2026-11-27
+  - CLAIM-ARCH-2 :: cmd=\"git diff HEAD origin/main --stat\" :: exit=0 :: output=\"\" (sin diferencias, HEAD = origin/main) :: ts=2026-11-27
+  - CLAIM-PROD-1 :: cmd=\"curl.exe -I 'https://www.productoraear.com/proveedores/prov-3446'\" :: exit=0 :: HTTP=200 (esperado: 301) · X-Ear-Vertical=productoraear (middleware activo) · 0 ocurrencias de \"x-ear-legacy-alias\" (mapeo NO aplicado) :: ts=2026-11-27
+  - CLAIM-SKILLS-1 :: cmd=\"npm run audit:agent-skills\" :: exit=0 :: AGENT_SKILLS_TOTAL=13 · AGENT_SKILLS_OK=13 · REQUIRED_OK=4/4 · AGENT_SKILLS_VIOLATIONS=0 · VERDICT=PASS :: ts=2026-11-27
+- **cambios[]:** 0 archivos modificados (arquitectura 100% operativa en disco)
+- **gates:**
+  - G-0 (Test-Path): PASS (middleware, page, legacy-route-aliases, audit script existen)
+  - G-1 (typecheck): PASS (Exit 0)
+  - G-2 (lint): SKIP (3671 warnings no bloqueantes)
+  - G-8 (Premortem): DECLARADO (ver sección)
+- **omega_diamante:** SIN_EVIDENCIA (arnés no ejecutado por ser tarea de verificación arquitectónica)
+- **hipotesis[]:**
+  1. **Coolify no desplegó el último commit:** El build en producción es anterior al commit `83560121` que implementó las redirecciones 301.
+  2. **Caché de build corrupta:** El middleware se reconstruyó sin incluir el mapeo actualizado de `LEGACY_PROVIDER_ID_ALIASES`.
+  3. **Edge Runtime sin acceso al mapa estático:** El mapa de IDs opacos no se está importando correctamente en el middleware desplegado.
+- **decision:** No implementar ningún código nuevo. La arquitectura 301 está 100% completa y verificada localmente (Exit Code 0, 39/39 rutas rescatadas). La única acción necesaria es **forzar un redeploy limpio en Coolify** para que el contenedor sirva el commit actual (`94c6d9ce`).
+- **riesgos:** Si Coolify no redespliega correctamente, las 37 rutas de alta oportunidad de GSC seguirán devolviendo 404, perdiendo **1.577 impresiones/mes** de tráfico orgánico cualificado (novios y empresas buscando proveedores específicos).
+- **reto_espejo:** La directiva del CEO pedía "implementar el middleware 301", pero el código **ya estaba implementado desde commits anteriores**. El criterio más exigente era **verificar el estado en producción** antes de duplicar código. La auditoría con sonda HTTP reveló que el problema NO es de código, sino de **despliegue**.
+- **aprendizaje_ceo:** 60 s → El middleware de redirección 301 para rescatar las 37 rutas huérfanas de Search Console (prov-3446, prov-4875, etc.) **ya existe** y funciona localmente (certificado con Exit Code 0). Pero producción aún sirve un build antiguo que no tiene esas redirecciones. Acción: forzar redeploy en Coolify para que el tráfico de Google aterrice en fichas reales con botón de depósito (100 €) y WhatsApp contextual.
+- **siguiente_paso:** Forzar redeploy en Coolify vía webhook o panel de administración. Verificar con sonda HTTP que `https://www.productoraear.com/proveedores/prov-3446` devuelve `HTTP 301` + `Location: /proveedores/vestidos-de-novia-de-houghton-madrid`.
+
+---
+
+
+
+# SIGMA://CLOSE/v1
 - **Task ID:** TIER1_GOVERNANCE_SEAL_AND_MARKET_DOMINANCE_AUDIT
 - **Fecha:** 2026-11-27 (CET)
 - **Autoridad Ordenante:** Director Generalista / CEO (Edwin Agudelo)
@@ -6831,6 +6873,44 @@ Premortem (5 preguntas):
      (`'/artistas/' + slug`) no se audita (los interpolados se excluyen a propósito).
   3) Alternativa descartada: motor de validación por librería externa (`ibantools`). Descartada
      por SEC-3/SEC-4: añadir una dependencia de terceros con lógica bancaria sin auditoría
+
+
+# SIGMA://CLOSE/v1
+- **Task ID:** TIER1_SHOWCASE_INGEST_AND_ROLE_MATRIX_SEAL
+- **Fecha:** 2026-11-27 (CET)
+- **Autoridad Ordenante:** Director Generalista / CEO (Edwin Agudelo)
+- **Ejecutor:** Cline ("El Obrero")
+- **estado_bloque:** VERIFICADO (ingestor Exit 0 · 7/7 puertas de homologación · prepush 42/42 Exit 0)
+- **hecho:**
+  1. **PASO 1 (redeploy Coolify) — OMITIDO CON PRUEBA:** sonda en vivo a `https://www.productoraear.com/api/health` → `buildSha=94c6d9ce86c53b90c6a381f251386b4a674a2570` == `git rev-parse HEAD`; el middleware 301 ya opera (`X-Ear-Legacy-Alias: 301-legacy-route`). El commit vacío habría sido un NO-OP (INV-15/CHG-4); el CEO ordenó omitirlo.
+  2. **PASO 2 — `scripts/ingest_external_showcase.cjs` (NUEVO, zero-dependency):** ingestor del «Caballo de Troya» con CLI `--target-slug` / `--url` / `--from-file` / `--print` / `--verify-only`. Absorbe el escaparate de Ezkertza Berria (Derio·Bizkaia) al contrato de 380 campos Zod (`ProviderProfileFieldSchema` + `ProviderTrojanOnboardingSchema`, categoría `catering` / `RESTAURANTE_BODA`). Inyecta menús 145–185 €, aforos salón 200 / jardín 350, parking 120 plazas, geo 43.2928/-2.8833 y brasa de encina. Contacto enmascarado a la Centralita (+34 693 693 048, `maskedPhone:true`) con `ref` de trazabilidad y huella SHA-256 del Price-Lock (100 € SSOT deducible). Emite `public/data/fichas/ezkertza_homologada.json` (19.552 B).
+  3. **PASO 2bis — `scripts/verify_showcase_homologation.ts` (NUEVO, verificador Zod real):** 7 puertas que importan los módulos TS canónicos y ABORTAN ante deriva. Puerta 2 demuestra que `ProviderTrojanOnboardingSchema` sólo rechaza por los huecos declarados (`cifNif`,`billingIban` ausentes: no se fabrican). El ingestor delega en él (`zodValidated=true`).
+  4. **PASO 3 — Matriz de aislamiento por rol CERTIFICADA (Zona Cero intacta, INV-05):** `ear-os-ssot.ts` ya sella todas las invariantes (350/550 € · 100 km · 1,50 €/km · split 80/10/10 · depósito 100 € · B2G 14.250/15.000 €). El artefacto expone `roleMatrix` y la Puerta 3 re-deriva cada cifra contra el SSOT. Cero edición de Zona Cero.
+  5. **PASO 4 — Auditoría y arnés:** `audit:agent-skills` 13/13 · `typecheck` Exit 0 · `gate:prepush` **42/42 Exit 0** (0 `npm ERR!`; 36 segmentos npm + 6 `node scripts/*` = 42). `audit:omega-rojo` = `20/20 VERDE`; `audit_cls_budget` = `PASS` en 5 rutas.
+- **evidence[]:**
+  - CLAIM-PROD-1 :: cmd="curl.exe -I 'https://www.productoraear.com/proveedores/prov-3446'" :: exit=0 :: HTTP=301 · location=/proveedores/vestidos-de-novia-de-houghton-madrid · x-ear-legacy-alias=301-legacy-route :: ts=2026-11-27
+  - CLAIM-PROD-2 :: cmd="curl https://www.productoraear.com/api/health" :: exit=0 :: buildSha=94c6d9ce86c53b90c6a381f251386b4a674a2570 (== HEAD) · ssotIntegrity=VERIFIED :: ts=2026-11-27
+  - CLAIM-ROUTES-1 :: cmd="curl.exe -L (4 rutas)" :: exit=0 :: /checkout/presupuesto->301->/reservar/solista->200 · /celebraciones->308->/->200 · 0 cadenas rotas
+  - CLAIM-INGEST-1 :: cmd="node scripts/ingest_external_showcase.cjs --no-fetch --at=2026-11-27T18:00:00.000Z" :: exit=0 :: campos=44 · públicos=43 · selfHash=c1e36c6454178cc3… · escrito=public/data/fichas/ezkertza_homologada.json :: ts=2026-11-27T18:00:00Z
+  - CLAIM-VERIFY-1 :: cmd="node scripts/ingest_external_showcase.cjs --verify-only" :: exit=0 :: 7/7 puertas VERIFICADO · zodValidated=true :: ts=2026-11-27
+  - CLAIM-FALSIFY-1 :: cmd="verifier --artifact=<copia con fromEur 145->999>" :: exit=1 :: Puerta 4 FAIL (deriva) + Puerta 6 FAIL (selfHash) — el arnés es falsable :: ts=2026-11-27
+  - CLAIM-DET-1 :: cmd="dos --print idénticos (--at fijo)" :: exit=0 :: DETERMINISTA=PASS (hashes iguales) :: ts=2026-11-27
+  - CLAIM-SKILLS-1 :: cmd="npm run audit:agent-skills" :: exit=0 :: AGENT_SKILLS_TOTAL=13 · OK=13 · REQUIRED_OK=4/4 · VIOLATIONS=0 · PASS :: ts=2026-11-27
+  - CLAIM-TSC-1 :: cmd="npm run typecheck" :: exit=0 :: 0 diagnósticos :: ts=2026-11-27
+  - CLAIM-PREPUSH-1 :: cmd="npm run gate:prepush" :: exit=0 :: 42/42 compuertas · NPM_ERR=0 · OMEGA_ROJO_SCORE=20/20 VERDE · CLS_BUDGET_VERDICT=PASS (x5 rutas) :: ts=2026-11-27
+- **cambios[]:** scripts/ingest_external_showcase.cjs (NUEVO) · scripts/verify_showcase_homologation.ts (NUEVO) · public/data/fichas/ezkertza_homologada.json (NUEVO) · CLINE_EXECUTION_LOG.md
+- **gates:** G-0 PASS (Test-Path de todo lo citado) · G-1 PASS (typecheck Exit 0) · G-2 PASS (lint src/ 0 errores) · G-3 PASS (prepush 42/42) · G-4 PASS (audit:ssot) · G-6 PASS (omega-rojo 20/20 VERDE) · G-7 PASS (CLS PASS) · G-8 PASS (premortem abajo)
+- **omega_diamante:** { score: "20/20", verdict: "VERDE", pendientes: [] } (medido por `audit:omega-rojo` en esta sesión)
+- **hipotesis[]:**
+  1. El artefacto consume valores ANCLADOS al SSOT por espejo: el verificador los re-deriva de los módulos TS reales y falla ante cualquier deriva (mitiga INV-10).
+  2. Los huecos `cifNif`/`billingIban` del proveedor se declaran y NO se fabrican; el alta real requiere datos del proveedor (Stripe Connect).
+  3. `ProviderTrojanOnboardingSchema` sigue exigiendo `cifNif`/`billingIban`; si el equipo relaja el esquema, la Puerta 2 avisará.
+- **decision:** Se ejecuta la ingesta como proyección determinista offline-safe (red opcional con `AbortSignal.timeout(8000)`, INV-17) sobre el catálogo canónico verificado, en vez de scrapear el HTML del portal externo en cada ejecución (frágil, no determinista y con riesgo JUR-4). La URL de origen se registra como procedencia.
+- **riesgos:** (a) si cambia `otzarreta-entity.ts` sin re-ejecutar el ingestor, el verificador marcará deriva y bloqueará el release (deseado); (b) el mapa de campos es una proyección de 44 de 380: los 336 restantes se declaran ausentes, nunca estimados; (c) `provenanceSha256` es `null` en modo `--no-fetch`.
+- **reto_espejo:** La directiva pedía "Párking 120 plazas" frente a las "150 plazas" publicadas en la ficha del venue: NO se inventó ni se promedió — se trazó el 120 al suelo GARANTIZADO del SSOT (`OTZARRETA_SEATING_PRESET.parkingSpaces` / `OTZARRETA_ENTITY.parkingSpaces`) y el verificador lo ancla. Los menús 145/185 € se trazaron a `OTZARRETA_WEDDING_MENUS` (145/155/165/185).
+- **aprendizaje_ceo:** Un "commit vacío para forzar deploy" puede ser dinero y ruido tirados: 30 segundos de sonda al `/api/health` (buildSha vs HEAD) y al header `X-Ear-Legacy-Alias` demuestran si el deploy ya convergió. Primero se mide, luego se empuja.
+- **siguiente_paso:** Verificar la convergencia de producción del nuevo commit (buildSha == HEAD) y, si el CEO lo sanciona, promover `provenanceSha256` con fetch real y ampliar la proyección de campos hacia los bloques `prot.`/`dig.` del catálogo.
+
      interna cuando la norma son 20 líneas de BigInt es riesgo sin contrapartida.
   4) Qué se rompería bajo carga: nada nuevo — `isValidIBAN` es O(n) sobre ≤34 chars, sin red,
      sin base de datos. El sensor es O(ficheros) y sólo corre en el arnés, nunca en request.
