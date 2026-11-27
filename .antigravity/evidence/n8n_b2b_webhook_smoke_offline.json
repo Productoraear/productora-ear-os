@@ -5,8 +5,8 @@
   "mode": "SIMULADO",
   "probed": false,
   "source": "static",
-  "checkedAt": "2026-11-27T20:46:51.455Z",
-  "startedAt": "2026-11-27T20:46:49.873Z",
+  "checkedAt": "2026-11-27T21:35:23.905Z",
+  "startedAt": "2026-11-27T21:35:20.124Z",
   "ssot": {
     "file": "src\\lib\\constants\\ear-os-ssot.ts",
     "values": {
@@ -74,7 +74,7 @@
   },
   "payloads": {
     "cupon": {
-      "requestId": "SMOKE-B2B-QUOTE-MWZGCC4F",
+      "requestId": "SMOKE-B2B-QUOTE-MWZI2QAA",
       "smokeTest": true,
       "source": "ear-os-smoke-harness",
       "event": "cita_iniciada_por_whatsapp",
@@ -85,7 +85,7 @@
       "eventDate": "2026-11-28",
       "location": "Madrid",
       "distanceKm": 15,
-      "quoteId": "SMOKE-B2B-QUOTE-MWZGCC4F",
+      "quoteId": "SMOKE-B2B-QUOTE-MWZI2QAA",
       "totalWithVat": 423.5,
       "format": "solista_edwin",
       "formatCatalogId": "solista-edwin-agudelo",
@@ -109,11 +109,11 @@
       "integrity": {
         "algorithm": "SHA-256",
         "scope": "canonical-payload",
-        "hash": "a9ab6b4813d28c737cfd3c9045fa57dfa70e070141f94f2024638a480ac3e192"
+        "hash": "fb2933845e5c5b0373257937e8baafdb73cdda5aed1308321496d13f405008b6"
       }
     },
     "sinCupon": {
-      "requestId": "SMOKE-B2B-QUOTE-MWZGCC4F",
+      "requestId": "SMOKE-B2B-QUOTE-MWZI2QAA",
       "smokeTest": true,
       "source": "ear-os-smoke-harness",
       "event": "cotizacion_directa_sin_cupon",
@@ -124,7 +124,7 @@
       "eventDate": "2026-11-28",
       "location": "Madrid",
       "distanceKm": 15,
-      "quoteId": "SMOKE-B2B-QUOTE-MWZGCC4F",
+      "quoteId": "SMOKE-B2B-QUOTE-MWZI2QAA",
       "totalWithVat": 665.5,
       "format": "solista_edwin",
       "formatCatalogId": "solista-edwin-agudelo",
@@ -148,7 +148,7 @@
       "integrity": {
         "algorithm": "SHA-256",
         "scope": "canonical-payload",
-        "hash": "3a94e27957ff0b151533687fe812910bafb39471ba5006f59c835c172bb10b3a"
+        "hash": "99ebfe15aa2125302cb0fff08e8793d32646985210c16c23805b788f783d37c7"
       }
     }
   },
@@ -225,7 +225,7 @@
     {
       "id": "G2_PAYLOAD_CANONICO",
       "ok": true,
-      "detail": "9/9 · requestId=SMOKE-B2B-QUOTE-MWZGCC4F",
+      "detail": "9/9 · requestId=SMOKE-B2B-QUOTE-MWZI2QAA",
       "checks": [
         {
           "id": "titular",
@@ -260,7 +260,7 @@
         {
           "id": "integrity.sha256",
           "ok": true,
-          "detail": "a9ab6b4813d28c73…"
+          "detail": "fb2933845e5c5b03…"
         },
         {
           "id": "priceLock.sha256",
@@ -280,7 +280,7 @@
       "detail": "valid=true · 10/10 mandatos · total=350 EUR",
       "output": {
         "valid": true,
-        "requestId": "SMOKE-B2B-QUOTE-MWZGCC4F",
+        "requestId": "SMOKE-B2B-QUOTE-MWZI2QAA",
         "smokeTest": true,
         "source": "ear-os-smoke-harness",
         "event": "cita_iniciada_por_whatsapp",
@@ -291,7 +291,7 @@
         "eventDate": "2026-11-28",
         "location": "Madrid",
         "distanceKm": 15,
-        "quoteId": "SMOKE-B2B-QUOTE-MWZGCC4F",
+        "quoteId": "SMOKE-B2B-QUOTE-MWZI2QAA",
         "totalWithVat": 423.5,
         "format": "solista_edwin",
         "formatCatalogId": "solista-edwin-agudelo",
@@ -315,7 +315,7 @@
         "integrity": {
           "algorithm": "SHA-256",
           "scope": "canonical-payload",
-          "hash": "a9ab6b4813d28c737cfd3c9045fa57dfa70e070141f94f2024638a480ac3e192"
+          "hash": "fb2933845e5c5b0373257937e8baafdb73cdda5aed1308321496d13f405008b6"
         },
         "logistica": 0,
         "hotel": 0,
@@ -394,7 +394,7 @@
       "detail": "valid=true · total=550 EUR vs esperado 550 EUR (delta 0) · fallidos=ninguno",
       "output": {
         "valid": true,
-        "requestId": "SMOKE-B2B-QUOTE-MWZGCC4F",
+        "requestId": "SMOKE-B2B-QUOTE-MWZI2QAA",
         "smokeTest": true,
         "source": "ear-os-smoke-harness",
         "event": "cotizacion_directa_sin_cupon",
@@ -405,7 +405,7 @@
         "eventDate": "2026-11-28",
         "location": "Madrid",
         "distanceKm": 15,
-        "quoteId": "SMOKE-B2B-QUOTE-MWZGCC4F",
+        "quoteId": "SMOKE-B2B-QUOTE-MWZI2QAA",
         "totalWithVat": 665.5,
         "format": "solista_edwin",
         "formatCatalogId": "solista-edwin-agudelo",
@@ -429,7 +429,7 @@
         "integrity": {
           "algorithm": "SHA-256",
           "scope": "canonical-payload",
-          "hash": "3a94e27957ff0b151533687fe812910bafb39471ba5006f59c835c172bb10b3a"
+          "hash": "99ebfe15aa2125302cb0fff08e8793d32646985210c16c23805b788f783d37c7"
         },
         "logistica": 0,
         "hotel": 0,
@@ -668,7 +668,7 @@
     "probed": false,
     "source": "static",
     "mode": "SIMULADO",
-    "checkedAt": "2026-11-27T20:46:51.455Z",
+    "checkedAt": "2026-11-27T21:35:23.905Z",
     "note": "ejecutado con --offline: no se sondeó la red"
   },
   "verdict": "PARCIAL",
@@ -679,7 +679,7 @@
     "exit": 0,
     "url": null,
     "sha256": null,
-    "ts": "2026-11-27T20:46:51.455Z"
+    "ts": "2026-11-27T21:35:23.905Z"
   },
   "reportPath": ".antigravity\\evidence\\n8n_b2b_webhook_smoke_offline.json"
 }

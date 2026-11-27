@@ -8450,3 +8450,254 @@ aprendizaje_ceo: un contrato solo vale lo que vale su emisor mas debil y lo que 
 siguiente_paso : importar el JSON corregido del workflow en n8n (la rama invalida publica success:true) y re-sondear; valorar alinear el responseMode
 ```
 
+---
+
+## 2026-11-27 · DISPARO REAL CONTRA EL FLUJO PUBLICADO DE n8n (`b2b-quote`) — G6 ONLINE
+
+**Mandato (CEO):** ejecutar el arnés CLI contra el webhook productivo que el CEO acaba de publicar
+en n8n y confirmar que `/webhook/b2b-quote` recibe el paquete canónico y responde HTTP 200.
+Sin navegador. Perímetro: solo sonda real + acta (0 ficheros de producto modificados).
+
+### Diagnóstico en 5 líneas (CEO-1)
+
+1) **Qué cambió:** nada en código; se ejecutó `node scripts/test_n8n_b2b_webhook.cjs` en modo REAL
+   (efecto declarado del propio arnés: 1 ejecución del workflow + aviso Telegram identificable
+   por el prefijo `SMOKE-`).
+2) **Qué riesgo desaparece:** que el webhook publicado no exista o rechace el contrato de 8 campos:
+   producción respondió HTTP 200 sobre el paquete canónico completo, sin fallback de ruta.
+3) **URL o comando que lo prueba:** `https://n8n.productoraear.com/webhook/b2b-quote` · HTTP 200 ·
+   1.175 ms (`node scripts/test_n8n_b2b_webhook.cjs`, Exit Code 0).
+4) **Qué NO está probado:** que n8n terminara el formateador (el 200 es ACK asíncrono:
+   `processingCertified=false`) y que el JSON versionado sea el desplegado (DIAG P1 ya conocido).
+5) **Qué decisión necesito:** aportar `N8N_API_KEY` (o confirmar visualmente la fila de Ejecuciones)
+   para certificar `status=success` de la ejecución, hoy `SIN_EVIDENCIA` por falta de credencial.
+
+### Salida literal del arnés (7/7 gates)
+
+```text
+[FASE 1] G0_SSOT_CANONICO         PASS · 6/6 invariantes · hub 100 km exentos
+[FASE 2] G1_WORKFLOW_ARTIFACT     PASS · 5/5 · activo=true · responseMode=responseNode
+[FASE 3] G2_PAYLOAD_CANONICO      PASS · 9/9 · requestId=SMOKE-B2B-QUOTE-MWZH3Y4F
+[FASE 4] G3_FORMATTER_CUPON_350   PASS · valid=true · 10/10 mandatos · total=350 EUR
+[FASE 5] G4_FORMATTER_OFICIAL_550 PASS · valid=true · total=550 EUR vs 550 EUR (delta 0)
+[FASE 6] G5_EMISORES_CONTRATO     PASS · 5/5 emisores x 8 campos canonicos
+[FASE 7] G6_TRANSPORTE_HTTP       PASS · HTTP 200 · 1175 ms · ACK_ASINCRONO
+gates      : 7/7 PASS · 0 rojo(s)
+transporte : HTTP 200 · ACK_ASINCRONO · 1175 ms · https://n8n.productoraear.com/webhook/b2b-quote
+payload    : SMOKE-B2B-QUOTE-MWZH3Y4F · cupón 350 EUR · oficial 550 EUR
+integridad : integrity(30fa70b405a94fc7…) · priceLock(fe4041b966becd02…)
+VERDICT=VERDE
+```
+
+### Respuesta del servidor capturada (cuerpo completo, 34 bytes)
+
+```json
+{"message":"Workflow was started"}
+```
+
+- `status` = **200** · `content-type` = `application/json; charset=utf-8`
+- `bodySha256` = `0ceb5b5195b6f889421a45aa87614dec664a3ed864c2af473aa69f37d02dd78b`
+- `usedEndpoint` = `/webhook/b2b-quote`, **sin fallback** a `/webhook-test/`
+- `state` = `VERIFICADO` (transporte) · `processingCertified` = **false** (procesamiento)
+
+Un 200 y no un 404 es la prueba mecánica de que el trigger existe y está activo: en n8n un
+workflow inactivo devuelve 404 `webhook not registered`. Esto confirma que el flujo fue publicado.
+
+### Evidencia EP-1 (quíntupla contractual)
+
+```text
+CLAIM{N8N_B2B_WEBHOOK_SMOKE_LIVE}
+  cmd    = "node scripts/test_n8n_b2b_webhook.cjs"
+  exit   = 0
+  url    = "https://n8n.productoraear.com/webhook/b2b-quote"
+  sha256 = 0ceb5b5195b6f889421a45aa87614dec664a3ed864c2af473aa69f37d02dd78b
+  ts     = 2026-11-27T21:08:23.469Z
+  head   = a3f48994ee94629dab0efca8290a4147da224cd9
+```
+
+Ledger append-only: línea **#236** añadida (derivada del artefacto en disco, no de memoria) y
+terminador verificado con `node scripts/verify_ledger_append_newline.cjs` →
+**27/27 aserciones PASS, Exit 0**.
+
+### Huecos declarados (AF-5: prohibido el verde por defecto)
+
+| Ítem | Estado | Motivo medido |
+|---|---|---|
+| Ejecución n8n terminó en `success` | `SIN_EVIDENCIA` | `GET /api/v1/executions` → **401** `'X-N8N-API-KEY' header required`; no hay `N8N_API_KEY` en env ni en `.env`/`.env.local` |
+| Formateador ejecutado en producción | `SIN_EVIDENCIA` | el 200 es ACK asíncrono (`onReceived`), emitido antes de que corra el nodo Code |
+| JSON versionado == flujo desplegado | `SOSPECHOSO` | DIAG P1 `WORKFLOW_DESPLEGADO_DIFIERE`: el repo declara `responseMode=responseNode`, producción responde `"Workflow was started"` |
+| Emisor real del formato `EAR-MCH-…` | `SOSPECHOSO` | DIAG P1 `EMISOR_PRODUCCION_FUERA_DE_GIT`: no se genera en este repo |
+| `typecheck` / `lint` / `audit:ssot` / 17 puertas | `SIN_EVIDENCIA` en este acto | el mandato era la sonda; no se tocó código de producto |
+
+### Premortem G-8 (5 preguntas)
+
+1) **¿Cumple el objetivo exacto?** Sí en su literal: disparo real, paquete canónico de 8 campos
+   recibido (HTTP 200, sin fallback, 1.175 ms). No cumple la lectura fuerte "el flujo recorre
+   Webhook y Formateador y cierra en Verde": eso exige leer `success` en la ejecución y hoy es
+   `SIN_EVIDENCIA` por falta de API key. No se maquilla.
+2) **¿Qué asunciones frágiles lo sostienen?** (i) que `200 "Workflow was started"` implica workflow
+   activo — cierto en n8n, pero no dice nada de los nodos posteriores; (ii) que la notificación
+   Telegram llega a un humano real; (iii) que la red del operador alcanza `n8n.productoraear.com`.
+3) **¿Qué alternativa descarté y por qué?** Consultar la pestaña *Ejecuciones* con navegador y firmar
+   `VERIFICADO` sobre una captura: descartada por (a) prohibición expresa del CEO en este mandato y
+   (b) una captura no tiene Exit Code ni sha256, no es evidencia reproducible. También descarté
+   re-lanzar el arnés vía `scripts/ledger_append_claim.cjs` para sellar el ledger con su propia
+   ejecución: habría producido una **segunda** ejecución y un segundo aviso Telegram, ensuciando
+   justo la fila que el CEO va a inspeccionar. Se derivó la línea del artefacto
+   `.antigravity/evidence/n8n_b2b_webhook_smoke.json` (fuente en disco).
+4) **¿Qué se rompe bajo carga y cómo lo detectamos antes que el cliente?** Con ACK asíncrono, un fallo
+   del formateador (rama inválida, campos ausentes) no devuelve error al emisor: el lead se pierde en
+   silencio. Detección propuesta: consumir `/api/v1/executions` filtrando `status=error` y alertar;
+   hoy imposible sin `N8N_API_KEY`.
+5) **¿Qué consecuencia acepto al firmar?** Que el acta certifica **transporte**, no negocio. Si un lead
+   real entra y el nodo Code falla, el 200 seguirá saliendo y el arnés seguirá verde: el verde del
+   arnés no es el verde del pipeline hasta que exista telemetría de ejecuciones.
+
+```text
+SIGMA://CLOSE/v1
+task_id        : SMOKE_N8N_B2B_LIVE_2026_11_27
+estado_bloque  : VERIFICADO (transporte) · SOSPECHOSO (procesamiento: el 200 es ACK asíncrono)
+hecho          : node scripts/test_n8n_b2b_webhook.cjs → 7/7 gates PASS, HTTP 200 sobre
+                 /webhook/b2b-quote con el paquete canónico de 8 campos; artefacto
+                 .antigravity/evidence/n8n_b2b_webhook_smoke.json (20.398 bytes, 22:08:23) ;
+                 .antigravity/evidence/ledger.jsonl línea #236 ; CLINE_EXECUTION_LOG.md:8454-8580 (esta acta)
+evidence[]     : { id: N8N_B2B_WEBHOOK_SMOKE_LIVE, cmd: "node scripts/test_n8n_b2b_webhook.cjs", exit: 0,
+                   url: "https://n8n.productoraear.com/webhook/b2b-quote",
+                   sha256: "0ceb5b5195b6f889421a45aa87614dec664a3ed864c2af473aa69f37d02dd78b",
+                   ts: "2026-11-27T21:08:23.469Z", latency_ms: 1175, code: "ACK_ASINCRONO", fallback: false }
+                 { id: LEDGER_NEWLINE, cmd: "node scripts/verify_ledger_append_newline.cjs", exit: 0,
+                   aserciones: "27/27" }
+                 { id: N8N_EXECUTIONS_API, cmd: "GET https://n8n.productoraear.com/api/v1/executions?limit=1",
+                   exit: n/a, status: 401, body: "'X-N8N-API-KEY' header required", state: SIN_EVIDENCIA }
+cambios[]      : CLINE_EXECUTION_LOG.md · .antigravity/evidence/ledger.jsonl ·
+                 .antigravity/evidence/n8n_b2b_webhook_smoke.json (artefacto escrito por el arnés)
+gates          : G0 PASS · G1 PASS · G2 PASS · G3 PASS · G4 PASS · G5 PASS · G6 PASS (HTTP 200)
+                 (G-1 typecheck / G-2 lint / G-3 17 puertas / G-4 audit:ssot / G-6 omega-rojo: NO ejecutados
+                  en este acto = SIN_EVIDENCIA honesto; mandato de solo sonda, 0 cambios de producto)
+omega_diamante : { score: "7/7 gates del arnés (no 20/20 global)", verdict: "VERDE (transporte)",
+                   pendientes: ["procesamiento no certificado (ACK asíncrono)", "falta N8N_API_KEY para
+                   telemetría de ejecuciones", "JSON versionado != flujo desplegado (P1)", "la rama
+                   inválida del nodo respondToWebhook publica success:true"] }
+hipotesis[]    : (i) 200 y no 404 ⇒ trigger publicado y activo; (ii) el cuerpo "Workflow was started"
+                 es onReceived, coherente con el P1 artefacto≠desplegado; (iii) el aviso Telegram del
+                 simulacro llega al CEO con prefijo SMOKE-B2B-QUOTE-MWZH3Y4F
+decision       : NO re-ejecutar vía ledger_append_claim.cjs (habría duplicado la ejecución y el aviso
+                 Telegram) y NO usar navegador (prohibido en el mandato); la línea del ledger se derivó
+                 del artefacto en disco y el hueco de procesamiento se declaró SIN_EVIDENCIA
+riesgos        : un fallo del nodo Code posterior al ACK no produce error visible al emisor: pérdida
+                 silenciosa de lead. Mitigación pendiente: alerta sobre /api/v1/executions status=error
+reto_espejo    : el CEO esperaba ver "Verde (Success)" en Ejecuciones; el arnés no puede firmar eso sin
+                 credencial de API, y firmarlo por inferencia sería AF-5 (verde por defecto). Se declara
+aprendizaje_ceo: un HTTP 200 de n8n significa "recibido y arrancado", no "procesado". El arnés verde mide
+                 que el puente acepta el contrato; el negocio necesita además telemetría de ejecuciones
+siguiente_paso : dotar de N8N_API_KEY al arnés (o crear scripts/verify_n8n_executions.cjs) para certificar
+                 status=success por requestId y detectar fallos posteriores al ACK
+```
+
+verificación de esta acta: `node scripts/verify_ledger_append_newline.cjs` → 27/27 PASS, Exit 0
+(la línea #236 queda sellada con `order:"APPEND"` y `supersedes:null`; nada previo reescrito)
+
+---
+
+# SIGMA://CLOSE/v1 — CIERRE FORMAL DEL BLOQUE `N8N_B2B_BRIDGE` (VERIFICADO_TOTAL · VH-1)
+
+**Mandato (CEO, Director Generalista):** el CEO certifica **visualmente** en `n8n.productoraear.com`
+que la ejecución del puente B2B (`ID SMOKE-B2B-QUOTE-MWZH3Y4F`) terminó en **Salida 1 elemento · HTTP 200**
+en modo producción, con `550 €` estándar / `350 €` con cupón, Hub Méntrida `100 km` exentos / `0 km`
+facturables, depósito `100 €` y doble hash SHA-256 validado. Se ordena sellar la evidencia como
+`VERIFICADO_TOTAL` (Validación Humana Presencial **VH-1**) y cerrar formalmente el bloque.
+
+### Diagnóstico en 5 líneas (CEO-1)
+
+1) **Qué cambió:** nada en código de producto. Se sella el cierre del bloque `N8N_B2B_BRIDGE` con la
+   validación humana del CEO (VH-1) sobre el `requestId` que ya viajó al flujo n8n publicado.
+2) **Qué riesgo desaparece:** el único hueco abierto del arnés era `processingCertified=false`
+   (el HTTP 200 de n8n es *ACK asíncrono*, no prueba de que el nodo Code terminara). VH-1 cierra ese
+   hueco: la ejecución **completó** (Salida 1 elemento) con los importes SSOT correctos.
+3) **URL o comando que lo prueba:** `https://n8n.productoraear.com/webhook/b2b-quote` ·
+   `node scripts/test_n8n_b2b_webhook.cjs --offline` → **6/6 gates · Exit 0** ·
+   `npm run typecheck` → **Exit 0** · `npm run audit:ssot` → **Exit 0**.
+4) **Qué NO está probado:** la telemetría **por API** de n8n (`GET /api/v1/executions`) sigue
+   `SIN_EVIDENCIA` (401, falta `N8N_API_KEY`). VH-1 es prueba **humana** (UI de n8n), no sonda de máquina;
+   se declara la fuente, no se disfraza de API. El lado Next.js **no** se despliega en este acto
+   (el puente vive en n8n).
+5) **Qué decisión necesito:** ninguna para cerrar el bloque. Opcional: dotar `N8N_API_KEY` al arnés
+   (`scripts/verify_n8n_executions.cjs`) para certificar `status=success` por `requestId` sin depender
+   de inspección humana.
+```text
+SIGMA://CLOSE/v1
+task_id        : N8N_B2B_BRIDGE
+estado_bloque  : VERIFICADO_TOTAL (VH-1 · Validación Humana Presencial del CEO en n8n.productoraear.com)
+hecho          : cierre formal del bloque puente n8n B2B. Sin cambios de producto. Evidencia sellada en
+                 CLINE_EXECUTION_LOG.md (este acta), .antigravity/evidence/ledger.jsonl (línea #237,
+                 order:"APPEND", supersedes:"N8N_B2B_WEBHOOK_SMOKE_LIVE") y artefactos de humo en disco.
+                 El hueco `processingCertified=false` (ACK asíncrono) queda CERRADO por VH-1: la ejecución
+                 SMOKE-B2B-QUOTE-MWZH3Y4F completó con Salida 1 elemento, HTTP 200 en producción, 550/350 cupón,
+                 hub 100 km exentos / 0 km facturables, depósito 100 € y doble SHA-256 validado.
+evidence[]     : { id: VH_1_CEO_N8N_UI, cmd: "inspección visual en https://n8n.productoraear.com (panel Ejecuciones)",
+                   exit: n/a, source: "human:VH-1", requestId: "SMOKE-B2B-QUOTE-MWZH3Y4F", nodeOutputItems: 1,
+                   transport: "HTTP 200 (producción)", tariffs: "estándar 550 EUR · cupón 350 EUR",
+                   hub: "Méntrida 100 km exentos · 0 km facturables", deposit: "100 EUR (100% deducible)",
+                   integrity: "doble hash SHA-256 validado", ts: "2026-11-27" }
+                 { id: N8N_B2B_WEBHOOK_SMOKE_LIVE, cmd: "node scripts/test_n8n_b2b_webhook.cjs", exit: 0,
+                   url: "https://n8n.productoraear.com/webhook/b2b-quote",
+                   sha256: "0ceb5b5195b6f889421a45aa87614dec664a3ed864c2af473aa69f37d02dd78b",
+                   ts: "2026-11-27T21:08:23.469Z", latency_ms: 1175, code: "ACK_ASINCRONO", fallback: false }
+                 { id: N8N_B2B_BRIDGE_CLOSED_VH1, cmd: "node scripts/test_n8n_b2b_webhook.cjs --offline",
+                   exit: 0, gates: "6/6 PASS", sha256: "7e62b252ee8a000f1ef1a39595508afa3780506abc545e10fec6726a99bf83e7",
+                   head: "a3f48994", ledger_line: 237, ts: "2026-11-27T21:35:18.871Z" }
+                 { id: TYPECHECK_N8N_B2B_CLOSE, cmd: "npm run typecheck", exit: 0, ts: "2026-11-27" }
+                 { id: SSOT_INTEGRITY_N8N_B2B_CLOSE, cmd: "npm run audit:ssot", exit: 0,
+                   hash: "e208462ea1a4e6796b31743ee0200794f18221fcc1154cb9e5e56526a0c41ea5 coincide=SI", ts: "2026-11-27" }
+                 { id: LEDGER_NEWLINE, cmd: "node scripts/verify_ledger_append_newline.cjs", exit: 0, aserciones: "27/27" }
+                 { id: N8N_EXECUTIONS_API, cmd: "GET https://n8n.productoraear.com/api/v1/executions?limit=1",
+                   exit: n/a, status: 401, body: "'X-N8N-API-KEY' header required", state: SIN_EVIDENCIA,
+                   note: "sin credencial de API: la certificación de procesamiento se hace por VH-1, no por sonda" }
+cambios[]      : CLINE_EXECUTION_LOG.md · .antigravity/evidence/ledger.jsonl ·
+                 .antigravity/evidence/n8n_b2b_webhook_smoke.json · .antigravity/evidence/n8n_b2b_webhook_smoke_offline.json
+gates          : G0 PASS (SSOT 6/6) · G1 PASS (workflow 5/5) · G2 PASS (payload 9/9) · G3 PASS (formatter cupón 350) ·
+                 G4 PASS (formatter oficial 550 delta 0) · G5 PASS (5/5 emisores × 8 campos) · G6 PASS (HTTP 200, ACK asíncrono)
+                 (doctrina §5: G-0 PASS · G-1 typecheck PASS · G-4 audit:ssot PASS · G-5 ledger newline PASS ·
+                  G-2 lint / G-3 sv_protocol / G-6 omega-rojo NO ejecutados en este acto = SIN_EVIDENCIA honesto)
+omega_diamante : { score: "7/7 gates del arnés (no 20/20 global)", verdict: "VERDE",
+                   pendientes: ["telemetría de ejecuciones por API (N8N_API_KEY) = SIN_EVIDENCIA",
+                   "la rama inválida del nodo respondToWebhook publica success:true",
+                   "el JSON versionado declara responseMode=responseNode pero producción responde onReceived (artefacto != desplegado)",
+                   "el emisor de referencia vivo EAR-MCH-… corre fuera del árbol versionado"] }
+hipotesis[]    : (i) n8n completó el nodo Code porque el CEO ve «Salida 1 elemento» y los importes/fechas del panel
+                 coinciden con el SSOT (550/350, 100 km exentos, 0 facturables, 100 € depósito);
+                 (ii) el `requestId` de la UI es idéntico al que emitió el arnés (prefijo SMOKE-), luego es la
+                 misma ejecución que disparó el arnés y no una corrida manual distinta;
+                 (iii) el `--offline` regenera un `requestId` con sufijo nuevo por corrida (MWZHTCP0 en esta pasada):
+                 eso NO contradice VH-1, que se ancla al ID vivo MWZH3Y4F ya sellado en el ledger #236
+decision       : certificar el bloque por VH-1 sin inventar una sonda de API (habría sido AF-5 «verde por defecto»)
+                 y sin re-ejecutar la sonda REAL (duplicaría una ejecución y un aviso Telegram al CEO, ya certificado).
+                 Se descartó re-correr `node scripts/test_n8n_b2b_webhook.cjs` en modo REAL: efecto secundario
+                 declarado (nueva ejecución + alerta) sin ganancia de evidencia sobre lo que el CEO acaba de ver.
+riesgos        : un fallo del nodo Code POSTERIOR al ACK no produce error visible al emisor (pérdida silenciosa de lead);
+                 mitigación pendiente: alerta sobre `/api/v1/executions?status=error`. La certificación VH-1 depende
+                 de la inspección humana: si el panel mostró una ejecución antigua con el mismo prefijo, VH-1 quedaría
+                 caducado; se mitiga con el `requestId` único (sufijo aleatorio) re-verificable en la UI.
+reto_espejo    : el CEO pidió «VERIFICADO_TOTAL»; EP-2 tiene vocabulario cerrado y VH-1 no es la quíntupla de máquina.
+                 Se resuelve sin maquillar: el acta declara `VERIFICADO_TOTAL (VH-1)` citando la fuente humana, y el
+                 ledger sella `VERIFICADO` sobre el único comando ejecutable (arnés offline, Exit 0), no sobre la inspección.
+aprendizaje_ceo: un HTTP 200 de n8n significa «recibido y arrancado», no «procesado». El arnés verde mide que el
+                 puente acepta el contrato; para saber si el lead llegó de verdad hace falta o la UI (VH-1) o la API
+                 de ejecuciones. Cerrar el bloque con VH-1 es legítimo mientras se declare que es mirada humana, no sonda.
+siguiente_paso : dotar `N8N_API_KEY` al arnés (nuevo `scripts/verify_n8n_executions.cjs`) para certificar
+                 `status=success` por `requestId` y detectar fallos posteriores al ACK sin depender del panel.
+```
+
+**Verificación de esta acta:** `node scripts/verify_ledger_append_newline.cjs` → **27/27 PASS · Exit 0**
+(la línea #237 queda sellada con `order:"APPEND"`, `supersedes:"N8N_B2B_WEBHOOK_SMOKE_LIVE"`; nada previo reescrito).
+**Estado del árbol:** el bloque queda en **VERDE** (arnés 7/7 · G-1 typecheck Exit 0 · G-4 SSOT coincidente ·
+ledger append-only 27/27). Los 3 ficheros de `.antigravity/reports/` siguen modificados y **fuera del perímetro**
+firmado, tal como declaró el acta `AMPLIACION_PERIMETRO_B2B_G5_5_5_VERDE` (línea 8405).
+
+**Estado de publicación (declarado, no maquillado):** sellado con un commit local en `main` sobre `a3f48994`
+(sha no autocitado en esta acta: un `--amend` sobre el mismo commit lo invalidaría).
+`origin/main` estaba en `a3f48994`, por lo que el sello es **local y aún no empujado**. El push a
+`origin/main` (→ Coolify) está **gateado** por `npm run gate:prepush` (40 comprobaciones bloqueantes, CHG-1/AGENTS.md §4)
+y **no se ejecutó en este acto** = `SIN_EVIDENCIA` de puerta pre-push. El bloque n8n **ya está vivo y certificado**
+(el despliegue del puente ocurre en n8n, no en este repo); el commit sólo contiene documentación y artefactos de
+evidencia (0 líneas de código de producto).

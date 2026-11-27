@@ -5,8 +5,8 @@
   "mode": "REAL",
   "probed": true,
   "source": "live",
-  "checkedAt": "2026-11-27T20:48:15.665Z",
-  "startedAt": "2026-11-27T20:48:13.400Z",
+  "checkedAt": "2026-11-27T21:08:23.469Z",
+  "startedAt": "2026-11-27T21:08:18.131Z",
   "ssot": {
     "file": "src\\lib\\constants\\ear-os-ssot.ts",
     "values": {
@@ -74,7 +74,7 @@
   },
   "payloads": {
     "cupon": {
-      "requestId": "SMOKE-B2B-QUOTE-MWZGE4IA",
+      "requestId": "SMOKE-B2B-QUOTE-MWZH3Y4F",
       "smokeTest": true,
       "source": "ear-os-smoke-harness",
       "event": "cita_iniciada_por_whatsapp",
@@ -85,7 +85,7 @@
       "eventDate": "2026-11-28",
       "location": "Madrid",
       "distanceKm": 15,
-      "quoteId": "SMOKE-B2B-QUOTE-MWZGE4IA",
+      "quoteId": "SMOKE-B2B-QUOTE-MWZH3Y4F",
       "totalWithVat": 423.5,
       "format": "solista_edwin",
       "formatCatalogId": "solista-edwin-agudelo",
@@ -109,11 +109,11 @@
       "integrity": {
         "algorithm": "SHA-256",
         "scope": "canonical-payload",
-        "hash": "af18a28ec1e99bbbc335d3bed25dc821a84d84650e49af1d3b8c0bd5c9a675ca"
+        "hash": "30fa70b405a94fc7e2ad106e93ef03b14d0ea12a0d7b71d5ca182be40d0e3cd8"
       }
     },
     "sinCupon": {
-      "requestId": "SMOKE-B2B-QUOTE-MWZGE4IA",
+      "requestId": "SMOKE-B2B-QUOTE-MWZH3Y4F",
       "smokeTest": true,
       "source": "ear-os-smoke-harness",
       "event": "cotizacion_directa_sin_cupon",
@@ -124,7 +124,7 @@
       "eventDate": "2026-11-28",
       "location": "Madrid",
       "distanceKm": 15,
-      "quoteId": "SMOKE-B2B-QUOTE-MWZGE4IA",
+      "quoteId": "SMOKE-B2B-QUOTE-MWZH3Y4F",
       "totalWithVat": 665.5,
       "format": "solista_edwin",
       "formatCatalogId": "solista-edwin-agudelo",
@@ -148,7 +148,7 @@
       "integrity": {
         "algorithm": "SHA-256",
         "scope": "canonical-payload",
-        "hash": "626b27e39e437ce9a28bfb3c956f71c2e805557196b66121248500cf6062965d"
+        "hash": "780fb3a991a5b6a7c0d3e17601580ec56a66c85156004a88372d8ea8ccad3f86"
       }
     }
   },
@@ -225,7 +225,7 @@
     {
       "id": "G2_PAYLOAD_CANONICO",
       "ok": true,
-      "detail": "9/9 · requestId=SMOKE-B2B-QUOTE-MWZGE4IA",
+      "detail": "9/9 · requestId=SMOKE-B2B-QUOTE-MWZH3Y4F",
       "checks": [
         {
           "id": "titular",
@@ -260,7 +260,7 @@
         {
           "id": "integrity.sha256",
           "ok": true,
-          "detail": "af18a28ec1e99bbb…"
+          "detail": "30fa70b405a94fc7…"
         },
         {
           "id": "priceLock.sha256",
@@ -280,7 +280,7 @@
       "detail": "valid=true · 10/10 mandatos · total=350 EUR",
       "output": {
         "valid": true,
-        "requestId": "SMOKE-B2B-QUOTE-MWZGE4IA",
+        "requestId": "SMOKE-B2B-QUOTE-MWZH3Y4F",
         "smokeTest": true,
         "source": "ear-os-smoke-harness",
         "event": "cita_iniciada_por_whatsapp",
@@ -291,7 +291,7 @@
         "eventDate": "2026-11-28",
         "location": "Madrid",
         "distanceKm": 15,
-        "quoteId": "SMOKE-B2B-QUOTE-MWZGE4IA",
+        "quoteId": "SMOKE-B2B-QUOTE-MWZH3Y4F",
         "totalWithVat": 423.5,
         "format": "solista_edwin",
         "formatCatalogId": "solista-edwin-agudelo",
@@ -315,7 +315,7 @@
         "integrity": {
           "algorithm": "SHA-256",
           "scope": "canonical-payload",
-          "hash": "af18a28ec1e99bbbc335d3bed25dc821a84d84650e49af1d3b8c0bd5c9a675ca"
+          "hash": "30fa70b405a94fc7e2ad106e93ef03b14d0ea12a0d7b71d5ca182be40d0e3cd8"
         },
         "logistica": 0,
         "hotel": 0,
@@ -394,7 +394,7 @@
       "detail": "valid=true · total=550 EUR vs esperado 550 EUR (delta 0) · fallidos=ninguno",
       "output": {
         "valid": true,
-        "requestId": "SMOKE-B2B-QUOTE-MWZGE4IA",
+        "requestId": "SMOKE-B2B-QUOTE-MWZH3Y4F",
         "smokeTest": true,
         "source": "ear-os-smoke-harness",
         "event": "cotizacion_directa_sin_cupon",
@@ -405,7 +405,7 @@
         "eventDate": "2026-11-28",
         "location": "Madrid",
         "distanceKm": 15,
-        "quoteId": "SMOKE-B2B-QUOTE-MWZGE4IA",
+        "quoteId": "SMOKE-B2B-QUOTE-MWZH3Y4F",
         "totalWithVat": 665.5,
         "format": "solista_edwin",
         "formatCatalogId": "solista-edwin-agudelo",
@@ -429,7 +429,7 @@
         "integrity": {
           "algorithm": "SHA-256",
           "scope": "canonical-payload",
-          "hash": "626b27e39e437ce9a28bfb3c956f71c2e805557196b66121248500cf6062965d"
+          "hash": "780fb3a991a5b6a7c0d3e17601580ec56a66c85156004a88372d8ea8ccad3f86"
         },
         "logistica": 0,
         "hotel": 0,
@@ -657,7 +657,7 @@
     {
       "id": "G6_TRANSPORTE_HTTP",
       "ok": true,
-      "detail": "HTTP 200 · 822 ms · ACK_ASINCRONO",
+      "detail": "HTTP 200 · 1175 ms · ACK_ASINCRONO",
       "endpoint": "https://n8n.productoraear.com/webhook/b2b-quote",
       "body": "{\"message\":\"Workflow was started\"}",
       "bodySha256": "0ceb5b5195b6f889421a45aa87614dec664a3ed864c2af473aa69f37d02dd78b"
@@ -683,7 +683,7 @@
       "message": "Workflow was started"
     },
     "bodySha256": "0ceb5b5195b6f889421a45aa87614dec664a3ed864c2af473aa69f37d02dd78b",
-    "latencyMs": 822,
+    "latencyMs": 1175,
     "error": null,
     "contentType": "application/json; charset=utf-8",
     "usedEndpoint": "https://n8n.productoraear.com/webhook/b2b-quote",
@@ -695,7 +695,7 @@
     "probed": true,
     "source": "live",
     "mode": "REAL",
-    "checkedAt": "2026-11-27T20:48:15.665Z",
+    "checkedAt": "2026-11-27T21:08:23.469Z",
     "processingCertified": false,
     "note": "n8n acusa recibo asíncrono: el 200 certifica TRANSPORTE, no la ejecución del formateador"
   },
@@ -707,7 +707,7 @@
     "exit": 0,
     "url": "https://n8n.productoraear.com/webhook/b2b-quote",
     "sha256": "0ceb5b5195b6f889421a45aa87614dec664a3ed864c2af473aa69f37d02dd78b",
-    "ts": "2026-11-27T20:48:15.665Z"
+    "ts": "2026-11-27T21:08:23.469Z"
   },
   "reportPath": ".antigravity\\evidence\\n8n_b2b_webhook_smoke.json"
 }
