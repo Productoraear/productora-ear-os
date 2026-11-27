@@ -7953,7 +7953,7 @@ gates          : G-0 PASS · G-1 PASS (tsc 0) · G-2 PASS (lint 0) · G-3 PASS (
 hipotesis[]    : (i) CSVs GSC/Clarity = snapshots locales válidos; (ii) el build de Coolify converge al nuevo commit; (iii) el WIP stasheado recompila al recuperarlo
 decision       : alinear los TESTS al SSOT (100 km) en vez de mutar libs/Zona Cero; aislar el WIP por stash en vez de commitearlo (rompería Coolify)
 riesgos        : producción sirve aún buildSha e0185f51 hasta que Coolify termine; el WIP stasheado debe revisarse antes de reproponerse
-reto_espejo    : la Directiva pedía "0 títulos > 60"; `/reservar/contrato` quedó fuera (depende de `@/lib/booking/b2b-orchestration`, WIP de booking prohibido) → su título NO se recorta en esta release
+reto_espejo    : la Directiva acotaba el recorte a `src/app/(public)/**`; el saneo exigió además 6 superficies fuera de `(public)` (`/`, `/pro`, `/reservar`, `/licitaciones`, `/fincas-landing`, `/voicestudio/studio-pro`) — se amplió el perímetro para lograr `TITLE_TOO_LONG=0` verificable
 aprendizaje_ceo: el gate prepush valida invariantes globales; un fix parcial hereda rojos históricos ajenos. Alineando los tests al SSOT el arnés cierra 42/42 sin relajar ninguna regla
 siguiente_paso : sondear /api/health hasta buildSha == nuevo HEAD; después `git stash pop` para retomar booking/stripe en sesión limpia
 ```
