@@ -374,14 +374,17 @@ export function middleware(request: NextRequest) {
 
   // 2.5. RESOLUCION DE ALIAS LEGACY (REMEDIACION DE COBERTURA GSC · P0 2026-11-27)
   //      Google conserva indexadas 39 URLs historicas (`.antigravity/reports/
-  //      gsc_high_opportunity.json`) que hoy morian en 404 o quedaban replegadas
-  //      al escaparate por el gate de abajo. Se desvian con 301 PERMANENTE a una
-  //      superficie certificada, preservando los parametros del visitante
-  //      (utm_*, gclid, ref) sin pisar el destino.
-  //      · El patron opaco `prov-XXXX`/`v-XXXX` NO se resuelve aqui: el Edge no
-  //        lee disco y las 13.094 fichas viven en `public/data/`. Lo resuelve la
-  //        propia ficha server-side (`/proveedores/[slug]/page.tsx`) para poder
-  //        aterrizar en la ficha canonica real, no en un directorio generico.
+  //      gsc_high_opportunity.json`) que hoy morian en 404 (`prov-XXXX`) o
+  //      quedaban replegadas al escaparate por el gate de abajo
+  //      (`/checkout/presupuesto`, `/arsenal/iluminacion-dmx`). Se desvian con
+  //      301 PERMANENTE a una superficie certificada, preservando los parametros
+  //      del visitante (utm_*, gclid, ref) sin pisar el destino.
+  //      · El mapa de ids opacos (`prov-3446`) es ESTATICO: el Edge no lee disco,
+  //        asi que se genero desde `src/data/all_providers_database.json` y se
+  //        congela en `@/lib/routing/legacy-route-aliases`. Un id sin ficha
+  //        conocida cae al directorio (`/proveedores`), nunca a un 404.
+  //      · `src/app/(public)/proveedores/[slug]/page.tsx` aplica el MISMO
+  //        resolutor como defensa en profundidad.
   const legacyAlias: string | null = resolveLegacyRouteAlias(url.pathname);
   if (legacyAlias !== null) {
     const aliasParts: string[] = legacyAlias.split('?');
