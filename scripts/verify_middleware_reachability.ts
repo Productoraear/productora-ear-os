@@ -50,6 +50,18 @@ const CASES: readonly ProbeCase[] = [
   { label: 'Dossier insignia', path: '/otzarreta', mustRedirect: false },
   { label: 'Escaparate (destino legítimo)', path: '/celebraciones', mustRedirect: false },
   { label: 'Presupuesto', path: '/presupuesto', mustRedirect: false },
+  // ── P0 2026-11-27 · Apertura de tráfico público canónico (Directiva CEO) ──
+  { label: 'Bodas', path: '/bodas', mustRedirect: false },
+  { label: 'Experiencia', path: '/experiencia', mustRedirect: false },
+  { label: 'Licitaciones', path: '/licitaciones', mustRedirect: false },
+  { label: 'Reservar · solista', path: '/reservar/solista', mustRedirect: false },
+  { label: 'Reservar · subruta canónica', path: '/reservar/mariachi', mustRedirect: false },
+  { label: 'Artistas · ficha', path: '/artistas/edwin-agudelo', mustRedirect: false },
+  { label: 'Fincas · ficha', path: '/fincas/jardines-la-cartuja', mustRedirect: false },
+  { label: 'Proveedores · ficha', path: '/proveedores/finca-ejemplo', mustRedirect: false },
+  { label: 'Seating planner', path: '/seating-planner', mustRedirect: false },
+  // La protección ESTRICTA sigue viva: /admin sin sesión → /login.
+  { label: 'Admin sin sesión (blindaje de sesión intacto)', path: '/admin', mustRedirect: true },
   // Contención multi-dominio: fincasparaboda.com y artistaseuropa.com
   {
     label: 'fincasparaboda.com · Agenda Otzarreta ?intent=ver',

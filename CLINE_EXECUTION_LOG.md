@@ -7665,3 +7665,140 @@ siguiente_paso : desplegar HEAD a Coolify + verificar `/_next/image` en producci
 ```
 
 
+
+---
+
+## AUDIT_UI_UX_300_PAGES_STREAMING_FIRST · 2026-11-27 (Cline / El Obrero)
+
+**Qué se midió (Fase 1 · streaming HTTP 0 tokens)**
+- Censo real por 3 vías: caminata del App Router (`src/app`, 211 rutas), sitemap vivo `/sitemap.xml` (2.182 URLs) y expansión acotada de familias dinámicas navegables (`/mariachis/red/*` 221 desde `/centralita-mariachis/*`; 40 fichas `/proveedores/{slug}` por lectura PARCIAL de la DB — 372 MB / 122.987 registros, jamás cargada entera). **Censo = 2.618 rutas (mínimo 300: SÍ).**
+- Selección estratificada navegable-primero: 615 navegables (prefijos certificados) + 2.003 gated/staff. Barrido real: **340 rutas**, concurrencia 8, streaming con tope de cuerpo 900 KB/ruta y reintentos.
+- Resultado: **338×200 OK · 1 redirect (3xx) · 0×404 · 0×5xx · 1 soft-404 · 0 inalcanzables** en 348.751 ms. Anomalía P1: `/proveedores/edwin-agudelo` (200 sin `<title>` → soft-404). Banderas de overflow estático (clases parásitas): `/artistas` y `/fincas` (1×`min-w-[NNNNpx]` cada una).
+- **Hallazgo estructural P0**: `src/middleware.ts` aplica Route-Gating/Dark-Launching con whitelist `CERTIFIED_PRODUCTION_ROUTES` (~19 prefijos) + patrones `fincas/[slug]`, `proveedores/[slug]`, `calendario/*`. Todo lo demás (`/bodas/*`, `/experiencia`, `/productora-ear/*`, `/centralita-mariachis/*`, `/vimume`, `/precios`, `/confianza`) repliega **307 → `/`**. El sitemap publica 2.182 URLs mientras la superficie pública real es un subconjunto.
+
+**Qué se midió (Fase 2 · sonda browser con bloqueo de activos)**
+- `scripts/audit_browser_ui_ux_lean.cjs` con Chrome real (`puppeteer-core` 25.10.0). Se ABORTA imagen/fuente/media/xhr/fetch y todo origen externo; sólo HTML + CSS/JS de Next.js. Navegación única + reflow por `setViewport` para 2 viewports (390×844, 1280×800). Pool de concurrencia.
+- Muestra: 25 rutas clave (mínimo del encargo) de la cola prioritaria de Fase 1 + muestra por familia.
+- Resultado: **23 PASS / 2 FAIL / 0 ERROR**. `overflow-x` móvil: **0**. Colisión tipográfica H1/H2 (intersección 2D): **0**. Dock inferior cubriendo ≥50 % de un interactivo ajeno: **2** (`/` desktop; `/fincas/jardines-la-cartuja` móvil).
+- Corrección de falsos positivos en sesión: (i) el test 1D "H2 en la misma Y" marcaba columnas lado a lado → sustituido por intersección 2D real (X∧Y); (ii) el test de dock contaba elementos rozados al plegarse → endurecido a cobertura ≥50 % del área del interactivo.
+
+**Premortem (INC-2 · G-8)**
+1. *¿Objetivo exacto o primo hermano?* Exacto: dos scripts nuevos + dos informes; sin tocar producto ni Zona Cero.
+2. *¿Asunciones frágiles?* (i) el dev server de 3007 es el objetivo y serializa el SSR (la concurrencia no reduce el muro de tiempo); (ii) el veredicto "navegable" es la whitelist del middleware, que puede cambiar; (iii) la detección de dock depende del settle (hidratación de cliente).
+3. *¿Alternativa descartada?* Chrome a ciegas sobre 300 URLs con multimedia (prohibido por el encargo y por la Ley del Halcón): se optó por streaming HTTP masivo (Fase 1) + muestra geométrica acotada (Fase 2).
+4. *¿Qué se rompe bajo carga?* Una ráfaga concurrente provocó 1 ECONNRESET en el dev server (mitigado con reintentos + backoff); detectado antes que el cliente por la propia sonda.
+5. *¿Qué acepto al firmar?* Que la UI/UX rinde bien, pero la **superficie pública (dark-launch) contradice el sitemap**; y que el gate <60 s de la sonda es inalcanzable contra `next dev` (medido 63–175 s según carga) y sólo se cumpliría sobre un build de producción precompilado.
+
+**SIGMA://CLOSE/v1**
+```
+task_id        : AUDIT_UI_UX_300_PAGES_STREAMING_FIRST
+estado_bloque  : VERIFICADO (Fase 1: 340 rutas, 0 errores de servidor) · SOSPECHOSO (Fase 2: gate <60 s no alcanzable en dev)
+hecho          : scripts/audit_streaming_300_routes.cjs · scripts/audit_browser_ui_ux_lean.cjs · .antigravity/reports/streaming_300_triage.json · .antigravity/reports/UI_UX_300_PAGES_VERIFICATION.md
+evidence[]     : node --check exit=0 (ambos scripts) · Fase1: 340 rutas (338×200, 1×3xx, 1 soft-404, 0×5xx) · sha256(streaming_300_triage.json)=9A3A00FFD8167A0AC61B8619872A953F256335C6F6243FD8C72D2758F587463A · Fase2: 25 rutas × 2 viewports (23 PASS/2 FAIL), overflow-x=0, colision2D=0, dock=2 · sha256(UI_UX_300_PAGES_VERIFICATION.md)=8A2F3E43C93C4EFA5FE0425A8808E604942C764DF77EBCF8695EB2B072C3F6CD
+cambios[]      : 2 scripts nuevos + 2 informes (ningún archivo de producto tocado; Zona Cero intacta)
+gates          : G0=PASS (Test-Path de todo lo citado) · G1=SIN_EVIDENCIA (sin diff de producto que tipar) · G2=SIN_EVIDENCIA · G3=SIN_EVIDENCIA · G4=SIN_EVIDENCIA · G5=SIN_EVIDENCIA · G6=SIN_EVIDENCIA · G7=SIN_EVIDENCIA · G8=PASS (premortem)
+omega_diamante : { score: "no re-auditado", verdict: "PENDIENTE" }
+hipotesis[]    : dev server serializa el SSR; whitelist del middleware vigente; detección de dock sensible al settle
+decision       : streaming masivo + muestra geométrica acotada, en lugar de navegador real sobre 300 URLs con multimedia
+riesgos        : dark-launch contradice el sitemap (2.182 URLs advertidas, ~2.003 gated); dock hidratado puede variar run-to-run
+reto_espejo    : endurecer el test de solapamiento a intersección 2D y el de dock a cobertura ≥50 %, en lugar de aceptar el ruido 1D
+aprendizaje_ceo: la UI rinde bien (0 fugas horizontales, 0 colisiones tipográficas en 25 rutas), pero el problema comercial es OTRO: el sitemap promete 2.182 URLs y el middleware sólo sirve ~19 prefijos; el resto cae en `/`. Es fuga de captación, no de CSS
+siguiente_paso : decidir con el CEO si las familias gated (`/bodas/*`, `/productora-ear/*`) deben certificarse, o alinear el sitemap con la superficie real
+```
+
+---
+
+## P0_APERTURA_RUTAS_MIDDLEWARE_DOCK_MOVIL_4_COACHES · 2026-11-27 (Cline / El Obrero)
+
+**Qué cambió (4 acciones del paquete quirúrgico del CEO)**
+1. `src/middleware.ts` — `CERTIFIED_PRODUCTION_ROUTES` certifica ahora los prefijos públicos canónicos que el audit de 300 páginas midió replegando a `/`: `/bodas`, `/experiencia`, `/licitaciones`, `/reservar` (además de los ya presentes `/fincas`, `/artistas`, `/proveedores`, `/seating-planner`, `/presupuesto`, `/mariachis`). Paso transparente (`NextResponse.next()`) al App Router. La protección de sesión sigue intacta y **exclusiva** sobre `/admin/**` + `/command-center`.
+2. `src/components/checkout/SovereignCartDrawer.tsx` — estratificación `z-[50] → z-[90]` (por encima del dock `z-[80]` y del concierge `z-[85]`), reserva inferior `pb-[calc(5.5rem+env(safe-area-inset-bottom))]` (`lg:pb-6`) y eliminación de `w-screen` (recortaba 40 px del panel en viewport 390 px).
+3. `src/components/sclass/SovereignMobileHUD.tsx` — el panel móvil ancla su offset al token único `--ear-dock-h` en lugar del literal `5.75rem` (mismo valor → cero cambio visual, un solo SSOT de zona segura inferior).
+4. `src/lib/agents/coachTypes.ts` — módulo tipado canónico del cuarteto (`AICoachRole`, `AICoachContract`, doctrina `VELOCITY_MEDIA_S_CLASS`) con `validateOutput` real por rol (suelo/techo/split/km, gates CI, CLS/LCP/INP, JUR-1/JUR-4 + Centralita). Cifras 100 % del SSOT.
+
+**Evidencia ejecutable (medida en esta sesión)**
+- `node ./node_modules/tsx/dist/cli.mjs scripts/verify_coach_doctrine.ts` → **41/41 PASS · Exit 0**
+- `node ./node_modules/tsx/dist/cli.mjs scripts/verify_mobile_dock_layout.ts` → **10/10 PASS · Exit 0**
+- `node ./node_modules/tsx/dist/cli.mjs scripts/verify_route_gating_and_hmac_bridge.ts` → **31/31 PASS · Exit 0**
+- `node ./node_modules/tsx/dist/cli.mjs scripts/verify_middleware_reachability.ts` → **25/26 · 1 FAIL PRE-EXISTENTE** (ver riesgo)
+- `npm run typecheck` (`tsc --noEmit`) → **Exit 0**
+- `eslint src/middleware.ts src/components/checkout/SovereignCartDrawer.tsx src/components/sclass/SovereignMobileHUD.tsx src/lib/agents/coachTypes.ts` → **0 errores · 6 warnings pre-existentes** (`no-unused-vars` en imports heredados)
+
+**Premortem (INC-2 · G-8)**
+1. *¿Objetivo exacto o primo hermano?* Exacto: los 4 entregables pedidos. NO cosmético: el middleware deja de replegar landings reales y el cajón de compra deja de quedar bajo el dock.
+2. *¿Asunciones frágiles?* (i) Que el orden gating → aislamiento vertical se mantiene (no toqué la isolation); (ii) que `/reservar/test-1eur` queda expuesta al certificar `/reservar` — el gating es cosmético, no frontera de seguridad; (iii) que `--ear-dock-h` sigue siendo la única zona segura inferior.
+3. *¿Alternativa descartada?* Añadir los prefijos canónicos a `allowedPublicPrefixes` de cada vertical soberana. Descartada: el aislamiento multi-dominio (W49_T02) es deliberado y `src/lib/domains/` está FUERA de mi perímetro asignado.
+4. *¿Qué se rompe bajo carga?* Nada nuevo: los cambios son declarativos (lista + clases). El riesgo real es la superficie expuesta (`/reservar/**`), mitigable con el rate-limit ya presente en rutas de cobro (SEC-5).
+5. *¿Qué acepto al firmar?* Que G-3 queda con 1 puerta roja PRE-EXISTENTE (`fincasparaboda.com · /celebraciones`) cuya causa raíz está en `sovereign-domain-registry.ts` (fuera de perímetro) y que `/reservar/**` pasa a ser público.
+
+**Riesgo declarado (verdad cruda · CEO-4)**
+- **FAIL pre-existente NO causado por este cambio**: `fincasparaboda.com · /celebraciones` redirige a `/fincas`. Prueba de que es anterior a mi diff: `git show HEAD:src/middleware.ts` ya certificaba `'/celebraciones'`, y `isPathAllowedForVertical(SOVEREIGN_DOMAINS.fincasparaboda, '/celebraciones')` = **false** con el registro SIN modificar (`git status` no lista `src/lib/domains/`). Fix recomendado (1 línea, fuera de perímetro): añadir `'/celebraciones'` a `fincasparaboda.allowedPublicPrefixes`.
+
+**SIGMA://CLOSE/v1**
+```
+task_id        : P0_APERTURA_RUTAS_MIDDLEWARE_DOCK_MOVIL_4_COACHES
+estado_bloque  : VERIFICADO (4 entregables) · SOSPECHOSO (G-3: 1 puerta roja pre-existente fuera de perímetro)
+hecho          : src/middleware.ts:62-93 (whitelist ampliada) · src/components/checkout/SovereignCartDrawer.tsx:50-64 (z-[90] + pb safe-area + w-full) · src/components/sclass/SovereignMobileHUD.tsx:491 (offset --ear-dock-h) · src/lib/agents/coachTypes.ts (1-263) · scripts/verify_coach_doctrine.ts · scripts/verify_mobile_dock_layout.ts · scripts/verify_middleware_reachability.ts:53-64
+evidence[]     : {cmd:"npx tsx scripts/verify_coach_doctrine.ts", exit:0, res:"41/41"} · {cmd:"npx tsx scripts/verify_mobile_dock_layout.ts", exit:0, res:"10/10"} · {cmd:"npx tsx scripts/verify_route_gating_and_hmac_bridge.ts", exit:0, res:"31/31"} · {cmd:"npx tsx scripts/verify_middleware_reachability.ts", exit:1, res:"25/26 (1 pre-existente)"} · {cmd:"npm run typecheck", exit:0} · {cmd:"eslint <4 ficheros>", exit:0, res:"0 errores/6 warnings pre-existentes"}
+cambios[]      : src/middleware.ts · src/components/checkout/SovereignCartDrawer.tsx · src/components/sclass/SovereignMobileHUD.tsx · src/lib/agents/coachTypes.ts (nuevo) · scripts/verify_coach_doctrine.ts (nuevo) · scripts/verify_mobile_dock_layout.ts (nuevo) · scripts/verify_middleware_reachability.ts
+gates          : G0=PASS · G1=PASS (tsc Exit 0) · G2=PASS (0 errores en ficheros tocados) · G3=FAIL (1/26, pre-existente, fuera de perímetro) · G4=SIN_EVIDENCIA (no ejecutado) · G5=SIN_EVIDENCIA · G6=SIN_EVIDENCIA · G7=SIN_EVIDENCIA · G8=PASS (premortem 5/5)
+omega_diamante : { score: "no re-auditado", verdict: "PENDIENTE", pendientes: ["G-3 puerta /celebraciones en fincasparaboda (registro fuera de perímetro)", "G-4 audit:ssot", "G-6 audit:omega-rojo"] }
+hipotesis[]    : orden gating→isolation intacto; /reservar/** ahora público; --ear-dock-h única zona segura inferior
+decision       : certificar prefijos en el middleware (mi perímetro) en lugar de tocar allowedPublicPrefixes de cada vertical (fuera de perímetro, diluye aislamiento W49_T02)
+riesgos        : /reservar/test-1eur expuesta (gating cosmético, no seguridad); G-3 rojo pre-existente no resuelto por límite de perímetro
+reto_espejo    : el verificador del dock elimina los comentarios JSX antes de auditar `w-screen`, para no dar un falso PASS por documentación
+aprendizaje_ceo: el sitemap prometía 2.182 URLs y el middleware servía ~19 prefijos; ahora las landings canónicas que VENDEN (bodas, experiencia, licitaciones, reservar) ya no se convierten en una redirección silenciosa a portada
+siguiente_paso : autorizar a Antigravity añadir '/celebraciones' a fincasparaboda.allowedPublicPrefixes (1 línea) y re-correr `npm run verify:middleware-reachability` hasta 26/26
+```
+
+---
+
+## P0_CIERRE_VERTICAL_FINCAS_CELEBRACIONES_Y_DESPLIEGUE_OLA · 2026-11-27 (Cline / El Obrero)
+
+**Qué cambió (cierre de la compuerta pendiente del acta anterior)**
+1. `src/lib/domains/sovereign-domain-registry.ts` — se añade `'/celebraciones'` a `fincasparaboda.allowedPublicPrefixes`. Era la causa raíz declarada en el acta anterior: el escaparate público canónico (ya certificado en `CERTIFIED_PRODUCTION_ROUTES` de `middleware.ts`) NO constaba como prefijo de la vertical fincasparaboda, así que `isPathAllowedForVertical` lo replegaba con 307 a `/fincas` (redirección parásita medida). Ahora el paso es transparente (200).
+2. AUDITORÍA TASTE/SLOP — `.agents/skills/taste-engine-ui.md` **NO EXISTE** en el repositorio. `Get-ChildItem .agents/skills -Recurse` lista 8 skills (`grill-me`, `planning-and-task-breakdown`, `ponytail`, `spec-driven-development`, `superpowers`, `test-driven-development`, `unslop`, `verification-and-testing`); la doctrina Taste Engine OLED vive en `.agents/skills/unslop/SKILL.md`. Estado declarado: `SIN_EVIDENCIA` (no se fabrica el enlace · EP-2/AF-5).
+3. DESBORDAMIENTO HORIZONTAL MÓVIL — sonda real en Chrome (Puppeteer) sobre las rutas liberadas en viewport 360/390 px: `hScroll=0 px` en 10/10 mediciones, `MAX_OBSERVED_CLS=0`, `ROWS_OVER_BUDGET=0`.
+4. `scripts/extract_velocity_subscription.cjs` — `node --check` limpio (Exit 0).
+
+**Evidencia ejecutable (medida en esta sesión)**
+- `node ./node_modules/tsx/dist/cli.mjs scripts/verify_middleware_reachability.ts` → **26/26 PASS · Exit 0** (antes 25/26)
+- `node ./node_modules/tsx/dist/cli.mjs scripts/verify_domain_isolation.ts` → **40/40 PASS · Exit 0**
+- `node ./node_modules/tsx/dist/cli.mjs scripts/verify_route_gating_and_hmac_bridge.ts` → **31/31 PASS · Exit 0**
+- `node ./node_modules/tsx/dist/cli.mjs scripts/verify_coach_doctrine.ts` → **41/41 PASS · Exit 0**
+- `node ./node_modules/tsx/dist/cli.mjs scripts/verify_mobile_dock_layout.ts` → **10/10 PASS · Exit 0**
+- `node scripts/audit_mobile_load_stability.cjs --base=http://127.0.0.1:3007 --routes=/celebraciones,/bodas,/fincas,/artistas,/reservar/solista` → **ROWS=10 · ROWS_WITH_ERROR=0 · ROWS_OVER_BUDGET=0 · MAX_OBSERVED_CLS=0 · VERDICT=PASS · Exit 0** (`sha256=239cee7625d323adf431bd35186e7cf2231e0c2ae1dde26a681ed169f61f9b95`)
+- `node --check scripts/extract_velocity_subscription.cjs` → **Exit 0**
+- `npm run typecheck` (`tsc --noEmit`) → **Exit 0**
+- `node ./node_modules/eslint/bin/eslint.js <5 ficheros>` → **0 errores · 6 warnings pre-existentes**
+- `node scripts/run_sv_protocol_15_gates.cjs` → **20/22 PASS · 2 FAIL PRE-EXISTENTES** (ver riesgo)
+
+**Premortem (INC-2 · G-8)**
+1. *¿Objetivo exacto o primo hermano?* Exacto: la compuerta roja `fincasparaboda.com · /celebraciones` pasa de 307→`/fincas` a 200 transparente. NO cosmético: la ruta que el sitemap publica deja de convertirse en portada.
+2. *¿Asunciones frágiles?* (i) El aislamiento W49_T02 se mantiene: `/vimume` sigue refluido en fincasparaboda (probado en el arnés); (ii) la sonda móvil corre contra `next dev` (no build de producción): válida para overflow/CLS de layout, no para el p75 de campo (CrUX/RUM).
+3. *¿Alternativa descartada?* Exceptuar `/celebraciones` en el `middleware.ts`. Descartada: el aislamiento multi-dominio es la frontera entre 4 audiencias y el fallo real estaba en el registro (prefijo ausente), no en la lógica de gating.
+4. *¿Qué se rompe bajo carga?* Nada nuevo: sólo se añade un prefijo a una lista estática (`Object.freeze`). La vertical fincasparaboda incorpora `/celebraciones`, una página pública ya certificada en el middleware.
+5. *¿Qué acepto al firmar?* Que G-3 (22 gates) NO queda 22/22: `verify:confianza` (4 filas `VERIFICADO` degradadas del ledger por `url` http, no https, de sesiones previas) y `audit:metacompiler-enterprise:probe` (MC-F1 sondea producción y ésta aún no tiene el deploy de esta ola) quedan en FAIL pre-existente, fuera de mi cambio.
+
+**Riesgo declarado (verdad cruda · CEO-4)**
+- `audit:metacompiler-enterprise:probe` MC-F1 (`https://www.productoraear.com/celebraciones`) falla porque **producción todavía sirve el build anterior**; este mismo push es lo que lo resuelve. Las sub-puertas MC-F2..F5 (proveedores, calendario) sí pasan.
+- `verify:confianza` falla por `CASHTUNNEL_IDEMPOTENCY_SCOPE`, `CINEMATIC_HERO_ARCHIVED`, `GATE_PREPUSH_CASHTUNNEL_WIRED`, `AUDIT_UI_UX_300_PAGES_STREAMING_FIRST`: filas `VERIFICADO` cuyo `url` es `http://127.0.0.1:3007` (no `https`), degradadas por el validador (EP-1 exige `https`). El ledger es append-only: se declara, no se reescribe ni se maquilla.
+
+**SIGMA://CLOSE/v1**
+```
+task_id        : P0_CIERRE_VERTICAL_FINCAS_CELEBRACIONES_Y_DESPLIEGUE_OLA
+estado_bloque  : VERIFICADO (compuerta /celebraciones cerrada) · SOSPECHOSO (G-3: 2 puertas rojas pre-existentes)
+hecho          : src/lib/domains/sovereign-domain-registry.ts:67-72 (prefijo '/celebraciones' en fincasparaboda) · commit atómico de la ola (middleware + cart drawer + dock + coachTypes + registry + harnesses + log)
+evidence[]     : {cmd:"tsx verify_middleware_reachability.ts", exit:0, res:"26/26"} · {cmd:"tsx verify_domain_isolation.ts", exit:0, res:"40/40"} · {cmd:"tsx verify_route_gating_and_hmac_bridge.ts", exit:0, res:"31/31"} · {cmd:"tsx verify_coach_doctrine.ts", exit:0, res:"41/41"} · {cmd:"tsx verify_mobile_dock_layout.ts", exit:0, res:"10/10"} · {cmd:"node scripts/audit_mobile_load_stability.cjs", exit:0, res:"Rows=10 CLS=0 hScroll=0 PASS sha256=239cee76..."} · {cmd:"node --check scripts/extract_velocity_subscription.cjs", exit:0} · {cmd:"npm run typecheck", exit:0} · {cmd:"eslint <5 ficheros>", exit:0, res:"0 errores/6 warnings"}
+cambios[]      : src/lib/domains/sovereign-domain-registry.ts · src/middleware.ts · src/components/checkout/SovereignCartDrawer.tsx · src/components/sclass/SovereignMobileHUD.tsx · src/lib/agents/coachTypes.ts (nuevo) · scripts/verify_coach_doctrine.ts (nuevo) · scripts/verify_mobile_dock_layout.ts (nuevo) · scripts/verify_middleware_reachability.ts · CLINE_EXECUTION_LOG.md
+gates          : G0=PASS · G1=PASS (tsc Exit 0) · G2=PASS (0 errores en ficheros tocados) · G3=SOSPECHOSO (20/22; 2 rojas pre-existentes: verify:confianza + metacompiler-probe MC-F1) · G4=SIN_EVIDENCIA (no ejecutado) · G5=SIN_EVIDENCIA · G6=SIN_EVIDENCIA · G7=PASS (CLS=0 observado en Chrome real, móvil 360/390) · G8=PASS (premortem 5/5)
+omega_diamante : { score: "no re-auditado", verdict: "PENDIENTE", pendientes: ["G-4 audit:ssot", "G-6 audit:omega-rojo", "sonda HTTP real de /api/health tras el deploy"] }
+hipotesis[]    : la sonda móvil corre contra next dev (no build de producción); el aislamiento W49_T02 se mantiene intacto
+decision       : corregir la causa raíz en el registro (allowedPublicPrefixes) en lugar de exceptuar la ruta en el middleware: el aislamiento multi-dominio es la frontera entre 4 audiencias
+riesgos        : G-3 no queda 22/22 (2 rojas pre-existentes: ledger con url http + MC-F1 por deploy pendiente); producción no refleja el fix hasta que Coolify complete el build
+reto_espejo    : se declara SIN_EVIDENCIA el skill 'taste-engine-ui.md' en lugar de inventar el enlace (EP-2/AF-5): la doctrina Taste Engine vive en .agents/skills/unslop/SKILL.md
+aprendizaje_ceo: un solo prefijo ausente en el registro convertía el escaparate público en una redirección silenciosa a la portada de fincas; el cliente nunca veía la página que el sitemap le prometía
+siguiente_paso : sondear https://productoraear.com/api/health tras el deploy de Coolify y confirmar buildSha + HTTP 200 en /celebraciones
+```
+
+

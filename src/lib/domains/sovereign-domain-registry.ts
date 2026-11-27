@@ -64,6 +64,11 @@ export const SOVEREIGN_DOMAINS: Readonly<Record<SovereignDomainId, SovereignDoma
     defaultHomePath: '/fincas',
     allowedPublicPrefixes: Object.freeze([
       '/',
+      // P0 · 2026-11-27: `/celebraciones` es el escaparate público canónico
+      // (certificado en `CERTIFIED_PRODUCTION_ROUTES`). Sin este prefijo el
+      // visitante de fincasparaboda.com que aterrizaba en el escaparate era
+      // refluido con 307 a `/fincas` (redirección parásita medida en G-3).
+      '/celebraciones',
       '/fincas',
       '/otzarreta',
       '/restaurante-otzarreta',

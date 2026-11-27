@@ -47,15 +47,21 @@ export function SovereignCartDrawer() {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 overflow-hidden" role="dialog" aria-modal="true" aria-labelledby="cart-title">
+    <div className="fixed inset-0 z-[90] overflow-hidden" role="dialog" aria-modal="true" aria-labelledby="cart-title">
       {/* Backdrop */}
       <div
         className="fixed inset-0 bg-black/80 backdrop-blur-md transition-opacity animate-fade-in"
         onClick={() => setIsOpen(false)}
       />
 
-      <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
-        <div className="w-screen max-w-md bg-zinc-950 border-l border-white/10 p-6 flex flex-col justify-between shadow-2xl relative">
+      {/* ESTRATIFICACIÓN z-[90] > dock móvil SovereignMobileHUD (z-[80]) y
+          concierge (z-[85]): el cajón modal queda POR ENCIMA, su backdrop
+          absorbe el toque y el dock queda oculto (visibilidad condicional
+          limpia) sin robar el clic al botón primario «Proceder al Pago».
+          El ancho se resuelve con `w-full` (nunca `w-screen`) para no
+          desbordar 40 px en viewport 390 px. */}
+      <div className="fixed inset-y-0 right-0 flex w-full max-w-md pl-10">
+        <div className="flex w-full flex-col justify-between border-l border-white/10 bg-zinc-950 p-6 pb-[calc(5.5rem+env(safe-area-inset-bottom))] shadow-2xl relative lg:pb-6">
           {/* Header */}
           <div>
             <div className="flex items-center justify-between pb-4 border-b border-white/10">

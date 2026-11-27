@@ -46,28 +46,48 @@ const AFFILIATE_COOKIE_OPTIONS = {
  *     crudo — de lo contrario `/presupuesto-oculto` colaría.
  *   · `307` (no 301): preserva método y cuerpo, y no se cachea como permanente
  *     mientras la ruta siga en taller.
+ *
+ * P0 · 2026-11-27 · APERTURA DE TRÁFICO PÚBLICO CANÓNICO (Directiva CEO):
+ *   La contención de dark-launch replegaba con 307 a `/` landings públicas
+ *   legítimas (bodas, fincas, artistas, proveedores, seating-planner,
+ *   presupuesto, experiencia, reservar, licitaciones) porque sus prefijos no
+ *   constaban como certificados. Se certifican esos prefijos para permitir el
+ *   paso TRANSPARENTE (`NextResponse.next()`) al App Router.
+ *   La protección ESTRICTA (sesión activa → `/login`) permanece EXCLUSIVAMENTE
+ *   sobre `/admin/**` y `/command-center` (ver `ADMIN_PATHS` +
+ *   `hasValidAdminSession`): el gating cosmético nunca es una frontera de
+ *   seguridad, sólo evita 404 de páginas en taller.
  * ════════════════════════════════════════════════════════════════════════════
  */
 const CERTIFIED_PRODUCTION_ROUTES: readonly string[] = Object.freeze([
   '/',
-  '/artistas',
-  '/mariachis', // Added
-  '/reservar/solista', // Added
-  '/otzarreta',
-  '/calendario',
+  // — Hub maestro y escaparate —
   '/gobiernos',
   '/celebraciones',
   '/profesionales',
-  '/restaurante-otzarreta',
   // `/restaurante-otzarreta` es un alias que hace `redirect('/otzarreta')`
   // (src/app/(public)/restaurante-otzarreta/page.tsx). Sin certificar el
   // destino, el viaje era alias → /otzarreta → GATE → /celebraciones: la ficha
   // insignia del asador NUNCA llegaba a un cliente real (medido en producción
   // el 2026-11-21). Se certifica el destino para que el alias aterrice en la ficha.
-  '/proveedores',
+  '/restaurante-otzarreta',
+  // — Landings públicas canónicas (P0 2026-11-27) —
+  '/bodas',
   '/fincas',
+  '/artistas',
+  '/mariachis',
+  '/proveedores',
   '/seating-planner',
   '/presupuesto',
+  '/experiencia',
+  '/licitaciones',
+  // — Funnel de reserva (paso transparente, cualquier subruta canónica) —
+  '/reservar',
+  '/reservar/solista',
+  // — Agenda y fichas —
+  '/otzarreta',
+  '/calendario',
+  // — Acceso y portal —
   '/portal/proveedor',
   '/login',
 ]);

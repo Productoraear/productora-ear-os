@@ -488,7 +488,7 @@ export const SovereignMobileHUD: React.FC = React.memo(function SovereignMobileH
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="fixed inset-x-0 bottom-[calc(5.75rem+env(safe-area-inset-bottom))] z-[70] mx-auto w-full max-w-lg px-2 lg:hidden"
+            className="fixed inset-x-0 bottom-[calc(var(--ear-dock-h)+0.25rem)] z-[70] mx-auto w-full max-w-lg px-2 lg:hidden"
           >
             <div className="max-h-[calc(100dvh-11rem)] overflow-y-auto overscroll-contain rounded-3xl border border-white/10 bg-[#07070b]/95 shadow-[0_0_80px_rgba(0,0,0,0.95)] backdrop-blur-2xl">
               <div className="sticky top-0 z-10 flex items-center gap-3 border-b border-white/10 bg-[#07070b]/95 px-4 py-3 backdrop-blur-xl">
