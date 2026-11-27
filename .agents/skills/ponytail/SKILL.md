@@ -1,6 +1,6 @@
 ---
 name: ponytail
-description: Doctrina de eficiencia de código y ahorro radical de tokens. Aplica el filtro de 6 preguntas antes de escribir cualquier línea, maximizando la reutilización de ear-os-ssot.ts, catálogos existentes y reduciendo la deuda técnica en un 30%.
+description: Metodología Ponytail de Dietrich Gebert y Pau Berenguer. Escalera de 7 peldaños de decisión pre-programación para erradicar sobre-ingeniería, deuda técnica y gasto de tokens en Next.js 16, reutilizando src/lib/ y el SSOT antes de escribir una sola línea.
 ---
 
 # Doctrina Ponytail & Mínimo Código S-Class (EAR OS)
@@ -12,30 +12,24 @@ Cada línea de código que una IA escribe sin necesidad es deuda técnica invisi
 
 ---
 
-## El Filtro de las 6 Preguntas (Secuencia Obligatoria Pre-Código)
+## La Escalera de Decisión Pre-Programación (7 Peldaños)
 
-Antes de generar o modificar cualquier archivo, el agente debe responder mentalmente estas 6 preguntas en orden:
+Antes de generar o modificar **cualquier** archivo, el agente desciende esta escalera en orden estricto. El primer peldaño que resuelve el problema **detiene** el descenso: no se baja a escribir código nuevo mientras un peldaño superior lo cubra.
 
-1. **¿Tiene esto que existir realmente?**
-   - ¿Aporta a la conversión, al cobro de fianza o a la trazabilidad legal?
-   - Si es un adorno superfluo, un mock innecesario o un wrapper vacío: **ELIMINAR**.
-
-2. **¿Existe ya dentro del ecosistema de EAR OS?**
-   - Buscar primero con `git grep` o consultar el grafo AST (`graphify`).
-   - El 80% de los botones, tarjetas de artistas, simuladores de menú y cálculos logísticos ya están programados en `src/components/` y `src/lib/`. Reutilizar importando.
-
-3. **¿Lo resuelve la plataforma o Next.js 16 de forma nativa?**
-   - Usar utilidades nativas (`URLSearchParams`, `headers()`, `cookies()`, Tailwind classes estándar) antes de instalar paquetes npm o crear helpers redundantes.
-
-4. **¿Pertenece al SSOT Canónico (`ear-os-ssot.ts`)?**
-   - Toda constante de dinero (350 € base de Edwin Agudelo, 550 € con 100 km, 100 € fianza deducible, 14.250 € umbral B2G) se importa de `@/lib/ear-os-ssot`.
-   - Prohibido hardcodear números mágicos de tarifas en componentes.
-
-5. **¿Se puede resolver en una sola línea o expresión concisa?**
-   - Preferir funciones puras de 1 línea, operadores ternarios limpios y composición declarativa sobre bloques de 50 líneas de código imperativo.
-
-6. **Si no hay alternativa: escribir el código nuevo mínimo necesario.**
-   - Escribir únicamente las líneas estrictamente requeridas para cumplir los criterios de aceptación y pasar las 17 compuertas con Exit Code 0.
+1. **¿Hace falta que exista?**
+   - Si no agrega valor **medible** al SSOT (`ear-os-ssot.ts`) o a la conversión, no se crea. Adornos, mocks innecesarios y wrappers vacíos: **ELIMINAR**.
+2. **¿Ya existe en el proyecto?**
+   - Reutilizar los motores de `src/lib/` y los componentes de `src/components/` **antes** de escribir funciones nuevas. Buscar primero con `git grep` o el grafo AST (`graphify`).
+3. **¿Lo cubre la librería estándar de JavaScript/TypeScript?**
+   - Cero librerías externas para utilidades nativas (`URLSearchParams`, `structuredClone`, `Array.prototype.*`, `Intl.*`).
+4. **¿Lo resuelve Next.js o React?**
+   - Aprovechar Server Components, `searchParams`, `headers()`, `cookies()` y `layout.tsx` nativos antes de crear helpers o endpoints redundantes.
+5. **¿Lo resuelve una dependencia ya instalada en `package.json`?**
+   - Prohibido instalar paquetes nuevos sin sanción explícita del CEO. Si algo ya está en `package.json`, se usa eso.
+6. **¿Se resuelve en una sola línea o expresión concisa?**
+   - Preferir funciones puras de 1 línea, operadores ternarios limpios y composición declarativa sobre bloques imperativos de 50 líneas.
+7. **Solo entonces: escribir el código mínimo que funcione, acompañado de su test correspondiente.**
+   - Únicamente las líneas estrictamente requeridas para cumplir los criterios de aceptación y pasar las 17 compuertas con Exit Code 0. Nunca sin su prueba.
 
 ---
 
@@ -44,6 +38,22 @@ Antes de generar o modificar cualquier archivo, el agente debe responder mentalm
 - **Mode LIGHT**: Para prototipos rápidos y landing pages de la Malla de Dominancia (prioriza reutilización visual).
 - **Mode FULL** (Predeterminado): Para componentes de frontend, controladores y hooks de negocio.
 - **Mode ULTRA**: Para APIs de facturación, pasarelas Stripe y endpoints de autenticación (máxima concisión, cero dependencias adicionales).
+
+---
+
+## Anclaje al SSOT Canónico
+
+Toda constante de dinero (350 € base de Edwin Agudelo, 550 € con 100 km, 100 € fianza deducible, 14.250 € umbral B2G) se importa de `@/lib/ear-os-ssot`. Prohibido hardcodear números mágicos de tarifas en componentes (INV-01 · INV-10).
+
+---
+
+## Regla de Cierre (Reporte Obligatorio)
+
+Al finalizar cada tarea, Cline debe reportar en el cierre:
+
+- **Cuántas líneas de código se ahorraron** (líneas escritas vs. líneas que habría exigido la vía ingenua).
+- **Qué componentes o dependencias evitó duplicar** (motor de `src/lib/` reutilizado, paquete de `package.json` aprovechado, primitiva de Next.js/React usada).
+- El peldaño de la escalera que resolvió la tarea (1–7).
 
 ---
 
